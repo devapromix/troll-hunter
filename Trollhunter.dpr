@@ -6,7 +6,8 @@ uses
   uTerminal in 'uTerminal.pas',
   uCommon in 'uCommon.pas',
   uScenes in 'uScenes.pas',
-  uPlayer in 'uPlayer.pas';
+  uPlayer in 'uPlayer.pas',
+  uMap in 'uMap.pas';
 
 var
   Key: Word = 0;

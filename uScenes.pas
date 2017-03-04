@@ -44,7 +44,7 @@ type
 
 implementation
 
-uses SysUtils, Math, uCommon, uTerminal, uPlayer, BearLibTerminal;
+uses SysUtils, Math, uCommon, uTerminal, uPlayer, BearLibTerminal, uMap;
 
 { TScenes }
 
@@ -109,6 +109,7 @@ end;
 procedure TSceneGame.Render;
 var
   X, Y, PX, PY, DX, DY: Integer;
+  T: TTile;
 begin
   // Map
   Terminal.BackgroundColor(0);
@@ -121,8 +122,9 @@ begin
       Y := DY - PY + Player.Y;
       if (X < Low(Byte)) or (Y < Low(Byte))
         or (X > High(Byte)) or (Y > High(Byte)) then Continue;
-      Terminal.ForegroundColor(clDarkGray);
-      Terminal.Print(DX + View.Left, DY + View.Top, '.');
+      T := Map.GetTile(X, Y);
+      Terminal.ForegroundColor(T.Color);
+      Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   Terminal.ForegroundColor(clDarkRed);
   Terminal.Print(PX + View.Left, PY + View.Top, '@');
@@ -130,9 +132,13 @@ begin
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(Status.Left, Status.Top, 'Trollhunter');
-  Terminal.Print(Status.Left + Status.Width - 1, Status.Top, Format('%d:%d', [Player.X, Player.Y]), TK_ALIGN_RIGHT);
+  Terminal.Print(Status.Left + Status.Width - 1, Status.Top, Format('%s (%d:%d)',
+    [Map.GetName, Player.X, Player.Y]), TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(Status.Left, Status.Top + 1, Format('Life %d/%d', [Player.Life, Player.MaxLife]));
+  Terminal.ForegroundColor(clYellow);
+  Terminal.Print(Status.Left, Status.Top + 2, Format('Turn %d', [Player.Turn]));
+  // Lifebar
   RenderLifeBar(Status.Left ,Status.Top + 1);
   // Log
   for Y := 0 to Log.Height - 1 do

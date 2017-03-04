@@ -7,6 +7,7 @@ type
   private
     FX: Byte;
     FY: Byte;
+    FTurn: Word;
     FLife: Word;
     FMaxLife: Word;
   public
@@ -14,6 +15,7 @@ type
     destructor Destroy; override;
     property X: Byte read FX write FX;
     property Y: Byte read FY write FY;
+    property Turn: Word read FTurn write FTurn;
     property Life: Word read FLife write FLife;
     property MaxLife: Word read FMaxLife write FMaxLife;
     procedure Move(AX, AY: ShortInt);
@@ -30,7 +32,7 @@ uses Math, uCommon;
 
 constructor TPlayer.Create;
 begin
-
+  Turn := 0;
 end;
 
 destructor TPlayer.Destroy;
@@ -43,6 +45,7 @@ procedure TPlayer.Move(AX, AY: ShortInt);
 begin
   X := Clamp(X + AX, 0, High(Byte));
   Y := Clamp(Y + AY, 0, High(Byte));
+  Turn := Turn + 1;
 end;
 
 initialization

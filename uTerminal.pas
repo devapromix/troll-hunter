@@ -66,7 +66,7 @@ begin
   Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'), 25), 25, 128);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
   Value.Width := Clamp(StrToIntDef(terminal_get('ini.panel.width'), 30), 30, 50);
-  Panel := SetEntSize(0, 0, Value.Width, 2);
+  Panel := SetEntSize(0, 0, Value.Width, 3);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);
   Log := SetEntSize(View.Width + 2, Status.Height + 2, Panel.Width, Screen.Height - Panel.Height - 3);

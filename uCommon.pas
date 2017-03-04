@@ -14,9 +14,10 @@ const
   Version = '0.1';
 
 const
-  clDarkGray = $FF222222;
-  clDarkRed  = $FF880000;
-  clYellow   = $FFFFFF00;
+  clDarkGray  = $FF222222;
+  clDarkGreen = $FF008800;
+  clDarkRed   = $FF880000;
+  clYellow    = $FFFFFF00;
 
 var
   Screen, Panel, View, Status, Log: TEntSize;
