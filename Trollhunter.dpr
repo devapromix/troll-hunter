@@ -1,12 +1,21 @@
 program Trollhunter;
 
-{$APPTYPE CONSOLE}
-
 uses
   SysUtils,
-  BearLibTerminal in 'BearLibTerminal.pas';
+  BearLibTerminal in 'BearLibTerminal.pas',
+  Common in 'Common.pas';
+
+var
+  Key: Word = 0;
 
 begin
-  Write('Trollhunter v.0.1');
-  ReadLn;
+  terminal_open;
+  terminal_refresh;
+  repeat
+    if terminal_has_input() then
+    begin
+      Key := terminal_read();
+    end;
+  until(Key = TK_CLOSE);
+  terminal_close;
 end.
