@@ -18,7 +18,6 @@ type
     procedure BackgroundColor(Value: Cardinal);
     procedure ForegroundColor(Value: Cardinal);
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0);
-    function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
   end;
@@ -35,22 +34,6 @@ uses SysUtils;
 procedure TTerminal.BackgroundColor(Value: Cardinal);
 begin
   terminal_bkcolor(Value);
-end;
-
-function TTerminal.Clamp(Value, AMin, AMax: Integer;
-  Flag: Boolean): Integer;
-begin
-  Result := Value;
-  if (Result < AMin) then
-    if Flag then
-      Result := AMin
-    else
-      Result := AMax;
-  if (Result > AMax) then
-    if Flag then
-      Result := AMax
-    else
-      Result := AMin;
 end;
 
 procedure TTerminal.Clear;
@@ -79,10 +62,10 @@ procedure TTerminal.Init;
 var
   Value: TEntSize;
 begin
-  Value.Width := Self.Clamp(StrToIntDef(terminal_get('ini.screen.width'), 80), 80, 255);
-  Value.Height := Self.Clamp(StrToIntDef(terminal_get('ini.screen.height'), 25), 25, 128);
+  Value.Width := Clamp(StrToIntDef(terminal_get('ini.screen.width'), 80), 80, 255);
+  Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'), 25), 25, 128);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
-  Value.Width := Self.Clamp(StrToIntDef(terminal_get('ini.panel.width'), 30), 30, 50);
+  Value.Width := Clamp(StrToIntDef(terminal_get('ini.panel.width'), 30), 30, 50);
   Panel := SetEntSize(0, 0, Value.Width, 2);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);

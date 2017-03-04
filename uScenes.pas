@@ -36,7 +36,7 @@ var
 type
   TSceneGame = class(TScene)
   private
-
+    procedure RenderLifeBar(X, Y: Byte);
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -44,7 +44,7 @@ type
 
 implementation
 
-uses uCommon, uTerminal;
+uses SysUtils, Math, uCommon, uTerminal, uPlayer, BearLibTerminal;
 
 { TScenes }
 
@@ -109,50 +109,89 @@ end;
 procedure TSceneGame.Render;
 var
   X, Y, PX, PY, DX, DY: Integer;
-const
-  PlayerX = 5;
-  PlayerY = 5;
 begin
+  // Map
+  Terminal.BackgroundColor(0);
   PX := View.Width div 2;
   PY := View.Height div 2;
   for DY := 0 to View.Height - 1 do
     for DX := 0 to View.Width - 1 do
     begin
-      X := DX - PX + PlayerX;
-      Y := DY - PY + PlayerY;
+      X := DX - PX + Player.X;
+      Y := DY - PY + Player.Y;
       if (X < Low(Byte)) or (Y < Low(Byte))
         or (X > High(Byte)) or (Y > High(Byte)) then Continue;
-      Terminal.BackgroundColor($FF550055);
-      //Terminal.Clear;
-      Terminal.ForegroundColor($FFFFFF00);
+      Terminal.ForegroundColor(clDarkGray);
       Terminal.Print(DX + View.Left, DY + View.Top, '.');
-      //Terminal.Refresh;
     end;
+  Terminal.ForegroundColor(clDarkRed);
   Terminal.Print(PX + View.Left, PY + View.Top, '@');
-  for Y := 0 to Status.Height - 1 do
-    for X := 0 to Status.Width - 1 do
-    begin
-      Terminal.BackgroundColor($FF550055);
-      //Terminal.Clear;
-      Terminal.ForegroundColor($FFFFFF00);
-      Terminal.Print(X + Status.Left, Y + Status.Top, ' ');
-      //Terminal.Refresh;
-    end;
+  // Player
+  Terminal.BackgroundColor(0);
+  Terminal.ForegroundColor(clYellow);
+  Terminal.Print(Status.Left, Status.Top, 'Trollhunter');
+  Terminal.Print(Status.Left + Status.Width - 1, Status.Top, Format('%d:%d', [Player.X, Player.Y]), TK_ALIGN_RIGHT);
+  Terminal.ForegroundColor(clYellow);
+  Terminal.Print(Status.Left, Status.Top + 1, Format('Life %d/%d', [Player.Life, Player.MaxLife]));
+  RenderLifeBar(Status.Left ,Status.Top + 1);
+  // Log
   for Y := 0 to Log.Height - 1 do
     for X := 0 to Log.Width - 1 do
     begin
       Terminal.BackgroundColor($FF550055);
-      //Terminal.Clear;
       Terminal.ForegroundColor($FFFFFF00);
       Terminal.Print(X + Log.Left, Y + Log.Top, ' ');
-      //Terminal.Refresh;
     end;
+end;
+
+procedure TSceneGame.RenderLifeBar(X, Y: Byte);
+var
+  I, L, W: Byte;
+begin
+  L := Status.Width - 14;
+  W := BarWidth(Player.Life, Player.MaxLife, L);
+  for I := 0 to L do
+  begin
+    Terminal.BackgroundColor(clDarkGray);
+    if (I <= W) then
+    begin
+      if (Player.Life > 0) then
+      begin
+        Terminal.BackgroundColor(clDarkRed);
+      end;
+    end;
+    Terminal.Print(X + I + 13, Y, ' ');
+  end;
 end;
 
 procedure TSceneGame.Update(var Key: Word);
 begin
-  inherited;
-
+  case Key of
+    TK_LEFT, TK_KP_4, TK_A:
+      Player.Move(-1, 0);
+    TK_RIGHT, TK_KP_6, TK_D:
+      Player.Move(1, 0);
+    TK_UP, TK_KP_8, TK_W:
+      Player.Move(0, -1);
+    TK_DOWN, TK_KP_2, TK_X:
+      Player.Move(0, 1);
+    TK_KP_7, TK_Q:
+      Player.Move(-1, -1);
+    TK_KP_9, TK_E:
+      Player.Move(1, -1);
+    TK_KP_1, TK_Z:
+      Player.Move(-1, 1);
+    TK_KP_3, TK_C:
+      Player.Move(1, 1);
+    TK_KP_5, TK_S:
+      Player.Move(0, 0);
+    TK_KP_PLUS:
+      if (Player.Life < Player.MaxLife) then
+        Player.Life := Player.Life + 1;
+    TK_KP_MINUS:
+      if (Player.Life > 0) then
+        Player.Life := Player.Life - 1;
+  end;
 end;
 
 initialization
