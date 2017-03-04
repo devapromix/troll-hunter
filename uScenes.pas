@@ -80,8 +80,8 @@ end;
 
 procedure TScenes.Render;
 begin
-//  Terminal.BackgroundColor(0);
-//  Terminal.Clear;
+  Terminal.BackgroundColor(0);
+  Terminal.Clear;
   if (FScene[Scene] <> nil) then
     FScene[Scene].Render;
 end;
@@ -157,7 +157,7 @@ end;
 
 initialization
   Scenes := TScenes.Create;
-  Scene.SetScene(stGame);
+  Scenes.SetScene(scGame);
 
 finalization
   Scenes.Free;
