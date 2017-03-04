@@ -3,7 +3,8 @@ program Trollhunter;
 uses
   SysUtils,
   BearLibTerminal in 'BearLibTerminal.pas',
-  Common in 'Common.pas';
+  Common in 'Common.pas',
+  Scenes in 'Scenes.pas';
 
 var
   Key: Word = 0;

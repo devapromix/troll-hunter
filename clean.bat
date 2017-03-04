@@ -1,1 +1,2 @@
+del *.dcu
 del *.exe
