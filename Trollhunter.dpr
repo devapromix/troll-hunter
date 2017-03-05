@@ -7,7 +7,8 @@ uses
   uCommon in 'uCommon.pas',
   uScenes in 'uScenes.pas',
   uPlayer in 'uPlayer.pas',
-  uMap in 'uMap.pas';
+  uMap in 'uMap.pas',
+  uVillage in 'uVillage.pas';
 
 var
   Key: Word = 0;
