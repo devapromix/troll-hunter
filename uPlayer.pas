@@ -51,7 +51,7 @@ end;
 initialization
   Player := TPlayer.Create;
   Player.X := RandomRange(1, High(Byte));
-  Player.Y := RandomRange(1, High(Byte));
+  Player.Y := 1;
   Player.MaxLife := 111;
   Player.Life := Player.MaxLife;
 
