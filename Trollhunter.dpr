@@ -15,7 +15,11 @@ var
 
 begin
   repeat
-    if IsRender then Scenes.Render;
+    if IsRender then
+    begin
+      Scenes.Render;
+      Terminal.Refresh;
+    end;
     Key := 0;
     if terminal_has_input() then
     begin
@@ -24,7 +28,6 @@ begin
       IsRender := True;
       Continue;
     end;
-    if IsRender then Terminal.Refresh;
     terminal_delay(10);
     IsRender := False;
   until (Key = TK_CLOSE);

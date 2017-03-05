@@ -192,11 +192,11 @@ begin
     TK_KP_5, TK_S:
       Player.Move(0, 0);
     TK_KP_PLUS:
-      if (Player.Life < Player.MaxLife) then
-        Player.Life := Player.Life + 1;
+      if (Map.Deep < High(TDeepEnum)) then
+        Map.Deep := succ(Map.Deep);
     TK_KP_MINUS:
-      if (Player.Life > 0) then
-        Player.Life := Player.Life - 1;
+      if (Map.Deep > Low(TDeepEnum)) then
+        Map.Deep := pred(Map.Deep);
   end;
 end;
 

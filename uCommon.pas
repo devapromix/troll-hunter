@@ -15,8 +15,9 @@ const
 
 const
   clDarkGray  = $FF222222;
-  clDarkGreen = $FF008800;
   clDarkRed   = $FF880000;
+  clDarkGreen = $FF008800;
+  clDarkBlue  = $FF000088;
   clYellow    = $FFFFFF00;
 
 var

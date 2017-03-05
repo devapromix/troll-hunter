@@ -1,2 +1,1 @@
 del *.dcu
-del *.exe
