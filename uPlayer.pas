@@ -22,7 +22,7 @@ type
   end;
 
 var
-  Player: TPlayer;
+  Player: TPlayer = nil;
 
 implementation
 

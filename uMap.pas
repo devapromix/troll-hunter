@@ -5,11 +5,11 @@ interface
 uses uCommon;
 
 type
-  TDeepEnum = (deDarkWood, deGrayCave, deDeepCave);
+  TDeepEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave);
 
 const
   DeepName: array [TDeepEnum] of string = (
-    'Dark Wood', 'Gray Cave', 'Deep Cave');
+    'Dark Wood', 'Gray Cave', 'Deep Cave', 'Blood Cave');
 
 type
   TTile = record
@@ -26,39 +26,46 @@ type
 const
   Tile: array[TTileEnum, TDeepEnum] of TTile = (
   ( // DefaultFloor
-    (Symbol: '"'; Name: 'Grass'; Color: clDarkGreen;), // Dark Wood
-    (Symbol: ':'; Name: 'Dirt'; Color: clDarkGray;),   // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Deep Cave
+    (Symbol: '"'; Name: 'Grass'; Color: $FF113311;), // Dark Wood
+    (Symbol: ':'; Name: 'Dirt';  Color: $FF331133;),   // Gray Cave
+    (Symbol: '.'; Name: 'Stone'; Color: $FF222111;),   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: $FF330000;)   // Blood Cave
   ),
   ( // DefaultWall
-    (Symbol: 'T'; Name: 'Tree'; Color: $FF006622;), // Dark Wood
-    (Symbol: '#'; Name: 'Wall'; Color: clDarkGray;),   // Gray Cave
-    (Symbol: '#'; Name: 'Wall'; Color: clDarkGray;)   // Deep Cave
+    (Symbol: 'T'; Name: 'Tree';  Color: $FF006622;), // Dark Wood
+    (Symbol: '#'; Name: 'Wall';  Color: $FF444422;),   // Gray Cave
+    (Symbol: '#'; Name: 'Wall';  Color: $FF222133;),   // Deep Cave
+    (Symbol: '#'; Name: 'Wall';  Color: $FF322118;)   // Blood Cave
   ),
   ( // Floor1
     (Symbol: '"'; Name: 'Grass'; Color: $FF222222;), // Dark Wood
     (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;),   // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;),   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Blood Cave
   ),
   ( // Floor2
     (Symbol: '"'; Name: 'Grass'; Color: $FF222222;), // Dark Wood
     (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;),   // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;),   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Blood Cave
   ),
   ( // Floor3
     (Symbol: '"'; Name: 'Grass'; Color: $FF222222;), // Dark Wood
     (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;),   // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;),   // Deep Cave
+    (Symbol: '.'; Name: 'Stone'; Color: clDarkGray;)   // Blood Cave
   ),
   ( // UpStairs
-    (Symbol: '<'; Name: 'Grass'; Color: clYellow;), // Dark Wood
+    (Symbol: '*'; Name: 'Grass'; Color: clYellow;), // Dark Wood
     (Symbol: '<'; Name: 'Stone'; Color: clYellow;),   // Gray Cave
-    (Symbol: '<'; Name: 'Stone'; Color: clYellow;)   // Deep Cave
+    (Symbol: '<'; Name: 'Stone'; Color: clYellow;),   // Deep Cave
+    (Symbol: '<'; Name: 'Stone'; Color: clYellow;)   // Blood Cave
   ),
   ( // DnStairs
-    (Symbol: '>'; Name: 'Grass'; Color: clDarkRed;), // Dark Wood
-    (Symbol: '>'; Name: 'Stone'; Color: clDarkRed;),   // Gray Cave
-    (Symbol: '>'; Name: 'Stone'; Color: clDarkRed;)   // Deep Cave
+    (Symbol: '*'; Name: 'Grass'; Color: clYellow;), // Dark Wood
+    (Symbol: '>'; Name: 'Stone'; Color: clYellow;),   // Gray Cave
+    (Symbol: '>'; Name: 'Stone'; Color: clYellow;),   // Deep Cave
+    (Symbol: '>'; Name: 'Stone'; Color: clYellow;)   // Blood Cave
   )
   );
 
@@ -74,9 +81,9 @@ type
     procedure Clear(ADeep: TDeepEnum; ATileEnum: TTileEnum);
     procedure Gen;
     property Deep: TDeepEnum read FDeep write FDeep;
-    function GetTile(X, Y: Byte): TTile;
-    procedure SetTileEnum(X, Y: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
-    function GetTileEnum(X, Y: Byte; ADeep: TDeepEnum): TTileEnum;
+    function GetTile(AX, AY: Byte): TTile;
+    procedure SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
+    function GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;
     function GetName: string;
   end;
 
@@ -95,32 +102,28 @@ var
   X, Y: Byte;
 begin
   X := AX;
-  Y := AY;
+  Y := AY;  
   AType := Clamp(AType, 2, 9);
   for K := 0 to ADen do
   begin
     if (Round(Random(AType)) = 1) and (X > 0) then
     begin
       X := X - 1;
-      //if (GetTileEnum(X, Y) <> teDefault) then Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
     if (Round(Random(AType)) = 1) and (X < High(Byte)) then
     begin
       X := X + 1;
-      //if (GetTileEnum(X, Y) <> teDefault) then Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
     if (Round(Random(AType)) = 1) and (Y > 0) then
     begin
       Y := Y - 1;
-      //if (GetTileEnum(X, Y) <> teDefault) then Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
     if (Round(Random(AType)) = 1) and (Y < High(Byte)) then
     begin
       Y := Y + 1;
-      //if (GetTileEnum(X, Y) <> teDefault) then Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
   end;
@@ -151,6 +154,23 @@ var
   I: Word;
   X, Y: Byte;
   FDeep: TDeepEnum;
+
+  procedure GenCave(D: Byte; C, V: Word);
+  var
+    I: Word;
+  begin
+    for I := 0 to C do
+    begin
+      repeat
+        X := Math.RandomRange(10, High(Byte) - 10);
+        Y := Math.RandomRange(10, High(Byte) - 10);
+      until(GetTileEnum(X, Y, pred(FDeep)) = teDefaultFloor);
+      Self.AddPart(X, Y, FDeep, D, V, teDefaultFloor);
+      SetTileEnum(X, Y, pred(FDeep), teDnStairs);
+      SetTileEnum(X, Y, FDeep, teUpStairs);
+    end;
+  end;
+
 begin
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
@@ -165,30 +185,17 @@ begin
       deGrayCave:
       begin
         Self.Clear(FDeep, teDefaultWall);
-        for I := 0 to 19 do
-        begin
-          repeat
-            X := Math.RandomRange(10, High(Byte) - 10);
-            Y := Math.RandomRange(10, High(Byte) - 10);
-          until(GetTileEnum(X, Y, pred(FDeep)) = teDefaultFloor);
-          Self.AddPart(X, Y, FDeep, 9, 2999, teDefaultFloor);
-          SetTileEnum(X, Y, pred(FDeep), teDnStairs);
-          SetTileEnum(X, Y, FDeep, teUpStairs);
-        end;
+        GenCave(9, 49, 2999);
       end;
       deDeepCave:
       begin
         Self.Clear(FDeep, teDefaultWall);
-        for I := 0 to 49 do
-        begin
-          repeat
-            X := Math.RandomRange(10, High(Byte) - 10);
-            Y := Math.RandomRange(10, High(Byte) - 10);
-          until(GetTileEnum(X, Y, pred(FDeep)) = teDefaultFloor);
-          Self.AddPart(X, Y, FDeep, 2, 999, teDefaultFloor);
-          SetTileEnum(X, Y, pred(FDeep), teDnStairs);
-          SetTileEnum(X, Y, FDeep, teUpStairs);
-        end;
+        GenCave(5, 39, 1999);
+      end;
+      deBloodCave:
+      begin
+        Self.Clear(FDeep, teDefaultWall);
+        GenCave(2, 29, 999);
       end;
     end;
   end;
@@ -199,19 +206,19 @@ begin
   Result := DeepName[Deep];
 end;
 
-function TMap.GetTile(X, Y: Byte): TTile;
+function TMap.GetTile(AX, AY: Byte): TTile;
 begin
-  Result := Tile[FMap[X][Y][Deep]][Deep];
+  Result := Tile[FMap[AX][AY][Deep]][Deep];
 end;
 
-function TMap.GetTileEnum(X, Y: Byte; ADeep: TDeepEnum): TTileEnum;
+function TMap.GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;
 begin
-  Result := FMap[X][Y][ADeep];
+  Result := FMap[AX][AY][ADeep];
 end;
 
-procedure TMap.SetTileEnum(X, Y: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
+procedure TMap.SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
 begin
-  FMap[X][Y][ADeep] := ATileEnum;
+  FMap[AX][AY][ADeep] := ATileEnum;
 end;
 
 initialization
