@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.1';
+  Version = '0.2';
 
 const
   clDarkGray  = $FF222222;
