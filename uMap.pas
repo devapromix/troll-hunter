@@ -207,7 +207,7 @@ end;
 
 constructor TMap.Create;
 begin
-  Self.Gen;
+
 end;
 
 destructor TMap.Destroy;

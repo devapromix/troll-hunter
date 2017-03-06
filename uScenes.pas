@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 type
-  TSceneEnum = (scGame);
+  TSceneEnum = (scTitle, scLoad, scGame);
 
 type
   TScene = class(TObject)
@@ -34,6 +34,25 @@ var
   Scenes: TScenes = nil;
 
 type
+  TSceneTitle = class(TScene)
+  private
+    W, H: Byte;
+  public
+    constructor Create;
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneLoad = class(TSceneTitle)
+  private
+  public
+    constructor Create;
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
   TSceneGame = class(TScene)
   private
     procedure RenderLifeBar(X, Y: Byte);
@@ -54,6 +73,10 @@ var
 begin
   for I := Low(TSceneEnum) to High(TSceneEnum) do
     case I of
+      scTitle:
+        FScene[I] := TSceneTitle.Create;
+      scLoad:
+        FScene[I] := TSceneLoad.Create;
       scGame:
         FScene[I] := TSceneGame.Create;
     end;
@@ -81,6 +104,7 @@ end;
 procedure TScenes.Render;
 begin
   Terminal.BackgroundColor(0);
+  Terminal.ForegroundColor(clYellow);
   Terminal.Clear;
   if (FScene[Scene] <> nil) then
     FScene[Scene].Render;
@@ -102,6 +126,35 @@ procedure TScenes.Update(var Key: Word);
 begin
   if (FScene[Scene] <> nil) then
     FScene[Scene].Update(Key);
+end;
+
+{ TSceneTitle }
+
+constructor TSceneTitle.Create;
+begin
+  W := Terminal.Window.Width div 2;
+  H := Terminal.Window.Height div 2;
+end;        
+
+procedure TSceneTitle.Render;
+begin
+  Terminal.Print(W, H - 2, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
+  Terminal.Print(W, H, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
+  Terminal.Print(W, H + 2, 'Press [[SPACE]] to continue...', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneTitle.Update(var Key: Word);
+begin
+  case Key of
+    TK_SPACE:
+    begin
+      Scenes.SetScene(scLoad);
+      Terminal.Refresh;
+      Map.Gen;
+      terminal_delay(1000);
+      Scenes.SetScene(scGame);
+    end;
+  end;
 end;
 
 { TSceneGame }
@@ -191,6 +244,7 @@ begin
       Player.Move(1, 1);
     TK_KP_5, TK_S:
       Player.Move(0, 0);
+      
     TK_KP_PLUS:
       if (Map.Deep < High(TDeepEnum)) then
         Map.Deep := succ(Map.Deep);
@@ -200,9 +254,28 @@ begin
   end;
 end;
 
+{ TSceneLoad }
+
+constructor TSceneLoad.Create;
+begin
+  inherited Create;
+end;
+
+procedure TSceneLoad.Render;
+begin
+  inherited;
+  Terminal.Print(W, H + 4, 'Creating the world, please wait...', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneLoad.Update(var Key: Word);
+begin
+  inherited;
+
+end;
+
 initialization
   Scenes := TScenes.Create;
-  Scenes.SetScene(scGame);
+  Scenes.SetScene(scTitle);
 
 finalization
   Scenes.Free;
