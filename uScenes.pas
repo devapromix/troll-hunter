@@ -138,9 +138,9 @@ end;
 
 procedure TSceneTitle.Render;
 begin
-  Terminal.Print(W, H - 2, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
-  Terminal.Print(W, H, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(W, H + 2, 'Press [[SPACE]] to continue...', TK_ALIGN_CENTER);
+  Terminal.Print(W, H - 3, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
+  Terminal.Print(W, H - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
+  Terminal.Print(W, H + 1, 'Press [[SPACE]] to continue...', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -185,8 +185,9 @@ begin
     begin
       X := DX - PX + Player.X;
       Y := DY - PY + Player.Y;
-      if (X < Low(Byte)) or (Y < Low(Byte))
-        or (X > High(Byte)) or (Y > High(Byte)) then Continue;
+      if not Map.InMap(X, Y) then Continue;
+      if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
+        and Map.GetFog(X, Y) then Continue;
       T := Map.GetTile(X, Y);
       if (Player.Look and (Player.LX = X) and (Player.LY = Y))  then
       begin
@@ -195,7 +196,12 @@ begin
         RenderLook(T);
       end;
       if (not Player.Look and (Player.X = X) and (Player.Y = Y))  then RenderLook(T);
-      Terminal.ForegroundColor(T.Color);
+      if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) then
+        Terminal.ForegroundColor(clFog)
+      else begin
+        Map.SetFog(X, Y, False);
+        Terminal.ForegroundColor(T.Color);
+      end;
       Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   Terminal.ForegroundColor(clDarkRed);

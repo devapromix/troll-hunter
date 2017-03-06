@@ -95,6 +95,7 @@ type
   private
     FDeep: TDeepEnum;
     FMap: array [Byte, Byte, TDeepEnum] of TTileEnum;
+    FFog: array [Byte, Byte, TDeepEnum] of Boolean;
     procedure AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum; ABaseTileEnum, ATileEnum: TTileEnum);
     procedure AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word; ABaseTileEnum, ATileEnum: TTileEnum);
   public
@@ -103,6 +104,10 @@ type
     procedure Clear(ADeep: TDeepEnum; ATileEnum: TTileEnum);
     procedure Gen;
     property Deep: TDeepEnum read FDeep write FDeep;
+    function InMap(AX, AY: Integer): Boolean;
+    function InView(AX, AY: Integer): Boolean;
+    function GetFog(AX, AY: Byte): Boolean;
+    procedure SetFog(AX, AY: Byte; AFlag: Boolean);
     function GetTile(AX, AY: Byte): TTile; overload;
     function GetTile(ATileEnum: TTileEnum): TTile; overload;
     procedure SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
@@ -115,9 +120,9 @@ var
 
 implementation
 
-uses Math;
+uses Math, uPlayer;
 
-{ TMap }               
+{ TMap }
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum; ABaseTileEnum,
   ATileEnum: TTileEnum);
@@ -203,7 +208,10 @@ var
 begin
   for Y := 0 to High(Byte) do
     for X := 0 to High(Byte) do
+    begin
       FMap[X][Y][ADeep] := ATileEnum;
+      FFog[X][Y][ADeep] := True;
+    end;
 end;
 
 constructor TMap.Create;
@@ -318,6 +326,32 @@ end;
 procedure TMap.SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
 begin
   FMap[AX][AY][ADeep] := ATileEnum;
+//  if (ATileEnum = teDefaultWall) then
+//    Map.SetFOV(AX, AY, FOV_CELL_OPAQUE);
+end;
+
+function TMap.GetFog(AX, AY: Byte): Boolean;
+begin
+  Result := FFog[AX][AY][Deep];
+end;
+
+procedure TMap.SetFog(AX, AY: Byte; AFlag: Boolean);
+begin
+  FFog[AX][AY][Deep] := AFlag;
+end;
+
+function TMap.InMap(AX, AY: Integer): Boolean;
+begin
+  Result := (AX >= 0) and (AY >= 0) and (AX <= High(Byte)) and (AY <= High(Byte))
+end;
+
+function TMap.InView(AX, AY: Integer): Boolean;
+var
+  PX, PY: Integer;
+begin
+  PX := View.Width div 2;
+  PY := View.Height div 2;
+  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and (AX <= Player.X + PX - 1) and (AY <= Player.X + PY - 1);
 end;
 
 initialization

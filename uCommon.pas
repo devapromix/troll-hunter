@@ -20,6 +20,9 @@ const
   clDarkBlue  = $FF000088;
   clYellow    = $FFFFFF00;
 
+const
+  clFog       = clDarkGray;
+
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
 
@@ -27,6 +30,7 @@ function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;
 function Percent(N, P: Integer): Integer;
 function BarWidth(CX, MX, WX: Integer): Integer;
+function GetDist(X1, Y1, X2, Y2: Single): Word;
 
 implementation
 
@@ -61,6 +65,11 @@ end;
 function BarWidth(CX, MX, WX: Integer): Integer;
 begin
   Result := Round(CX / MX * WX);
+end;
+
+function GetDist(X1, Y1, X2, Y2: Single): Word;
+begin
+  Result := Round(sqrt(sqr(X2 - X1) + sqr(Y2 - Y1)));
 end;
 
 end.

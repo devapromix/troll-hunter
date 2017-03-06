@@ -25,6 +25,7 @@ type
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Look: Boolean read FLook write FLook;
     procedure Move(AX, AY: ShortInt);
+    function GetRadius: Byte;
   end;
 
 var
@@ -32,7 +33,7 @@ var
 
 implementation
 
-uses Math, uCommon;
+uses Math, uCommon, uMap;
 
 { TPlayer }
 
@@ -48,12 +49,22 @@ begin
   inherited;
 end;
 
+function TPlayer.GetRadius: Byte;
+begin
+  Result := 9;
+end;
+
 procedure TPlayer.Move(AX, AY: ShortInt);
 begin
-  if Look then
+  if Look then    
   begin
-    LX := Clamp(LX + AX, 0, High(Byte));
-    LY := Clamp(LY + AY, 0, High(Byte));
+    if Map.InMap(LX + AX, LY + AY)
+      and Map.InView(LX + AX, LY + AY)
+      and not Map.GetFog(LX + AX, LY + AY) then
+    begin
+      LX := Clamp(LX + AX, 0, High(Byte));
+      LY := Clamp(LY + AY, 0, High(Byte));
+    end;
   end else begin
     X := Clamp(X + AX, 0, High(Byte));
     Y := Clamp(Y + AY, 0, High(Byte));
