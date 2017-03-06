@@ -25,6 +25,8 @@ type
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Look: Boolean read FLook write FLook;
     procedure Move(AX, AY: ShortInt);
+    procedure Wait;
+    procedure AddTurn;
     function GetRadius: Byte;
   end;
 
@@ -36,6 +38,11 @@ implementation
 uses Math, uCommon, uMap;
 
 { TPlayer }
+
+procedure TPlayer.AddTurn;
+begin
+  Turn := Turn + 1;
+end;
 
 constructor TPlayer.Create;
 begin
@@ -51,12 +58,14 @@ end;
 
 function TPlayer.GetRadius: Byte;
 begin
-  Result := 9;
+  Result := 7;
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
+var
+  FX, FY: Byte;
 begin
-  if Look then    
+  if Look then
   begin
     if Map.InMap(LX + AX, LY + AY)
       and Map.InView(LX + AX, LY + AY)
@@ -66,16 +75,22 @@ begin
       LY := Clamp(LY + AY, 0, High(Byte));
     end;
   end else begin
-    X := Clamp(X + AX, 0, High(Byte));
-    Y := Clamp(Y + AY, 0, High(Byte));
-    Turn := Turn + 1;
+    FX := Clamp(X + AX, 0, High(Byte));
+    FY := Clamp(Y + AY, 0, High(Byte));
+    AddTurn;
+    if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) then Exit;
+    X := FX;
+    Y := FY;
   end;
+end;
+
+procedure TPlayer.Wait;
+begin
+  Move(0, 0);
 end;
 
 initialization
   Player := TPlayer.Create;
-  Player.X := RandomRange(64, High(Byte) - 64);
-  Player.Y := 0;
   Player.MaxLife := 100;
   Player.Life := Player.MaxLife;
 

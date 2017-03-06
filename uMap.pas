@@ -24,6 +24,9 @@ type
     teUpStairs, teDnStairs, teWater);
 
 const
+  StopTiles = [teDefaultWall];  
+
+const
   Tile: array[TTileEnum, TDeepEnum] of TTile = (
   ( // DefaultFloor
     (Symbol: '"'; Name: 'Grass'; Color: $FF113311;), // Dark Wood
@@ -96,6 +99,7 @@ type
     FDeep: TDeepEnum;
     FMap: array [Byte, Byte, TDeepEnum] of TTileEnum;
     FFog: array [Byte, Byte, TDeepEnum] of Boolean;
+    FFOV: array [Byte, Byte] of Boolean;
     procedure AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum; ABaseTileEnum, ATileEnum: TTileEnum);
     procedure AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word; ABaseTileEnum, ATileEnum: TTileEnum);
   public
@@ -108,6 +112,9 @@ type
     function InView(AX, AY: Integer): Boolean;
     function GetFog(AX, AY: Byte): Boolean;
     procedure SetFog(AX, AY: Byte; AFlag: Boolean);
+    procedure ClearFOV;
+    function GetFOV(AX, AY: Byte): Boolean;
+    procedure SetFOV(AX, AY: Byte; AFlag: Boolean);
     function GetTile(AX, AY: Byte): TTile; overload;
     function GetTile(ATileEnum: TTileEnum): TTile; overload;
     procedure SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
@@ -200,6 +207,15 @@ begin
       ModTile(X, Y);
     end;
   end;
+end;
+
+procedure TMap.ClearFOV;
+var
+  X, Y: Integer;
+begin
+  for Y := Player.Y - Player.GetRadius to Player.Y + Player.GetRadius do
+    for X := Player.X - Player.GetRadius to Player.X + Player.GetRadius do
+      FFOV[Clamp(X, 0, High(Byte))][Clamp(Y, 0, High(Byte))] := False;
 end;
 
 procedure TMap.Clear(ADeep: TDeepEnum; ATileEnum: TTileEnum);
@@ -301,6 +317,10 @@ begin
     for I := 0 to 49 do
       AddArea(FDeep, teDefaultFloor, teFloor3);
   end;
+  repeat
+    Player.X := RandomRange(64, High(Byte) - 64);
+    Player.Y := RandomRange(64, High(Byte) - 64);
+  until (not (GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));  
 end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;
@@ -352,6 +372,16 @@ begin
   PX := View.Width div 2;
   PY := View.Height div 2;
   Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and (AX <= Player.X + PX - 1) and (AY <= Player.X + PY - 1);
+end;
+
+function TMap.GetFOV(AX, AY: Byte): Boolean;
+begin
+  Result := FFOV[AX][AY];
+end;
+
+procedure TMap.SetFOV(AX, AY: Byte; AFlag: Boolean);
+begin
+  FFOV[AX][AY] := AFlag;
 end;
 
 initialization

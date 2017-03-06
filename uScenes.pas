@@ -63,7 +63,9 @@ type
 
 implementation
 
-uses SysUtils, Math, uCommon, uTerminal, uPlayer, BearLibTerminal, uMap;
+uses
+  SysUtils, Types, Dialogs, Math, uCommon, uTerminal,
+  uPlayer, BearLibTerminal, uMap;
 
 { TScenes }
 
@@ -102,7 +104,7 @@ begin
 end;
 
 procedure TScenes.Render;
-begin
+begin        
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);
   Terminal.Clear;
@@ -113,7 +115,7 @@ end;
 procedure TScenes.SetScene(SceneEnum: TSceneEnum);
 begin
   Self.Scene := SceneEnum;
-  Render;
+  Render; 
 end;
 
 procedure TScenes.SetScene(SceneEnum, CurrSceneEnum: TSceneEnum);
@@ -161,8 +163,9 @@ end;
 
 procedure TSceneGame.Render;
 var
-  X, Y, PX, PY, DX, DY: Integer;
+  I, X, Y, PX, PY, DX, DY: Integer;
   T: TTile;
+  Min, Max: TPoint;
 
   procedure RenderLook(T: TTile);
   var
@@ -175,8 +178,34 @@ var
     Terminal.Print(Info.Left, Info.Top, S);
   end;
 
+  procedure AddTo(X, Y: Integer);
+  var
+    I, L: Integer;
+    AX, AY: Byte;
+    LR: Real;
+  begin
+    L := Math.Max(Abs(Player.X - X), Abs(Player.Y - Y)) + 1;
+    for I := 1 to L do
+    begin
+      LR := I / L;
+      AX := Clamp(Player.X + Trunc((X - Player.X) * LR), 0, High(Byte));
+      AY := Clamp(Player.Y + Trunc((Y - Player.Y) * LR), 0, High(Byte));
+      Map.SetFOV(AX, AY, True);
+      if Map.GetTileEnum(AX, AY, Map.Deep) in StopTiles then Exit;
+    end;
+  end;
+
 begin
   // Map
+  Min.X := Player.X - Player.GetRadius;
+  Max.X := Player.X + Player.GetRadius;
+  Min.Y := Player.Y - Player.GetRadius;
+  Max.Y := Player.Y + Player.GetRadius;
+  Map.ClearFOV;
+  for I := Min.X to Max.X do AddTo(I, Min.Y);
+  for I := Min.Y to Max.Y do AddTo(Max.X, I);
+  for I := Max.X downto Min.X do AddTo(I, Max.Y);
+  for I := Max.Y downto Min.Y do AddTo(Min.X, I);
   Terminal.BackgroundColor(0);
   PX := View.Width div 2;
   PY := View.Height div 2;
@@ -196,13 +225,21 @@ begin
         RenderLook(T);
       end;
       if (not Player.Look and (Player.X = X) and (Player.Y = Y))  then RenderLook(T);
-      if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) then
-        Terminal.ForegroundColor(clFog)
-      else begin
-        Map.SetFog(X, Y, False);
-        Terminal.ForegroundColor(T.Color);
+      if (GetDist(Player.X, Player.Y, X, Y) <= Player.GetRadius) then
+      begin
+        if not Map.GetFog(X, Y) then
+          Terminal.ForegroundColor(clFog);
+        if Map.GetFOV(X, Y) then
+        begin
+          Terminal.ForegroundColor(T.Color);
+          Map.SetFog(X, Y, False);
+        end;
+      end else begin
+        if not Map.GetFog(X, Y) then
+          Terminal.ForegroundColor(clFog);
       end;
-      Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
+      if not Map.GetFog(X, Y) then
+        Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   Terminal.ForegroundColor(clDarkRed);
   Terminal.Print(PX + View.Left, PY + View.Top, '@');
@@ -268,7 +305,7 @@ begin
     TK_KP_3, TK_C:
       Player.Move(1, 1);
     TK_KP_5, TK_S:
-      Player.Move(0, 0);
+      Player.Wait;
     TK_L:
       begin
         Player.LX := Player.X;
@@ -281,6 +318,20 @@ begin
     TK_KP_MINUS:
       if (Map.Deep > Low(TDeepEnum)) then
         Map.Deep := pred(Map.Deep);
+    TK_COMMA:
+      if (Map.GetTileEnum(Player.X, Player.Y, Map.Deep) = teUpStairs) then
+        if (Map.Deep > Low(TDeepEnum)) then
+        begin
+          Map.Deep := pred(Map.Deep);
+          Player.Wait;
+        end;
+    TK_PERIOD:
+      if (Map.GetTileEnum(Player.X, Player.Y, Map.Deep) = teDnStairs) then
+        if (Map.Deep < High(TDeepEnum)) then
+        begin
+          Map.Deep := succ(Map.Deep);
+          Player.Wait;
+        end;
   end;
 end;
 

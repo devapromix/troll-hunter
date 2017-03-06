@@ -1,7 +1,7 @@
 unit uCommon;
 
 interface
-
+            
 type
   TEntSize = record
     Left: Integer;
@@ -21,7 +21,7 @@ const
   clYellow    = $FFFFFF00;
 
 const
-  clFog       = clDarkGray;
+  clFog       = $FF111111;
 
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
