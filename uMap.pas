@@ -68,18 +68,18 @@ const
     (Symbol: '~'; Name: 'Stone'; Color: $FF226622;)  // Dungeon of Doom
   ),
   ( // UpStairs
-    (Symbol: '*'; Name: 'Grass'; Color: $FFFFFF00;), // Dark Wood
-    (Symbol: '<'; Name: 'Stone'; Color: $FFEEEE00;), // Gray Cave
-    (Symbol: '<'; Name: 'Stone'; Color: $FFDDDD00;), // Deep Cave
-    (Symbol: '<'; Name: 'Stone'; Color: $FFCCCC00;), // Blood Cave
-    (Symbol: '<'; Name: 'Stone'; Color: $FFBBBB00;)  // Dungeon of Doom
+    (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFBBBB00;)  // Dungeon of Doom
   ),
   ( // DnStairs
-    (Symbol: '*'; Name: 'Grass'; Color: $FFFFFF00;), // Dark Wood
-    (Symbol: '>'; Name: 'Stone'; Color: $FFEEEE00;), // Gray Cave
-    (Symbol: '>'; Name: 'Stone'; Color: $FFDDDD00;), // Deep Cave
-    (Symbol: '>'; Name: 'Stone'; Color: $FFCCCC00;), // Blood Cave
-    (Symbol: '>'; Name: 'Stone'; Color: $FFBBBB00;)  // Dungeon of Doom
+    (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFBBBB00;)  // Dungeon of Doom
   ),
   ( // Water
     (Symbol: '='; Name: 'Water'; Color: $FF333388;), // Dark Wood
@@ -103,7 +103,8 @@ type
     procedure Clear(ADeep: TDeepEnum; ATileEnum: TTileEnum);
     procedure Gen;
     property Deep: TDeepEnum read FDeep write FDeep;
-    function GetTile(AX, AY: Byte): TTile;
+    function GetTile(AX, AY: Byte): TTile; overload;
+    function GetTile(ATileEnum: TTileEnum): TTile; overload;
     procedure SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
     function GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;
     function GetName: string;
@@ -294,14 +295,19 @@ begin
   end;
 end;
 
-function TMap.GetName: string;
+function TMap.GetTile(ATileEnum: TTileEnum): TTile;
 begin
-  Result := DeepName[Deep];
+  Result := Tile[ATileEnum][Deep];
 end;
 
 function TMap.GetTile(AX, AY: Byte): TTile;
 begin
   Result := Tile[FMap[AX][AY][Deep]][Deep];
+end;
+
+function TMap.GetName: string;
+begin
+  Result := DeepName[Deep];
 end;
 
 function TMap.GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;

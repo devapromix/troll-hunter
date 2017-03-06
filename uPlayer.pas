@@ -7,17 +7,23 @@ type
   private
     FX: Byte;
     FY: Byte;
+    FLX: Byte;
+    FLY: Byte;
     FTurn: Word;
     FLife: Word;
     FMaxLife: Word;
+    FLook: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
     property X: Byte read FX write FX;
     property Y: Byte read FY write FY;
+    property LX: Byte read FLX write FLX;
+    property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
     property Life: Word read FLife write FLife;
     property MaxLife: Word read FMaxLife write FMaxLife;
+    property Look: Boolean read FLook write FLook;
     procedure Move(AX, AY: ShortInt);
   end;
 
@@ -33,6 +39,7 @@ uses Math, uCommon;
 constructor TPlayer.Create;
 begin
   Turn := 0;
+  Look := False;
 end;
 
 destructor TPlayer.Destroy;
@@ -43,9 +50,15 @@ end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
 begin
-  X := Clamp(X + AX, 0, High(Byte));
-  Y := Clamp(Y + AY, 0, High(Byte));
-  Turn := Turn + 1;
+  if Look then
+  begin
+    LX := Clamp(LX + AX, 0, High(Byte));
+    LY := Clamp(LY + AY, 0, High(Byte));
+  end else begin
+    X := Clamp(X + AX, 0, High(Byte));
+    Y := Clamp(Y + AY, 0, High(Byte));
+    Turn := Turn + 1;
+  end;
 end;
 
 initialization

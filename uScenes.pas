@@ -163,6 +163,18 @@ procedure TSceneGame.Render;
 var
   X, Y, PX, PY, DX, DY: Integer;
   T: TTile;
+
+  procedure RenderLook(T: TTile);
+  var
+    S: string;
+  begin
+    S := '';
+    Terminal.BackgroundColor(0);
+    Terminal.ForegroundColor(clYellow);
+    S := S + T.Name + '. ';
+    Terminal.Print(Info.Left, Info.Top, S);
+  end;
+
 begin
   // Map
   Terminal.BackgroundColor(0);
@@ -176,6 +188,13 @@ begin
       if (X < Low(Byte)) or (Y < Low(Byte))
         or (X > High(Byte)) or (Y > High(Byte)) then Continue;
       T := Map.GetTile(X, Y);
+      if (Player.Look and (Player.LX = X) and (Player.LY = Y))  then
+      begin
+        Terminal.BackgroundColor($88FFFF00);
+        Terminal.Print(DX + View.Left, DY + View.Top, ' ');
+        RenderLook(T);
+      end;
+      if (not Player.Look and (Player.X = X) and (Player.Y = Y))  then RenderLook(T);
       Terminal.ForegroundColor(T.Color);
       Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
@@ -244,7 +263,12 @@ begin
       Player.Move(1, 1);
     TK_KP_5, TK_S:
       Player.Move(0, 0);
-      
+    TK_L:
+      begin
+        Player.LX := Player.X;
+        Player.LY := Player.Y;
+        Player.Look := not Player.Look;
+      end;
     TK_KP_PLUS:
       if (Map.Deep < High(TDeepEnum)) then
         Map.Deep := succ(Map.Deep);

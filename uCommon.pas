@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.2';
+  Version = '0.3';
 
 const
   clDarkGray  = $FF222222;
@@ -21,7 +21,7 @@ const
   clYellow    = $FFFFFF00;
 
 var
-  Screen, Panel, View, Status, Log: TEntSize;
+  Screen, Panel, View, Status, Log, Info: TEntSize;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;
