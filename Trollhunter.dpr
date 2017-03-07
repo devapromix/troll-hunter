@@ -32,5 +32,6 @@ begin
     terminal_delay(10);
     IsRender := False;
   until (Key = TK_CLOSE);
+  Player.SaveCharacterDump('Quit the game');
 end.
 

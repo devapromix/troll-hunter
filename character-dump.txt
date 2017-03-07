@@ -1,0 +1,17 @@
+== Trollhunter ==
+
+{date-time}
+
+{reason}
+
+== Screenshot ==
+
+{screenshot}
+
+== Last messages ==
+
+{messages}
+
+== Inventory ==
+
+{inventory}

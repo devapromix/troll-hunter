@@ -28,6 +28,7 @@ type
     procedure Wait;
     procedure AddTurn;
     function GetRadius: Byte;
+    function SaveCharacterDump(Reason: string): string;
   end;
 
 var
@@ -35,7 +36,7 @@ var
 
 implementation
 
-uses Math, uCommon, uMap;
+uses Classes, SysUtils, Dialogs, Math, uCommon, uMap;
 
 { TPlayer }
 
@@ -81,6 +82,26 @@ begin
     if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) then Exit;
     X := FX;
     Y := FY;
+  end;
+end;
+
+function TPlayer.SaveCharacterDump(Reason: string): string;
+var
+  I: Byte;
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(CharacterDumpFileName);
+    for I := 0 to SL.Count - 1 do
+    begin
+      SL[I] := StringReplace(SL[I], '{date-time}', GetDateTime, [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], '{reason}', Reason, [rfReplaceAll]);
+//      SL[I] := StringReplace(SL[I], '{reason}', Reason, [rfReplaceAll]);
+    end;
+    SL.SaveToFile(Format('%s-%s', [GetDateTime('-', '-'), CharacterDumpFileName]));
+  finally
+    SL.Free;
   end;
 end;
 
