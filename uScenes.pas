@@ -2,10 +2,12 @@ unit uScenes;
 
 interface
 
-uses Classes;
+uses
+  Classes;
 
 type
-  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scPromptYN);
+  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
+    scDrop);
 
 type
   TScene = class(TObject)
@@ -37,24 +39,48 @@ var
 
 type
   TSceneTitle = class(TScene)
-  private
-    W, H: Byte;
   public
-    constructor Create;
     procedure Render; override;
     procedure Update(var Key: Word); override;
   end;
 
 type
-  TSceneLoad = class(TSceneTitle)
+  TSceneLoad = class(TScene)
   public
-    constructor Create;
-    procedure Render;
-    procedure Update(var Key: Word);
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
   end;
 
 type
-  TScenePromptYN = class(TScene)
+  TSceneQuit = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneDef = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneWin = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneInv = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneDrop = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -83,8 +109,8 @@ type
 implementation
 
 uses
-  SysUtils, Types, Dialogs, Math, uCommon, uTerminal,
-  uPlayer, BearLibTerminal, uMap;
+  SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
+  uMap;
 
 { TScenes }
 
@@ -102,8 +128,16 @@ begin
         FScene[I] := TSceneHelp.Create;
       scGame:
         FScene[I] := TSceneGame.Create;
-      scPromptYN:
-        FScene[I] := TScenePromptYN.Create;
+      scQuit:
+        FScene[I] := TSceneQuit.Create;
+      scWin:
+        FScene[I] := TSceneWin.Create;
+      scDef:
+        FScene[I] := TSceneDef.Create;
+      scInv:
+        FScene[I] := TSceneInv.Create;
+      scDrop:
+        FScene[I] := TSceneDrop.Create;
     end;
 end;
 
@@ -151,32 +185,40 @@ procedure TScenes.Update(var Key: Word);
 begin
   if (FScene[Scene] <> nil) then
     FScene[Scene].Update(Key);
+  case Key of
+    TK_CLOSE:
+    begin
+      if GameMode and not (Scene in [scWin, scDef, scQuit]) then
+        SetScene(scQuit, Scene);
+    end;
+  end;
 end;
 
 { TSceneTitle }
 
-constructor TSceneTitle.Create;
-begin
-  W := Terminal.Window.Width div 2;
-  H := Terminal.Window.Height div 2;
-end;        
-
 procedure TSceneTitle.Render;
+var
+  X, Y: Byte;
 begin
-  Terminal.Print(W, H - 3, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
-  Terminal.Print(W, H - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(W, H + 1, 'Press [[SPACE]] to continue...', TK_ALIGN_CENTER);
+  X := Terminal.Window.Width div 2;
+  Y := Terminal.Window.Height div 2;
+  Terminal.Print(X, Y - 3, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
+  Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1, 'Press [[SPACE]] to continue...', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
 begin
   case Key of
+    TK_ESCAPE:
+      CanClose := True;
     TK_SPACE:
     begin
       Scenes.SetScene(scLoad);
       Terminal.Refresh;
       Map.Gen;
       terminal_delay(1000);
+      GameMode := True;
       Scenes.SetScene(scGame);
     end;
   end;
@@ -406,36 +448,41 @@ begin
         end;
     TK_SLASH:
       Scenes.SetScene(scHelp);
+    TK_ESCAPE:
+      Scenes.SetScene(scQuit, Scenes.Scene);
+    TK_I:
+      Scenes.SetScene(scInv);
+    TK_F:
+      Scenes.SetScene(scDrop);
+    TK_V:
+      if WizardMode then
+        Scenes.SetScene(scWin);
+    TK_B:
+      if WizardMode then
+        Scenes.SetScene(scDef);
   end;
 end;
 
 { TSceneLoad }
 
-constructor TSceneLoad.Create;
-begin
-  inherited Create;
-end;
-
 procedure TSceneLoad.Render;
 begin
-  inherited;
-  Terminal.Print(W, H + 4, 'Creating the world, please wait...', TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2, 'Creating the world, please wait...', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneLoad.Update(var Key: Word);
 begin
-  inherited;
 
 end;
 
-{ TScenePromptYN }
+{ TSceneQuit }
 
-procedure TScenePromptYN.Render;
+procedure TSceneQuit.Render;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, 10, 'Quit? [[yn]]', TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2, 'Quit? [[Y/N]]', TK_ALIGN_CENTER);
 end;
 
-procedure TScenePromptYN.Update(var Key: Word);
+procedure TSceneQuit.Update(var Key: Word);
 begin
   case Key of
     TK_Y:
@@ -445,6 +492,88 @@ begin
     end;
     TK_ESCAPE, TK_N:
       Scenes.GoBack;
+  end;
+end;
+
+{ TSceneDef }
+
+procedure TSceneDef.Render;
+begin
+  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
+    Format('Game over: killed by %s. Press ENTER', ['MOB']), TK_ALIGN_CENTER);
+end;
+
+procedure TSceneDef.Update(var Key: Word);
+begin
+  case Key of
+    TK_ENTER:
+    begin
+      Player.SaveCharacterDump(Format('Killed by %s', ['MOB']));
+      CanClose := True;
+    end;
+  end;
+end;
+
+{ TSceneWin }
+
+procedure TSceneWin.Render;
+begin
+  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
+    'Congratulations! You have won. Press ENTER', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneWin.Update(var Key: Word);
+begin
+  case Key of
+    TK_ENTER:
+    begin
+      Player.SaveCharacterDump('Won the game');
+      CanClose := True;
+    end;
+  end;
+end;
+
+{ TSceneInv }
+
+procedure TSceneInv.Render;
+var
+  X, Y: Byte;
+begin
+  Y := 1;
+  X := Terminal.Window.Width div 2;
+  Terminal.Print(X, Y, 'Inventory', TK_ALIGN_CENTER);
+
+  Terminal.Print(X, Terminal.Window.Height - Y - 1,
+    '[color=red][[ESC]][/color] Close', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneInv.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
+{ TSceneDrop }
+
+procedure TSceneDrop.Render;
+var
+  X, Y: Byte;
+begin
+  Y := 1;
+  X := Terminal.Window.Width div 2;
+  Terminal.Print(X, Y, 'Select an item to drop', TK_ALIGN_CENTER);
+
+  Terminal.Print(X, Terminal.Window.Height - Y - 1,
+    '[color=red][[ESC]][/color] Close', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneDrop.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
   end;
 end;
 

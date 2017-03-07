@@ -30,6 +30,7 @@ const
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
   WizardMode: Boolean = False;
+  GameMode: Boolean = False;
   CanClose: Boolean = False;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;

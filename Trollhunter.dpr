@@ -26,8 +26,6 @@ begin
     begin
       Key := terminal_read();
       Scenes.Update(Key);
-      if (Key = TK_CLOSE) then
-        Scenes.SetScene(scPromptYN, Scenes.Scene);
       IsRender := True;
       Continue;
     end;
