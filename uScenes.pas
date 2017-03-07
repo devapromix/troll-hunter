@@ -2,8 +2,10 @@ unit uScenes;
 
 interface
 
+uses Classes;
+
 type
-  TSceneEnum = (scTitle, scLoad, scGame);
+  TSceneEnum = (scTitle, scLoad, scHelp, scGame);
 
 type
   TScene = class(TObject)
@@ -48,6 +50,17 @@ type
   private
   public
     constructor Create;
+    procedure Render;
+    procedure Update(var Key: Word);
+  end;
+
+type
+  TSceneHelp = class(TScene)
+  private
+    SL: TStringList;
+  public
+    constructor Create;
+    destructor Destroy; override;
     procedure Render; override;
     procedure Update(var Key: Word); override;
   end;
@@ -79,6 +92,8 @@ begin
         FScene[I] := TSceneTitle.Create;
       scLoad:
         FScene[I] := TSceneLoad.Create;
+      scHelp:
+        FScene[I] := TSceneHelp.Create;
       scGame:
         FScene[I] := TSceneGame.Create;
     end;
@@ -159,6 +174,45 @@ begin
   end;
 end;
 
+{ TSceneHelp }
+
+constructor TSceneHelp.Create;
+begin
+  SL := TStringList.Create;
+  SL.LoadFromFile('Readme.md');
+end;
+
+destructor TSceneHelp.Destroy;
+begin
+  SL.Free;
+  inherited;
+end;
+
+procedure TSceneHelp.Render;
+var
+  I, X, Y: Byte;
+begin
+  X := Terminal.Window.Width div 2;
+  Y := (Terminal.Window.Height div 2) - ((SL.Count + 4) div 2);
+  for I := 0 to SL.Count - 1 do
+  Terminal.Print(X, Y + I, SL[I], TK_ALIGN_CENTER);
+  Terminal.Print(X, Terminal.Window.Height - Y - 1,
+    '[color=red][[ESC]][/color] Close', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneHelp.Update(var Key: Word);
+begin
+  case Key of
+    TK_R: // Refresh
+      if WizardMode then
+      begin
+        SL.LoadFromFile('Readme.md');
+      end;
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
 { TSceneGame }
 
 procedure TSceneGame.Render;
@@ -197,15 +251,18 @@ var
 
 begin
   // Map
-  Min.X := Player.X - Player.GetRadius;
-  Max.X := Player.X + Player.GetRadius;
-  Min.Y := Player.Y - Player.GetRadius;
-  Max.Y := Player.Y + Player.GetRadius;
-  Map.ClearFOV;
-  for I := Min.X to Max.X do AddTo(I, Min.Y);
-  for I := Min.Y to Max.Y do AddTo(Max.X, I);
-  for I := Max.X downto Min.X do AddTo(I, Max.Y);
-  for I := Max.Y downto Min.Y do AddTo(Min.X, I);
+  if not WizardMode then
+  begin
+    Min.X := Player.X - Player.GetRadius;
+    Max.X := Player.X + Player.GetRadius;
+    Min.Y := Player.Y - Player.GetRadius;
+    Max.Y := Player.Y + Player.GetRadius;
+    Map.ClearFOV;
+    for I := Min.X to Max.X do AddTo(I, Min.Y);
+    for I := Min.Y to Max.Y do AddTo(Max.X, I);
+    for I := Max.X downto Min.X do AddTo(I, Max.Y);
+    for I := Max.Y downto Min.Y do AddTo(Min.X, I);
+  end;
   Terminal.BackgroundColor(0);
   PX := View.Width div 2;
   PY := View.Height div 2;
@@ -215,8 +272,9 @@ begin
       X := DX - PX + Player.X;
       Y := DY - PY + Player.Y;
       if not Map.InMap(X, Y) then Continue;
-      if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
-        and Map.GetFog(X, Y) then Continue;
+      if not WizardMode then
+        if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
+          and Map.GetFog(X, Y) then Continue;
       T := Map.GetTile(X, Y);
       if (Player.Look and (Player.LX = X) and (Player.LY = Y))  then
       begin
@@ -224,21 +282,25 @@ begin
         Terminal.Print(DX + View.Left, DY + View.Top, ' ');
         RenderLook(T);
       end;
-      if (not Player.Look and (Player.X = X) and (Player.Y = Y))  then RenderLook(T);
-      if (GetDist(Player.X, Player.Y, X, Y) <= Player.GetRadius) then
+      if (not Player.Look and (Player.X = X) and (Player.Y = Y)) then
+        RenderLook(T);
+      if not WizardMode then
       begin
-        if not Map.GetFog(X, Y) then
-          Terminal.ForegroundColor(clFog);
-        if Map.GetFOV(X, Y) then
+        if (GetDist(Player.X, Player.Y, X, Y) <= Player.GetRadius) then
         begin
-          Terminal.ForegroundColor(T.Color);
-          Map.SetFog(X, Y, False);
+          if not Map.GetFog(X, Y) then
+            Terminal.ForegroundColor(clFog);
+          if Map.GetFOV(X, Y) then
+          begin
+            Terminal.ForegroundColor(T.Color);
+            Map.SetFog(X, Y, False);
+          end;
+        end else begin
+          if not Map.GetFog(X, Y) then
+            Terminal.ForegroundColor(clFog);
         end;
-      end else begin
-        if not Map.GetFog(X, Y) then
-          Terminal.ForegroundColor(clFog);
-      end;
-      if not Map.GetFog(X, Y) then
+      end else Terminal.ForegroundColor(T.Color);
+      if WizardMode or not Map.GetFog(X, Y) then
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   Terminal.ForegroundColor(clDarkRed);
@@ -306,18 +368,20 @@ begin
       Player.Move(1, 1);
     TK_KP_5, TK_S:
       Player.Wait;
-    TK_L:
+    TK_L: // Look
       begin
         Player.LX := Player.X;
         Player.LY := Player.Y;
         Player.Look := not Player.Look;
       end;
     TK_KP_PLUS:
-      if (Map.Deep < High(TDeepEnum)) then
-        Map.Deep := succ(Map.Deep);
+      if WizardMode then
+        if (Map.Deep < High(TDeepEnum)) then
+          Map.Deep := succ(Map.Deep);
     TK_KP_MINUS:
-      if (Map.Deep > Low(TDeepEnum)) then
-        Map.Deep := pred(Map.Deep);
+      if WizardMode then
+        if (Map.Deep > Low(TDeepEnum)) then
+          Map.Deep := pred(Map.Deep);
     TK_COMMA:
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Deep) = teUpStairs) then
         if (Map.Deep > Low(TDeepEnum)) then
@@ -332,6 +396,8 @@ begin
           Map.Deep := succ(Map.Deep);
           Player.Wait;
         end;
+    TK_SLASH:
+      Scenes.SetScene(scHelp);
   end;
 end;
 

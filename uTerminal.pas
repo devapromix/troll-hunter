@@ -61,6 +61,7 @@ end;
 procedure TTerminal.Init;
 var
   Value: TEntSize;
+  Wizard: string;
 begin
   Value.Width := Clamp(StrToIntDef(terminal_get('ini.screen.width'), 80), 80, 255);
   Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'), 30), 30, 128);
@@ -74,8 +75,9 @@ begin
   //
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
+  Wizard := ''; if WizardMode then Wizard := '[WIZARD]';
   terminal_set(Format('window: size=%dx%d, title=%s', [Screen.Width, Screen.Height,
-    'Trollhunter']));
+    Trim('Trollhunter ' + Wizard)]));
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
 end;
@@ -91,7 +93,6 @@ begin
 end;
 
 initialization
-  Randomize;
   Terminal := TTerminal.Create;
   Terminal.Init;
 

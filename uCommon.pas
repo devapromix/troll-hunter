@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.3';
+  Version = '0.4';
 
 const
   clDarkGray  = $FF222222;
@@ -25,6 +25,7 @@ const
 
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
+  WizardMode: Boolean = False;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;
@@ -33,6 +34,20 @@ function BarWidth(CX, MX, WX: Integer): Integer;
 function GetDist(X1, Y1, X2, Y2: Single): Word;
 
 implementation
+
+uses SysUtils;
+
+procedure Init;
+var
+  I: Byte;
+begin
+  Randomize;
+  for I := 1 to ParamCount do
+  begin
+    if (LowerCase(ParamStr(I)) = '-w') then WizardMode := True;
+
+  end;
+end;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 begin
@@ -71,6 +86,9 @@ function GetDist(X1, Y1, X2, Y2: Single): Word;
 begin
   Result := Round(sqrt(sqr(X2 - X1) + sqr(Y2 - Y1)));
 end;
+
+initialization
+  Init();
 
 end.
 
