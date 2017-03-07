@@ -26,12 +26,13 @@ begin
     begin
       Key := terminal_read();
       Scenes.Update(Key);
+      if (Key = TK_CLOSE) then
+        Scenes.SetScene(scPromptYN, Scenes.Scene);
       IsRender := True;
       Continue;
     end;
     terminal_delay(10);
     IsRender := False;
-  until (Key = TK_CLOSE);
-  Player.SaveCharacterDump('Quit the game');
+  until CanClose;
 end.
 

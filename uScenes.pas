@@ -5,7 +5,7 @@ interface
 uses Classes;
 
 type
-  TSceneEnum = (scTitle, scLoad, scHelp, scGame);
+  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scPromptYN);
 
 type
   TScene = class(TObject)
@@ -47,11 +47,17 @@ type
 
 type
   TSceneLoad = class(TSceneTitle)
-  private
   public
     constructor Create;
     procedure Render;
     procedure Update(var Key: Word);
+  end;
+
+type
+  TScenePromptYN = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
   end;
 
 type
@@ -96,6 +102,8 @@ begin
         FScene[I] := TSceneHelp.Create;
       scGame:
         FScene[I] := TSceneGame.Create;
+      scPromptYN:
+        FScene[I] := TScenePromptYN.Create;
     end;
 end;
 
@@ -179,7 +187,7 @@ end;
 constructor TSceneHelp.Create;
 begin
   SL := TStringList.Create;
-  SL.LoadFromFile('Readme.md');
+  SL.LoadFromFile(HelpFileName);
 end;
 
 destructor TSceneHelp.Destroy;
@@ -206,7 +214,7 @@ begin
     TK_R: // Refresh
       if WizardMode then
       begin
-        SL.LoadFromFile('Readme.md');
+        SL.LoadFromFile(HelpFileName);
       end;
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
@@ -418,6 +426,26 @@ procedure TSceneLoad.Update(var Key: Word);
 begin
   inherited;
 
+end;
+
+{ TScenePromptYN }
+
+procedure TScenePromptYN.Render;
+begin
+  Terminal.Print(Terminal.Window.Width div 2, 10, 'Quit? [[yn]]', TK_ALIGN_CENTER);
+end;
+
+procedure TScenePromptYN.Update(var Key: Word);
+begin
+  case Key of
+    TK_Y:
+    begin
+      Player.SaveCharacterDump('Quit the game');
+      CanClose := True;
+    end;
+    TK_ESCAPE, TK_N:
+      Scenes.GoBack;
+  end;
 end;
 
 initialization

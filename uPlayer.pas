@@ -28,7 +28,7 @@ type
     procedure Wait;
     procedure AddTurn;
     function GetRadius: Byte;
-    function SaveCharacterDump(Reason: string): string;
+    function SaveCharacterDump(AReason: string): string;
   end;
 
 var
@@ -85,7 +85,7 @@ begin
   end;
 end;
 
-function TPlayer.SaveCharacterDump(Reason: string): string;
+function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   I: Byte;
   SL: TStringList;
@@ -96,10 +96,12 @@ begin
     for I := 0 to SL.Count - 1 do
     begin
       SL[I] := StringReplace(SL[I], '{date-time}', GetDateTime, [rfReplaceAll]);
-      SL[I] := StringReplace(SL[I], '{reason}', Reason, [rfReplaceAll]);
-//      SL[I] := StringReplace(SL[I], '{reason}', Reason, [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], '{reason}', AReason, [rfReplaceAll]);
+//      SL[I] := StringReplace(SL[I], '{screenshot}', , [rfReplaceAll]);
+//      SL[I] := StringReplace(SL[I], '{messages}', , [rfReplaceAll]);
+//      SL[I] := StringReplace(SL[I], '{inventory}', , [rfReplaceAll]);
     end;
-    SL.SaveToFile(Format('%s-%s', [GetDateTime('-', '-'), CharacterDumpFileName]));
+    SL.SaveToFile(StringReplace(CharacterDumpFileName, 'trollhunter', GetDateTime('-', '-'), [rfReplaceAll]));
   finally
     SL.Free;
   end;

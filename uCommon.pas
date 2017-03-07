@@ -14,7 +14,8 @@ const
   Version = '0.4';
 
 const
-  CharacterDumpFileName = 'character-dump.txt';
+  CharacterDumpFileName = 'trollhunter-character-dump.txt';
+  HelpFileName          = 'trollhunter-help.txt';
 
 const
   clDarkGray  = $FF222222;
@@ -29,6 +30,7 @@ const
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
   WizardMode: Boolean = False;
+  CanClose: Boolean = False;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;
