@@ -13,7 +13,8 @@ confrontation with final boss. Good luck!
 Move:  [color=orange]arrow keys[/color],      Quit/Close:   [color=orange]ESC[/color]         Up staris:    [color=orange]<[/color]
        [color=orange]numpad[/color],          Pick up item: [color=orange]G[/color]           Down staris:  [color=orange]>[/color]
        [color=orange]QWEADZXC[/color]         Drop item:    [color=orange]F[/color]           Look:         [color=orange]L[/color]
-Wait:  [color=orange]5[/color], [color=orange]S[/color]             Inventory:    [color=orange]I[/color]           Help:         [color=orange]?[/color]
+Wait:  [color=orange]5[/color], [color=orange]S[/color]             Inventory:    [color=orange]I[/color]           Player info:  [color=orange]P[/color]
+Help:  [color=orange]?[/color]                                                            
 
 == Character dump ==
 

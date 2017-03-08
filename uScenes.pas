@@ -7,7 +7,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop);
+    scDrop, scHero);
 
 type
   TScene = class(TObject)
@@ -106,6 +106,18 @@ type
     procedure Update(var Key: Word); override;
   end;
 
+type
+  TSceneHero = class(TScene)
+  private
+    procedure RenderPlayer;
+    procedure RenderSkills;
+    procedure RenderBar(X, Y, Wd, Min, Max: Byte);
+  public
+    constructor Create;
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
 implementation
 
 uses
@@ -138,6 +150,8 @@ begin
         FScene[I] := TSceneInv.Create;
       scDrop:
         FScene[I] := TSceneDrop.Create;
+      scHero:
+        FScene[I] := TSceneHero.Create;
     end;
 end;
 
@@ -454,6 +468,8 @@ begin
       Scenes.SetScene(scInv);
     TK_F:
       Scenes.SetScene(scDrop);
+    TK_P:
+      Scenes.SetScene(scHero);
     TK_V:
       if WizardMode then
         Scenes.SetScene(scWin);
@@ -570,6 +586,89 @@ begin
 end;
 
 procedure TSceneDrop.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
+{ TSceneHero }
+
+constructor TSceneHero.Create;
+begin
+
+end;
+
+procedure TSceneHero.Render;
+var
+  X, Y: Byte;
+begin
+  Y := 1;
+  X := Terminal.Window.Width div 2;
+  Terminal.Print(X, Y, 'Trollhunter', TK_ALIGN_CENTER);
+
+  Self.RenderPlayer;
+  Self.RenderSkills;
+
+  Terminal.Print(X, Terminal.Window.Height - Y - 1,
+    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Inventory', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneHero.RenderBar(X, Y, Wd, Min, Max: Byte);
+var
+  I, L, W: Byte;
+begin
+  L := Wd;
+  W := BarWidth(Min, Max, L);
+  for I := 0 to L do
+  begin
+    Terminal.BackgroundColor(clDarkGray);
+    if (I <= W) then
+    begin
+      if (Min > 0) then
+      begin
+        Terminal.BackgroundColor(clDarkRed);
+      end;
+    end;
+    Terminal.Print(X + I, Y, ' ');
+    Terminal.BackgroundColor(0);
+  end;
+
+end;
+
+procedure TSceneHero.RenderPlayer;
+var
+  X, Y: Byte;
+begin
+  Y := 3;
+  X := Terminal.Window.Width div 4;
+  Terminal.Print(X, Y, '== Attributes ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 2, 'Strength 8', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 4, 'Dexterity 8', TK_ALIGN_CENTER);
+end;
+
+procedure TSceneHero.RenderSkills;
+var
+  I: TSkillEnum;
+  A, B, X, Y: Byte;
+begin
+  Y := 3;
+  X := Terminal.Window.Width div 2;
+  A := Terminal.Window.Width div 4;
+  B := A * 3;
+  Terminal.Print(B, Y, '== Skills ==', TK_ALIGN_CENTER);
+  for I := Low(TSkillEnum) to High(TSkillEnum) do
+  begin
+    RenderBar(X, (ord(I) * 2) + Y + 2, X - 2, Player.GetSkill(I).Value, SkillMax);
+    Terminal.Print(B, (ord(I) * 2) + Y + 2,
+      Format('%s %d/%d', [SkillName[I], Player.GetSkill(I).Value, SkillMax]),
+      TK_ALIGN_CENTER);
+  end;
+
+end;
+
+procedure TSceneHero.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE: // Close

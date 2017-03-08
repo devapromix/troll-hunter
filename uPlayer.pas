@@ -3,11 +3,23 @@ unit uPlayer;
 interface
 
 type
-  TSkillEnum = (skSword, skAxe, skSpear);
+  TSkillEnum = (
+  // Attributes skills
+  skAthletics, skDodge,
+  //Weapon skills
+  skSword, skAxe, skSpear,
+  // Skills
+  skAlertness
+  );
+  // Athletics     (+Strength)
+  // Dodge         (+Dexterity)
+  // Concentration (+Willpower)
 
 const
   SkillName: array [TSkillEnum] of string = (
-  'Swords', 'Axes', 'Spears'
+  'Athletics', 'Dodge',
+  'Swords', 'Axes', 'Spears',
+  'Alertness'
   );
 
 type
@@ -15,6 +27,11 @@ type
     Value: Integer;
     Exp: Integer;
   end;
+
+const
+  SkillMin = 5;
+  SkillMax = 75;
+  SkillExp = 100;
 
 type
   TPlayer = class(TObject)
@@ -45,6 +62,7 @@ type
     function GetRadius: Byte;
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
+    function GetSkill(ASkill: TSkillEnum): TSkill;
   end;
 
 var
@@ -53,11 +71,6 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, uCommon, uMap;
-
-const
-  SkillMin = 5;
-  SkillMax = 75;
-  SkillExp = 100;
 
 { TPlayer }
 
@@ -75,7 +88,7 @@ begin
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   with FSkill[I] do
   begin
-    Value := SkillMin;
+    Value := Math.RandomRange(SkillMin, SkillMax);//SkillMin;
     Exp := Math.RandomRange(0, SkillExp);
   end;
 end;
@@ -89,6 +102,11 @@ end;
 function TPlayer.GetRadius: Byte;
 begin
   Result := 7;
+end;
+
+function TPlayer.GetSkill(ASkill: TSkillEnum): TSkill;
+begin
+  Result := FSkill[ASkill];
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
