@@ -3,6 +3,12 @@ unit uPlayer;
 interface
 
 type
+  TSkill = record
+    Value: Integer;
+    Exp: Integer;
+  end;
+
+type
   TPlayer = class(TObject)
   private
     FX: Byte;
@@ -13,6 +19,7 @@ type
     FLife: Word;
     FMaxLife: Word;
     FLook: Boolean;
+    FSkill: array [Byte] of TSkill;
   public
     constructor Create;
     destructor Destroy; override;
@@ -46,9 +53,17 @@ begin
 end;
 
 constructor TPlayer.Create;
+var
+  I: Byte;
 begin
   Turn := 0;
   Look := False;
+  for I := 0 to High(Byte) do
+  with FSkill[I] do
+  begin
+    Value := 5;
+    Exp := 0;
+  end;
 end;
 
 destructor TPlayer.Destroy;
