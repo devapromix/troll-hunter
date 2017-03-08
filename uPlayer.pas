@@ -3,6 +3,14 @@ unit uPlayer;
 interface
 
 type
+  TSkillEnum = (skSword, skAxe, skSpear);
+
+const
+  SkillName: array [TSkillEnum] of string = (
+  'Swords', 'Axes', 'Spears'
+  );
+
+type
   TSkill = record
     Value: Integer;
     Exp: Integer;
@@ -19,7 +27,7 @@ type
     FLife: Word;
     FMaxLife: Word;
     FLook: Boolean;
-    FSkill: array [Byte] of TSkill;
+    FSkill: array [TSkillEnum] of TSkill;
   public
     constructor Create;
     destructor Destroy; override;
@@ -36,6 +44,7 @@ type
     procedure AddTurn;
     function GetRadius: Byte;
     function SaveCharacterDump(AReason: string): string;
+    procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
   end;
 
 var
@@ -44,6 +53,11 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, uCommon, uMap;
+
+const
+  SkillMin = 5;
+  SkillMax = 75;
+  SkillExp = 100;
 
 { TPlayer }
 
@@ -54,15 +68,15 @@ end;
 
 constructor TPlayer.Create;
 var
-  I: Byte;
+  I: TSkillEnum;
 begin
   Turn := 0;
   Look := False;
-  for I := 0 to High(Byte) do
+  for I := Low(TSkillEnum) to High(TSkillEnum) do
   with FSkill[I] do
   begin
-    Value := 5;
-    Exp := 0;
+    Value := SkillMin;
+    Exp := Math.RandomRange(0, SkillExp);
   end;
 end;
 
@@ -94,7 +108,7 @@ begin
     FX := Clamp(X + AX, 0, High(Byte));
     FY := Clamp(Y + AY, 0, High(Byte));
     AddTurn;
-    if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) then Exit;
+    if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then Exit;
     X := FX;
     Y := FY;
   end;
@@ -119,6 +133,22 @@ begin
     SL.SaveToFile(StringReplace(CharacterDumpFileName, 'trollhunter', GetDateTime('-', '-'), [rfReplaceAll]));
   finally
     SL.Free;
+  end;
+end;
+
+procedure TPlayer.Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
+begin
+  if (FSkill[ASkill].Value < SkillMax) then
+  begin
+    Inc(FSkill[ASkill].Exp, AExpValue);
+    if (FSkill[ASkill].Exp >= SkillExp) then
+    begin
+      FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
+      Inc(FSkill[ASkill].Value);
+      // Add message   
+
+      FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
+    end;
   end;
 end;
 
