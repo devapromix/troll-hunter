@@ -44,15 +44,13 @@ end;
 { TMob }
 
 procedure TMob.AddRandom;
-var
-  I: Integer;
 begin
   Create;
-  repeat
-    X := Math.RandomRange(0, High(Byte));
-    Y := Math.RandomRange(0, High(Byte));
-  until (Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles)
-    and (Player.X <> X) and (Player.Y <> Y);
+//  repeat
+  X := Math.RandomRange(0, High(Byte));
+  Y := Math.RandomRange(0, High(Byte));
+//  until (Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles)
+//    and (Player.X <> X) and (Player.Y <> Y);
 end;
 
 constructor TMob.Create;
@@ -70,20 +68,23 @@ end;
 
 procedure TMob.Process;
 var
-  NX, NY: Integer;
+  NX, NY: Integer;          
 begin
   if not DoAStar(High(Byte), High(Byte), X, Y, Player.X, Player.Y, @MyCallback, NX, NY)then Exit;
   if (NX = Player.X) and (NY = Player.Y) then AddRandom else
   begin
-    X := NX;
-    Y := NY;
+    if (GetDist(NX, NY, Player.X, Player.Y) <= 10) then
+    begin
+      X := NX;
+      Y := NY;
+    end;
   end;
 end;
 
 procedure TMob.Render(AX, AY: Byte);
 begin
   Terminal.ForegroundColor(clDarkRed);
-  Terminal.Print(X + AX, Y + AY, '@');
+  Terminal.Print(X - Player.X + AX, Y - Player.Y + AY, '@');
 end;
 
 { TMobs }
@@ -151,8 +152,7 @@ var
 
 initialization
   Mobs := TMobs.Create;
-  for I := 0 to 99 do
-    Mobs.Add;
+  for I := 0 to 99 do Mobs.Add;
 
 finalization
   Mobs.Free;

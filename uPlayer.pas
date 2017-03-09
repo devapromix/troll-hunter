@@ -97,13 +97,14 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, uCommon, uMap;
+uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob;
 
 { TPlayer }
 
 procedure TPlayer.AddTurn;
 begin
   Turn := Turn + 1;
+  Mobs.Process;
 end;
 
 procedure TPlayer.Calc;

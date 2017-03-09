@@ -364,7 +364,7 @@ begin
       if (Player.Look and (Player.LX = X) and (Player.LY = Y))  then
       begin
         Terminal.BackgroundColor($88FFFF00);
-        Terminal.Print(DX + View.Left, DY + View.Top, ' ');
+        Terminal.Print(DX, DY, ' ');
         RenderLook(T);
       end;
       if (not Player.Look and (Player.X = X) and (Player.Y = Y)) then
@@ -386,12 +386,12 @@ begin
         end;
       end else Terminal.ForegroundColor(T.Color);
       if WizardMode or not Map.GetFog(X, Y) then
-        Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
+        Terminal.Print(DX, DY, T.Symbol);
     end;
   // @
   Terminal.ForegroundColor(clDarkGreen);
-  Terminal.Print(PX + View.Left, PY + View.Top, '@');
-  Mobs.Render(View.Left, View.Top);  
+  Terminal.Print(PX, PY, '@');
+  Mobs.Render(PX, PY);
   // Player info
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);

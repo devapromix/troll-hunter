@@ -11,7 +11,7 @@ uses
   uMap in 'uMap.pas',
   uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
-  uMob in 'uMob.pas';
+  uMob in 'uMob.pas';      
 
 var
   Key: Word = 0;
