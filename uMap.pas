@@ -24,7 +24,8 @@ type
     teUpStairs, teDnStairs, teWater);
 
 const
-  StopTiles = [teDefaultWall];  
+  StopTiles = [teDefaultWall];
+  FreeTiles = [teDefaultFloor];
 
 const
   Tile: array[TTileEnum, TDeepEnum] of TTile = (
