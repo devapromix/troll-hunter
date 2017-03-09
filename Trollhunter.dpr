@@ -1,14 +1,17 @@
 program Trollhunter;
 
 uses
-  SysUtils,   
+  SysUtils,
   BearLibTerminal in 'BearLibTerminal.pas',
   uTerminal in 'uTerminal.pas',
+  BeaRLibItems in 'BeaRLibItems.pas',
   uCommon in 'uCommon.pas',
   uScenes in 'uScenes.pas',
   uPlayer in 'uPlayer.pas',
   uMap in 'uMap.pas',
-  uVillage in 'uVillage.pas';
+  uVillage in 'uVillage.pas',
+  uItem in 'uItem.pas',
+  uMob in 'uMob.pas';
 
 var
   Key: Word = 0;
