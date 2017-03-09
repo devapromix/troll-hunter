@@ -14,7 +14,7 @@ Move:  [color=orange]arrow keys[/color],      Quit/Close:   [color=orange]ESC[/c
        [color=orange]numpad[/color],          Pick up item: [color=orange]G[/color]           Down staris:  [color=orange]>[/color]
        [color=orange]QWEADZXC[/color]         Drop item:    [color=orange]F[/color]           Look:         [color=orange]L[/color]
 Wait:  [color=orange]5[/color], [color=orange]S[/color]             Inventory:    [color=orange]I[/color]           Player info:  [color=orange]P[/color]
-Help:  [color=orange]?[/color]                                                            
+Skills and attributes:                [color=orange]T[/color]           Help:         [color=orange]?[/color]
 
 == Character dump ==
 

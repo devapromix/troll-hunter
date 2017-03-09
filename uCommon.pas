@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.4';
+  Version = '0.5';
 
 const
   CharacterDumpFileName = 'trollhunter-character-dump.txt';
@@ -23,6 +23,8 @@ const
   clDarkGreen = $FF008800;
   clDarkBlue  = $FF000088;
   clYellow    = $FFFFFF00;
+  clGray      = $FF777777;
+  clWhite     = $FFDDDDDD;
 
 const
   clFog       = $FF111111;

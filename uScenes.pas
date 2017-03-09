@@ -13,6 +13,7 @@ type
   TScene = class(TObject)
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
+    procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
   end;
 
 type
@@ -99,8 +100,6 @@ type
 
 type
   TSceneGame = class(TScene)
-  private
-    procedure RenderLifeBar(X, Y: Byte);
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -111,7 +110,6 @@ type
   private
     procedure RenderPlayer;
     procedure RenderSkills;
-    procedure RenderBar(X, Y, Wd, Min, Max: Byte);
   public
     constructor Create;
     procedure Render; override;
@@ -123,6 +121,29 @@ implementation
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
   uMap;
+
+{ TScene }
+
+procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
+var
+  I, L, W: Byte;
+begin
+  L := Wd;
+  W := BarWidth(Cur, Max, L);
+  for I := 0 to L do
+  begin
+    Terminal.BackgroundColor(DarkColor);
+    if (I <= W) then
+    begin
+      if (Cur > 0) then
+      begin
+        Terminal.BackgroundColor(AColor);
+      end;
+    end;
+    Terminal.Print(X + I + LM, Y, ' ');
+    Terminal.BackgroundColor(0);
+  end;
+end;
 
 { TScenes }
 
@@ -377,10 +398,12 @@ begin
     [Map.GetName, Player.X, Player.Y]), TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(Status.Left, Status.Top + 1, Format('Life %d/%d', [Player.Life, Player.MaxLife]));
+  Terminal.Print(Status.Left, Status.Top + 2, Format('Mana %d/%d', [Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clYellow);
-  Terminal.Print(Status.Left, Status.Top + 2, Format('Turn %d', [Player.Turn]));
-  // Lifebar
-  RenderLifeBar(Status.Left ,Status.Top + 1);
+  Terminal.Print(Status.Left, Status.Top + 3, Format('Turn %d', [Player.Turn]));
+  // Bars
+  Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14, Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
+  Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14, Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
   // Log
   for Y := 0 to Log.Height - 1 do
     for X := 0 to Log.Width - 1 do
@@ -389,26 +412,6 @@ begin
       Terminal.ForegroundColor($FFFFFF00);
       Terminal.Print(X + Log.Left, Y + Log.Top, ' ');
     end;
-end;
-
-procedure TSceneGame.RenderLifeBar(X, Y: Byte);
-var
-  I, L, W: Byte;
-begin
-  L := Status.Width - 14;
-  W := BarWidth(Player.Life, Player.MaxLife, L);
-  for I := 0 to L do
-  begin
-    Terminal.BackgroundColor(clDarkGray);
-    if (I <= W) then
-    begin
-      if (Player.Life > 0) then
-      begin
-        Terminal.BackgroundColor(clDarkRed);
-      end;
-    end;
-    Terminal.Print(X + I + 13, Y, ' ');
-  end;
 end;
 
 procedure TSceneGame.Update(var Key: Word);
@@ -575,7 +578,7 @@ end;
 
 procedure TSceneDrop.Render;
 var
-  X, Y: Byte;
+  X, Y: Byte;          
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
@@ -615,43 +618,41 @@ begin
     '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Inventory', TK_ALIGN_CENTER);
 end;
 
-procedure TSceneHero.RenderBar(X, Y, Wd, Min, Max: Byte);
-var
-  I, L, W: Byte;
-begin
-  L := Wd;
-  W := BarWidth(Min, Max, L);
-  for I := 0 to L do
-  begin
-    Terminal.BackgroundColor(clDarkGray);
-    if (I <= W) then
-    begin
-      if (Min > 0) then
-      begin
-        Terminal.BackgroundColor(clDarkRed);
-      end;
-    end;
-    Terminal.Print(X + I, Y, ' ');
-    Terminal.BackgroundColor(0);
-  end;
-
-end;
-
 procedure TSceneHero.RenderPlayer;
 var
-  X, Y: Byte;
+  X, Y, W: Byte;
 begin
   Y := 3;
   X := Terminal.Window.Width div 4;
+  W := X * 2 - 3;
   Terminal.Print(X, Y, '== Attributes ==', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 2, 'Strength 8', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 4, 'Dexterity 8', TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y +  2, W, 10, 10, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y +  2, Format('Level %d', [Player.Level]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y +  4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y +  4, Format('Strength %d/%d', [Player.Strength, AtrMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y +  6, W, Player.Dexterity, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y +  6, Format('Dexterity %d/%d', [Player.Dexterity, AtrMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y +  8, W, Player.Willpower, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y +  8, Format('Willpower %d/%d', [Player.Willpower, AtrMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 10, W, Player.Perception, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 10, Format('Perception %d/%d', [Player.Perception, AtrMax]), TK_ALIGN_CENTER);
+
+  RenderBar(1, 0, Y + 14, W, Player.GetDV, DVMax, clDarkGreen, clDarkGray);
+  Terminal.Print(X, Y + 14, Format('Defensive Value (DV) %d/%d', [Player.GetDV, DVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 16, W, Player.GetPV, PVMax, clDarkGreen, clDarkGray);
+  Terminal.Print(X, Y + 16, Format('Protection Value (PV) %d/%d', [Player.GetPV, PVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 18, Format('Life %d/%d', [Player.Life, Player.MaxLife]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
+  Terminal.Print(X, Y + 20, Format('Mana %d/%d', [Player.Mana, Player.MaxMana]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 22, W, Player.GetRadius, RadiusMax, clGray, clDarkGray);
+  Terminal.Print(X, Y + 22, Format('Radius %d/%d', [Player.GetRadius, RadiusMax]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneHero.RenderSkills;
 var
   I: TSkillEnum;
-  A, B, X, Y: Byte;
+  A, B, X, Y, D: Byte;
 begin
   Y := 3;
   X := Terminal.Window.Width div 2;
@@ -660,12 +661,13 @@ begin
   Terminal.Print(B, Y, '== Skills ==', TK_ALIGN_CENTER);
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   begin
-    RenderBar(X, (ord(I) * 2) + Y + 2, X - 2, Player.GetSkill(I).Value, SkillMax);
-    Terminal.Print(B, (ord(I) * 2) + Y + 2,
-      Format('%s %d/%d', [SkillName[I], Player.GetSkill(I).Value, SkillMax]),
+    D := (ord(I) * 2) + Y + 2;
+    RenderBar(X, 0, D, X - 2, Player.GetSkill(I).Value,
+      SkillMax, clDarkRed, clDarkGray);
+    Terminal.Print(B, D, Format('%s %d/%d', [SkillName[I],
+      Player.GetSkill(I).Value, SkillMax]),
       TK_ALIGN_CENTER);
   end;
-
 end;
 
 procedure TSceneHero.Update(var Key: Word);
