@@ -9,6 +9,8 @@ type
     Symbol: Char;
     Name: string;
     MaxLife: Word;
+    Armor: Byte;
+    Damage: Word;
     Color: Cardinal;
   end;
 
@@ -17,9 +19,9 @@ const
 
 const
   MobBase: array [0..MobCount - 1] of TMobBase = (
-  (Symbol: 'r'; Name: 'Rat';    MaxLife: 5;  Color: $FF249988;),
-  (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Color: $FF777700;),
-  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Color: $FF00AA00;)
+  (Symbol: 'r'; Name: 'Rat';    MaxLife:  5; Armor:  0; Damage:  2; Color: $FF249988;),
+  (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Armor:  1; Damage:  4; Color: $FF777700;),
+  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Armor:  2; Damage:  5; Color: $FF00AA00;)
   );
 
 type
@@ -43,7 +45,8 @@ type
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
-    function FreeTile(AX, AY: Byte): Boolean;
+    function GetFreeTile(AX, AY: Byte): Boolean;
+    function GetIndex(AX, AY: Byte): Integer;
   end;
 
 type
@@ -74,7 +77,7 @@ begin
     FY := Math.RandomRange(0, High(Byte));
   until (Map.GetTileEnum(FX, FY, Map.Deep) in FreeTiles)
     and (Player.X <> FX) and (Player.Y <> FY)
-    and Mobs.FreeTile(FX, FY);
+    and Mobs.GetFreeTile(FX, FY);
   X := FX;
   Y := FY;
   Alive := True;
@@ -84,7 +87,8 @@ end;
 
 procedure TMob.Attack;
 begin
-  Player.Life := Clamp(Player.Life - 5, 0, High(Word));
+  if (Self.Life = 0) then Exit;
+  Player.Life := Clamp(Player.Life - MobBase[ID].Damage, 0, High(Word));
   if Player.Life = 0 then Player.Defeat(MobBase[ID].Name);
 end;
 
@@ -99,7 +103,7 @@ begin
   begin
     Self.Attack();
   end else
-  if (Mobs.FreeTile(NX, NY)) then
+  if (Mobs.GetFreeTile(NX, NY)) then
   begin
     X := NX;
     Y := NY;
@@ -154,16 +158,30 @@ begin
   inherited;
 end;
 
-function TMobs.FreeTile(AX, AY: Byte): Boolean;
+function TMobs.GetFreeTile(AX, AY: Byte): Boolean;
 var
   I: Integer;
 begin
   Result := True;
   for I := 0 to Count - 1 do
-    with FMob[I] do  
+    with FMob[I] do
       if Alive and (AX = X) and (AY = Y)then
       begin
         Result := False;
+        Exit;
+      end;
+end;
+
+function TMobs.GetIndex(AX, AY: Byte): Integer;
+var
+  I: Integer;
+begin
+  Result := -1;
+  for I := 0 to Count - 1 do
+    with FMob[I] do
+      if Alive and (AX = X) and (AY = Y)then
+      begin
+        Result := I;
         Exit;
       end;
 end;

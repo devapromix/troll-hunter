@@ -91,6 +91,7 @@ type
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
     function GetSkill(ASkill: TSkillEnum): TSkill;
     procedure Defeat(AKiller: string);
+    procedure Attack(Index: Integer);
   end;
 
 var
@@ -106,6 +107,19 @@ procedure TPlayer.AddTurn;
 begin
   Turn := Turn + 1;
   Mobs.Process;
+end;
+
+procedure TPlayer.Attack(Index: Integer);
+var
+  Mob: TMob;
+  Damage: Byte;
+begin
+  if (Index < 0) then Exit;
+  Mob := Mobs.FMob[Index];
+  if not Mob.Alive then Exit;
+  Damage := 5;
+  Mob.Life := Clamp(Mob.Life - Damage, 0, High(Word));
+  if (Mob.Life = 0) then Mob.Alive := False;
 end;
 
 procedure TPlayer.Calc;
@@ -195,9 +209,9 @@ begin
     FY := Clamp(Y + AY, 0, High(Byte));
     AddTurn;
     if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then Exit;
-    if not Mobs.FreeTile(FX, FY) then
+    if not Mobs.GetFreeTile(FX, FY) then
     begin
-
+      Self.Attack(Mobs.GetIndex(FX, FY));
     end else begin
       X := FX;
       Y := FY;
