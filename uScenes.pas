@@ -7,7 +7,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scHero);
+    scDrop, scPlayer);
 
 type
   TScene = class(TObject)
@@ -106,7 +106,7 @@ type
   end;
 
 type
-  TSceneHero = class(TScene)
+  TScenePlayer = class(TScene)
   private
     procedure RenderPlayer;
     procedure RenderSkills;
@@ -120,11 +120,12 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob;
+  uMap, uMob;  
 
 { TScene }
 
-procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
+procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor,
+  DarkColor: Cardinal);
 var
   I, L, W: Byte;
 begin
@@ -171,8 +172,8 @@ begin
         FScene[I] := TSceneInv.Create;
       scDrop:
         FScene[I] := TSceneDrop.Create;
-      scHero:
-        FScene[I] := TSceneHero.Create;
+      scPlayer:
+        FScene[I] := TScenePlayer.Create;
     end;
 end;
 
@@ -239,7 +240,7 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 3, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 1, 'Press [[SPACE]] to continue...', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1, 'Press [color=red][[ENTER]][/color] to continue...', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -247,7 +248,7 @@ begin
   case Key of
     TK_ESCAPE:
       CanClose := True;
-    TK_SPACE:
+    TK_ENTER:
     begin
       Scenes.SetScene(scLoad);
       Terminal.Refresh;
@@ -389,10 +390,9 @@ begin
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   // @
-  Terminal.ForegroundColor(clYellow);
-  Terminal.Print(PX + View.Left, PY + View.Top, '@');
+  Player.Render(PX, PY);
   Mobs.Render(PX, PY);
-  // Player info
+  // Player info   
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(Status.Left, Status.Top, 'Trollhunter');
@@ -458,7 +458,7 @@ begin
           Map.Deep := pred(Map.Deep);
           Player.Wait;
         end;
-    TK_PERIOD:
+    TK_PERIOD:  
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Deep) = teDnStairs) then
         if (Map.Deep < High(TDeepEnum)) then
         begin
@@ -473,8 +473,8 @@ begin
       Scenes.SetScene(scInv);
     TK_F:
       Scenes.SetScene(scDrop);
-    TK_P:
-      Scenes.SetScene(scHero);
+    TK_T:
+      Scenes.SetScene(scPlayer);
     TK_V:
       if WizardMode then
         Scenes.SetScene(scWin);
@@ -520,9 +520,15 @@ end;
 { TSceneDef }  
 
 procedure TSceneDef.Render;
-begin                   
-  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
-    Format('Game over: killed by %s. Press ENTER', [Killer]), TK_ALIGN_CENTER);
+var
+  X, Y: Byte;
+begin
+  X := Terminal.Window.Width div 2;
+  Y := Terminal.Window.Height div 2;
+  Terminal.Print(X, Y - 1, 'GAME OVER!!!', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1,
+    Format('Killed by [color=white]%s[/color]. Press [color=red][[ENTER]][/color]',
+    [Killer]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneDef.Update(var Key: Word);
@@ -539,9 +545,15 @@ end;
 { TSceneWin }
 
 procedure TSceneWin.Render;
+var
+  X, Y: Byte;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
-    'Congratulations! You have won. Press ENTER', TK_ALIGN_CENTER);
+  X := Terminal.Window.Width div 2;
+  Y := Terminal.Window.Height div 2;
+  Terminal.Print(X, Y - 1, 'CONGRATULATIONS!!!', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1,
+    Format('You have won. Press [color=red][[ENTER]][/color]',
+    [Killer]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneWin.Update(var Key: Word);
@@ -566,7 +578,7 @@ begin
   Terminal.Print(X, Y, 'Inventory', TK_ALIGN_CENTER);
 
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    '[color=red][[ESC]][/color] Close', TK_ALIGN_CENTER);
+    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Player', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -574,6 +586,8 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_SPACE: // Player
+      Scenes.SetScene(scPlayer);
   end;
 end;
 
@@ -599,14 +613,14 @@ begin
   end;
 end;
 
-{ TSceneHero }
+{ TScenePlayer }
 
-constructor TSceneHero.Create;
+constructor TScenePlayer.Create;
 begin
 
 end;
 
-procedure TSceneHero.Render;
+procedure TScenePlayer.Render;
 var
   X, Y: Byte;
 begin
@@ -621,7 +635,7 @@ begin
     '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Inventory', TK_ALIGN_CENTER);
 end;
 
-procedure TSceneHero.RenderPlayer;
+procedure TScenePlayer.RenderPlayer;
 var
   X, Y, W: Byte;
 begin
@@ -629,7 +643,7 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, '== Attributes ==', TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y +  2, W, 10, 10, clDarkRed, clDarkGray);
+  RenderBar(1, 0, Y +  2, W, 10, ExpMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y +  2, Format('Level %d', [Player.Level]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y +  4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y +  4, Format('Strength %d/%d', [Player.Strength, AtrMax]), TK_ALIGN_CENTER);
@@ -652,7 +666,7 @@ begin
   Terminal.Print(X, Y + 22, Format('Radius %d/%d', [Player.GetRadius, RadiusMax]), TK_ALIGN_CENTER);
 end;
 
-procedure TSceneHero.RenderSkills;
+procedure TScenePlayer.RenderSkills;
 var
   I: TSkillEnum;
   A, B, X, Y, D: Byte;
@@ -673,11 +687,13 @@ begin
   end;
 end;
 
-procedure TSceneHero.Update(var Key: Word);
+procedure TScenePlayer.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_SPACE: // Inventory
+      Scenes.SetScene(scInv);
   end;
 end;
 

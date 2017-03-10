@@ -1,7 +1,7 @@
 program Trollhunter;
 
 uses
-  SysUtils,
+  SysUtils,    
   BearLibTerminal in 'BearLibTerminal.pas',
   uTerminal in 'uTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',

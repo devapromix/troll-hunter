@@ -35,6 +35,7 @@ const
   RadiusMax = 15;
   DVMax     = 80;
   PVMax     = 250;
+  ExpMax    = 10;
 
 type
   TPlayer = class(TObject)
@@ -80,6 +81,7 @@ type
     property Dexterity: Byte read FDexterity write FDexterity;
     property Willpower: Byte read FWillpower write FWillpower;
     property Perception: Byte read FPerception write FPerception;
+    procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
     property Damage: Byte read FDamage write FDamage;
     procedure Calc;
@@ -101,7 +103,8 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes;
+uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes,
+  uTerminal;
 
 { TPlayer }
 
@@ -114,13 +117,18 @@ end;
 procedure TPlayer.Attack(Index: Integer);
 var
   Mob: TMob;
-  Damage: Byte;
 begin
   if (Index < 0) then Exit;
   Mob := Mobs.FMob[Index];
   if not Mob.Alive then Exit;
-  Mob.Life := Clamp(Mob.Life - Damage, 0, High(Word));
-  if (Mob.Life = 0) then Mob.Alive := False;
+  if (MobBase[Mob.ID].DV < Math.RandomRange(0, 100)) then
+  begin
+    // Attack
+    Mob.Life := Clamp(Mob.Life - Damage, 0, High(Word));
+    if (Mob.Life = 0) then Mob.Alive := False;
+  end else begin
+    // Miss
+  end;
 end;
 
 procedure TPlayer.Calc;
@@ -148,8 +156,10 @@ begin
   Look := False;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   with FSkill[I] do
-  begin               
-    Value := SkillMax; //Math.RandomRange(SkillMin, SkillMax);//SkillMin;
+  begin
+    if WizardMode then
+      Value := Math.RandomRange(SkillMin, SkillMax)
+        else Value := SkillMin;
     Exp := Math.RandomRange(0, SkillExp);
   end;
   Self.Calc;
@@ -212,13 +222,19 @@ begin
     AddTurn;
     if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then Exit;
     if not Mobs.GetFreeTile(FX, FY) then
-    begin
+    begin                
       Self.Attack(Mobs.GetIndex(FX, FY));
     end else begin
       X := FX;
       Y := FY;
     end;
   end;
+end;
+
+procedure TPlayer.Render(AX, AY: Byte);
+begin
+  Terminal.ForegroundColor(clDarkBlue);
+  Terminal.Print(AX + View.Left, AY + View.Top, '@');
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;

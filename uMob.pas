@@ -9,7 +9,9 @@ type
     Symbol: Char;
     Name: string;
     MaxLife: Word;
+    Level: Byte;
     Armor: Byte;
+    DV: Byte;
     Damage: Word;
     Color: Cardinal;
   end;
@@ -19,10 +21,10 @@ const
 
 const
   MobBase: array [0..MobCount - 1] of TMobBase = (
-  (Symbol: 'r'; Name: 'Rat';    MaxLife:  5; Armor:  0; Damage:  2; Color: $FF249988;),
-  (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Armor:  1; Damage:  4; Color: $FF777700;),
-  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Armor:  2; Damage:  5; Color: $FF00AA00;),
-  (Symbol: 'z'; Name: 'Zombie'; MaxLife: 25; Armor:  2; Damage:  3; Color: $FF00BB00;)
+  (Symbol: 'r'; Name: 'Rat';    MaxLife:  5; Level: 1; Armor:  0; DV:  4; Damage:  2; Color: $FF249988;),
+  (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Level: 1; Armor:  1; DV:  6; Damage:  4; Color: $FF777700;),
+  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Level: 2; Armor:  2; DV: 12; Damage:  5; Color: $FF00AA00;),
+  (Symbol: 'z'; Name: 'Zombie'; MaxLife: 25; Level: 2; Armor:  2; DV:  9; Damage:  3; Color: $FF00BB00;)
   );
 
 type
@@ -84,13 +86,19 @@ begin
   Alive := True;
   ID := Math.RandomRange(0, MobCount);
   Life := MobBase[ID].MaxLife;
-end;
+end;    
 
 procedure TMob.Attack;
 begin
   if (Self.Life = 0) then Exit;
-  Player.Life := Clamp(Player.Life - MobBase[ID].Damage, 0, High(Word));
-  if Player.Life = 0 then Player.Defeat(MobBase[ID].Name);
+  if (Player.DV < Math.RandomRange(0, 100)) then
+  begin
+    // Attack
+    Player.Life := Clamp(Player.Life - MobBase[ID].Damage, 0, High(Word));
+    if Player.Life = 0 then Player.Defeat(MobBase[ID].Name);
+  end else begin
+    // Miss
+  end;
 end;
 
 procedure TMob.Process;
