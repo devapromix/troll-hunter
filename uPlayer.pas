@@ -52,6 +52,7 @@ type
     FRadius: Byte;
     FDV: Byte;
     FPV: Byte;
+    FDamage: Byte;
     FLook: Boolean;
     FStrength: Byte;
     FDexterity: Byte;
@@ -80,6 +81,7 @@ type
     property Willpower: Byte read FWillpower write FWillpower;
     property Perception: Byte read FPerception write FPerception;
     procedure Move(AX, AY: ShortInt);
+    property Damage: Byte read FDamage write FDamage;
     procedure Calc;
     procedure Fill;
     procedure Wait;
@@ -117,7 +119,6 @@ begin
   if (Index < 0) then Exit;
   Mob := Mobs.FMob[Index];
   if not Mob.Alive then Exit;
-  Damage := 5;
   Mob.Life := Clamp(Mob.Life - Damage, 0, High(Word));
   if (Mob.Life = 0) then Mob.Alive := False;
 end;
@@ -134,6 +135,7 @@ begin
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
+  Damage := Clamp(0, 1, High(Byte));
   Self.Fill;
 end;
 

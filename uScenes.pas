@@ -389,7 +389,7 @@ begin
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   // @
-  Terminal.ForegroundColor(clDarkGreen);
+  Terminal.ForegroundColor(clYellow);
   Terminal.Print(PX + View.Left, PY + View.Top, '@');
   Mobs.Render(PX, PY);
   // Player info
@@ -402,7 +402,7 @@ begin
   Terminal.Print(Status.Left, Status.Top + 1, Format('Life %d/%d', [Player.Life, Player.MaxLife]));
   Terminal.Print(Status.Left, Status.Top + 2, Format('Mana %d/%d', [Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clYellow);
-  Terminal.Print(Status.Left, Status.Top + 3, Format('Turn %d', [Player.Turn]));
+  Terminal.Print(Status.Left, Status.Top + 3, Format('Turn %d Damage %d', [Player.Turn, Player.Damage]));
   // Bars
   Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14, Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
   Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14, Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);

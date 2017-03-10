@@ -15,13 +15,14 @@ type
   end;
 
 const
-  MobCount = 3;
+  MobCount = 4;
 
 const
   MobBase: array [0..MobCount - 1] of TMobBase = (
   (Symbol: 'r'; Name: 'Rat';    MaxLife:  5; Armor:  0; Damage:  2; Color: $FF249988;),
   (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Armor:  1; Damage:  4; Color: $FF777700;),
-  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Armor:  2; Damage:  5; Color: $FF00AA00;)
+  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Armor:  2; Damage:  5; Color: $FF00AA00;),
+  (Symbol: 'z'; Name: 'Zombie'; MaxLife: 25; Armor:  2; Damage:  3; Color: $FF00BB00;)
   );
 
 type
