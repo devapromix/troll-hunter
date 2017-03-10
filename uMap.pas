@@ -25,7 +25,9 @@ type
 
 const
   StopTiles = [teDefaultWall];
-  FreeTiles = [teDefaultFloor];
+  FreeTiles = [teDefaultFloor, teRock,
+    teFloor1, teFloor2, teFloor3,
+    teUpStairs, teDnStairs, teWater];
 
 const
   Tile: array[TTileEnum, TDeepEnum] of TTile = (
@@ -128,7 +130,7 @@ var
 
 implementation
 
-uses Math, uPlayer;
+uses Math, uPlayer, uMob;
 
 { TMap }
 
@@ -322,6 +324,9 @@ begin
     Player.X := RandomRange(64, High(Byte) - 64);
     Player.Y := RandomRange(64, High(Byte) - 64);
   until (not (GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));  
+
+  for I := 0 to 255 do Mobs.Add;
+  
 end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;
@@ -372,7 +377,7 @@ var
 begin
   PX := View.Width div 2;
   PY := View.Height div 2;
-  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and (AX <= Player.X + PX - 1) and (AY <= Player.X + PY - 1);
+  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and (AX <= Player.X + PX - 1) and (AY <= Player.Y + PY - 1);
 end;
 
 function TMap.GetFOV(AX, AY: Byte): Boolean;
