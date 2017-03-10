@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.5';
+  Version = '0.6';
 
 const
   CharacterDumpFileName = 'trollhunter-character-dump.txt';
@@ -34,6 +34,7 @@ var
   WizardMode: Boolean = False;
   GameMode: Boolean = False;
   CanClose: Boolean = False;
+  Killer: string = '';
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;

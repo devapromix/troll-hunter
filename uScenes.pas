@@ -488,7 +488,8 @@ end;
 
 procedure TSceneLoad.Render;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2, 'Creating the world, please wait...', TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
+    'Creating the world, please wait...', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneLoad.Update(var Key: Word);
@@ -516,12 +517,12 @@ begin
   end;
 end;
 
-{ TSceneDef }
+{ TSceneDef }  
 
 procedure TSceneDef.Render;
-begin
+begin                   
   Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
-    Format('Game over: killed by %s. Press ENTER', ['MOB']), TK_ALIGN_CENTER);
+    Format('Game over: killed by %s. Press ENTER', [Killer]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneDef.Update(var Key: Word);
@@ -529,7 +530,7 @@ begin
   case Key of
     TK_ENTER:
     begin
-      Player.SaveCharacterDump(Format('Killed by %s', ['MOB']));
+      Player.SaveCharacterDump(Format('Killed by %s', [Killer]));
       CanClose := True;
     end;
   end;

@@ -90,6 +90,7 @@ type
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
     function GetSkill(ASkill: TSkillEnum): TSkill;
+    procedure Defeat(AKiller: string);
   end;
 
 var
@@ -97,7 +98,7 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob;
+uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes;
 
 { TPlayer }
 
@@ -136,6 +137,12 @@ begin
     Exp := Math.RandomRange(0, SkillExp);
   end;
   Self.Calc;
+end;
+
+procedure TPlayer.Defeat(AKiller: string);
+begin
+  Killer := AKiller;
+  Scenes.SetScene(scDef);
 end;
 
 destructor TPlayer.Destroy;

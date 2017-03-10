@@ -2,15 +2,36 @@ unit uMob;
 
 interface
 
+uses uCommon;
+
+type
+  TMobBase = record
+    Symbol: Char;
+    Name: string;
+    MaxLife: Word;
+    Color: Cardinal;
+  end;
+
+const
+  MobCount = 3;
+
+const
+  MobBase: array [0..MobCount - 1] of TMobBase = (
+  (Symbol: 'r'; Name: 'Rat';    MaxLife: 5;  Color: $FF249988;),
+  (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Color: $FF777700;),
+  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Color: $FF00AA00;)
+  );
+
 type
   TMob = class(TObject)
+    ID: Byte;
+    Life: Word;
     X, Y: Integer;
     Alive: Boolean;
-    constructor Create;
-    destructor Destroy; override;
     procedure AddRandom;
     procedure Process;
     procedure Render(AX, AY: Byte);
+    procedure Attack;
   end;
 
 type
@@ -26,21 +47,20 @@ type
   end;
 
 type
-  TGetXYVal = function(X, Y: integer): boolean;stdcall;
+  TGetXYVal = function(X, Y: Integer): Boolean; stdcall;
 
 var
   Mobs: TMobs = nil;
 
 implementation
 
-uses Math, uTerminal, uMap, uPlayer, uCommon;
+uses Math, uTerminal, uMap, uPlayer;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer; Callback: TGetXYVal; var TargetX, TargetY: integer): boolean;external 'BeaRLibPF.dll';
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
   Result := (Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles)
-//    and not Map.GetEnt(X, Y);
 end;
 
 { TMob }
@@ -49,7 +69,6 @@ procedure TMob.AddRandom;
 var
   FX, FY: Byte;
 begin
-  Create;
   repeat
     FX := Math.RandomRange(0, High(Byte));
     FY := Math.RandomRange(0, High(Byte));
@@ -58,31 +77,27 @@ begin
     and Mobs.FreeTile(FX, FY);
   X := FX;
   Y := FY;
-end;
-
-constructor TMob.Create;
-begin
   Alive := True;
-  X := 0;
-  Y := 0;
+  ID := Math.RandomRange(0, MobCount);
+  Life := MobBase[ID].MaxLife;
 end;
 
-destructor TMob.Destroy;
+procedure TMob.Attack;
 begin
-
-  inherited;
+  Player.Life := Clamp(Player.Life - 5, 0, High(Word));
+  if Player.Life = 0 then Player.Defeat(MobBase[ID].Name);
 end;
 
 procedure TMob.Process;
 var
-  NX, NY: Integer;          
+  NX, NY: Integer;
 begin
   if (GetDist(X, Y, Player.X, Player.Y) > 20) then Exit;
   if not DoAStar(High(Byte), High(Byte), X, Y, Player.X,
     Player.Y, @MyCallback, NX, NY)then Exit;
   if (NX = Player.X) and (NY = Player.Y) then
   begin
-    {AddRandom}
+    Self.Attack();
   end else
   if (Mobs.FreeTile(NX, NY)) then
   begin
@@ -94,9 +109,9 @@ end;
 procedure TMob.Render(AX, AY: Byte);
 begin
   if not Map.InView(X, Y) or (not WizardMode and not Map.GetFOV(X, Y)) then Exit;
-  Terminal.ForegroundColor(clDarkRed);
+  Terminal.ForegroundColor(MobBase[ID].Color);
   Terminal.Print(X - Player.X + AX + View.Left,
-    Y - Player.Y + AY + View.Top, '@');
+    Y - Player.Y + AY + View.Top, MobBase[ID].Symbol);
 end;
 
 { TMobs }
