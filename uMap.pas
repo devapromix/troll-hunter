@@ -324,9 +324,8 @@ begin
     Player.X := RandomRange(64, High(Byte) - 64);
     Player.Y := RandomRange(64, High(Byte) - 64);
   until (not (GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));  
-
-  for I := 0 to 255 do Mobs.Add;
   
+  for I := 0 to 255 do Mobs.Add;  
 end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;
@@ -352,8 +351,6 @@ end;
 procedure TMap.SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
 begin
   FMap[AX][AY][ADeep] := ATileEnum;
-//  if (ATileEnum = teDefaultWall) then
-//    Map.SetFOV(AX, AY, FOV_CELL_OPAQUE);
 end;
 
 function TMap.GetFog(AX, AY: Byte): Boolean;

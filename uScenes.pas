@@ -367,7 +367,7 @@ begin
         Terminal.Print(DX + View.Left, DY + View.Top, ' ');
         RenderLook(T);
       end;
-      if (not Player.Look and (Player.X = X) and (Player.Y = Y)) then
+      if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
         RenderLook(T);
       if not WizardMode then
       begin

@@ -177,8 +177,8 @@ begin
   if Look then
   begin
     if Map.InMap(LX + AX, LY + AY)
-      and Map.InView(LX + AX, LY + AY)
-      and not Map.GetFog(LX + AX, LY + AY) then
+      and ((Map.InView(LX + AX, LY + AY)
+      and not Map.GetFog(LX + AX, LY + AY)) or (WizardMode)) then
     begin
       LX := Clamp(LX + AX, 0, High(Byte));
       LY := Clamp(LY + AY, 0, High(Byte));
@@ -188,8 +188,13 @@ begin
     FY := Clamp(Y + AY, 0, High(Byte));
     AddTurn;
     if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then Exit;
-    X := FX;
-    Y := FY;
+    if not Mobs.FreeTile(FX, FY) then
+    begin
+
+    end else begin
+      X := FX;
+      Y := FY;
+    end;
   end;
 end;
 

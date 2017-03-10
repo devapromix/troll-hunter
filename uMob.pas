@@ -22,6 +22,7 @@ type
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
+    function FreeTile(AX, AY: Byte): Boolean;
   end;
 
 type
@@ -38,20 +39,25 @@ function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer; Callback: TGetXYVa
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
-  Result := Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles;
+  Result := (Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles)
+//    and not Map.GetEnt(X, Y);
 end;
 
 { TMob }
 
 procedure TMob.AddRandom;
+var
+  FX, FY: Byte;
 begin
   Create;
   repeat
-    X := Math.RandomRange(0, High(Byte));
-    Y := Math.RandomRange(0, High(Byte));
-  until (Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles)
-    and (Player.X <> X) and (Player.Y <> Y);
-  Map.SetTileEnum(X, Y, Map.Deep, teWater);  
+    FX := Math.RandomRange(0, High(Byte));
+    FY := Math.RandomRange(0, High(Byte));
+  until (Map.GetTileEnum(FX, FY, Map.Deep) in FreeTiles)
+    and (Player.X <> FX) and (Player.Y <> FY)
+    and Mobs.FreeTile(FX, FY);
+  X := FX;
+  Y := FY;
 end;
 
 constructor TMob.Create;
@@ -74,7 +80,11 @@ begin
   if (GetDist(X, Y, Player.X, Player.Y) > 20) then Exit;
   if not DoAStar(High(Byte), High(Byte), X, Y, Player.X,
     Player.Y, @MyCallback, NX, NY)then Exit;
-  if (NX = Player.X) and (NY = Player.Y) then AddRandom else
+  if (NX = Player.X) and (NY = Player.Y) then
+  begin
+    {AddRandom}
+  end else
+  if (Mobs.FreeTile(NX, NY)) then
   begin
     X := NX;
     Y := NY;
@@ -83,7 +93,7 @@ end;
 
 procedure TMob.Render(AX, AY: Byte);
 begin
-  if not Map.InView(X, Y) then Exit;
+  if not Map.InView(X, Y) or (not WizardMode and not Map.GetFOV(X, Y)) then Exit;
   Terminal.ForegroundColor(clDarkRed);
   Terminal.Print(X - Player.X + AX + View.Left,
     Y - Player.Y + AY + View.Top, '@');
@@ -127,6 +137,20 @@ begin
     FMob[I] := nil;
   end;
   inherited;
+end;
+
+function TMobs.FreeTile(AX, AY: Byte): Boolean;
+var
+  I: Integer;
+begin
+  Result := True;
+  for I := 0 to Count - 1 do
+    with FMob[I] do  
+      if Alive and (AX = X) and (AY = Y)then
+      begin
+        Result := False;
+        Exit;
+      end;
 end;
 
 procedure TMobs.Process;
