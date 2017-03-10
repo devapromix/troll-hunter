@@ -1,7 +1,7 @@
 program Trollhunter;
 
 uses
-  SysUtils,    
+  SysUtils,
   BearLibTerminal in 'BearLibTerminal.pas',
   uTerminal in 'uTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
@@ -11,7 +11,8 @@ uses
   uMap in 'uMap.pas',
   uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
-  uMob in 'uMob.pas';      
+  uMob in 'uMob.pas',
+  uMsgLog in 'uMsgLog.pas';
 
 var
   Key: Word = 0;

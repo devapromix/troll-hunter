@@ -120,7 +120,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob;  
+  uMap, uMob, uMsgLog;
 
 { TScene }
 
@@ -407,13 +407,7 @@ begin
   Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14, Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
   Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14, Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
   // Log
-  for Y := 0 to Log.Height - 1 do
-    for X := 0 to Log.Width - 1 do
-    begin
-      Terminal.BackgroundColor($FF550055);
-      Terminal.ForegroundColor($FFFFFF00);
-      Terminal.Print(X + Log.Left, Y + Log.Top, ' ');
-    end;
+  MsgLog.Render;
 end;
 
 procedure TSceneGame.Update(var Key: Word);

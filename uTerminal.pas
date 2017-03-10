@@ -17,7 +17,8 @@ type
     procedure Refresh;
     procedure BackgroundColor(Value: Cardinal);
     procedure ForegroundColor(Value: Cardinal);
-    procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0);
+    procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
+    procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string; Align: Byte); overload;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
   end;
@@ -85,6 +86,11 @@ end;
 procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Byte);
 begin
   terminal_print(AX, AY, Align, AText);
+end;
+
+procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string; Align: Byte);
+begin
+  terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
 end;
 
 procedure TTerminal.Refresh;
