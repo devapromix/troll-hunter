@@ -104,12 +104,13 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes,
-  uTerminal;
+  uTerminal, uMsgLog;
 
 { TPlayer }
 
 procedure TPlayer.AddTurn;
 begin
+  MsgLog.Turn;
   Turn := Turn + 1;
   Mobs.Process;
 end;
@@ -117,17 +118,23 @@ end;
 procedure TPlayer.Attack(Index: Integer);
 var
   Mob: TMob;
+  Dam: Word;
+  The: string;
 begin
   if (Index < 0) then Exit;
   Mob := Mobs.FMob[Index];
   if not Mob.Alive then Exit;
+  The := GetDescThe(MobBase[Mob.ID].Name);
   if (MobBase[Mob.ID].DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
-    Mob.Life := Clamp(Mob.Life - Damage, 0, High(Word));
+    Dam := Clamp(Self.Damage, 0, High(Word));
+    Mob.Life := Clamp(Mob.Life - Dam, 0, High(Word));
+    MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
     if (Mob.Life = 0) then Mob.Alive := False;
   end else begin
     // Miss
+    MsgLog.Add(Format('You fail to hurt %s.', [The]));
   end;
 end;
 
@@ -167,8 +174,7 @@ end;
 
 procedure TPlayer.Defeat(AKiller: string);
 begin
-  Killer := AKiller;
-  Scenes.SetScene(scDef);
+  Killer := AKiller; // You die
 end;
 
 destructor TPlayer.Destroy;
@@ -217,6 +223,11 @@ begin
       LY := Clamp(LY + AY, 0, High(Byte));
     end;
   end else begin
+    if (Life = 0) then
+    begin
+      Scenes.SetScene(scDef);
+      Exit;
+    end;
     FX := Clamp(X + AX, 0, High(Byte));
     FY := Clamp(Y + AY, 0, High(Byte));
     AddTurn;

@@ -60,7 +60,7 @@ var
 
 implementation
 
-uses Math, uTerminal, uMap, uPlayer;
+uses Math, SysUtils, uTerminal, uMap, uPlayer, uMsgLog;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer; Callback: TGetXYVal; var TargetX, TargetY: integer): boolean;external 'BeaRLibPF.dll';
 
@@ -89,15 +89,26 @@ begin
 end;    
 
 procedure TMob.Attack;
+var
+  The: string;
+  Dam: Word;
 begin
-  if (Self.Life = 0) then Exit;
+  if (Self.Life = 0) or (Player.Life = 0) then Exit;
+  The := GetCapit(GetDescThe(MobBase[ID].Name));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
-    Player.Life := Clamp(Player.Life - MobBase[ID].Damage, 0, High(Word));
-    if Player.Life = 0 then Player.Defeat(MobBase[ID].Name);
+    Dam := Clamp(MobBase[ID].Damage, 0, High(Word));
+    Player.Life := Clamp(Player.Life - Dam, 0, High(Word));
+    MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
+    if Player.Life = 0 then
+    begin
+      Player.Defeat(MobBase[ID].Name);
+      MsgLog.Add('You die...');
+    end;
   end else begin
     // Miss
+    MsgLog.Add(Format('%s hits you, but your armor protects you.', [The]));
   end;
 end;
 
