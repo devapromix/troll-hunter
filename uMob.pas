@@ -2,12 +2,13 @@ unit uMob;
 
 interface
 
-uses uCommon;
+uses uMap, uCommon;
 
 type
   TMobBase = record
     Symbol: Char;
     Name: string;
+    Deep: TDeepEnum;
     MaxLife: Word;
     Level: Byte;
     Armor: Byte;
@@ -17,14 +18,21 @@ type
   end;
 
 const
-  MobCount = 4;
+  MobCount = 6;
 
 const
   MobBase: array [0..MobCount - 1] of TMobBase = (
-  (Symbol: 'r'; Name: 'Rat';    MaxLife:  5; Level: 1; Armor:  0; DV:  4; Damage:  2; Color: $FF249988;),
-  (Symbol: 'k'; Name: 'Kobold'; MaxLife: 15; Level: 1; Armor:  1; DV:  6; Damage:  4; Color: $FF777700;),
-  (Symbol: 'g'; Name: 'Goblin'; MaxLife: 20; Level: 2; Armor:  2; DV: 12; Damage:  5; Color: $FF00AA00;),
-  (Symbol: 'z'; Name: 'Zombie'; MaxLife: 25; Level: 2; Armor:  2; DV:  9; Damage:  3; Color: $FF00BB00;)
+  // Dark Wood
+  (Symbol: 'r'; Name: 'Rat';        Deep: deDarkWood;      MaxLife:   5; Level:  1; Armor:  0;  DV:  4; Damage:  2; Color: $FF249988;),
+  (Symbol: 'f'; Name: 'Frog';       Deep: deDarkWood;      MaxLife:   7; Level:  1; Armor:  0;  DV:  5; Damage:  2; Color: $FF33FF66;),
+  // Gray Cave
+  (Symbol: 'k'; Name: 'Kobold';     Deep: deGrayCave;      MaxLife:  15; Level:  1; Armor:  1;  DV:  6; Damage:  4; Color: $FF777700;),
+  // Deep Cave
+  (Symbol: 'g'; Name: 'Goblin';     Deep: deDeepCave;      MaxLife:  20; Level:  2; Armor:  2;  DV: 12; Damage:  5; Color: $FF00AA00;),
+  // Blood Cave
+  (Symbol: 'z'; Name: 'Zombie';     Deep: deBloodCave;     MaxLife:  25; Level:  2; Armor:  2;  DV:  9; Damage:  3; Color: $FF00BB00;),
+  // Dungeon of Doom
+  (Symbol: 'T'; Name: 'Troll King'; Deep: deDungeonOfDoom; MaxLife: 100; Level: 10; Armor:  14; DV: 60; Damage: 25; Color: $FFFF4400;)
   );
 
 type
@@ -32,11 +40,13 @@ type
     ID: Byte;
     Life: Word;
     X, Y: Integer;
+    Deep: TDeepEnum;
     Alive: Boolean;
-    procedure AddRandom;
+    procedure AddRandom(ADeep: TDeepEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
     procedure Attack;
+    procedure Defeat;
   end;
 
 type
@@ -44,7 +54,7 @@ type
     FMob: array of TMob;
     constructor Create();
     destructor Destroy; override;
-    procedure Add;
+    procedure Add(ADeep: TDeepEnum);
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -60,7 +70,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, uMap, uPlayer, uMsgLog;
+uses Math, SysUtils, uTerminal, uPlayer, uMsgLog;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer; Callback: TGetXYVal; var TargetX, TargetY: integer): boolean;external 'BeaRLibPF.dll';
 
@@ -71,20 +81,23 @@ end;
 
 { TMob }
 
-procedure TMob.AddRandom;
+procedure TMob.AddRandom(ADeep: TDeepEnum);
 var
   FX, FY: Byte;
 begin
   repeat
+    ID := Math.RandomRange(0, MobCount);
     FX := Math.RandomRange(0, High(Byte));
     FY := Math.RandomRange(0, High(Byte));
-  until (Map.GetTileEnum(FX, FY, Map.Deep) in FreeTiles)
-    and (Player.X <> FX) and (Player.Y <> FY)
-    and Mobs.GetFreeTile(FX, FY);
+  until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles)
+    and (Player.X <> FX)
+    and (Player.Y <> FY)
+    and Mobs.GetFreeTile(FX, FY)
+    and (MobBase[ID].Deep = ADeep);
   X := FX;
   Y := FY;
+  Deep := ADeep;
   Alive := True;
-  ID := Math.RandomRange(0, MobCount);
   Life := MobBase[ID].MaxLife;
 end;    
 
@@ -102,14 +115,17 @@ begin
     Player.Life := Clamp(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
     if Player.Life = 0 then
-    begin
       Player.Defeat(MobBase[ID].Name);
-      MsgLog.Add('You die...');
-    end;
   end else begin
     // Miss
     MsgLog.Add(Format('%s hits you, but your armor protects you.', [The]));
   end;
+end;
+
+procedure TMob.Defeat;
+begin
+  Self.Alive := False;
+  MsgLog.Add(Format('You kill %s.', [GetDescThe(MobBase[ID].Name)]));
 end;
 
 procedure TMob.Process;
@@ -140,20 +156,20 @@ end;
 
 { TMobs }
 
-procedure TMobs.Add;
+procedure TMobs.Add(ADeep: TDeepEnum);
 var
   I: Integer;
 begin
-  for I := 0 to Count - 1 do
+  for I := 0 to Self.Count - 1 do
     if not FMob[I].Alive then
     begin
-      FMob[I].AddRandom;
+      FMob[I].AddRandom(ADeep);
       Exit;
     end;
   SetLength(FMob, Length(FMob) + 1);
   I := Length(FMob) - 1;
   FMob[I] := TMob.Create;
-  FMob[I].AddRandom;
+  FMob[I].AddRandom(ADeep);
 end;
 
 function TMobs.Count: Integer;
@@ -185,7 +201,7 @@ begin
   Result := True;
   for I := 0 to Count - 1 do
     with FMob[I] do
-      if Alive and (AX = X) and (AY = Y)then
+      if Alive and (Deep = Map.Deep) and (AX = X) and (AY = Y)then
       begin
         Result := False;
         Exit;
@@ -199,7 +215,7 @@ begin
   Result := -1;
   for I := 0 to Count - 1 do
     with FMob[I] do
-      if Alive and (AX = X) and (AY = Y)then
+      if Alive and (Deep = Map.Deep) and (AX = X) and (AY = Y)then
       begin
         Result := I;
         Exit;
@@ -212,7 +228,7 @@ var
 begin
   if (Count > 0) then
     for I := 0 to Count - 1 do
-      if FMob[I].Alive then
+      if FMob[I].Alive and (FMob[I].Deep = Map.Deep) then
         FMob[I].Process;
 end;
 
@@ -222,7 +238,7 @@ var
 begin
   if (Count > 0) then
     for I := 0 to Count - 1 do
-      if FMob[I].Alive then
+      if FMob[I].Alive and (FMob[I].Deep = Map.Deep) then
         FMob[I].Render(AX, AY);
 end;
 

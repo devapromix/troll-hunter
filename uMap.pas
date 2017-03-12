@@ -24,10 +24,13 @@ type
     teUpStairs, teDnStairs, teWater);
 
 const
-  StopTiles = [teDefaultWall];
-  FreeTiles = [teDefaultFloor, teRock,
+  StopTiles  = [teDefaultWall];
+  FreeTiles  = [teDefaultFloor, teRock,
     teFloor1, teFloor2, teFloor3,
     teUpStairs, teDnStairs, teWater];
+  SpawnTiles = [teDefaultFloor, teRock,
+    teFloor1, teFloor2, teFloor3,
+    teWater];
 
 const
   Tile: array[TTileEnum, TDeepEnum] of TTile = (
@@ -325,7 +328,10 @@ begin
     Player.Y := RandomRange(64, High(Byte) - 64);
   until (not (GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));  
   
-  for I := 0 to 255 do Mobs.Add;  
+  for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
+  begin
+    for I := 0 to 255 do Mobs.Add(FDeep);
+  end;    
 end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;

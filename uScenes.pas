@@ -281,7 +281,7 @@ begin
   X := Terminal.Window.Width div 2;
   Y := (Terminal.Window.Height div 2) - ((SL.Count + 4) div 2);
   for I := 0 to SL.Count - 1 do
-  Terminal.Print(X, Y + I, SL[I], TK_ALIGN_CENTER);
+    Terminal.Print(X, Y + I, SL[I], TK_ALIGN_CENTER);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     '[color=red][[ESC]][/color] Close', TK_ALIGN_CENTER);
 end;
@@ -331,7 +331,7 @@ var
       AX := Clamp(Player.X + Trunc((X - Player.X) * LR), 0, High(Byte));
       AY := Clamp(Player.Y + Trunc((Y - Player.Y) * LR), 0, High(Byte));
       Map.SetFOV(AX, AY, True);
-      if Map.GetTileEnum(AX, AY, Map.Deep) in StopTiles then Exit;
+      if (Map.GetTileEnum(AX, AY, Map.Deep) in StopTiles) then Exit;
     end;
   end;
 
@@ -389,7 +389,7 @@ begin
       if WizardMode or not Map.GetFog(X, Y) then
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
-  // @
+  // Player, mobs, items
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
   // Player info   

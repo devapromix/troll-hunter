@@ -110,7 +110,6 @@ uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes,
 
 procedure TPlayer.AddTurn;
 begin
-  MsgLog.Turn;
   Turn := Turn + 1;
   Mobs.Process;
 end;
@@ -119,7 +118,7 @@ procedure TPlayer.Attack(Index: Integer);
 var
   Mob: TMob;
   Dam: Word;
-  The: string;
+  The: string;  
 begin
   if (Index < 0) then Exit;
   Mob := Mobs.FMob[Index];
@@ -131,7 +130,7 @@ begin
     Dam := Clamp(Self.Damage, 0, High(Word));
     Mob.Life := Clamp(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
-    if (Mob.Life = 0) then Mob.Alive := False;
+    if (Mob.Life = 0) then Mob.Defeat;
   end else begin
     // Miss
     MsgLog.Add(Format('You fail to hurt %s.', [The]));
@@ -150,7 +149,7 @@ begin
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
-  Damage := Clamp(0, 1, High(Byte));
+  Damage := Clamp(5, 1, High(Byte));
   Self.Fill;
 end;
 
@@ -174,7 +173,8 @@ end;
 
 procedure TPlayer.Defeat(AKiller: string);
 begin
-  Killer := AKiller; // You die
+  Killer := AKiller;
+  MsgLog.Add('You die...');
 end;
 
 destructor TPlayer.Destroy;
@@ -217,7 +217,8 @@ begin
   begin
     if Map.InMap(LX + AX, LY + AY)
       and ((Map.InView(LX + AX, LY + AY)
-      and not Map.GetFog(LX + AX, LY + AY)) or (WizardMode)) then
+      and not Map.GetFog(LX + AX, LY + AY))
+      or (WizardMode)) then
     begin
       LX := Clamp(LX + AX, 0, High(Byte));
       LY := Clamp(LY + AY, 0, High(Byte));
@@ -233,19 +234,21 @@ begin
     AddTurn;
     if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then Exit;
     if not Mobs.GetFreeTile(FX, FY) then
-    begin                
+    begin
       Self.Attack(Mobs.GetIndex(FX, FY));
     end else begin
       X := FX;
       Y := FY;
     end;
+    MsgLog.Turn;
   end;
 end;
 
 procedure TPlayer.Render(AX, AY: Byte);
 begin
-  Terminal.ForegroundColor(clDarkBlue);
-  Terminal.Print(AX + View.Left, AY + View.Top, '@');
+  if (Self.Life = 0) then
+    Terminal.Print(AX + View.Left, AY + View.Top, '%', clDarkGray)
+      else Terminal.Print(AX + View.Left, AY + View.Top, '@', clDarkBlue);
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;

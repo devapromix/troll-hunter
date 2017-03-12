@@ -59,7 +59,7 @@ var
   L: string;
 begin
   if (Trim(MsgLog.Msg) = '') then
-    L := '' else L := '[color=green]' + FMsg + '[/color]';
+    L := '' else L := '[color=yellow]' + FMsg + '[/color]';
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top,
   Log.Width, Log.Height, FLog.Text + L,

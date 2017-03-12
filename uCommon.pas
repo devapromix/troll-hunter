@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.6';
+  Version = '0.7';
 
 const
   CharacterDumpFileName = 'trollhunter-character-dump.txt';
@@ -49,7 +49,7 @@ function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
 
 implementation
 
-uses SysUtils;
+uses SysUtils, uTerminal;
 
 procedure Init;
 var
