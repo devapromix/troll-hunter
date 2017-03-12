@@ -120,7 +120,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog;
+  uMap, uMob, uMsgLog, uItem;
 
 { TScene }
 
@@ -389,10 +389,11 @@ begin
       if WizardMode or not Map.GetFog(X, Y) then
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
-  // Player, mobs, items
+  // Items, player, mobs
+  Items.Render(PX, PY);
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
-  // Player info   
+  // Player info
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(Status.Left, Status.Top, 'Trollhunter');

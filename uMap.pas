@@ -133,7 +133,7 @@ var
 
 implementation
 
-uses Math, uPlayer, uMob;
+uses Math, uPlayer, uMob, uItem;
 
 { TMap }
 
@@ -331,7 +331,8 @@ begin
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
     for I := 0 to 255 do Mobs.Add(FDeep);
-  end;    
+    for I := 0 to 255 do Items.Add(FDeep);
+  end;
 end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;

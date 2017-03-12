@@ -62,7 +62,7 @@ type
     function GetIndex(AX, AY: Byte): Integer;
   end;
 
-type
+type  
   TGetXYVal = function(X, Y: Integer): Boolean; stdcall;
 
 var
@@ -148,10 +148,11 @@ end;
 
 procedure TMob.Render(AX, AY: Byte);
 begin
-  if not Map.InView(X, Y) or (not WizardMode and not Map.GetFOV(X, Y)) then Exit;
-  Terminal.ForegroundColor(MobBase[ID].Color);
+  if not Map.InView(X, Y) or (not WizardMode
+    and not Map.GetFOV(X, Y)) then Exit;
   Terminal.Print(X - Player.X + AX + View.Left,
-    Y - Player.Y + AY + View.Top, MobBase[ID].Symbol);
+    Y - Player.Y + AY + View.Top, MobBase[ID].Symbol,
+    MobBase[ID].Color);
 end;
 
 { TMobs }
@@ -166,7 +167,7 @@ begin
       FMob[I].AddRandom(ADeep);
       Exit;
     end;
-  SetLength(FMob, Length(FMob) + 1);
+  SetLength(FMob, Length(FMob) + 1);  
   I := Length(FMob) - 1;
   FMob[I] := TMob.Create;
   FMob[I].AddRandom(ADeep);
