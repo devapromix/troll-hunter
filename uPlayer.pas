@@ -264,7 +264,7 @@ begin
       SL[I] := StringReplace(SL[I], '{date-time}', GetDateTime, [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{reason}', AReason, [rfReplaceAll]);
 //      SL[I] := StringReplace(SL[I], '{screenshot}', , [rfReplaceAll]);
-//      SL[I] := StringReplace(SL[I], '{messages}', , [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], '{messages}', MsgLog.GetLastMsg(10), [rfReplaceAll]);
 //      SL[I] := StringReplace(SL[I], '{inventory}', , [rfReplaceAll]);
     end;
     SL.SaveToFile(StringReplace(CharacterDumpFileName, 'trollhunter', GetDateTime('-', '-'), [rfReplaceAll]));

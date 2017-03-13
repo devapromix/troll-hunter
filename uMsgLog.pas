@@ -18,6 +18,7 @@ type
     procedure Add(S: string);
     procedure Turn;
     property Msg: string read FMsg;
+    function GetLastMsg(const ACount: Integer): string;
   end;
 
 var
@@ -25,7 +26,7 @@ var
 
 implementation
 
-uses SysUtils, uCommon, uTerminal, BearLibTerminal;
+uses SysUtils, Math, uCommon, uTerminal, BearLibTerminal;
 
 { TMsgLog }
 
@@ -52,6 +53,23 @@ begin
   FLog.Free;
   FLog := nil;
   inherited;
+end;
+
+function TMsgLog.GetLastMsg(const ACount: Integer): string;
+var
+  SL: TStringList;
+  I, C: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    C := Math.Min(ACount, FLog.Count - 1);
+    for I := 0 to C do
+      SL.Append(FLog[I]);
+    Result := SL.Text;
+  finally
+    SL.Free;
+    SL := nil;
+  end;
 end;
 
 procedure TMsgLog.Render;
