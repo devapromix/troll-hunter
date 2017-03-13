@@ -20,6 +20,7 @@ type
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
     procedure Print(AX, AY: Integer; AChar: Char; AForegroundColor: Cardinal); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string; Align: Byte); overload;
+    function Pick(X, Y: Byte): Byte;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
   end;
@@ -87,6 +88,11 @@ end;
 procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Byte);
 begin
   terminal_print(AX, AY, Align, AText);
+end;
+
+function TTerminal.Pick(X, Y: Byte): Byte;
+begin
+  Result := terminal_pick(X, Y, 0);
 end;
 
 procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string; Align: Byte);

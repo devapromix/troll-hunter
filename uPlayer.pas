@@ -175,6 +175,7 @@ procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
   MsgLog.Add('You die...');
+  TextScreenshot := GetTextScreenshot();
 end;
 
 destructor TPlayer.Destroy;
@@ -263,7 +264,7 @@ begin
     begin
       SL[I] := StringReplace(SL[I], '{date-time}', GetDateTime, [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{reason}', AReason, [rfReplaceAll]);
-//      SL[I] := StringReplace(SL[I], '{screenshot}', , [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], '{screenshot}', TextScreenshot, [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{messages}', MsgLog.GetLastMsg(10), [rfReplaceAll]);
 //      SL[I] := StringReplace(SL[I], '{inventory}', , [rfReplaceAll]);
     end;

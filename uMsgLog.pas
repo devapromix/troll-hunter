@@ -62,9 +62,9 @@ var
 begin
   SL := TStringList.Create;
   try
-    C := Math.Min(ACount, FLog.Count - 1);
-    for I := 0 to C do
-      SL.Append(FLog[I]);
+    C := Math.Min(ACount, FLog.Count);
+    for I := C downto 1 do
+      SL.Append(FLog[FLog.Count - I]);
     Result := SL.Text;
   finally
     SL.Free;

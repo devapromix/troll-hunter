@@ -31,6 +31,7 @@ const
 
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
+  TextScreenshot: string = '';
   WizardMode: Boolean = False;
   GameMode: Boolean = False;
   CanClose: Boolean = False;
@@ -46,10 +47,11 @@ function GetDescAn(S: string): string;
 function GetDescThe(S: string): string;
 function GetDescSig(V: Integer): string;
 function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
+function GetTextScreenshot: string;
 
 implementation
 
-uses SysUtils, uTerminal;
+uses SysUtils, Classes, uTerminal;
 
 procedure Init;
 var
@@ -130,6 +132,33 @@ begin
   SysUtils.DateSeparator := DateSep;
   SysUtils.TimeSeparator := TimeSep;
   Result := DateToStr(Date) + '-' + TimeToStr(Time);
+end;
+
+function GetTextScreenshot: string;
+var
+  SL: TStringList;
+  X, Y, C: Byte;
+  S: string;
+begin
+  SL := TStringList.Create;
+  try
+  for Y := 0 to View.Height - 1 do
+  begin
+    S := '';
+    for X := 0 to View.Width - 1 do
+    begin
+      C := Terminal.Pick(X, Y);
+      if (C >= 32) and (C < 126) then
+        S := S + Chr(C)
+          else S := S + ' ';
+    end;
+    SL.Append(S);
+  end;
+  Result := SL.Text;
+  finally
+    SL.Free;
+    SL := nil;
+  end;
 end;
 
 initialization
