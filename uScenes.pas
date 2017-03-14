@@ -463,7 +463,10 @@ begin
     TK_SLASH:
       Scenes.SetScene(scHelp);
     TK_ESCAPE:
+    begin
+      TextScreenshot := GetTextScreenshot();
       Scenes.SetScene(scQuit, Scenes.Scene);
+    end;
     TK_I:
       Scenes.SetScene(scInv);
     TK_F:

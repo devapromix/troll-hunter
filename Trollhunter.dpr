@@ -26,7 +26,7 @@ begin
       Scenes.Render;
       Terminal.Refresh;
     end;
-    Key := 0;
+    Key := 0;  
     if terminal_has_input() then
     begin
       Key := terminal_read();
