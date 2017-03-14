@@ -257,6 +257,7 @@ var
   I: Byte;
   SL: TStringList;
 begin
+  if WizardMode then Exit;
   SL := TStringList.Create;
   try
     SL.LoadFromFile(CharacterDumpFileName);

@@ -103,9 +103,10 @@ end;
 
 procedure TItems.Render(AX, AY: Byte);
 var
+  MapID, X, Y: Byte;
   I, Count: Integer;
+  Color: Cardinal;
   FItem: Item;
-  MapID: Byte;
 begin
   MapID := Ord(Map.Deep);
   Count := Items_Dungeon_GetMapCount(MapID);
@@ -114,9 +115,11 @@ begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
     if not Map.InView(FItem.X, FItem.Y)
       or (not WizardMode and not Map.GetFOV(FItem.X, FItem.Y)) then Continue;
-    Terminal.Print(FItem.X - Player.X + AX + View.Left,
-      FItem.Y - Player.Y + AY + View.Top, ItemBase[FItem.ItemID].Symbol,
-      ItemBase[FItem.ItemID].Color);
+    X := FItem.X - Player.X + AX + View.Left;
+    Y := FItem.Y - Player.Y + AY + View.Top;
+    if Map.GetFOG(X, Y) then
+      Color := clFog else Color := ItemBase[FItem.ItemID].Color;
+    Terminal.Print(X, Y, ItemBase[FItem.ItemID].Symbol, Color);
   end;
 end;
 
