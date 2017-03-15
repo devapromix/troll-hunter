@@ -8,6 +8,7 @@ type
   TMobBase = record
     Symbol: Char;
     Name: string;
+    Boss: Boolean;
     Deep: TDeepEnum;
     MaxLife: Word;
     Level: Byte;
@@ -18,21 +19,23 @@ type
   end;
 
 const
-  MobCount = 6;
+  MobCount = 7;
 
 const
   MobBase: array [0..MobCount - 1] of TMobBase = (
   // Dark Wood
-  (Symbol: 'r'; Name: 'Rat';        Deep: deDarkWood;      MaxLife:   5; Level:  1; Armor:  0;  DV:  4; Damage:  2; Color: $FF249988;),
-  (Symbol: 'f'; Name: 'Frog';       Deep: deDarkWood;      MaxLife:   7; Level:  1; Armor:  0;  DV:  5; Damage:  2; Color: $FF33FF66;),
+  (Symbol: 'r'; Name: 'Rat';        Boss: False; Deep: deDarkWood;      MaxLife:   5; Level:  1; Armor:  0;  DV:  4; Damage:  2; Color: $FF249988;),
+  (Symbol: 'f'; Name: 'Frog';       Boss: False; Deep: deDarkWood;      MaxLife:   7; Level:  1; Armor:  0;  DV:  5; Damage:  2; Color: $FF33FF66;),
   // Gray Cave
-  (Symbol: 'k'; Name: 'Kobold';     Deep: deGrayCave;      MaxLife:  15; Level:  1; Armor:  1;  DV:  6; Damage:  4; Color: $FF777700;),
+  (Symbol: 'k'; Name: 'Kobold';     Boss: False; Deep: deGrayCave;      MaxLife:  15; Level:  1; Armor:  1;  DV:  6; Damage:  4; Color: $FF777700;),
   // Deep Cave
-  (Symbol: 'g'; Name: 'Goblin';     Deep: deDeepCave;      MaxLife:  20; Level:  2; Armor:  2;  DV: 12; Damage:  5; Color: $FF00AA00;),
+  (Symbol: 'g'; Name: 'Goblin';     Boss: False; Deep: deDeepCave;      MaxLife:  20; Level:  2; Armor:  2;  DV: 12; Damage:  5; Color: $FF00AA00;),
   // Blood Cave
-  (Symbol: 'z'; Name: 'Zombie';     Deep: deBloodCave;     MaxLife:  25; Level:  2; Armor:  2;  DV:  9; Damage:  3; Color: $FF00BB00;),
+  (Symbol: 'z'; Name: 'Zombie';     Boss: False; Deep: deBloodCave;     MaxLife:  25; Level:  2; Armor:  2;  DV:  9; Damage:  3; Color: $FF00BB00;),
   // Dungeon of Doom
-  (Symbol: 'T'; Name: 'Troll King'; Deep: deDungeonOfDoom; MaxLife: 100; Level: 10; Armor:  14; DV: 60; Damage: 25; Color: $FFFF4400;)
+  (Symbol: 'O'; Name: 'Ogre';       Boss: False; Deep: deDungeonOfDoom; MaxLife:  80; Level: 10; Armor:  12; DV: 60; Damage: 30; Color: $FF559977;),
+  // Boss
+  (Symbol: 'T'; Name: 'Troll King'; Boss: True;  Deep: deDungeonOfDoom; MaxLife: 10; Level: 10; Armor:  14; DV: 60; Damage: 35; Color: $FFFF4400;)
   );
 
 type
@@ -70,7 +73,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, uPlayer, uMsgLog;
+uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer; Callback: TGetXYVal; var TargetX, TargetY: integer): boolean;external 'BeaRLibPF.dll';
 
@@ -94,11 +97,22 @@ begin
     and (Player.Y <> FY)
     and Mobs.GetFreeTile(FX, FY)
     and (MobBase[ID].Deep = ADeep);
+  if (MobBase[ID].Boss and IsBoss) then AddRandom(ADeep);
   X := FX;
   Y := FY;
   Deep := ADeep;
   Alive := True;
   Life := MobBase[ID].MaxLife;
+  // Boss
+  if MobBase[ID].Boss then
+  begin
+    IsBoss := True;
+    if WizardMode then
+    begin
+      Player.X := X - 1;
+      Player.Y := Y - 1;
+    end;
+  end;
 end;    
 
 procedure TMob.Attack;

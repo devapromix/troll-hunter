@@ -36,6 +36,7 @@ var
   GameMode: Boolean = False;
   CanClose: Boolean = False;
   Killer: string = '';
+  IsBoss: Boolean = False;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;

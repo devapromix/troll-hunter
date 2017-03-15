@@ -330,6 +330,7 @@ begin
   
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
+    IsBoss := False;
     for I := 0 to 255 do Mobs.Add(FDeep);
     for I := 0 to 255 do Items.Add(FDeep);
   end;
