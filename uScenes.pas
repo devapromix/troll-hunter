@@ -249,7 +249,7 @@ begin
   case Key of
     TK_ESCAPE:
       CanClose := True;
-    TK_ENTER:
+    TK_ENTER, TK_KP_ENTER:
     begin
       Scenes.SetScene(scLoad);
       Terminal.Refresh;
@@ -536,7 +536,7 @@ end;
 procedure TSceneDef.Update(var Key: Word);
 begin
   case Key of
-    TK_ENTER:
+    TK_ENTER, TK_KP_ENTER:
     begin
       Player.SaveCharacterDump(Format('Killed by %s', [Killer]));
       CanClose := True;
@@ -561,7 +561,7 @@ end;
 procedure TSceneWin.Update(var Key: Word);
 begin
   case Key of
-    TK_ENTER:
+    TK_ENTER, TK_KP_ENTER:
     begin
       Player.SaveCharacterDump('Won the game');
       CanClose := True;
@@ -578,7 +578,6 @@ begin
   Y := 1;
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, Y, 'Inventory', TK_ALIGN_CENTER);
-
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes', TK_ALIGN_CENTER);
 end;
