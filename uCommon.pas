@@ -112,6 +112,7 @@ end;
 
 function GetDescAn(S: string): string;
 begin
+  S := LowerCase(S);
   if (S[1] in ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + S else
       Result := 'a ' + S;

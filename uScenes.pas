@@ -120,7 +120,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog, uItem;
+  uMap, uMob, uMsgLog, uItem, BeaRLibItems;
 
 { TScene }
 
@@ -310,14 +310,43 @@ var
   T: TTile;
   Min, Max: TPoint;
 
-  procedure RenderLook(T: TTile);
+  function GetItemInfo(AItem: Item; IsManyItems: Boolean): string;
   var
     S: string;
+    N: Integer;
+  begin
+    S := '';
+    N := AItem.ItemID;
+    if (AItem.Stack > 1) then
+      // Amount
+      S := '(' + IntToStr(AItem.Amount) + ')'
+      // Durability
+      else
+        S := '(' + IntToStr(AItem.Durability) + '/' + IntToStr(ItemBase[N].MaxDurability) + ')';
+    S := GetCapit(GetDescAn(Trim(ItemBase[AItem.ItemID].Name + ' ' + S)));
+    if IsManyItems then
+    begin
+      Result := Format('Many items lays in the ground (%s).', [S]);
+    end else Result := Format('%s lays in the ground.', [S]);
+  end;
+
+
+  procedure RenderLook(X, Y: Byte; T: TTile; IsMob: Boolean);
+  var
+    S: string;
+    C: Integer;
+    FItem: Item;
   begin
     S := '';
     Terminal.BackgroundColor(0);
     Terminal.ForegroundColor(clYellow);
     S := S + T.Name + '. ';
+    C := Items_Dungeon_GetMapCountXY(Ord(Map.Deep), X, Y);
+    if (C > 0) then
+    begin
+      FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Deep), 0, X, Y);
+      S := S + GetItemInfo(FItem, (C > 1)) + '. ';
+    end;
     Terminal.Print(Info.Left, Info.Top, S);
   end;
 
@@ -369,10 +398,10 @@ begin
       begin
         Terminal.BackgroundColor($88FFFF00);
         Terminal.Print(DX + View.Left, DY + View.Top, ' ');
-        RenderLook(T);
+        RenderLook(X, Y, T, True);
       end;
       if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
-        RenderLook(T);
+        RenderLook(X, Y, T, False);
       if not WizardMode then
       begin
         if (GetDist(Player.X, Player.Y, X, Y) <= Player.GetRadius) then

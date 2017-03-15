@@ -23,15 +23,15 @@ const
   // All
   (Symbol: '$'; Name: 'Gold';               MaxDurability:   0; Color: clYellow; Deep: deDarkWood;     ),
   // Dark Wood
-  (Symbol: '/'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDarkWood;     ),
+  (Symbol: '/'; Name: 'Item';               MaxDurability:  10; Color: clYellow; Deep: deDarkWood;     ),
   // Gray Cave
-  (Symbol: '\'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deGrayCave;     ),
+  (Symbol: '\'; Name: 'Item';               MaxDurability:  10; Color: clYellow; Deep: deGrayCave;     ),
   // Deep Cave
-  (Symbol: '['; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDeepCave;     ),
+  (Symbol: '['; Name: 'Item';               MaxDurability:  10; Color: clYellow; Deep: deDeepCave;     ),
   // Blood Cave
-  (Symbol: '^'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deBloodCave;    ),
+  (Symbol: '^'; Name: 'Item';               MaxDurability:  10; Color: clYellow; Deep: deBloodCave;    ),
   // Dungeon of Doom
-  (Symbol: '{'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDungeonOfDoom;)
+  (Symbol: '{'; Name: 'Item';               MaxDurability:  10; Color: clYellow; Deep: deDungeonOfDoom;)
   );
 
 type
