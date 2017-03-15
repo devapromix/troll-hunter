@@ -224,8 +224,9 @@ begin
   case Key of
     TK_CLOSE:
     begin
-      if GameMode and not (Scene in [scWin, scDef, scQuit]) then
-        SetScene(scQuit, Scene);
+      if GameMode and not (Scene in [scWin, scDef, scQuit])
+        and (Player.Life > 0) then
+          SetScene(scQuit, Scene);
     end;
   end;
 end;
@@ -464,6 +465,7 @@ begin
       Scenes.SetScene(scHelp);
     TK_ESCAPE:
     begin
+      if (Player.Life = 0) then Exit;
       TextScreenshot := GetTextScreenshot();
       Scenes.SetScene(scQuit, Scenes.Scene);
     end;
@@ -576,7 +578,7 @@ begin
   Terminal.Print(X, Y, 'Inventory', TK_ALIGN_CENTER);
 
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Player', TK_ALIGN_CENTER);
+    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneInv.Update(var Key: Word);
