@@ -298,6 +298,11 @@ end;
 
 procedure TPlayer.Wait;
 begin
+  if not DeepVis[Map.Deep] then
+  begin
+    MsgLog.Add(Format('You have opened a new territory: %s.', [Map.GetName]));
+    DeepVis[Map.Deep] := True;
+  end;
   Move(0, 0);
 end;
 

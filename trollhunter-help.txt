@@ -5,7 +5,7 @@ there is village, Dork. The land is in danger, because The Troll King and
 his armies are coming. Only a legendary hero can kill the monster.
 
 You play as a lonely hero who has to slay trolls to save your land Elvion.
-You gather equipment, fight enemies and try to survive for your final 
+You can gather equipment, fight enemies and try to survive for your final 
 confrontation with boss. Good luck!
 
 == Keybindings ==

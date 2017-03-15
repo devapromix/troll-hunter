@@ -14,6 +14,9 @@ const
 const
   FinalDungeon = deDungeonOfDoom;
 
+var
+  DeepVis: array [TDeepEnum] of Boolean;
+
 type
   TTile = record
     Symbol: Char;
@@ -286,9 +289,11 @@ var
 begin
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
+    DeepVis[FDeep] := False;
     case FDeep of
       deDarkWood:
       begin
+        DeepVis[FDeep] := True;
         Self.Clear(FDeep, teDefaultFloor);
         for I := 0 to 9999 do
           Self.SetTileEnum(Math.RandomRange(0, High(Byte)),

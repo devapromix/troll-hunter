@@ -256,6 +256,8 @@ begin
       Map.Gen;
       terminal_delay(1000);
       GameMode := True;
+      MsgLog.Clear;
+      MsgLog.Add('Welcome to Elvion. You need to find and kill The King Troll!');
       Scenes.SetScene(scGame);
     end;
   end;
@@ -444,11 +446,17 @@ begin
     TK_KP_PLUS:
       if WizardMode then
         if (Map.Deep < High(TDeepEnum)) then
+        begin
           Map.Deep := succ(Map.Deep);
+          Player.Wait;
+        end;
     TK_KP_MINUS:
       if WizardMode then
         if (Map.Deep > Low(TDeepEnum)) then
+        begin
           Map.Deep := pred(Map.Deep);
+          Player.Wait;
+        end;
     TK_COMMA:
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Deep) = teUpStairs) then
         if (Map.Deep > Low(TDeepEnum)) then
@@ -465,6 +473,9 @@ begin
         end;
     TK_SLASH:
       Scenes.SetScene(scHelp);
+    TK_KP_MULTIPLY:
+      if WizardMode then
+        Player.Fill;
     TK_ESCAPE:
     begin
       if (Player.Life = 0) then Exit;
