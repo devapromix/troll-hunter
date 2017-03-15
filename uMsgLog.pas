@@ -17,7 +17,7 @@ type
     procedure Clear;
     procedure Add(S: string);
     procedure Turn;
-    property Msg: string read FMsg;
+    property Msg: string read FMsg write FMsg;
     function GetLastMsg(const ACount: Integer): string;
   end;
 
@@ -30,10 +30,12 @@ uses SysUtils, Math, uCommon, uTerminal, BearLibTerminal;
 
 { TMsgLog }
 
+const
+  MaxLogCapacity = 25;
+
 procedure TMsgLog.Add(S: string);
 begin
-  if (Trim(S) <> '') then
-    FMsg := FMsg + ' ' + S;
+  FMsg := FMsg + Trim(' ' + S);
 end;
 
 procedure TMsgLog.Clear;
@@ -57,8 +59,8 @@ end;
 
 function TMsgLog.GetLastMsg(const ACount: Integer): string;
 var
-  SL: TStringList;
   I, C: Integer;
+  SL: TStringList;
 begin
   SL := TStringList.Create;
   try
@@ -79,15 +81,18 @@ begin
     L := '' else L := '[color=yellow]' + FMsg + '[/color]';
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top,
-  Log.Width, Log.Height, FLog.Text + L,
-  TK_ALIGN_BOTTOM);
+    Log.Width, Log.Height, Trim(FLog.Text + L),
+    TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.Turn;
 begin
-  if (Trim(MsgLog.Msg) = '') then Exit;
-  FLog.Append(FMsg);
-  FMsg := '';
+  if (Trim(MsgLog.Msg) <> '') then
+  begin
+    if (FLog.Count > MaxLogCapacity - 1) then
+      FLog.Delete(FLog.Count - 1);
+    FLog.Append(FMsg);
+  end;
 end;
 
 initialization

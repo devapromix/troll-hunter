@@ -11,6 +11,9 @@ const
   DeepName: array [TDeepEnum] of string = (
     'Dark Wood', 'Gray Cave', 'Deep Cave', 'Blood Cave', 'Dungeon of Doom');
 
+const
+  FinalDungeon = deDungeonOfDoom;
+
 type
   TTile = record
     Symbol: Char;

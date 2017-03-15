@@ -120,7 +120,7 @@ var
   Dam: Word;
   The: string;  
 begin
-  if (Index < 0) then Exit;
+  if (Index < 0) then Exit;  
   Mob := Mobs.FMob[Index];
   if not Mob.Alive then Exit;
   The := GetDescThe(MobBase[Mob.ID].Name);
@@ -135,6 +135,7 @@ begin
     // Miss
     MsgLog.Add(Format('You fail to hurt %s.', [The]));
   end;
+  AddTurn;
 end;
 
 procedure TPlayer.Calc;
@@ -230,14 +231,13 @@ begin
       Scenes.SetScene(scDef);
       Exit;
     end;
-    if Won then
+    if WonGame then
     begin
-      Scenes.SetScene(scVic);
+      Scenes.SetScene(scWin);
       Exit;
     end;
     FX := Clamp(X + AX, 0, High(Byte));
     FY := Clamp(Y + AY, 0, High(Byte));
-    AddTurn;
     if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then Exit;
     if not Mobs.GetFreeTile(FX, FY) then
     begin
@@ -245,8 +245,8 @@ begin
     end else begin
       X := FX;
       Y := FY;
+      AddTurn;
     end;
-    MsgLog.Turn;
   end;
 end;
 

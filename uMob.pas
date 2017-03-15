@@ -140,12 +140,11 @@ procedure TMob.Defeat;
 begin
   Self.Alive := False;
   MsgLog.Add(Format('You kill %s.', [GetDescThe(MobBase[ID].Name)]));
-  if () then
+  if (MobBase[ID].Boss and (Map.Deep = FinalDungeon)) then
   begin
-
-//  WonGame := True;
-//  MsgLog.Add('You have won.');
-//  TextScreenshot := GetTextScreenshot();
+    WonGame := True;
+    MsgLog.Add('You have won.');
+    TextScreenshot := GetTextScreenshot();
   end;
 end;
 

@@ -414,6 +414,8 @@ end;
 
 procedure TSceneGame.Update(var Key: Word);
 begin
+  MsgLog.Turn;
+  MsgLog.Msg := '';
   case Key of
     TK_LEFT, TK_KP_4, TK_A:
       Player.Move(-1, 0);

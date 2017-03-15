@@ -14,7 +14,7 @@ type
   end;
 
 const
-  ItemCount = 6;
+  ItemCount = 6; 
   //
   itGold    = 0;
 
