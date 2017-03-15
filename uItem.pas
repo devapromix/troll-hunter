@@ -2,7 +2,7 @@ unit uItem;
 
 interface
 
-uses BearLibItems, uCommon, uMap;
+uses BearLibItems, uCommon, uMap, uPlayer;
 
 type
   TItemBase = record
@@ -25,13 +25,13 @@ const
   // Dark Wood
   (Symbol: '/'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDarkWood;     ),
   // Gray Cave
-  (Symbol: '/'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deGrayCave;     ),
+  (Symbol: '\'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deGrayCave;     ),
   // Deep Cave
-  (Symbol: '/'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDeepCave;     ),
+  (Symbol: '['; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDeepCave;     ),
   // Blood Cave
-  (Symbol: '/'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deBloodCave;    ),
+  (Symbol: '^'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deBloodCave;    ),
   // Dungeon of Doom
-  (Symbol: '/'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDungeonOfDoom;)
+  (Symbol: '{'; Name: 'Item';               MaxDurability:   0; Color: clYellow; Deep: deDungeonOfDoom;)
   );
 
 type
@@ -50,7 +50,7 @@ var
 
 implementation
 
-uses Math, uTerminal, uPlayer;
+uses Math, uTerminal;
 
 { TItems }
 
@@ -117,7 +117,8 @@ begin
       or (not WizardMode and not Map.GetFOV(FItem.X, FItem.Y)) then Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if Map.GetFOG(X, Y) then
+    if not WizardMode
+      and (GetDist(Player.X, Player.Y, FItem.X, FItem.Y) > Player.GetRadius) then
       Color := clFog else Color := ItemBase[FItem.ItemID].Color;
     Terminal.Print(X, Y, ItemBase[FItem.ItemID].Symbol, Color);
   end;

@@ -157,7 +157,6 @@ begin
   Result := SL.Text;
   finally
     SL.Free;
-    SL := nil;
   end;
 end;
 

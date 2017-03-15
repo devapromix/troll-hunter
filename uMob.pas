@@ -150,6 +150,8 @@ procedure TMob.Render(AX, AY: Byte);
 begin
   if not Map.InView(X, Y) or (not WizardMode
     and not Map.GetFOV(X, Y)) then Exit;
+  if not WizardMode
+    and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) then Exit;
   Terminal.Print(X - Player.X + AX + View.Left,
     Y - Player.Y + AY + View.Top, MobBase[ID].Symbol,
     MobBase[ID].Color);
