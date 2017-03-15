@@ -48,6 +48,7 @@ type
     procedure AddRandom(ADeep: TDeepEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
+    procedure Walk(AX, AY: Byte);
     procedure Attack;
     procedure Defeat;
   end;
@@ -163,7 +164,7 @@ begin
   begin
     X := NX;
     Y := NY;
-  end;
+  end else Self.Walk(X, Y);
 end;
 
 procedure TMob.Render(AX, AY: Byte);
@@ -175,6 +176,51 @@ begin
   Terminal.Print(X - Player.X + AX + View.Left,
     Y - Player.Y + AY + View.Top, MobBase[ID].Symbol,
     MobBase[ID].Color);
+end;
+
+procedure TMob.Walk(AX, AY: Byte);
+var
+  NX, NY: ShortInt;
+begin
+  NX := 0;
+  NY := 0;
+  case Math.RandomRange(0, 8) + 1 of
+    // North
+    0: begin
+         NY := -1;
+       end;
+    1: begin
+         NX := +1;
+         NY := -1;
+       end;
+    2: begin
+         NX := +1;
+       end;
+    3: begin
+         NX := +1;
+         NY := +1;
+       end;
+    4: begin
+         NY := +1;
+       end;
+    5: begin
+         NX := -1;
+         NY := +1;
+       end;
+    6: begin
+         NX := -1;
+       end;
+    7: begin
+         NX := -1;
+         NY := -1;
+       end;
+  end;
+  if Mobs.GetFreeTile(X + NX, Y + NY)
+    and (Map.GetTileEnum(X, Y, Map.Deep) in FreeTiles) then
+  begin
+    X := X + NX;
+    Y := Y + NY;
+  end;
 end;
 
 { TMobs }

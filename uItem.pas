@@ -74,7 +74,7 @@ begin
     itGold: // Gold
     begin
       FItem.Stack := 1000;
-      FItem.Amount := Math.RandomRange(0, 25) + 1;
+      FItem.Amount := (Math.RandomRange(0, 25) + 1) * ord(ADeep);
     end;
     else
     begin
