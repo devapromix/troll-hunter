@@ -230,6 +230,11 @@ begin
       Scenes.SetScene(scDef);
       Exit;
     end;
+    if Won then
+    begin
+      Scenes.SetScene(scVic);
+      Exit;
+    end;
     FX := Clamp(X + AX, 0, High(Byte));
     FY := Clamp(Y + AY, 0, High(Byte));
     AddTurn;
