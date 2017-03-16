@@ -31,8 +31,10 @@ const
     teDnStairs, teWater];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
-const
-  Tile: array [TTileEnum, TDeepEnum] of TTile = (( // DefaultFloor
+var
+  Tile: array [TTileEnum, TDeepEnum] of TTile;
+
+  { = (( // DefaultFloor
     (Symbol: '"'; Name: 'Grass'; Color: $FF113311;), // Dark Wood
     (Symbol: ':'; Name: 'Dirt'; Color: $FF331133;), // Gray Cave
     (Symbol: '.'; Name: 'Stone'; Color: $FF222111;), // Deep Cave
@@ -87,7 +89,7 @@ const
     (Symbol: '='; Name: 'Water'; Color: $FF222255;), // Blood Cave
     (Symbol: '='; Name: 'Water'; Color: $FF222244;) // Dungeon of Doom
     ));
-
+  }
 type
   TMap = class(TObject)
   private
@@ -99,6 +101,9 @@ type
       ABaseTileEnum, ATileEnum: TTileEnum);
     procedure AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word;
       ABaseTileEnum, ATileEnum: TTileEnum);
+    procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
+      ATile: TTileEnum; ADeep: TDeepEnum);
+    procedure InitTiles;
   public
     constructor Create;
     destructor Destroy; override;
@@ -127,6 +132,22 @@ implementation
 uses Math, uPlayer, uMob, uItem, gnugettext;
 
 { TMap }
+
+procedure TMap.InitTiles;
+begin
+  // DefaultFloor
+  AddTile('"', _('Grass'), $FF113311, teDefaultFloor, deDarkWood);
+  AddTile(':', _('Dirt'),  $FF331133, teDefaultFloor, deGrayCave);
+  AddTile('.', _('Stone'), $FF222111, teDefaultFloor, deDeepCave);
+  AddTile(';', _('Stone'), $FF330000, teDefaultFloor, deBloodCave);
+  AddTile('~', _('Stone'), $FF002200, teDefaultFloor, deDungeonOfDoom);
+  // DefaultWall
+  AddTile('T', _('Tree'), $FF006622, teDefaultWall, deDarkWood);
+  AddTile('#', _('Wall'), $FF444422, teDefaultWall, deGrayCave);
+  AddTile('#', _('Wall'), $FF222133, teDefaultWall, deDeepCave);
+  AddTile('#', _('Wall'), $FF322118, teDefaultWall, deBloodCave);
+  AddTile('#', _('Wall'), $FF112211, teDefaultWall, deDungeonOfDoom);
+end;
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum;
   ABaseTileEnum, ATileEnum: TTileEnum);
@@ -167,6 +188,17 @@ begin
         Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
+  end;
+end;
+
+procedure TMap.AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
+  ATile: TTileEnum; ADeep: TDeepEnum);
+begin
+  with Tile[ATile, ADeep] do
+  begin
+    Symbol := ASymbol;
+    Name := AName;
+    Color := AColor;
   end;
 end;
 
@@ -278,6 +310,7 @@ var
   end;
 
 begin
+  InitTiles();
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
     DeepVis[FDeep] := False;

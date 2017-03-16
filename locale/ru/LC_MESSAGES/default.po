@@ -1,59 +1,146 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr "Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-12 20:30\n"
-"PO-Revision-Date: 2015-08-12 20:30\n"
+"PO-Revision-Date: 2017-03-16 17:52+0000\n"
 "Last-Translator: Somebody <your.email@address.com>\n"
+"Language-Team: Invalid\n"
+"Language: zxx\n"
+"Plural-Forms: nplurals=2; plural=n!=1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: dxgettext 1.2.2\n"
-"Language-Team:  <>\n"
+"X-Loco-Source-Locale: uk_UA\n"
+"X-Generator: Loco - https://localise.biz/\n"
 "X-Poedit-Language: Russian\n"
+"X-Loco-Parser: loco_parse_po"
 
-#: uMap.pas:354
+#. All
+#: uItem.pas:123
+msgid "Gold"
+msgstr ""
+
+#: uItem.pas:125
+msgid "Potion of health"
+msgstr ""
+
+#: uItem.pas:127
+msgid "Potion of mana"
+msgstr ""
+
+#. Dark Wood
+#: uItem.pas:130
+msgid "Short Sword"
+msgstr ""
+
+#. Gray Cave
+#: uItem.pas:133
+msgid "Item A"
+msgstr ""
+
+#. Deep Cave
+#: uItem.pas:136
+msgid "Item B"
+msgstr ""
+
+#. Blood Cave
+#: uItem.pas:139
+msgid "Item C"
+msgstr ""
+
+#. Dungeon of Doom
+#: uItem.pas:142
+msgid "Item D"
+msgstr ""
+
+#. DefaultFloor
+#: uMap.pas:139
+msgid "Grass"
+msgstr ""
+
+#: uMap.pas:140
+msgid "Dirt"
+msgstr ""
+
+#: uMap.pas:141
+#: uMap.pas:142
+#: uMap.pas:143
+msgid "Stone"
+msgstr ""
+
+#: uMap.pas:381
 msgid "Dark Wood"
 msgstr "Темнолесье"
 
-#: uMap.pas:356
+#: uMap.pas:383
 msgid "Gray Cave"
 msgstr ""
 
-#: uMap.pas:358
+#: uMap.pas:385
 msgid "Deep Cave"
 msgstr ""
 
-#: uMap.pas:360
+#: uMap.pas:387
 msgid "Blood Cave"
 msgstr ""
 
-#: uMap.pas:362
+#: uMap.pas:389
 msgid "Dungeon Of Doom"
 msgstr ""
 
 #. Attack
-#: uMob.pas:140
+#: uMob.pas:150
 msgid "%s hits you (%d)."
 msgstr "%s ударил тебя (%d)."
 
 #. Miss
-#: uMob.pas:147
+#: uMob.pas:157
 msgid "%s hits you, but your armor protects "
 "you."
 msgstr "%s попытался ударить тебя, но промахнулся."
 
-#: uMob.pas:154
+#: uMob.pas:164
 msgid "You kill %s."
 msgstr "Ты убил %s."
 
-#: uMob.pas:158
+#: uMob.pas:168
 msgid "You have won."
 msgstr "Ты победил."
+
+#. Dark Wood
+#: uMob.pas:332
+msgid "Rat"
+msgstr ""
+
+#: uMob.pas:334
+msgid "Frog"
+msgstr ""
+
+#. Gray Cave
+#: uMob.pas:337
+msgid "Kobold"
+msgstr ""
+
+#. Deep Cave
+#: uMob.pas:340
+msgid "Goblin"
+msgstr ""
+
+#. Blood Cave
+#: uMob.pas:343
+msgid "Zombie"
+msgstr ""
+
+#. Dungeon of Doom
+#: uMob.pas:346
+msgid "Ogre"
+msgstr ""
+
+#: uMob.pas:348
+msgid "Troll King"
+msgstr ""
 
 #. Attack
 #: uPlayer.pas:125
@@ -119,8 +206,8 @@ msgstr ""
 #: uPlayer.pas:306
 #: uScenes.pas:243
 #. Player info
-#: uScenes.pas:459
-#: uScenes.pas:706
+#: uScenes.pas:462
+#: uScenes.pas:709
 msgid "Trollhunter"
 msgstr ""
 
@@ -133,7 +220,7 @@ msgid "Last messages"
 msgstr ""
 
 #: uPlayer.pas:315
-#: uScenes.pas:655
+#: uScenes.pas:658
 msgid "Inventory"
 msgstr ""
 
@@ -141,133 +228,136 @@ msgstr ""
 msgid "You have opened a new territory: %s."
 msgstr ""
 
-#: uScenes.pas:245
+#: uScenes.pas:246
 msgid "Press [color=red][[ENTER]][/color] to "
 "continue..."
 msgstr "Нажми [color=red][[ENTER]][/color]..."
 
 #: uScenes.pas:263
-msgid "Welcome to Elvion. You need to find and kill The King "
+msgid "Welcome to Elvion! You need to find and kill The King "
 "Troll!"
 msgstr ""
 
-#: uScenes.pas:292
-#: uScenes.pas:682
+#: uScenes.pas:265
+msgid "Press ? for help."
+msgstr ""
+
+#: uScenes.pas:294
+#: uScenes.pas:685
 msgid "[color=red][[ESC]][/color] Close"
 msgstr ""
 
 #. Durability
-#: uScenes.pas:333
-msgid "Many items (%dx) lays in the ground "
-"(%s)."
+#: uScenes.pas:336
+msgid "Saveral items (%dx) are lying here (%s)."
 msgstr ""
 
-#: uScenes.pas:337
-msgid "%s lays in the ground."
+#: uScenes.pas:340
+msgid "%s is lying here."
 msgstr ""
 
-#: uScenes.pas:464
-#: uScenes.pas:747
+#: uScenes.pas:467
+#: uScenes.pas:751
 msgid "Life"
 msgstr ""
 
-#: uScenes.pas:466
-#: uScenes.pas:751
+#: uScenes.pas:469
+#: uScenes.pas:755
 msgid "Mana"
 msgstr ""
 
-#: uScenes.pas:468
+#: uScenes.pas:471
 msgid "Turn %d Damage %d"
 msgstr ""
 
-#: uScenes.pas:568
+#: uScenes.pas:571
 msgid "Creating the world, please wait..."
 msgstr ""
 
-#: uScenes.pas:581
+#: uScenes.pas:584
 msgid "Quit? [[Y/N]]"
 msgstr ""
 
-#: uScenes.pas:589
+#: uScenes.pas:592
 msgid "Quit the game"
 msgstr ""
 
-#: uScenes.pas:605
+#: uScenes.pas:608
 msgid "GAME OVER!!!"
 msgstr ""
 
-#: uScenes.pas:607
+#: uScenes.pas:610
 msgid "Killed by [color=white]%s[/color]. Press "
 "[color=red][[ENTER]][/color]"
 msgstr ""
 
-#: uScenes.pas:616
+#: uScenes.pas:619
 msgid "Killed by %s"
 msgstr ""
 
-#: uScenes.pas:630
+#: uScenes.pas:633
 msgid "CONGRATULATIONS!!!"
 msgstr ""
 
-#: uScenes.pas:632
+#: uScenes.pas:635
 msgid "You have won. Press [color=red][[ENTER]][/color]"
 msgstr ""
 
-#: uScenes.pas:641
+#: uScenes.pas:644
 msgid "Won the game"
 msgstr ""
 
-#: uScenes.pas:657
+#: uScenes.pas:660
 msgid "[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills "
 "and attributes"
 msgstr ""
 
-#: uScenes.pas:679
+#: uScenes.pas:682
 msgid "Select an item to drop"
 msgstr ""
 
-#: uScenes.pas:712
+#: uScenes.pas:715
 msgid "[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] "
 "Inventory"
 msgstr ""
 
-#: uScenes.pas:723
+#: uScenes.pas:726
 msgid "Attributes"
 msgstr ""
 
-#: uScenes.pas:725
+#: uScenes.pas:728
 msgid "Level"
 msgstr "Уровень"
 
-#: uScenes.pas:727
+#: uScenes.pas:731
 msgid "Strength"
 msgstr ""
 
-#: uScenes.pas:730
+#: uScenes.pas:734
 msgid "Dexterity"
 msgstr ""
 
-#: uScenes.pas:733
+#: uScenes.pas:737
 msgid "Willpower"
 msgstr ""
 
-#: uScenes.pas:736
+#: uScenes.pas:740
 msgid "Perception"
 msgstr ""
 
-#: uScenes.pas:741
+#: uScenes.pas:744
 msgid "Defensive Value (DV)"
 msgstr ""
 
-#: uScenes.pas:744
+#: uScenes.pas:747
 msgid "Protection Value (PV)"
 msgstr ""
 
-#: uScenes.pas:754
+#: uScenes.pas:758
 msgid "Radius"
 msgstr ""
 
-#: uScenes.pas:767
+#: uScenes.pas:771
 msgid "Skills"
-msgstr ""
+msgstr "Навыки"
 

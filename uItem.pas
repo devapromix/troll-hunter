@@ -42,13 +42,13 @@ const
     // Dark Wood
     (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 30; Color: clWhite;    Deep: deDarkWood;),
     // Gray Cave
-    (Symbol: '\'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 40; Color: clYellow;   Deep: deGrayCave;),
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 40; Color: clYellow;   Deep: deGrayCave;),
     // Deep Cave
-    (Symbol: '['; ItemType: itSword;  MaxStack: 1;    MaxDurability: 50; Color: clYellow;   Deep: deDeepCave;),
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 50; Color: clYellow;   Deep: deDeepCave;),
     // Blood Cave
-    (Symbol: '^'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 60; Color: clYellow;   Deep: deBloodCave;),
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 60; Color: clYellow;   Deep: deBloodCave;),
     // Dungeon of Doom
-    (Symbol: '{'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 70; Color: clYellow;   Deep: deDungeonOfDoom;)
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 70; Color: clYellow;   Deep: deDungeonOfDoom;)
   );
 
 type
@@ -79,7 +79,7 @@ var
   Value: Integer;
 begin
   repeat
-    ID := Math.RandomRange(0, Ord(High(TItemEnum)));
+    ID := Math.RandomRange(0, Ord(High(TItemEnum)) + 1);
     FX := Math.RandomRange(0, High(Byte));
     FY := Math.RandomRange(0, High(Byte));
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
@@ -122,9 +122,9 @@ begin
     iGold:
       Result := _('Gold');
     iMinHPot:
-      Result := _('Minor Health Potion');
+      Result := _('Potion of health');
     iMinMPot:
-      Result := _('Minor Mana Potion');
+      Result := _('Potion of mana');
     // Dark Wood
     iShortSword:
       Result := _('Short Sword');

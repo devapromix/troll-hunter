@@ -260,7 +260,8 @@ begin
         GameMode := True;
         MsgLog.Clear;
         MsgLog.Add
-          (_('Welcome to Elvion. You need to find and kill The King Troll!'));
+          (_('Welcome to Elvion! You need to find and kill The King Troll!'));
+        MsgLog.Add(_('Press ? for help.'));
         Scenes.SetScene(scGame);
       end;
   end;
@@ -282,12 +283,66 @@ end;
 
 procedure TSceneHelp.Render;
 var
-  I, X, Y: Byte;
+  I, X, Y, KX, KY: Byte;
+
+  procedure AddKey(Key, Text: string);
+  begin
+    Terminal.Print(KX + 10, Y + KY, Format('[color=orange][[%s]][/color] %s',
+      [Key, Text]), TK_ALIGN_LEFT);
+    Inc(KX, X - 5);
+    if (KX > X + 11) then
+    begin
+      KX := 0;
+      Inc(KY);
+    end;
+  end;
+
 begin
+  Y := 1;
+  KX := 0;
+  KY := 14;
   X := Terminal.Window.Width div 2;
-  Y := (Terminal.Window.Height div 2) - ((SL.Count + 4) div 2);
-  for I := 0 to SL.Count - 1 do
-    Terminal.Print(X, Y + I, SL[I], TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, '== ' + _('Trollhunter') + ' ==', TK_ALIGN_CENTER);
+
+  Terminal.Print(X, Y + 2,
+    _('The land Elvion is surrounded by mountains. In the center of this land'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 3,
+    _('there is village, Dork. The land is in danger, because The Troll King and'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 4,
+    _('his armies are coming. Only a legendary hero can kill the monster.'),
+    TK_ALIGN_CENTER);
+
+  Terminal.Print(X, Y + 6,
+    _('You play as a lonely hero who has to slay trolls to save your land Elvion.'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 7,
+    _('You can gather equipment, fight enemies and try to survive for your final'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 8, _('confrontation with boss. Good luck!'),
+    TK_ALIGN_CENTER);
+
+  Terminal.Print(X, Y + 10, '== ' + _('Keybindings') + ' ==', TK_ALIGN_CENTER);
+
+  Terminal.Print(KX + 10, Y + 12, _('Move: [color=orange][[arrow keys]][/color], [color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], Wait:  [color=orange][[5]][/color], [color=orange][[S]][/color]'), TK_ALIGN_LEFT);
+
+  AddKey('<',   'Up staris');
+  AddKey('>',   'Down staris');
+  AddKey('G',   'Pickup an item');
+  AddKey('F',   'Drop an item');
+  AddKey('L',   'Look mode');
+  AddKey('I',   'Inventory');
+  AddKey('T',   'Skills and attributes');
+  AddKey('?',   'Help');
+  AddKey('Esc', 'Close');
+
+  Terminal.Print(X, Terminal.Window.Height - Y - 5, '== ' + _('Character dump')
+    + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Terminal.Window.Height - Y - 3,
+    _('The game saves a character dump to [color=green]*-character-dump.txt[/color] file.'),
+    TK_ALIGN_CENTER);
+
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     _('[color=red][[ESC]][/color] Close'), TK_ALIGN_CENTER);
 end;
@@ -331,11 +386,11 @@ var
       ' ' + S)));
     if IsManyItems then
     begin
-      Result := Format(_('Many items (%dx) lays in the ground (%s).'),
+      Result := Format(_('Saveral items (%dx) are lying here (%s).'),
         [ACount, S]);
     end
     else
-      Result := Format(_('%s lays in the ground.'), [S]);
+      Result := Format(_('%s is lying here.'), [S]);
   end;
 
   procedure RenderLook(X, Y: Byte; T: TTile; IsMob: Boolean);
@@ -359,8 +414,9 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%d/%d). ', [MobBase[Mobs.FMob[C].ID].Name,
-          Mobs.FMob[C].Life, MobBase[Mobs.FMob[C].ID].MaxLife]);
+        S := S + Format('%s (%d/%d). ',
+          [Mobs.GetName(TMobEnum(Mobs.FMob[C].ID)), Mobs.FMob[C].Life,
+          MobBase[TMobEnum(Mobs.FMob[C].ID)].MaxLife]);
       end;
     end;
 

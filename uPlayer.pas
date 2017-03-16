@@ -116,8 +116,8 @@ begin
   Mob := Mobs.FMob[Index];
   if not Mob.Alive then
     Exit;
-  The := GetDescThe(MobBase[Mob.ID].Name);
-  if (MobBase[Mob.ID].DV < Math.RandomRange(0, 100)) then
+  The := GetDescThe(Mobs.GetName(TMobEnum(Mob.ID)));
+  if (MobBase[TMobEnum(Mob.ID)].DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
     Dam := Clamp(Self.Damage, 0, High(Word));

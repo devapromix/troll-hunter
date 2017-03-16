@@ -11,7 +11,7 @@ type
   end;
 
 const
-  Version = '0.7';
+  Version = '0.8';
 
 const
   CharacterDumpFileName = 'trollhunter-character-dump.txt';
