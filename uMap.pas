@@ -5,11 +5,12 @@ interface
 uses uCommon;
 
 type
-  TDeepEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave, deDungeonOfDoom);
+  TDeepEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom);
 
 const
-  DeepName: array [TDeepEnum] of string = (
-    'Dark Wood', 'Gray Cave', 'Deep Cave', 'Blood Cave', 'Dungeon of Doom');
+  DeepName: array [TDeepEnum] of string = ('Dark Wood', 'Gray Cave',
+    'Deep Cave', 'Blood Cave', 'Dungeon of Doom');
 
 const
   FinalDungeon = deDungeonOfDoom;
@@ -25,85 +26,71 @@ type
   end;
 
 type
-  TTileEnum = (teDefaultFloor, teDefaultWall, teRock,
-    teFloor1, teFloor2, teFloor3,
-    teUpStairs, teDnStairs, teWater);
+  TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
+    teFloor3, teUpStairs, teDnStairs, teWater);
 
 const
-  StopTiles  = [teDefaultWall];
-  FreeTiles  = [teDefaultFloor, teRock,
-    teFloor1, teFloor2, teFloor3,
-    teUpStairs, teDnStairs, teWater];
-  SpawnTiles = [teDefaultFloor, teRock,
-    teFloor1, teFloor2, teFloor3,
-    teWater];
+  StopTiles = [teDefaultWall];
+  FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs,
+    teDnStairs, teWater];
+  SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 const
-  Tile: array[TTileEnum, TDeepEnum] of TTile = (
-  ( // DefaultFloor
+  Tile: array [TTileEnum, TDeepEnum] of TTile = (( // DefaultFloor
     (Symbol: '"'; Name: 'Grass'; Color: $FF113311;), // Dark Wood
-    (Symbol: ':'; Name: 'Dirt';  Color: $FF331133;), // Gray Cave
+    (Symbol: ':'; Name: 'Dirt'; Color: $FF331133;), // Gray Cave
     (Symbol: '.'; Name: 'Stone'; Color: $FF222111;), // Deep Cave
     (Symbol: ';'; Name: 'Stone'; Color: $FF330000;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF002200;)  // Dungeon of Doom
-  ),
-  ( // DefaultWall
-    (Symbol: 'T'; Name: 'Tree';  Color: $FF006622;), // Dark Wood
-    (Symbol: '#'; Name: 'Wall';  Color: $FF444422;), // Gray Cave
-    (Symbol: '#'; Name: 'Wall';  Color: $FF222133;), // Deep Cave
-    (Symbol: '#'; Name: 'Wall';  Color: $FF322118;), // Blood Cave
-    (Symbol: '#'; Name: 'Wall';  Color: $FF112211;)  // Dungeon of Doom
-  ),
-  ( // Rock
-    (Symbol: '^'; Name: 'Rock';  Color: $FF556655;), // Dark Wood
-    (Symbol: ':'; Name: 'Wall';  Color: $FF444422;), // Gray Cave
-    (Symbol: ':'; Name: 'Wall';  Color: $FF222133;), // Deep Cave
-    (Symbol: ':'; Name: 'Wall';  Color: $FF322118;), // Blood Cave
-    (Symbol: ';'; Name: 'Wall';  Color: $FF322118;)  // Dungeon of Doom
-  ),
-  ( // Floor1
+    (Symbol: '~'; Name: 'Stone'; Color: $FF002200;) // Dungeon of Doom
+    ), ( // DefaultWall
+    (Symbol: 'T'; Name: 'Tree'; Color: $FF006622;), // Dark Wood
+    (Symbol: '#'; Name: 'Wall'; Color: $FF444422;), // Gray Cave
+    (Symbol: '#'; Name: 'Wall'; Color: $FF222133;), // Deep Cave
+    (Symbol: '#'; Name: 'Wall'; Color: $FF322118;), // Blood Cave
+    (Symbol: '#'; Name: 'Wall'; Color: $FF112211;) // Dungeon of Doom
+    ), ( // Rock
+    (Symbol: '^'; Name: 'Rock'; Color: $FF556655;), // Dark Wood
+    (Symbol: ':'; Name: 'Wall'; Color: $FF444422;), // Gray Cave
+    (Symbol: ':'; Name: 'Wall'; Color: $FF222133;), // Deep Cave
+    (Symbol: ':'; Name: 'Wall'; Color: $FF322118;), // Blood Cave
+    (Symbol: ';'; Name: 'Wall'; Color: $FF322118;) // Dungeon of Doom
+    ), ( // Floor1
     (Symbol: '"'; Name: 'Grass'; Color: $FF446644;), // Dark Wood
     (Symbol: '"'; Name: 'Grass'; Color: $FF99AA99;), // Gray Cave
     (Symbol: '.'; Name: 'Stone'; Color: $FF224422;), // Deep Cave
     (Symbol: ';'; Name: 'Stone'; Color: $FF225533;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF228833;)  // Dungeon of Doom
-  ),
-  ( // Floor2
+    (Symbol: '~'; Name: 'Stone'; Color: $FF228833;) // Dungeon of Doom
+    ), ( // Floor2
     (Symbol: '"'; Name: 'Grass'; Color: $FF447755;), // Dark Wood
     (Symbol: '"'; Name: 'Grass'; Color: $FF779977;), // Gray Cave
     (Symbol: '.'; Name: 'Stone'; Color: $FF22CC44;), // Deep Cave
     (Symbol: ';'; Name: 'Stone'; Color: $FF333322;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF334422;)  // Dungeon of Doom
-  ),
-  ( // Floor3
+    (Symbol: '~'; Name: 'Stone'; Color: $FF334422;) // Dungeon of Doom
+    ), ( // Floor3
     (Symbol: '"'; Name: 'Grass'; Color: $FF778866;), // Dark Wood
     (Symbol: '"'; Name: 'Grass'; Color: $FF668866;), // Gray Cave
     (Symbol: '.'; Name: 'Stone'; Color: $FF338855;), // Deep Cave
     (Symbol: ';'; Name: 'Stone'; Color: $FF223333;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF226622;)  // Dungeon of Doom
-  ),
-  ( // UpStairs
+    (Symbol: '~'; Name: 'Stone'; Color: $FF226622;) // Dungeon of Doom
+    ), ( // UpStairs
     (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
     (Symbol: '<'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
     (Symbol: '<'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
     (Symbol: '<'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
-    (Symbol: '<'; Name: 'Stairs'; Color: $FFBBBB00;)  // Dungeon of Doom
-  ),
-  ( // DnStairs
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFBBBB00;) // Dungeon of Doom
+    ), ( // DnStairs
     (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
     (Symbol: '>'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
     (Symbol: '>'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
     (Symbol: '>'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
-    (Symbol: '>'; Name: 'Stairs'; Color: $FFBBBB00;)  // Dungeon of Doom
-  ),
-  ( // Water
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFBBBB00;) // Dungeon of Doom
+    ), ( // Water
     (Symbol: '='; Name: 'Water'; Color: $FF333388;), // Dark Wood
     (Symbol: '='; Name: 'Water'; Color: $FF333377;), // Gray Cave
     (Symbol: '='; Name: 'Water'; Color: $FF222266;), // Deep Cave
     (Symbol: '='; Name: 'Water'; Color: $FF222255;), // Blood Cave
-    (Symbol: '='; Name: 'Water'; Color: $FF222244;)  // Dungeon of Doom
-  )
-  );
+    (Symbol: '='; Name: 'Water'; Color: $FF222244;) // Dungeon of Doom
+    ));
 
 type
   TMap = class(TObject)
@@ -112,8 +99,10 @@ type
     FMap: array [Byte, Byte, TDeepEnum] of TTileEnum;
     FFog: array [Byte, Byte, TDeepEnum] of Boolean;
     FFOV: array [Byte, Byte] of Boolean;
-    procedure AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum; ABaseTileEnum, ATileEnum: TTileEnum);
-    procedure AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word; ABaseTileEnum, ATileEnum: TTileEnum);
+    procedure AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum;
+      ABaseTileEnum, ATileEnum: TTileEnum);
+    procedure AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word;
+      ABaseTileEnum, ATileEnum: TTileEnum);
   public
     constructor Create;
     destructor Destroy; override;
@@ -143,8 +132,8 @@ uses Math, uPlayer, uMob, uItem;
 
 { TMap }
 
-procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum; ABaseTileEnum,
-  ATileEnum: TTileEnum);
+procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum;
+  ABaseTileEnum, ATileEnum: TTileEnum);
 var
   X, Y: Byte;
   I: Word;
@@ -157,31 +146,36 @@ begin
     if (Round(Random(6)) = 1) and (X > 0) then
     begin
       X := X - 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then Continue;
+      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+        Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
     if (Round(Random(6)) = 1) and (X < High(Byte)) then
     begin
       X := X + 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then Continue;
+      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+        Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
     if (Round(Random(6)) = 1) and (Y > 0) then
     begin
       Y := Y - 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then Continue;
+      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+        Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
     if (Round(Random(6)) = 1) and (Y < High(Byte)) then
     begin
       Y := Y + 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then Continue;
+      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+        Continue;
       SetTileEnum(X, Y, ADeep, ATileEnum);
     end;
   end;
 end;
 
-procedure TMap.AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word; ABaseTileEnum, ATileEnum: TTileEnum);
+procedure TMap.AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word;
+  ABaseTileEnum, ATileEnum: TTileEnum);
 var
   K: Word;
   X, Y: Byte;
@@ -268,7 +262,7 @@ var
       repeat
         X := Math.RandomRange(10, High(Byte) - 10);
         Y := Math.RandomRange(10, High(Byte) - 10);
-      until(GetTileEnum(X, Y, pred(FDeep)) = teDefaultFloor);
+      until (GetTileEnum(X, Y, pred(FDeep)) = teDefaultFloor);
       Self.AddTiles(X, Y, FDeep, D, V, teDefaultWall, teDefaultFloor);
       SetTileEnum(X, Y, pred(FDeep), teDnStairs);
       SetTileEnum(X, Y, FDeep, teUpStairs);
@@ -282,8 +276,9 @@ var
     repeat
       X := Math.RandomRange(10, High(Byte) - 10);
       Y := Math.RandomRange(10, High(Byte) - 10);
-    until(GetTileEnum(X, Y, ADeep) = ABaseTileEnum);
-    AddSpot(X, Y, Math.RandomRange(49, High(Byte)), ADeep, ABaseTileEnum, ATileEnum);
+    until (GetTileEnum(X, Y, ADeep) = ABaseTileEnum);
+    AddSpot(X, Y, Math.RandomRange(49, High(Byte)), ADeep, ABaseTileEnum,
+      ATileEnum);
   end;
 
 begin
@@ -292,33 +287,33 @@ begin
     DeepVis[FDeep] := False;
     case FDeep of
       deDarkWood:
-      begin
-        DeepVis[FDeep] := True;
-        Self.Clear(FDeep, teDefaultFloor);
-        for I := 0 to 9999 do
-          Self.SetTileEnum(Math.RandomRange(0, High(Byte)),
-            Math.RandomRange(0, High(Byte)), FDeep, teDefaultWall);
-      end;
+        begin
+          DeepVis[FDeep] := True;
+          Self.Clear(FDeep, teDefaultFloor);
+          for I := 0 to 9999 do
+            Self.SetTileEnum(Math.RandomRange(0, High(Byte)),
+              Math.RandomRange(0, High(Byte)), FDeep, teDefaultWall);
+        end;
       deGrayCave:
-      begin
-        Self.Clear(FDeep, teDefaultWall);
-        GenCave(9, 49, 4999);
-      end;
+        begin
+          Self.Clear(FDeep, teDefaultWall);
+          GenCave(9, 49, 4999);
+        end;
       deDeepCave:
-      begin
-        Self.Clear(FDeep, teDefaultWall);
-        GenCave(6, 39, 3999);
-      end;
+        begin
+          Self.Clear(FDeep, teDefaultWall);
+          GenCave(6, 39, 3999);
+        end;
       deBloodCave:
-      begin
-        Self.Clear(FDeep, teDefaultWall);
-        GenCave(3, 29, 2999);
-      end;
+        begin
+          Self.Clear(FDeep, teDefaultWall);
+          GenCave(3, 29, 2999);
+        end;
       deDungeonOfDoom:
-      begin
-        Self.Clear(FDeep, teDefaultWall);
-        GenCave(2, 19, 1999);
-      end;
+        begin
+          Self.Clear(FDeep, teDefaultWall);
+          GenCave(2, 19, 1999);
+        end;
     end;
     for I := 0 to 9 do
       AddArea(FDeep, teDefaultFloor, teWater);
@@ -334,13 +329,15 @@ begin
   repeat
     Player.X := RandomRange(64, High(Byte) - 64);
     Player.Y := RandomRange(64, High(Byte) - 64);
-  until (not (GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));  
-  
+  until (not(GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));
+
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
     IsBoss := False;
-    for I := 0 to 255 do Mobs.Add(FDeep);
-    for I := 0 to 255 do Items.Add(FDeep);
+    for I := 0 to 255 do
+      Mobs.Add(FDeep);
+    for I := 0 to 255 do
+      Items.Add(FDeep);
   end;
 end;
 
@@ -364,7 +361,8 @@ begin
   Result := FMap[AX][AY][ADeep];
 end;
 
-procedure TMap.SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
+procedure TMap.SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum;
+  ATileEnum: TTileEnum);
 begin
   FMap[AX][AY][ADeep] := ATileEnum;
 end;
@@ -381,7 +379,8 @@ end;
 
 function TMap.InMap(AX, AY: Integer): Boolean;
 begin
-  Result := (AX >= 0) and (AY >= 0) and (AX <= High(Byte)) and (AY <= High(Byte))
+  Result := (AX >= 0) and (AY >= 0) and (AX <= High(Byte)) and
+    (AY <= High(Byte))
 end;
 
 function TMap.InView(AX, AY: Integer): Boolean;
@@ -390,7 +389,8 @@ var
 begin
   PX := View.Width div 2;
   PY := View.Height div 2;
-  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and (AX <= Player.X + PX - 1) and (AY <= Player.Y + PY - 1);
+  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and
+    (AX <= Player.X + PX - 1) and (AY <= Player.Y + PY - 1);
 end;
 
 function TMap.GetFOV(AX, AY: Byte): Boolean;
@@ -404,11 +404,13 @@ begin
 end;
 
 initialization
-  Map := TMap.Create;
-  Map.Deep := deDarkWood;
+
+Map := TMap.Create;
+Map.Deep := deDarkWood;
 
 finalization
-  Map.Free;
-  Map := nil;
+
+Map.Free;
+Map := nil;
 
 end.

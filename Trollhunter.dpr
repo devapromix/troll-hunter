@@ -3,8 +3,8 @@ program Trollhunter;
 uses
   SysUtils,
   BearLibTerminal in 'BearLibTerminal.pas',
-  uTerminal in 'uTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
+  uTerminal in 'uTerminal.pas',
   uCommon in 'uCommon.pas',
   uScenes in 'uScenes.pas',
   uPlayer in 'uPlayer.pas',

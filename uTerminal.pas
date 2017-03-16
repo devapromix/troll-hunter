@@ -18,8 +18,10 @@ type
     procedure BackgroundColor(Value: Cardinal);
     procedure ForegroundColor(Value: Cardinal);
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
-    procedure Print(AX, AY: Integer; AChar: Char; AForegroundColor: Cardinal); overload;
-    procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string; Align: Byte); overload;
+    procedure Print(AX, AY: Integer; AChar: Char;
+      AForegroundColor: Cardinal); overload;
+    procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
+      Align: Byte); overload;
     function Pick(X, Y: Byte): Byte;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
@@ -66,21 +68,27 @@ var
   Value: TEntSize;
   Wizard: string;
 begin
-  Value.Width := Clamp(StrToIntDef(terminal_get('ini.screen.width'), 80), 80, 255);
-  Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'), 30), 30, 128);
+  Value.Width := Clamp(StrToIntDef(terminal_get('ini.screen.width'),
+    80), 80, 255);
+  Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'),
+    30), 30, 128);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
-  Value.Width := Clamp(StrToIntDef(terminal_get('ini.panel.width'), 35), 35, 50);
+  Value.Width := Clamp(StrToIntDef(terminal_get('ini.panel.width'),
+    35), 35, 50);
   Panel := SetEntSize(0, 0, Value.Width, 4);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);
-  Log := SetEntSize(View.Width + 2, Status.Height + 2, Panel.Width, Screen.Height - Panel.Height - 5);
+  Log := SetEntSize(View.Width + 2, Status.Height + 2, Panel.Width,
+    Screen.Height - Panel.Height - 5);
   Info := SetEntSize(View.Width + 2, Screen.Height - 2, Panel.Width, 1);
   //
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
-  Wizard := ''; if WizardMode then Wizard := '[WIZARD]';
-  terminal_set(Format('window: size=%dx%d, title=%s', [Screen.Width, Screen.Height,
-    Trim('Trollhunter ' + Wizard)]));
+  Wizard := '';
+  if WizardMode then
+    Wizard := '[WIZARD]';
+  terminal_set(Format('window: size=%dx%d, title=%s',
+    [Screen.Width, Screen.Height, Trim('Trollhunter ' + Wizard)]));
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
 end;
@@ -95,7 +103,8 @@ begin
   Result := terminal_pick(X, Y, 0);
 end;
 
-procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string; Align: Byte);
+procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
+  Align: Byte);
 begin
   terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
 end;
@@ -113,11 +122,13 @@ begin
 end;
 
 initialization
-  Terminal := TTerminal.Create;
-  Terminal.Init;
+
+Terminal := TTerminal.Create;
+Terminal.Init;
 
 finalization
-  Terminal.Free;
-  Terminal := nil;
+
+Terminal.Free;
+Terminal := nil;
 
 end.

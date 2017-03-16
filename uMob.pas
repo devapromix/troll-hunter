@@ -22,21 +22,27 @@ const
   MobCount = 7;
 
 const
-  MobBase: array [0..MobCount - 1] of TMobBase = (
-  // Dark Wood
-  (Symbol: 'r'; Name: 'Rat';        Boss: False; Deep: deDarkWood;      MaxLife:   5; Level:  1; Armor:  0;  DV:  4; Damage:  2; Color: $FF249988;),
-  (Symbol: 'f'; Name: 'Frog';       Boss: False; Deep: deDarkWood;      MaxLife:   7; Level:  1; Armor:  0;  DV:  5; Damage:  2; Color: $FF33FF66;),
-  // Gray Cave
-  (Symbol: 'k'; Name: 'Kobold';     Boss: False; Deep: deGrayCave;      MaxLife:  15; Level:  1; Armor:  1;  DV:  6; Damage:  4; Color: $FF777700;),
-  // Deep Cave
-  (Symbol: 'g'; Name: 'Goblin';     Boss: False; Deep: deDeepCave;      MaxLife:  20; Level:  2; Armor:  2;  DV: 12; Damage:  5; Color: $FF00AA00;),
-  // Blood Cave
-  (Symbol: 'z'; Name: 'Zombie';     Boss: False; Deep: deBloodCave;     MaxLife:  25; Level:  2; Armor:  2;  DV:  9; Damage:  3; Color: $FF00BB00;),
-  // Dungeon of Doom
-  (Symbol: 'O'; Name: 'Ogre';       Boss: False; Deep: deDungeonOfDoom; MaxLife:  80; Level: 10; Armor:  12; DV: 60; Damage: 30; Color: $FF559977;),
-  // Boss
-  (Symbol: 'T'; Name: 'Troll King'; Boss: True;  Deep: deDungeonOfDoom; MaxLife: 10; Level: 10; Armor:  14; DV: 60; Damage: 35; Color: $FFFF4400;)
-  );
+  MobBase: array [0 .. MobCount - 1] of TMobBase = (
+    // Dark Wood
+    (Symbol: 'r'; Name: 'Rat'; Boss: False; Deep: deDarkWood; MaxLife: 5;
+    Level: 1; Armor: 0; DV: 4; Damage: 2; Color: $FF249988;
+    ), (Symbol: 'f'; Name: 'Frog'; Boss: False; Deep: deDarkWood; MaxLife: 7;
+    Level: 1; Armor: 0; DV: 5; Damage: 2; Color: $FF33FF66;),
+    // Gray Cave
+    (Symbol: 'k'; Name: 'Kobold'; Boss: False; Deep: deGrayCave; MaxLife: 15;
+    Level: 1; Armor: 1; DV: 6; Damage: 4; Color: $FF777700;),
+    // Deep Cave
+    (Symbol: 'g'; Name: 'Goblin'; Boss: False; Deep: deDeepCave; MaxLife: 20;
+    Level: 2; Armor: 2; DV: 12; Damage: 5; Color: $FF00AA00;),
+    // Blood Cave
+    (Symbol: 'z'; Name: 'Zombie'; Boss: False; Deep: deBloodCave; MaxLife: 25;
+    Level: 2; Armor: 2; DV: 9; Damage: 3; Color: $FF00BB00;),
+    // Dungeon of Doom
+    (Symbol: 'O'; Name: 'Ogre'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80;
+    Level: 10; Armor: 12; DV: 60; Damage: 30; Color: $FF559977;),
+    // Boss
+    (Symbol: 'T'; Name: 'Troll King'; Boss: True; Deep: deDungeonOfDoom;
+    MaxLife: 10; Level: 10; Armor: 14; DV: 60; Damage: 35; Color: $FFFF4400;));
 
 type
   TMob = class(TObject)
@@ -66,7 +72,7 @@ type
     function GetIndex(AX, AY: Byte): Integer;
   end;
 
-type  
+type
   TGetXYVal = function(X, Y: Integer): Boolean; stdcall;
 
 var
@@ -76,7 +82,9 @@ implementation
 
 uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog;
 
-function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer; Callback: TGetXYVal; var TargetX, TargetY: integer): boolean;external 'BeaRLibPF.dll';
+function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
+  Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
+  external 'BeaRLibPF.dll';
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
@@ -93,12 +101,11 @@ begin
     ID := Math.RandomRange(0, MobCount);
     FX := Math.RandomRange(0, High(Byte));
     FY := Math.RandomRange(0, High(Byte));
-  until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles)
-    and (Player.X <> FX)
-    and (Player.Y <> FY)
-    and Mobs.GetFreeTile(FX, FY)
-    and (MobBase[ID].Deep = ADeep);
-  if (MobBase[ID].Boss and IsBoss) then AddRandom(ADeep);
+  until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and (Player.X <> FX) and
+    (Player.Y <> FY) and Mobs.GetFreeTile(FX, FY) and
+    (MobBase[ID].Deep = ADeep);
+  if (MobBase[ID].Boss and IsBoss) then
+    AddRandom(ADeep);
   X := FX;
   Y := FY;
   Deep := ADeep;
@@ -114,14 +121,15 @@ begin
       Player.Y := Y - 1;
     end;
   end;
-end;    
+end;
 
 procedure TMob.Attack;
 var
   The: string;
   Dam: Word;
 begin
-  if (Self.Life = 0) or (Player.Life = 0) then Exit;
+  if (Self.Life = 0) or (Player.Life = 0) then
+    Exit;
   The := GetCapit(GetDescThe(MobBase[ID].Name));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
@@ -131,7 +139,9 @@ begin
     MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
     if Player.Life = 0 then
       Player.Defeat(MobBase[ID].Name);
-  end else begin
+  end
+  else
+  begin
     // Miss
     MsgLog.Add(Format('%s hits you, but your armor protects you.', [The]));
   end;
@@ -153,29 +163,33 @@ procedure TMob.Process;
 var
   NX, NY: Integer;
 begin
-  if (GetDist(X, Y, Player.X, Player.Y) > 20) then Exit;
-  if not DoAStar(High(Byte), High(Byte), X, Y, Player.X,
-    Player.Y, @MyCallback, NX, NY)then Exit;
+  if (GetDist(X, Y, Player.X, Player.Y) > 20) then
+    Exit;
+  if not DoAStar(High(Byte), High(Byte), X, Y, Player.X, Player.Y, @MyCallback,
+    NX, NY) then
+    Exit;
   if (NX = Player.X) and (NY = Player.Y) then
   begin
     Self.Attack();
-  end else
-  if (Mobs.GetFreeTile(NX, NY)) then
+  end
+  else if (Mobs.GetFreeTile(NX, NY)) then
   begin
     X := NX;
     Y := NY;
-  end else Self.Walk(X, Y, Player.X, Player.Y);
+  end
+  else
+    Self.Walk(X, Y, Player.X, Player.Y);
 end;
 
 procedure TMob.Render(AX, AY: Byte);
 begin
-  if not Map.InView(X, Y) or (not WizardMode
-    and not Map.GetFOV(X, Y)) then Exit;
-  if not WizardMode
-    and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) then Exit;
-  Terminal.Print(X - Player.X + AX + View.Left,
-    Y - Player.Y + AY + View.Top, MobBase[ID].Symbol,
-    MobBase[ID].Color);
+  if not Map.InView(X, Y) or (not WizardMode and not Map.GetFOV(X, Y)) then
+    Exit;
+  if not WizardMode and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
+  then
+    Exit;
+  Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top,
+    MobBase[ID].Symbol, MobBase[ID].Color);
 end;
 
 procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
@@ -186,37 +200,45 @@ begin
   NY := 0;
   case Math.RandomRange(0, 8) + 1 of
     // North
-    0: begin
-         NY := -1;
-       end;
-    1: begin
-         NX := +1;
-         NY := -1;
-       end;
-    2: begin
-         NX := +1;
-       end;
-    3: begin
-         NX := +1;
-         NY := +1;
-       end;
-    4: begin
-         NY := +1;
-       end;
-    5: begin
-         NX := -1;
-         NY := +1;
-       end;
-    6: begin
-         NX := -1;
-       end;
-    7: begin
-         NX := -1;
-         NY := -1;
-       end;
+    0:
+      begin
+        NY := -1;
+      end;
+    1:
+      begin
+        NX := +1;
+        NY := -1;
+      end;
+    2:
+      begin
+        NX := +1;
+      end;
+    3:
+      begin
+        NX := +1;
+        NY := +1;
+      end;
+    4:
+      begin
+        NY := +1;
+      end;
+    5:
+      begin
+        NX := -1;
+        NY := +1;
+      end;
+    6:
+      begin
+        NX := -1;
+      end;
+    7:
+      begin
+        NX := -1;
+        NY := -1;
+      end;
   end;
-  if Mobs.GetFreeTile(X + NX, Y + NY)
-    and (Map.GetTileEnum(X + NX, Y + NY, Map.Deep) in FreeTiles) then
+  if Mobs.GetFreeTile(X + NX, Y + NY) and
+    (Map.GetTileEnum(X + NX, Y + NY, Map.Deep) in FreeTiles) then
   begin
     X := X + NX;
     Y := Y + NY;
@@ -235,7 +257,7 @@ begin
       FMob[I].AddRandom(ADeep);
       Exit;
     end;
-  SetLength(FMob, Length(FMob) + 1);  
+  SetLength(FMob, Length(FMob) + 1);
   I := Length(FMob) - 1;
   FMob[I] := TMob.Create;
   FMob[I].AddRandom(ADeep);
@@ -270,7 +292,7 @@ begin
   Result := True;
   for I := 0 to Count - 1 do
     with FMob[I] do
-      if Alive and (Deep = Map.Deep) and (AX = X) and (AY = Y)then
+      if Alive and (Deep = Map.Deep) and (AX = X) and (AY = Y) then
       begin
         Result := False;
         Exit;
@@ -284,7 +306,7 @@ begin
   Result := -1;
   for I := 0 to Count - 1 do
     with FMob[I] do
-      if Alive and (Deep = Map.Deep) and (AX = X) and (AY = Y)then
+      if Alive and (Deep = Map.Deep) and (AX = X) and (AY = Y) then
       begin
         Result := I;
         Exit;
@@ -312,10 +334,12 @@ begin
 end;
 
 initialization
-  Mobs := TMobs.Create;
+
+Mobs := TMobs.Create;
 
 finalization
-  Mobs.Free;
-  Mobs := nil;
+
+Mobs.Free;
+Mobs := nil;
 
 end.

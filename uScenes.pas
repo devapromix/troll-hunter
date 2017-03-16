@@ -13,7 +13,8 @@ type
   TScene = class(TObject)
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
-    procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
+    procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
+      AColor, DarkColor: Cardinal);
   end;
 
 type
@@ -124,8 +125,8 @@ uses
 
 { TScene }
 
-procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor,
-  DarkColor: Cardinal);
+procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
+  AColor, DarkColor: Cardinal);
 var
   I, L, W: Byte;
 begin
@@ -197,7 +198,7 @@ begin
 end;
 
 procedure TScenes.Render;
-begin        
+begin
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);
   Terminal.Clear;
@@ -208,7 +209,7 @@ end;
 procedure TScenes.SetScene(SceneEnum: TSceneEnum);
 begin
   Self.Scene := SceneEnum;
-  Render; 
+  Render;
 end;
 
 procedure TScenes.SetScene(SceneEnum, CurrSceneEnum: TSceneEnum);
@@ -223,11 +224,11 @@ begin
     FScene[Scene].Update(Key);
   case Key of
     TK_CLOSE:
-    begin
-      if GameMode and not (Scene in [scWin, scDef, scQuit])
-        and (Player.Life > 0) then
+      begin
+        if GameMode and not(Scene in [scWin, scDef, scQuit]) and
+          (Player.Life > 0) then
           SetScene(scQuit, Scene);
-    end;
+      end;
   end;
 end;
 
@@ -241,7 +242,8 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 3, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 1, 'Press [color=red][[ENTER]][/color] to continue...', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1, 'Press [color=red][[ENTER]][/color] to continue...',
+    TK_ALIGN_CENTER);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -250,16 +252,17 @@ begin
     TK_ESCAPE:
       CanClose := True;
     TK_ENTER, TK_KP_ENTER:
-    begin
-      Scenes.SetScene(scLoad);
-      Terminal.Refresh;
-      Map.Gen;
-      terminal_delay(1000);
-      GameMode := True;
-      MsgLog.Clear;
-      MsgLog.Add('Welcome to Elvion. You need to find and kill The King Troll!');
-      Scenes.SetScene(scGame);
-    end;
+      begin
+        Scenes.SetScene(scLoad);
+        Terminal.Refresh;
+        Map.Gen;
+        terminal_delay(1000);
+        GameMode := True;
+        MsgLog.Clear;
+        MsgLog.Add
+          ('Welcome to Elvion. You need to find and kill The King Troll!');
+        Scenes.SetScene(scGame);
+      end;
   end;
 end;
 
@@ -321,15 +324,17 @@ var
       // Amount
       S := '(' + IntToStr(AItem.Amount) + ')'
       // Durability
-      else
-        S := '(' + IntToStr(AItem.Durability) + '/' + IntToStr(ItemBase[N].MaxDurability) + ')';
+    else
+      S := '(' + IntToStr(AItem.Durability) + '/' +
+        IntToStr(ItemBase[N].MaxDurability) + ')';
     S := GetCapit(GetDescAn(Trim(ItemBase[AItem.ItemID].Name + ' ' + S)));
     if IsManyItems then
     begin
       Result := Format('Many items lays in the ground (%s).', [S]);
-    end else Result := Format('%s lays in the ground.', [S]);
+    end
+    else
+      Result := Format('%s lays in the ground.', [S]);
   end;
-
 
   procedure RenderLook(X, Y: Byte; T: TTile; IsMob: Boolean);
   var
@@ -363,7 +368,8 @@ var
       AX := Clamp(Player.X + Trunc((X - Player.X) * LR), 0, High(Byte));
       AY := Clamp(Player.Y + Trunc((Y - Player.Y) * LR), 0, High(Byte));
       Map.SetFOV(AX, AY, True);
-      if (Map.GetTileEnum(AX, AY, Map.Deep) in StopTiles) then Exit;
+      if (Map.GetTileEnum(AX, AY, Map.Deep) in StopTiles) then
+        Exit;
     end;
   end;
 
@@ -376,10 +382,14 @@ begin
     Min.Y := Player.Y - Player.GetRadius;
     Max.Y := Player.Y + Player.GetRadius;
     Map.ClearFOV;
-    for I := Min.X to Max.X do AddTo(I, Min.Y);
-    for I := Min.Y to Max.Y do AddTo(Max.X, I);
-    for I := Max.X downto Min.X do AddTo(I, Max.Y);
-    for I := Max.Y downto Min.Y do AddTo(Min.X, I);
+    for I := Min.X to Max.X do
+      AddTo(I, Min.Y);
+    for I := Min.Y to Max.Y do
+      AddTo(Max.X, I);
+    for I := Max.X downto Min.X do
+      AddTo(I, Max.Y);
+    for I := Max.Y downto Min.Y do
+      AddTo(Min.X, I);
   end;
   Terminal.BackgroundColor(0);
   PX := View.Width div 2;
@@ -389,12 +399,14 @@ begin
     begin
       X := DX - PX + Player.X;
       Y := DY - PY + Player.Y;
-      if not Map.InMap(X, Y) then Continue;
+      if not Map.InMap(X, Y) then
+        Continue;
       if not WizardMode then
-        if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
-          and Map.GetFog(X, Y) then Continue;
+        if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) and
+          Map.GetFog(X, Y) then
+          Continue;
       T := Map.GetTile(X, Y);
-      if (Player.Look and (Player.LX = X) and (Player.LY = Y))  then
+      if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
       begin
         Terminal.BackgroundColor($88FFFF00);
         Terminal.Print(DX + View.Left, DY + View.Top, ' ');
@@ -413,11 +425,15 @@ begin
             Terminal.ForegroundColor(T.Color);
             Map.SetFog(X, Y, False);
           end;
-        end else begin
+        end
+        else
+        begin
           if not Map.GetFog(X, Y) then
             Terminal.ForegroundColor(clFog);
         end;
-      end else Terminal.ForegroundColor(T.Color);
+      end
+      else
+        Terminal.ForegroundColor(T.Color);
       if WizardMode or not Map.GetFog(X, Y) then
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
@@ -429,16 +445,21 @@ begin
   Terminal.BackgroundColor(0);
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(Status.Left, Status.Top, 'Trollhunter');
-  Terminal.Print(Status.Left + Status.Width - 1, Status.Top, Format('%s (%d:%d)',
-    [Map.GetName, Player.X, Player.Y]), TK_ALIGN_RIGHT);
+  Terminal.Print(Status.Left + Status.Width - 1, Status.Top,
+    Format('%s (%d:%d)', [Map.GetName, Player.X, Player.Y]), TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clYellow);
-  Terminal.Print(Status.Left, Status.Top + 1, Format('Life %d/%d', [Player.Life, Player.MaxLife]));
-  Terminal.Print(Status.Left, Status.Top + 2, Format('Mana %d/%d', [Player.Mana, Player.MaxMana]));
+  Terminal.Print(Status.Left, Status.Top + 1,
+    Format('Life %d/%d', [Player.Life, Player.MaxLife]));
+  Terminal.Print(Status.Left, Status.Top + 2,
+    Format('Mana %d/%d', [Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clYellow);
-  Terminal.Print(Status.Left, Status.Top + 3, Format('Turn %d Damage %d', [Player.Turn, Player.Damage]));
+  Terminal.Print(Status.Left, Status.Top + 3, Format('Turn %d Damage %d',
+    [Player.Turn, Player.Damage]));
   // Bars
-  Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14, Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
-  Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14, Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
+  Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
+    Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
+  Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
+    Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
   // Log
   MsgLog.Render;
 end;
@@ -493,7 +514,7 @@ begin
           Map.Deep := pred(Map.Deep);
           Player.Wait;
         end;
-    TK_PERIOD:  
+    TK_PERIOD:
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Deep) = teDnStairs) then
         if (Map.Deep < High(TDeepEnum)) then
         begin
@@ -506,11 +527,12 @@ begin
       if WizardMode then
         Player.Fill;
     TK_ESCAPE:
-    begin
-      if (Player.Life = 0) then Exit;
-      TextScreenshot := GetTextScreenshot();
-      Scenes.SetScene(scQuit, Scenes.Scene);
-    end;
+      begin
+        if (Player.Life = 0) then
+          Exit;
+        TextScreenshot := GetTextScreenshot();
+        Scenes.SetScene(scQuit, Scenes.Scene);
+      end;
     TK_I:
       Scenes.SetScene(scInv);
     TK_F:
@@ -543,23 +565,24 @@ end;
 
 procedure TSceneQuit.Render;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2, 'Quit? [[Y/N]]', TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
+    'Quit? [[Y/N]]', TK_ALIGN_CENTER);
 end;
 
 procedure TSceneQuit.Update(var Key: Word);
 begin
   case Key of
     TK_Y:
-    begin
-      Player.SaveCharacterDump('Quit the game');
-      CanClose := True;
-    end;
+      begin
+        Player.SaveCharacterDump('Quit the game');
+        CanClose := True;
+      end;
     TK_ESCAPE, TK_N:
       Scenes.GoBack;
   end;
 end;
 
-{ TSceneDef }  
+{ TSceneDef }
 
 procedure TSceneDef.Render;
 var
@@ -577,10 +600,10 @@ procedure TSceneDef.Update(var Key: Word);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
-    begin
-      Player.SaveCharacterDump(Format('Killed by %s', [Killer]));
-      CanClose := True;
-    end;
+      begin
+        Player.SaveCharacterDump(Format('Killed by %s', [Killer]));
+        CanClose := True;
+      end;
   end;
 end;
 
@@ -594,18 +617,18 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 1, 'CONGRATULATIONS!!!', TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,
-    Format('You have won. Press [color=red][[ENTER]][/color]',
-    [Killer]), TK_ALIGN_CENTER);
+    Format('You have won. Press [color=red][[ENTER]][/color]', [Killer]),
+    TK_ALIGN_CENTER);
 end;
 
 procedure TSceneWin.Update(var Key: Word);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
-    begin
-      Player.SaveCharacterDump('Won the game');
-      CanClose := True;
-    end;
+      begin
+        Player.SaveCharacterDump('Won the game');
+        CanClose := True;
+      end;
   end;
 end;
 
@@ -619,7 +642,8 @@ begin
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, Y, 'Inventory', TK_ALIGN_CENTER);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes', TK_ALIGN_CENTER);
+    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes',
+    TK_ALIGN_CENTER);
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -636,7 +660,7 @@ end;
 
 procedure TSceneDrop.Render;
 var
-  X, Y: Byte;          
+  X, Y: Byte;
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
@@ -673,7 +697,8 @@ begin
   Self.RenderSkills;
 
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Inventory', TK_ALIGN_CENTER);
+    '[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Inventory',
+    TK_ALIGN_CENTER);
 end;
 
 procedure TScenePlayer.RenderPlayer;
@@ -684,27 +709,38 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, '== Attributes ==', TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y +  2, W, 10, ExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y +  2, Format('Level %d', [Player.Level]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y +  4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y +  4, Format('Strength %d/%d', [Player.Strength, AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y +  6, W, Player.Dexterity, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y +  6, Format('Dexterity %d/%d', [Player.Dexterity, AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y +  8, W, Player.Willpower, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y +  8, Format('Willpower %d/%d', [Player.Willpower, AtrMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 2, W, 10, ExpMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 2, Format('Level %d', [Player.Level]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 4, Format('Strength %d/%d', [Player.Strength, AtrMax]),
+    TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 6, W, Player.Dexterity, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 6, Format('Dexterity %d/%d', [Player.Dexterity, AtrMax]
+    ), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 8, W, Player.Willpower, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 8, Format('Willpower %d/%d', [Player.Willpower, AtrMax]
+    ), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 10, W, Player.Perception, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 10, Format('Perception %d/%d', [Player.Perception, AtrMax]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 10, Format('Perception %d/%d', [Player.Perception,
+    AtrMax]), TK_ALIGN_CENTER);
 
   RenderBar(1, 0, Y + 14, W, Player.GetDV, DVMax, clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 14, Format('Defensive Value (DV) %d/%d', [Player.GetDV, DVMax]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 14, Format('Defensive Value (DV) %d/%d',
+    [Player.GetDV, DVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 16, W, Player.GetPV, PVMax, clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 16, Format('Protection Value (PV) %d/%d', [Player.GetPV, PVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 18, Format('Life %d/%d', [Player.Life, Player.MaxLife]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
-  Terminal.Print(X, Y + 20, Format('Mana %d/%d', [Player.Mana, Player.MaxMana]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 16, Format('Protection Value (PV) %d/%d',
+    [Player.GetPV, PVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clDarkRed,
+    clDarkGray);
+  Terminal.Print(X, Y + 18, Format('Life %d/%d', [Player.Life, Player.MaxLife]),
+    TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clDarkBlue,
+    clDarkGray);
+  Terminal.Print(X, Y + 20, Format('Mana %d/%d', [Player.Mana, Player.MaxMana]),
+    TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 22, W, Player.GetRadius, RadiusMax, clGray, clDarkGray);
-  Terminal.Print(X, Y + 22, Format('Radius %d/%d', [Player.GetRadius, RadiusMax]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 22, Format('Radius %d/%d', [Player.GetRadius, RadiusMax]
+    ), TK_ALIGN_CENTER);
 end;
 
 procedure TScenePlayer.RenderSkills;
@@ -719,12 +755,11 @@ begin
   Terminal.Print(B, Y, '== Skills ==', TK_ALIGN_CENTER);
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   begin
-    D := (ord(I) * 2) + Y + 2;
-    RenderBar(X, 0, D, X - 2, Player.GetSkill(I).Value,
-      SkillMax, clDarkRed, clDarkGray);
+    D := (Ord(I) * 2) + Y + 2;
+    RenderBar(X, 0, D, X - 2, Player.GetSkill(I).Value, SkillMax, clDarkRed,
+      clDarkGray);
     Terminal.Print(B, D, Format('%s %d/%d', [SkillName[I],
-      Player.GetSkill(I).Value, SkillMax]),
-      TK_ALIGN_CENTER);
+      Player.GetSkill(I).Value, SkillMax]), TK_ALIGN_CENTER);
   end;
 end;
 
@@ -739,11 +774,13 @@ begin
 end;
 
 initialization
-  Scenes := TScenes.Create;
-  Scenes.SetScene(scTitle);
+
+Scenes := TScenes.Create;
+Scenes.SetScene(scTitle);
 
 finalization
-  Scenes.Free;
-  Scenes := nil;
+
+Scenes.Free;
+Scenes := nil;
 
 end.

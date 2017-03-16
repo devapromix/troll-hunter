@@ -78,10 +78,11 @@ var
   L: string;
 begin
   if (Trim(MsgLog.Msg) = '') then
-    L := '' else L := '[color=yellow]' + FMsg + '[/color]';
+    L := ''
+  else
+    L := '[color=yellow]' + FMsg + '[/color]';
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(Log.Left, Log.Top,
-    Log.Width, Log.Height, Trim(FLog.Text + L),
+  Terminal.Print(Log.Left, Log.Top, Log.Width, Log.Height, Trim(FLog.Text + L),
     TK_ALIGN_BOTTOM);
 end;
 
@@ -96,10 +97,12 @@ begin
 end;
 
 initialization
-  MsgLog := TMsgLog.Create;
+
+MsgLog := TMsgLog.Create;
 
 finalization
-  MsgLog.Free;
-  MsgLog := nil;
+
+MsgLog.Free;
+MsgLog := nil;
 
 end.

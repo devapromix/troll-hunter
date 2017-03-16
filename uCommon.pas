@@ -1,7 +1,7 @@
 unit uCommon;
 
 interface
-            
+
 type
   TEntSize = record
     Left: Integer;
@@ -15,19 +15,19 @@ const
 
 const
   CharacterDumpFileName = 'trollhunter-character-dump.txt';
-  HelpFileName          = 'trollhunter-help.txt';
+  HelpFileName = 'trollhunter-help.txt';
 
 const
-  clDarkGray  = $FF222222;
-  clDarkRed   = $FF880000;
+  clDarkGray = $FF222222;
+  clDarkRed = $FF880000;
   clDarkGreen = $FF008800;
-  clDarkBlue  = $FF000088;
-  clYellow    = $FFFFFF00;
-  clGray      = $FF777777;
-  clWhite     = $FFDDDDDD;
+  clDarkBlue = $FF000088;
+  clYellow = $FFFFFF00;
+  clGray = $FF777777;
+  clWhite = $FFDDDDDD;
 
 const
-  clFog       = $FF111111;
+  clFog = $FF111111;
 
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
@@ -62,7 +62,8 @@ begin
   Randomize;
   for I := 1 to ParamCount do
   begin
-    if (LowerCase(ParamStr(I)) = '-w') then WizardMode := True;
+    if (LowerCase(ParamStr(I)) = '-w') then
+      WizardMode := True;
 
   end;
 end;
@@ -114,8 +115,9 @@ function GetDescAn(S: string): string;
 begin
   S := LowerCase(S);
   if (S[1] in ['a', 'e', 'i', 'o', 'u']) then
-    Result := 'an ' + S else
-      Result := 'a ' + S;
+    Result := 'an ' + S
+  else
+    Result := 'a ' + S;
 end;
 
 function GetDescThe(S: string): string;
@@ -126,15 +128,16 @@ end;
 function GetDescSig(V: Integer): string;
 begin
   if (V > 0) then
-    Result := '+' + IntToStr(V) else
-      Result := IntToStr(V);
+    Result := '+' + IntToStr(V)
+  else
+    Result := IntToStr(V);
 end;
 
 function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
 begin
-  SysUtils.DateSeparator := DateSep;
-  SysUtils.TimeSeparator := TimeSep;
   Result := DateToStr(Date) + '-' + TimeToStr(Time);
+  Result := StringReplace(Result, '.', DateSep, [rfReplaceAll]);
+  Result := StringReplace(Result, ':', TimeSep, [rfReplaceAll]);
 end;
 
 function GetTextScreenshot: string;
@@ -145,26 +148,27 @@ var
 begin
   SL := TStringList.Create;
   try
-  for Y := 0 to View.Height - 1 do
-  begin
-    S := '';
-    for X := 0 to View.Width - 1 do
+    for Y := 0 to View.Height - 1 do
     begin
-      C := Terminal.Pick(X, Y);
-      if (C >= 32) and (C < 126) then
-        S := S + Chr(C)
-          else S := S + ' ';
+      S := '';
+      for X := 0 to View.Width - 1 do
+      begin
+        C := Terminal.Pick(X, Y);
+        if (C >= 32) and (C < 126) then
+          S := S + Chr(C)
+        else
+          S := S + ' ';
+      end;
+      SL.Append(S);
     end;
-    SL.Append(S);
-  end;
-  Result := SL.Text;
+    Result := SL.Text;
   finally
     SL.Free;
   end;
 end;
 
 initialization
-  Init();
+
+Init();
 
 end.
-
