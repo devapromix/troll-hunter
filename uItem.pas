@@ -10,7 +10,6 @@ type
 type
   TItemBase = record
     Symbol: Char;
-    Name: string;
     ItemType: TItemType;
     MaxStack: Word;
     MaxDurability: Word;
@@ -18,7 +17,39 @@ type
     Deep: TDeepEnum;
   end;
 
-  {$I Items.inc}
+type
+  TItemEnum = (
+    // All
+    iGold, iMinHPot, iMinMPot,
+    // Dark Wood
+    iShortSword,
+    // Gray Cave
+    iItemA,
+    // Deep Cave
+    iItemB,
+    // Blood Cave
+    iItemC,
+    // Dungeon of Doom
+    iItemD
+  );
+
+const
+  ItemBase: array [TItemEnum] of TItemBase = (
+    // All
+    (Symbol: '$'; ItemType: itCoin;   MaxStack: 1000; MaxDurability: 0;  Color: clYellow;   Deep: deDarkWood;),
+    (Symbol: '!'; ItemType: itPotion; MaxStack: 10;   MaxDurability: 0;  Color: clRed;      Deep: deDarkWood;),
+    (Symbol: '!'; ItemType: itPotion; MaxStack: 10;   MaxDurability: 0;  Color: clBlue;     Deep: deDarkWood;),
+    // Dark Wood
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 30; Color: clWhite;    Deep: deDarkWood;),
+    // Gray Cave
+    (Symbol: '\'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 40; Color: clYellow;   Deep: deGrayCave;),
+    // Deep Cave
+    (Symbol: '['; ItemType: itSword;  MaxStack: 1;    MaxDurability: 50; Color: clYellow;   Deep: deDeepCave;),
+    // Blood Cave
+    (Symbol: '^'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 60; Color: clYellow;   Deep: deBloodCave;),
+    // Dungeon of Doom
+    (Symbol: '{'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 70; Color: clYellow;   Deep: deDungeonOfDoom;)
+  );
 
 type
   TItems = class(TObject)
@@ -29,6 +60,7 @@ type
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
     procedure Add(ADeep: TDeepEnum);
+    function GetName(AItem: TItemEnum): string;
   end;
 
 var
@@ -81,6 +113,34 @@ destructor TItems.Destroy;
 begin
   Items_Close;
   inherited;
+end;
+
+function TItems.GetName(AItem: TItemEnum): string;
+begin
+  case AItem of
+    // All
+    iGold:
+      Result := _('Gold');
+    iMinHPot:
+      Result := _('Minor Health Potion');
+    iMinMPot:
+      Result := _('Minor Mana Potion');
+    // Dark Wood
+    iShortSword:
+      Result := _('Short Sword');
+    // Gray Cave
+    iItemA:
+      Result := _('Item A');
+    // Deep Cave
+    iItemB:
+      Result := _('Item B');
+    // Blood Cave
+    iItemC:
+      Result := _('Item C');
+    // Dungeon of Doom
+    iItemD:
+      Result := _('Item D');
+  end;
 end;
 
 procedure TItems.Render(AX, AY: Byte);

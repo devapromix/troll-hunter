@@ -11,11 +11,6 @@ type
     // Skills
     skStealth, skHealing);
 
-const
-  SkillName: array [TSkillEnum] of string = ('Learning', 'Athletics', 'Dodge',
-    'Concentration', 'Toughness', 'Swords', 'Axes', 'Spears', 'Daggers',
-    'Stealth', 'Healing');
-
 type
   TSkill = record
     Value: Integer;
@@ -91,6 +86,7 @@ type
     function GetSkill(ASkill: TSkillEnum): TSkill;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
+    function GetSkillName(ASkill: TSkillEnum): string;
   end;
 
 var
@@ -177,7 +173,7 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add('You die...');
+  MsgLog.Add(_('You die...'));
   TextScreenshot := GetTextScreenshot();
 end;
 
@@ -211,6 +207,37 @@ end;
 function TPlayer.GetSkill(ASkill: TSkillEnum): TSkill;
 begin
   Result := FSkill[ASkill];
+end;
+
+function TPlayer.GetSkillName(ASkill: TSkillEnum): string;
+begin
+  case ASkill of
+    skLearning:
+      Result := _('Learning');
+    // Attributes skills
+    skAthletics:
+      Result := _('Athletics');
+    skDodge:
+      Result := _('Dodge');
+    skConcentration:
+      Result := _('Concentration');
+    skToughness:
+      Result := _('Toughness');
+    // Weapon skills
+    skSword:
+      Result := _('Swords');
+    skAxe:
+      Result := _('Axes');
+    skSpear:
+      Result := _('Spears');
+    skDagger:
+      Result := _('Daggers');
+    // Skills
+    skStealth:
+      Result := _('Stealth');
+    skHealing:
+      Result := _('Healing');
+  end;
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
@@ -276,13 +303,17 @@ begin
     SL.LoadFromFile(CharacterDumpFileName);
     for I := 0 to SL.Count - 1 do
     begin
+      SL[I] := StringReplace(SL[I], 'Trollhunter', _('Trollhunter'), [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{date-time}', GetDateTime, [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{reason}', AReason, [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], 'Screenshot', _('Screenshot'), [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{screenshot}', TextScreenshot,
         [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], 'Last messages', _('Last messages'), [rfReplaceAll]);
       SL[I] := StringReplace(SL[I], '{messages}', MsgLog.GetLastMsg(10),
         [rfReplaceAll]);
-      // SL[I] := StringReplace(SL[I], '{inventory}', , [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], 'Inventory', _('Inventory'), [rfReplaceAll]);
+      SL[I] := StringReplace(SL[I], '{inventory}', '', [rfReplaceAll]);
     end;
     SL.SaveToFile(StringReplace(CharacterDumpFileName, 'trollhunter',
       GetDateTime('-', '-'), [rfReplaceAll]));
@@ -311,7 +342,7 @@ procedure TPlayer.Wait;
 begin
   if not DeepVis[Map.Deep] then
   begin
-    MsgLog.Add(Format('You have opened a new territory: %s.', [Map.GetName]));
+    MsgLog.Add(Format(_('You have opened a new territory: %s.'), [Map.GetName]));
     DeepVis[Map.Deep] := True;
   end;
   Move(0, 0);

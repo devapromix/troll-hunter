@@ -54,6 +54,7 @@ type
     procedure AddRandom(ADeep: TDeepEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
+//    function GetName(AMob: Byte): string;
     procedure Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
     procedure Attack;
     procedure Defeat;
@@ -80,7 +81,7 @@ var
 
 implementation
 
-uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog;
+uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -136,25 +137,25 @@ begin
     // Attack
     Dam := Clamp(MobBase[ID].Damage, 0, High(Word));
     Player.Life := Clamp(Player.Life - Dam, 0, High(Word));
-    MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
+    MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if Player.Life = 0 then
       Player.Defeat(MobBase[ID].Name);
   end
   else
   begin
     // Miss
-    MsgLog.Add(Format('%s hits you, but your armor protects you.', [The]));
+    MsgLog.Add(Format(_('%s hits you, but your armor protects you.'), [The]));
   end;
 end;
 
 procedure TMob.Defeat;
 begin
   Self.Alive := False;
-  MsgLog.Add(Format('You kill %s.', [GetDescThe(MobBase[ID].Name)]));
+  MsgLog.Add(Format(_('You kill %s.'), [GetDescThe(MobBase[ID].Name)]));
   if (MobBase[ID].Boss and (Map.Deep = FinalDungeon)) then
   begin
     WonGame := True;
-    MsgLog.Add('You have won.');
+    MsgLog.Add(_('You have won.'));
     TextScreenshot := GetTextScreenshot();
   end;
 end;

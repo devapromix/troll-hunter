@@ -16,18 +16,258 @@ msgstr "Project-Id-Version: PACKAGE VERSION\n"
 "Language-Team:  <>\n"
 "X-Poedit-Language: Russian\n"
 
+#: uMap.pas:354
+msgid "Dark Wood"
+msgstr "Темнолесье"
+
+#: uMap.pas:356
+msgid "Gray Cave"
+msgstr ""
+
+#: uMap.pas:358
+msgid "Deep Cave"
+msgstr ""
+
+#: uMap.pas:360
+msgid "Blood Cave"
+msgstr ""
+
+#: uMap.pas:362
+msgid "Dungeon Of Doom"
+msgstr ""
+
 #. Attack
-#: uPlayer.pas:129
+#: uMob.pas:140
+msgid "%s hits you (%d)."
+msgstr "%s ударил тебя (%d)."
+
+#. Miss
+#: uMob.pas:147
+msgid "%s hits you, but your armor protects "
+"you."
+msgstr "%s попытался ударить тебя, но промахнулся."
+
+#: uMob.pas:154
+msgid "You kill %s."
+msgstr "Ты убил %s."
+
+#: uMob.pas:158
+msgid "You have won."
+msgstr "Ты победил."
+
+#. Attack
+#: uPlayer.pas:125
 msgid "You hit %s (%d)."
 msgstr "Ты ударил %s (%d)."
 
 #. Miss
-#: uPlayer.pas:136
+#: uPlayer.pas:132
 msgid "You fail to hurt %s."
 msgstr "Ты промахнулся по %s."
+
+#: uPlayer.pas:176
+msgid "You die..."
+msgstr ""
+
+#: uPlayer.pas:216
+msgid "Learning"
+msgstr ""
+
+#. Attributes skills
+#: uPlayer.pas:219
+msgid "Athletics"
+msgstr ""
+
+#: uPlayer.pas:221
+msgid "Dodge"
+msgstr ""
+
+#: uPlayer.pas:223
+msgid "Concentration"
+msgstr ""
+
+#: uPlayer.pas:225
+msgid "Toughness"
+msgstr ""
+
+#. Weapon skills
+#: uPlayer.pas:228
+msgid "Swords"
+msgstr ""
+
+#: uPlayer.pas:230
+msgid "Axes"
+msgstr ""
+
+#: uPlayer.pas:232
+msgid "Spears"
+msgstr ""
+
+#: uPlayer.pas:234
+msgid "Daggers"
+msgstr ""
+
+#. Skills
+#: uPlayer.pas:237
+msgid "Stealth"
+msgstr ""
+
+#: uPlayer.pas:239
+msgid "Healing"
+msgstr ""
+
+#: uPlayer.pas:306
+#: uScenes.pas:243
+#. Player info
+#: uScenes.pas:459
+#: uScenes.pas:706
+msgid "Trollhunter"
+msgstr ""
+
+#: uPlayer.pas:309
+msgid "Screenshot"
+msgstr ""
+
+#: uPlayer.pas:312
+msgid "Last messages"
+msgstr ""
+
+#: uPlayer.pas:315
+#: uScenes.pas:655
+msgid "Inventory"
+msgstr ""
+
+#: uPlayer.pas:345
+msgid "You have opened a new territory: %s."
+msgstr ""
 
 #: uScenes.pas:245
 msgid "Press [color=red][[ENTER]][/color] to "
 "continue..."
 msgstr "Нажми [color=red][[ENTER]][/color]..."
+
+#: uScenes.pas:263
+msgid "Welcome to Elvion. You need to find and kill The King "
+"Troll!"
+msgstr ""
+
+#: uScenes.pas:292
+#: uScenes.pas:682
+msgid "[color=red][[ESC]][/color] Close"
+msgstr ""
+
+#. Durability
+#: uScenes.pas:333
+msgid "Many items (%dx) lays in the ground "
+"(%s)."
+msgstr ""
+
+#: uScenes.pas:337
+msgid "%s lays in the ground."
+msgstr ""
+
+#: uScenes.pas:464
+#: uScenes.pas:747
+msgid "Life"
+msgstr ""
+
+#: uScenes.pas:466
+#: uScenes.pas:751
+msgid "Mana"
+msgstr ""
+
+#: uScenes.pas:468
+msgid "Turn %d Damage %d"
+msgstr ""
+
+#: uScenes.pas:568
+msgid "Creating the world, please wait..."
+msgstr ""
+
+#: uScenes.pas:581
+msgid "Quit? [[Y/N]]"
+msgstr ""
+
+#: uScenes.pas:589
+msgid "Quit the game"
+msgstr ""
+
+#: uScenes.pas:605
+msgid "GAME OVER!!!"
+msgstr ""
+
+#: uScenes.pas:607
+msgid "Killed by [color=white]%s[/color]. Press "
+"[color=red][[ENTER]][/color]"
+msgstr ""
+
+#: uScenes.pas:616
+msgid "Killed by %s"
+msgstr ""
+
+#: uScenes.pas:630
+msgid "CONGRATULATIONS!!!"
+msgstr ""
+
+#: uScenes.pas:632
+msgid "You have won. Press [color=red][[ENTER]][/color]"
+msgstr ""
+
+#: uScenes.pas:641
+msgid "Won the game"
+msgstr ""
+
+#: uScenes.pas:657
+msgid "[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills "
+"and attributes"
+msgstr ""
+
+#: uScenes.pas:679
+msgid "Select an item to drop"
+msgstr ""
+
+#: uScenes.pas:712
+msgid "[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] "
+"Inventory"
+msgstr ""
+
+#: uScenes.pas:723
+msgid "Attributes"
+msgstr ""
+
+#: uScenes.pas:725
+msgid "Level"
+msgstr "Уровень"
+
+#: uScenes.pas:727
+msgid "Strength"
+msgstr ""
+
+#: uScenes.pas:730
+msgid "Dexterity"
+msgstr ""
+
+#: uScenes.pas:733
+msgid "Willpower"
+msgstr ""
+
+#: uScenes.pas:736
+msgid "Perception"
+msgstr ""
+
+#: uScenes.pas:741
+msgid "Defensive Value (DV)"
+msgstr ""
+
+#: uScenes.pas:744
+msgid "Protection Value (PV)"
+msgstr ""
+
+#: uScenes.pas:754
+msgid "Radius"
+msgstr ""
+
+#: uScenes.pas:767
+msgid "Skills"
+msgstr ""
 

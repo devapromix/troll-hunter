@@ -9,10 +9,6 @@ type
     deDungeonOfDoom);
 
 const
-  DeepName: array [TDeepEnum] of string = ('Dark Wood', 'Gray Cave',
-    'Deep Cave', 'Blood Cave', 'Dungeon of Doom');
-
-const
   FinalDungeon = deDungeonOfDoom;
 
 var
@@ -128,7 +124,7 @@ var
 
 implementation
 
-uses Math, uPlayer, uMob, uItem;
+uses Math, uPlayer, uMob, uItem, gnugettext;
 
 { TMap }
 
@@ -353,7 +349,18 @@ end;
 
 function TMap.GetName: string;
 begin
-  Result := DeepName[Deep];
+  case Deep of
+    deDarkWood:
+      Result := _('Dark Wood');
+    deGrayCave:
+      Result := _('Gray Cave');
+    deDeepCave:
+      Result := _('Deep Cave');
+    deBloodCave:
+      Result := _('Blood Cave');
+    deDungeonOfDoom:
+      Result := _('Dungeon Of Doom');
+  end;
 end;
 
 function TMap.GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;
