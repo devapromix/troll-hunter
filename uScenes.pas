@@ -313,7 +313,7 @@ var
   T: TTile;
   Min, Max: TPoint;
 
-  function GetItemInfo(AItem: Item; IsManyItems: Boolean): string;
+  function GetItemInfo(AItem: Item; IsManyItems: Boolean; ACount: Byte): string;
   var
     S: string;
     N: Integer;
@@ -326,11 +326,12 @@ var
       // Durability
     else
       S := '(' + IntToStr(AItem.Durability) + '/' +
-        IntToStr(ItemBase[N].MaxDurability) + ')';
-    S := GetCapit(GetDescAn(Trim(ItemBase[AItem.ItemID].Name + ' ' + S)));
+        IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
+    S := GetCapit(GetDescAn(Trim(ItemBase[TItemEnum(AItem.ItemID)].Name + ' ' + S)));
     if IsManyItems then
     begin
-      Result := Format('Many items lays in the ground (%s).', [S]);
+      Result := Format('Many items (%dx) lays in the ground (%s).',
+        [ACount, S]);
     end
     else
       Result := Format('%s lays in the ground.', [S]);
@@ -340,7 +341,7 @@ var
   var
     S: string;
     C: Integer;
-    FItem: Item;
+    FItem: Item; 
   begin
     S := '';
     Terminal.BackgroundColor(0);
@@ -350,9 +351,20 @@ var
     if (C > 0) then
     begin
       FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Deep), 0, X, Y);
-      S := S + GetItemInfo(FItem, (C > 1)) + '. ';
+      S := S + GetItemInfo(FItem, (C > 1), C) + ' ';
     end;
-    Terminal.Print(Info.Left, Info.Top, S);
+    if IsMob then
+    begin
+      C := Mobs.GetIndex(X, Y);
+      if (C > -1) then
+      begin
+        S := S + Format('%s (%d/%d). ', [MobBase[Mobs.FMob[C].ID].Name,
+          Mobs.FMob[C].Life, MobBase[Mobs.FMob[C].ID].MaxLife]);
+      end;
+    end;
+
+    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S,
+      TK_ALIGN_TOP);
   end;
 
   procedure AddTo(X, Y: Integer);

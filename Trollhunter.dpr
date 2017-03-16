@@ -2,6 +2,7 @@ program Trollhunter;
 
 uses
   SysUtils,
+  gnugettext in 'gnugettext.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
   uTerminal in 'uTerminal.pas',
@@ -13,7 +14,6 @@ uses
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
   uMsgLog in 'uMsgLog.pas';
-  
 
 var
   Key: Word = 0;

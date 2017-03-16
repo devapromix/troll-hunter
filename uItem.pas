@@ -5,39 +5,20 @@ interface
 uses BearLibItems, uCommon, uMap, uPlayer;
 
 type
+  TItemType = (itCoin, itPotion, itSword);
+
+type
   TItemBase = record
     Symbol: Char;
     Name: string;
-    MaxDurability: Byte;
+    ItemType: TItemType;
+    MaxStack: Word;
+    MaxDurability: Word;
     Color: Cardinal;
     Deep: TDeepEnum;
   end;
 
-const
-  ItemCount = 6;
-  //
-  itGold = 0;
-
-const
-  ItemBase: array [0 .. ItemCount - 1] of TItemBase = (
-    // All
-    (Symbol: '$'; Name: 'Gold'; MaxDurability: 0; Color: clYellow;
-    Deep: deDarkWood;),
-    // Dark Wood
-    (Symbol: '/'; Name: 'Item'; MaxDurability: 10; Color: clYellow;
-    Deep: deDarkWood;),
-    // Gray Cave
-    (Symbol: '\'; Name: 'Item'; MaxDurability: 10; Color: clYellow;
-    Deep: deGrayCave;),
-    // Deep Cave
-    (Symbol: '['; Name: 'Item'; MaxDurability: 10; Color: clYellow;
-    Deep: deDeepCave;),
-    // Blood Cave
-    (Symbol: '^'; Name: 'Item'; MaxDurability: 10; Color: clYellow;
-    Deep: deBloodCave;),
-    // Dungeon of Doom
-    (Symbol: '{'; Name: 'Item'; MaxDurability: 10; Color: clYellow;
-    Deep: deDungeonOfDoom;));
+  {$I Items.inc}
 
 type
   TItems = class(TObject)
@@ -63,34 +44,30 @@ procedure TItems.Add(ADeep: TDeepEnum);
 var
   ID, FX, FY: Byte;
   FItem: Item;
-  D: Integer;
+  Value: Integer;
 begin
   repeat
-    ID := Math.RandomRange(0, ItemCount);
+    ID := Math.RandomRange(0, Ord(High(TItemEnum)));
     FX := Math.RandomRange(0, High(Byte));
     FY := Math.RandomRange(0, High(Byte));
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
-    ((ID <= itGold) or (ItemBase[ID].Deep = ADeep));
+    ((ItemBase[TItemEnum(ID)].MaxStack > 1)
+    or (ItemBase[TItemEnum(ID)].Deep = ADeep));
   FItem.MapID := Ord(ADeep);
-  FItem.ItemID := ID;
+  FItem.ItemID := Ord(ID);
+  FItem.Amount := 1;
   FItem.X := FX;
   FItem.Y := FY;
-  case FItem.ItemID of
-    itGold: // Gold
-      begin
-        FItem.Stack := 1000;
-        FItem.Amount := (Math.RandomRange(0, 25) + 1) * Ord(ADeep);
-      end;
-  else
-    begin
-      FItem.Stack := 1;
-      FItem.Amount := 1;
-    end;
+  FItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
+  FItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
+  case ItemBase[TItemEnum(ID)].ItemType of
+    itCoin: FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
+    itPotion: FItem.Amount := (Math.RandomRange(0, 3) + 1);
   end;
   if (FItem.Stack = 1) then
   begin
-    D := ItemBase[ID].MaxDurability;
-    FItem.Durability := Math.RandomRange(D div 5, D) + 1;
+    Value := ItemBase[TItemEnum(ID)].MaxDurability;
+    FItem.Durability := Math.RandomRange(Value div 4, Value) + 1;
   end;
   Items_Dungeon_AppendItem(FItem);
 end;
@@ -127,8 +104,8 @@ begin
       Player.GetRadius) then
       Color := clFog
     else
-      Color := ItemBase[FItem.ItemID].Color;
-    Terminal.Print(X, Y, ItemBase[FItem.ItemID].Symbol, Color);
+      Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
+    Terminal.Print(X, Y, ItemBase[TItemEnum(FItem.ItemID)].Symbol, Color);
   end;
 end;
 

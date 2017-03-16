@@ -18,6 +18,9 @@ const
   HelpFileName = 'trollhunter-help.txt';
 
 const
+  clRed = $FFFF0000;
+  clGreen = $FF00FF00;
+  clBlue = $FF0000FF;
   clDarkGray = $FF222222;
   clDarkRed = $FF880000;
   clDarkGreen = $FF008800;
