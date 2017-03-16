@@ -56,7 +56,7 @@ function GetTextScreenshot: string;
 
 implementation
 
-uses SysUtils, Classes, uTerminal;
+uses SysUtils, Classes, uTerminal, gnugettext, BearLibTerminal;
 
 procedure Init;
 var
@@ -67,7 +67,6 @@ begin
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
       WizardMode := True;
-
   end;
 end;
 

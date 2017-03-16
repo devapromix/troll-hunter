@@ -1,0 +1,33 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr "Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2015-08-12 20:30\n"
+"PO-Revision-Date: 2015-08-12 20:30\n"
+"Last-Translator: Somebody <your.email@address.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: dxgettext 1.2.2\n"
+"Language-Team:  <>\n"
+"X-Poedit-Language: Russian\n"
+
+#. Attack
+#: uPlayer.pas:129
+msgid "You hit %s (%d)."
+msgstr "Ты ударил %s (%d)."
+
+#. Miss
+#: uPlayer.pas:136
+msgid "You fail to hurt %s."
+msgstr "Ты промахнулся по %s."
+
+#: uScenes.pas:245
+msgid "Press [color=red][[ENTER]][/color] to "
+"continue..."
+msgstr "Нажми [color=red][[ENTER]][/color]..."
+

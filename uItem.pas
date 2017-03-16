@@ -36,7 +36,7 @@ var
 
 implementation
 
-uses Math, uTerminal;
+uses Math, uTerminal, gnugettext;
 
 { TItems }
 
@@ -110,12 +110,10 @@ begin
 end;
 
 initialization
-
-Items := TItems.Create;
+  Items := TItems.Create;
 
 finalization
-
-Items.Free;
-Items := nil;
+  Items.Free;
+  Items := nil;
 
 end.

@@ -99,7 +99,7 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes,
-  uTerminal, uMsgLog;
+  uTerminal, uMsgLog, gnugettext;
 
 { TPlayer }
 
@@ -126,14 +126,14 @@ begin
     // Attack
     Dam := Clamp(Self.Damage, 0, High(Word));
     Mob.Life := Clamp(Mob.Life - Dam, 0, High(Word));
-    MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
+    MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     if (Mob.Life = 0) then
       Mob.Defeat;
   end
   else
   begin
     // Miss
-    MsgLog.Add(Format('You fail to hurt %s.', [The]));
+    MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
   end;
   AddTurn;
 end;

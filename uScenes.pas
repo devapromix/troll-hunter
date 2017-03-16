@@ -121,7 +121,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog, uItem, BeaRLibItems;
+  uMap, uMob, uMsgLog, uItem, BeaRLibItems, gnugettext;
 
 { TScene }
 
@@ -242,7 +242,7 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 3, 'Trollhunter v.' + Version, TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 1, 'Press [color=red][[ENTER]][/color] to continue...',
+  Terminal.Print(X, Y + 1, _('Press [color=red][[ENTER]][/color] to continue...'),
     TK_ALIGN_CENTER);
 end;
 

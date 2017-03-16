@@ -12,7 +12,7 @@ type
     iItemC,
     // Dungeon of Doom
     iItemD
-  );
+  );  
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (

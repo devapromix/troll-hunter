@@ -1,7 +1,7 @@
 program Trollhunter;
 
 uses
-  SysUtils,
+  SysUtils, Dialogs,
   gnugettext in 'gnugettext.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
@@ -13,13 +13,14 @@ uses
   uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
-  uMsgLog in 'uMsgLog.pas';
+  uMsgLog in 'uMsgLog.pas'; 
 
-var
+var      
   Key: Word = 0;
   IsRender: Boolean = True;
 
 begin
+  UseLanguage(terminal_get('ini.localization.locale'));
   repeat
     if IsRender then
     begin
