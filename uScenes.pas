@@ -283,7 +283,7 @@ end;
 
 procedure TSceneHelp.Render;
 var
-  I, X, Y, KX, KY: Byte;
+  X, Y, KX, KY: Byte;
 
   procedure AddKey(Key, Text: string);
   begin
@@ -327,15 +327,15 @@ begin
 
   Terminal.Print(KX + 10, Y + 12, _('Move: [color=orange][[arrow keys]][/color], [color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], Wait:  [color=orange][[5]][/color], [color=orange][[S]][/color]'), TK_ALIGN_LEFT);
 
-  AddKey('<',   'Up staris');
-  AddKey('>',   'Down staris');
-  AddKey('G',   'Pickup an item');
-  AddKey('F',   'Drop an item');
-  AddKey('L',   'Look mode');
-  AddKey('I',   'Inventory');
-  AddKey('T',   'Skills and attributes');
-  AddKey('?',   'Help');
-  AddKey('Esc', 'Close');
+  AddKey('<',   _('Up staris'));
+  AddKey('>',   _('Down staris'));
+  AddKey('G',   _('Pickup an item'));
+  AddKey('F',   _('Drop an item'));
+  AddKey('L',   _('Look mode'));
+  AddKey('I',   _('Inventory'));
+  AddKey('T',   _('Skills and attributes'));
+  AddKey('?',   _('Help'));
+  AddKey('Esc', _('Close'));
 
   Terminal.Print(X, Terminal.Window.Height - Y - 5, '== ' + _('Character dump')
     + ' ==', TK_ALIGN_CENTER);

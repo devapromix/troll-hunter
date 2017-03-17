@@ -147,6 +147,48 @@ begin
   AddTile('#', _('Wall'), $FF222133, teDefaultWall, deDeepCave);
   AddTile('#', _('Wall'), $FF322118, teDefaultWall, deBloodCave);
   AddTile('#', _('Wall'), $FF112211, teDefaultWall, deDungeonOfDoom);
+  // Rock
+  AddTile('^', _('Rock'), $FF556655, teRock, deDarkWood);
+  AddTile(':', _('Wall'), $FF444422, teRock, deGrayCave);
+  AddTile(':', _('Wall'), $FF222133, teRock, deDeepCave);
+  AddTile(':', _('Wall'), $FF322118, teRock, deBloodCave);
+  AddTile(':', _('Wall'), $FF112233, teRock, deDungeonOfDoom);
+  // Floor #1
+  AddTile('"', _('Grass'), $FF446644, teFloor1, deDarkWood);
+  AddTile('"', _('Grass'), $FF99AA99, teFloor1, deGrayCave);
+  AddTile('.', _('Stone'), $FF224422, teFloor1, deDeepCave);
+  AddTile(';', _('Stone'), $FF225533, teFloor1, deBloodCave);
+  AddTile('~', _('Stone'), $FF228833, teFloor1, deDungeonOfDoom);
+  // Floor #2
+  AddTile('"', _('Grass'), $FF447755, teFloor2, deDarkWood);
+  AddTile('"', _('Grass'), $FF779977, teFloor2, deGrayCave);
+  AddTile('.', _('Stone'), $FF22CC44, teFloor2, deDeepCave);
+  AddTile(';', _('Stone'), $FF333322, teFloor2, deBloodCave);
+  AddTile('~', _('Stone'), $FF334422, teFloor2, deDungeonOfDoom);
+  // Floor #3
+  AddTile('"', _('Grass'), $FF778866, teFloor3, deDarkWood);
+  AddTile('"', _('Grass'), $FF668866, teFloor3, deGrayCave);
+  AddTile('.', _('Stone'), $FF338855, teFloor3, deDeepCave);
+  AddTile(';', _('Stone'), $FF223333, teFloor3, deBloodCave);
+  AddTile('~', _('Stone'), $FF226622, teFloor3, deDungeonOfDoom);
+    ), ( // UpStairs
+    (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
+    (Symbol: '<'; Name: 'Stairs'; Color: $FFBBBB00;) // Dungeon of Doom
+    ), ( // DnStairs   
+    (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
+    (Symbol: '>'; Name: 'Stairs'; Color: $FFBBBB00;) // Dungeon of Doom
+    ), ( // Water
+    (Symbol: '='; Name: 'Water'; Color: $FF333388;), // Dark Wood
+    (Symbol: '='; Name: 'Water'; Color: $FF333377;), // Gray Cave
+    (Symbol: '='; Name: 'Water'; Color: $FF222266;), // Deep Cave
+    (Symbol: '='; Name: 'Water'; Color: $FF222255;), // Blood Cave
+    (Symbol: '='; Name: 'Water'; Color: $FF222244;) // Dungeon of Doom
 end;
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum;
