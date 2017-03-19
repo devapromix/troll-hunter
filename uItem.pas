@@ -22,6 +22,7 @@ type
     // All
     iGold, iMinHPot, iMinMPot,
     // Dark Wood
+    iRustySword,
     iShortSword,
     // Gray Cave
     iItemA,
@@ -40,7 +41,8 @@ const
     (Symbol: '!'; ItemType: itPotion; MaxStack: 10;   MaxDurability: 0;  Color: clRed;      Deep: deDarkWood;),
     (Symbol: '!'; ItemType: itPotion; MaxStack: 10;   MaxDurability: 0;  Color: clBlue;     Deep: deDarkWood;),
     // Dark Wood
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 30; Color: clWhite;    Deep: deDarkWood;),
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 30; Color: clDarkRed;  Deep: deDarkWood;),
+    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 35; Color: clWhite;    Deep: deDarkWood;),
     // Gray Cave
     (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 40; Color: clYellow;   Deep: deGrayCave;),
     // Deep Cave
@@ -115,6 +117,20 @@ begin
   inherited;
 end;
 
+// Dull
+// Rusty, Chipped
+// Low Quality, Medium Quality, High Quality
+// Fine, Double Bladed, Enchanted
+// Bronze, Iron, Steel
+
+// Short Bow, Battle Bow, Long Bow, Elven Long Bow
+// Hunter's Bow, Ranger's Bow, Elvish Longbow, Compound Bow
+
+// Tunic, Chainmail, Platemail
+// Padded clothing, Chitin armor, Bone armor, Light armor,
+// Medium armor, Mail hauberk, Brigandine,
+// Heavy armor, Plate armor, 
+
 function TItems.GetName(AItem: TItemEnum): string;
 begin
   case AItem of
@@ -126,14 +142,16 @@ begin
     iMinMPot:
       Result := _('Potion of mana');
     // Dark Wood
-    iShortSword:
-      Result := _('Short Sword');
-    // Gray Cave
-    iItemA:
-      Result := _('Item A');
-    // Deep Cave
-    iItemB:
-      Result := _('Item B');
+    iRustySword:
+      Result := _('Rusty Sword'); // Broadsword, Hilted Sword, Longsword, Bastard Sword
+    iShortSword:                  // Combat Sword, War Sword, Claymore, Ebony Sword
+      Result := _('Short Sword'); // Rusty Iron Wood-Chopping Axe, Battle Axe,
+    // Gray Cave                  // Phantom Axe, Dwarven Battle Axe, War Axe
+    iItemA:                       // Feathered Spear, Bronze Spear, Rusted Spear
+      Result := _('Item A');      // Small Dagger, a Rusty Dagger, Flying Dagger
+    // Deep Cave                  // Sharpened Daggers, Gemmed Dagger, Carving Knife
+    iItemB:                       // Boot Knife, Target Knife, Throwing Spike
+      Result := _('Item B');      // Rapier, Sabre,
     // Blood Cave
     iItemC:
       Result := _('Item C');
