@@ -404,9 +404,12 @@ begin
 
   for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
   begin
+    // Add mobs
     IsBoss := False;
     for I := 0 to 255 do
       Mobs.Add(FDeep);
+    // Add items
+    IsRare := False;
     for I := 0 to 255 do
       Items.Add(FDeep);
   end;

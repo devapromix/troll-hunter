@@ -40,6 +40,7 @@ var
   CanClose: Boolean = False;
   Killer: string = '';
   IsBoss: Boolean = False;
+  IsRare: Boolean = False;
   WonGame: Boolean = False;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
