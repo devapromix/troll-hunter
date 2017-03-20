@@ -597,6 +597,11 @@ begin
         Player.Fill;
     TK_ESCAPE:
       begin
+        if Player.Look then
+        begin
+          Player.Look := False;
+          Exit;
+        end;
         if (Player.Life = 0) then
           Exit;
         TextScreenshot := GetTextScreenshot();
