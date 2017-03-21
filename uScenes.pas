@@ -299,7 +299,7 @@ begin
   KX := 0;
   KY := 14;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, '== ' + _('Trollhunter') + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, Format(FT, [_('Trollhunter')]), TK_ALIGN_CENTER);
 
   Terminal.Print(X, Y + 2,
     _('The land Elvion is surrounded by mountains. In the center of this land'),
@@ -320,7 +320,7 @@ begin
   Terminal.Print(X, Y + 8, _('confrontation with boss. Good luck!'),
     TK_ALIGN_CENTER);
 
-  Terminal.Print(X, Y + 10, '== ' + _('Keybindings') + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 10, Format(FT, [_('Keybindings')]), TK_ALIGN_CENTER);
 
   Terminal.Print(KX + 10, Y + 12, _('Move: [color=orange][[arrow keys]][/color], [color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], Wait:  [color=orange][[5]][/color], [color=orange][[S]][/color]'), TK_ALIGN_LEFT);
 
@@ -334,8 +334,7 @@ begin
   AddKey('?',   _('Help'));
   AddKey('Esc', _('Close'));
 
-  Terminal.Print(X, Terminal.Window.Height - Y - 5, '== ' + _('Character dump')
-    + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Terminal.Window.Height - Y - 5, Format(FT, [_('Character dump')]), TK_ALIGN_CENTER);
   Terminal.Print(X, Terminal.Window.Height - Y - 3,
     _('The game saves a character dump to [color=green]*-character-dump.txt[/color] file.'),
     TK_ALIGN_CENTER);
@@ -706,7 +705,7 @@ var
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, '== ' + _('Inventory') + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     _('[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes'),
     TK_ALIGN_CENTER);
@@ -757,7 +756,7 @@ var
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, '== ' + _('Trollhunter') + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, Format(FT, [_('Trollhunter')]), TK_ALIGN_CENTER);
 
   Self.RenderPlayer;
   Self.RenderSkills;
@@ -774,7 +773,7 @@ begin
   Y := 3;
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
-  Terminal.Print(X, Y, '== ' + _('Attributes') + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 2, W, 10, ExpMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 2, Format('%s %d', [_('Level'), Player.Level]),
     TK_ALIGN_CENTER);
@@ -819,7 +818,7 @@ begin
   X := Terminal.Window.Width div 2;
   A := Terminal.Window.Width div 4;
   B := A * 3;
-  Terminal.Print(B, Y, '== ' + _('Skills') + ' ==', TK_ALIGN_CENTER);
+  Terminal.Print(B, Y, Format(FT, [_('Skills')]), TK_ALIGN_CENTER);
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   begin
     D := (Ord(I) * 2) + Y + 2;

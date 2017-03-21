@@ -14,6 +14,9 @@ const
   Version = '0.8';
 
 const
+  FT = '== %s ==';
+
+const
   clRed = $FFFF0000;
   clGreen = $FF00FF00;
   clBlue = $FF0000FF;

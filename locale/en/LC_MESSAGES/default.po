@@ -17,87 +17,143 @@ msgstr "Project-Id-Version: PACKAGE VERSION\n"
 "X-Poedit-Language: english\n"
 
 #. All
-#: uItem.pas:123
+#: uItem.pas:139
 msgid "Gold"
 msgstr ""
 
-#: uItem.pas:125
+#: uItem.pas:141
 msgid "Potion of health"
 msgstr ""
 
-#: uItem.pas:127
+#: uItem.pas:143
 msgid "Potion of mana"
 msgstr ""
 
-#. Dark Wood
-#: uItem.pas:130
+#. Broadsword, Hilted Sword, Longsword, Bastard Sword
+#: uItem.pas:146
+msgid "Rusty Sword"
+msgstr ""
+
+#. Rusty Iron Wood-Chopping Axe, Battle Axe,
+#: uItem.pas:148
 msgid "Short Sword"
 msgstr ""
 
-#. Gray Cave
-#: uItem.pas:133
+#. Small Dagger, a Rusty Dagger, Flying Dagger
+#: uItem.pas:151
 msgid "Item A"
 msgstr ""
 
-#. Deep Cave
-#: uItem.pas:136
+#. Rapier, Sabre,
+#: uItem.pas:154
 msgid "Item B"
 msgstr ""
 
 #. Blood Cave
-#: uItem.pas:139
+#: uItem.pas:157
 msgid "Item C"
 msgstr ""
 
 #. Dungeon of Doom
-#: uItem.pas:142
+#: uItem.pas:160
 msgid "Item D"
 msgstr ""
 
 #. DefaultFloor
-#: uMap.pas:139
+#: uMap.pas:82
+#. Floor #1
+#: uMap.pas:100
+#: uMap.pas:101
+#. Floor #2
+#: uMap.pas:106
+#: uMap.pas:107
+#. Floor #3
+#: uMap.pas:112
+#: uMap.pas:113
 msgid "Grass"
 msgstr ""
 
-#: uMap.pas:140
+#: uMap.pas:83
 msgid "Dirt"
 msgstr ""
 
-#: uMap.pas:141
-#: uMap.pas:142
-#: uMap.pas:143
+#: uMap.pas:84
+#: uMap.pas:85
+#: uMap.pas:86
+#: uMap.pas:102
+#: uMap.pas:103
+#: uMap.pas:104
+#: uMap.pas:108
+#: uMap.pas:109
+#: uMap.pas:110
+#: uMap.pas:114
+#: uMap.pas:115
+#: uMap.pas:116
 msgid "Stone"
 msgstr ""
 
 #. DefaultWall
-#: uMap.pas:145
+#: uMap.pas:88
 msgid "Tree"
 msgstr ""
 
-#: uMap.pas:146
-#: uMap.pas:147
-#: uMap.pas:148
-#: uMap.pas:149
+#: uMap.pas:89
+#: uMap.pas:90
+#: uMap.pas:91
+#: uMap.pas:92
+#: uMap.pas:95
+#: uMap.pas:96
+#: uMap.pas:97
+#: uMap.pas:98
 msgid "Wall"
 msgstr ""
 
-#: uMap.pas:387
+#. Rock
+#: uMap.pas:94
+msgid "Rock"
+msgstr ""
+
+#. Up Stairs
+#: uMap.pas:118
+#: uMap.pas:119
+#: uMap.pas:120
+#: uMap.pas:121
+#: uMap.pas:122
+#. Down Stairs
+#: uMap.pas:124
+#: uMap.pas:125
+#: uMap.pas:126
+#: uMap.pas:127
+#: uMap.pas:128
+msgid "Stairs"
+msgstr ""
+
+#. Water
+#: uMap.pas:130
+#: uMap.pas:131
+#: uMap.pas:132
+#: uMap.pas:133
+#: uMap.pas:134
+msgid "Water"
+msgstr ""
+
+#: uMap.pas:375
 msgid "Dark Wood"
 msgstr ""
 
-#: uMap.pas:389
+#: uMap.pas:377
 msgid "Gray Cave"
 msgstr ""
 
-#: uMap.pas:391
+#: uMap.pas:379
 msgid "Deep Cave"
 msgstr ""
 
-#: uMap.pas:393
+#: uMap.pas:381
 msgid "Blood Cave"
 msgstr ""
 
-#: uMap.pas:395
+#: uMap.pas:383
 msgid "Dungeon Of Doom"
 msgstr ""
 
@@ -215,12 +271,12 @@ msgstr ""
 msgid "Healing"
 msgstr ""
 
-#: uPlayer.pas:306
-#: uScenes.pas:243
-#: uScenes.pas:305
+#: uPlayer.pas:303
+#: uScenes.pas:241
+#: uScenes.pas:302
 #. Player info
-#: uScenes.pas:516
-#: uScenes.pas:763
+#: uScenes.pas:508
+#: uScenes.pas:760
 msgid "Trollhunter"
 msgstr ""
 
@@ -232,8 +288,9 @@ msgstr ""
 msgid "Last messages"
 msgstr ""
 
-#: uPlayer.pas:315
-#: uScenes.pas:712
+#: uPlayer.pas:316
+#: uScenes.pas:332
+#: uScenes.pas:709
 msgid "Inventory"
 msgstr ""
 
@@ -241,186 +298,218 @@ msgstr ""
 msgid "You have opened a new territory: %s."
 msgstr ""
 
-#: uScenes.pas:246
+#: uScenes.pas:244
 msgid "Press [color=red][[ENTER]][/color] to "
 "continue..."
 msgstr "Press [color=red][[ENTER]][/color] to "
 "continue..."
 
-#: uScenes.pas:263
+#: uScenes.pas:261
 msgid "Welcome to Elvion! You need to find and kill The King "
 "Troll!"
 msgstr ""
 
-#: uScenes.pas:264
+#: uScenes.pas:262
 msgid "Press ? for help."
 msgstr ""
 
-#: uScenes.pas:308
+#: uScenes.pas:305
 msgid "The land Elvion is surrounded by mountains. In the center of this "
 "land"
 msgstr ""
 
-#: uScenes.pas:311
+#: uScenes.pas:308
 msgid "there is village, Dork. The land is in danger, because The Troll King "
 "and"
 msgstr ""
 
-#: uScenes.pas:314
+#: uScenes.pas:311
 msgid "his armies are coming. Only a legendary hero can kill the "
 "monster."
 msgstr ""
 
-#: uScenes.pas:318
+#: uScenes.pas:315
 msgid "You play as a lonely hero who has to slay trolls to save your land "
 "Elvion."
 msgstr ""
 
-#: uScenes.pas:321
+#: uScenes.pas:318
 msgid "You can gather equipment, fight enemies and try to survive for your "
 "final"
 msgstr ""
 
-#: uScenes.pas:323
+#: uScenes.pas:320
 msgid "confrontation with boss. Good luck!"
 msgstr ""
 
-#: uScenes.pas:326
+#: uScenes.pas:323
 msgid "Keybindings"
 msgstr ""
 
-#: uScenes.pas:328
+#: uScenes.pas:325
 msgid "Move: [color=orange][[arrow keys]][/color], "
 "[color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], "
 "Wait:  [color=orange][[5]][/color], "
 "[color=orange][[S]][/color]"
 msgstr ""
 
-#: uScenes.pas:340
+#: uScenes.pas:327
+msgid "Up staris"
+msgstr ""
+
+#: uScenes.pas:328
+msgid "Down staris"
+msgstr ""
+
+#: uScenes.pas:329
+msgid "Pickup an item"
+msgstr ""
+
+#: uScenes.pas:330
+msgid "Drop an item"
+msgstr ""
+
+#: uScenes.pas:331
+msgid "Look mode"
+msgstr ""
+
+#: uScenes.pas:333
+msgid "Skills and attributes"
+msgstr ""
+
+#: uScenes.pas:334
+msgid "Help"
+msgstr ""
+
+#: uScenes.pas:335
+msgid "Close"
+msgstr ""
+
+#: uScenes.pas:337
 msgid "Character dump"
 msgstr ""
 
-#: uScenes.pas:343
+#: uScenes.pas:340
 msgid "The game saves a character dump to [color=green]*-character-dump.txt[/"
 "color] file."
 msgstr ""
 
-#: uScenes.pas:347
-#: uScenes.pas:739
+#: uScenes.pas:344
+#: uScenes.pas:736
 msgid "[color=red][[ESC]][/color] Close"
 msgstr ""
 
 #. Durability
-#: uScenes.pas:389
+#: uScenes.pas:381
 msgid "Saveral items (%dx) are lying here (%s)."
 msgstr ""
 
-#: uScenes.pas:393
+#: uScenes.pas:385
 msgid "%s is lying here."
 msgstr ""
 
-#: uScenes.pas:521
-#: uScenes.pas:805
+#: uScenes.pas:513
+#: uScenes.pas:802
 msgid "Life"
 msgstr ""
 
-#: uScenes.pas:523
-#: uScenes.pas:809
+#: uScenes.pas:515
+#: uScenes.pas:806
 msgid "Mana"
 msgstr ""
 
-#: uScenes.pas:525
+#: uScenes.pas:517
 msgid "Turn %d Damage %d"
 msgstr ""
 
-#: uScenes.pas:625
+#: uScenes.pas:622
 msgid "Creating the world, please wait..."
 msgstr ""
 
-#: uScenes.pas:638
+#: uScenes.pas:635
 msgid "Quit? [[Y/N]]"
 msgstr ""
 
-#: uScenes.pas:646
+#: uScenes.pas:643
 msgid "Quit the game"
 msgstr ""
 
-#: uScenes.pas:662
+#: uScenes.pas:659
 msgid "GAME OVER!!!"
 msgstr ""
 
-#: uScenes.pas:664
+#: uScenes.pas:661
 msgid "Killed by [color=white]%s[/color]. Press "
 "[color=red][[ENTER]][/color]"
 msgstr ""
 
-#: uScenes.pas:673
+#: uScenes.pas:670
 msgid "Killed by %s"
 msgstr ""
 
-#: uScenes.pas:687
+#: uScenes.pas:684
 msgid "CONGRATULATIONS!!!"
 msgstr ""
 
-#: uScenes.pas:689
+#: uScenes.pas:686
 msgid "You have won. Press [color=red][[ENTER]][/color]"
 msgstr ""
 
-#: uScenes.pas:698
+#: uScenes.pas:695
 msgid "Won the game"
 msgstr ""
 
-#: uScenes.pas:714
+#: uScenes.pas:711
 msgid "[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills "
 "and attributes"
 msgstr ""
 
-#: uScenes.pas:736
+#: uScenes.pas:733
 msgid "Select an item to drop"
 msgstr ""
 
-#: uScenes.pas:769
+#: uScenes.pas:766
 msgid "[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] "
 "Inventory"
 msgstr ""
 
-#: uScenes.pas:780
+#: uScenes.pas:777
 msgid "Attributes"
 msgstr ""
 
-#: uScenes.pas:782
+#: uScenes.pas:779
 msgid "Level"
 msgstr ""
 
-#: uScenes.pas:785
+#: uScenes.pas:782
 msgid "Strength"
 msgstr ""
 
-#: uScenes.pas:788
+#: uScenes.pas:785
 msgid "Dexterity"
 msgstr ""
 
-#: uScenes.pas:791
+#: uScenes.pas:788
 msgid "Willpower"
 msgstr ""
 
-#: uScenes.pas:794
+#: uScenes.pas:791
 msgid "Perception"
 msgstr ""
 
-#: uScenes.pas:798
+#: uScenes.pas:795
 msgid "Defensive Value (DV)"
 msgstr ""
 
-#: uScenes.pas:801
+#: uScenes.pas:798
 msgid "Protection Value (PV)"
 msgstr ""
 
-#: uScenes.pas:812
+#: uScenes.pas:809
 msgid "Radius"
 msgstr ""
 
-#: uScenes.pas:825
+#: uScenes.pas:822
 msgid "Skills"
 msgstr ""
 

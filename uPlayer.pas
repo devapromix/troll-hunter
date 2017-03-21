@@ -294,26 +294,22 @@ end;
 function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   SL: TStringList;
-const
-  F = '== %s ==';
 begin
   if WizardMode then Exit;
   SL := TStringList.Create;
   try
-    SL.Append(Format(F, [_('Trollhunter')]));
+    SL.Append(Format(FT, [_('Trollhunter')]));
     SL.Append('');
     SL.Append(GetDateTime);
     SL.Append('');
     SL.Append(AReason);
     SL.Append('');
-    SL.Append(Format(F, [_('Screenshot')]));
+    SL.Append(Format(FT, [_('Screenshot')]));
     SL.Append(TextScreenshot);
-    SL.Append('');
-    SL.Append(Format(F, [_('Last messages')]));
+    SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
     SL.Append(MsgLog.GetLastMsg(10));
-    SL.Append('');
-    SL.Append(Format(F, [_('Inventory')]));
+    SL.Append(Format(FT, [_('Inventory')]));
     SL.Append('');
     SL.Append('');
     SL.SaveToFile(GetDateTime('-', '-') + '-character-dump.txt');
