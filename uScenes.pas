@@ -90,8 +90,6 @@ type
 
 type
   TSceneHelp = class(TScene)
-  private
-    SL: TStringList;
   public
     constructor Create;
     destructor Destroy; override;
@@ -271,13 +269,12 @@ end;
 
 constructor TSceneHelp.Create;
 begin
-  SL := TStringList.Create;
-  SL.LoadFromFile(HelpFileName);
+
 end;
 
 destructor TSceneHelp.Destroy;
 begin
-  SL.Free;
+
   inherited;
 end;
 
@@ -350,11 +347,6 @@ end;
 procedure TSceneHelp.Update(var Key: Word);
 begin
   case Key of
-    TK_R: // Refresh
-      if WizardMode then
-      begin
-        SL.LoadFromFile(HelpFileName);
-      end;
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
   end;

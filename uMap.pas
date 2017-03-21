@@ -33,63 +33,6 @@ const
 
 var
   Tile: array [TTileEnum, TDeepEnum] of TTile;
-
-  { = (( // DefaultFloor
-    (Symbol: '"'; Name: 'Grass'; Color: $FF113311;), // Dark Wood
-    (Symbol: ':'; Name: 'Dirt'; Color: $FF331133;), // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: $FF222111;), // Deep Cave
-    (Symbol: ';'; Name: 'Stone'; Color: $FF330000;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF002200;) // Dungeon of Doom
-    ), ( // DefaultWall
-    (Symbol: 'T'; Name: 'Tree'; Color: $FF006622;), // Dark Wood
-    (Symbol: '#'; Name: 'Wall'; Color: $FF444422;), // Gray Cave
-    (Symbol: '#'; Name: 'Wall'; Color: $FF222133;), // Deep Cave
-    (Symbol: '#'; Name: 'Wall'; Color: $FF322118;), // Blood Cave
-    (Symbol: '#'; Name: 'Wall'; Color: $FF112211;) // Dungeon of Doom
-    ), ( // Rock
-    (Symbol: '^'; Name: 'Rock'; Color: $FF556655;), // Dark Wood
-    (Symbol: ':'; Name: 'Wall'; Color: $FF444422;), // Gray Cave
-    (Symbol: ':'; Name: 'Wall'; Color: $FF222133;), // Deep Cave
-    (Symbol: ':'; Name: 'Wall'; Color: $FF322118;), // Blood Cave
-    (Symbol: ';'; Name: 'Wall'; Color: $FF322118;) // Dungeon of Doom
-    ), ( // Floor1
-    (Symbol: '"'; Name: 'Grass'; Color: $FF446644;), // Dark Wood
-    (Symbol: '"'; Name: 'Grass'; Color: $FF99AA99;), // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: $FF224422;), // Deep Cave
-    (Symbol: ';'; Name: 'Stone'; Color: $FF225533;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF228833;) // Dungeon of Doom
-    ), ( // Floor2
-    (Symbol: '"'; Name: 'Grass'; Color: $FF447755;), // Dark Wood
-    (Symbol: '"'; Name: 'Grass'; Color: $FF779977;), // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: $FF22CC44;), // Deep Cave
-    (Symbol: ';'; Name: 'Stone'; Color: $FF333322;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF334422;) // Dungeon of Doom
-    ), ( // Floor3
-    (Symbol: '"'; Name: 'Grass'; Color: $FF778866;), // Dark Wood
-    (Symbol: '"'; Name: 'Grass'; Color: $FF668866;), // Gray Cave
-    (Symbol: '.'; Name: 'Stone'; Color: $FF338855;), // Deep Cave
-    (Symbol: ';'; Name: 'Stone'; Color: $FF223333;), // Blood Cave
-    (Symbol: '~'; Name: 'Stone'; Color: $FF226622;) // Dungeon of Doom
-    ), ( // UpStairs
-    (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
-    (Symbol: '<'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
-    (Symbol: '<'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
-    (Symbol: '<'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
-    (Symbol: '<'; Name: 'Stairs'; Color: $FFBBBB00;) // Dungeon of Doom
-    ), ( // DnStairs
-    (Symbol: '*'; Name: 'Stairs'; Color: $FFFFFF00;), // Dark Wood
-    (Symbol: '>'; Name: 'Stairs'; Color: $FFEEEE00;), // Gray Cave
-    (Symbol: '>'; Name: 'Stairs'; Color: $FFDDDD00;), // Deep Cave
-    (Symbol: '>'; Name: 'Stairs'; Color: $FFCCCC00;), // Blood Cave
-    (Symbol: '>'; Name: 'Stairs'; Color: $FFBBBB00;) // Dungeon of Doom
-    ), ( // Water
-    (Symbol: '='; Name: 'Water'; Color: $FF333388;), // Dark Wood
-    (Symbol: '='; Name: 'Water'; Color: $FF333377;), // Gray Cave
-    (Symbol: '='; Name: 'Water'; Color: $FF222266;), // Deep Cave
-    (Symbol: '='; Name: 'Water'; Color: $FF222255;), // Blood Cave
-    (Symbol: '='; Name: 'Water'; Color: $FF222244;) // Dungeon of Doom
-    ));
-  }
 type
   TMap = class(TObject)
   private

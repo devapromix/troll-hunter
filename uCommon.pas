@@ -14,10 +14,6 @@ const
   Version = '0.8';
 
 const
-  CharacterDumpFileName = 'trollhunter-character-dump.txt';
-  HelpFileName = 'trollhunter-help.txt';
-
-const
   clRed = $FFFF0000;
   clGreen = $FF00FF00;
   clBlue = $FF0000FF;
