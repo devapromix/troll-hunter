@@ -5,7 +5,7 @@ interface
 uses BearLibItems, uCommon, uMap, uPlayer;
 
 type
-  TItemType = (itCoin, itPotion, itSword);
+  TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace);
 
 type
   TItemBase = record
@@ -19,43 +19,79 @@ type
 
 type
   TItemEnum = (
-    // All
+    // All maps
     iGold, iMinHPot, iMinMPot,
     // Dark Wood
-    iRustySword, iShortSword,
-    // Gray Cave
-    iItemA,
-    // Deep Cave
-    iItemB,
-    // Blood Cave
-    iItemC,
-    // Dungeon of Doom
-    iItemD);
+    iRustySword, iShortSword, // Blade
+    iHatchet, iBattleaxe, // Axe
+    iShortSpear, iSpear, // Spear
+    iHeavyBranch, iSpikedCudgel { , }   // Mace
+    { // Gray Cave
+      iBroadSword, iLongSword,            // Blade
+      iMeatAxe,  iFleshTearer,              // Axe
+      iJavelin, iFuscina,                 // Spear
+      iWarhammer, iWarMace,               // Mace
+      // Deep Cave
+      iMoonBlade, iSwordOfTheJackal,      // Blade
+      iRubyAxe, DarkAxe,                  // Axe
+      iWarSpear, iHarpoon,                // Spear
+      iFlangedMace, iWarGavel,            // Mace
+      // Blood Cave
+      iBastardSword, iGreatSword,          // Blade
+      iBerserkerAxe, iMarauderAxe,            // Axe
+      iSilvanWhisper, iImpaler,           // Spear
+      iBarbarousMace, iAdeptHammer,       // Mace
+      // Dungeon of Doom
+      iRuneSword, iTrollSlayer,          // Blade
+      iChopper, iDemonAxe,            // Axe
+      iSoulReaver, iKeeperOfEternalFlame, // Spear
+      iOgreMorningStar, iBoneOfTheHigher  // Mace
+    }
+    );
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
-    // All
+    // All maps
+    // Gold
     (Symbol: '$'; ItemType: itCoin; MaxStack: 1000; MaxDurability: 0;
-    Color: clYellow; Deep: deDarkWood;), (Symbol: '!'; ItemType: itPotion;
-    MaxStack: 10; MaxDurability: 0; Color: clRed; Deep: deDarkWood;
-    ), (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
+    Color: clYellow; Deep: deDarkWood;),
+    // Life Potion
+    (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
+    Color: clRed; Deep: deDarkWood;),
+    // Mana potion
+    (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
     Color: clBlue; Deep: deDarkWood;),
     // Dark Wood
-    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 30;
-    Color: clDarkRed; Deep: deDarkWood;), (Symbol: '/'; ItemType: itSword;
-    MaxStack: 1; MaxDurability: 35; Color: clWhite; Deep: deDarkWood;),
+    // RustySword
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 30;
+    Color: clDarkRed; Deep: deDarkWood;),
+    // ShortSword
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 40;
+    Color: clWhite; Deep: deDarkWood;),
+    // Hatchet
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 25;
+    Color: clDarkRed; Deep: deDarkWood;),
+    // Battleaxe
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 30;
+    Color: clDarkRed; Deep: deDarkWood;),
+    // ShortSpear
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 30;
+    Color: clDarkRed; Deep: deDarkWood;),
+    // Spear
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 35;
+    Color: clDarkRed; Deep: deDarkWood;),
+    // HeavyBranch
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 30;
+    Color: clDarkRed; Deep: deDarkWood;),
+    // SpikedCudgel
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 40;
+    Color: clDarkRed; Deep: deDarkWood;) { , }
+
     // Gray Cave
-    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 40;
-    Color: clYellow; Deep: deGrayCave;),
     // Deep Cave
-    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 50;
-    Color: clYellow; Deep: deDeepCave;),
     // Blood Cave
-    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 60;
-    Color: clYellow; Deep: deBloodCave;),
     // Dungeon of Doom
-    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 70;
-    Color: clYellow; Deep: deDungeonOfDoom;));
+    );
 
 type
   TItems = class(TObject)
@@ -148,23 +184,49 @@ begin
     iMinMPot:
       Result := _('Potion of mana');
     // Dark Wood
+    // Blade
     iRustySword:
       Result := _('Rusty Sword');
+    iShortSword:
+      Result := _('Short Sword');
+    // Axe
+    iHatchet:
+      Result := _('Hatchet');
+    iBattleaxe:
+      Result := _('Battleaxe');
+    // Spear
+    iShortSpear:
+      Result := _('Short Spear');
+    iSpear:
+      Result := _('Spear');
+    // Mace
+    iHeavyBranch:
+      Result := _('Heavy Branch');
+    iSpikedCudgel:
+      Result := _('Spiked Cudgel');
+
+    {
+      iRustySword:
+
       // Broadsword, Hilted Sword, Longsword, Bastard Sword
-    iShortSword: // Combat Sword, War Sword, Claymore, Ebony Sword
+      iShortSword: // Combat Sword, War Sword, Claymore, Ebony Sword
       Result := _('Short Sword'); // Rusty Iron Wood-Chopping Axe, Battle Axe,
-    // Gray Cave                  // Phantom Axe, Dwarven Battle Axe, War Axe
-    iItemA: // Feathered Spear, Bronze Spear, Rusted Spear
+
+      // Gray Cave                  // Phantom Axe, Dwarven Battle Axe, War Axe
+      iItemA: // Feathered Spear, Bronze Spear, Rusted Spear
       Result := _('Item A'); // Small Dagger, a Rusty Dagger, Flying Dagger
-    // Deep Cave                  // Sharpened Daggers, Gemmed Dagger, Carving Knife
-    iItemB: // Boot Knife, Target Knife, Throwing Spike
+      // Deep Cave                  // Sharpened Daggers, Gemmed Dagger, Carving Knife
+      iItemB: // Boot Knife, Target Knife, Throwing Spike
       Result := _('Item B'); // Rapier, Sabre,
-    // Blood Cave
-    iItemC:
+      // Blood Cave
+      iSilvanWhisper:
+      Result := _('Silvan Whisper');
+      iItemC:
       Result := _('Item C');
-    // Dungeon of Doom
-    iItemD:
+      // Dungeon of Doom
+      iItemD:
       Result := _('Item D');
+    }
   end;
 end;
 

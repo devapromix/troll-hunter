@@ -7,7 +7,7 @@ type
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
     // Weapon skills
-    skSword, skAxe, skSpear, skDagger,
+    skBlade, skAxe, skSpear, skMace,
     // Skills
     skStealth, skHealing);
 
@@ -224,14 +224,14 @@ begin
     skToughness:
       Result := _('Toughness');
     // Weapon skills
-    skSword:
-      Result := _('Swords');
+    skBlade:
+      Result := _('Blade');
     skAxe:
-      Result := _('Axes');
+      Result := _('Axe');
     skSpear:
-      Result := _('Spears');
-    skDagger:
-      Result := _('Daggers');
+      Result := _('Spear');
+    skMace:
+      Result := _('Mace');
     // Skills
     skStealth:
       Result := _('Stealth');
