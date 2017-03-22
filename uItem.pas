@@ -26,17 +26,17 @@ type
     iHatchet, iBattleaxe, // Axe
     iShortSpear, iSpear, // Spear
     iHeavyBranch, iSpikedCudgel, // Mace
-     // Gray Cave
+    // Gray Cave
     iBroadSword, iLongSword,            // Blade
     iMeatAxe,  iFleshTearer,              // Axe
     iJavelin, iFuscina,                 // Spear
-    iWarhammer, iWarMace{,}               // Mace
-{      // Deep Cave
-      iMoonBlade, iSwordOfTheJackal,      // Blade
-      iRubyAxe, DarkAxe,                  // Axe
-      iWarSpear, iHarpoon,                // Spear
-      iFlangedMace, iWarGavel,            // Mace
-      // Blood Cave
+    iWarhammer, iWarMace,               // Mace
+    // Deep Cave
+    iMoonBlade, iSwordOfTheJackal,      // Blade
+    iRubyAxe, iDarkAxe,                  // Axe
+    iWarSpear, iHarpoon,                // Spear
+    iFlangedMace, iWarGavel{,}            // Mace
+{      // Blood Cave
       iBastardSword, iGreatSword,          // Blade
       iBerserkerAxe, iMarauderAxe,            // Axe
       iSilvanWhisper, iImpaler,           // Spear
@@ -99,10 +99,10 @@ const
     (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 45;
     Color: clDarkRed; Deep: deGrayCave;),
     // MeatAxe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 35;
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 40;
     Color: clDarkRed; Deep: deGrayCave;),
     // FleshTearer
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 40;
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 45;
     Color: clDarkRed; Deep: deGrayCave;),
     // Javelin
     (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 40;
@@ -115,9 +115,35 @@ const
     Color: clDarkRed; Deep: deGrayCave;),
     // WarMace
     (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 45;
-    Color: clDarkRed; Deep: deGrayCave;) { , }
+    Color: clDarkRed; Deep: deGrayCave;),
 
-    // Deep Cave
+    // == Deep Cave == //
+
+    // MoonBlade
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 50;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // SwordOfTheJackal
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 55;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // RubyAxe
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 50;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // DarkAxe
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 55;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // WarSpear
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 50;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // Harpoon
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 55;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // FlangedMace
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 50;
+    Color: clDarkRed; Deep: deDeepCave;),
+    // WarGavel
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 55;
+    Color: clDarkRed; Deep: deDeepCave;){,}
+
     // Blood Cave
     // Dungeon of Doom
     );
@@ -261,6 +287,33 @@ begin
       Result := _('Warhammer');
     iWarMace:
       Result := _('War Mace');
+
+       // == Deep Cave == //
+
+    // Blade
+    iMoonBlade:
+      Result := _('Moon Blade');
+    iSwordOfTheJackal:
+      Result := _('Sword Of The Jackal');
+    // Axe
+    iRubyAxe:
+      Result := _('Ruby Axe');
+    iDarkAxe:
+      Result := _('Dark Axe');
+    // Spear
+    iWarSpear:
+      Result := _('War Spear');
+    iHarpoon:
+      Result := _('Harpoon');
+    // Mace
+    iFlangedMace:
+      Result := _('Flanged Mace');
+    iWarGavel:
+      Result := _('War Gavel');
+
+
+
+
     {
       iRustySword:
 
