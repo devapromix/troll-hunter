@@ -23,30 +23,29 @@ type
     iGold, iMinHPot, iMinMPot,
     // Dark Wood
     iRustySword, iShortSword, // Blade
-    iHatchet, iBattleaxe, // Axe
+    iHatchet, iBattleAxe, // Axe
     iShortSpear, iSpear, // Spear
     iHeavyBranch, iSpikedCudgel, // Mace
     // Gray Cave
-    iBroadSword, iLongSword,            // Blade
-    iMeatAxe,  iFleshTearer,              // Axe
-    iJavelin, iFuscina,                 // Spear
-    iWarhammer, iWarMace,               // Mace
+    iBroadSword, iLongSword, // Blade
+    iMeatAxe, iFleshTearer, // Axe
+    iJavelin, iFuscina, // Spear
+    iWarhammer, iWarMace, // Mace
     // Deep Cave
-    iMoonBlade, iSwordOfTheJackal,      // Blade
-    iRubyAxe, iDarkAxe,                  // Axe
-    iWarSpear, iHarpoon,                // Spear
-    iFlangedMace, iWarGavel,            // Mace
+    iMoonBlade, iSwordOfTheJackal, // Blade
+    iRubyAxe, iDarkAxe, // Axe
+    iWarSpear, iHarpoon, // Spear
+    iFlangedMace, iWarGavel, // Mace
     // Blood Cave
-    iBastardSword, iGreatSword,          // Blade
-    iBerserkerAxe, iMarauderAxe,            // Axe
-    iSilvanWhisper, iImpaler,           // Spear
-    iBarbarousMace, iAdeptHammer{,}       // Mace
-{      // Dungeon of Doom
-      iRuneSword, iTrollSlayer,          // Blade
-      iChopper, iDemonAxe,            // Axe
-      iSoulReaver, iKeeperOfEternalFlame, // Spear
-      iOgreMorningStar, iBoneOfTheHigher  // Mace
-    }
+    iBastardSword, iGreatSword, // Blade
+    iBerserkerAxe, iMarauderAxe, // Axe
+    iSilvanWhisper, iImpaler, // Spear
+    iBarbarousMace, iAdeptHammer, // Mace
+    // Dungeon of Doom
+    iRuneSword, iTrollSlayer, // Blade
+    iChopper, iDemonAxe, // Axe
+    iSoulReaver, iKeeperOfEternalFlame, // Spear
+    iOgreMorningStar, iBoneOfTheHigher // Mace
     );
 
 const
@@ -74,7 +73,7 @@ const
     // Hatchet
     (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
-    // Battleaxe
+    // Battle Axe
     (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 35;
     Color: clDarkRed; Deep: deDarkWood;),
     // Short Spear
@@ -169,16 +168,39 @@ const
     Color: clDarkRed; Deep: deBloodCave;),
     // Adept Hammer
     (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 65;
-    Color: clDarkRed; Deep: deBloodCave;){,}
+    Color: clDarkRed; Deep: deBloodCave;),
 
     // == Dungeon of Doom == //
-    
+
+    // Rune Sword
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 70;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Troll Slayer,
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 75;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Chopper
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 70;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Demon Axe,
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 75;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Soul Reaver
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 70;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Keeper Of Eternal Flame,
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 75;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Ogre Morning Star
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 70;
+    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    // Bone Of The Higher
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 75;
+    Color: clDarkRed; Deep: deDungeonOfDoom;)
+
     );
 
 type
   TItems = class(TObject)
-  private
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -230,6 +252,32 @@ begin
   Items_Dungeon_AppendItem(FItem);
 end;
 
+procedure TItems.Render(AX, AY: Byte);
+var
+  MapID, X, Y: Byte;
+  I, Count: Integer;
+  Color: Cardinal;
+  FItem: Item;
+begin
+  MapID := Ord(Map.Deep);
+  Count := Items_Dungeon_GetMapCount(MapID);
+  for I := Count - 1 downto 0 do
+  begin
+    FItem := Items_Dungeon_GetMapItem(MapID, I);
+    if not Map.InView(FItem.X, FItem.Y) or
+      (not WizardMode and not Map.GetFOV(FItem.X, FItem.Y)) then
+      Continue;
+    X := FItem.X - Player.X + AX + View.Left;
+    Y := FItem.Y - Player.Y + AY + View.Top;
+    if not WizardMode and (GetDist(Player.X, Player.Y, FItem.X, FItem.Y) >
+      Player.GetRadius) then
+      Color := clFog
+    else
+      Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
+    Terminal.Print(X, Y, ItemBase[TItemEnum(FItem.ItemID)].Symbol, Color);
+  end;
+end;
+
 constructor TItems.Create;
 begin
   Items_Open;
@@ -241,21 +289,17 @@ begin
   inherited;
 end;
 
-    {
-      iRustySword:
+// Broadsword, Hilted Sword, Longsword, Bastard Sword
+// Combat Sword, War Sword, Claymore, Ebony Sword
+// Rusty Iron Wood-Chopping Axe, Battle Axe,
 
-      // Broadsword, Hilted Sword, Longsword, Bastard Sword
-      iShortSword: // Combat Sword, War Sword, Claymore, Ebony Sword
-      Result := _('Short Sword'); // Rusty Iron Wood-Chopping Axe, Battle Axe,
+// Phantom Axe, Dwarven Battle Axe, War Axe
+// Feathered Spear, Bronze Spear, Rusted Spear
+// Small Dagger, a Rusty Dagger, Flying Dagger
+// Sharpened Daggers, Gemmed Dagger, Carving Knife
+// Boot Knife, Target Knife, Throwing Spike
+// Rapier, Sabre,
 
-      // Gray Cave                  // Phantom Axe, Dwarven Battle Axe, War Axe
-      iItemA: // Feathered Spear, Bronze Spear, Rusted Spear
-      Result := _('Item A'); // Small Dagger, a Rusty Dagger, Flying Dagger
-      // Deep Cave                  // Sharpened Daggers, Gemmed Dagger, Carving Knife
-      iItemB: // Boot Knife, Target Knife, Throwing Spike
-      Result := _('Item B'); // Rapier, Sabre,
-    }
-// Dull
 // Rusty, Chipped
 // Low Quality, Medium Quality, High Quality
 // Fine, Double Bladed, Enchanted
@@ -279,7 +323,7 @@ begin
     // Health Potion
     iMinHPot:
       Result := _('Potion of health');
-    // Mana Potion  
+    // Mana Potion
     iMinMPot:
       Result := _('Potion of mana');
 
@@ -293,8 +337,8 @@ begin
     // Axe
     iHatchet:
       Result := _('Hatchet');
-    iBattleaxe:
-      Result := _('Battleaxe');
+    iBattleAxe:
+      Result := _('Battle Axe');
     // Spear
     iShortSpear:
       Result := _('Short Spear');
@@ -329,7 +373,7 @@ begin
     iWarMace:
       Result := _('War Mace');
 
-       // == Deep Cave == //
+    // == Deep Cave == //
 
     // Blade
     iMoonBlade:
@@ -353,6 +397,7 @@ begin
       Result := _('War Gavel');
 
     // == Blood Cave == //
+
     // Blade
     iBastardSword:
       Result := _('Bastard Sword');
@@ -374,32 +419,28 @@ begin
     iAdeptHammer:
       Result := _('Adept Hammer');
 
-  end;
-end;
+    // == Dungeon of Doom == //
 
-procedure TItems.Render(AX, AY: Byte);
-var
-  MapID, X, Y: Byte;
-  I, Count: Integer;
-  Color: Cardinal;
-  FItem: Item;
-begin
-  MapID := Ord(Map.Deep);
-  Count := Items_Dungeon_GetMapCount(MapID);
-  for I := Count - 1 downto 0 do
-  begin
-    FItem := Items_Dungeon_GetMapItem(MapID, I);
-    if not Map.InView(FItem.X, FItem.Y) or
-      (not WizardMode and not Map.GetFOV(FItem.X, FItem.Y)) then
-      Continue;
-    X := FItem.X - Player.X + AX + View.Left;
-    Y := FItem.Y - Player.Y + AY + View.Top;
-    if not WizardMode and (GetDist(Player.X, Player.Y, FItem.X, FItem.Y) >
-      Player.GetRadius) then
-      Color := clFog
-    else
-      Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
-    Terminal.Print(X, Y, ItemBase[TItemEnum(FItem.ItemID)].Symbol, Color);
+    // Blade
+    iRuneSword:
+      Result := _('Rune Sword');
+    iTrollSlayer:
+      Result := _('Troll Slayer');
+    // Axe
+    iChopper:
+      Result := _('Chopper');
+    iDemonAxe:
+      Result := _('Demon Axe');
+    // Spear
+    iSoulReaver:
+      Result := _('Soul Reaver');
+    iKeeperOfEternalFlame:
+      Result := _('Keeper Of Eternal Flame');
+    // Mace
+    iOgreMorningStar:
+      Result := _('Ogre Morning Star');
+    iBoneOfTheHigher:
+      Result := _('Bone Of The Higher');
   end;
 end;
 
