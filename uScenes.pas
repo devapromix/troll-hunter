@@ -322,19 +322,22 @@ begin
 
   Terminal.Print(X, Y + 10, Format(FT, [_('Keybindings')]), TK_ALIGN_CENTER);
 
-  Terminal.Print(KX + 10, Y + 12, _('Move: [color=orange][[arrow keys]][/color], [color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], Wait:  [color=orange][[5]][/color], [color=orange][[S]][/color]'), TK_ALIGN_LEFT);
+  Terminal.Print(KX + 10, Y + 12,
+    _('Move: [color=orange][[arrow keys]][/color], [color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], Wait:  [color=orange][[5]][/color], [color=orange][[S]][/color]'),
+    TK_ALIGN_LEFT);
 
-  AddKey('<',   _('Up staris'));
-  AddKey('>',   _('Down staris'));
-  AddKey('G',   _('Pickup an item'));
-  AddKey('F',   _('Drop an item'));
-  AddKey('L',   _('Look mode'));
-  AddKey('I',   _('Inventory'));
-  AddKey('T',   _('Skills and attributes'));
-  AddKey('?',   _('Help'));
+  AddKey('<', _('Up staris'));
+  AddKey('>', _('Down staris'));
+  AddKey('G', _('Pickup an item'));
+  AddKey('F', _('Drop an item'));
+  AddKey('L', _('Look mode'));
+  AddKey('I', _('Inventory'));
+  AddKey('T', _('Skills and attributes'));
+  AddKey('?', _('Help'));
   AddKey('Esc', _('Close'));
 
-  Terminal.Print(X, Terminal.Window.Height - Y - 5, Format(FT, [_('Character dump')]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Terminal.Window.Height - Y - 5,
+    Format(FT, [_('Character dump')]), TK_ALIGN_CENTER);
   Terminal.Print(X, Terminal.Window.Height - Y - 3,
     _('The game saves a character dump to [color=green]*-character-dump.txt[/color] file.'),
     TK_ALIGN_CENTER);

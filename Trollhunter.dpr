@@ -13,9 +13,9 @@ uses
   uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
-  uMsgLog in 'uMsgLog.pas'; 
+  uMsgLog in 'uMsgLog.pas';
 
-var      
+var
   Key: Word = 0;
   IsRender: Boolean = True;
 
@@ -27,7 +27,7 @@ begin
       Scenes.Render;
       Terminal.Refresh;
     end;
-    Key := 0;  
+    Key := 0;
     if terminal_has_input() then
     begin
       Key := terminal_read();
@@ -38,5 +38,5 @@ begin
     terminal_delay(10);
     IsRender := False;
   until CanClose;
-end.
 
+end.

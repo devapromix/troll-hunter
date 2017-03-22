@@ -28,31 +28,30 @@ type
     // Blood Cave
     mZombie,
     // Dungeon of Doom
-    mOgre, mTrollKing
-  );
+    mOgre, mTrollKing);
 
 const
   MobBase: array [TMobEnum] of TMobBase = (
     // Dark Wood
-    (Symbol: 'r'; Boss: False; Deep: deDarkWood; MaxLife: 5;
-    Level: 1; Armor: 0; DV: 4; Damage: 2; Color: $FF249988;
-    ), (Symbol: 'f'; Boss: False; Deep: deDarkWood; MaxLife: 7;
-    Level: 1; Armor: 0; DV: 5; Damage: 2; Color: $FF33FF66;),
+    (Symbol: 'r'; Boss: False; Deep: deDarkWood; MaxLife: 5; Level: 1; Armor: 0;
+    DV: 4; Damage: 2; Color: $FF249988;), (Symbol: 'f'; Boss: False;
+    Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0; DV: 5; Damage: 2;
+    Color: $FF33FF66;),
     // Gray Cave
-    (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 15;
-    Level: 1; Armor: 1; DV: 6; Damage: 4; Color: $FF777700;),
+    (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 15; Level: 1;
+    Armor: 1; DV: 6; Damage: 4; Color: $FF777700;),
     // Deep Cave
-    (Symbol: 'g'; Boss: False; Deep: deDeepCave; MaxLife: 20;
-    Level: 2; Armor: 2; DV: 12; Damage: 5; Color: $FF00AA00;),
+    (Symbol: 'g'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 2;
+    Armor: 2; DV: 12; Damage: 5; Color: $FF00AA00;),
     // Blood Cave
-    (Symbol: 'z'; Boss: False; Deep: deBloodCave; MaxLife: 25;
-    Level: 2; Armor: 2; DV: 9; Damage: 3; Color: $FF00BB00;),
+    (Symbol: 'z'; Boss: False; Deep: deBloodCave; MaxLife: 25; Level: 2;
+    Armor: 2; DV: 9; Damage: 3; Color: $FF00BB00;),
     // Dungeon of Doom
-    (Symbol: 'O'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80;
-    Level: 10; Armor: 12; DV: 60; Damage: 30; Color: $FF559977;),
+    (Symbol: 'O'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80; Level: 10;
+    Armor: 12; DV: 60; Damage: 30; Color: $FF559977;),
     // Boss
-    (Symbol: 'T'; Boss: True; Deep: deDungeonOfDoom;
-    MaxLife: 10; Level: 10; Armor: 14; DV: 60; Damage: 35; Color: $FFFF4400;));
+    (Symbol: 'T'; Boss: True; Deep: deDungeonOfDoom; MaxLife: 10; Level: 10;
+    Armor: 14; DV: 60; Damage: 35; Color: $FFFF4400;));
 
 type
   TMob = class(TObject)
@@ -161,7 +160,8 @@ end;
 procedure TMob.Defeat;
 begin
   Self.Alive := False;
-  MsgLog.Add(Format(_('You kill %s.'), [GetDescThe(Mobs.GetName(TMobEnum(ID)))]));
+  MsgLog.Add(Format(_('You kill %s.'),
+    [GetDescThe(Mobs.GetName(TMobEnum(ID)))]));
   if (MobBase[TMobEnum(ID)].Boss and (Map.Deep = FinalDungeon)) then
   begin
     WonGame := True;

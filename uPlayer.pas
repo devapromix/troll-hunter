@@ -295,7 +295,8 @@ function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   SL: TStringList;
 begin
-  if WizardMode then Exit;
+  if WizardMode then
+    Exit;
   SL := TStringList.Create;
   try
     SL.Append(Format(FT, [_('Trollhunter')]));
@@ -338,7 +339,8 @@ procedure TPlayer.Wait;
 begin
   if not DeepVis[Map.Deep] then
   begin
-    MsgLog.Add(Format(_('You have opened a new territory: %s.'), [Map.GetName]));
+    MsgLog.Add(Format(_('You have opened a new territory: %s.'),
+      [Map.GetName]));
     DeepVis[Map.Deep] := True;
   end;
   Move(0, 0);

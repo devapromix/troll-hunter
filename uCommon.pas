@@ -116,7 +116,8 @@ end;
 function GetDescAn(S: string): string;
 begin
   Result := LowerCase(S);
-  if (GetCurrentLanguage <> 'en') then Exit;
+  if (GetCurrentLanguage <> 'en') then
+    Exit;
   if (S[1] in ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + Result
   else
@@ -126,7 +127,8 @@ end;
 function GetDescThe(S: string): string;
 begin
   Result := LowerCase(S);
-  if (GetCurrentLanguage <> 'en') then Exit;
+  if (GetCurrentLanguage <> 'en') then
+    Exit;
   Result := 'the ' + Result;
 end;
 

@@ -195,7 +195,7 @@ type
 {$ENDIF}
 
 type
-  TSize = Types.TSize; 
+  TSize = Types.TSize;
 
   // Open
 function terminal_open(): LongBool; cdecl;

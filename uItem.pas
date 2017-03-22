@@ -22,8 +22,7 @@ type
     // All
     iGold, iMinHPot, iMinMPot,
     // Dark Wood
-    iRustySword,
-    iShortSword,
+    iRustySword, iShortSword,
     // Gray Cave
     iItemA,
     // Deep Cave
@@ -31,27 +30,32 @@ type
     // Blood Cave
     iItemC,
     // Dungeon of Doom
-    iItemD
-  );
+    iItemD);
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
     // All
-    (Symbol: '$'; ItemType: itCoin;   MaxStack: 1000; MaxDurability: 0;  Color: clYellow;   Deep: deDarkWood;),
-    (Symbol: '!'; ItemType: itPotion; MaxStack: 10;   MaxDurability: 0;  Color: clRed;      Deep: deDarkWood;),
-    (Symbol: '!'; ItemType: itPotion; MaxStack: 10;   MaxDurability: 0;  Color: clBlue;     Deep: deDarkWood;),
+    (Symbol: '$'; ItemType: itCoin; MaxStack: 1000; MaxDurability: 0;
+    Color: clYellow; Deep: deDarkWood;), (Symbol: '!'; ItemType: itPotion;
+    MaxStack: 10; MaxDurability: 0; Color: clRed; Deep: deDarkWood;
+    ), (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
+    Color: clBlue; Deep: deDarkWood;),
     // Dark Wood
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 30; Color: clDarkRed;  Deep: deDarkWood;),
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 35; Color: clWhite;    Deep: deDarkWood;),
+    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 30;
+    Color: clDarkRed; Deep: deDarkWood;), (Symbol: '/'; ItemType: itSword;
+    MaxStack: 1; MaxDurability: 35; Color: clWhite; Deep: deDarkWood;),
     // Gray Cave
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 40; Color: clYellow;   Deep: deGrayCave;),
+    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 40;
+    Color: clYellow; Deep: deGrayCave;),
     // Deep Cave
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 50; Color: clYellow;   Deep: deDeepCave;),
+    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 50;
+    Color: clYellow; Deep: deDeepCave;),
     // Blood Cave
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 60; Color: clYellow;   Deep: deBloodCave;),
+    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 60;
+    Color: clYellow; Deep: deBloodCave;),
     // Dungeon of Doom
-    (Symbol: '/'; ItemType: itSword;  MaxStack: 1;    MaxDurability: 70; Color: clYellow;   Deep: deDungeonOfDoom;)
-  );
+    (Symbol: '/'; ItemType: itSword; MaxStack: 1; MaxDurability: 70;
+    Color: clYellow; Deep: deDungeonOfDoom;));
 
 type
   TItems = class(TObject)
@@ -85,8 +89,8 @@ begin
     FX := Math.RandomRange(0, High(Byte));
     FY := Math.RandomRange(0, High(Byte));
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
-    ((ItemBase[TItemEnum(ID)].MaxStack > 1)
-    or (ItemBase[TItemEnum(ID)].Deep = ADeep));
+    ((ItemBase[TItemEnum(ID)].MaxStack > 1) or
+    (ItemBase[TItemEnum(ID)].Deep = ADeep));
   FItem.MapID := Ord(ADeep);
   FItem.ItemID := Ord(ID);
   FItem.Amount := 1;
@@ -95,8 +99,10 @@ begin
   FItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
   FItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
   case ItemBase[TItemEnum(ID)].ItemType of
-    itCoin: FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
-    itPotion: FItem.Amount := (Math.RandomRange(0, 3) + 1);
+    itCoin:
+      FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
+    itPotion:
+      FItem.Amount := (Math.RandomRange(0, 3) + 1);
   end;
   if (FItem.Stack = 1) then
   begin
@@ -129,7 +135,7 @@ end;
 // Tunic, Chainmail, Platemail
 // Padded clothing, Chitin armor, Bone armor, Light armor,
 // Medium armor, Mail hauberk, Brigandine,
-// Heavy armor, Plate armor, 
+// Heavy armor, Plate armor,
 
 function TItems.GetName(AItem: TItemEnum): string;
 begin
@@ -143,15 +149,16 @@ begin
       Result := _('Potion of mana');
     // Dark Wood
     iRustySword:
-      Result := _('Rusty Sword'); // Broadsword, Hilted Sword, Longsword, Bastard Sword
-    iShortSword:                  // Combat Sword, War Sword, Claymore, Ebony Sword
+      Result := _('Rusty Sword');
+      // Broadsword, Hilted Sword, Longsword, Bastard Sword
+    iShortSword: // Combat Sword, War Sword, Claymore, Ebony Sword
       Result := _('Short Sword'); // Rusty Iron Wood-Chopping Axe, Battle Axe,
     // Gray Cave                  // Phantom Axe, Dwarven Battle Axe, War Axe
-    iItemA:                       // Feathered Spear, Bronze Spear, Rusted Spear
-      Result := _('Item A');      // Small Dagger, a Rusty Dagger, Flying Dagger
+    iItemA: // Feathered Spear, Bronze Spear, Rusted Spear
+      Result := _('Item A'); // Small Dagger, a Rusty Dagger, Flying Dagger
     // Deep Cave                  // Sharpened Daggers, Gemmed Dagger, Carving Knife
-    iItemB:                       // Boot Knife, Target Knife, Throwing Spike
-      Result := _('Item B');      // Rapier, Sabre,
+    iItemB: // Boot Knife, Target Knife, Throwing Spike
+      Result := _('Item B'); // Rapier, Sabre,
     // Blood Cave
     iItemC:
       Result := _('Item C');
@@ -188,10 +195,12 @@ begin
 end;
 
 initialization
-  Items := TItems.Create;
+
+Items := TItems.Create;
 
 finalization
-  Items.Free;
-  Items := nil;
+
+Items.Free;
+Items := nil;
 
 end.

@@ -33,6 +33,7 @@ const
 
 var
   Tile: array [TTileEnum, TDeepEnum] of TTile;
+
 type
   TMap = class(TObject)
   private
@@ -80,7 +81,7 @@ procedure TMap.InitTiles;
 begin
   // DefaultFloor
   AddTile('"', _('Grass'), $FF113311, teDefaultFloor, deDarkWood);
-  AddTile(':', _('Dirt'),  $FF331133, teDefaultFloor, deGrayCave);
+  AddTile(':', _('Dirt'), $FF331133, teDefaultFloor, deGrayCave);
   AddTile('.', _('Stone'), $FF222111, teDefaultFloor, deDeepCave);
   AddTile(';', _('Stone'), $FF330000, teDefaultFloor, deBloodCave);
   AddTile('~', _('Stone'), $FF002200, teDefaultFloor, deDungeonOfDoom);
