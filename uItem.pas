@@ -20,7 +20,7 @@ type
 type
   TItemEnum = (
     // All maps
-    iGold, iMinHPot, iMinMPot,
+    iGold, iPotionOfHealth, iPotionOfMana,
     // Dark Wood
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
@@ -32,7 +32,7 @@ type
     iJavelin, iFuscina, // Spear
     iWarhammer, iWarMace, // Mace
     // Deep Cave
-    iMoonBlade, iSwordOfTheJackal, // Blade
+    iMoonBlade, iScimitar, // Blade
     iRubyAxe, iDarkAxe, // Axe
     iWarSpear, iHarpoon, // Spear
     iFlangedMace, iWarGavel, // Mace
@@ -44,8 +44,8 @@ type
     // Dungeon of Doom
     iRuneSword, iTrollSlayer, // Blade
     iChopper, iDemonAxe, // Axe
-    iSoulReaver, iKeeperOfEternalFlame, // Spear
-    iOgreMorningStar, iBoneOfTheHigher // Mace
+    iSoulReaver, iHonedSpear, // Spear
+    iWarMaul, iDoomHammer // Mace
     );
 
 const
@@ -121,7 +121,7 @@ const
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 50;
     Color: clDarkRed; Deep: deDeepCave;),
-    // Sword Of The Jackal
+    // Scimitar
     (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 55;
     Color: clDarkRed; Deep: deDeepCave;),
     // Ruby Axe
@@ -187,13 +187,13 @@ const
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 70;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
-    // Keeper Of Eternal Flame,
+    // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 75;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
-    // Ogre Morning Star
+    // War Maul
     (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 70;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
-    // Bone Of The Higher
+    // Doom Hammer
     (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 75;
     Color: clDarkRed; Deep: deDungeonOfDoom;)
 
@@ -320,11 +320,11 @@ begin
     // Gold
     iGold:
       Result := _('Gold');
-    // Health Potion
-    iMinHPot:
+    // Potion of health
+    iPotionOfHealth:
       Result := _('Potion of health');
-    // Mana Potion
-    iMinMPot:
+    // Potion of mana
+    iPotionOfMana:
       Result := _('Potion of mana');
 
     // == Dark Wood == //
@@ -378,8 +378,8 @@ begin
     // Blade
     iMoonBlade:
       Result := _('Moon Blade');
-    iSwordOfTheJackal:
-      Result := _('Sword Of The Jackal');
+    iScimitar:
+      Result := _('Scimitar');
     // Axe
     iRubyAxe:
       Result := _('Ruby Axe');
@@ -434,13 +434,13 @@ begin
     // Spear
     iSoulReaver:
       Result := _('Soul Reaver');
-    iKeeperOfEternalFlame:
-      Result := _('Keeper Of Eternal Flame');
+    iHonedSpear:
+      Result := _('Honed Spear');
     // Mace
-    iOgreMorningStar:
-      Result := _('Ogre Morning Star');
-    iBoneOfTheHigher:
-      Result := _('Bone Of The Higher');
+    iWarMaul:
+      Result := _('War Maul');
+    iDoomHammer:
+      Result := _('Doom Hammer');
   end;
 end;
 
