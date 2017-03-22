@@ -25,13 +25,13 @@ type
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleaxe, // Axe
     iShortSpear, iSpear, // Spear
-    iHeavyBranch, iSpikedCudgel { , }   // Mace
-    { // Gray Cave
-      iBroadSword, iLongSword,            // Blade
-      iMeatAxe,  iFleshTearer,              // Axe
-      iJavelin, iFuscina,                 // Spear
-      iWarhammer, iWarMace,               // Mace
-      // Deep Cave
+    iHeavyBranch, iSpikedCudgel, // Mace
+     // Gray Cave
+    iBroadSword, iLongSword,            // Blade
+    iMeatAxe,  iFleshTearer,              // Axe
+    iJavelin, iFuscina,                 // Spear
+    iWarhammer, iWarMace{,}               // Mace
+{      // Deep Cave
       iMoonBlade, iSwordOfTheJackal,      // Blade
       iRubyAxe, DarkAxe,                  // Axe
       iWarSpear, iHarpoon,                // Spear
@@ -51,7 +51,8 @@ type
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
-    // All maps
+    // == All maps == //
+
     // Gold
     (Symbol: '$'; ItemType: itCoin; MaxStack: 1000; MaxDurability: 0;
     Color: clYellow; Deep: deDarkWood;),
@@ -61,18 +62,20 @@ const
     // Mana potion
     (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
     Color: clBlue; Deep: deDarkWood;),
-    // Dark Wood
+
+    // == Dark Wood == //
+
     // RustySword
     (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // ShortSword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 40;
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 35;
     Color: clWhite; Deep: deDarkWood;),
     // Hatchet
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 25;
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // Battleaxe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 30;
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 35;
     Color: clDarkRed; Deep: deDarkWood;),
     // ShortSpear
     (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 30;
@@ -84,10 +87,36 @@ const
     (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // SpikedCudgel
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 40;
-    Color: clDarkRed; Deep: deDarkWood;) { , }
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 35;
+    Color: clDarkRed; Deep: deDarkWood;),
 
-    // Gray Cave
+    // == Gray Cave == //
+
+    // BroadSword
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 40;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // LongSword
+    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 45;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // MeatAxe
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 35;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // FleshTearer
+    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 40;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // Javelin
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 40;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // Fuscina
+    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 45;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // Warhammer
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 40;
+    Color: clDarkRed; Deep: deGrayCave;),
+    // WarMace
+    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 45;
+    Color: clDarkRed; Deep: deGrayCave;) { , }
+
     // Deep Cave
     // Blood Cave
     // Dungeon of Doom
@@ -176,14 +205,19 @@ end;
 function TItems.GetName(AItem: TItemEnum): string;
 begin
   case AItem of
-    // All
+    // == All maps == //
+    // Gold
     iGold:
       Result := _('Gold');
+    // Health Potion
     iMinHPot:
       Result := _('Potion of health');
+    // Mana Potion  
     iMinMPot:
       Result := _('Potion of mana');
-    // Dark Wood
+
+    // == Dark Wood == //
+
     // Blade
     iRustySword:
       Result := _('Rusty Sword');
@@ -205,6 +239,28 @@ begin
     iSpikedCudgel:
       Result := _('Spiked Cudgel');
 
+    // == Gray Cave == //
+
+    // Blade
+    iBroadSword:
+      Result := _('Broad Sword');
+    iLongSword:
+      Result := _('Long Sword');
+    // Axe
+    iMeatAxe:
+      Result := _('Meat Axe');
+    iFleshTearer:
+      Result := _('Flesh Tearer');
+    // Spear
+    iJavelin:
+      Result := _('Javelin');
+    iFuscina:
+      Result := _('Fuscina');
+    // Mace
+    iWarhammer:
+      Result := _('Warhammer');
+    iWarMace:
+      Result := _('War Mace');
     {
       iRustySword:
 
