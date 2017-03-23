@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes;
+  Classes, BeaRLibItems;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -76,6 +76,8 @@ type
 
 type
   TSceneInv = class(TScene)
+  private
+    procedure RenderItem(X, Y, I: Integer; AItem: Item);
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -119,7 +121,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog, uItem, BeaRLibItems, gnugettext;
+  uMap, uMob, uMsgLog, uItem, gnugettext;
 
 { TScene }
 
@@ -362,31 +364,6 @@ var
   T: TTile;
   Min, Max: TPoint;
 
-  function GetItemInfo(AItem: Item; IsManyItems: Boolean; ACount: Byte): string;
-  var
-    S: string;
-    N: Integer;
-  begin
-    S := '';
-    N := AItem.ItemID;
-    if (AItem.Stack > 1) then
-      // Amount
-      S := '(' + IntToStr(AItem.Amount) + ')'
-      // Durability
-    else
-      S := '(' + IntToStr(AItem.Durability) + '/' +
-        IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
-    S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
-      ' ' + S)));
-    if IsManyItems then
-    begin
-      Result := Format(_('Saveral items (%dx) are lying here (%s).'),
-        [ACount, S]);
-    end
-    else
-      Result := Format(_('%s is lying here.'), [S]);
-  end;
-
   procedure RenderLook(X, Y: Byte; T: TTile; IsMob: Boolean);
   var
     S: string;
@@ -601,6 +578,8 @@ begin
         TextScreenshot := GetTextScreenshot();
         Scenes.SetScene(scQuit, Scenes.Scene);
       end;
+    TK_G:
+      Player.Pickup;
     TK_I:
       Scenes.SetScene(scInv);
     TK_F:
@@ -704,14 +683,44 @@ end;
 
 procedure TSceneInv.Render;
 var
+  I, FCount: Integer;
+  FItem: Item;
   X, Y: Byte;
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, Y, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
+
+  FCount := Items_Inventory_GetCount();
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    RenderItem(X, Y, I + 5, FItem);
+  end;
+
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     _('[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes'),
     TK_ALIGN_CENTER);
+end;
+
+procedure TSceneInv.RenderItem(X, Y, I: Integer; AItem: Item);
+  var
+    N: Integer;
+    S, Name: string;
+  begin
+    S := '';
+    N := AItem.ItemID;
+    if (AItem.Stack > 1) then
+      // Amount
+      S := '(' + IntToStr(AItem.Amount) + ')'
+      // Durability
+      else
+        S := '(' + IntToStr(AItem.Durability) + '/' + IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
+    // Item name
+    Name := Items.GetName(TItemEnum(N));
+    Terminal.Print(X, Y, '[' + Chr(I + 97) + ']');
+    Terminal.Print(X + 4, Y, Name);
+    Terminal.Print(X + Length(Name) + 5, Y, S);
 end;
 
 procedure TSceneInv.Update(var Key: Word);

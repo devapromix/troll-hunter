@@ -212,11 +212,38 @@ type
 var
   Items: TItems = nil;
 
+function GetItemInfo(AItem: Item; IsManyItems: Boolean; ACount: Byte): string;  
+
 implementation
 
-uses Math, uTerminal, gnugettext;
+uses Math, SysUtils, uTerminal, gnugettext;
 
 { TItems }
+
+  function GetItemInfo(AItem: Item; IsManyItems: Boolean; ACount: Byte): string;
+  var
+    S: string;
+    N: Integer;
+  begin
+    S := '';
+    N := AItem.ItemID;
+    if (AItem.Stack > 1) then
+      // Amount
+      S := '(' + IntToStr(AItem.Amount) + ')'
+      // Durability
+    else
+      S := '(' + IntToStr(AItem.Durability) + '/' +
+        IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
+    S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
+      ' ' + S)));
+    if IsManyItems then
+    begin
+      Result := Format(_('Saveral items (%dx) are lying here (%s).'),
+        [ACount, S]);
+    end
+    else
+      Result := Format(_('%s is lying here.'), [S]);
+  end;
 
 procedure TItems.Add(ADeep: TDeepEnum);
 var

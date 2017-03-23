@@ -87,6 +87,7 @@ type
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     function GetSkillName(ASkill: TSkillEnum): string;
+    procedure Pickup;
   end;
 
 var
@@ -95,7 +96,7 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes,
-  uTerminal, uMsgLog, gnugettext;
+  uTerminal, uMsgLog, gnugettext, BeaRLibItems;
 
 { TPlayer }
 
@@ -280,6 +281,24 @@ begin
       Y := FY;
       AddTurn;
     end;
+  end;
+end;
+
+procedure TPlayer.Pickup;
+var
+  MapID, FCount, Index: Integer;
+  FItem: Item;
+begin
+  MapID := Ord(Map.Deep);
+  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
+  if (FCount > 0) then
+  begin
+    Index := 0;
+    FItem := Items_Dungeon_GetMapItemXY(MapID, Index, X, Y);
+
+    //S := S + GetItemInfo(FItem, (C > 1), C) + ' ';
+    if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
+      Items_Inventory_AppendItem(FItem);
   end;
 end;
 
