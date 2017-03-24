@@ -28,7 +28,9 @@ type
     // Blood Cave
     mZombie,
     // Dungeon of Doom
-    mOgre, mTrollKing);
+    mOgre,
+    // Boss
+    mTrollKing);
 
 const
   MobBase: array [TMobEnum] of TMobBase = (

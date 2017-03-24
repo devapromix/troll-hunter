@@ -870,7 +870,7 @@ var
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, Format(FT, [_('Amount')]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, Format(FT, [_('Enter amount')]), TK_ALIGN_CENTER);
 
 {  FCount := Items_Inventory_GetCount();
   for I := 0 to FCount - 1 do

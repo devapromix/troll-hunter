@@ -25,7 +25,7 @@ type
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
     iShortSpear, iSpear, // Spear
-    iHeavyBranch, iSpikedCudgel, // Mace
+    iSlagHammer, iSpikedCudgel, // Mace
     // Gray Cave
     iBroadSword, iLongSword, // Blade
     iMeatAxe, iFleshTearer, // Axe
@@ -82,7 +82,7 @@ const
     // Spear
     (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 35;
     Color: clDarkRed; Deep: deDarkWood;),
-    // Heavy Branch
+    // Slag Hammer
     (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // Spiked Cudgel
@@ -393,8 +393,8 @@ begin
     iSpear:
       Result := _('Spear');
     // Mace
-    iHeavyBranch:
-      Result := _('Heavy Branch');
+    iSlagHammer:
+      Result := _('Slag Hammer');
     iSpikedCudgel:
       Result := _('Spiked Cudgel');
 
