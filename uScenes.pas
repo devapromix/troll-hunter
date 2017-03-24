@@ -7,7 +7,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scPlayer);
+    scDrop, scItems, scAmount, scPlayer);
 
 type
   TScene = class(TObject)
@@ -83,6 +83,20 @@ type
 
 type
   TSceneDrop = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneAmount = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneItems = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -173,6 +187,10 @@ begin
         FScene[I] := TSceneDrop.Create;
       scPlayer:
         FScene[I] := TScenePlayer.Create;
+      scAmount:
+        FScene[I] := TSceneAmount.Create;
+      scItems:
+        FScene[I] := TSceneItems.Create;
     end;
 end;
 
@@ -839,6 +857,55 @@ begin
       Scenes.SetScene(scGame);
     TK_SPACE: // Inventory
       Scenes.SetScene(scInv);
+  end;
+end;
+
+{ TSceneAmount }
+
+procedure TSceneAmount.Render;
+var
+  I, FCount: Integer;
+  FItem: Item;
+  X, Y: Byte;
+begin
+  Y := 1;
+  X := Terminal.Window.Width div 2;
+  Terminal.Print(X, Y, Format(FT, [_('Amount')]), TK_ALIGN_CENTER);
+
+{  FCount := Items_Inventory_GetCount();
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    Items.RenderInvItem(6, Y + 3, I, FItem);
+  end;  }
+
+  Terminal.ForegroundColor(clYellow);
+  Terminal.Print(X, Terminal.Window.Height - Y - 1,
+    _('[color=red][[ESC]][/color] Close'),
+    TK_ALIGN_CENTER);
+end;
+
+procedure TSceneAmount.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
+{ TSceneItems }
+
+procedure TSceneItems.Render;
+begin
+
+
+end;
+
+procedure TSceneItems.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
   end;
 end;
 

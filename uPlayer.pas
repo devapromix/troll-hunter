@@ -87,7 +87,7 @@ type
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     function GetSkillName(ASkill: TSkillEnum): string;
-    procedure Pickup;
+    procedure PickUp;
     procedure Drop(Index: Integer);
   end;
 
@@ -316,17 +316,23 @@ begin
   end else DeleteItem;
 end;
 
-procedure TPlayer.Pickup;
+procedure TPlayer.PickUp;
 var
   The: string;
   MapID, FCount, Index: Integer;
   FItem: Item;
 begin
+  // Your backpack is full!
   MapID := Ord(Map.Deep);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
 //  if (FItem.Stack > 1) and (FItem.Amount > 1) then
-
   if (FCount > 0) then
+  begin
+
+  end;
+
+
+{  if (FCount > 0) then
   begin
     Index := 0;
     FItem := Items_Dungeon_GetMapItemXY(MapID, Index, X, Y);
@@ -338,7 +344,7 @@ begin
       The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
       MsgLog.Add(Format(_('You pick up %s.'), [The]));
     end;
-  end;
+  end; }
 end;
 
 procedure TPlayer.Render(AX, AY: Byte);
