@@ -378,7 +378,7 @@ var
     if (C > 0) then
     begin
       FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Deep), 0, X, Y);
-      S := S + GetItemInfo(FItem, (C > 1), C) + ' ';
+      S := S + Items.GetMapItemInfo(FItem, (C > 1), C) + ' ';
     end;
     if IsMob then
     begin
@@ -695,32 +695,21 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
-    RenderItem(X, Y, I + 5, FItem);
+    RenderItem(6, Y + 3, I, FItem);
   end;
 
+  Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     _('[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes'),
     TK_ALIGN_CENTER);
 end;
 
 procedure TSceneInv.RenderItem(X, Y, I: Integer; AItem: Item);
-  var
-    N: Integer;
-    S, Name: string;
-  begin
-    S := '';
-    N := AItem.ItemID;
-    if (AItem.Stack > 1) then
-      // Amount
-      S := '(' + IntToStr(AItem.Amount) + ')'
-      // Durability
-      else
-        S := '(' + IntToStr(AItem.Durability) + '/' + IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
-    // Item name
-    Name := Items.GetName(TItemEnum(N));
-    Terminal.Print(X, Y, '[' + Chr(I + 97) + ']');
-    Terminal.Print(X + 4, Y, Name);
-    Terminal.Print(X + Length(Name) + 5, Y, S);
+begin
+  Terminal.ForegroundColor(clRed);                 
+  Terminal.Print(X - 4, Y + I, '[[' + Chr(I + Ord('A')) + ']]');
+  Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
+  Terminal.Print(X, Y + I, Items.GetItemInfo(AItem));
 end;
 
 procedure TSceneInv.Update(var Key: Word);

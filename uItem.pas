@@ -207,12 +207,13 @@ type
     procedure Render(AX, AY: Byte);
     procedure Add(ADeep: TDeepEnum);
     function GetName(AItem: TItemEnum): string;
+    function GetItemInfo(AItem: Item): string;
+    function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
+      ACount: Byte): string;
   end;
 
 var
   Items: TItems = nil;
-
-function GetItemInfo(AItem: Item; IsManyItems: Boolean; ACount: Byte): string;  
 
 implementation
 
@@ -220,30 +221,48 @@ uses Math, SysUtils, uTerminal, gnugettext;
 
 { TItems }
 
-  function GetItemInfo(AItem: Item; IsManyItems: Boolean; ACount: Byte): string;
-  var
-    S: string;
-    N: Integer;
+function TItems.GetItemInfo(AItem: Item): string;
+var
+  ID: Integer;
+  S, Name: string;
+begin
+  S := '';
+  ID := AItem.ItemID;
+  if (AItem.Stack > 1) then
+    // Amount
+    S := '(' + IntToStr(AItem.Amount) + ')'
+    // Durability
+  else
+    S := '(' + IntToStr(AItem.Durability) + '/' +
+      IntToStr(ItemBase[TItemEnum(ID)].MaxDurability) + ')';
+  Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
+end;
+
+function TItems.GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
+  ACount: Byte): string;
+var
+  S: string;
+  N: Integer;
+begin
+  S := '';
+  N := AItem.ItemID;
+  if (AItem.Stack > 1) then
+    // Amount
+    S := '(' + IntToStr(AItem.Amount) + ')'
+    // Durability
+  else
+    S := '(' + IntToStr(AItem.Durability) + '/' +
+      IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
+  S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
+    ' ' + S)));
+  if IsManyItems then
   begin
-    S := '';
-    N := AItem.ItemID;
-    if (AItem.Stack > 1) then
-      // Amount
-      S := '(' + IntToStr(AItem.Amount) + ')'
-      // Durability
-    else
-      S := '(' + IntToStr(AItem.Durability) + '/' +
-        IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
-    S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
-      ' ' + S)));
-    if IsManyItems then
-    begin
-      Result := Format(_('Saveral items (%dx) are lying here (%s).'),
-        [ACount, S]);
-    end
-    else
-      Result := Format(_('%s is lying here.'), [S]);
-  end;
+    Result := Format(_('Several items (%dx) are lying here (%s).'),
+      [ACount, S]);
+  end
+  else
+    Result := Format(_('%s is lying here.'), [S]);
+end;
 
 procedure TItems.Add(ADeep: TDeepEnum);
 var
