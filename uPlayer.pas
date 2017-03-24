@@ -88,6 +88,7 @@ type
     procedure Attack(Index: Integer);
     function GetSkillName(ASkill: TSkillEnum): string;
     procedure Pickup;
+    procedure Drop(Index: Integer);
   end;
 
 var
@@ -96,7 +97,7 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, uCommon, uMap, uMob, uScenes,
-  uTerminal, uMsgLog, gnugettext, BeaRLibItems;
+  uTerminal, uMsgLog, gnugettext, BeaRLibItems, uItem;
 
 { TPlayer }
 
@@ -284,13 +285,47 @@ begin
   end;
 end;
 
+procedure TPlayer.Drop(Index: Integer);
+var
+  AItem: Item;
+  MapID, FCount: Integer;
+
+  procedure DeleteItem;
+  var
+    The: string;
+  begin
+    if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
+    begin
+      AItem.X := Player.X;
+      AItem.Y := Player.Y;
+      AItem.MapID := Ord(Map.Deep);
+      Items_Dungeon_AppendItem(AItem);
+      The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+      MsgLog.Add(Format(_('You drop %s.'), [The]));
+    end;
+  end;
+
+begin
+  MapID := Ord(Map.Deep);
+  AItem := Items_Inventory_GetItem(Index);
+  FCount := Items_Inventory_GetItemCount(AItem.ItemID);
+  if (AItem.Stack > 1) and (AItem.Amount > 1) then
+  begin
+
+    Exit;
+  end else DeleteItem;
+end;
+
 procedure TPlayer.Pickup;
 var
+  The: string;
   MapID, FCount, Index: Integer;
   FItem: Item;
 begin
   MapID := Ord(Map.Deep);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
+//  if (FItem.Stack > 1) and (FItem.Amount > 1) then
+
   if (FCount > 0) then
   begin
     Index := 0;
@@ -298,7 +333,11 @@ begin
 
     //S := S + GetItemInfo(FItem, (C > 1), C) + ' ';
     if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
+    begin
       Items_Inventory_AppendItem(FItem);
+      The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
+      MsgLog.Add(Format(_('You pick up %s.'), [The]));
+    end;
   end;
 end;
 

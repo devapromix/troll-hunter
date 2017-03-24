@@ -741,6 +741,8 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_A..TK_Z:
+      Player.Drop(Key - TK_A);
   end;
 end;
 
