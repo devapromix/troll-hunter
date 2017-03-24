@@ -210,6 +210,7 @@ type
     function GetItemInfo(AItem: Item): string;
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
+    procedure RenderInvItem(X, Y, I: Integer; AItem: Item);  
   end;
 
 var
@@ -488,6 +489,14 @@ begin
     iDoomHammer:
       Result := _('Doom Hammer');
   end;
+end;
+
+procedure TItems.RenderInvItem(X, Y, I: Integer; AItem: Item);
+begin
+  Terminal.ForegroundColor(clRed);                 
+  Terminal.Print(X - 4, Y + I, '[[' + Chr(I + Ord('A')) + ']]');
+  Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
+  Terminal.Print(X, Y + I, Items.GetItemInfo(AItem));
 end;
 
 initialization

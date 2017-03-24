@@ -76,8 +76,6 @@ type
 
 type
   TSceneInv = class(TScene)
-  private
-    procedure RenderItem(X, Y, I: Integer; AItem: Item);
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -695,21 +693,13 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
-    RenderItem(6, Y + 3, I, FItem);
+    Items.RenderInvItem(6, Y + 3, I, FItem);
   end;
 
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     _('[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes'),
     TK_ALIGN_CENTER);
-end;
-
-procedure TSceneInv.RenderItem(X, Y, I: Integer; AItem: Item);
-begin
-  Terminal.ForegroundColor(clRed);                 
-  Terminal.Print(X - 4, Y + I, '[[' + Chr(I + Ord('A')) + ']]');
-  Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
-  Terminal.Print(X, Y + I, Items.GetItemInfo(AItem));
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -726,12 +716,22 @@ end;
 
 procedure TSceneDrop.Render;
 var
+  I, FCount: Integer;
+  FItem: Item;
   X, Y: Byte;
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, _('Select an item to drop'), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, _('Drop item'), TK_ALIGN_CENTER);
 
+  FCount := Items_Inventory_GetCount();
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    Items.RenderInvItem(6, Y + 3, I, FItem);
+  end;
+
+  Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
     _('[color=red][[ESC]][/color] Close'), TK_ALIGN_CENTER);
 end;
