@@ -18,42 +18,86 @@ type
   end;
 
 type
-  TMobEnum = (
+  TMobEnum = ( 
     // Dark Wood
-    mRat, mFrog,
+    mRat, mSpinyFrog,
     // Gray Cave
     mKobold,
     // Deep Cave
-    mGoblin,
+    mScorpion,
     // Blood Cave
-    mZombie,
+    mGoblin,
     // Dungeon of Doom
+    mZombie,
     mOgre,
     // Boss
     mTrollKing);
 
+// Black Bear (B), Grizzly Bear (B),
+// Black Viper (S), Ball Python (S), Anaconda (S),
+// Jackal (J), Hound (H), Wolf (W),
+// Spiny Frog (F), Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G), Komodo Dragon (K)
+// Pan (P), Satyr (S), Faun (F), Centaur (C),
+
+// Kobold (K), Big Kobold (K), Black Kobold (K), Gnoll (G), Basilisk (B)
+// Worm (W), Swamp Worm (W), Wisp (W), Fire Vortex (V), Giant Slug (S)
+// Naga (N), Greater Naga (N), Naga Warrior (N), Jelly (J), Acid Blob (B)
+
+//
+// Scorpion (S), Wasp (W),
+// Ant (A), Soldier Ant (A), Scarab (S), Fire Crab (C), Big Spider (S)
+
+// Goblin (G), Dark Goblin (G), Black Goblin (G), Gargoyle (G), Warg (W)
+// Air Elemental (E), Fire Elemental (E), Air Elemental (E), Air Elemental (E),
+// Orc (O), Orc Warrior (O), Orc Warlord (O), Draconian (D),
+
+// Mummy (M), Ghoul (G), Vampire (V), Zombie (Z), Skeleton (S), Lich (L), Phantom (P)
+// Stone Golem (G), Fire Golem (G), Frost Golem (G), Hill Giant (G), Stone Giant (G)
+// Titan (T), Ogre (O), Two-Headed Ogre (O), Cyclops (C), Troll King (T)
+
 const
   MobBase: array [TMobEnum] of TMobBase = (
-    // Dark Wood
+    // == Dark Wood == //
+
+    // Rat
     (Symbol: 'r'; Boss: False; Deep: deDarkWood; MaxLife: 5; Level: 1; Armor: 0;
-    DV: 4; Damage: 2; Color: $FF249988;), (Symbol: 'f'; Boss: False;
-    Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0; DV: 5; Damage: 2;
-    Color: $FF33FF66;),
-    // Gray Cave
-    (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 15; Level: 1;
-    Armor: 1; DV: 6; Damage: 4; Color: $FF777700;),
-    // Deep Cave
-    (Symbol: 'g'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 2;
-    Armor: 2; DV: 12; Damage: 5; Color: $FF00AA00;),
-    // Blood Cave
-    (Symbol: 'z'; Boss: False; Deep: deBloodCave; MaxLife: 25; Level: 2;
-    Armor: 2; DV: 9; Damage: 3; Color: $FF00BB00;),
-    // Dungeon of Doom
-    (Symbol: 'O'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80; Level: 10;
-    Armor: 12; DV: 60; Damage: 30; Color: $FF559977;),
-    // Boss
-    (Symbol: 'T'; Boss: True; Deep: deDungeonOfDoom; MaxLife: 10; Level: 10;
-    Armor: 14; DV: 60; Damage: 35; Color: $FFFF4400;));
+    DV: 4; Damage: 2; Color: $FF249988;),
+    // Spiny Frog
+    (Symbol: 'f'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
+    DV: 5; Damage: 2; Color: $FF33FF66;),
+
+    // == Gray Cave == //
+
+    // Kobold
+    (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 15; Level: 1; Armor: 1;
+    DV: 6; Damage: 4; Color: $FF777700;),
+
+    // == Deep Cave == //
+
+    // Scorpion
+    (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 15; Level: 1; Armor: 1;
+    DV: 6; Damage: 4; Color: $FF992233;),
+
+    // == Blood Cave == //
+
+    // Goblin
+    (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 20; Level: 2; Armor: 2;
+    DV: 12; Damage: 5; Color: $FF00AA00;),
+
+    // == Dungeon of Doom == //
+
+    // Zombie
+    (Symbol: 'z'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 25; Level: 2; Armor: 2;
+    DV: 9; Damage: 3; Color: $FF00BB00;),
+    // Ogre
+    (Symbol: 'O'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80; Level: 10; Armor: 12;
+    DV: 60; Damage: 30; Color: $FF559977;),
+
+    // == Bosses == //
+
+    // Troll King
+    (Symbol: 'T'; Boss: True; Deep: deDungeonOfDoom; MaxLife: 10; Level: 10; Armor: 14;
+    DV: 60; Damage: 35; Color: $FFFF4400;));
 
 type
   TMob = class(TObject)
@@ -326,31 +370,6 @@ begin
       end;
 end;
 
-function TMobs.GetName(AMob: TMobEnum): string;
-begin
-  case AMob of
-    // Dark Wood
-    mRat:
-      Result := _('Rat');
-    mFrog:
-      Result := _('Frog');
-    // Gray Cave
-    mKobold:
-      Result := _('Kobold');
-    // Deep Cave
-    mGoblin:
-      Result := _('Goblin');
-    // Blood Cave
-    mZombie:
-      Result := _('Zombie');
-    // Dungeon of Doom
-    mOgre:
-      Result := _('Ogre');
-    mTrollKing:
-      Result := _('Troll King');
-  end;
-end;
-
 procedure TMobs.Process;
 var
   I: Integer;
@@ -369,6 +388,45 @@ begin
     for I := 0 to Count - 1 do
       if FMob[I].Alive and (FMob[I].Deep = Map.Deep) then
         FMob[I].Render(AX, AY);
+end;
+
+function TMobs.GetName(AMob: TMobEnum): string;
+begin
+  case AMob of
+    // == Dark Wood == //
+
+    mRat:
+      Result := _('Rat');
+    mSpinyFrog:
+      Result := _('Spiny Frog');
+
+    // == Gray Cave == //
+
+    mKobold:
+      Result := _('Kobold');
+
+    // == Deep Cave == //
+
+    mScorpion:
+      Result := _('Scorpion');
+
+    // == Blood Cave == //
+
+    mGoblin:
+      Result := _('Goblin');
+
+    // == Dungeon of Doom == //
+
+    mZombie:
+      Result := _('Zombie');
+    mOgre:
+      Result := _('Ogre');
+
+    // == Bosses == //
+
+    mTrollKing:
+      Result := _('Troll King');
+  end;
 end;
 
 initialization
