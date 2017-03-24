@@ -20,62 +20,76 @@ type
 type
   TMobEnum = ( 
     // Dark Wood
-    mRat, mSpinyFrog,
+    mBigRat, mSpinyFrog, mJackal,
     // Gray Cave
-    mKobold,
+    mKobold, mBigKobold, mRedKobold,
     // Deep Cave
-    mScorpion,
+    mScorpion, mWasp, mAnt,
     // Blood Cave
-    mGoblin,
+    mGoblin, mDarkGoblin, mBlackGoblin,
     // Dungeon of Doom
-    mZombie,
-    mOgre,
+    mZombie, mOgre, mMummy,
     // Boss
     mTrollKing);
 
-// Black Bear (B), Grizzly Bear (B),
+// Black Bear (B), Grizzly Bear (B), {Big Rat (R)}
 // Black Viper (S), Ball Python (S), Anaconda (S),
-// Jackal (J), Hound (H), Wolf (W),
-// Spiny Frog (F), Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G), Komodo Dragon (K)
+// {Jackal (J)}, Hound (H), Wolf (W),
+// {Spiny Frog (F)}, Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G), Komodo Dragon (K)
 // Pan (P), Satyr (S), Faun (F), Centaur (C),
 
-// Kobold (K), Big Kobold (K), Black Kobold (K), Gnoll (G), Basilisk (B)
+// {Kobold (K)}, {Big Kobold (K)}, {Red Kobold} (K), Gnoll (G), Basilisk (B)
 // Worm (W), Swamp Worm (W), Wisp (W), Fire Vortex (V), Giant Slug (S)
 // Naga (N), Greater Naga (N), Naga Warrior (N), Jelly (J), Acid Blob (B)
 
 //
-// Scorpion (S), Wasp (W),
-// Ant (A), Soldier Ant (A), Scarab (S), Fire Crab (C), Big Spider (S)
+// {Scorpion (S)}, {Wasp (W)},
+// {Ant (A)}, Soldier Ant (A), Scarab (S), Fire Crab (C), Big Spider (S)
 
-// Goblin (G), Dark Goblin (G), Black Goblin (G), Gargoyle (G), Warg (W)
-// Air Elemental (E), Fire Elemental (E), Air Elemental (E), Air Elemental (E),
+// {Goblin (G)}, {Dark Goblin (G)}, {Black Goblin (G)}, Gargoyle (G), Warg (W)
+// Air Elemental (E), Fire Elemental (E), Water Elemental (E), Earth Elemental (E),
 // Orc (O), Orc Warrior (O), Orc Warlord (O), Draconian (D),
 
-// Mummy (M), Ghoul (G), Vampire (V), Zombie (Z), Skeleton (S), Lich (L), Phantom (P)
+// {Mummy (M)}, Ghoul (G), Vampire (V), {Zombie (Z)}, Skeleton (S), Lich (L), Phantom (P)
 // Stone Golem (G), Fire Golem (G), Frost Golem (G), Hill Giant (G), Stone Giant (G)
-// Titan (T), Ogre (O), Two-Headed Ogre (O), Cyclops (C), Troll King (T)
+// Titan (T), {Ogre (O)}, Two-Headed Ogre (O), Cyclops (C), {Troll King (T)}
 
 const
   MobBase: array [TMobEnum] of TMobBase = (
     // == Dark Wood == //
 
-    // Rat
+    // Big Rat
     (Symbol: 'r'; Boss: False; Deep: deDarkWood; MaxLife: 5; Level: 1; Armor: 0;
     DV: 4; Damage: 2; Color: $FF249988;),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
     DV: 5; Damage: 2; Color: $FF33FF66;),
+    // Jackal
+    (Symbol: 'j'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
+    DV: 5; Damage: 2; Color: $FF9955FF;),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 15; Level: 1; Armor: 1;
     DV: 6; Damage: 4; Color: $FF777700;),
+    // Big Kobold
+    (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 25; Level: 1; Armor: 1;
+    DV: 12; Damage: 6; Color: $FF777700;),
+    // Red Kobold
+    (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
+    DV: 17; Damage: 9; Color: $FF777700;),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 15; Level: 1; Armor: 1;
+    DV: 6; Damage: 4; Color: $FF992233;),
+    // Wasp
+    (Symbol: 'w'; Boss: False; Deep: deDeepCave; MaxLife: 18; Level: 1; Armor: 1;
+    DV: 6; Damage: 4; Color: $FF992233;),
+    // Ant
+    (Symbol: 'a'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
     DV: 6; Damage: 4; Color: $FF992233;),
 
     // == Blood Cave == //
@@ -83,6 +97,12 @@ const
     // Goblin
     (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 20; Level: 2; Armor: 2;
     DV: 12; Damage: 5; Color: $FF00AA00;),
+    // Dark Goblin
+    (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 22; Level: 2; Armor: 2;
+    DV: 15; Damage: 7; Color: $FF116610;),
+    // Black Goblin
+    (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
+    DV: 20; Damage: 9; Color: $FF445544;),
 
     // == Dungeon of Doom == //
 
@@ -90,8 +110,11 @@ const
     (Symbol: 'z'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 25; Level: 2; Armor: 2;
     DV: 9; Damage: 3; Color: $FF00BB00;),
     // Ogre
-    (Symbol: 'O'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80; Level: 10; Armor: 12;
+    (Symbol: 'o'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80; Level: 10; Armor: 12;
     DV: 60; Damage: 30; Color: $FF559977;),
+    // Mummy
+    (Symbol: 'm'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
+    DV: 60; Damage: 30; Color: $FF223333;),
 
     // == Bosses == //
 
@@ -395,25 +418,39 @@ begin
   case AMob of
     // == Dark Wood == //
 
-    mRat:
-      Result := _('Rat');
+    mBigRat:
+      Result := _('Big Rat');
     mSpinyFrog:
       Result := _('Spiny Frog');
+    mJackal:
+      Result := _('Jackal');
 
     // == Gray Cave == //
 
     mKobold:
       Result := _('Kobold');
+    mBigKobold:
+      Result := _('Big Kobold');
+    mRedKobold:
+      Result := _('Red Kobold');
 
     // == Deep Cave == //
 
     mScorpion:
       Result := _('Scorpion');
+    mWasp:
+      Result := _('Wasp');
+    mAnt:
+      Result := _('Ant');
 
     // == Blood Cave == //
-
+             
     mGoblin:
       Result := _('Goblin');
+    mDarkGoblin:
+      Result := _('Dark Goblin');
+    mBlackGoblin:
+      Result := _('Black Goblin');
 
     // == Dungeon of Doom == //
 
@@ -421,6 +458,8 @@ begin
       Result := _('Zombie');
     mOgre:
       Result := _('Ogre');
+    mMummy:
+      Result := _('Mummy');
 
     // == Bosses == //
 
