@@ -258,7 +258,7 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 3, _('Trollhunter') + ' v.' + Version, TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 1,
+  Terminal.Print(X, Y + 1,   
     _('Press [color=red][[ENTER]][/color] to continue...'), TK_ALIGN_CENTER);
 end;
 
@@ -740,7 +740,7 @@ var
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, _('Drop item'), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y, _('Drop an item'), TK_ALIGN_CENTER);
 
   FCount := Items_Inventory_GetCount();
   for I := 0 to FCount - 1 do
@@ -896,9 +896,27 @@ end;
 { TSceneItems }
 
 procedure TSceneItems.Render;
+var
+  I, FCount, MapID: Integer;
+  FItem: Item;
+  X, Y: Byte;
 begin
+  Y := 1;
+  MapID := Ord(Map.Deep);
+  X := Terminal.Window.Width div 2;
+  Terminal.Print(X, Y, Format(FT, [_('Pick up an item')]), TK_ALIGN_CENTER);
 
+  FCount := Clamp(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, 26);
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
+    Items.RenderInvItem(6, Y + 3, I, FItem);
+  end;
 
+  Terminal.ForegroundColor(clYellow);
+  Terminal.Print(X, Terminal.Window.Height - Y - 1,
+    _('[color=red][[ESC]][/color] Close'),
+    TK_ALIGN_CENTER);
 end;
 
 procedure TSceneItems.Update(var Key: Word);
@@ -906,6 +924,8 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_A..TK_Z:
+      Items.AddItemToInv(Key - TK_A);
   end;
 end;
 

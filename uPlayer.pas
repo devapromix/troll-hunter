@@ -328,7 +328,14 @@ begin
 //  if (FItem.Stack > 1) and (FItem.Amount > 1) then
   if (FCount > 0) then
   begin
-
+    if (FCount = 1) then
+    begin
+      //
+      Items.AddItemToInv(0);
+    end else begin
+      //
+      Scenes.SetScene(scItems);
+    end;
   end;
 
 

@@ -210,7 +210,8 @@ type
     function GetItemInfo(AItem: Item): string;
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
-    procedure RenderInvItem(X, Y, I: Integer; AItem: Item);  
+    procedure RenderInvItem(X, Y, I: Integer; AItem: Item);
+    procedure AddItemToInv(Index: Integer);
   end;
 
 var
@@ -218,7 +219,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, gnugettext;
+uses Math, SysUtils, uTerminal, gnugettext, uMsgLog;
 
 { TItems }
 
@@ -497,6 +498,23 @@ begin
   Terminal.Print(X - 4, Y + I, '[[' + Chr(I + Ord('A')) + ']]');
   Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
   Terminal.Print(X, Y + I, Items.GetItemInfo(AItem));
+end;
+
+procedure TItems.AddItemToInv(Index: Integer);
+var
+  FItem: Item;
+  MapID: Integer;
+  The: string;
+begin
+  MapID := Ord(Map.Deep);
+  FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
+  //S := S + GetItemInfo(FItem, (C > 1), C) + ' ';
+  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
+  begin
+    Items_Inventory_AppendItem(FItem);
+    The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
+    MsgLog.Add(Format(_('You pick up %s.'), [The]));
+  end;
 end;
 
 initialization
