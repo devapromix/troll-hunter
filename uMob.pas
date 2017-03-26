@@ -18,39 +18,39 @@ type
   end;
 
 type
-  TMobEnum = ( 
+  TMobEnum = (                                                    
     // Dark Wood
-    mBigRat, mSpinyFrog, mJackal, mBlackBear, mGrizzlyBear, mAnaconda,
+    mBigRat, mSpinyFrog, mJackal, mBlackBear, mGrizzlyBear, mAnaconda, mWolf,
     // Gray Cave
-    mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp,
+    mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm,
     // Deep Cave
-    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider,
+    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian,
+    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian, mOrc,
     // Dungeon of Doom
-    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops,
+    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton,
     // Boss
     mTrollKing);
 
 // {Black Bear (B)}, {Grizzly Bear (B)}, {Big Rat (R)}
 // Black Viper (S), Ball Python (S), {Anaconda (S)},
-// {Jackal (J)}, Hound (H), Wolf (W),
+// {Jackal (J)}, Hound (H), {Wolf (W)},
 // {Spiny Frog (F)}, Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G), Komodo Dragon (K)
 // Pan (P), Satyr (S), Faun (F), Centaur (C),
 
 // {Kobold (K)}, {Big Kobold (K)}, {Red Kobold} (K), {Gnoll (G)}, {Basilisk (B)}
-// Worm (W), Swamp Worm (W), {Wisp (W)}, Fire Vortex (V), Giant Slug (S)
+// {Worm (W)}, Swamp Worm (W), {Wisp (W)}, Fire Vortex (V), Giant Slug (S)
 // Naga (N), Greater Naga (N), Naga Warrior (N), Jelly (J), Acid Blob (B)
 
 //
 // {Scorpion (S)}, {Wasp (W)},
-// {Ant (A)}, {Soldier Ant (A)}, {Scarab (S)}, Fire Crab (C), {Big Spider (S)}
+// {Ant (A)}, {Soldier Ant (A)}, {Scarab (S)}, {Fire Crab (C)}, {Big Spider (S)}
 
 // {Goblin (G)}, {Dark Goblin (G)}, {Black Goblin (G)}, {Gargoyle (G)}, {Warg (W)}
 // Air Elemental (E), Fire Elemental (E), Water Elemental (E), Earth Elemental (E),
-// Orc (O), Orc Warrior (O), Orc Warlord (O), {Draconian (D)},
+// {Orc (O)}, Orc Warrior (O), Orc Warlord (O), {Draconian (D)},
 
-// {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, Skeleton (S), Lich (L), Phantom (P)
+// {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, {Skeleton (S)}, Lich (L), Phantom (P)
 // Stone Golem (G), Fire Golem (G), Frost Golem (G), Hill Giant (G), Stone Giant (G)
 // Titan (T), {Ogre (O)}, Two-Headed Ogre (O), {Cyclops (C)}, {Troll King (T)}
 
@@ -76,6 +76,9 @@ const
     // Anaconda
     (Symbol: 's'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
     DV: 5; Damage: 2; Color: $FF331155;),
+    // Wolf
+    (Symbol: 'w'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
+    DV: 5; Damage: 2; Color: $FF331155;),
 
     // == Gray Cave == //
 
@@ -95,6 +98,9 @@ const
     (Symbol: 'b'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
     DV: 17; Damage: 9; Color: $FF777700;),
     // Wisp
+    (Symbol: 'w'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
+    DV: 17; Damage: 9; Color: $FF777700;),
+    // Worm
     (Symbol: 'w'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
     DV: 17; Damage: 9; Color: $FF777700;),
 
@@ -118,6 +124,9 @@ const
     // Big Spider
     (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
     DV: 6; Damage: 4; Color: $FF992233;),
+    // Fire Crab
+    (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
+    DV: 6; Damage: 4; Color: $FF992233;),
 
     // == Blood Cave == //
 
@@ -139,6 +148,9 @@ const
     // Draconian
     (Symbol: 'd'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
     DV: 20; Damage: 9; Color: $FF445544;),
+    // Orc
+    (Symbol: 'd'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
+    DV: 20; Damage: 9; Color: $FF445544;),
 
     // == Dungeon of Doom == //
 
@@ -158,6 +170,9 @@ const
     (Symbol: 'v'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
     DV: 60; Damage: 30; Color: $FF223333;),
     // Cyclops
+    (Symbol: 'c'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
+    DV: 60; Damage: 30; Color: $FF223333;),
+    // Skeleton
     (Symbol: 'c'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
     DV: 60; Damage: 30; Color: $FF223333;),
 
@@ -475,6 +490,8 @@ begin
       Result := _('Grizzly Bear');
     mAnaconda:
       Result := _('Anaconda');
+    mWolf:
+      Result := _('Wolf');
 
     // == Gray Cave == //
 
@@ -490,6 +507,8 @@ begin
       Result := _('Basilisk');
     mWisp:
       Result := _('Wisp');
+    mWorm:
+      Result := _('Worm');
 
     // == Deep Cave == //
 
@@ -505,6 +524,8 @@ begin
       Result := _('Scarab');
     mBigSpider:
       Result := _('Big Spider');
+    mFireCrab:
+      Result := _('Fire Crab');
 
     // == Blood Cave == //
              
@@ -520,6 +541,8 @@ begin
       Result := _('Warg');
     mDraconian:
       Result := _('Draconian');
+    mOrc:
+      Result := _('Orc');
 
     // == Dungeon of Doom == //
 
@@ -535,6 +558,8 @@ begin
       Result := _('Vampire');
     mCyclops:
       Result := _('Cyclops');
+    mSkeleton:
+      Result := _('Skeleton');
 
     // == Bosses == //
 
