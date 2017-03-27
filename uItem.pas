@@ -8,9 +8,13 @@ type
   TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace);
 
 type
+  TSlotType = (stNone, stHead, stBody, stRHand);
+
+type
   TItemBase = record
     Symbol: Char;
     ItemType: TItemType;
+    SlotType: TSlotType;
     MaxStack: Word;
     MaxDurability: Word;
     Color: Cardinal;
@@ -53,148 +57,148 @@ const
     // == All maps == //
 
     // Gold
-    (Symbol: '$'; ItemType: itCoin; MaxStack: 1000; MaxDurability: 0;
+    (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 1000; MaxDurability: 0;
     Color: clYellow; Deep: deDarkWood;),
     // Life Potion
-    (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
     Color: clRed; Deep: deDarkWood;),
     // Mana potion
-    (Symbol: '!'; ItemType: itPotion; MaxStack: 10; MaxDurability: 0;
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
     Color: clBlue; Deep: deDarkWood;),
 
     // == Dark Wood == //
 
     // Rusty Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 30;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // Short Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 35;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
     Color: clWhite; Deep: deDarkWood;),
     // Hatchet
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 30;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // Battle Axe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 35;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
     Color: clDarkRed; Deep: deDarkWood;),
     // Short Spear
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 30;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // Spear
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 35;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
     Color: clDarkRed; Deep: deDarkWood;),
     // Slag Hammer
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 30;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
     Color: clDarkRed; Deep: deDarkWood;),
     // Spiked Cudgel
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 35;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
     Color: clDarkRed; Deep: deDarkWood;),
 
     // == Gray Cave == //
 
     // Broad Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 40;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
     Color: clDarkRed; Deep: deGrayCave;),
     // Long Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 45;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
     Color: clDarkRed; Deep: deGrayCave;),
     // Meat Axe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 40;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
     Color: clDarkRed; Deep: deGrayCave;),
     // Flesh Tearer
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 45;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
     Color: clDarkRed; Deep: deGrayCave;),
     // Javelin
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 40;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
     Color: clDarkRed; Deep: deGrayCave;),
     // Fuscina
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 45;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
     Color: clDarkRed; Deep: deGrayCave;),
     // Warhammer
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 40;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
     Color: clDarkRed; Deep: deGrayCave;),
     // War Mace
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 45;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
     Color: clDarkRed; Deep: deGrayCave;),
 
     // == Deep Cave == //
 
     // Moon Blade
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 50;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
     Color: clDarkRed; Deep: deDeepCave;),
     // Scimitar
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 55;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
     Color: clDarkRed; Deep: deDeepCave;),
     // Ruby Axe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 50;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
     Color: clDarkRed; Deep: deDeepCave;),
     // Dark Axe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 55;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
     Color: clDarkRed; Deep: deDeepCave;),
     // War Spear
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 50;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
     Color: clDarkRed; Deep: deDeepCave;),
     // Harpoon
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 55;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
     Color: clDarkRed; Deep: deDeepCave;),
     // Flanged Mace
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 50;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
     Color: clDarkRed; Deep: deDeepCave;),
     // War Gavel
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 55;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
     Color: clDarkRed; Deep: deDeepCave;),
 
     // == Blood Cave == //
 
     // Bastard Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 60;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
     Color: clDarkRed; Deep: deBloodCave;),
     // Great Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 65;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
     Color: clDarkRed; Deep: deBloodCave;),
     // Berserker Axe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 60;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
     Color: clDarkRed; Deep: deDeepCave;),
     // Marauder Axe
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 65;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
     Color: clDarkRed; Deep: deBloodCave;),
     // Silvan Whisper
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 60;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
     Color: clDarkRed; Deep: deBloodCave;),
     // Impaler
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 65;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
     Color: clDarkRed; Deep: deBloodCave;),
     // Barbarous Mace
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 60;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
     Color: clDarkRed; Deep: deBloodCave;),
     // Adept Hammer
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 65;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
     Color: clDarkRed; Deep: deBloodCave;),
 
     // == Dungeon of Doom == //
 
     // Rune Sword
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 70;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Troll Slayer,
-    (Symbol: '/'; ItemType: itBlade; MaxStack: 1; MaxDurability: 75;
+    (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Chopper
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 70;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Demon Axe,
-    (Symbol: '('; ItemType: itAxe; MaxStack: 1; MaxDurability: 75;
+    (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Soul Reaver
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 70;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Honed Spear,
-    (Symbol: '|'; ItemType: itSpear; MaxStack: 1; MaxDurability: 75;
+    (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // War Maul
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 70;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
     Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Doom Hammer
-    (Symbol: ')'; ItemType: itMace; MaxStack: 1; MaxDurability: 75;
+    (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
     Color: clDarkRed; Deep: deDungeonOfDoom;)
 
     );
@@ -226,7 +230,7 @@ uses Math, SysUtils, uTerminal, gnugettext, uMsgLog;
 function TItems.GetItemInfo(AItem: Item): string;
 var
   ID: Integer;
-  S, Name: string;
+  S: string;
 begin
   S := '';
   ID := AItem.ItemID;
