@@ -582,7 +582,7 @@ begin
     TK_KP_MULTIPLY:
       if WizardMode then
         Player.Fill;
-    TK_ESCAPE:
+    TK_ESCAPE: 
       begin
         if Player.Look then
         begin
@@ -702,17 +702,24 @@ var
   I, FCount: Integer;
   FItem: Item;
   X, Y: Byte;
+  S: string;
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, Y, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
 
   FCount := Items_Inventory_GetCount();
-  for I := 0 to FCount - 1 do
+  for I := 0 to FCount - 1 do    
   begin
     FItem := Items_Inventory_GetItem(I);
-//    FItem.Equipment
-    Items.RenderInvItem(6, Y + 3, I, FItem);
+    S := '';
+    if (FItem.Equipment > 0) then
+    begin
+      case ItemBase[TItemEnum(FItem.ItemID)].SlotType of
+        stRHand: S := Format(' - %s', [_('in right hand')]);
+      end;
+    end;
+    Items.RenderInvItem(6, Y + 3, I, FItem, S);
   end;
 
   Terminal.ForegroundColor(clYellow);
@@ -724,10 +731,12 @@ end;
 procedure TSceneInv.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:  // Close
       Scenes.SetScene(scGame);
-    TK_SPACE: // Player
+    TK_SPACE:   // Player
       Scenes.SetScene(scPlayer);
+    TK_A..TK_Z: // Use an item
+      Player.Use(Key - TK_A);
   end;
 end;
 
@@ -758,9 +767,9 @@ end;
 procedure TSceneDrop.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:  // Close
       Scenes.SetScene(scGame);
-    TK_A..TK_Z:
+    TK_A..TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
   end;
 end;

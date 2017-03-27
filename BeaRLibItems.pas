@@ -13,6 +13,7 @@ type
     Durability: Integer;
     Weight: Integer;
     Size: Integer;
+    SlotID: Integer;
     Equipment: Integer;
   end;
 
@@ -69,6 +70,9 @@ function Items_Inventory_GetItem(Index: Integer): Item; stdcall; external 'BeaRL
 
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall; external 'BeaRLibItems.dll';
 function Items_Inventory_DeleteItem(Index: Integer; var AItem: Item): Integer; stdcall; external 'BeaRLibItems.dll';
+
+function Items_Inventory_EquipItem(Index: Integer): Integer; stdcall; external 'BeaRLibItems.dll';
+function Items_Inventory_UnEquipItem(Index: Integer): Integer; stdcall; external 'BeaRLibItems.dll';
 
 implementation
 

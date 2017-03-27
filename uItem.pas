@@ -214,7 +214,7 @@ type
     function GetItemInfo(AItem: Item): string;
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
-    procedure RenderInvItem(X, Y, I: Integer; AItem: Item);
+    procedure RenderInvItem(X, Y, I: Integer; AItem: Item; Adv: string = '');
     procedure AddItemToInv(Index: Integer);
   end;
 
@@ -286,6 +286,8 @@ begin
   FItem.MapID := Ord(ADeep);
   FItem.ItemID := Ord(ID);
   FItem.Amount := 1;
+  FItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
+  FItem.Equipment := 0;
   FItem.X := FX;
   FItem.Y := FY;
   FItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
@@ -496,23 +498,32 @@ begin
   end;
 end;
 
-procedure TItems.RenderInvItem(X, Y, I: Integer; AItem: Item);
+procedure TItems.RenderInvItem(X, Y, I: Integer; AItem: Item; Adv: string = '');
+var
+  S: string;
 begin
-  Terminal.ForegroundColor(clRed);                 
+  Terminal.ForegroundColor(clRed);
   Terminal.Print(X - 4, Y + I, '[[' + Chr(I + Ord('A')) + ']]');
   Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
-  Terminal.Print(X, Y + I, Items.GetItemInfo(AItem));
+  Terminal.Print(X, Y + I, ItemBase[TItemEnum(AItem.ItemID)].Symbol);
+  S := Items.GetItemInfo(AItem);
+  Terminal.ForegroundColor(clGray);
+  if (Adv <> '') then
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(X + Length(S) + 2, Y + I, Adv);
+  end;
+  Terminal.Print(X + 2, Y + I, S);
 end;
 
 procedure TItems.AddItemToInv(Index: Integer);
 var
   FItem: Item;
-  MapID: Integer;
+  MapID, C, I: Integer;
   The: string;
 begin
   MapID := Ord(Map.Deep);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
-  //S := S + GetItemInfo(FItem, (C > 1), C) + ' ';
   if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
     Items_Inventory_AppendItem(FItem);

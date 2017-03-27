@@ -89,6 +89,9 @@ type
     function GetSkillName(ASkill: TSkillEnum): string;
     procedure PickUp;
     procedure Drop(Index: Integer);
+    procedure Use(Index: Integer);
+    procedure Equip(Index: Integer);
+    procedure UnEquip(Index: Integer);
   end;
 
 var
@@ -150,7 +153,6 @@ begin
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
   Damage := Clamp(5, 1, High(Byte));
-  Self.Fill;
 end;
 
 constructor TPlayer.Create;
@@ -170,6 +172,7 @@ begin
       Exp := Math.RandomRange(0, SkillExp);
     end;
   Self.Calc;
+  Self.Fill;
 end;
 
 procedure TPlayer.Defeat(AKiller: string);
@@ -285,6 +288,60 @@ begin
   end;
 end;
 
+procedure TPlayer.Use(Index: Integer);
+var
+  The: string;
+  AItem: Item;
+  FCount: Integer;
+begin
+  AItem := Items_Inventory_GetItem(Index);
+  The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+  FCount := Items_Inventory_GetItemCount(AItem.ItemID);
+  if (AItem.Equipment = 1) then
+    Self.UnEquip(Index) else
+  if (AItem.Equipment = 0) then
+    Self.Equip(Index) else
+  MsgLog.Add(Format(_('You don''t know how to use %s.'), [The]));
+end;
+
+procedure TPlayer.Equip(Index: Integer);
+var
+  The: string;
+  AItem, AUnEquipItem: Item;
+  I, C: Integer;
+begin
+  // Replace
+  I := Items_Inventory_EquipItem(Index);
+  if (I > -1) then
+  begin
+    AUnEquipItem := Items_Inventory_GetItem(I);
+    The := GetDescThe(Items.GetName(TItemEnum(AUnEquipItem.ItemID)));
+    MsgLog.Add(Format(_('You unequip %s.'), [The]));
+    Move(0, 0);
+  end;
+  // Equip
+  AItem := Items_Inventory_GetItem(Index);
+  The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+  MsgLog.Add(Format(_('You equip %s.'), [The]));
+  Self.Calc;
+  Move(0, 0);
+end;
+
+procedure TPlayer.UnEquip(Index: Integer);
+var
+  The: string;
+  AItem: Item;
+begin
+  if (Items_Inventory_UnEquipItem(Index) > 0) then
+  begin
+    AItem := Items_Inventory_GetItem(Index);
+    The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+    MsgLog.Add(Format(_('You unequip %s.'), [The]));
+    Self.Calc;
+    Move(0, 0);
+  end;
+end;
+
 procedure TPlayer.Drop(Index: Integer);
 var
   AItem: Item;
@@ -302,6 +359,7 @@ var
       Items_Dungeon_AppendItem(AItem);
       The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
       MsgLog.Add(Format(_('You drop %s.'), [The]));
+      Move(0, 0);
     end;
   end;
 
