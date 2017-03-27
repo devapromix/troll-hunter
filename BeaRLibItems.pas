@@ -13,6 +13,7 @@ type
     Durability: Integer;
     Weight: Integer;
     Size: Integer;
+    Equipment: Integer;
   end;
 
 // Library

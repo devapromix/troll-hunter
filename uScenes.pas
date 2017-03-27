@@ -695,7 +695,7 @@ begin
   end;
 end;
 
-{ TSceneInv }
+{ TSceneInv }    
 
 procedure TSceneInv.Render;
 var
@@ -711,6 +711,7 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
+//    FItem.Equipment
     Items.RenderInvItem(6, Y + 3, I, FItem);
   end;
 

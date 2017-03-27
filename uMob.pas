@@ -512,7 +512,7 @@ begin
 
     // == Deep Cave == //
 
-    mScorpion:
+    mScorpion:  
       Result := _('Scorpion');
     mWasp:
       Result := _('Wasp');
@@ -574,7 +574,6 @@ Mobs := TMobs.Create;
 
 finalization
 
-Mobs.Free;
-Mobs := nil;
+FreeAndNil(Mobs);
 
 end.
