@@ -315,13 +315,14 @@ begin
   if (I > -1) then
   begin
     AUnEquipItem := Items_Inventory_GetItem(I);
-    The := GetDescThe(Items.GetName(TItemEnum(AUnEquipItem.ItemID)));
+    //Items.GetItemEnum(AUnEquipItem.ItemID)
+    The := GetDescThe(Items.GetName(Items.GetItemEnum(AUnEquipItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
     Move(0, 0);
   end;
   // Equip
   AItem := Items_Inventory_GetItem(Index);
-  The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+  The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
   MsgLog.Add(Format(_('You equip %s.'), [The]));
   Self.Calc;
   Move(0, 0);
@@ -335,7 +336,7 @@ begin
   if (Items_Inventory_UnEquipItem(Index) > 0) then
   begin
     AItem := Items_Inventory_GetItem(Index);
-    The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+    The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
     Self.Calc;
     Move(0, 0);

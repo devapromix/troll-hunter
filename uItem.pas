@@ -53,6 +53,9 @@ type
     );
 
 const
+  NotEquipItems = [iGold, iPotionOfHealth, iPotionOfMana];
+
+const
   ItemBase: array [TItemEnum] of TItemBase = (
     // == All maps == //
 
@@ -211,6 +214,7 @@ type
     procedure Render(AX, AY: Byte);
     procedure Add(ADeep: TDeepEnum);
     function GetName(AItem: TItemEnum): string;
+    function GetItemEnum(AItemID: Integer): TItemEnum;
     function GetItemInfo(AItem: Item): string;
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
@@ -530,6 +534,11 @@ begin
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
     MsgLog.Add(Format(_('You pick up %s.'), [The]));
   end;
+end;
+
+function TItems.GetItemEnum(AItemID: Integer): TItemEnum;
+begin
+  Result := TItemEnum(AItemID);
 end;
 
 initialization
