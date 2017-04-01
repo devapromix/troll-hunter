@@ -10,6 +10,12 @@ type
     Height: Integer;
   end;
 
+type
+  TDamage = record
+    Min: Byte;
+    Max: Byte;
+  end;
+
 const
   Version = '0.8';
 

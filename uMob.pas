@@ -13,7 +13,7 @@ type
     Level: Byte;
     Armor: Byte;
     DV: Byte;
-    Damage: Word;
+    Damage: TDamage;
     Color: Cardinal;
   end;
 

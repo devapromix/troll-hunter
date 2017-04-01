@@ -318,14 +318,14 @@ begin
     //Items.GetItemEnum(AUnEquipItem.ItemID)
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AUnEquipItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
-    Self.Wait;
+    Wait;
   end;
   // Equip
   AItem := Items_Inventory_GetItem(Index);
   The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
   MsgLog.Add(Format(_('You equip %s.'), [The]));
   Self.Calc;
-  Self.Wait;
+  Wait;
 end;
 
 procedure TPlayer.UnEquip(Index: Integer);
