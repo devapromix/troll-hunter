@@ -318,14 +318,14 @@ begin
     //Items.GetItemEnum(AUnEquipItem.ItemID)
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AUnEquipItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
-    Move(0, 0);
+    Self.Wait;
   end;
   // Equip
   AItem := Items_Inventory_GetItem(Index);
   The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
   MsgLog.Add(Format(_('You equip %s.'), [The]));
   Self.Calc;
-  Move(0, 0);
+  Self.Wait;
 end;
 
 procedure TPlayer.UnEquip(Index: Integer);
@@ -339,7 +339,7 @@ begin
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
     Self.Calc;
-    Move(0, 0);
+    Wait;
   end;
 end;
 
@@ -360,7 +360,7 @@ var
       Items_Dungeon_AppendItem(AItem);
       The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
       MsgLog.Add(Format(_('You drop %s.'), [The]));
-      Move(0, 0);
+      Wait;
     end;
   end;
 
