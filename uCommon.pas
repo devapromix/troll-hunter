@@ -39,6 +39,7 @@ const
 
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
+  KeyColor: string = 'Green';
   TextScreenshot: string = '';
   WizardMode: Boolean = False;
   GameMode: Boolean = False;

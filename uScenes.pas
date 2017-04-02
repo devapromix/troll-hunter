@@ -15,6 +15,7 @@ type
     procedure Update(var Key: Word); virtual; abstract;
     procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
       AColor, DarkColor: Cardinal);
+    function KeyStr(AKey: string; AStr: string = ''): string;
   end;
 
 type
@@ -136,6 +137,11 @@ uses
   uMap, uMob, uMsgLog, uItem, gnugettext;
 
 { TScene }
+
+function TScene.KeyStr(AKey: string; AStr: string = ''): string;
+begin
+  Result := Trim(Format('[color=%s][[%s]][/color] %s', [LowerCase(KeyColor), UpperCase(AKey), AStr]));
+end;
 
 procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
   AColor, DarkColor: Cardinal);
@@ -259,7 +265,7 @@ begin
   Terminal.Print(X, Y - 3, _('Trollhunter') + ' v.' + Version, TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,   
-    _('Press [color=red][[ENTER]][/color] to continue...'), TK_ALIGN_CENTER);
+    Format(_('Press %s to continue...'), [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -302,8 +308,7 @@ var
 
   procedure AddKey(Key, Text: string);
   begin
-    Terminal.Print(KX + 10, Y + KY, Format('[color=orange][[%s]][/color] %s',
-      [Key, Text]), TK_ALIGN_LEFT);
+    Terminal.Print(KX + 10, Y + KY, KeyStr(Key, Text), TK_ALIGN_LEFT);
     Inc(KX, X - 5);
     if (KX > X + 11) then
     begin
@@ -361,7 +366,7 @@ begin
     TK_ALIGN_CENTER);
 
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    _('[color=red][[ESC]][/color] Close'), TK_ALIGN_CENTER);
+    KeyStr('ESC', _('Close')), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneHelp.Update(var Key: Word);
@@ -727,7 +732,7 @@ begin
 
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    _('[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Skills and attributes'),
+    Format('%s %s', [KeyStr('ESC', _('Close')), KeyStr('SPACE', _('Skills and attributes'))]),
     TK_ALIGN_CENTER);
 end;
 
@@ -764,7 +769,7 @@ begin
 
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    _('[color=red][[ESC]][/color] Close'), TK_ALIGN_CENTER);
+    KeyStr('ESC', _('Close')), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneDrop.Update(var Key: Word);
@@ -796,7 +801,7 @@ begin
   Self.RenderSkills;
 
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    _('[color=red][[ESC]][/color] Close [color=red][[SPACE]][/color] Inventory'),
+    Format('%s %s', [KeyStr('ESC', _('Close')), KeyStr('ESC', _('Inventory'))]),
     TK_ALIGN_CENTER);
 end;
 
@@ -894,7 +899,7 @@ begin
 
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    _('[color=red][[ESC]][/color] Close'),
+    KeyStr('ESC', _('Close')),
     TK_ALIGN_CENTER);
 end;
 
@@ -928,7 +933,7 @@ begin
 
   Terminal.ForegroundColor(clYellow);
   Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    _('[color=red][[ESC]][/color] Close'),
+    KeyStr('ESC', _('Close')),
     TK_ALIGN_CENTER);
 end;
 
