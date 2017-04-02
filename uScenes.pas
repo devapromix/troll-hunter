@@ -627,9 +627,12 @@ end;
 { TSceneQuit }
 
 procedure TSceneQuit.Render;
+var
+  Y: Byte;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
-    _('Quit? [[Y/N]]'), TK_ALIGN_CENTER);
+  Y := Terminal.Window.Height div 2;
+  Terminal.Print(Terminal.Window.Width div 2, Y - 1, _('Are you sure?'), TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Y + 1, _('Quit? [[Y/N]]'), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneQuit.Update(var Key: Word);

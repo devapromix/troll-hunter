@@ -60,127 +60,127 @@ const
 
     // Big Rat
     (Symbol: 'r'; Boss: False; Deep: deDarkWood; MaxLife: 5; Level: 1; Armor: 0;
-    DV: 4; Damage: 2; Color: $FF249988;),
+    DV: 4; Damage: (Min: 2; Max: 3;); Color: $FF249988;),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: 2; Color: $FF33FF66;),
+    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF33FF66;),
     // Jackal
     (Symbol: 'j'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: 2; Color: $FF9955FF;),
+    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;),
     // Black Bear
     (Symbol: 'b'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: 2; Color: $FF331155;),
+    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: 2; Color: $FF331155;),
+    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
     // Anaconda
     (Symbol: 's'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: 2; Color: $FF331155;),
+    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
     // Wolf
     (Symbol: 'w'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: 2; Color: $FF331155;),
+    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 15; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF777700;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 25; Level: 1; Armor: 1;
-    DV: 12; Damage: 6; Color: $FF777700;),
+    DV: 12; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
-    DV: 17; Damage: 9; Color: $FF777700;),
+    DV: 17; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
     // Gnoll
     (Symbol: 'g'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
-    DV: 17; Damage: 9; Color: $FF777700;),
+    DV: 17; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
     // Basilisk
     (Symbol: 'b'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
-    DV: 17; Damage: 9; Color: $FF777700;),
+    DV: 17; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
     // Wisp
     (Symbol: 'w'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
-    DV: 17; Damage: 9; Color: $FF777700;),
+    DV: 17; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
     // Worm
     (Symbol: 'w'; Boss: False; Deep: deGrayCave; MaxLife: 30; Level: 1; Armor: 1;
-    DV: 17; Damage: 9; Color: $FF777700;),
+    DV: 17; Damage: (Min: 2; Max: 3;); Color: $FF777700;),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 15; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
     // Wasp
     (Symbol: 'w'; Boss: False; Deep: deDeepCave; MaxLife: 18; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
     // Ant
     (Symbol: 'a'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
     // Scarab
     (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
     // Big Spider
     (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
     // Fire Crab
     (Symbol: 's'; Boss: False; Deep: deDeepCave; MaxLife: 20; Level: 1; Armor: 1;
-    DV: 6; Damage: 4; Color: $FF992233;),
+    DV: 6; Damage: (Min: 2; Max: 3;); Color: $FF992233;),
 
     // == Blood Cave == //
 
     // Goblin
     (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 20; Level: 2; Armor: 2;
-    DV: 12; Damage: 5; Color: $FF00AA00;),
+    DV: 12; Damage: (Min: 2; Max: 3;); Color: $FF00AA00;),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 22; Level: 2; Armor: 2;
-    DV: 15; Damage: 7; Color: $FF116610;),
+    DV: 15; Damage: (Min: 2; Max: 3;); Color: $FF116610;),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
-    DV: 20; Damage: 9; Color: $FF445544;),
+    DV: 20; Damage: (Min: 2; Max: 3;); Color: $FF445544;),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
-    DV: 20; Damage: 9; Color: $FF445544;),
+    DV: 20; Damage: (Min: 2; Max: 3;); Color: $FF445544;),
     // Warg
     (Symbol: 'w'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
-    DV: 20; Damage: 9; Color: $FF445544;),
+    DV: 20; Damage: (Min: 2; Max: 3;); Color: $FF445544;),
     // Draconian
     (Symbol: 'd'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
-    DV: 20; Damage: 9; Color: $FF445544;),
+    DV: 20; Damage: (Min: 2; Max: 3;); Color: $FF445544;),
     // Orc
     (Symbol: 'd'; Boss: False; Deep: deBloodCave; MaxLife: 28; Level: 2; Armor: 2;
-    DV: 20; Damage: 9; Color: $FF445544;),
+    DV: 20; Damage: (Min: 2; Max: 3;); Color: $FF445544;),
 
     // == Dungeon of Doom == //
 
     // Zombie
     (Symbol: 'z'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 25; Level: 2; Armor: 2;
-    DV: 9; Damage: 3; Color: $FF00BB00;),
+    DV: 9; Damage: (Min: 2; Max: 3;); Color: $FF00BB00;),
     // Ogre
     (Symbol: 'o'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 80; Level: 10; Armor: 12;
-    DV: 60; Damage: 30; Color: $FF559977;),
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FF559977;),
     // Mummy
     (Symbol: 'm'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
-    DV: 60; Damage: 30; Color: $FF223333;),
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FF223333;),
     // Ghoul
     (Symbol: 'g'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
-    DV: 60; Damage: 30; Color: $FF223333;),
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FF223333;),
     // Vampire
     (Symbol: 'v'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
-    DV: 60; Damage: 30; Color: $FF223333;),
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FF223333;),
     // Cyclops
     (Symbol: 'c'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
-    DV: 60; Damage: 30; Color: $FF223333;),
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FF223333;),
     // Skeleton
     (Symbol: 'c'; Boss: False; Deep: deDungeonOfDoom; MaxLife: 90; Level: 10; Armor: 12;
-    DV: 60; Damage: 30; Color: $FF223333;),
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FF223333;),
 
     // == Bosses == //
 
     // Troll King
     (Symbol: 'T'; Boss: True; Deep: deDungeonOfDoom; MaxLife: 10; Level: 10; Armor: 14;
-    DV: 60; Damage: 35; Color: $FFFF4400;));
+    DV: 60; Damage: (Min: 2; Max: 3;); Color: $FFFF4400;));
 
 type
   TMob = class(TObject)
@@ -273,7 +273,7 @@ begin
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
-    Dam := Clamp(MobBase[TMobEnum(ID)].Damage, 0, High(Word));
+    Dam := Clamp(RandomRange(MobBase[TMobEnum(ID)].Damage.Min, MobBase[TMobEnum(ID)].Damage.Max + 1), 0, High(Word));
     Player.Life := Clamp(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if Player.Life = 0 then
