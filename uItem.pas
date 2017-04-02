@@ -17,6 +17,9 @@ type
     SlotType: TSlotType;
     MaxStack: Word;
     MaxDurability: Word;
+    Level: Byte;
+    Defense: Byte;
+    Damage: TDamage;
     Color: Cardinal;
     Deep: TDeepEnum;
   end;
@@ -61,148 +64,148 @@ const
 
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 1000; MaxDurability: 0;
-    Color: clYellow; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: deDarkWood;),
     // Life Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Color: clRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: deDarkWood;),
     // Mana potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Color: clBlue; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: deDarkWood;),
 
     // == Dark Wood == //
 
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
     // Short Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
-    Color: clWhite; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: deDarkWood;),
     // Hatchet
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
     // Battle Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
     // Short Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
     // Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
     // Slag Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
     // Spiked Cudgel
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
-    Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
 
     // == Gray Cave == //
 
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // Long Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // Meat Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // Flesh Tearer
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // Javelin
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // Fuscina
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // Warhammer
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 40;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
     // War Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 45;
-    Color: clDarkRed; Deep: deGrayCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
 
     // == Deep Cave == //
 
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // Scimitar
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // Ruby Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // Dark Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // War Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // Harpoon
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // Flanged Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 50;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // War Gavel
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 55;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
 
     // == Blood Cave == //
 
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
     // Great Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
     // Berserker Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
-    Color: clDarkRed; Deep: deDeepCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
     // Marauder Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
     // Silvan Whisper
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
     // Impaler
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
     // Barbarous Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 60;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
     // Adept Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 65;
-    Color: clDarkRed; Deep: deBloodCave;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
 
     // == Dungeon of Doom == //
 
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Troll Slayer,
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Demon Axe,
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // War Maul
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 70;
-    Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
     // Doom Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stRHand; MaxStack: 1; MaxDurability: 75;
-    Color: clDarkRed; Deep: deDungeonOfDoom;)
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;)
 
     );
 
