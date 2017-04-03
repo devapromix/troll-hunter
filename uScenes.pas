@@ -528,8 +528,8 @@ begin
   Terminal.Print(Status.Left, Status.Top + 2,
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clYellow);
-  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn %d Damage %d'),
-    [Player.Turn, Player.Damage]));
+  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Damage: %d-%d'),
+    [Player.Turn, Player.Damage.Min, Player.Damage.Max]));
   // Bars
   Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
     Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
@@ -596,8 +596,6 @@ begin
           Map.Deep := succ(Map.Deep);
           Player.Wait;
         end;
-    TK_SLASH:
-      Scenes.SetScene(scHelp);
     TK_KP_MULTIPLY:
       if WizardMode then
         Player.Fill;
@@ -627,6 +625,8 @@ begin
     TK_B:
       if WizardMode then
         Scenes.SetScene(scDef);
+    TK_SLASH:
+      Scenes.SetScene(scHelp);
   end;
 end;
 
@@ -736,7 +736,7 @@ begin
     Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
   end;
 
-  FCount := Items_Inventory_GetCount();
+  FCount := Clamp(Items_Inventory_GetCount(), 0, 26);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -785,7 +785,7 @@ begin
     Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
   end;
 
-  FCount := Items_Inventory_GetCount();
+  FCount := Clamp(Items_Inventory_GetCount(), 0, 26);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
