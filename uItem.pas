@@ -230,7 +230,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, gnugettext, uMsgLog;
+uses Math, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes;
 
 { TItems }
 
@@ -510,7 +510,7 @@ var
   S: string;
 begin
   Terminal.ForegroundColor(clRed);
-  Terminal.Print(X - 4, Y + I, '[[' + Chr(I + Ord('A')) + ']]');
+  Terminal.Print(X - 4, Y + I, TScene.KeyStr(Chr(I + Ord('A'))));
   Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
   Terminal.Print(X, Y + I, ItemBase[TItemEnum(AItem.ItemID)].Symbol);
   S := Items.GetItemInfo(AItem);

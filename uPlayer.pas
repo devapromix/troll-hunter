@@ -346,7 +346,7 @@ end;
 procedure TPlayer.Drop(Index: Integer);
 var
   AItem: Item;
-  MapID, FCount: Integer;
+  MapID, FCount, C: Integer;
 
   procedure DeleteItem;
   var
@@ -389,10 +389,10 @@ begin
   begin
     if (FCount = 1) then
     begin
-      //
+      // Pickup an item
       Items.AddItemToInv(0);
     end else begin
-      //
+      // Items scene
       Scenes.SetScene(scItems);
     end;
   end;

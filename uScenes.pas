@@ -11,11 +11,15 @@ type
 
 type
   TScene = class(TObject)
+  private
+    KStr: string;
+  public
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
     procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
       AColor, DarkColor: Cardinal);
-    function KeyStr(AKey: string; AStr: string = ''): string;
+    class function KeyStr(AKey: string; AStr: string = ''): string;
+    procedure AddKey(AKey, AStr: string; IsClear: Boolean = False; IsRender: Boolean = False);
   end;
 
 type
@@ -138,7 +142,19 @@ uses
 
 { TScene }
 
-function TScene.KeyStr(AKey: string; AStr: string = ''): string;
+procedure TScene.AddKey(AKey, AStr: string; IsClear: Boolean = False; IsRender: Boolean = False);
+begin
+  if IsClear then KStr := '';
+  KStr := KStr + KeyStr(AKey, AStr) + ' ';
+  if IsRender and (KStr <> '') then
+  begin
+    Terminal.ForegroundColor(clYellow);
+    Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height - 2,
+      Trim(Self.KStr), TK_ALIGN_CENTER);
+  end;
+end;
+
+class function TScene.KeyStr(AKey: string; AStr: string = ''): string;
 begin
   Result := Trim(Format('[color=%s][[%s]][/color] %s', [LowerCase(KeyColor), UpperCase(AKey), AStr]));
 end;
@@ -264,7 +280,7 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 3, _('Trollhunter') + ' v.' + Version, TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 1,   
+  Terminal.Print(X, Y + 1,
     Format(_('Press %s to continue...'), [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
@@ -282,8 +298,7 @@ begin
         GameMode := True;
         MsgLog.Clear;
         MsgLog.Add
-          (_('Welcome to Elvion! You need to find and kill The King Troll!'));
-        MsgLog.Add(_('Press ? for help.'));
+          (_('Welcome to Elvion! You need to find and kill The King Troll! Press ? for help.'));
         Scenes.SetScene(scGame);
       end;
   end;
@@ -346,7 +361,8 @@ begin
   Terminal.Print(X, Y + 10, Format(FT, [_('Keybindings')]), TK_ALIGN_CENTER);
 
   Terminal.Print(KX + 10, Y + 12,
-    _('Move: [color=orange][[arrow keys]][/color], [color=orange][[numpad]][/color], [color=orange][[QWEADZXC]][/color], Wait:  [color=orange][[5]][/color], [color=orange][[S]][/color]'),
+    Format('%s: %s, %s, %s Wait: %s, %s', [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'),
+    KeyStr('QWEADZXC'), KeyStr('5'), KeyStr('S')]),
     TK_ALIGN_LEFT);
 
   AddKey('<', _('Up staris'));
@@ -357,7 +373,6 @@ begin
   AddKey('I', _('Inventory'));
   AddKey('T', _('Skills and attributes'));
   AddKey('?', _('Help'));
-  AddKey('Esc', _('Close'));
 
   Terminal.Print(X, Terminal.Window.Height - Y - 5,
     Format(FT, [_('Character dump')]), TK_ALIGN_CENTER);
@@ -365,8 +380,7 @@ begin
     _('The game saves a character dump to [color=green]*-character-dump.txt[/color] file.'),
     TK_ALIGN_CENTER);
 
-  Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    KeyStr('ESC', _('Close')), TK_ALIGN_CENTER);
+  Self.AddKey('Esc', _('Close'), True, True);
 end;
 
 procedure TSceneHelp.Update(var Key: Word);
@@ -587,7 +601,7 @@ begin
     TK_KP_MULTIPLY:
       if WizardMode then
         Player.Fill;
-    TK_ESCAPE: 
+    TK_ESCAPE:
       begin
         if Player.Look then
         begin
@@ -637,7 +651,7 @@ var
 begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(Terminal.Window.Width div 2, Y - 1, _('Are you sure?'), TK_ALIGN_CENTER);
-  Terminal.Print(Terminal.Window.Width div 2, Y + 1, _('Quit? [[Y/N]]'), TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Y + 1, Format(_('Quit? %s/%s'), [KeyStr('Y'), KeyStr('N')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneQuit.Update(var Key: Word);
@@ -663,8 +677,8 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 1, _('GAME OVER!!!'), TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,
-    Format(_('Killed by [color=white]%s[/color]. Press [color=red][[ENTER]][/color]'),
-    [Killer]), TK_ALIGN_CENTER);
+    Format(_('Killed by [color=white]%s[/color]. Press %s'),
+    [Killer, KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneDef.Update(var Key: Word);
@@ -688,7 +702,7 @@ begin
   Y := Terminal.Window.Height div 2;
   Terminal.Print(X, Y - 1, _('CONGRATULATIONS!!!'), TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,
-    Format(_('You have won. Press [color=red][[ENTER]][/color]'), [Killer]),
+    Format(_('You have won. Press %s'), [KeyStr('ENTER')]),
     TK_ALIGN_CENTER);
 end;
 
@@ -703,21 +717,27 @@ begin
   end;
 end;
 
-{ TSceneInv }    
+{ TSceneInv }
 
 procedure TSceneInv.Render;
 var
   I, FCount: Integer;
   FItem: Item;
-  X, Y: Byte;
+  X: Byte;
   S: string;
 begin
-  Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
+  Terminal.Print(X, 1, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
+
+  if WizardMode then
+  for I := 0 to 25 do
+  begin
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
+  end;
 
   FCount := Items_Inventory_GetCount();
-  for I := 0 to FCount - 1 do    
+  for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
     S := '';
@@ -727,13 +747,12 @@ begin
         stRHand: S := Format(' - %s', [_('in right hand')]);
       end;
     end;
-    Items.RenderInvItem(6, Y + 3, I, FItem, S);
+    Items.RenderInvItem(5, 2, I, FItem, S);
   end;
 
-  Terminal.ForegroundColor(clYellow);
-  Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    Format('%s %s', [KeyStr('ESC', _('Close')), KeyStr('SPACE', _('Skills and attributes'))]),
-    TK_ALIGN_CENTER);
+  AddKey('Esc', _('Close'), True);
+  AddKey('Space', _('Skills and attributes'));
+  AddKey('A-Z', _('Select an item'), False, True);
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -754,22 +773,27 @@ procedure TSceneDrop.Render;
 var
   I, FCount: Integer;
   FItem: Item;
-  X, Y: Byte;
+  X: Byte;
 begin
-  Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, _('Drop an item'), TK_ALIGN_CENTER);
+  Terminal.Print(X, 1, Format(FT, [_('Drop an item')]), TK_ALIGN_CENTER);
+
+  if WizardMode then
+  for I := 0 to 25 do
+  begin
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
+  end;
 
   FCount := Items_Inventory_GetCount();
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
-    Items.RenderInvItem(6, Y + 3, I, FItem);
+    Items.RenderInvItem(5, 2, I, FItem);
   end;
 
-  Terminal.ForegroundColor(clYellow);
-  Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    KeyStr('ESC', _('Close')), TK_ALIGN_CENTER);
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Drop an item'), False, True);
 end;
 
 procedure TSceneDrop.Update(var Key: Word);
@@ -791,18 +815,16 @@ end;
 
 procedure TScenePlayer.Render;
 var
-  X, Y: Byte;
+  X: Byte;
 begin
-  Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, Format(FT, [_('Trollhunter')]), TK_ALIGN_CENTER);
+  Terminal.Print(X, 1, Format(FT, [_('Trollhunter')]), TK_ALIGN_CENTER);
 
   Self.RenderPlayer;
   Self.RenderSkills;
 
-  Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    Format('%s %s', [KeyStr('ESC', _('Close')), KeyStr('ESC', _('Inventory'))]),
-    TK_ALIGN_CENTER);
+  AddKey('Esc', _('Close'), True);
+  AddKey('Space', _('Inventory'), False, True);
 end;
 
 procedure TScenePlayer.RenderPlayer;
@@ -894,13 +916,10 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
-    Items.RenderInvItem(6, Y + 3, I, FItem);
+    Items.RenderInvItem(5, 2, I, FItem);
   end;  }
 
-  Terminal.ForegroundColor(clYellow);
-  Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    KeyStr('ESC', _('Close')),
-    TK_ALIGN_CENTER);
+  AddKey('Esc', _('Close'), True, True);
 end;
 
 procedure TSceneAmount.Update(var Key: Word);
@@ -924,17 +943,22 @@ begin
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, Y, Format(FT, [_('Pick up an item')]), TK_ALIGN_CENTER);
 
+  if WizardMode then
+  for I := 0 to 25 do
+  begin
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
+  end;
+
   FCount := Clamp(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, 26);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
-    Items.RenderInvItem(6, Y + 3, I, FItem);
+    Items.RenderInvItem(5, 2, I, FItem);
   end;
 
-  Terminal.ForegroundColor(clYellow);
-  Terminal.Print(X, Terminal.Window.Height - Y - 1,
-    KeyStr('ESC', _('Close')),
-    TK_ALIGN_CENTER);
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Pick up an item'), False, True);
 end;
 
 procedure TSceneItems.Update(var Key: Word);
