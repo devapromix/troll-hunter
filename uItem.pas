@@ -76,10 +76,10 @@ const
 
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 0; Defense: 1; Damage: (Min: 2; Max: 4;); Color: clDarkRed; Deep: deDarkWood;),
     // Short Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stRHand; MaxStack: 1; MaxDurability: 35;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: deDarkWood;),
+    Level: 0; Defense: 2; Damage: (Min: 3; Max: 5;); Color: clWhite; Deep: deDarkWood;),
     // Hatchet
     (Symbol: '('; ItemType: itAxe; SlotType: stRHand; MaxStack: 1; MaxDurability: 30;
     Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDarkWood;),
@@ -536,6 +536,7 @@ begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
     MsgLog.Add(Format(_('You pick up %s.'), [The]));
+    Player.Calc;
   end;
 end;
 

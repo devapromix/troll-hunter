@@ -528,8 +528,10 @@ begin
   Terminal.Print(Status.Left, Status.Top + 2,
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clYellow);
-  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Damage: %d-%d'),
-    [Player.Turn, Player.Damage.Min, Player.Damage.Max]));
+  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d '),
+    [Player.Turn, Player.Gold]));
+  Terminal.Print(Status.Left, Status.Top + 4, Format(_('Damage: %d-%d Protection: %d'),
+    [Player.Damage.Min, Player.Damage.Max, Player.PV]));
   // Bars
   Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
     Player.Life, Player.MaxLife, clDarkRed, clDarkGray);

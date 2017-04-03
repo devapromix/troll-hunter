@@ -51,6 +51,7 @@ type
     FDexterity: Byte;
     FWillpower: Byte;
     FPerception: Byte;
+    FGold: Integer;
     FSkill: array [TSkillEnum] of TSkill;
   public
     constructor Create;
@@ -73,6 +74,7 @@ type
     property Dexterity: Byte read FDexterity write FDexterity;
     property Willpower: Byte read FWillpower write FWillpower;
     property Perception: Byte read FPerception write FPerception;
+    property Gold: Integer read FGold write FGold;
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
     property Damage: TDamage read FDamage write FDamage;
@@ -143,26 +145,37 @@ end;
 
 procedure TPlayer.Calc;
 var
-  I, FCount: Integer;
+  I, FCount, Def: Integer;
   Dam: TDamage;
+  FI: TItemEnum;
   FItem: Item;
 begin
+  Dam.Min := 0;
+  Dam.Max := 0;
+  Def := 0;
   FCount := Clamp(Items_Inventory_GetCount(), 0, 26);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
     if (FItem.Equipment > 0) then
     begin
-      FItem.ItemID;
+      FI := TItemEnum(FItem.ItemID);
+      Dam.Min := Dam.Min + ItemBase[FI].Damage.Min;
+      Dam.Max := Dam.Max + ItemBase[FI].Damage.Max;
+      Def := Def + ItemBase[FI].Defense;
     end;
   end;
+  FDamage.Min := Clamp(Dam.Min, 1, High(Byte) - 1);
+  FDamage.Max := Clamp(Dam.Max, 2, High(Byte));
+  Self.Gold := Clamp(Items_Inventory_GetItemAmount(Ord(iGold)), 0, High(Integer));
+  //
   Strength := Clamp(Round(FSkill[skAthletics].Value * 0.5) +
     Round(FSkill[skToughness].Value * 0.9), 1, AtrMax);
   Dexterity := Clamp(Round(FSkill[skDodge].Value * 1.4), 1, AtrMax);
   Willpower := Clamp(Round(FSkill[skConcentration].Value * 1.4), 1, AtrMax);
   Perception := Clamp(Round(FSkill[skToughness].Value * 1.4), 1, AtrMax);
   DV := Clamp(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
-  PV := Clamp(Round(FSkill[skToughness].Value / 1.4) - 4 { +ItemProp } ,
+  PV := Clamp(Round(FSkill[skToughness].Value / 1.4) - 4 + Def,
     0, PVMax);
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
@@ -174,6 +187,7 @@ var
   I: TSkillEnum;
 begin
   Turn := 0;
+  Gold := 0;
   Level := 1;
   Look := False;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
