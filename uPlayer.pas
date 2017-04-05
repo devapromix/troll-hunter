@@ -135,15 +135,36 @@ begin
     Mob.Life := Clamp(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     case FWeaponSkill of
-      skBlade, skAxe, skSpear, skMace:
+      skBlade:
       begin
         Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
         Skill(skAthletics, 2);
-        Skill(skLearning);
+        Skill(skDodge, 2);
+      end;
+      skAxe:
+      begin
+        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(skAthletics, 3);
+        Skill(skDodge);
+      end;
+      skSpear:
+      begin
+        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(skAthletics);
+        Skill(skDodge, 3);
+      end;
+      skMace:
+      begin
+        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(skAthletics, 4);
       end;
     end;
+    if (RandomRange(0, 2) = 0) then Skill(skLearning) else Skill(skToughness);
+    // Victory
     if (Mob.Life = 0) then
+    begin
       Mob.Defeat;
+    end;
   end
   else
   begin
@@ -498,7 +519,7 @@ begin
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
       Inc(FSkill[ASkill].Value);
       // Add message
-
+      MsgLog.Add(Format('Skill %s +1.', [Self.GetSkillName(ASkill)]));
       FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
       Self.Calc;
     end;
