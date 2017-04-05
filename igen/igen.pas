@@ -36,17 +36,21 @@ begin
   begin
     case RadioGroup1.ItemIndex of
     0: begin
-
+         Def := I;
+         DamMin := 1 + (I * 3) + Round(I / 4);
+         DamMax := 2 + Round(DamMin * 1.7);
+         S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
+           [I, Def, DamMin, DamMax]);
        end;
     1: begin
          Def := I;
-         DamMin := 1 + (I * 3) + Round(I / 4);
-         DamMax := 2 + Round(I * 6.7);
+         DamMin := 1 + Round(I * 3.9);
+         DamMax := 2 + Round(DamMin * 1.3);
          S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
            [I, Def, DamMin, DamMax]);
        end;
     2: begin
-         Def := I;
+         Def := 1 + (I div 2);
          DamMin := 1 + I;
          DamMax := 3 + I * I;
          S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
@@ -55,7 +59,7 @@ begin
     3: begin
          Def := I;
          DamMin := 3 + Round((I / 3) * I);
-         DamMax := 3 + Round((I / 2) * I) + I;
+         DamMax := 3 + Round((I / 2) * I) + (I * 2);
          S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
            [I, Def, DamMin, DamMax]);
        end;
