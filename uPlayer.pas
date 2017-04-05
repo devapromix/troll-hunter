@@ -53,6 +53,7 @@ type
     FPerception: Byte;
     FGold: Integer;
     FSkill: array [TSkillEnum] of TSkill;
+    FWeaponSkill: TSkillEnum;
   public
     constructor Create;
     destructor Destroy; override;
@@ -91,6 +92,7 @@ type
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     function GetSkillName(ASkill: TSkillEnum): string;
+    function GetSkillValue(ASkill: TSkillEnum): Byte;
     procedure PickUp;
     procedure Drop(Index: Integer);
     procedure Use(Index: Integer);
@@ -132,6 +134,13 @@ begin
     Dam := Clamp(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0, High(Word));
     Mob.Life := Clamp(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
+    case FWeaponSkill of
+      skBlade, skAxe, skSpear, skMace:
+      begin
+        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(skLearning);
+      end;
+    end;
     if (Mob.Life = 0) then
       Mob.Defeat;
   end
@@ -163,6 +172,14 @@ begin
       Dam.Min := Dam.Min + ItemBase[FI].Damage.Min;
       Dam.Max := Dam.Max + ItemBase[FI].Damage.Max;
       Def := Def + ItemBase[FI].Defense;
+      if (ItemBase[FI].SlotType = stRHand) then
+        case ItemBase[FI].ItemType of
+          itBlade: FWeaponSkill := skBlade;
+          itAxe  : FWeaponSkill := skAxe;
+          itSpear: FWeaponSkill := skSpear;
+          itMace : FWeaponSkill := skMace;
+          else FWeaponSkill := skLearning;
+        end;
     end;
   end;
   //
@@ -274,6 +291,11 @@ begin
     skHealing:
       Result := _('Healing');
   end;
+end;
+
+function TPlayer.GetSkillValue(ASkill: TSkillEnum): Byte;
+begin
+  Result := FSkill[ASkill].Value;
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);

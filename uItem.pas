@@ -3,7 +3,7 @@ unit uItem;
 interface
 
 uses BearLibItems, uCommon, uMap, uPlayer;
-
+        
 type
   TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace);
 
