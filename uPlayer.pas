@@ -165,8 +165,7 @@ begin
       Def := Def + ItemBase[FI].Defense;
     end;
   end;
-  FDamage.Min := Clamp(Dam.Min, 1, High(Byte) - 1);
-  FDamage.Max := Clamp(Dam.Max, 2, High(Byte));
+  //
   Self.Gold := Clamp(Items_Inventory_GetItemAmount(Ord(iGold)), 0, High(Integer));
   //
   Strength := Clamp(Round(FSkill[skAthletics].Value * 0.5) +
@@ -180,6 +179,10 @@ begin
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
+  //
+  FDamage.Min := Clamp(Dam.Min + Strength div 3, 1, High(Byte) - 1);
+  FDamage.Max := Clamp(Dam.Max + Strength div 2, 2, High(Byte));
+
 end;
 
 constructor TPlayer.Create;
@@ -206,7 +209,7 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(_('You die...'));
+  MsgLog.Add(_('[color=red]You die...[/color]'));
   TextScreenshot := GetTextScreenshot();
 end;
 

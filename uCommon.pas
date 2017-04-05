@@ -12,8 +12,8 @@ type
 
 type
   TDamage = record
-    Min: Byte;
-    Max: Byte;
+    Min: Word;
+    Max: Word;
   end;
 
 const
