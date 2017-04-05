@@ -138,6 +138,7 @@ begin
       skBlade, skAxe, skSpear, skMace:
       begin
         Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(skAthletics, 2);
         Skill(skLearning);
       end;
     end;
@@ -199,7 +200,6 @@ begin
   //
   FDamage.Min := Clamp(Dam.Min + Strength div 3, 1, High(Byte) - 1);
   FDamage.Max := Clamp(Dam.Max + Strength div 2, 2, High(Byte));
-
 end;
 
 constructor TPlayer.Create;
@@ -210,6 +210,7 @@ begin
   Gold := 0;
   Level := 1;
   Look := False;
+  FWeaponSkill := skLearning;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
     with FSkill[I] do
     begin
@@ -499,6 +500,7 @@ begin
       // Add message
 
       FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
+      Self.Calc;
     end;
   end;
 end;
