@@ -4,10 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls;
 
 type
   TForm1 = class(TForm)
+    RadioGroup1: TRadioGroup;
+    RichEdit1: TRichEdit;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -20,5 +24,45 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  I: Integer;
+  S: string;
+  Def, DamMin, DamMax: Integer;
+begin
+  RichEdit1.Clear;
+  for I := 1 to 10 do
+  begin
+    case RadioGroup1.ItemIndex of
+    0: begin
+
+       end;
+    1: begin
+         Def := I;
+         DamMin := 1 + (I * 3) + Round(I / 4);
+         DamMax := 2 + Round(I * 6.7);
+         S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
+           [I, Def, DamMin, DamMax]);
+       end;
+    2: begin
+         Def := I;
+         DamMin := 1 + I;
+         DamMax := 3 + I * I;
+         S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
+           [I, Def, DamMin, DamMax]);
+       end;
+    3: begin
+         Def := I;
+         DamMin := 3 + Round((I / 3) * I);
+         DamMax := 3 + Round((I / 2) * I) + I;
+         S := Format('Level: %d; Defense: %d; Damage: (Min: %d; Max: %d;);',
+           [I, Def, DamMin, DamMax]);
+       end;
+    end;
+    RichEdit1.Lines.Append(S);
+  end;
+    
+end;
 
 end.
