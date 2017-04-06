@@ -12,7 +12,7 @@ type
     skBlade, skAxe, skSpear, skMace,
     // Skills
     skStealth, skHealing);
-
+    
 type
   TSkill = record
     Value: Integer;
@@ -45,6 +45,7 @@ type
     FRadius: Byte;
     FDV: Byte;
     FPV: Byte;
+    FExp: Byte;
     FDamage: TDamage;
     FLook: Boolean;
     FStrength: Byte;
@@ -70,6 +71,7 @@ type
     property Radius: Byte read FRadius write FRadius;
     property DV: Byte read FDV write FDV;
     property PV: Byte read FPV write FPV;
+    property Exp: Byte read FExp write FExp;
     property Look: Boolean read FLook write FLook;
     property Strength: Byte read FStrength write FStrength;
     property Dexterity: Byte read FDexterity write FDexterity;
@@ -87,7 +89,7 @@ type
     function GetDV: Byte;
     function GetPV: Byte;
     function SaveCharacterDump(AReason: string): string;
-    procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
+    procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetSkill(ASkill: TSkillEnum): TSkill;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
@@ -98,6 +100,8 @@ type
     procedure Use(Index: Integer);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
+    procedure AddExp(Value: Byte = 1);
+    procedure StarterSet;
   end;
 
 var
@@ -111,8 +115,17 @@ uses Classes, SysUtils, Dialogs, Math, uMap, uMob, uScenes,
 { TPlayer }
 
 procedure TPlayer.AddTurn;
+var
+  V: Byte;
 begin
   Turn := Turn + 1;
+  V := Clamp(100 - Player.GetSkillValue(skToughness), 25, 100);
+  if ((Turn / V) = (Turn div V)) then
+  begin
+    if (RandomRange(0, 4) = 0) then
+      Life := Clamp(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
+    Mana := Clamp(Life + Player.GetSkillValue(skConcentration), 0, MaxMana);
+  end;
   Mobs.Process;
 end;
 
@@ -227,6 +240,7 @@ constructor TPlayer.Create;
 var
   I: TSkillEnum;
 begin
+  Exp := 0;
   Turn := 0;
   Gold := 0;
   Level := 1;
@@ -509,17 +523,29 @@ begin
   end;
 end;
 
-procedure TPlayer.Skill(ASkill: TSkillEnum; AExpValue: Byte = 10);
+procedure TPlayer.AddExp(Value: Byte = 1);
+begin
+  Exp := Exp + Value;
+  if (Exp >= ExpMax) then
+  begin
+    Exp := Exp - ExpMax;
+    FLevel := FLevel + 1;
+    MsgLog.Add(Format('%s +1.', [_('Level')]));
+  end;
+end;
+
+procedure TPlayer.Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
 begin
   if (FSkill[ASkill].Value < SkillMax) then
   begin
     Inc(FSkill[ASkill].Exp, AExpValue);
     if (FSkill[ASkill].Exp >= SkillExp) then
     begin
+      AddExp();
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
       Inc(FSkill[ASkill].Value);
       // Add message
-      MsgLog.Add(Format('Skill %s +1.', [Self.GetSkillName(ASkill)]));
+      MsgLog.Add(Format('%s %s +1.', [_('Skill'), Self.GetSkillName(ASkill)]));
       FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
       Self.Calc;
     end;
@@ -535,6 +561,26 @@ begin
     DeepVis[Map.Deep] := True;
   end;
   Move(0, 0);
+end;
+
+procedure TPlayer.StarterSet;
+var
+  G: Word;
+begin
+  // Add weapon and armor
+  if WizardMode then
+  begin
+    Items.AddItemToInv(iTrollSlayer, 1, True);
+  end else begin
+    Items.AddItemToInv(iSlagHammer, 1, True);
+  end;
+  // Add potions and scrolls
+  Items.AddItemToInv(iPotionOfHealth, 5);
+  Items.AddItemToInv(iPotionOfMana, 5);
+  // Add coins
+  G := IfThen(WizardMode, RandomRange(3333, 9999), 30);
+  Items.AddItemToInv(iGold, G);
+  Self.Calc;
 end;
 
 initialization

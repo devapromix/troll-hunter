@@ -189,12 +189,14 @@ type
     X, Y: Integer;
     Deep: TDeepEnum;
     Alive: Boolean;
+    Sleep: Boolean;
     procedure AddRandom(ADeep: TDeepEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
     procedure Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
     procedure Attack;
     procedure Defeat;
+    function GetRadius: Byte;
   end;
 
 type
@@ -249,6 +251,7 @@ begin
   Y := FY;
   Deep := ADeep;
   Alive := True;
+  Sleep := True;
   Life := MobBase[TMobEnum(ID)].MaxLife;
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
@@ -299,18 +302,32 @@ begin
   end;
 end;
 
+function TMob.GetRadius: Byte;
+begin
+  Result := Clamp(30 - (Player.GetSkillValue(skStealth) div 3), 5, 30);
+end;
+
 procedure TMob.Process;
 var
-  NX, NY: Integer;
+  NX, NY, Dist: Integer;
 begin
-  if (GetDist(X, Y, Player.X, Player.Y) > 20) then
+  Dist := GetDist(X, Y, Player.X, Player.Y);
+  if (Dist > GetRadius) then Exit;
+  if Sleep then
+  begin
+    if (Math.RandomRange(0, 99) <= 10) then
+    begin
+      Sleep := False;
+      Exit;
+    end;
+    Player.Skill(skStealth);
     Exit;
+  end;
   if not DoAStar(High(Byte), High(Byte), X, Y, Player.X, Player.Y, @MyCallback,
-    NX, NY) then
-    Exit;
+    NX, NY) then Exit;
   if (NX = Player.X) and (NY = Player.Y) then
   begin
-    Self.Attack();
+    Self.Attack();  
   end
   else if (Mobs.GetFreeTile(NX, NY)) then
   begin

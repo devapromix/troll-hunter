@@ -24,7 +24,7 @@ type
     Deep: TDeepEnum;
   end;
 
-type
+type        
   TItemEnum = (
     // All maps
     iGold, iPotionOfHealth, iPotionOfMana,
@@ -222,7 +222,8 @@ type
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
     procedure RenderInvItem(X, Y, I: Integer; AItem: Item; Adv: string = '');
-    procedure AddItemToInv(Index: Integer);
+    procedure AddItemToInv(Index: Integer); overload;
+    procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1; EqFlag: Boolean = False); overload;
   end;
 
 var
@@ -277,6 +278,15 @@ begin
     Result := Format(_('%s is lying here.'), [S]);
 end;
 
+procedure Make(ID: Byte; var AItem: Item);
+begin
+  Items_Clear_Item(AItem);
+  AItem.ItemID := ID;
+  AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
+  AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
+  AItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
+end;
+
 procedure TItems.Add(ADeep: TDeepEnum);
 var
   ID, FX, FY: Byte;
@@ -290,15 +300,11 @@ begin
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
     ((ItemBase[TItemEnum(ID)].MaxStack > 1) or
     (ItemBase[TItemEnum(ID)].Deep = ADeep));
+  Make(ID, FItem);
   FItem.MapID := Ord(ADeep);
-  FItem.ItemID := Ord(ID);
   FItem.Amount := 1;
-  FItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
-  FItem.Equipment := 0;
   FItem.X := FX;
   FItem.Y := FY;
-  FItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
-  FItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
   case ItemBase[TItemEnum(ID)].ItemType of
     itCoin:
       FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
@@ -310,7 +316,19 @@ begin
     Value := ItemBase[TItemEnum(ID)].MaxDurability;
     FItem.Durability := Math.RandomRange(Value div 4, Value) + 1;
   end;
+  FItem.Equipment := 0;
   Items_Dungeon_AppendItem(FItem);
+end;
+
+procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1; EqFlag: Boolean = False);
+var
+  ID: Byte;
+  FItem: Item;
+begin
+  Make(Ord(AItemEnum), FItem);
+  FItem.Amount := AAmount;
+  FItem.Equipment := IfThen(EqFlag, 1, 0);
+  Items_Inventory_AppendItem(FItem);
 end;
 
 procedure TItems.Render(AX, AY: Byte);
