@@ -244,7 +244,7 @@ begin
   ID := AItem.ItemID;
   if (AItem.Stack > 1) then
     // Amount
-    S := '(' + IntToStr(AItem.Amount) + ')'
+    S := '(' + IntToStr(AItem.Amount) + 'x)'
     // Durability
   else
     S := '(' + IntToStr(AItem.Durability) + '/' +
@@ -262,7 +262,7 @@ begin
   N := AItem.ItemID;
   if (AItem.Stack > 1) then
     // Amount
-    S := '(' + IntToStr(AItem.Amount) + ')'
+    S := '(' + IntToStr(AItem.Amount) + 'x)'
     // Durability
   else
     S := '(' + IntToStr(AItem.Durability) + '/' +

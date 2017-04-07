@@ -315,7 +315,7 @@ begin
   if (Dist > GetRadius) then Exit;
   if Sleep then
   begin
-    if (Math.RandomRange(0, 99) <= 10) then
+    if (Math.RandomRange(0, 99) <= 20) then
     begin
       Sleep := False;
       Exit;
