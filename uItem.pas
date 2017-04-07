@@ -5,7 +5,8 @@ interface
 uses BearLibItems, uCommon, uMap, uPlayer;
         
 type
-  TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace);
+  TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace, itHelm,
+    itArmour);
 
 type
   TSlotType = (stNone, stHead, stBody, stRHand);
