@@ -18,7 +18,7 @@ type
   end;
 
 type
-  TMobEnum = (                                                    
+  TMobEnum = (
     // Dark Wood
     mBigRat, mSpinyFrog, mJackal, mBlackBear, mGrizzlyBear, mAnaconda, mWolf,
     // Gray Cave
@@ -63,22 +63,22 @@ const
     DV: 4; Damage: (Min: 2; Max: 3;); Color: $FF249988;),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF33FF66;),
+    DV: 5; Damage: (Min: 4; Max: 5;); Color: $FF33FF66;),
     // Jackal
     (Symbol: 'j'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;),
+    DV: 5; Damage: (Min: 5; Max: 7;); Color: $FF9955FF;),
     // Black Bear
     (Symbol: 'b'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
+    DV: 5; Damage: (Min: 6; Max: 8;); Color: $FF331155;),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
+    DV: 5; Damage: (Min: 6; Max: 9;); Color: $FF331155;),
     // Anaconda
     (Symbol: 's'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
+    DV: 5; Damage: (Min: 7; Max: 9;); Color: $FF331155;),
     // Wolf
     (Symbol: 'w'; Boss: False; Deep: deDarkWood; MaxLife: 7; Level: 1; Armor: 0;
-    DV: 5; Damage: (Min: 2; Max: 3;); Color: $FF331155;),
+    DV: 5; Damage: (Min: 7; Max: 9;); Color: $FF331155;),
 
     // == Gray Cave == //
 
