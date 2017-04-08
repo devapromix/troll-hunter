@@ -396,7 +396,7 @@ end;
 
 procedure TSceneGame.Render;
 var
-  I, X, Y, PX, PY, DX, DY: Integer;
+  I, X, Y, PX, PY, DX, DY, R: Integer;
   T: TTile;
   Min, Max: TPoint;
 
@@ -453,10 +453,11 @@ begin
   // Map
   if not WizardMode then
   begin
-    Min.X := Player.X - Player.GetRadius;
-    Max.X := Player.X + Player.GetRadius;
-    Min.Y := Player.Y - Player.GetRadius;
-    Max.Y := Player.Y + Player.GetRadius;
+    R := Player.GetRadius;
+    Min.X := Player.X - R;
+    Max.X := Player.X + R;
+    Min.Y := Player.Y - R;
+    Max.Y := Player.Y + R;
     Map.ClearFOV;
     for I := Min.X to Max.X do
       AddTo(I, Min.Y);
@@ -478,7 +479,7 @@ begin
       if not Map.InMap(X, Y) then
         Continue;
       if not WizardMode then
-        if (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) and
+        if (GetDist(Player.X, Player.Y, X, Y) > R) and
           Map.GetFog(X, Y) then
           Continue;
       T := Map.GetTile(X, Y);
@@ -492,7 +493,7 @@ begin
         RenderLook(X, Y, T, False);
       if not WizardMode then
       begin
-        if (GetDist(Player.X, Player.Y, X, Y) <= Player.GetRadius) then
+        if (GetDist(Player.X, Player.Y, X, Y) <= R) then
         begin
           if not Map.GetFog(X, Y) then
             Terminal.ForegroundColor(clFog);
