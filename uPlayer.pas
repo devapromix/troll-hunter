@@ -225,6 +225,7 @@ begin
   Dexterity := Clamp(Round(FSkill[skDodge].Value * 1.4), 1, AtrMax);
   Willpower := Clamp(Round(FSkill[skConcentration].Value * 1.4), 1, AtrMax);
   Perception := Clamp(Round(FSkill[skToughness].Value * 1.4), 1, AtrMax);
+  //
   DV := Clamp(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
   PV := Clamp(Round(FSkill[skToughness].Value / 1.4) - 4 + Def,
     0, PVMax);
