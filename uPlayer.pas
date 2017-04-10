@@ -98,6 +98,7 @@ type
     procedure PickUp;
     procedure Drop(Index: Integer);
     procedure Use(Index: Integer);
+    procedure Drink(Index: Integer);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure AddExp(Value: Byte = 1);
@@ -387,11 +388,19 @@ begin
   AItem := Items_Inventory_GetItem(Index);
   The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
   FCount := Items_Inventory_GetItemCount(AItem.ItemID);
-  if (AItem.Equipment = 1) then
-    Self.UnEquip(Index) else
-  if (AItem.Equipment = 0) then
-    Self.Equip(Index) else
-  MsgLog.Add(Format(_('You don''t know how to use %s.'), [The]));
+  if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
+  begin
+    // Drink a potion
+    if (Items.GetItemEnum(AItem.ItemID) in DrinkItems) then
+      Self.Drink(Index);
+  end else begin
+    // Equip or unequip an item
+    case AItem.Equipment of
+      0: Self.Equip(Index);
+      1: Self.UnEquip(Index);
+    end;
+  end;
+//  MsgLog.Add(Format(_('You don''t know how to use %s.'), [The]));
 end;
 
 procedure TPlayer.Equip(Index: Integer);
@@ -408,6 +417,7 @@ begin
     //Items.GetItemEnum(AUnEquipItem.ItemID)
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AUnEquipItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
+    Self.Calc;
     Wait;
   end;
   // Equip
@@ -428,6 +438,36 @@ begin
     AItem := Items_Inventory_GetItem(Index);
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
+    Self.Calc;
+    Wait;
+  end;
+end;
+
+procedure TPlayer.Drink(Index: Integer);
+var
+  The: string;
+  AItem: Item;
+const
+  F = '%s +%d.';
+begin
+  AItem := Items_Inventory_GetItem(Index);
+  begin
+    AItem.Amount := AItem.Amount - 1;
+    The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
+    MsgLog.Add(Format(_('You drink %s.'), [The]));
+    case Items.GetItemEnum(AItem.ItemID) of
+      iPotionOfHealth:
+      begin
+        MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, 100)]));
+        Self.Life := Clamp(Self.Life + 100, 0, MaxLife);
+      end;
+      iPotionOfMana:
+      begin
+        MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, 100)]));
+        Self.Mana := Clamp(Self.Mana + 100, 0, MaxMana);
+      end;
+    end;
+    Items_Inventory_SetItem(Index, AItem);
     Self.Calc;
     Wait;
   end;
@@ -461,8 +501,10 @@ begin
   if (AItem.Stack > 1) and (AItem.Amount > 1) then
   begin
 
+    Self.Calc;
     Exit;
   end else DeleteItem;
+  Self.Calc;
 end;
 
 procedure TPlayer.PickUp;
@@ -576,10 +618,16 @@ begin
     Items.AddItemToInv(iSlagHammer, 1, True);
   end;
   // Add potions and scrolls
-  Items.AddItemToInv(iPotionOfHealth, 5);
-  Items.AddItemToInv(iPotionOfMana, 5);
+  if WizardMode then
+  begin
+    Items.AddItemToInv(iPotionOfHealth, ItemBase[iPotionOfHealth].MaxStack);
+    Items.AddItemToInv(iPotionOfMana, ItemBase[iPotionOfMana].MaxStack);
+  end else begin
+    Items.AddItemToInv(iPotionOfHealth, 5);
+    Items.AddItemToInv(iPotionOfMana, 5);
+  end;
   // Add coins
-  G := IfThen(WizardMode, RandomRange(3333, 9999), 30);
+  G := IfThen(WizardMode, RandomRange(3333, 9999), 50);
   Items.AddItemToInv(iGold, G);
   Self.Calc;
 end;

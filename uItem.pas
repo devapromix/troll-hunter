@@ -58,6 +58,7 @@ type
 
 const
   NotEquipItems = [iGold, iPotionOfHealth, iPotionOfMana];
+  DrinkItems = [iPotionOfHealth, iPotionOfMana];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (

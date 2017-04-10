@@ -51,7 +51,7 @@ function Items_Dungeon_DeleteItemXY(MapID: Integer; Index, AX, AY: Integer; var 
 
 function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Integer): Integer; stdcall; external 'BeaRLibItems.dll';
 
-// Inventory
+// Inventory        
 procedure Items_Inventory_Clear(); stdcall; external 'BeaRLibItems.dll';
 
 function Items_Inventory_GetCount(): Integer; stdcall; external 'BeaRLibItems.dll';

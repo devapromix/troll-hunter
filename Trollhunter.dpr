@@ -13,7 +13,7 @@ uses
   uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
-  uMsgLog in 'uMsgLog.pas';
+  uMsgLog in 'uMsgLog.pas';    
 
 var
   Key: Word = 0;
@@ -38,5 +38,4 @@ begin
     terminal_delay(10);
     IsRender := False;
   until CanClose;
-
 end.
