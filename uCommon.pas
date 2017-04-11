@@ -41,10 +41,6 @@ var
   Screen, Panel, View, Status, Log, Info: TEntSize;
   KeyColor: string = 'Green';
   TextScreenshot: string = '';
-  WizardMode: Boolean = False;
-  GameMode: Boolean = False;
-  CanClose: Boolean = False;
-  Killer: string = '';
   IsBoss: Boolean = False;
   IsRare: Boolean = False;
   WonGame: Boolean = False;
@@ -64,18 +60,6 @@ function GetTextScreenshot: string;
 implementation
 
 uses SysUtils, Classes, uTerminal, gnugettext, BearLibTerminal;
-
-procedure Init;
-var
-  I: Byte;
-begin
-  Randomize;
-  for I := 1 to ParamCount do
-  begin
-    if (LowerCase(ParamStr(I)) = '-w') then
-      WizardMode := True;
-  end;
-end;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 begin
@@ -180,9 +164,5 @@ begin
     SL.Free;
   end;
 end;
-
-initialization
-
-Init();
 
 end.

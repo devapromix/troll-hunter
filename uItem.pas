@@ -233,7 +233,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes;
+uses Math, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes, uGame;
 
 { TItems }
 
@@ -346,11 +346,11 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
     if not Map.InView(FItem.X, FItem.Y) or
-      (not WizardMode and not Map.GetFOV(FItem.X, FItem.Y)) then
+      (not Game.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
       Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not WizardMode and (GetDist(Player.X, Player.Y, FItem.X, FItem.Y) >
+    if not Game.Wizard and (GetDist(Player.X, Player.Y, FItem.X, FItem.Y) >
       Player.GetRadius) then
       Color := clFog
     else

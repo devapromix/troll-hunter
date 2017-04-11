@@ -1,7 +1,8 @@
 program Trollhunter;
 
 uses
-  SysUtils, Dialogs,
+  SysUtils,
+  Dialogs,
   gnugettext in 'gnugettext.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
@@ -13,7 +14,8 @@ uses
   uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
-  uMsgLog in 'uMsgLog.pas';    
+  uGame in 'uGame.pas',
+  uMsgLog in 'uMsgLog.pas';
 
 var
   Key: Word = 0;
@@ -22,7 +24,7 @@ var
 begin
   UseLanguage(terminal_get('ini.localization.locale'));
   repeat
-    if IsRender then
+    if IsRender then  
     begin
       Scenes.Render;
       Terminal.Refresh;
@@ -33,9 +35,9 @@ begin
       Key := terminal_read();
       Scenes.Update(Key);
       IsRender := True;
-      Continue;
+      Continue;  
     end;
     terminal_delay(10);
     IsRender := False;
-  until CanClose;
+  until Game.CanClose;
 end.

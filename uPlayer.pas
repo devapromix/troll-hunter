@@ -53,6 +53,7 @@ type
     FWillpower: Byte;
     FPerception: Byte;
     FGold: Integer;
+    FKiller: string;
     FSkill: array [TSkillEnum] of TSkill;
     FWeaponSkill: TSkillEnum;
   public
@@ -78,6 +79,7 @@ type
     property Willpower: Byte read FWillpower write FWillpower;
     property Perception: Byte read FPerception write FPerception;
     property Gold: Integer read FGold write FGold;
+    property Killer: string read FKiller write FKiller;
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
     property Damage: TDamage read FDamage write FDamage;
@@ -91,10 +93,10 @@ type
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetSkill(ASkill: TSkillEnum): TSkill;
-    procedure Defeat(AKiller: string);
-    procedure Attack(Index: Integer);
     function GetSkillName(ASkill: TSkillEnum): string;
     function GetSkillValue(ASkill: TSkillEnum): Byte;
+    procedure Defeat(AKiller: string);
+    procedure Attack(Index: Integer);
     procedure PickUp;
     procedure Drop(Index: Integer);
     procedure Use(Index: Integer);
@@ -102,6 +104,7 @@ type
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure AddExp(Value: Byte = 1);
+    procedure SkillSet;
     procedure StarterSet;
   end;
 
@@ -110,7 +113,7 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, uMap, uMob, uScenes,
+uses Classes, SysUtils, Dialogs, Math, uGame, uMap, uMob, uScenes,
   uTerminal, uMsgLog, gnugettext, BeaRLibItems, uItem;
 
 { TPlayer }
@@ -246,25 +249,23 @@ begin
   Turn := 0;
   Gold := 0;
   Level := 1;
+  Killer := '';
   Look := False;
   FWeaponSkill := skLearning;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
-    with FSkill[I] do
-    begin
-      if WizardMode then
-        Value := Math.RandomRange(SkillMin, SkillMax)
-      else
-        Value := SkillMin;
-      Exp := Math.RandomRange(0, SkillExp);
-    end;
+  with FSkill[I] do
+  begin
+    Value := SkillMin;
+    Exp := 0;
+  end;
   Self.Calc;
-  Self.Fill;
+  Self.Fill;  
 end;
 
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(_('[color=red]You die...[/color]'));
+  MsgLog.Add(Format('[color=red]%s[/color]', [_('You die...')]));
   TextScreenshot := GetTextScreenshot();
 end;
 
@@ -344,7 +345,7 @@ begin
   begin
     if Map.InMap(LX + AX, LY + AY) and
       ((Map.InView(LX + AX, LY + AY) and not Map.GetFog(LX + AX, LY + AY)) or
-      (WizardMode)) then
+      Game.Wizard) then
     begin
       LX := Clamp(LX + AX, 0, High(Byte));
       LY := Clamp(LY + AY, 0, High(Byte));
@@ -364,7 +365,7 @@ begin
     end;
     FX := Clamp(X + AX, 0, High(Byte));
     FY := Clamp(Y + AY, 0, High(Byte));
-    if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not WizardMode then
+    if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not Game.Wizard then
       Exit;
     if not Mobs.GetFreeTile(FX, FY) then
     begin
@@ -542,7 +543,7 @@ function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   SL: TStringList;
 begin
-  if WizardMode then
+  if Game.Wizard then
     Exit;
   SL := TStringList.Create;
   try
@@ -595,6 +596,19 @@ begin
   end;
 end;
 
+procedure TPlayer.SkillSet;
+var
+  I: TSkillEnum;
+begin
+  if not Game.Wizard then Exit;
+  for I := Low(TSkillEnum) to High(TSkillEnum) do
+    with FSkill[I] do
+    begin
+      Value := Math.RandomRange(SkillMin, SkillMax);
+      Exp := Math.RandomRange(0, SkillExp);
+    end;
+end;
+
 procedure TPlayer.Wait;
 begin
   if not DeepVis[Map.Deep] then
@@ -611,14 +625,14 @@ var
   G: Word;
 begin
   // Add weapon and armor
-  if WizardMode then
+  if Game.Wizard then
   begin
     Items.AddItemToInv(iTrollSlayer, 1, True);
   end else begin
     Items.AddItemToInv(iSlagHammer, 1, True);
   end;
   // Add potions and scrolls
-  if WizardMode then
+  if Game.Wizard then
   begin
     Items.AddItemToInv(iPotionOfHealth, ItemBase[iPotionOfHealth].MaxStack);
     Items.AddItemToInv(iPotionOfMana, ItemBase[iPotionOfMana].MaxStack);
@@ -627,7 +641,7 @@ begin
     Items.AddItemToInv(iPotionOfMana, 5);
   end;
   // Add coins
-  G := IfThen(WizardMode, RandomRange(3333, 9999), 50);
+  G := IfThen(Game.Wizard, RandomRange(3333, 9999), 50);
   Items.AddItemToInv(iGold, G);
   Self.Calc;
 end;

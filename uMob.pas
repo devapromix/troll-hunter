@@ -221,7 +221,7 @@ var
 
 implementation
 
-uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext;
+uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext, uGame;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -257,7 +257,7 @@ begin
   if MobBase[TMobEnum(ID)].Boss then
   begin
     IsBoss := True;
-    if WizardMode then
+    if Game.Wizard then
     begin
       Player.X := X - 1;
       Player.Y := Y - 1;
@@ -340,9 +340,9 @@ end;
 
 procedure TMob.Render(AX, AY: Byte);
 begin
-  if not Map.InView(X, Y) or (not WizardMode and not Map.GetFOV(X, Y)) then
+  if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then
     Exit;
-  if not WizardMode and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
+  if not Game.Wizard and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
   then
     Exit;
   Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top,
