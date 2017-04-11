@@ -53,8 +53,9 @@ begin
   Player.SkillSet;
   Player.StarterSet;
   MsgLog.Clear;
-  MsgLog.Add
-    (_('Welcome to Elvion! You need to find and kill The King Troll! Press ? for help.'));
+  MsgLog.Add(_('Welcome to Elvion!'));
+  MsgLog.Add(_('You need to find and kill The King Troll!'));
+  MsgLog.Add(_('Press ? for help.'));
   Scenes.SetScene(scGame);
 end;
 

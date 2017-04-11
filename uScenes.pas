@@ -138,7 +138,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog, uItem, gnugettext;
+  uMap, uMob, uMsgLog, uItem, gnugettext, uGame, uVillage;
 
 { TScene }
 
@@ -263,7 +263,7 @@ begin
   case Key of
     TK_CLOSE:
       begin
-        if GameMode and not(Scene in [scWin, scDef, scQuit]) and
+        if Game.IsMode and not(Scene in [scWin, scDef, scQuit]) and
           (Player.Life > 0) then
           SetScene(scQuit, Scene);
       end;
@@ -288,19 +288,14 @@ procedure TSceneTitle.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE:
-      CanClose := True;
+      Game.CanClose := True;
     TK_ENTER, TK_KP_ENTER:
       begin
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
         Map.Gen;
         terminal_delay(1000);
-        GameMode := True;
-        Player.StarterSet;
-        MsgLog.Clear;
-        MsgLog.Add
-          (_('Welcome to Elvion! You need to find and kill The King Troll! Press ? for help.'));
-        Scenes.SetScene(scGame);
+        Game.Start();
       end;
   end;
 end;
@@ -451,9 +446,9 @@ var
 
 begin
   // Map
-  if not WizardMode then
+  R := Player.GetRadius;
+  if not Game.Wizard then
   begin
-    R := Player.GetRadius;
     Min.X := Player.X - R;
     Max.X := Player.X + R;
     Min.Y := Player.Y - R;
@@ -478,7 +473,7 @@ begin
       Y := DY - PY + Player.Y;
       if not Map.InMap(X, Y) then
         Continue;
-      if not WizardMode then
+      if not Game.Wizard then
         if (GetDist(Player.X, Player.Y, X, Y) > R) and
           Map.GetFog(X, Y) then
           Continue;
@@ -491,7 +486,7 @@ begin
       end;
       if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
         RenderLook(X, Y, T, False);
-      if not WizardMode then
+      if not Game.Wizard then
       begin
         if (GetDist(Player.X, Player.Y, X, Y) <= R) then
         begin
@@ -511,7 +506,7 @@ begin
       end
       else
         Terminal.ForegroundColor(T.Color);
-      if WizardMode or not Map.GetFog(X, Y) then
+      if Game.Wizard or not Map.GetFog(X, Y) then
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
   // Items, player, mobs
@@ -573,14 +568,14 @@ begin
         Player.Look := not Player.Look;
       end;
     TK_KP_PLUS:
-      if WizardMode then
+      if Game.Wizard then
         if (Map.Deep < High(TDeepEnum)) then
         begin
           Map.Deep := succ(Map.Deep);
           Player.Wait;
         end;
     TK_KP_MINUS:
-      if WizardMode then
+      if Game.Wizard then
         if (Map.Deep > Low(TDeepEnum)) then
         begin
           Map.Deep := pred(Map.Deep);
@@ -601,7 +596,7 @@ begin
           Player.Wait;
         end;
     TK_KP_MULTIPLY:
-      if WizardMode then
+      if Game.Wizard then
         Player.Fill;
     TK_ESCAPE:
       begin
@@ -624,10 +619,10 @@ begin
     TK_T:
       Scenes.SetScene(scPlayer);
     TK_V:
-      if WizardMode then
+      if Game.Wizard then
         Scenes.SetScene(scWin);
     TK_B:
-      if WizardMode then
+      if Game.Wizard then
         Scenes.SetScene(scDef);
     TK_SLASH:
       Scenes.SetScene(scHelp);
@@ -664,7 +659,7 @@ begin
     TK_Y:
       begin
         Player.SaveCharacterDump(_('Quit the game'));
-        CanClose := True;
+        Game.CanClose := True;
       end;
     TK_ESCAPE, TK_N:
       Scenes.GoBack;
@@ -682,7 +677,7 @@ begin
   Terminal.Print(X, Y - 1, _('GAME OVER!!!'), TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,
     Format(_('Killed by [color=white]%s[/color]. Press %s'),
-    [Killer, KeyStr('ENTER')]), TK_ALIGN_CENTER);
+    [Player.Killer, KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneDef.Update(var Key: Word);
@@ -690,8 +685,8 @@ begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
       begin
-        Player.SaveCharacterDump(Format(_('Killed by %s'), [Killer]));
-        CanClose := True;
+        Player.SaveCharacterDump(Format(_('Killed by %s'), [Player.Killer]));
+        Game.CanClose := True;
       end;
   end;
 end;
@@ -716,7 +711,7 @@ begin
     TK_ENTER, TK_KP_ENTER:
       begin
         Player.SaveCharacterDump(_('Won the game'));
-        CanClose := True;
+        Game.CanClose := True;
       end;
   end;
 end;
@@ -733,7 +728,7 @@ begin
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, 1, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
 
-  if WizardMode then
+  if Game.Wizard then
   for I := 0 to 25 do
   begin
     Terminal.ForegroundColor(clGray);
@@ -782,7 +777,7 @@ begin
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, 1, Format(FT, [_('Drop an item')]), TK_ALIGN_CENTER);
 
-  if WizardMode then
+  if Game.Wizard then
   for I := 0 to 25 do
   begin
     Terminal.ForegroundColor(clGray);
@@ -947,7 +942,7 @@ begin
   X := Terminal.Window.Width div 2;
   Terminal.Print(X, Y, Format(FT, [_('Pick up an item')]), TK_ALIGN_CENTER);
 
-  if WizardMode then
+  if Game.Wizard then
   for I := 0 to 25 do
   begin
     Terminal.ForegroundColor(clGray);
@@ -978,11 +973,8 @@ end;
 initialization
 
 Scenes := TScenes.Create;
-Scenes.SetScene(scTitle);
 
 finalization
-
-Scenes.Free;
-Scenes := nil;
+  FreeAndNil(Scenes);
 
 end.

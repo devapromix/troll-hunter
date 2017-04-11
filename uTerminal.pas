@@ -35,7 +35,7 @@ var
 
 implementation
 
-uses SysUtils;
+uses SysUtils, Dialogs, uGame;
 
 { TTerminal }
 
@@ -53,6 +53,7 @@ constructor TTerminal.Create;
 begin
   terminal_open;
   terminal_refresh;
+  Self.Init;
 end;
 
 destructor TTerminal.Destroy;
@@ -84,11 +85,11 @@ begin
   Log := SetEntSize(View.Width + 2, Status.Height + 2, Panel.Width,
     Screen.Height - Panel.Height - 7);
   Info := SetEntSize(View.Width + 2, Screen.Height - 4, Panel.Width, 3);
-  //
+  //           
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
   Wizard := '';
-  if WizardMode then
+  if Game.Wizard then
     Wizard := '[WIZARD]';
   terminal_set(Format('window: size=%dx%d, title=%s',
     [Screen.Width, Screen.Height, Trim('Trollhunter ' + Wizard)]));
@@ -125,13 +126,9 @@ begin
 end;
 
 initialization
-
-Terminal := TTerminal.Create;
-Terminal.Init;
+  Terminal := TTerminal.Create;
 
 finalization
-
-Terminal.Free;
-Terminal := nil;
+  FreeAndNil(Terminal);
 
 end.
