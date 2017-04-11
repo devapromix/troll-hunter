@@ -5,12 +5,14 @@ interface
 type
   TGame = class(TObject)
   private
+    FWon: Boolean;
     FMode: Boolean;
     FWizard: Boolean;
     FCanClose: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
+    property Won: Boolean read FWon write FWon;
     property IsMode: Boolean read FMode write FMode;
     property Wizard: Boolean read FWizard write FWizard;
     property CanClose: Boolean read FCanClose write FCanClose;
@@ -31,6 +33,7 @@ var
   I: Byte;
 begin
   Randomize;
+  Won := False;
   IsMode := False;
   Wizard := False;
   CanClose := False;

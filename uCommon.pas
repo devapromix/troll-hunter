@@ -43,7 +43,6 @@ var
   TextScreenshot: string = '';
   IsBoss: Boolean = False;
   IsRare: Boolean = False;
-  WonGame: Boolean = False;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;
