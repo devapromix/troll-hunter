@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses Math, uPlayer, uMob, uItem, gnugettext;
+uses SysUtils, Math, uPlayer, uMob, uItem, GNUGetText;
 
 { TMap }
 
@@ -252,7 +252,7 @@ end;
 
 constructor TMap.Create;
 begin
-
+  Self.Deep := deDarkWood;
 end;
 
 destructor TMap.Destroy;
@@ -435,11 +435,8 @@ end;
 initialization
 
 Map := TMap.Create;
-Map.Deep := deDarkWood;
 
 finalization
-
-Map.Free;
-Map := nil;
+  FreeAndNil(Map);
 
 end.

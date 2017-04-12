@@ -678,6 +678,10 @@ begin
   Terminal.Print(X, Y + 1,
     Format(_('Killed by [color=white]%s[/color]. Press %s'),
     [Player.Killer, KeyStr('ENTER')]), TK_ALIGN_CENTER);
+  if Game.Wizard then
+    Terminal.Print(X, Y + 3, Format(_('Press %s to continue...'),
+      [KeyStr('SPACE')]), TK_ALIGN_CENTER);
+
 end;
 
 procedure TSceneDef.Update(var Key: Word);
@@ -688,6 +692,12 @@ begin
         Player.SaveCharacterDump(Format(_('Killed by %s'), [Player.Killer]));
         Game.CanClose := True;
       end;
+    TK_SPACE:
+    if Game.Wizard then
+    begin
+      Player.Fill;
+      Scenes.SetScene(scGame);
+    end;
   end;
 end;
 

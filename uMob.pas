@@ -296,7 +296,7 @@ begin
     [GetDescThe(Mobs.GetName(TMobEnum(ID)))]));
   if (MobBase[TMobEnum(ID)].Boss and (Map.Deep = FinalDungeon)) then
   begin
-    WonGame := True;
+    Game.Won := True;
     MsgLog.Add(_('You have won.'));
     TextScreenshot := GetTextScreenshot();
   end;

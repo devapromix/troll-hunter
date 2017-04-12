@@ -358,7 +358,7 @@ begin
       Scenes.SetScene(scDef);
       Exit;
     end;
-    if WonGame then
+    if Game.Won then
     begin
       Scenes.SetScene(scWin);
       Exit;
@@ -607,6 +607,8 @@ begin
       Value := Math.RandomRange(SkillMin, SkillMax);
       Exp := Math.RandomRange(0, SkillExp);
     end;
+  Self.Calc;
+  Self.Fill;
 end;
 
 procedure TPlayer.Wait;
