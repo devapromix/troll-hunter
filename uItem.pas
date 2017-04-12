@@ -324,7 +324,6 @@ end;
 
 procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1; EqFlag: Boolean = False);
 var
-  ID: Byte;
   FItem: Item;
 begin
   Make(Ord(AItemEnum), FItem);
@@ -546,7 +545,7 @@ end;
 procedure TItems.AddItemToInv(Index: Integer);
 var
   FItem: Item;
-  MapID, C, I: Integer;
+  MapID: Integer;
   The: string;
 begin
   MapID := Ord(Map.Deep);

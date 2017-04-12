@@ -408,7 +408,7 @@ procedure TPlayer.Equip(Index: Integer);
 var
   The: string;
   AItem, AUnEquipItem: Item;
-  I, C: Integer;
+  I: Integer;
 begin
   // Replace
   I := Items_Inventory_EquipItem(Index);
@@ -477,7 +477,7 @@ end;
 procedure TPlayer.Drop(Index: Integer);
 var
   AItem: Item;
-  MapID, FCount, C: Integer;
+  MapID, FCount: Integer;
 
   procedure DeleteItem;
   var
