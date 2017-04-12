@@ -358,8 +358,7 @@ begin
 
   Terminal.Print(KX + 10, Y + 12,
     Format('%s: %s, %s, %s Wait: %s, %s', [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'),
-    KeyStr('QWEADZXC'), KeyStr('5'), KeyStr('S')]),
-    TK_ALIGN_LEFT);
+    KeyStr('QWEADZXC'), KeyStr('5'), KeyStr('S')]), TK_ALIGN_LEFT);
 
   AddKey('<', _('Up staris'));
   AddKey('>', _('Down staris'));
@@ -373,7 +372,7 @@ begin
   Terminal.Print(X, Terminal.Window.Height - Y - 5,
     Format(FT, [_('Character dump')]), TK_ALIGN_CENTER);
   Terminal.Print(X, Terminal.Window.Height - Y - 3,
-    _('The game saves a character dump to [color=green]*-character-dump.txt[/color] file.'),
+    Format(_('The game saves a character dump to %s file.'), [KeyStr('*-character-dump.txt')]),
     TK_ALIGN_CENTER);
 
   Self.AddKey('Esc', _('Close'), True, True);
