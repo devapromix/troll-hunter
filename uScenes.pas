@@ -607,7 +607,7 @@ begin
         end;
         if (Player.Life = 0) then
           Exit;
-        TextScreenshot := GetTextScreenshot();
+        Game.Screenshot := GetTextScreenshot();
         Scenes.SetScene(scQuit, Scenes.Scene);
       end;
     TK_G:

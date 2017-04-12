@@ -266,7 +266,7 @@ procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
   MsgLog.Add(Format('[color=red]%s[/color]', [_('You die...')]));
-  TextScreenshot := GetTextScreenshot();
+  Game.Screenshot := GetTextScreenshot();
 end;
 
 destructor TPlayer.Destroy;
@@ -554,7 +554,7 @@ begin
     SL.Append(AReason);
     SL.Append('');
     SL.Append(Format(FT, [_('Screenshot')]));
-    SL.Append(TextScreenshot);
+    SL.Append(Game.Screenshot);
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
     SL.Append(MsgLog.GetLastMsg(10));

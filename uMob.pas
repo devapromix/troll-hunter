@@ -298,7 +298,7 @@ begin
   begin
     Game.Won := True;
     MsgLog.Add(_('You have won.'));
-    TextScreenshot := GetTextScreenshot();
+    Game.Screenshot := GetTextScreenshot();
   end;
 end;
 

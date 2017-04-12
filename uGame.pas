@@ -9,6 +9,7 @@ type
     FMode: Boolean;
     FWizard: Boolean;
     FCanClose: Boolean;
+    FScreenshot: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -16,6 +17,7 @@ type
     property IsMode: Boolean read FMode write FMode;
     property Wizard: Boolean read FWizard write FWizard;
     property CanClose: Boolean read FCanClose write FCanClose;
+    property Screenshot: string read FScreenshot write FScreenshot;
     procedure Start;
   end;
 

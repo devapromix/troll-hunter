@@ -69,6 +69,10 @@ type
   end;
 
 var
+  IsBoss: Boolean = False;
+  IsRare: Boolean = False;
+
+var
   Map: TMap = nil;
 
 implementation
