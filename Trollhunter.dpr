@@ -22,9 +22,9 @@ var
   IsRender: Boolean = True;
 
 begin
-  UseLanguage(terminal_get('ini.localization.locale'));
+  Game.LoadConfig;
   repeat
-    if IsRender then  
+    if IsRender then                
     begin
       Scenes.Render;
       Terminal.Refresh;

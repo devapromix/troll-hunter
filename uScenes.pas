@@ -19,6 +19,7 @@ type
     procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
       AColor, DarkColor: Cardinal);
     class function KeyStr(AKey: string; AStr: string = ''): string;
+    class procedure Title(ATitleStr: string; AY: Byte = 1);
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False; IsRender: Boolean = False);
   end;
 
@@ -148,7 +149,7 @@ begin
   KStr := KStr + KeyStr(AKey, AStr) + ' ';
   if IsRender and (KStr <> '') then
   begin
-    Terminal.ForegroundColor(clYellow);
+    Terminal.ForegroundColor(clDefault);
     Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height - 2,
       Trim(Self.KStr), TK_ALIGN_CENTER);
   end;
@@ -156,7 +157,7 @@ end;
 
 class function TScene.KeyStr(AKey: string; AStr: string = ''): string;
 begin
-  Result := Trim(Format('[color=%s][[%s]][/color] %s', [LowerCase(KeyColor), UpperCase(AKey), AStr]));
+  Result := Trim(Format('[color=%s][[%s]][/color] %s', [LowerCase(terminal_get('ini.colors.key')), UpperCase(AKey), AStr]));
 end;
 
 procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
@@ -177,8 +178,18 @@ begin
       end;
     end;
     Terminal.Print(X + I + LM, Y, ' ');
-    Terminal.BackgroundColor(0);
+    Terminal.BackgroundColor(0); // Clear background
   end;
+end;
+
+class procedure TScene.Title(ATitleStr: string; AY: Byte);
+var
+  X: Byte;
+begin
+  X := Terminal.Window.Width div 2;
+  Terminal.ForegroundColor(color_from_name(LowerCase(terminal_get('ini.colors.title'))));
+  Terminal.Print(X, AY, Format(FT, [ATitleStr]), TK_ALIGN_CENTER);
+  Terminal.ForegroundColor(clDefault);
 end;
 
 { TScenes }
@@ -237,8 +248,8 @@ end;
 
 procedure TScenes.Render;
 begin
-  Terminal.BackgroundColor(0);
-  Terminal.ForegroundColor(clYellow);
+  Terminal.BackgroundColor(clBackground);
+  Terminal.ForegroundColor(clDefault);
   Terminal.Clear;
   if (FScene[Scene] <> nil) then
     FScene[Scene].Render;
@@ -278,7 +289,9 @@ var
 begin
   X := Terminal.Window.Width div 2;
   Y := Terminal.Window.Height div 2;
-  Terminal.Print(X, Y - 3, _('Trollhunter') + ' v.' + Version, TK_ALIGN_CENTER);
+  if Game.Wizard then
+    Terminal.Print(X, Y - 5, '1 [color=red] 2 [color=green] 3 [/color] 2 [/color] 1', TK_ALIGN_CENTER);
+  Terminal.Print(X, Y - 3, Format('%s v.%s', [_('Trollhunter'), Version]), TK_ALIGN_CENTER);
   Terminal.Print(X, Y - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,
     Format(_('Press %s to continue...'), [KeyStr('ENTER')]), TK_ALIGN_CENTER);
@@ -333,7 +346,7 @@ begin
   KX := 0;
   KY := 14;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, Format(FT, [_('Trollhunter')]), TK_ALIGN_CENTER);
+  Self.Title(_('Trollhunter'));
 
   Terminal.Print(X, Y + 2,
     _('The land Elvion is surrounded by mountains. In the center of this land'),
@@ -354,7 +367,7 @@ begin
   Terminal.Print(X, Y + 8, _('confrontation with boss. Good luck!'),
     TK_ALIGN_CENTER);
 
-  Terminal.Print(X, Y + 10, Format(FT, [_('Keybindings')]), TK_ALIGN_CENTER);
+  Self.Title(_('Keybindings'), Y + 10);
 
   Terminal.Print(KX + 10, Y + 12,
     Format('%s: %s, %s, %s Wait: %s, %s', [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'),
@@ -369,8 +382,7 @@ begin
   AddKey('T', _('Skills and attributes'));
   AddKey('?', _('Help'));
 
-  Terminal.Print(X, Terminal.Window.Height - Y - 5,
-    Format(FT, [_('Character dump')]), TK_ALIGN_CENTER);
+  Self.Title(_('Character dump'), Terminal.Window.Height - Y - 5);
   Terminal.Print(X, Terminal.Window.Height - Y - 3,
     Format(_('The game saves a character dump to %s file.'), [KeyStr('*-character-dump.txt')]),
     TK_ALIGN_CENTER);
@@ -401,8 +413,8 @@ var
     FItem: Item;
   begin
     S := '';
-    Terminal.BackgroundColor(0);
-    Terminal.ForegroundColor(clYellow);
+    Terminal.BackgroundColor(clBackground);
+    Terminal.ForegroundColor(clDefault);
     S := S + T.Name + '. ';
     C := Items_Dungeon_GetMapCountXY(Ord(Map.Deep), X, Y);
     if (C > 0) then
@@ -462,7 +474,7 @@ begin
     for I := Max.Y downto Min.Y do
       AddTo(Min.X, I);
   end;
-  Terminal.BackgroundColor(0);
+  Terminal.BackgroundColor(clBackground);
   PX := View.Width div 2;
   PY := View.Height div 2;
   for DY := 0 to View.Height - 1 do
@@ -513,17 +525,17 @@ begin
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
   // Player info
-  Terminal.BackgroundColor(0);
-  Terminal.ForegroundColor(clYellow);
+  Terminal.BackgroundColor(clBackground);
+  Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top, _('Trollhunter'));
   Terminal.Print(Status.Left + Status.Width - 1, Status.Top,
     Format('%s (%d:%d)', [Map.GetName, Player.X, Player.Y]), TK_ALIGN_RIGHT);
-  Terminal.ForegroundColor(clYellow);
+  Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 1,
     Format('%s %d/%d', [_('Life'), Player.Life, Player.MaxLife]));
   Terminal.Print(Status.Left, Status.Top + 2,
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
-  Terminal.ForegroundColor(clYellow);
+  Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d '),
     [Player.Turn, Player.Gold]));
   Terminal.Print(Status.Left, Status.Top + 4, Format(_('Damage: %d-%d Protection: %d'),
@@ -735,7 +747,7 @@ var
   S: string;
 begin
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, 1, Format(FT, [_('Inventory')]), TK_ALIGN_CENTER);
+  Self.Title(_('Inventory'));
 
   if Game.Wizard then
   for I := 0 to 25 do
@@ -784,7 +796,7 @@ var
   X: Byte;
 begin
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, 1, Format(FT, [_('Drop an item')]), TK_ALIGN_CENTER);
+  Self.Title(_('Drop an item'));
 
   if Game.Wizard then
   for I := 0 to 25 do
@@ -826,7 +838,7 @@ var
   X: Byte;
 begin
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, 1, Format(FT, [_('Trollhunter')]), TK_ALIGN_CENTER);
+  Self.Title(_('Trollhunter'));
 
   Self.RenderPlayer;
   Self.RenderSkills;
@@ -918,7 +930,7 @@ var
 begin
   Y := 1;
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, Format(FT, [_('Enter amount')]), TK_ALIGN_CENTER);
+  Self.Title(_('Enter amount'));
 
 {  FCount := Items_Inventory_GetCount();
   for I := 0 to FCount - 1 do
@@ -949,7 +961,7 @@ begin
   Y := 1;
   MapID := Ord(Map.Deep);
   X := Terminal.Window.Width div 2;
-  Terminal.Print(X, Y, Format(FT, [_('Pick up an item')]), TK_ALIGN_CENTER);
+  Self.Title(_('Pick up an item'));
 
   if Game.Wizard then
   for I := 0 to 25 do

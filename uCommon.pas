@@ -38,8 +38,11 @@ const
   clFog = $FF111111;
 
 var
+  clDefault:    Cardinal = $FFFFFF00;
+  clBackground: Cardinal = $00000000;
+
+var
   Screen, Panel, View, Status, Log, Info: TEntSize;
-  KeyColor: string = 'Dark Green';
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 function Clamp(Value, AMin, AMax: Integer; Flag: Boolean = True): Integer;

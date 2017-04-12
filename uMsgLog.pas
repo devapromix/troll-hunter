@@ -44,7 +44,7 @@ begin
   FLog.Clear;
 end;
 
-constructor TMsgLog.Create;
+constructor TMsgLog.Create; 
 begin
   FLog := TStringList.Create;
   Self.Clear;
@@ -80,7 +80,7 @@ begin
   if (Trim(MsgLog.Msg) = '') then
     L := ''
   else
-    L := '[color=yellow]' + FMsg + '[/color]';
+    L := Format('[color=%s]%s[/color]', [LowerCase(terminal_get('ini.colors.log')), FMsg]);
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top, Log.Width, Log.Height, Trim(FLog.Text + L),
     TK_ALIGN_BOTTOM);

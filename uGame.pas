@@ -18,6 +18,7 @@ type
     property Wizard: Boolean read FWizard write FWizard;
     property CanClose: Boolean read FCanClose write FCanClose;
     property Screenshot: string read FScreenshot write FScreenshot;
+    procedure LoadConfig;
     procedure Start;
   end;
 
@@ -26,7 +27,8 @@ var
 
 implementation
 
-uses SysUtils, Math, Dialogs, uCommon, uPlayer, uMsgLog, uScenes, gnugettext;
+uses SysUtils, Math, Dialogs, uCommon, uPlayer, uMsgLog, uScenes, gnugettext,
+  BearLibTerminal;
 
 { TGame }
 
@@ -52,6 +54,15 @@ begin
   inherited;
 end;
 
+procedure TGame.LoadConfig;
+begin
+  // Localization
+  UseLanguage(terminal_get('ini.localization.locale'));
+  // Load colors
+  clDefault := color_from_name(LowerCase(terminal_get('ini.colors.default')));
+  clBackground := color_from_name(LowerCase(terminal_get('ini.colors.background')));
+end;
+
 procedure TGame.Start;
 begin
   IsMode := True;
@@ -65,7 +76,7 @@ begin
 end;
 
 initialization  
-  Game := TGame.Create;
+  Game := TGame.Create; 
 
 finalization
   FreeAndNil(Game);
