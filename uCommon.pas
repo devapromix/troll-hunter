@@ -58,7 +58,7 @@ function GetTextScreenshot: string;
 
 implementation
 
-uses SysUtils, Classes, uTerminal, gnugettext, BearLibTerminal;
+uses SysUtils, Classes, Math, uTerminal, gnugettext, BearLibTerminal;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
 begin

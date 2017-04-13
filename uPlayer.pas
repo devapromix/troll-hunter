@@ -126,8 +126,7 @@ begin
   V := Clamp(100 - Player.GetSkillValue(skToughness), 25, 100);
   if ((Turn / V) = (Turn div V)) then
   begin
-    if (RandomRange(0, 4) = 0) then
-      Life := Clamp(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
+    Life := Clamp(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
     Mana := Clamp(Life + Player.GetSkillValue(skConcentration), 0, MaxMana);
   end;
   Mobs.Process;
@@ -448,6 +447,7 @@ procedure TPlayer.Drink(Index: Integer);
 var
   The: string;
   AItem: Item;
+  Value: Word;
 const
   F = '%s +%d.';
 begin
@@ -459,13 +459,17 @@ begin
     case Items.GetItemEnum(AItem.ItemID) of
       iPotionOfHealth:
       begin
-        MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, 100)]));
-        Self.Life := Clamp(Self.Life + 100, 0, MaxLife);
+        Value := Self.GetSkillValue(skHealing) + 100;
+        MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
+        Self.Life := Clamp(Self.Life + Value, 0, MaxLife);
+        Self.Skill(skHealing, 5);
       end;
       iPotionOfMana:
       begin
-        MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, 100)]));
-        Self.Mana := Clamp(Self.Mana + 100, 0, MaxMana);
+        Value := Self.GetSkillValue(skConcentration) + 100;
+        MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
+        Self.Mana := Clamp(Self.Mana + Value, 0, MaxMana);
+        Self.Skill(skConcentration, 5);
       end;
     end;
     Items_Inventory_SetItem(Index, AItem);
