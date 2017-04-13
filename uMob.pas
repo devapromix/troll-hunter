@@ -270,8 +270,7 @@ var
   The: string;
   Dam: Word;
 begin
-  if (Self.Life = 0) or (Player.Life = 0) then
-    Exit;
+  if (Self.Life = 0) or (Player.Life = 0) then Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
@@ -294,10 +293,14 @@ begin
   Self.Alive := False;
   MsgLog.Add(Format(_('You kill %s.'),
     [GetDescThe(Mobs.GetName(TMobEnum(ID)))]));
+  Player.Kills := Player.Kills + 1;
+  Player.Score := Player.Score + MobBase[TMobEnum(ID)].Level;
+  // Boss
   if (MobBase[TMobEnum(ID)].Boss and (Map.Deep = FinalDungeon)) then
   begin
     Game.Won := True;
     MsgLog.Add(_('You have won.'));
+    Player.Score := Player.Score + 1000;
     Game.Screenshot := GetTextScreenshot();
   end;
 end;
@@ -323,6 +326,8 @@ begin
     Player.Skill(skStealth);
     Exit;
   end;
+  if (Dist <= 2) and Player.IsRest then Player.IsRest := False;
+  // A*
   if not DoAStar(High(Byte), High(Byte), X, Y, Player.X, Player.Y, @MyCallback,
     NX, NY) then Exit;
   if (NX = Player.X) and (NY = Player.Y) then

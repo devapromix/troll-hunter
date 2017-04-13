@@ -35,7 +35,7 @@ const
 
 procedure TMsgLog.Add(S: string);
 begin
-  FMsg := FMsg + Trim(' ' + S);
+  FMsg := FMsg + ' ' + Trim(S);
 end;
 
 procedure TMsgLog.Clear;
@@ -47,13 +47,11 @@ end;
 constructor TMsgLog.Create; 
 begin
   FLog := TStringList.Create;
-  Self.Clear;
 end;
 
 destructor TMsgLog.Destroy;
 begin
-  FLog.Free;
-  FLog := nil;
+  FreeAndNil(FLog);
   inherited;
 end;
 
@@ -77,23 +75,19 @@ procedure TMsgLog.Render;
 var
   L: string;
 begin
-  if (Trim(MsgLog.Msg) = '') then
-    L := ''
-  else
-    L := Format('[color=%s]%s[/color]', [LowerCase(terminal_get('ini.colors.log')), FMsg]);
+  if (Trim(MsgLog.Msg) = '') then L := '' else
+    L := Format('[color=%s]%s[/color]',
+    [LowerCase(terminal_get('ini.colors.log')), Trim(FMsg)]);
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(Log.Left, Log.Top, Log.Width, Log.Height, Trim(FLog.Text + L),
+  Terminal.Print(Log.Left, Log.Top, Log.Width, Log.Height,
+    Trim(Self.GetLastMsg(MaxLogCapacity) + L),
     TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.Turn;
 begin
-  if (Trim(MsgLog.Msg) <> '') then
-  begin
-    if (FLog.Count > MaxLogCapacity - 1) then
-      FLog.Delete(FLog.Count - 1);
-    FLog.Append(FMsg);
-  end;
+  if (Trim(FMsg) <> '') then
+    FLog.Append(Trim(FMsg));
 end;
 
 initialization
@@ -102,7 +96,6 @@ MsgLog := TMsgLog.Create;
 
 finalization
 
-MsgLog.Free;
-MsgLog := nil;
+FreeAndNil(MsgLog);
 
 end.

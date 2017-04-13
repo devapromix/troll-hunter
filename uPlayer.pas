@@ -28,6 +28,7 @@ const
   DVMax = 80;
   PVMax = 250;
   ExpMax = 10;
+  FoodMax = 250;
 
 type
   TPlayer = class(TObject)
@@ -37,6 +38,7 @@ type
     FLX: Byte;
     FLY: Byte;
     FTurn: Word;
+    FFood: Word;
     FLevel: Byte;
     FLife: Word;
     FMaxLife: Word;
@@ -53,9 +55,12 @@ type
     FWillpower: Byte;
     FPerception: Byte;
     FGold: Integer;
+    FScore: Word;
+    FKills: Word;
     FKiller: string;
     FSkill: array [TSkillEnum] of TSkill;
     FWeaponSkill: TSkillEnum;
+    FIsRest: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -64,6 +69,7 @@ type
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
+    property Food: Word read FFood write FFood;
     property Level: Byte read FLevel write FLevel;
     property Life: Word read FLife write FLife;
     property MaxLife: Word read FMaxLife write FMaxLife;
@@ -79,7 +85,10 @@ type
     property Willpower: Byte read FWillpower write FWillpower;
     property Perception: Byte read FPerception write FPerception;
     property Gold: Integer read FGold write FGold;
+    property Score: Word read FScore write FScore;
+    property Kills: Word read FKills write FKills;
     property Killer: string read FKiller write FKiller;
+    property IsRest: Boolean read FIsRest write FIsRest;
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
     property Damage: TDamage read FDamage write FDamage;
@@ -106,6 +115,8 @@ type
     procedure AddExp(Value: Byte = 1);
     procedure SkillSet;
     procedure StarterSet;
+    function IsDead: Boolean;
+    procedure Rest(ATurns: Byte);
   end;
 
 var
@@ -153,29 +164,28 @@ begin
     case FWeaponSkill of
       skBlade:
       begin
-        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(FWeaponSkill);
         Skill(skAthletics, 2);
         Skill(skDodge, 2);
       end;
       skAxe:
       begin
-        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(FWeaponSkill);
         Skill(skAthletics, 3);
         Skill(skDodge);
       end;
       skSpear:
       begin
-        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(FWeaponSkill);
         Skill(skAthletics);
         Skill(skDodge, 3);
       end;
       skMace:
       begin
-        Skill(FWeaponSkill, Player.GetSkillValue(skLearning));
+        Skill(FWeaponSkill);
         Skill(skAthletics, 4);
       end;
     end;
-    if (RandomRange(0, 2) = 0) then Skill(skLearning) else Skill(skToughness);
     // Victory
     if (Mob.Life = 0) then
     begin
@@ -206,17 +216,16 @@ begin
     FItem := Items_Inventory_GetItem(I);
     if (FItem.Equipment > 0) then
     begin
-      FI := TItemEnum(FItem.ItemID);
+      FI := TItemEnum(FItem.ItemID);   
       Dam.Min := Dam.Min + ItemBase[FI].Damage.Min;
       Dam.Max := Dam.Max + ItemBase[FI].Damage.Max;
       Def := Def + ItemBase[FI].Defense;
-      if (ItemBase[FI].SlotType = stRHand) then
+      if (ItemBase[FI].SlotType = stMainHand) then
         case ItemBase[FI].ItemType of
           itBlade: FWeaponSkill := skBlade;
           itAxe  : FWeaponSkill := skAxe;
           itSpear: FWeaponSkill := skSpear;
           itMace : FWeaponSkill := skMace;
-          else FWeaponSkill := skLearning;
         end;
     end;
   end;
@@ -246,10 +255,14 @@ var
 begin
   Exp := 0;
   Turn := 0;
+  Food := FoodMax;
   Gold := 0;
+  Score := 0;
+  Kills := 0;
   Level := 1;
   Killer := '';
   Look := False;
+  IsRest := False;
   FWeaponSkill := skLearning;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   with FSkill[I] do
@@ -264,7 +277,7 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(Format('[color=red]%s[/color]', [_('You die...')]));
+  MsgLog.Add(_('You die...'));
   Game.Screenshot := GetTextScreenshot();
 end;
 
@@ -336,6 +349,11 @@ begin
   Result := FSkill[ASkill].Value;
 end;
 
+function TPlayer.IsDead: Boolean;
+begin
+  Result := Self.Life = 0;
+end;
+
 procedure TPlayer.Move(AX, AY: ShortInt);
 var
   FX, FY: Byte;
@@ -352,7 +370,7 @@ begin
   end
   else
   begin
-    if (Life = 0) then
+    if Self.IsDead then
     begin
       Scenes.SetScene(scDef);
       Exit;
@@ -459,6 +477,7 @@ begin
     case Items.GetItemEnum(AItem.ItemID) of
       iPotionOfHealth:
       begin
+        Player.Score := Player.Score + 1;
         Value := Self.GetSkillValue(skHealing) + 100;
         MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
         Self.Life := Clamp(Self.Life + Value, 0, MaxLife);
@@ -466,6 +485,7 @@ begin
       end;
       iPotionOfMana:
       begin
+        Player.Score := Player.Score + 1;
         Value := Self.GetSkillValue(skConcentration) + 100;
         MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
         Self.Mana := Clamp(Self.Mana + Value, 0, MaxMana);
@@ -556,15 +576,22 @@ begin
     SL.Append(GetDateTime);
     SL.Append('');
     SL.Append(AReason);
+    if Player.IsDead then
+      SL.Append(Format(_('He scored %d points.'), [Player.Score]))
+      else SL.Append(Format(_('He has scored %d points so far.'), [Player.Score]));
     SL.Append('');
     SL.Append(Format(FT, [_('Screenshot')]));
     SL.Append(Game.Screenshot);
+    SL.Append(Format(FT, [_('Defeated foes')]));
+    SL.Append('');
+    SL.Append(Format('Total: %d creatures defeated.', [Player.Kills])); 
+    SL.Append('');
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
     SL.Append(MsgLog.GetLastMsg(10));
     SL.Append(Format(FT, [_('Inventory')]));
     SL.Append('');
-    SL.Append('');
+    SL.Append(Format('%s: %d', [_('Gold'), Player.Gold]));
     SL.SaveToFile(GetDateTime('-', '-') + '-character-dump.txt');
   finally
     SL.Free;
@@ -579,6 +606,7 @@ begin
     Exp := Exp - ExpMax;
     FLevel := FLevel + 1;
     MsgLog.Add(Format('%s +1.', [_('Level')]));
+    Player.Score := Player.Score + (FLevel * FLevel);
   end;
 end;
 
@@ -592,9 +620,12 @@ begin
       AddExp();
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
       Inc(FSkill[ASkill].Value);
-      // Add message
+      // Add message {!!!}
       MsgLog.Add(Format('%s %s +1.', [_('Skill'), Self.GetSkillName(ASkill)]));
       FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
+      // Add scores
+      if (FSkill[ASkill].Value = SkillMax) then 
+        Player.Score := Player.Score + 50;
       Self.Calc;
     end;
   end;
@@ -622,8 +653,41 @@ begin
     MsgLog.Add(Format(_('You have opened a new territory: %s.'),
       [Map.GetName]));
     DeepVis[Map.Deep] := True;
+    if (Ord(Map.Deep) > 0) then
+    Player.Score := Player.Score + (Ord(Map.Deep) * 15);
   end;
   Move(0, 0);
+end;
+
+procedure TPlayer.Rest(ATurns: Byte);
+var
+  T: Byte;
+
+  procedure FinRest;
+  begin
+    MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
+    IsRest := False;  
+  end;
+
+begin
+  if (Player.Food = 0) then 
+  begin
+    MsgLog.Add(_('Need food!'));
+    Exit;
+  end;
+  IsRest := True;
+  MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));
+  for T := 1 to ATurns do
+  begin
+    if not IsRest or (Player.Food = 0) then 
+    begin
+      FinRest;
+      Exit;
+    end;
+    Player.Food := Clamp(Player.Food - 1, 0, FoodMax);
+    Wait;
+  end;  
+  FinRest;
 end;
 
 procedure TPlayer.StarterSet;
@@ -647,7 +711,7 @@ begin
     Items.AddItemToInv(iPotionOfMana, 5);
   end;
   // Add coins
-  G := IfThen(Game.Wizard, RandomRange(3333, 9999), 50);
+  G := IfThen(Game.Wizard, RandomRange(6666, 9999), 50); // :)
   Items.AddItemToInv(iGold, G);
   Self.Calc;
 end;

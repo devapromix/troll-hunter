@@ -82,8 +82,8 @@ begin
   Panel := SetEntSize(0, 0, Value.Width, 4);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);
-  Log := SetEntSize(View.Width + 2, Status.Height + 2, Panel.Width,
-    Screen.Height - Panel.Height - 7);
+  Log := SetEntSize(View.Width + 2, Status.Height + 3, Panel.Width,
+    Screen.Height - Panel.Height - 8);
   Info := SetEntSize(View.Width + 2, Screen.Height - 4, Panel.Width, 3);
   //           
   FWindow.Width := Screen.Width;

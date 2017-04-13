@@ -378,8 +378,9 @@ begin
   AddKey('G', _('Pickup an item'));
   AddKey('F', _('Drop an item'));
   AddKey('L', _('Look mode'));
+  AddKey('R', _('Rest'));
   AddKey('I', _('Inventory'));
-  AddKey('T', _('Skills and attributes'));
+  AddKey('P', _('Skills and attributes'));
   AddKey('?', _('Help'));
 
   Self.Title(_('Character dump'), Terminal.Window.Height - Y - 5);
@@ -536,8 +537,9 @@ begin
   Terminal.Print(Status.Left, Status.Top + 2,
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d '),
-    [Player.Turn, Player.Gold]));
+  Terminal.Print(Status.Left, Status.Top + 3,
+    Format(_('Turn: %d Gold: %d Food: %d Score: %d'),
+    [Player.Turn, Player.Gold, Player.Food, Player.Score]));
   Terminal.Print(Status.Left, Status.Top + 4, Format(_('Damage: %d-%d Protection: %d'),
     [Player.Damage.Min, Player.Damage.Max, Player.PV]));
   // Bars
@@ -621,13 +623,15 @@ begin
         Game.Screenshot := GetTextScreenshot();
         Scenes.SetScene(scQuit, Scenes.Scene);
       end;
+    TK_R:
+      Player.Rest(100);
     TK_G:
       Player.Pickup;
     TK_I:
       Scenes.SetScene(scInv);
     TK_F:
       Scenes.SetScene(scDrop);
-    TK_T:
+    TK_P:
       Scenes.SetScene(scPlayer);
     TK_V:
       if Game.Wizard then
@@ -764,7 +768,7 @@ begin
     if (FItem.Equipment > 0) then
     begin
       case ItemBase[TItemEnum(FItem.ItemID)].SlotType of
-        stRHand: S := Format(' - %s', [_('in right hand')]);
+        stMainHand: S := Format(' - %s', [_('in main hand')]);
       end;
     end;
     Items.RenderInvItem(5, 2, I, FItem, S);
