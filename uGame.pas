@@ -68,10 +68,12 @@ begin
   IsMode := True;
   Player.SkillSet;
   Player.StarterSet;
+  // Intro
   MsgLog.Clear;
   MsgLog.Add(_('Welcome to Elvion!'));
   MsgLog.Add(_('You need to find and kill The King Troll!'));
   MsgLog.Add(_('Press ? for help.'));
+  //
   Scenes.SetScene(scGame);
 end;
 

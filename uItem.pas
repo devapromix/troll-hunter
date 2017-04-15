@@ -571,7 +571,6 @@ Items := TItems.Create;
 
 finalization
 
-Items.Free;
-Items := nil;
+FreeAndNil(Items);
 
 end.
