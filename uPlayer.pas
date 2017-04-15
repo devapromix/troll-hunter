@@ -135,7 +135,7 @@ var
 begin
   Turn := Turn + 1;
   V := Clamp(100 - Player.GetSkillValue(skToughness), 25, 100);
-  if ((Turn / V) = (Turn div V)) then
+  if (Turn mod v = 0) then
   begin
     Life := Clamp(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
     Mana := Clamp(Life + Player.GetSkillValue(skConcentration), 0, MaxMana);
