@@ -776,14 +776,7 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
-    S := '';
-    if (FItem.Equipment > 0) then
-    begin
-      case ItemBase[TItemEnum(FItem.ItemID)].SlotType of
-        stMainHand: S := Format(' - %s', [_('in main hand')]);
-      end;
-    end;
-    Items.RenderInvItem(5, 2, I, FItem, S);
+    Items.RenderInvItem(5, 2, I, FItem, True);
   end;
 
   AddKey('Esc', _('Close'), True);

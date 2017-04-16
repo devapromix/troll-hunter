@@ -591,6 +591,7 @@ begin
     SL.Append(GetPureText(MsgLog.GetLastMsg(10)));
     SL.Append(Format(FT, [_('Inventory')]));
     SL.Append('');
+    SL.Append(GetPureText(Items.GetInventory));
     SL.Append(Format('%s: %d', [_('Gold'), Player.Gold]));
     SL.SaveToFile(GetDateTime('-', '-') + '-character-dump.txt');
   finally

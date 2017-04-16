@@ -224,9 +224,10 @@ type
     function GetItemInfo(AItem: Item): string;
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
-    procedure RenderInvItem(X, Y, I: Integer; AItem: Item; Adv: string = '');
+    procedure RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False);
     procedure AddItemToInv(Index: Integer); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1; EqFlag: Boolean = False); overload;
+    function GetInventory: string;
   end;
 
 var
@@ -525,9 +526,9 @@ begin
   end;
 end;
 
-procedure TItems.RenderInvItem(X, Y, I: Integer; AItem: Item; Adv: string = '');
+procedure TItems.RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False);
 var
-  S: string;
+  Info, S: string;
 begin
   Terminal.ForegroundColor(clRed);
   Terminal.Print(X - 4, Y + I, TScene.KeyStr(Chr(I + Ord('A'))));
@@ -535,12 +536,17 @@ begin
   Terminal.Print(X, Y + I, ItemBase[TItemEnum(AItem.ItemID)].Symbol);
   S := Items.GetItemInfo(AItem);
   Terminal.ForegroundColor(clGray);
-  if (Adv <> '') then
+  if IsAdvInfo then
   begin
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(X + Length(S) + 2, Y + I, Adv);
+    Info := '';
+    if (AItem.Equipment > 0) then
+    begin
+      case ItemBase[TItemEnum(AItem.ItemID)].SlotType of
+        stMainHand: Info := Format(' - %s', [_('in main hand')]);
+      end;
+    end;
   end;
-  Terminal.Print(X + 2, Y + I, S);
+  Terminal.Print(X + 2, Y + I, S + Info);
 end;
 
 procedure TItems.AddItemToInv(Index: Integer);
@@ -558,6 +564,11 @@ begin
     MsgLog.Add(Format(_('You pick up %s.'), [The]));
     Player.Calc;
   end;
+end;
+
+function TItems.GetInventory: string;
+begin
+
 end;
 
 function TItems.GetItemEnum(AItemID: Integer): TItemEnum;
