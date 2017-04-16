@@ -5,8 +5,8 @@ interface
 uses BearLibItems, uCommon, uMap, uPlayer;
 
 type
-  TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace, itHelm,
-    itArmour);
+  TItemType = (itCoin, itPotion, itFood,  itBlade, itAxe, itSpear, itMace,
+    itHelm, itArmour);
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand,
@@ -29,7 +29,7 @@ type
 type
   TItemEnum = (
     // All maps
-    iGold, iPotionOfHealth, iPotionOfMana,
+    iGold, iPotionOfHealth, iPotionOfMana, iFood,
     // Dark Wood
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
@@ -58,8 +58,9 @@ type
     );
 
 const
-  NotEquipItems = [iGold, iPotionOfHealth, iPotionOfMana];
+  NotEquipItems = [iGold, iPotionOfHealth, iPotionOfMana, iFood];
   DrinkItems = [iPotionOfHealth, iPotionOfMana];
+  EatItems = [iFood];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -74,6 +75,9 @@ const
     // Mana potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
     Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: deDarkWood;),
+    // Food
+    (Symbol: '%'; ItemType: itFood; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: deDarkWood;),
 
     // == Dark Wood == //
 
@@ -314,6 +318,8 @@ begin
       FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
     itPotion:
       FItem.Amount := (Math.RandomRange(0, 3) + 1);
+    itFood:
+      FItem.Amount := (Math.RandomRange(0, 5) + 1);
   end;
   if (FItem.Stack = 1) then
   begin
@@ -408,6 +414,9 @@ begin
     // Potion of mana
     iPotionOfMana:
       Result := _('Potion of mana');
+    // Food
+    iFood:
+      Result := _('Food');
 
     // == Dark Wood == //
 

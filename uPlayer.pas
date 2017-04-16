@@ -110,6 +110,7 @@ type
     procedure Drop(Index: Integer);
     procedure Use(Index: Integer);
     procedure Drink(Index: Integer);
+    procedure Eat(Index: Integer);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure AddExp(Value: Byte = 1);
@@ -410,7 +411,10 @@ begin
   begin
     // Drink a potion
     if (Items.GetItemEnum(AItem.ItemID) in DrinkItems) then
-      Self.Drink(Index);
+      Self.Drink(Index) else
+    // Eat a food
+    if (Items.GetItemEnum(AItem.ItemID) in EatItems) then
+      Self.Eat(Index)
   end else begin
     // Equip or unequip an item
     case AItem.Equipment of
@@ -490,6 +494,33 @@ begin
         MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
         Self.Mana := Clamp(Self.Mana + Value, 0, MaxMana);
         Self.Skill(skConcentration, 5);
+      end;
+    end;
+    Items_Inventory_SetItem(Index, AItem);
+    Self.Calc;
+    Wait;
+  end;
+end;
+
+procedure TPlayer.Eat(Index: Integer);
+var
+  The: string;
+  AItem: Item;
+  Value: Word;
+const
+  F = '%s +%d.';
+begin
+  AItem := Items_Inventory_GetItem(Index);
+  begin
+    AItem.Amount := AItem.Amount - 1;
+    The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
+    MsgLog.Add(Format(_('You eat %s.'), [The]));
+    case Items.GetItemEnum(AItem.ItemID) of
+      iFood:
+      begin
+        Player.Score := Player.Score + 1;
+        Player.Food := Player.Food + 250;
+        MsgLog.Add(Format(F, [_('Food'), 250]));
       end;
     end;
     Items_Inventory_SetItem(Index, AItem);
