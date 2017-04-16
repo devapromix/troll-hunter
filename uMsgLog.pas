@@ -70,7 +70,7 @@ begin
       if (Odd(I)) then Color := 'dark gray' else Color := 'light gray';
       SL.Append(Format('[color=%s]%s[/color]',
         [Color, FLog[FLog.Count - I]]));
-    end;//SL.Append(FLog[FLog.Count - I]);
+    end;
     Result := SL.Text;
   finally
     SL.Free;

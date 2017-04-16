@@ -588,7 +588,7 @@ begin
     SL.Append('');
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
-    SL.Append(MsgLog.GetLastMsg(10));
+    SL.Append(GetPureText(MsgLog.GetLastMsg(10)));
     SL.Append(Format(FT, [_('Inventory')]));
     SL.Append('');
     SL.Append(Format('%s: %d', [_('Gold'), Player.Gold]));

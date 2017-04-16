@@ -55,6 +55,7 @@ function GetDescThe(S: string): string;
 function GetDescSig(V: Integer): string;
 function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
 function GetTextScreenshot: string;
+function GetPureText(const S: string): string;
 
 implementation
 
@@ -161,6 +162,21 @@ begin
     Result := SL.Text;
   finally
     SL.Free;
+  end;
+end;
+
+function GetPureText(const S: string): string;
+var
+  I: Integer;
+  B: Boolean;
+begin
+  B := True;
+  Result := '';
+  for I := 1 to Length(S) do
+  begin
+    if (S[I] = '[') then B := False;
+    if B then Result := Result + S[I];
+    if (S[I] = ']') then B := True;
   end;
 end;
 
