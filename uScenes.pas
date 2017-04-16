@@ -7,7 +7,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer);
+    scDrop, scItems, scAmount, scPlayer, scMessages);
 
 type
   TScene = class(TObject)
@@ -135,6 +135,13 @@ type
     procedure Update(var Key: Word); override;
   end;
 
+type
+  TSceneMessages = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
 implementation
 
 uses
@@ -224,6 +231,8 @@ begin
         FScene[I] := TSceneAmount.Create;
       scItems:
         FScene[I] := TSceneItems.Create;
+      scMessages:
+        FScene[I] := TSceneMessages.Create;
     end;
 end;
 
@@ -379,6 +388,7 @@ begin
   AddKey('F', _('Drop an item'));
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
+  AddKey('M', _('Last messages'));
   AddKey('I', _('Inventory'));
   AddKey('P', _('Skills and attributes'));
   AddKey('?', _('Help'));
@@ -629,6 +639,8 @@ begin
       Player.Pickup;
     TK_I:
       Scenes.SetScene(scInv);
+    TK_M:
+      Scenes.SetScene(scMessages);
     TK_F:
       Scenes.SetScene(scDrop);
     TK_P:
@@ -995,11 +1007,29 @@ begin
   end;
 end;
 
+{ TSceneMessages }
+
+procedure TSceneMessages.Render;
+begin
+  Self.Title(_('Last messages'));
+  MsgLog.RenderAllMessages;
+  AddKey('Esc', _('Close'), True, True);
+end;
+
+procedure TSceneMessages.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
 initialization
 
 Scenes := TScenes.Create;
 
 finalization
-  FreeAndNil(Scenes);
+
+FreeAndNil(Scenes);
 
 end.
