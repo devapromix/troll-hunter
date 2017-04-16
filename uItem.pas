@@ -548,9 +548,10 @@ begin
       case D.SlotType of
         stMainHand: S := _('in main hand');
       end;
+      S := '- ' + S;
     end;
   end;
-  S := Format('%s - %s', [Items.GetItemInfo(AItem), S]);
+  S := Items.GetItemInfo(AItem) + ' ' + S;
   if IsRender then
     Terminal.Print(X + 2, Y + I, S)
       else Result := Result + S;
