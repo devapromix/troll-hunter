@@ -316,10 +316,8 @@ begin
   case ItemBase[TItemEnum(ID)].ItemType of
     itCoin:
       FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
-    itPotion:
-      FItem.Amount := (Math.RandomRange(0, 3) + 1);
-    itFood:
-      FItem.Amount := (Math.RandomRange(0, 5) + 1);
+    itPotion, iFood:
+      FItem.Amount := (Math.RandomRange(0, ItemBase[TItemEnum(ID)].MaxStack div 3) + 1);
   end;
   if (FItem.Stack = 1) then
   begin
