@@ -3,7 +3,7 @@ unit uItem;
 interface
 
 uses BearLibItems, uCommon, uMap, uPlayer;
-        
+
 type
   TItemType = (itCoin, itPotion, itBlade, itAxe, itSpear, itMace, itHelm,
     itArmour);
@@ -26,7 +26,7 @@ type
     Deep: TDeepEnum;
   end;
 
-type        
+type
   TItemEnum = (
     // All maps
     iGold, iPotionOfHealth, iPotionOfMana,
@@ -224,7 +224,7 @@ type
     function GetItemInfo(AItem: Item): string;
     function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
       ACount: Byte): string;
-    procedure RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False);
+    function RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True): string;
     procedure AddItemToInv(Index: Integer); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1; EqFlag: Boolean = False); overload;
     function GetInventory: string;
@@ -235,7 +235,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes, uGame;
+uses Math, Classes, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes, uGame;
 
 { TItems }
 
@@ -526,27 +526,34 @@ begin
   end;
 end;
 
-procedure TItems.RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False);
+function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True): string;
 var
-  Info, S: string;
+  S: string;
+  D: TItemBase;
 begin
-  Terminal.ForegroundColor(clRed);
+  Result := '';
+  D := ItemBase[TItemEnum(AItem.ItemID)];
   Terminal.Print(X - 4, Y + I, TScene.KeyStr(Chr(I + Ord('A'))));
-  Terminal.ForegroundColor(ItemBase[TItemEnum(AItem.ItemID)].Color);
-  Terminal.Print(X, Y + I, ItemBase[TItemEnum(AItem.ItemID)].Symbol);
-  S := Items.GetItemInfo(AItem);
+  if IsRender then
+  begin
+    Terminal.ForegroundColor(D.Color);
+    Terminal.Print(X, Y + I, D.Symbol);
+  end else Result := Result + D.Symbol + ' ';
   Terminal.ForegroundColor(clGray);
   if IsAdvInfo then
   begin
-    Info := '';
+    S := '';
     if (AItem.Equipment > 0) then
     begin
-      case ItemBase[TItemEnum(AItem.ItemID)].SlotType of
-        stMainHand: Info := Format(' - %s', [_('in main hand')]);
+      case D.SlotType of
+        stMainHand: S := _('in main hand');
       end;
     end;
   end;
-  Terminal.Print(X + 2, Y + I, S + Info);
+  S := Format('%s - %s', [Items.GetItemInfo(AItem), S]);
+  if IsRender then
+    Terminal.Print(X + 2, Y + I, S)
+      else Result := Result + S;
 end;
 
 procedure TItems.AddItemToInv(Index: Integer);
@@ -567,8 +574,24 @@ begin
 end;
 
 function TItems.GetInventory: string;
+var
+  SL: TStringList;
+  I, FCount: Integer;
+  FItem: Item;
 begin
-
+  Result := '';
+  SL := TStringList.Create;
+  try
+    FCount := Clamp(Items_Inventory_GetCount(), 0, 26);
+    for I := 0 to FCount - 1 do
+    begin
+      FItem := Items_Inventory_GetItem(I);
+      SL.Append(Items.RenderInvItem(5, 2, I, FItem, False, False));
+    end;
+    Result := SL.Text;
+  finally
+    SL.Free;
+  end;
 end;
 
 function TItems.GetItemEnum(AItemID: Integer): TItemEnum;
