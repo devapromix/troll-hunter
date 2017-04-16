@@ -9,7 +9,7 @@ type
     itArmour);
 
 type
-  TSlotType = (stNone, stHead, stChest, stHands, stFeet, stMainHand, stOffHand,
+  TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand,
     stNeck, stFinger);
 
 type
@@ -546,7 +546,13 @@ begin
     if (AItem.Equipment > 0) then
     begin
       case D.SlotType of
+        stHead:;
+        stNeck:;
+        stFinger:;
         stMainHand: S := _('in main hand');
+        stOffHand:;
+        stChest:;
+        stFeet:;
       end;
       S := '- ' + S;
     end;
