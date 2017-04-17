@@ -125,8 +125,8 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, uGame, uMap, uMob, uScenes,
-  uTerminal, uMsgLog, gnugettext, BeaRLibItems, uItem;
+uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uMob, uScenes,
+  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse;
 
 { TPlayer }
 
@@ -272,14 +272,15 @@ begin
     Exp := 0;
   end;
   Self.Calc;
-  Self.Fill;  
+  Self.Fill;
 end;
 
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(_('You die...'));
+  MsgLog.Add('[color=red]' + _('You die...') + '[/color]');
   Game.Screenshot := GetTextScreenshot();
+  Corpses.Append();
 end;
 
 destructor TPlayer.Destroy;
@@ -589,7 +590,7 @@ end;
 procedure TPlayer.Render(AX, AY: Byte);
 begin
   if (Self.Life = 0) then
-    Terminal.Print(AX + View.Left, AY + View.Top, '%', clDarkGray)
+    Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
     Terminal.Print(AX + View.Left, AY + View.Top, '@', clDarkBlue);
 end;

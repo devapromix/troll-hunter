@@ -15,7 +15,8 @@ uses
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
   uGame in 'uGame.pas',
-  uMsgLog in 'uMsgLog.pas';
+  uMsgLog in 'uMsgLog.pas',
+  uCorpse in 'uCorpse.pas';
 
 var
   Key: Word = 0;

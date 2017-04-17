@@ -259,8 +259,8 @@ begin
     IsBoss := True;
     if Game.Wizard then
     begin
-      Player.X := X - 1;
-      Player.Y := Y - 1;
+      Player.X := Clamp(X - 1, 0, High(Byte));
+      Player.Y := Clamp(Y - 1, 0, High(Byte));
     end;
   end;
 end;

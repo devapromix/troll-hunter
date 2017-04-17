@@ -38,8 +38,10 @@ const
   clFog = $FF111111;
 
 var
-  clDefault:    Cardinal = $FFFFFF00;
-  clBackground: Cardinal = $00000000;
+  clDefault    : Cardinal = $FFFFFF00;
+  clBackground : Cardinal = $00000000;
+  clCorpse     : Cardinal = $FF555555;
+  clLook       : Cardinal = $FFFFFF33;
 
 var
   Screen, Panel, View, Status, Log, Info: TEntSize;
@@ -56,6 +58,7 @@ function GetDescSig(V: Integer): string;
 function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
 function GetTextScreenshot: string;
 function GetPureText(const S: string): string;
+function GetPath(SubDir: string = ''): string;
 
 implementation
 
@@ -178,6 +181,12 @@ begin
     if B then Result := Result + S[I];
     if (S[I] = ']') then B := True;
   end;
+end;
+
+function GetPath(SubDir: string = ''): string;
+begin
+  Result := ExtractFilePath(ParamStr(0));
+  Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
 end.

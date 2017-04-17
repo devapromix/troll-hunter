@@ -146,7 +146,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uCommon, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog, uItem, gnugettext, uGame, uVillage;
+  uMap, uMob, uMsgLog, uItem, gnugettext, uGame, uVillage, uCorpse;
 
 { TScene }
 
@@ -424,9 +424,11 @@ var
     FItem: Item;
   begin
     S := '';
-    Terminal.BackgroundColor(clBackground);
+    Terminal.BackgroundColor(0);  
     Terminal.ForegroundColor(clDefault);
     S := S + T.Name + '. ';
+    if Corpses.IsCorpse(X, Y) then
+      S := S + _('Corpse') + '. ';
     C := Items_Dungeon_GetMapCountXY(Ord(Map.Deep), X, Y);
     if (C > 0) then
     begin
@@ -502,7 +504,7 @@ begin
       T := Map.GetTile(X, Y);
       if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
       begin
-        Terminal.BackgroundColor($88FFFF00);
+        Terminal.BackgroundColor(clLook);
         Terminal.Print(DX + View.Left, DY + View.Top, ' ');
         RenderLook(X, Y, T, True);
       end;
@@ -531,8 +533,9 @@ begin
       if Game.Wizard or not Map.GetFog(X, Y) then
         Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
     end;
-  // Items, player, mobs
+  // Items, player's corpses, player, mobs
   Items.Render(PX, PY);
+  Corpses.Render(PX, PY);
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
   // Player info

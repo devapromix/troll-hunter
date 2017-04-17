@@ -61,6 +61,8 @@ begin
   // Load colors
   clDefault := color_from_name(LowerCase(terminal_get('ini.colors.default')));
   clBackground := color_from_name(LowerCase(terminal_get('ini.colors.background')));
+  clCorpse := color_from_name(LowerCase(terminal_get('ini.colors.corpse')));
+  clLook := color_from_name(LowerCase(terminal_get('ini.colors.look')));
 end;
 
 procedure TGame.Start;

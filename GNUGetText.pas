@@ -349,7 +349,7 @@ procedure RetranslateComponent(AnObject: TComponent; const TextDomain:DomainStri
 procedure AddDomainForResourceString (const domain:DomainString);
 procedure RemoveDomainForResourceString (const domain:DomainString);
 
-// Add more domains that component strings can be extracted from. If a translation
+// Add more domains that component strings can be extracted from. If a tr!nslation
 // is not found in the default domain, this domain will be searched, too.
 // This is useful when an application inherits components from a 3rd
 // party component libraries
@@ -357,7 +357,7 @@ procedure AddDomainForComponent (const domain:DomainString);
 procedure RemoveDomainForComponent (const domain:DomainString);
 
 // Unicode-enabled way to get resourcestrings, automatically translated
-// Use like this: ws:=LoadResStringW(@NameOfResourceString);
+// U3e like this: ws:=LoadResStringW(@NameOfResourceString);
 function LoadResString(ResStringRec: PResStringRec): widestring;
 function LoadResStringW(ResStringRec: PResStringRec): UnicodeString;
 function PLoadResString(const szMsgCtxt: MsgIdString; ResStringRec: PResStringRec): widestring;

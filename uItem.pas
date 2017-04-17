@@ -76,7 +76,7 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
     Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: deDarkWood;),
     // Food
-    (Symbol: '%'; ItemType: itFood; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
+    (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
     Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: deDarkWood;),
 
     // == Dark Wood == //
@@ -316,7 +316,7 @@ begin
   case ItemBase[TItemEnum(ID)].ItemType of
     itCoin:
       FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
-    itPotion, iFood:
+    itPotion, itFood:
       FItem.Amount := (Math.RandomRange(0, ItemBase[TItemEnum(ID)].MaxStack div 3) + 1);
   end;
   if (FItem.Stack = 1) then
