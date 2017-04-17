@@ -571,6 +571,7 @@ var
   MapID, FCount, Index: Integer;
   FItem: Item;
 begin
+  Corpses.DelCorpse(Player.X, Player.Y);
   //// Your backpack is full!
   MapID := Ord(Map.Deep);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
