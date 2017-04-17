@@ -13,6 +13,7 @@ type
   TCorpses = class
   private
     FCorpse: array [0..CorpseMax - 1] of TCorpse;
+    procedure Save(Index, AX, AY, AZ: Byte);
   public
     constructor Create;
     destructor Destroy; override;
@@ -31,6 +32,22 @@ uses SysUtils, IniFiles, uPlayer, uCommon, uMap, uGame, uTerminal;
 
 { TCorpses }
 
+procedure TCorpses.Save(Index, AX, AY, AZ: Byte);
+var
+  F: TIniFile;
+  S: string;
+begin
+  F := TIniFile.Create(GetPath() + 'morgue.thi');
+  try
+    S := IntToStr(Index);
+    F.WriteInteger(S, 'X', AX);
+    F.WriteInteger(S, 'Y', AY);
+    F.WriteInteger(S, 'Z', AZ);
+  finally
+    F.Free;
+  end;
+end;
+
 procedure TCorpses.Append;
 var
   F: TIniFile;
@@ -46,9 +63,7 @@ begin
       S := IntToStr(I);
       if not F.SectionExists(S) then
       begin
-        F.WriteInteger(S, 'X', Player.X);
-        F.WriteInteger(S, 'Y', Player.Y);
-        F.WriteInteger(S, 'Z', Ord(Map.Deep));
+        Save(I, Player.X, Player.Y, Ord(Map.Deep));
         Exit;
       end;
     end;
@@ -80,25 +95,12 @@ end;
 procedure TCorpses.DelCorpse(AX, AY: Byte);
 var
   I: Byte;
-  S: string;
-  F: TIniFile;
 begin
   for I := 0 to CorpseMax - 1 do
   begin
     if (Ord(Map.Deep) <> FCorpse[I].Z) then Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
-    begin
-      F := TIniFile.Create(GetPath() + 'morgue.thi');
-      try
-        S := IntToStr(I);
-        F.WriteInteger(S, 'X', 0);
-        F.WriteInteger(S, 'Y', 0);
-        F.WriteInteger(S, 'Z', 0);
-        Exit;
-      finally
-        F.Free;
-      end;
-    end;
+      Save(I, 0, 0, 0);
   end;
 end;
 
