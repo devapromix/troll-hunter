@@ -484,7 +484,8 @@ begin
       begin
         Player.Score := Player.Score + 1;
         Value := Self.GetSkillValue(skHealing) + 100;
-        MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
+        MsgLog.Add(Format(_('You feel healthy!') + ' ' + F, [_('Life'),
+          Min(MaxLife - Life, Value)]));
         Self.Life := Clamp(Self.Life + Value, 0, MaxLife);
         Self.Skill(skHealing, 5);
       end;
