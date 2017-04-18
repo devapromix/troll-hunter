@@ -5,8 +5,8 @@ interface
 uses BearLibItems, uCommon, uMap, uPlayer;
 
 type
-  TItemType = (itCoin, itPotion, itFood,  itBlade, itAxe, itSpear, itMace,
-    itHelm, itArmour);
+  TItemType = (itCorpse, itKey, itCoin, itPotion, itFood,  itBlade, itAxe,
+  itSpear, itMace, itHelm, itArmour);
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand,
@@ -23,13 +23,15 @@ type
     Defense: Byte;
     Damage: TDamage;
     Color: Cardinal;
-    Deep: TDeepEnum;
+    Deep: set of TDeepEnum;
   end;
 
 type
   TItemEnum = (
     // All maps
-    iGold, iPotionOfHealth, iPotionOfMana, iFood,
+    iCorpse, iGold,
+    iPotionOfHealth, iPotionOfMana,
+    iFood, iKey,
     // Dark Wood
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
@@ -58,161 +60,174 @@ type
     );
 
 const
-  NotEquipItems = [iGold, iPotionOfHealth, iPotionOfMana, iFood];
-  DrinkItems = [iPotionOfHealth, iPotionOfMana];
-  EatItems = [iFood];
+  NotEquipItems = [iCorpse, iGold, iPotionOfHealth, iPotionOfMana, iFood, iKey];
+  NotDropItems  = [iCorpse, iFood];
+  DrinkItems    = [iPotionOfHealth, iPotionOfMana];
+  EatItems      = [iFood];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
     // == All maps == //
 
+    // Corpse
+    (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1; MaxDurability: 0;
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clGray; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom];),
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 1000; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom];),
     // Life Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom];),
     // Mana potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom];),
     // Food
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: deDarkWood;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom];),
+    // Key
+    (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
+    deDungeonOfDoom];),
 
     // == Dark Wood == //
 
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30;
-    Level: 1; Defense: 1; Damage: (Min: 2; Max: 3;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 1; Defense: 1; Damage: (Min: 2; Max: 3;); Color: clDarkRed; Deep: [deDarkWood];),
     // Short Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35;
-    Level: 2; Defense: 2; Damage: (Min: 3; Max: 5;); Color: clWhite; Deep: deDarkWood;),
+    Level: 2; Defense: 2; Damage: (Min: 3; Max: 5;); Color: clWhite; Deep: [deDarkWood];),
     // Hatchet
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30;
-    Level: 1; Defense: 1; Damage: (Min: 1; Max: 3;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 1; Defense: 1; Damage: (Min: 1; Max: 3;); Color: clDarkRed; Deep: [deDarkWood];),
     // Battle Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35;
-    Level: 2; Defense: 2; Damage: (Min: 2; Max: 5;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 2; Defense: 2; Damage: (Min: 2; Max: 5;); Color: clDarkRed; Deep: [deDarkWood];),
     // Short Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30;
-    Level: 1; Defense: 1; Damage: (Min: 1; Max: 3;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 1; Defense: 1; Damage: (Min: 1; Max: 3;); Color: clDarkRed; Deep: [deDarkWood];),
     // Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35;
-    Level: 2; Defense: 2; Damage: (Min: 1; Max: 5;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 2; Defense: 2; Damage: (Min: 1; Max: 5;); Color: clDarkRed; Deep: [deDarkWood];),
     // Slag Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30;
-    Level: 1; Defense: 1; Damage: (Min: 3; Max: 4;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 1; Defense: 1; Damage: (Min: 3; Max: 4;); Color: clDarkRed; Deep: [deDarkWood];),
     // Spiked Cudgel
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35;
-    Level: 2; Defense: 2; Damage: (Min: 4; Max: 5;); Color: clDarkRed; Deep: deDarkWood;),
+    Level: 2; Defense: 2; Damage: (Min: 4; Max: 5;); Color: clDarkRed; Deep: [deDarkWood];),
 
     // == Gray Cave == //
 
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40;
-    Level: 3; Defense: 3; Damage: (Min: 7; Max: 10;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 3; Defense: 3; Damage: (Min: 7; Max: 10;); Color: clDarkRed; Deep: [deGrayCave];),
     // Long Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45;
-    Level: 4; Defense: 4; Damage: (Min: 10; Max: 14;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 4; Defense: 4; Damage: (Min: 10; Max: 14;); Color: clDarkRed; Deep: [deGrayCave];),
     // Meat Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40;
-    Level: 3; Defense: 3; Damage: (Min: 3; Max: 7;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 3; Defense: 3; Damage: (Min: 3; Max: 7;); Color: clDarkRed; Deep: [deGrayCave];),
     // Flesh Tearer
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45;
-    Level: 4; Defense: 4; Damage: (Min: 6; Max: 10;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 4; Defense: 4; Damage: (Min: 6; Max: 10;); Color: clDarkRed; Deep: [deGrayCave];),
     // Javelin
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40;
-    Level: 3; Defense: 3; Damage: (Min: 1; Max: 10;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 3; Defense: 3; Damage: (Min: 1; Max: 10;); Color: clDarkRed; Deep: [deGrayCave];),
     // Fuscina
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45;
-    Level: 4; Defense: 4; Damage: (Min: 1; Max: 15;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 4; Defense: 4; Damage: (Min: 1; Max: 15;); Color: clDarkRed; Deep: [deGrayCave];),
     // Warhammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40;
-    Level: 3; Defense: 3; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 3; Defense: 3; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deGrayCave];),
     // War Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45;
-    Level: 4; Defense: 4; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deGrayCave;),
+    Level: 4; Defense: 4; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deGrayCave];),
 
     // == Deep Cave == //
 
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50;
-    Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
     // Scimitar
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55;
-    Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
     // Ruby Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50;
-    Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
     // Dark Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55;
-    Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
     // War Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50;
-    Level: 5; Defense: 5; Damage: (Min: 1; Max: 25;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 5; Defense: 5; Damage: (Min: 1; Max: 25;); Color: clDarkRed; Deep: [deDeepCave];),
     // Harpoon
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55;
-    Level: 6; Defense: 6; Damage: (Min: 1; Max: 35;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 6; Defense: 6; Damage: (Min: 1; Max: 35;); Color: clDarkRed; Deep: [deDeepCave];),
     // Flanged Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50;
-    Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
     // War Gavel
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55;
-    Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
 
     // == Blood Cave == //
 
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60;
-    Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deBloodCave];),
     // Great Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65;
-    Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deBloodCave];),
     // Berserker Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60;
-    Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDeepCave;),
+    Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDeepCave];),
     // Marauder Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65;
-    Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deBloodCave];),
     // Silvan Whisper
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60;
-    Level: 7; Defense: 7; Damage: (Min: 1; Max: 50;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 7; Defense: 7; Damage: (Min: 1; Max: 50;); Color: clDarkRed; Deep: [deBloodCave];),
     // Impaler
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65;
-    Level: 8; Defense: 8; Damage: (Min: 1; Max: 65;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 8; Defense: 8; Damage: (Min: 1; Max: 65;); Color: clDarkRed; Deep: [deBloodCave];),
     // Barbarous Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60;
-    Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deBloodCave];),
     // Adept Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65;
-    Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deBloodCave;),
+    Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deBloodCave];),
 
     // == Dungeon of Doom == //
 
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70;
-    Level: 9; Defense: 9; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 9; Defense: 9; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // Troll Slayer,
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75;
-    Level: 10; Defense: 10; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 10; Defense: 10; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70;
-    Level: 9; Defense: 9; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 9; Defense: 9; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // Demon Axe,
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75;
-    Level: 10; Defense: 10; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 10; Defense: 10; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70;
-    Level: 9; Defense: 9; Damage: (Min: 1; Max: 80;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 9; Defense: 9; Damage: (Min: 1; Max: 80;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75;
-    Level: 10; Defense: 10; Damage: (Min: 1; Max: 100;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 10; Defense: 10; Damage: (Min: 1; Max: 100;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // War Maul
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70;
-    Level: 9; Defense: 9; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;),
+    Level: 9; Defense: 9; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDungeonOfDoom];),
     // Doom Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75;
-    Level: 10; Defense: 10; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: deDungeonOfDoom;)
+    Level: 10; Defense: 10; Damage: (Min: 0; Max: 0;); Color: clDarkRed; Deep: [deDungeonOfDoom];)
 
     );
 
@@ -222,16 +237,17 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
-    procedure Add(ADeep: TDeepEnum);
-    function GetName(AItem: TItemEnum): string;
+    procedure Add(ADeep: TDeepEnum; AX: Integer = -1; AY: Integer = -1; AID: Integer = -1);
+    function GetName(AItemEnum: TItemEnum): string;
     function GetItemEnum(AItemID: Integer): TItemEnum;
-    function GetItemInfo(AItem: Item): string;
-    function GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
-      ACount: Byte): string;
+    function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
+      ACount: Byte = 0): string;
     function RenderInvItem(X, Y, I: Integer; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True): string;
     procedure AddItemToInv(Index: Integer); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1; EqFlag: Boolean = False); overload;
     function GetInventory: string;
+    procedure Drop(AX, AY: Byte; AItemEnum: TItemEnum); overload;
+    procedure Drop(AX, AY: Byte; AIsBoss: Boolean); overload;
   end;
 
 var
@@ -239,51 +255,39 @@ var
 
 implementation
 
-uses Math, Classes, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes, uGame;
+uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes, uGame;
 
 { TItems }
 
-function TItems.GetItemInfo(AItem: Item): string;
+function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
+  ACount: Byte = 0): string;
 var
   ID: Integer;
   S: string;
 begin
   S := '';
   ID := AItem.ItemID;
+  // Amount
   if (AItem.Stack > 1) then
-    // Amount
     S := '(' + IntToStr(AItem.Amount) + 'x)'
-    // Durability
+  // Corpse
+  else if (TItemEnum(ID) = iCorpse) then
+    S := ''
+  // Durability
   else
     S := '(' + IntToStr(AItem.Durability) + '/' +
       IntToStr(ItemBase[TItemEnum(ID)].MaxDurability) + ')';
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
-end;
-
-function TItems.GetMapItemInfo(AItem: Item; IsManyItems: Boolean;
-  ACount: Byte): string;
-var
-  S: string;
-  N: Integer;
-begin
-  S := '';
-  N := AItem.ItemID;
-  if (AItem.Stack > 1) then
-    // Amount
-    S := '(' + IntToStr(AItem.Amount) + 'x)'
-    // Durability
-  else
-    S := '(' + IntToStr(AItem.Durability) + '/' +
-      IntToStr(ItemBase[TItemEnum(N)].MaxDurability) + ')';
-  S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
-    ' ' + S)));
-  if IsManyItems then
+  // Map's item
+  if (IsManyItems or (ACount > 0)) then
   begin
-    Result := Format(_('Several items (%dx) are lying here (%s).'),
-      [ACount, S]);
-  end
-  else
-    Result := Format(_('%s is lying here.'), [S]);
+    S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) + ' ' + S)));
+    if IsManyItems then
+    begin
+      Result := Format(_('Several items (%dx) are lying here (%s).'),
+        [ACount, S]);
+    end else Result := Format(_('%s is lying here.'), [S]);
+  end;
 end;
 
 procedure Make(ID: Byte; var AItem: Item);
@@ -295,35 +299,42 @@ begin
   AItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
 end;
 
-procedure TItems.Add(ADeep: TDeepEnum);
+procedure TItems.Add(ADeep: TDeepEnum; AX: Integer = -1; AY: Integer = -1;
+  AID: Integer = -1);
 var
   ID, FX, FY: Byte;
   FItem: Item;
   Value: Integer;
+  IT: TItemType;
 begin
   repeat
-    ID := Math.RandomRange(0, Ord(High(TItemEnum)) + 1);
-    FX := Math.RandomRange(0, High(Byte));
-    FY := Math.RandomRange(0, High(Byte));
+    if (AID >= 0) then ID := AID
+      else ID := Math.RandomRange(0, Ord(High(TItemEnum)) + 1);
+    if (AX >= 0) then FX := AX
+      else FX := Math.RandomRange(0, High(Byte));
+    if (AY >= 0) then FY := AY
+      else FY := Math.RandomRange(0, High(Byte));
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
-    ((ItemBase[TItemEnum(ID)].MaxStack > 1) or
-    (ItemBase[TItemEnum(ID)].Deep = ADeep));
+    (ADeep in ItemBase[TItemEnum(ID)].Deep);
+  if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then Exit;
   Make(ID, FItem);
   FItem.MapID := Ord(ADeep);
-  FItem.Amount := 1;
-  FItem.X := FX;
-  FItem.Y := FY;
-  case ItemBase[TItemEnum(ID)].ItemType of
+  FItem.Amount := Clamp(Math.RandomRange(0, ItemBase[TItemEnum(ID)].MaxStack div 3) + 1, 1, ItemBase[TItemEnum(ID)].MaxStack);
+  IT := ItemBase[TItemEnum(ID)].ItemType;
+  case IT of
     itCoin:
-      FItem.Amount := (Math.RandomRange(0, 25) + 1) * (Ord(ADeep) + 1);
-    itPotion, itFood:
-      FItem.Amount := (Math.RandomRange(0, ItemBase[TItemEnum(ID)].MaxStack div 3) + 1);
+    begin
+      Value := Ord(ADeep) + 1;
+      FItem.Amount := Math.RandomRange(Value * Value, Value * Value * 10) + 1;
+    end;
   end;
-  if (FItem.Stack = 1) then
+  if ((FItem.Stack = 1) and (IT <> itCorpse)) then
   begin
     Value := ItemBase[TItemEnum(ID)].MaxDurability;
     FItem.Durability := Math.RandomRange(Value div 4, Value) + 1;
   end;
+  FItem.X := FX;
+  FItem.Y := FY;
   FItem.Equipment := 0;
   Items_Dungeon_AppendItem(FItem);
 end;
@@ -336,6 +347,39 @@ begin
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
   Items_Inventory_AppendItem(FItem);
+end;
+
+procedure TItems.Drop(AX, AY: Byte; AItemEnum: TItemEnum);
+begin
+  Add(Map.Deep, AX, AY, Ord(AItemEnum));
+end;
+
+procedure TItems.Drop(AX, AY: Byte; AIsBoss: Boolean);
+var
+  V, I: Byte;
+  F: Boolean;
+begin
+  V := Math.RandomRange(0, 10);
+  if (V < 4) then Drop(AX, AY, iGold);
+  if (V < 3) then Add(Map.Deep, AX, AY);
+  if (V < 2) then Add(Map.Deep, AX, AY);
+  if (V < 1) then Add(Map.Deep, AX, AY);
+  if AIsBoss then
+  begin
+    F := False;
+    for I := 1 to Ord(Map.Deep) + 5 do
+    begin
+      case Math.RandomRange(0, 3) of
+        0..1: Drop(AX, AY, iGold);
+        2:
+        begin
+          Add(Map.Deep, AX, AY);
+          F := True;
+        end;
+      end;
+    end;
+    if not F then Add(Map.Deep, AX, AY);
+  end;
 end;
 
 procedure TItems.Render(AX, AY: Byte);
@@ -399,10 +443,13 @@ end;
 // Medium armor, Mail hauberk, Brigandine,
 // Heavy armor, Plate armor,
 
-function TItems.GetName(AItem: TItemEnum): string;
+function TItems.GetName(AItemEnum: TItemEnum): string;
 begin
-  case AItem of
+  case AItemEnum of
     // == All maps == //
+    // Corpse
+    iCorpse:
+      Result := _('Corpse');
     // Gold
     iGold:
       Result := _('Gold');
@@ -415,6 +462,9 @@ begin
     // Food
     iFood:
       Result := _('Food');
+    // Key
+    iKey:
+      Result := _('Key');
 
     // == Dark Wood == //
 

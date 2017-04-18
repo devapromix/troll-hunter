@@ -433,7 +433,7 @@ var
     if (C > 0) then
     begin
       FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Deep), 0, X, Y);
-      S := S + Items.GetMapItemInfo(FItem, (C > 1), C) + ' ';
+      S := S + Items.GetItemInfo(FItem, (C > 1), C) + ' ';
     end;
     if IsMob then
     begin
@@ -445,7 +445,7 @@ var
           MobBase[TMobEnum(Mobs.FMob[C].ID)].MaxLife]);
       end;
     end;
-
+    //
     Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S,
       TK_ALIGN_TOP);
   end;

@@ -197,6 +197,7 @@ type
     procedure Attack;
     procedure Defeat;
     function GetRadius: Byte;
+    procedure DropItems;
   end;
 
 type
@@ -221,7 +222,8 @@ var
 
 implementation
 
-uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext, uGame;
+uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext, uGame,
+  uItem;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -295,14 +297,21 @@ begin
     [GetDescThe(Mobs.GetName(TMobEnum(ID)))]));
   Player.Kills := Player.Kills + 1;
   Player.Score := Player.Score + MobBase[TMobEnum(ID)].Level;
+  Self.DropItems;
   // Boss
   if (MobBase[TMobEnum(ID)].Boss and (Map.Deep = FinalDungeon)) then
   begin
-    Game.Won := True;
+    if not Game.Wizard then Game.Won := True;
     MsgLog.Add(_('You have won.'));
     Player.Score := Player.Score + 1000;
     Game.Screenshot := GetTextScreenshot();
   end;
+end;
+
+procedure TMob.DropItems;
+begin
+  Items.Drop(Self.X, Self.Y, MobBase[TMobEnum(Self.ID)].Boss);
+  Items.Drop(Self.X, Self.Y, iCorpse);
 end;
 
 function TMob.GetRadius: Byte;

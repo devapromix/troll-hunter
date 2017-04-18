@@ -441,6 +441,7 @@ initialization
 Map := TMap.Create;
 
 finalization
-  FreeAndNil(Map);
+
+FreeAndNil(Map);
 
 end.
