@@ -22,7 +22,7 @@ type
 const
   SkillMin = 5;
   SkillMax = 75;
-  SkillExp = 100;
+  SkillExp = 65;
   AtrMax = 100;
   RadiusMax = 15;
   DVMax = 80;
@@ -165,25 +165,25 @@ begin
     case FWeaponSkill of
       skBlade:
       begin
-        Skill(FWeaponSkill);
+        Skill(FWeaponSkill, 2);
         Skill(skAthletics, 2);
         Skill(skDodge, 2);
       end;
       skAxe:
       begin
-        Skill(FWeaponSkill);
+        Skill(FWeaponSkill, 2);
         Skill(skAthletics, 3);
         Skill(skDodge);
       end;
       skSpear:
       begin
-        Skill(FWeaponSkill);
+        Skill(FWeaponSkill, 2);
         Skill(skAthletics);
         Skill(skDodge, 3);
       end;
       skMace:
       begin
-        Skill(FWeaponSkill);
+        Skill(FWeaponSkill, 2);
         Skill(skAthletics, 4);
       end;
     end;
@@ -732,9 +732,19 @@ begin
   // Add weapon and armor
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iTrollSlayer, 1, True);
+    case Math.RandomRange(0, 4) of
+      0:Items.AddItemToInv(iTrollSlayer, 1, True);
+      1:Items.AddItemToInv(iDemonAxe, 1, True);
+      2:Items.AddItemToInv(iHonedSpear, 1, True);
+      3:Items.AddItemToInv(iDoomHammer, 1, True);
+    end;
   end else begin
-    Items.AddItemToInv(iSlagHammer, 1, True);
+    case Math.RandomRange(0, 4) of
+      0: Items.AddItemToInv(iRustySword, 1, True);
+      1: Items.AddItemToInv(iHatchet, 1, True);
+      2: Items.AddItemToInv(iShortSpear, 1, True);
+      3: Items.AddItemToInv(iSlagHammer, 1, True);
+    end;
   end;
   // Add potions and scrolls
   if Game.Wizard then
