@@ -20,37 +20,39 @@ type
 type
   TMobEnum = (
     // Dark Wood
-    mBigRat, mSpinyFrog, mJackal, mBlackBear, mGrizzlyBear, mAnaconda, mWolf,
+    mBigRat, mSpinyFrog, mJackal, mBlackBear, mGrizzlyBear, mAnaconda, mWolf, mHound,
     // Gray Cave
-    mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm,
+    mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm, mNaga,
     // Deep Cave
-    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab,
+    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab, mPan,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian, mOrc,
+    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian, mOrc, mOrcWarrior,
     // Dungeon of Doom
-    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton,
+    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton, mLich,
     // Boss
     mTrollKing);
 
 // {Black Bear (B)}, {Grizzly Bear (B)}, {Big Rat (R)}
 // Black Viper (S), Ball Python (S), {Anaconda (S)},
-// {Jackal (J)}, Hound (H), {Wolf (W)},
-// {Spiny Frog (F)}, Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G), Komodo Dragon (K)
-// Pan (P), Satyr (S), Faun (F), Centaur (C),
+// {Jackal (J)}, {Hound (H)}, {Wolf (W)},
+// {Spiny Frog (F)}, Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G),
+// Komodo Dragon (K)
+// Faun (F), Centaur (C),
 
 // {Kobold (K)}, {Big Kobold (K)}, {Red Kobold} (K), {Gnoll (G)}, {Basilisk (B)}
 // {Worm (W)}, Swamp Worm (W), {Wisp (W)}, Fire Vortex (V), Giant Slug (S)
-// Naga (N), Greater Naga (N), Naga Warrior (N), Jelly (J), Acid Blob (B)
+// {Naga (N)}, Greater Naga (N), Naga Warrior (N), Jelly (J), Acid Blob (B)
 
 //
-// {Scorpion (S)}, {Wasp (W)},
+// {Scorpion (S)}, {Wasp (W)}, {Pan (P)}, Satyr (S),
 // {Ant (A)}, {Soldier Ant (A)}, {Scarab (S)}, {Fire Crab (C)}, {Big Spider (S)}
 
 // {Goblin (G)}, {Dark Goblin (G)}, {Black Goblin (G)}, {Gargoyle (G)}, {Warg (W)}
 // Air Elemental (E), Fire Elemental (E), Water Elemental (E), Earth Elemental (E),
-// {Orc (O)}, Orc Warrior (O), Orc Warlord (O), {Draconian (D)},
+// {Orc (O)}, {Orc Warrior (O)}, Orc Warlord (O), {Draconian (D)},
 
-// {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, {Skeleton (S)}, Lich (L), Phantom (P)
+// {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, {Skeleton (S)},
+// {Lich (L)}, Phantom (P)
 // Stone Golem (G), Fire Golem (G), Frost Golem (G), Hill Giant (G), Stone Giant (G)
 // Titan (T), {Ogre (O)}, Two-Headed Ogre (O), {Cyclops (C)}, {Troll King (T)}
 
@@ -78,7 +80,10 @@ const
     DV: 10; Damage: (Min: 7; Max: 9;); Color: $FF331155;),
     // Wolf
     (Symbol: 'w'; Boss: False; Deep: [deDarkWood]; MaxLife: 22; Level: 3; Armor: 2;
-    DV: 12; Damage: (Min: 8; Max: 9;); Color: $FF331155;),
+    DV: 11; Damage: (Min: 8; Max: 9;); Color: $FF331155;),
+    // Hound
+    (Symbol: 'h'; Boss: False; Deep: [deDarkWood]; MaxLife: 23; Level: 3; Armor: 2;
+    DV: 12; Damage: (Min: 8; Max: 9;); Color: $FF249988;),
 
     // == Gray Cave == //
 
@@ -103,6 +108,9 @@ const
     // Worm
     (Symbol: 'w'; Boss: False; Deep: [deGrayCave]; MaxLife: 40; Level: 5; Armor: 5;
     DV: 27; Damage: (Min: 10; Max: 14;); Color: $FF777700;),
+    // Naga
+    (Symbol: 'n'; Boss: False; Deep: [deGrayCave]; MaxLife: 42; Level: 5; Armor: 5;
+    DV: 28; Damage: (Min: 10; Max: 14;); Color: $FF7777CC;),
 
     // == Deep Cave == //
 
@@ -127,12 +135,15 @@ const
     // Fire Crab
     (Symbol: 's'; Boss: False; Deep: [deDeepCave]; MaxLife: 70; Level: 6; Armor: 7;
     DV: 40; Damage: (Min: 15; Max: 20;); Color: $FF992233;),
+    // Pan
+    (Symbol: 'p'; Boss: False; Deep: [deDeepCave]; MaxLife: 70; Level: 6; Armor: 7;
+    DV: 42; Damage: (Min: 15; Max: 20;); Color: $FF992233;),
 
     // == Blood Cave == //
 
     // Goblin
     (Symbol: 'g'; Boss: False; Deep: [deBloodCave]; MaxLife: 72; Level: 7; Armor: 8;
-    DV: 40; Damage: (Min: 15; Max: 20;); Color: $FF00AA00;),
+    DV: 42; Damage: (Min: 15; Max: 20;); Color: $FF00AA00;),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Deep: [deBloodCave]; MaxLife: 75; Level: 7; Armor: 8;
     DV: 45; Damage: (Min: 15; Max: 21;); Color: $FF116610;),
@@ -149,8 +160,11 @@ const
     (Symbol: 'd'; Boss: False; Deep: [deBloodCave]; MaxLife: 85; Level: 8; Armor: 10;
     DV: 50; Damage: (Min: 17; Max: 24;); Color: $FF445544;),
     // Orc
-    (Symbol: 'd'; Boss: False; Deep: [deBloodCave]; MaxLife: 88; Level: 8; Armor: 10;
-    DV: 50; Damage: (Min: 18; Max: 25;); Color: $FF445544;),
+    (Symbol: 'o'; Boss: False; Deep: [deBloodCave]; MaxLife: 88; Level: 8; Armor: 10;
+    DV: 50; Damage: (Min: 17; Max: 25;); Color: $FF445544;),
+    // Orc Warrior
+    (Symbol: 'o'; Boss: False; Deep: [deBloodCave]; MaxLife: 88; Level: 8; Armor: 11;
+    DV: 53; Damage: (Min: 18; Max: 25;); Color: $FF445544;),
 
     // == Dungeon of Doom == //
 
@@ -175,6 +189,9 @@ const
     // Skeleton
     (Symbol: 'c'; Boss: False; Deep: [deDungeonOfDoom]; MaxLife: 100; Level: 10; Armor: 18;
     DV: 60; Damage: (Min: 22; Max: 30;); Color: $FF223333;),
+    // Lich
+    (Symbol: 'l'; Boss: False; Deep: [deDungeonOfDoom]; MaxLife: 100; Level: 10; Armor: 19;
+    DV: 60; Damage: (Min: 23; Max: 30;); Color: $FF223333;),
 
     // == Bosses == //
 
@@ -523,6 +540,8 @@ begin
       Result := _('Anaconda');
     mWolf:
       Result := _('Wolf');
+    mHound:
+      Result := _('Hound');
 
     // == Gray Cave == //
 
@@ -540,6 +559,8 @@ begin
       Result := _('Wisp');
     mWorm:
       Result := _('Worm');
+    mNaga:
+      Result := _('Naga');
 
     // == Deep Cave == //
 
@@ -557,6 +578,8 @@ begin
       Result := _('Big Spider');
     mFireCrab:
       Result := _('Fire Crab');
+    mPan:
+      Result := _('Pan');
 
     // == Blood Cave == //
              
@@ -574,6 +597,8 @@ begin
       Result := _('Draconian');
     mOrc:
       Result := _('Orc');
+    mOrcWarrior:
+      Result := _('Orc Warrior');
 
     // == Dungeon of Doom == //
 
@@ -591,6 +616,8 @@ begin
       Result := _('Cyclops');
     mSkeleton:
       Result := _('Skeleton');
+    mLich:
+      Result := _('Lich');
 
     // == Bosses == //
 
