@@ -278,7 +278,7 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add('[color=red]' + _('You die...') + '[/color]');
+  MsgLog.Add(Format(FC, [clAlarm, _('You die...')]));
   Game.Screenshot := GetTextScreenshot();
   Corpses.Append();
 end;
@@ -480,19 +480,19 @@ begin
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You drink %s.'), [The]));
     case Items.GetItemEnum(AItem.ItemID) of
-      iPotionOfHealth:
+      iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3:
       begin
         Player.Score := Player.Score + 1;
-        Value := Self.GetSkillValue(skHealing) + 100;
+        Value := Self.GetSkillValue(skHealing) + ItemBase[TItemEnum(AItem.ItemID)].Value;
         MsgLog.Add(Format(_('You feel healthy!') + ' ' + F, [_('Life'),
           Min(MaxLife - Life, Value)]));
         Self.Life := Clamp(Self.Life + Value, 0, MaxLife);
         Self.Skill(skHealing, 5);
       end;
-      iPotionOfMana:
+      iPotionOfMana1, iPotionOfMana2, iPotionOfMana3:
       begin
         Player.Score := Player.Score + 1;
-        Value := Self.GetSkillValue(skConcentration) + 100;
+        Value := Self.GetSkillValue(skConcentration) + ItemBase[TItemEnum(AItem.ItemID)].Value;
         MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
         Self.Mana := Clamp(Self.Mana + Value, 0, MaxMana);
         Self.Skill(skConcentration, 5);
@@ -520,9 +520,10 @@ begin
     case Items.GetItemEnum(AItem.ItemID) of
       iFood:
       begin
+        Value := ItemBase[TItemEnum(AItem.ItemID)].Value;
         Player.Score := Player.Score + 1;
-        Player.Food := Player.Food + 250;
-        MsgLog.Add(Format(F, [_('Food'), 250]));
+        Player.Food := Player.Food + Value;
+        MsgLog.Add(Format(F, [_('Food'), Value]));
       end;
     end;
     Items_Inventory_SetItem(Index, AItem);
@@ -640,7 +641,8 @@ begin
   begin
     Exp := Exp - ExpMax;
     FLevel := FLevel + 1;
-    MsgLog.Add(Format('%s +1.', [_('Level')]));
+    MsgLog.Add(
+    Format(FC, [clAlarm, Format('%s +1.', [_('Level')])]));
     Player.Score := Player.Score + (FLevel * FLevel);
   end;
 end;
@@ -649,15 +651,16 @@ procedure TPlayer.Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
 begin
   if (FSkill[ASkill].Value < SkillMax) then
   begin
-    Inc(FSkill[ASkill].Exp, AExpValue);
+    Inc(FSkill[ASkill].Exp, Math.RandomRange(0, AExpValue + 1) + 1);
     if (FSkill[ASkill].Exp >= SkillExp) then
     begin
-      AddExp();
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
       Inc(FSkill[ASkill].Value);
       // Add message {!!!}
-      MsgLog.Add(Format('%s %s +1.', [_('Skill'), Self.GetSkillName(ASkill)]));
+      MsgLog.Add(Format(FC, [clAlarm, Format('%s %s +1.', [_('Skill'), Self.GetSkillName(ASkill)])]));
       FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
+      // Add exp
+      AddExp();
       // Add scores
       if (FSkill[ASkill].Value = SkillMax) then 
         Player.Score := Player.Score + 50;
@@ -685,11 +688,10 @@ procedure TPlayer.Wait;
 begin
   if not DeepVis[Map.Deep] then
   begin
-    MsgLog.Add(Format(_('You have opened a new territory: %s.'),
-      [Map.GetName]));
+    MsgLog.Add(Format(FC, [clAlarm, Format(_('You have opened a new territory: %s.'), [Map.GetName])]));
     DeepVis[Map.Deep] := True;
     if (Ord(Map.Deep) > 0) then
-    Player.Score := Player.Score + (Ord(Map.Deep) * 15);
+      Player.Score := Player.Score + (Ord(Map.Deep) * 15);
   end;
   Move(0, 0);
 end;
@@ -749,11 +751,11 @@ begin
   // Add potions and scrolls
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iPotionOfHealth, ItemBase[iPotionOfHealth].MaxStack);
-    Items.AddItemToInv(iPotionOfMana, ItemBase[iPotionOfMana].MaxStack);
+    Items.AddItemToInv(iPotionOfHealth1, ItemBase[iPotionOfHealth1].MaxStack);
+    Items.AddItemToInv(iPotionOfMana1, ItemBase[iPotionOfMana1].MaxStack);
   end else begin
-    Items.AddItemToInv(iPotionOfHealth, 5);
-    Items.AddItemToInv(iPotionOfMana, 5);
+    Items.AddItemToInv(iPotionOfHealth1, 5);
+    Items.AddItemToInv(iPotionOfMana1, 5);
   end;
   // Add coins
   G := IfThen(Game.Wizard, RandomRange(6666, 9999), 50); // :)

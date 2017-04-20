@@ -164,7 +164,8 @@ end;
 
 class function TScene.KeyStr(AKey: string; AStr: string = ''): string;
 begin
-  Result := Trim(Format('[color=%s][[%s]][/color] %s', [LowerCase(terminal_get('ini.colors.key')), UpperCase(AKey), AStr]));
+  Result := Trim(Format(FC + ' %s', [GetColorFromIni('Key'),
+    Format('[[%s]]', [UpperCase(AKey)]), AStr]));
 end;
 
 procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
@@ -177,13 +178,7 @@ begin
   for I := 0 to L do
   begin
     Terminal.BackgroundColor(DarkColor);
-    if (I <= W) then
-    begin
-      if (Cur > 0) then
-      begin
-        Terminal.BackgroundColor(AColor);
-      end;
-    end;
+    if (I <= W) and (Cur > 0) then Terminal.BackgroundColor(AColor);
     Terminal.Print(X + I + LM, Y, ' ');
     Terminal.BackgroundColor(0); // Clear background
   end;
@@ -194,7 +189,7 @@ var
   X: Byte;
 begin
   X := Terminal.Window.Width div 2;
-  Terminal.ForegroundColor(color_from_name(LowerCase(terminal_get('ini.colors.title'))));
+  Terminal.ForegroundColor(color_from_name(GetColorFromIni('Title')));
   Terminal.Print(X, AY, Format(FT, [ATitleStr]), TK_ALIGN_CENTER);
   Terminal.ForegroundColor(clDefault);
 end;
@@ -424,7 +419,7 @@ var
     FItem: Item;
   begin
     S := '';
-    Terminal.BackgroundColor(0);  
+    Terminal.BackgroundColor(0);
     Terminal.ForegroundColor(clDefault);
     S := S + T.Name + '. ';
     if Corpses.IsCorpse(X, Y) then
@@ -551,10 +546,12 @@ begin
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 3,
-    Format(_('Turn: %d Gold: %d Food: %d Score: %d'),
-    [Player.Turn, Player.Gold, Player.Food, Player.Score]));
-  Terminal.Print(Status.Left, Status.Top + 4, Format(_('Damage: %d-%d Protection: %d'),
-    [Player.Damage.Min, Player.Damage.Max, Player.PV]));
+    Format(_('Turn: %d Gold: %d Food: %d'),
+    [Player.Turn, Player.Gold, Player.Food]));
+  Terminal.Print(Status.Left, Status.Top + 4, Format(_('Damage: %d-%d PV: %d DV: %d'),
+    [Player.Damage.Min, Player.Damage.Max, Player.PV, Player.DV]));
+  Terminal.Print(Status.Left, Status.Top + 5, Format(_('Score: %d Kills: %d'),
+    [Player.Score, Player.Kills]));
   // Bars
   Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
     Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
@@ -679,8 +676,8 @@ var
   Y: Byte;
 begin
   Y := Terminal.Window.Height div 2;
-  Terminal.Print(Terminal.Window.Width div 2, Y - 1, _('Are you sure?'), TK_ALIGN_CENTER);
-  Terminal.Print(Terminal.Window.Width div 2, Y + 1, Format(_('Quit? %s/%s'), [KeyStr('Y'), KeyStr('N')]), TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Y - 1, UpperCase(_('Are you sure?')), TK_ALIGN_CENTER);
+  Terminal.Print(Terminal.Window.Width div 2, Y + 1, Format(_('Wish to leave? %s/%s'), [KeyStr('Y'), KeyStr('N')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneQuit.Update(var Key: Word);
@@ -704,10 +701,9 @@ var
 begin
   X := Terminal.Window.Width div 2;
   Y := Terminal.Window.Height div 2;
-  Terminal.Print(X, Y - 1, _('GAME OVER!!!'), TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 1,
-    Format(_('Killed by [color=white]%s[/color]. Press %s'),
-    [Player.Killer, KeyStr('ENTER')]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y - 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1, Format(_('Killed by %s. Press %s'),
+    [Format(FC, [clAlarm, Player.Killer]), KeyStr('ENTER')]), TK_ALIGN_CENTER);
   if Game.Wizard then
     Terminal.Print(X, Y + 3, Format(_('Press %s to continue...'),
       [KeyStr('SPACE')]), TK_ALIGN_CENTER);
@@ -739,7 +735,7 @@ var
 begin
   X := Terminal.Window.Width div 2;
   Y := Terminal.Window.Height div 2;
-  Terminal.Print(X, Y - 1, _('CONGRATULATIONS!!!'), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y - 1, UpperCase(_('Congratulations!!!')), TK_ALIGN_CENTER);
   Terminal.Print(X, Y + 1,
     Format(_('You have won. Press %s'), [KeyStr('ENTER')]),
     TK_ALIGN_CENTER);
@@ -782,9 +778,11 @@ begin
     Items.RenderInvItem(5, 2, I, FItem, True);
   end;
 
+  MsgLog.Render(2);
+
   AddKey('Esc', _('Close'), True);
   AddKey('Space', _('Skills and attributes'));
-  AddKey('A-Z', _('Select an item'), False, True);
+  AddKey('A-Z', _('Use an item'), False, True);
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -823,6 +821,8 @@ begin
     FItem := Items_Inventory_GetItem(I);
     Items.RenderInvItem(5, 2, I, FItem);
   end;
+
+  MsgLog.Render(2);
 
   AddKey('Esc', _('Close'), True, False);
   AddKey('A-Z', _('Drop an item'), False, True);
@@ -988,6 +988,8 @@ begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
     Items.RenderInvItem(5, 2, I, FItem);
   end;
+
+  MsgLog.Render(2);
 
   AddKey('Esc', _('Close'), True, False);
   AddKey('A-Z', _('Pick up an item'), False, True);

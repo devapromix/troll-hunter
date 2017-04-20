@@ -73,17 +73,17 @@ var
   Wizard: string;
 begin
   Value.Width := Clamp(StrToIntDef(terminal_get('ini.screen.width'),
-    80), 80, 255);
+    80), 80, High(Byte));
   Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'),
-    30), 30, 128);
+    30), 30, High(Byte) div 2); 
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
   Value.Width := Clamp(StrToIntDef(terminal_get('ini.panel.width'),
     35), 35, 50);
   Panel := SetEntSize(0, 0, Value.Width, 4);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);
-  Log := SetEntSize(View.Width + 2, Status.Height + 3, Panel.Width,
-    Screen.Height - Panel.Height - 8);
+  Log := SetEntSize(View.Width + 2, Status.Height + 4, Panel.Width,
+    Screen.Height - Panel.Height - 9);
   Info := SetEntSize(View.Width + 2, Screen.Height - 4, Panel.Width, 3);
   //           
   FWindow.Width := Screen.Width;

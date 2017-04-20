@@ -20,6 +20,7 @@ type
     property Screenshot: string read FScreenshot write FScreenshot;
     procedure LoadConfig;
     procedure Start;
+    procedure Log(S: string);
   end;
 
 var
@@ -28,7 +29,7 @@ var
 implementation
 
 uses SysUtils, Math, Dialogs, uCommon, uPlayer, uMsgLog, uScenes, gnugettext,
-  BearLibTerminal;
+  BearLibTerminal, uItem, uMob;
 
 { TGame }
 
@@ -54,15 +55,24 @@ begin
   inherited;
 end;
 
+procedure TGame.Log(S: string);
+begin
+  terminal_set('Log: ' + S);
+end;
+
 procedure TGame.LoadConfig;
 begin
   // Localization
   UseLanguage(terminal_get('ini.localization.locale'));
   // Load colors
-  clDefault := color_from_name(LowerCase(terminal_get('ini.colors.default')));
-  clBackground := color_from_name(LowerCase(terminal_get('ini.colors.background')));
-  clCorpse := color_from_name(LowerCase(terminal_get('ini.colors.corpse')));
-  clLook := color_from_name(LowerCase(terminal_get('ini.colors.look')));
+  clDefault := color_from_name(GetColorFromIni('Default'));
+  clBackground := color_from_name(GetColorFromIni('Background'));
+  clCorpse := color_from_name(GetColorFromIni('Corpse'));
+  clLook := color_from_name(GetColorFromIni('Look'));
+  clAlarm := GetColorFromIni('Alarm');
+  // Save to log
+  Game.Log(Format('Items: count=%d', [Length(ItemBase)]));
+  Game.Log(Format('Mobs: count=%d', [Length(MobBase)]));
 end;
 
 procedure TGame.Start;
@@ -72,9 +82,10 @@ begin
   Player.StarterSet;
   // Intro
   MsgLog.Clear;
-  MsgLog.Add(_('Welcome to Elvion!'));
-  MsgLog.Add(_('You need to find and kill The King Troll!'));
-  MsgLog.Add(_('Press ? for help.'));
+  MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [
+    _('Welcome to Elvion!'),
+    _('You need to find and kill The King Troll!'),
+    _('Press ? for help.')])]));
   //
   Scenes.SetScene(scGame);
 end;

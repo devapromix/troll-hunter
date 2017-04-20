@@ -8,12 +8,13 @@ uses
 type
   TMsgLog = class(TObject)
   private
+    FAct: string;
     FMsg: string;
     FLog: TStringList;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Render;
+    procedure Render(const Y: Byte = 0);
     procedure Clear;
     procedure Add(S: string);
     procedure Turn;
@@ -32,7 +33,7 @@ uses SysUtils, Math, uCommon, uTerminal, BearLibTerminal, uPlayer;
 { TMsgLog }
 
 const
-  MaxLogCapacity = 35;
+  MaxLogCapacity = 50;
 
 procedure TMsgLog.Add(S: string);
 begin
@@ -41,6 +42,7 @@ end;
 
 procedure TMsgLog.Clear;
 begin
+  FAct := '';
   FMsg := '';
   FLog.Clear;
 end;
@@ -68,8 +70,7 @@ begin
     for I := C downto 1 do
     begin
       if (Odd(I)) then Color := 'dark gray' else Color := 'light gray';
-      SL.Append(Format('[color=%s]%s[/color]',
-        [Color, FLog[FLog.Count - I]]));
+      SL.Append(Format(FC, [Color, FLog[FLog.Count - I]]));
     end;
     Result := SL.Text;
   finally
@@ -77,16 +78,13 @@ begin
   end;
 end;
 
-procedure TMsgLog.Render;
-var
-  L: string;
+procedure TMsgLog.Render(const Y: Byte = 0);
 begin
-  if (Trim(MsgLog.Msg) = '') then L := '' else
-    L := Format('[color=%s]%s[/color]',
-    [LowerCase(terminal_get('ini.colors.log')), Trim(FMsg)]);
+  if (Trim(MsgLog.Msg) = '') then FAct := '' else
+    FAct := Format(FC, [GetColorFromIni('Log'), Trim(FMsg)]);
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(Log.Left, Log.Top, Log.Width, Log.Height,
-    Trim(Self.GetLastMsg(MaxLogCapacity) + L),
+  Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height,
+    Trim(Self.GetLastMsg(MaxLogCapacity) + FAct),
     TK_ALIGN_BOTTOM);
 end;
 
@@ -100,8 +98,7 @@ begin
   for I := C downto 1 do
   begin
     if (Odd(I)) then Color := 'dark gray' else Color := 'light gray';
-    S := S + ' ' + Format('[color=%s]%s[/color]',
-      [Color, FLog[FLog.Count - I]]);
+    S := S + ' ' + Format(FC, [Color, FLog[FLog.Count - I]]);
   end;
   Terminal.ForegroundColor(clGray);
   Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4,

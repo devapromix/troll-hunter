@@ -20,41 +20,48 @@ type
 type
   TMobEnum = (
     // Dark Wood
-    mBigRat, mSpinyFrog, mJackal, mBlackBear, mGrizzlyBear, mAnaconda, mWolf, mHound,
+    mBigRat, mSpinyFrog, mJackal, mBlackBear,
+    mGrizzlyBear, mAnaconda, mWolf, mHound,
     // Gray Cave
-    mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm, mNaga,
+    mKobold, mBigKobold, mRedKobold, mGnoll,
+    mBasilisk, mWisp, mWorm, mNaga,
     // Deep Cave
-    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab, mPan,
+    mScorpion, mWasp, mAnt, mSoldierAnt,
+    mScarab, mBigSpider, mFireCrab, mPan,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian, mOrc, mOrcWarrior,
+    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle,
+    mWarg, mDraconian, mOrc, mOrcWarrior,
     // Dungeon of Doom
-    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton, mLich,
-    // Boss
+    mZombie, mOgre, mMummy, mGhoul,
+    mVampire, mCyclops, mSkeleton, mLich,
+    // Bosses
+    mBlackHound, mGiantNewt, mIguana,
+    mKoboldKing, mSwampWorm, mGiantSlug,
+    mCentaur, mSatyr, mTitan,
+    mHillGiant, mStoneGiant, mTwoHeadedOgre,
     mTrollKing);
 
 // {Black Bear (B)}, {Grizzly Bear (B)}, {Big Rat (R)}
 // Black Viper (S), Ball Python (S), {Anaconda (S)},
 // {Jackal (J)}, {Hound (H)}, {Wolf (W)},
-// {Spiny Frog (F)}, Giant Toad (F), Giant Newt (N), Iguana (I), Giant Gecko (G),
-// Komodo Dragon (K)
-// Faun (F), Centaur (C),
+// {Spiny Frog (F)}, Giant Toad (F), {Giant Newt (N)}, {Iguana (I)}, Giant Gecko (G),
 
 // {Kobold (K)}, {Big Kobold (K)}, {Red Kobold} (K), {Gnoll (G)}, {Basilisk (B)}
-// {Worm (W)}, Swamp Worm (W), {Wisp (W)}, Fire Vortex (V), Giant Slug (S)
+// {Worm (W)}, {Swamp Worm (W)}, {Wisp (W)}, Fire Vortex (V), {Giant Slug (S)}
 // {Naga (N)}, Greater Naga (N), Naga Warrior (N), Jelly (J), Acid Blob (B)
 
-//
-// {Scorpion (S)}, {Wasp (W)}, {Pan (P)}, Satyr (S),
+// {Scorpion (S)}, {Wasp (W)}, {Pan (P)}, {Satyr (S)}, Faun (F), {Centaur (C)},
 // {Ant (A)}, {Soldier Ant (A)}, {Scarab (S)}, {Fire Crab (C)}, {Big Spider (S)}
 
 // {Goblin (G)}, {Dark Goblin (G)}, {Black Goblin (G)}, {Gargoyle (G)}, {Warg (W)}
 // Air Elemental (E), Fire Elemental (E), Water Elemental (E), Earth Elemental (E),
-// {Orc (O)}, {Orc Warrior (O)}, Orc Warlord (O), {Draconian (D)},
+// {Orc (O)}, {Orc Warrior (O)}, Orc Warlord (O), {Draconian (D)}, {Titan (T)}
+// {Hill Giant (G)}, {Stone Giant (G)}
 
 // {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, {Skeleton (S)},
-// {Lich (L)}, Phantom (P)
-// Stone Golem (G), Fire Golem (G), Frost Golem (G), Hill Giant (G), Stone Giant (G)
-// Titan (T), {Ogre (O)}, Two-Headed Ogre (O), {Cyclops (C)}, {Troll King (T)}
+// {Lich (L)}, Phantom (P),
+// Stone Golem (G), Fire Golem (G), Frost Golem (G), 
+// {Ogre (O)}, {Two-Headed Ogre (O)}, {Cyclops (C)}, {Troll King (T)}
 
 const
   MobBase: array [TMobEnum] of TMobBase = (
@@ -133,10 +140,10 @@ const
     (Symbol: 's'; Boss: False; Deep: [deDeepCave]; MaxLife: 65; Level: 6; Armor: 7;
     DV: 40; Damage: (Min: 14; Max: 19;); Color: $FF992233;),
     // Fire Crab
-    (Symbol: 's'; Boss: False; Deep: [deDeepCave]; MaxLife: 70; Level: 6; Armor: 7;
+    (Symbol: 's'; Boss: False; Deep: [deDeepCave]; MaxLife: 70; Level: 7; Armor: 7;
     DV: 40; Damage: (Min: 15; Max: 20;); Color: $FF992233;),
     // Pan
-    (Symbol: 'p'; Boss: False; Deep: [deDeepCave]; MaxLife: 70; Level: 6; Armor: 7;
+    (Symbol: 'p'; Boss: False; Deep: [deDeepCave]; MaxLife: 70; Level: 7; Armor: 7;
     DV: 42; Damage: (Min: 15; Max: 20;); Color: $FF992233;),
 
     // == Blood Cave == //
@@ -163,7 +170,7 @@ const
     (Symbol: 'o'; Boss: False; Deep: [deBloodCave]; MaxLife: 88; Level: 8; Armor: 10;
     DV: 50; Damage: (Min: 17; Max: 25;); Color: $FF445544;),
     // Orc Warrior
-    (Symbol: 'o'; Boss: False; Deep: [deBloodCave]; MaxLife: 88; Level: 8; Armor: 11;
+    (Symbol: 'o'; Boss: False; Deep: [deBloodCave]; MaxLife: 90; Level: 9; Armor: 11;
     DV: 53; Damage: (Min: 18; Max: 25;); Color: $FF445544;),
 
     // == Dungeon of Doom == //
@@ -195,9 +202,45 @@ const
 
     // == Bosses == //
 
+    // Black Hound
+    (Symbol: 'h'; Boss: True; Deep: [deDarkWood]; MaxLife: 45; Level: 3; Armor: 8;
+    DV: 25; Damage: (Min: 8; Max: 10;); Color: $FFCC8899;),
+    // Giant Newt
+    (Symbol: 'n'; Boss: True; Deep: [deDarkWood]; MaxLife: 50; Level: 3; Armor: 9;
+    DV: 27; Damage: (Min: 9; Max: 11;); Color: $FF66DD99;),
+    // Iguana
+    (Symbol: 'i'; Boss: True; Deep: [deDarkWood]; MaxLife: 55; Level: 3; Armor: 10;
+    DV: 30; Damage: (Min: 10; Max: 12;); Color: $FF44FF77;),
+    // Kobold King
+    (Symbol: 'k'; Boss: True; Deep: [deGrayCave]; MaxLife: 60; Level: 5; Armor: 12;
+    DV: 32; Damage: (Min: 10; Max: 15;); Color: $FFAA77CC;),
+    // Swamp Worm
+    (Symbol: 'k'; Boss: True; Deep: [deGrayCave]; MaxLife: 63; Level: 5; Armor: 14;
+    DV: 35; Damage: (Min: 12; Max: 18;); Color: $FF6699BB;),
+    // Giant Slug
+    (Symbol: 'k'; Boss: True; Deep: [deGrayCave]; MaxLife: 67; Level: 5; Armor: 16;
+    DV: 38; Damage: (Min: 14; Max: 20;); Color: $FFCCAADD;),
+    // Centaur
+    (Symbol: 'c'; Boss: True; Deep: [deDeepCave]; MaxLife: 70; Level: 7; Armor: 25;
+    DV: 40; Damage: (Min: 18; Max: 23;); Color: $FF77CCAA;),
+    // Satyr
+    (Symbol: 's'; Boss: True; Deep: [deDeepCave]; MaxLife: 75; Level: 7; Armor: 27;
+    DV: 45; Damage: (Min: 20; Max: 25;); Color: $FF3388AA;),
+    // Titan
+    (Symbol: 't'; Boss: True; Deep: [deDeepCave]; MaxLife: 95; Level: 8; Armor: 30;
+    DV: 55; Damage: (Min: 22; Max: 25;); Color: $FFAABB77;),
+    // Hill Giant
+    (Symbol: 'g'; Boss: True; Deep: [deBloodCave]; MaxLife: 96; Level: 9; Armor: 18;
+    DV: 60; Damage: (Min: 23; Max: 25;); Color: $FF2233FF;),
+    // Stone Giant
+    (Symbol: 'g'; Boss: True; Deep: [deBloodCave]; MaxLife: 99; Level: 9; Armor: 19;
+    DV: 60; Damage: (Min: 24; Max: 25;); Color: $FF22FF33;),
+    // Two-Headed Ogre
+    (Symbol: 'o'; Boss: True; Deep: [deBloodCave]; MaxLife: 100; Level: 10; Armor: 20;
+    DV: 60; Damage: (Min: 25; Max: 30;); Color: $FF223333;),
     // Troll King
-    (Symbol: 'T'; Boss: True; Deep: [deDungeonOfDoom]; MaxLife: 100; Level: 10; Armor: 20;
-    DV: 60; Damage: (Min: 25; Max: 35;); Color: $FFFF4400;));
+    (Symbol: 't'; Boss: True; Deep: [deDungeonOfDoom]; MaxLife: 20; Level: 15; Armor: 40;
+    DV: 60; Damage: (Min: 50; Max: 75;); Color: $FFDD7711;));
 
 type
   TMob = class(TObject)
@@ -207,6 +250,7 @@ type
     Deep: TDeepEnum;
     Alive: Boolean;
     Sleep: Boolean;
+    Boss: Boolean;
     procedure AddRandom(ADeep: TDeepEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -214,7 +258,7 @@ type
     procedure Attack;
     procedure Defeat;
     function GetRadius: Byte;
-    procedure DropItems;
+    procedure DropItems;  
   end;
 
 type
@@ -228,7 +272,7 @@ type
     procedure Render(AX, AY: Byte);
     function GetFreeTile(AX, AY: Byte): Boolean;
     function GetIndex(AX, AY: Byte): Integer;
-    function GetName(AMob: TMobEnum): string;
+    function GetName(AMobEnum: TMobEnum): string;
   end;
 
 type
@@ -240,7 +284,7 @@ var
 implementation
 
 uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext, uGame,
-  uItem;
+  uItem, BearLibTerminal;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -268,6 +312,7 @@ begin
     AddRandom(ADeep);
   X := FX;
   Y := FY;
+  Self.Boss := False;
   Deep := ADeep;
   Alive := True;
   Sleep := True;
@@ -275,6 +320,9 @@ begin
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
+    Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)),
+      X, Y, Ord(ADeep)]));
+    Self.Boss := True;
     IsBoss := True;
     if Game.Wizard then
     begin
@@ -308,18 +356,23 @@ begin
 end;
 
 procedure TMob.Defeat;
+var
+  S: string;
+  V: Byte;
 begin
   Self.Alive := False;
-  MsgLog.Add(Format(_('You kill %s.'),
-    [GetDescThe(Mobs.GetName(TMobEnum(ID)))]));
+  S := Format(_('You kill %s.'), [GetDescThe(Mobs.GetName(TMobEnum(ID)))]);
+  if Boss then S := Format(FC, [clAlarm, S]);
+  MsgLog.Add(S);
   Player.Kills := Player.Kills + 1;
-  Player.Score := Player.Score + MobBase[TMobEnum(ID)].Level;
+  if Boss then V := 25 else V := 1;
+  Player.Score := Player.Score + (MobBase[TMobEnum(ID)].Level * V);
   Self.DropItems;
   // Boss
-  if (MobBase[TMobEnum(ID)].Boss and (Map.Deep = FinalDungeon)) then
+  if (Boss and (Map.Deep = FinalDungeon) and (TMobEnum(ID) = mTrollKing)) then
   begin
     if not Game.Wizard then Game.Won := True;
-    MsgLog.Add(_('You have won.'));
+    MsgLog.Add(Format(FC, [clAlarm, _('You have won!!!')]));
     Player.Score := Player.Score + 1000;
     Game.Screenshot := GetTextScreenshot();
   end;
@@ -327,7 +380,7 @@ end;
 
 procedure TMob.DropItems;
 begin
-  Items.Drop(Self.X, Self.Y, MobBase[TMobEnum(Self.ID)].Boss);
+  Items.Drop(Self.X, Self.Y, Boss);
   Items.Drop(Self.X, Self.Y, iCorpse);
 end;
 
@@ -370,19 +423,21 @@ begin
 end;
 
 procedure TMob.Render(AX, AY: Byte);
+var
+  S: Char;
 begin
-  if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then
-    Exit;
-  if not Game.Wizard and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius)
-  then
-    Exit;
+  if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then Exit;
+  if not Game.Wizard and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) then Exit;
+  S := MobBase[TMobEnum(ID)].Symbol;
+  if (Self.Boss) then S := Chr(Ord(S) - 32);
   Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top,
-    MobBase[TMobEnum(ID)].Symbol, MobBase[TMobEnum(ID)].Color);
+    S, MobBase[TMobEnum(ID)].Color);
 end;
 
 procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
 var
   NX, NY: ShortInt;
+  FX, FY: Byte;
 begin
   NX := 0;
   NY := 0;
@@ -422,14 +477,15 @@ begin
     7:
       begin
         NX := -1;
-        NY := -1;
+        NY := -1;       
       end;
   end;
-  if Mobs.GetFreeTile(X + NX, Y + NY) and
-    (Map.GetTileEnum(X + NX, Y + NY, Map.Deep) in FreeTiles) then
+  FX := Clamp(X + NX, 0, High(Byte));
+  FY := Clamp(Y + NY, 0, High(Byte));
+  if Mobs.GetFreeTile(FX, FY) and (Map.GetTileEnum(FX, FY, Map.Deep) in FreeTiles) then
   begin
-    X := X + NX;
-    Y := Y + NY;
+    X := FX;
+    Y := FY;
   end;
 end;
 
@@ -521,9 +577,10 @@ begin
         FMob[I].Render(AX, AY);
 end;
 
-function TMobs.GetName(AMob: TMobEnum): string;
+function TMobs.GetName(AMobEnum: TMobEnum): string;
 begin
-  case AMob of
+  case AMobEnum of
+
     // == Dark Wood == //
 
     mBigRat:
@@ -621,6 +678,35 @@ begin
 
     // == Bosses == //
 
+    // Dark Wood
+    mBlackHound:
+      Result := _('Black Hound');
+    mGiantNewt:
+      Result := _('Giant Newt');
+    mIguana:
+      Result := _('Iguana');
+    // Gray Cave
+    mKoboldKing:
+      Result := _('Kobold King');
+    mSwampWorm:
+      Result := _('Swamp Worm');
+    mGiantSlug:
+      Result := _('Giant Slug');
+    // Deep Cave
+    mCentaur:
+      Result := _('Centaur');
+    mSatyr:
+      Result := _('Satyr');
+    mTitan:
+      Result := _('Titan');
+    // Blood Cave
+    mHillGiant:
+      Result := _('Hill Giant');
+    mStoneGiant:
+      Result := _('Stone Giant');
+    mTwoHeadedOgre:
+      Result := _('Two-Headed Ogre');
+    // Dungeon of Doom
     mTrollKing:
       Result := _('Troll King');
   end;

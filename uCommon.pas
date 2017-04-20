@@ -21,6 +21,7 @@ const
 
 const
   FT = '== %s ==';
+  FC = '[color=%s]%s[/color]';
 
 const
   clRed = $FFFF0000;
@@ -44,6 +45,9 @@ var
   clLook       : Cardinal = $FFFFFF33;
 
 var
+  clAlarm      : string = 'Lightest Green';
+
+var
   Screen, Panel, View, Status, Log, Info: TEntSize;
 
 function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
@@ -59,6 +63,7 @@ function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
 function GetTextScreenshot: string;
 function GetPureText(const S: string): string;
 function GetPath(SubDir: string = ''): string;
+function GetColorFromIni(AKey: string): string;
 
 implementation
 
@@ -187,6 +192,11 @@ function GetPath(SubDir: string = ''): string;
 begin
   Result := ExtractFilePath(ParamStr(0));
   Result := IncludeTrailingPathDelimiter(Result + SubDir);
+end;
+
+function GetColorFromIni(AKey: string): string;
+begin
+  Result := LowerCase(terminal_get('ini.colors.' + LowerCase(AKey)))
 end;
 
 end.
