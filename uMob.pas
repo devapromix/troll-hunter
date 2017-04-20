@@ -397,7 +397,7 @@ begin
   if (Dist > GetRadius) then Exit;
   if Sleep then
   begin
-    if (Math.RandomRange(0, 99) <= 20) then
+    if (Math.RandomRange(0, 99) <= 15) then
     begin
       Sleep := False;
       Exit;
@@ -424,14 +424,14 @@ end;
 
 procedure TMob.Render(AX, AY: Byte);
 var
-  S: Char;
+  C: Char;
 begin
   if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then Exit;
   if not Game.Wizard and (GetDist(Player.X, Player.Y, X, Y) > Player.GetRadius) then Exit;
-  S := MobBase[TMobEnum(ID)].Symbol;
-  if (Self.Boss) then S := Chr(Ord(S) - 32);
+  C := MobBase[TMobEnum(ID)].Symbol;
+  if (Self.Boss) then C := Chr(Ord(C) - 32);
   Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top,
-    S, MobBase[TMobEnum(ID)].Color);
+    C, MobBase[TMobEnum(ID)].Color, clBkMob);
 end;
 
 procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);

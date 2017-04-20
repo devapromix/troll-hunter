@@ -411,6 +411,7 @@ var
   I, X, Y, PX, PY, DX, DY, R: Integer;
   T: TTile;
   Min, Max: TPoint;
+  S: string;
 
   procedure RenderLook(X, Y: Byte; T: TTile; IsMob: Boolean);
   var
@@ -537,8 +538,10 @@ begin
   Terminal.BackgroundColor(clBackground);
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top, _('Trollhunter'));
-  Terminal.Print(Status.Left + Status.Width - 1, Status.Top,
-    Format('%s (%d:%d)', [Map.GetName, Player.X, Player.Y]), TK_ALIGN_RIGHT);
+  if Game.Wizard then
+    S := Format('%s (%d:%d)', [Map.GetName, Player.X, Player.Y])
+      else S := Map.GetName;
+  Terminal.Print(Status.Left + Status.Width - 1, Status.Top, S, TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 1,
     Format('%s %d/%d', [_('Life'), Player.Life, Player.MaxLife]));

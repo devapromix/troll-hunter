@@ -595,7 +595,7 @@ begin
   if (Self.Life = 0) then
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
-    Terminal.Print(AX + View.Left, AY + View.Top, '@', clDarkBlue);
+    Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;

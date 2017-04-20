@@ -22,7 +22,7 @@ type
     procedure ForegroundColor(Value: Cardinal);
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
     procedure Print(AX, AY: Integer; AChar: Char;
-      AForegroundColor: Cardinal); overload;
+      AForegroundColor: Cardinal; ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
       Align: Byte); overload;
     function Pick(X, Y: Byte): Byte;
@@ -114,8 +114,9 @@ begin
 end;
 
 procedure TTerminal.Print(AX, AY: Integer; AChar: Char;
-  AForegroundColor: Cardinal);
+  AForegroundColor: Cardinal; ABackgroundColor: Cardinal = 0);
 begin
+  terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);
   terminal_print(AX, AY, TK_ALIGN_DEFAULT, AChar);
 end;

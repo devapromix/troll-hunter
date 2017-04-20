@@ -43,6 +43,9 @@ var
   clBackground : Cardinal = $00000000;
   clCorpse     : Cardinal = $FF555555;
   clLook       : Cardinal = $FFFFFF33;
+  clBkMob      : Cardinal = $FF330000;
+  clPlayer     : Cardinal = $FF009900;
+  clBkPlayer   : Cardinal = $FF003300;
 
 var
   clAlarm      : string = 'Lightest Green';

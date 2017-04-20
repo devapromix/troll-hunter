@@ -69,6 +69,9 @@ begin
   clBackground := color_from_name(GetColorFromIni('Background'));
   clCorpse := color_from_name(GetColorFromIni('Corpse'));
   clLook := color_from_name(GetColorFromIni('Look'));
+  clBkMob := color_from_name(GetColorFromIni('BkMob'));
+  clPlayer := color_from_name(GetColorFromIni('Player'));
+  clBkPlayer := color_from_name(GetColorFromIni('BkPlayer'));
   clAlarm := GetColorFromIni('Alarm');
   // Save to log
   Game.Log(Format('Items: count=%d', [Length(ItemBase)]));
