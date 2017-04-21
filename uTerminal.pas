@@ -2,10 +2,21 @@ unit uTerminal;
 
 interface
 
-uses Types, BearLibTerminal, uCommon;
+uses Types, BearLibTerminal;
 
 type
   TSize = Types.TSize;
+
+type
+  TEntSize = record
+    Left: Integer;
+    Top: Integer;
+    Width: Integer;
+    Height: Integer;
+  end;
+
+var
+  Screen, Panel, View, Status, Log, Info: TEntSize;
 
 type
   TTerminal = class(TObject)
@@ -28,6 +39,10 @@ type
     function Pick(X, Y: Byte): Byte;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
+    function GetColorFromIni(AKey: string): string; overload;
+    function GetColorFromIni(AKey: string; ADefault: string): Cardinal; overload;
+    function GetTextScreenshot: string;
+    function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
   end;
 
 var
@@ -35,7 +50,7 @@ var
 
 implementation
 
-uses SysUtils, Dialogs, uGame;
+uses SysUtils, Classes, Math, Dialogs, uGame;
 
 { TTerminal }
 
@@ -67,17 +82,54 @@ begin
   terminal_color(Value);
 end;
 
+function TTerminal.GetColorFromIni(AKey: string; ADefault: string): Cardinal;
+begin
+  Result := color_from_name(GetColorFromIni(AKey));
+end;
+
+function TTerminal.GetTextScreenshot: string;
+var
+  SL: TStringList;
+  X, Y, C: Byte;
+  S: string;
+begin
+  SL := TStringList.Create;
+  try
+    for Y := 0 to View.Height - 1 do
+    begin
+      S := '';
+      for X := 0 to View.Width - 1 do
+      begin
+        C := Terminal.Pick(X, Y);
+        if (C >= 32) and (C < 126) then
+          S := S + Chr(C)
+        else
+          S := S + ' ';
+      end;
+      SL.Append(S);
+    end;
+    Result := SL.Text;
+  finally
+    SL.Free;
+  end;
+end;
+
+function TTerminal.GetColorFromIni(AKey: string): string;
+begin
+  Result := LowerCase(terminal_get('ini.colors.' + LowerCase(AKey)));
+end;
+
 procedure TTerminal.Init;
 var
   Value: TEntSize;
   Wizard: string;
 begin
-  Value.Width := Clamp(StrToIntDef(terminal_get('ini.screen.width'),
+  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'),
     80), 80, High(Byte));
-  Value.Height := Clamp(StrToIntDef(terminal_get('ini.screen.height'),
+  Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'),
     30), 30, High(Byte) div 2); 
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
-  Value.Width := Clamp(StrToIntDef(terminal_get('ini.panel.width'),
+  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'),
     35), 35, 50);
   Panel := SetEntSize(0, 0, Value.Width, 4);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
@@ -124,6 +176,14 @@ end;
 procedure TTerminal.Refresh;
 begin
   terminal_refresh;
+end;
+
+function TTerminal.SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
+begin
+  Result.Left := ALeft;
+  Result.Top := ATop;
+  Result.Width := AWidth;
+  Result.Height := AHeight;
 end;
 
 initialization

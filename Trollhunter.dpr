@@ -7,7 +7,6 @@ uses
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
   uTerminal in 'uTerminal.pas',
-  uCommon in 'uCommon.pas',
   uScenes in 'uScenes.pas',
   uPlayer in 'uPlayer.pas',
   uMap in 'uMap.pas',
@@ -16,7 +15,8 @@ uses
   uMob in 'uMob.pas',
   uGame in 'uGame.pas',
   uMsgLog in 'uMsgLog.pas',
-  uCorpse in 'uCorpse.pas';
+  uCorpse in 'uCorpse.pas',
+  uEntity in 'uEntity.pas';
 
 var
   Key: Word = 0;

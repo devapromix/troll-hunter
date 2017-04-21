@@ -28,7 +28,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uCommon, uTerminal, BearLibTerminal, uPlayer;
+uses SysUtils, Math, uTerminal, BearLibTerminal, uPlayer, uGame;
 
 { TMsgLog }
 
@@ -81,7 +81,7 @@ end;
 procedure TMsgLog.Render(const Y: Byte = 0);
 begin
   if (Trim(MsgLog.Msg) = '') then FAct := '' else
-    FAct := Format(FC, [GetColorFromIni('Log'), Trim(FMsg)]);
+    FAct := Format(FC, [Terminal.GetColorFromIni('Log'), Trim(FMsg)]);
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height,
     Trim(Self.GetLastMsg(MaxLogCapacity) + FAct),

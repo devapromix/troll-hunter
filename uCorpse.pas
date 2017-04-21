@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses SysUtils, IniFiles, uPlayer, uCommon, uMap, uGame, uTerminal;
+uses SysUtils, IniFiles, uPlayer, uMap, uGame, uTerminal;
 
 { TCorpses }
 
@@ -38,7 +38,7 @@ var
   F: TIniFile;
   S: string;
 begin
-  F := TIniFile.Create(GetPath() + 'morgue.thi');
+  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     S := IntToStr(Index);
     F.EraseSection(S);
@@ -58,7 +58,7 @@ var
   F: TIniFile;  
   S: string;
 begin
-  F := TIniFile.Create(GetPath() + 'morgue.thi');
+  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     S := IntToStr(Index);
     FCorpse[Index].X := F.ReadInteger(S, 'X', 0);
@@ -77,7 +77,7 @@ var
 begin
   if (Player.X = 0) or (Player.Y = 0) or (Player.X = High(Byte)) or
     (Player.Y = High(Byte)) then Exit;
-  F := TIniFile.Create(GetPath() + 'morgue.thi');
+  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     for I := 0 to CorpseMax - 1 do
     begin
@@ -86,7 +86,7 @@ begin
         F.EraseSection(S);
       if not F.SectionExists(S) then
       begin
-        Save(I, Player.X, Player.Y, Ord(Map.Deep));
+        Save(I, Player.X, Player.Y, Ord(Map.Current));
         Exit;
       end;
     end;
@@ -100,7 +100,7 @@ var
   F: TIniFile;
   I: Byte;
 begin
-  F := TIniFile.Create(GetPath() + 'morgue.thi');
+  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     for I := 0 to CorpseMax - 1 do Load(I);
   finally
@@ -114,7 +114,7 @@ var
 begin
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Ord(Map.Deep) <> FCorpse[I].Z) then Continue;
+    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
     begin
       Save(I, 0, 0, 0);
@@ -137,7 +137,7 @@ begin
   Result := False;
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Ord(Map.Deep) <> FCorpse[I].Z) then Continue;
+    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
     begin
       Result := True;
@@ -153,15 +153,14 @@ var
 begin
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Ord(Map.Deep) <> FCorpse[I].Z) then Continue;
+    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then Continue;
     if not Map.InView(FCorpse[I].X, FCorpse[I].Y) or
       (not Game.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then
       Continue;
     if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then Continue;
     X := FCorpse[I].X - Player.X + AX + View.Left;
     Y := FCorpse[I].Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (GetDist(Player.X, Player.Y,
-      FCorpse[I].X, FCorpse[I].Y) > Player.GetRadius) then
+    if not Game.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) > Player.GetRadius) then
       Color := clFog
     else
       Color := clCorpse;

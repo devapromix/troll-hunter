@@ -2,17 +2,11 @@ unit uMap;
 
 interface
 
-uses uCommon;
-
 type
-  TDeepEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom);
+  TMapEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave, deDungeonOfDoom);
 
 const
   FinalDungeon = deDungeonOfDoom;
-
-var
-  DeepVis: array [TDeepEnum] of Boolean;
 
 type
   TTile = record
@@ -32,28 +26,31 @@ const
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
-  Tile: array [TTileEnum, TDeepEnum] of TTile;
+  Tile: array [TTileEnum, TMapEnum] of TTile;
 
 type
   TMap = class(TObject)
   private
-    FDeep: TDeepEnum;
-    FMap: array [Byte, Byte, TDeepEnum] of TTileEnum;
-    FFog: array [Byte, Byte, TDeepEnum] of Boolean;
+    FCurrent: TMapEnum;
+    FVis: array [TMapEnum] of Boolean;
+    FMap: array [Byte, Byte, TMapEnum] of TTileEnum;
+    FFog: array [Byte, Byte, TMapEnum] of Boolean;
     FFOV: array [Byte, Byte] of Boolean;
-    procedure AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum;
+    procedure AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
       ABaseTileEnum, ATileEnum: TTileEnum);
-    procedure AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word;
+    procedure AddTiles(AX, AY: Byte; AZ: TMapEnum; AType: Byte; ADen: Word;
       ABaseTileEnum, ATileEnum: TTileEnum);
     procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
-      ATile: TTileEnum; ADeep: TDeepEnum);
+      ATile: TTileEnum; AZ: TMapEnum);
     procedure InitTiles;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear(ADeep: TDeepEnum; ATileEnum: TTileEnum);
+    procedure SetVis(const AZ: TMapEnum; const Value: Boolean);
+    function GetVis(const AZ: TMapEnum): Boolean;
+    procedure Clear(Z: TMapEnum; ATileEnum: TTileEnum);
     procedure Gen;
-    property Deep: TDeepEnum read FDeep write FDeep;
+    property Current: TMapEnum read FCurrent write FCurrent;
     function InMap(AX, AY: Integer): Boolean;
     function InView(AX, AY: Integer): Boolean;
     function GetFog(AX, AY: Byte): Boolean;
@@ -63,8 +60,8 @@ type
     procedure SetFOV(AX, AY: Byte; AFlag: Boolean);
     function GetTile(AX, AY: Byte): TTile; overload;
     function GetTile(ATileEnum: TTileEnum): TTile; overload;
-    procedure SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum; ATileEnum: TTileEnum);
-    function GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;
+    procedure SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
+    function GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
     function GetName: string;
   end;
 
@@ -77,7 +74,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uPlayer, uMob, uItem, GNUGetText;
+uses SysUtils, Math, uPlayer, uMob, uItem, GNUGetText, uTerminal;
 
 { TMap }
 
@@ -139,52 +136,54 @@ begin
   AddTile('=', _('Water'), $FF222244, teWater, deDungeonOfDoom);
 end;
 
-procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; ADeep: TDeepEnum;
+procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
   ABaseTileEnum, ATileEnum: TTileEnum);
 var
+  Z: TMapEnum;
   X, Y: Byte;
   I: Word;
 begin
   X := AX;
   Y := AY;
-  ASize := Clamp(ASize, 49, 9999);
+  Z := AZ;
+  ASize := EnsureRange(ASize, 49, 9999);
   for I := 0 to ASize do
   begin
     if (Round(Random(6)) = 1) and (X > 0) then
     begin
       X := X - 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+      if (GetTileEnum(X, Y, Z) <> ABaseTileEnum) then
         Continue;
-      SetTileEnum(X, Y, ADeep, ATileEnum);
+      SetTileEnum(X, Y, Z, ATileEnum);
     end;
     if (Round(Random(6)) = 1) and (X < High(Byte)) then
     begin
       X := X + 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+      if (GetTileEnum(X, Y, Z) <> ABaseTileEnum) then
         Continue;
-      SetTileEnum(X, Y, ADeep, ATileEnum);
+      SetTileEnum(X, Y, Z, ATileEnum);
     end;
     if (Round(Random(6)) = 1) and (Y > 0) then
     begin
       Y := Y - 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+      if (GetTileEnum(X, Y, Z) <> ABaseTileEnum) then
         Continue;
-      SetTileEnum(X, Y, ADeep, ATileEnum);
+      SetTileEnum(X, Y, Z, ATileEnum);
     end;
     if (Round(Random(6)) = 1) and (Y < High(Byte)) then
     begin
       Y := Y + 1;
-      if (GetTileEnum(X, Y, ADeep) <> ABaseTileEnum) then
+      if (GetTileEnum(X, Y, Z) <> ABaseTileEnum) then
         Continue;
-      SetTileEnum(X, Y, ADeep, ATileEnum);
+      SetTileEnum(X, Y, Z, ATileEnum);
     end;
   end;
 end;
 
 procedure TMap.AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
-  ATile: TTileEnum; ADeep: TDeepEnum);
+  ATile: TTileEnum; AZ: TMapEnum);
 begin
-  with Tile[ATile, ADeep] do
+  with Tile[ATile, AZ] do
   begin
     Symbol := ASymbol;
     Name := AName;
@@ -192,22 +191,24 @@ begin
   end;
 end;
 
-procedure TMap.AddTiles(AX, AY: Byte; ADeep: TDeepEnum; AType: Byte; ADen: Word;
+procedure TMap.AddTiles(AX, AY: Byte; AZ: TMapEnum; AType: Byte; ADen: Word;
   ABaseTileEnum, ATileEnum: TTileEnum);
 var
   K: Word;
   X, Y: Byte;
+  Z: TMapEnum;
 
   procedure ModTile(const X, Y: Byte);
   begin
-    if (GetTileEnum(X, Y, ADeep) = ABaseTileEnum) then
-      SetTileEnum(X, Y, ADeep, ATileEnum);
+    if (GetTileEnum(X, Y, Z) = ABaseTileEnum) then
+      SetTileEnum(X, Y, Z, ATileEnum);
   end;
 
 begin
   X := AX;
   Y := AY;
-  AType := Clamp(AType, 2, 9);
+  Z := AZ;
+  AType := EnsureRange(AType, 2, 9);
   for K := 0 to ADen do
   begin
     if (Round(Random(AType)) = 1) and (X > 0) then
@@ -239,24 +240,24 @@ var
 begin
   for Y := Player.Y - Player.GetRadius to Player.Y + Player.GetRadius do
     for X := Player.X - Player.GetRadius to Player.X + Player.GetRadius do
-      FFOV[Clamp(X, 0, High(Byte))][Clamp(Y, 0, High(Byte))] := False;
+      FFOV[EnsureRange(X, 0, High(Byte))][EnsureRange(Y, 0, High(Byte))] := False;
 end;
 
-procedure TMap.Clear(ADeep: TDeepEnum; ATileEnum: TTileEnum);
+procedure TMap.Clear(Z: TMapEnum; ATileEnum: TTileEnum);
 var
   X, Y: Byte;
 begin
   for Y := 0 to High(Byte) do
     for X := 0 to High(Byte) do
     begin
-      FMap[X][Y][ADeep] := ATileEnum;
-      FFog[X][Y][ADeep] := True;
+      FMap[X][Y][Z] := ATileEnum;
+      FFog[X][Y][Z] := True;
     end;
 end;
 
 constructor TMap.Create;
 begin
-  Self.Deep := deDarkWood;
+  Self.Current := deDarkWood;
 end;
 
 destructor TMap.Destroy;
@@ -269,7 +270,7 @@ procedure TMap.Gen;
 var
   I: Word;
   X, Y: Byte;
-  FDeep: TDeepEnum;
+  Z: TMapEnum;
 
   procedure GenCave(D: Byte; C, V: Word);
   var
@@ -280,14 +281,14 @@ var
       repeat
         X := Math.RandomRange(10, High(Byte) - 10);
         Y := Math.RandomRange(10, High(Byte) - 10);
-      until (GetTileEnum(X, Y, pred(FDeep)) = teDefaultFloor);
-      Self.AddTiles(X, Y, FDeep, D, V, teDefaultWall, teDefaultFloor);
-      SetTileEnum(X, Y, pred(FDeep), teDnStairs);
-      SetTileEnum(X, Y, FDeep, teUpStairs);
+      until (GetTileEnum(X, Y, pred(Z)) = teDefaultFloor);
+      Self.AddTiles(X, Y, Z, D, V, teDefaultWall, teDefaultFloor);
+      SetTileEnum(X, Y, pred(Z), teDnStairs);
+      SetTileEnum(X, Y, Z, teUpStairs);
     end;
   end;
 
-  procedure AddArea(ADeep: TDeepEnum; ABaseTileEnum, ATileEnum: TTileEnum);
+  procedure AddArea(ADeep: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
   var
     X, Y: Byte;
   begin
@@ -301,81 +302,81 @@ var
 
 begin
   InitTiles();
-  for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
+  for Z := Low(TMapEnum) to High(TMapEnum) do
   begin
-    DeepVis[FDeep] := False;
-    case FDeep of
+    Self.SetVis(Z, False);
+    case Z of
       deDarkWood:
         begin
-          DeepVis[FDeep] := True;
-          Self.Clear(FDeep, teDefaultFloor);
+          Self.SetVis(Z, True);
+          Self.Clear(Z, teDefaultFloor);
           for I := 0 to 9999 do
             Self.SetTileEnum(Math.RandomRange(0, High(Byte)),
-              Math.RandomRange(0, High(Byte)), FDeep, teDefaultWall);
+              Math.RandomRange(0, High(Byte)), Z, teDefaultWall);
         end;
       deGrayCave:
         begin
-          Self.Clear(FDeep, teDefaultWall);
+          Self.Clear(Z, teDefaultWall);
           GenCave(9, 49, 4999);
         end;
       deDeepCave:
         begin
-          Self.Clear(FDeep, teDefaultWall);
+          Self.Clear(Z, teDefaultWall);
           GenCave(6, 39, 3999);
         end;
       deBloodCave:
         begin
-          Self.Clear(FDeep, teDefaultWall);
+          Self.Clear(Z, teDefaultWall);
           GenCave(3, 29, 2999);
         end;
       deDungeonOfDoom:
         begin
-          Self.Clear(FDeep, teDefaultWall);
+          Self.Clear(Z, teDefaultWall);
           GenCave(2, 19, 1999);
         end;
     end;
     for I := 0 to 9 do
-      AddArea(FDeep, teDefaultFloor, teWater);
+      AddArea(Z, teDefaultFloor, teWater);
     for I := 0 to 19 do
-      AddArea(FDeep, teDefaultFloor, teRock);
+      AddArea(Z, teDefaultFloor, teRock);
     for I := 0 to 29 do
-      AddArea(FDeep, teDefaultFloor, teFloor1);
+      AddArea(Z, teDefaultFloor, teFloor1);
     for I := 0 to 39 do
-      AddArea(FDeep, teDefaultFloor, teFloor2);
+      AddArea(Z, teDefaultFloor, teFloor2);
     for I := 0 to 49 do
-      AddArea(FDeep, teDefaultFloor, teFloor3);
+      AddArea(Z, teDefaultFloor, teFloor3);
   end;
   repeat
     Player.X := RandomRange(64, High(Byte) - 64);
     Player.Y := RandomRange(64, High(Byte) - 64);
-  until (not(GetTileEnum(Player.X, Player.Y, Deep) in StopTiles));
+  until (not(GetTileEnum(Player.X, Player.Y, Current) in StopTiles));
 
-  for FDeep := Low(TDeepEnum) to High(TDeepEnum) do
+  for Z := Low(TMapEnum) to High(TMapEnum) do
   begin
     // Add mobs
     IsBoss := False;
     for I := 0 to 255 do
-      Mobs.Add(FDeep);
+      Mobs.Add(Z);
     // Add items
     IsRare := False;
     for I := 0 to 255 do
-      Items.Add(FDeep);
+      Items.Add(Z);
   end;
 end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;
 begin
-  Result := Tile[ATileEnum][Deep];
+  Result := Tile[ATileEnum][Current];
 end;
 
 function TMap.GetTile(AX, AY: Byte): TTile;
 begin
-  Result := Tile[FMap[AX][AY][Deep]][Deep];
+  Result := Tile[FMap[AX][AY][Current]][Current];
 end;
 
 function TMap.GetName: string;
 begin
-  case Deep of
+  case Current of
     deDarkWood:
       Result := _('Dark Wood');
     deGrayCave:
@@ -389,25 +390,30 @@ begin
   end;
 end;
 
-function TMap.GetTileEnum(AX, AY: Byte; ADeep: TDeepEnum): TTileEnum;
+function TMap.GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
 begin
-  Result := FMap[AX][AY][ADeep];
+  Result := FMap[AX][AY][AZ];
 end;
 
-procedure TMap.SetTileEnum(AX, AY: Byte; ADeep: TDeepEnum;
+function TMap.GetVis(const AZ: TMapEnum): Boolean;
+begin
+  Result := FVis[AZ];
+end;
+
+procedure TMap.SetTileEnum(AX, AY: Byte; AZ: TMapEnum;
   ATileEnum: TTileEnum);
 begin
-  FMap[AX][AY][ADeep] := ATileEnum;
+  FMap[AX][AY][AZ] := ATileEnum;
 end;
 
 function TMap.GetFog(AX, AY: Byte): Boolean;
 begin
-  Result := FFog[AX][AY][Deep];
+  Result := FFog[AX][AY][Current];
 end;
 
 procedure TMap.SetFog(AX, AY: Byte; AFlag: Boolean);
 begin
-  FFog[AX][AY][Deep] := AFlag;
+  FFog[AX][AY][Current] := AFlag;
 end;
 
 function TMap.InMap(AX, AY: Integer): Boolean;
@@ -434,6 +440,11 @@ end;
 procedure TMap.SetFOV(AX, AY: Byte; AFlag: Boolean);
 begin
   FFOV[AX][AY] := AFlag;
+end;
+
+procedure TMap.SetVis(const AZ: TMapEnum; const Value: Boolean);
+begin
+  FVis[AZ] := Value;
 end;
 
 initialization

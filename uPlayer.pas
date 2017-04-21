@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses uCommon;
+uses uEntity;
 
 type
   TSkillEnum = (skLearning,
@@ -31,24 +31,19 @@ const
   FoodMax = 250;
 
 type
-  TPlayer = class(TObject)
+  TPlayer = class(TEntity)
   private
-    FX: Byte;
-    FY: Byte;
     FLX: Byte;
     FLY: Byte;
     FTurn: Word;
     FFood: Word;
     FLevel: Byte;
-    FLife: Word;
-    FMaxLife: Word;
     FMana: Word;
     FMaxMana: Word;
     FRadius: Byte;
     FDV: Byte;
     FPV: Byte;
     FExp: Byte;
-    FDamage: TDamage;
     FLook: Boolean;
     FStrength: Byte;
     FDexterity: Byte;
@@ -64,15 +59,11 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property X: Byte read FX write FX;
-    property Y: Byte read FY write FY;
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
     property Food: Word read FFood write FFood;
     property Level: Byte read FLevel write FLevel;
-    property Life: Word read FLife write FLife;
-    property MaxLife: Word read FMaxLife write FMaxLife;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
     property Radius: Byte read FRadius write FRadius;
@@ -91,7 +82,6 @@ type
     property IsRest: Boolean read FIsRest write FIsRest;
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
-    property Damage: TDamage read FDamage write FDamage;
     procedure Calc;
     procedure Fill;
     procedure Wait;
@@ -135,11 +125,11 @@ var
   V: Byte;
 begin
   Turn := Turn + 1;
-  V := Clamp(100 - Player.GetSkillValue(skToughness), 25, 100);
+  V := EnsureRange(100 - Player.GetSkillValue(skToughness), 25, 100);
   if (Turn mod v = 0) then
   begin
-    Life := Clamp(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
-    Mana := Clamp(Life + Player.GetSkillValue(skConcentration), 0, MaxMana);
+    Life := EnsureRange(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
+    Mana := EnsureRange(Life + Player.GetSkillValue(skConcentration), 0, MaxMana);
   end;
   Mobs.Process;
 end;
@@ -159,8 +149,8 @@ begin
   if (MobBase[TMobEnum(Mob.ID)].DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
-    Dam := Clamp(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0, High(Word));
-    Mob.Life := Clamp(Mob.Life - Dam, 0, High(Word));
+    Dam := EnsureRange(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0, High(Word));
+    Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     case FWeaponSkill of
       skBlade:
@@ -211,7 +201,7 @@ begin
   Dam.Min := 0;
   Dam.Max := 0;
   Def := 0;
-  FCount := Clamp(Items_Inventory_GetCount(), 0, 26);
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, 26);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -231,29 +221,30 @@ begin
     end;
   end;
   //
-  Self.Gold := Clamp(Items_Inventory_GetItemAmount(Ord(iGold)), 0, High(Integer));
+  Self.Gold := EnsureRange(Items_Inventory_GetItemAmount(Ord(iGold)), 0, High(Integer));
   //
-  Strength := Clamp(Round(FSkill[skAthletics].Value * 0.5) +
+  Strength := EnsureRange(Round(FSkill[skAthletics].Value * 0.5) +
     Round(FSkill[skToughness].Value * 0.9), 1, AtrMax);
-  Dexterity := Clamp(Round(FSkill[skDodge].Value * 1.4), 1, AtrMax);
-  Willpower := Clamp(Round(FSkill[skConcentration].Value * 1.4), 1, AtrMax);
-  Perception := Clamp(Round(FSkill[skToughness].Value * 1.4), 1, AtrMax);
+  Dexterity := EnsureRange(Round(FSkill[skDodge].Value * 1.4), 1, AtrMax);
+  Willpower := EnsureRange(Round(FSkill[skConcentration].Value * 1.4), 1, AtrMax);
+  Perception := EnsureRange(Round(FSkill[skToughness].Value * 1.4), 1, AtrMax);
   //
-  DV := Clamp(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
-  PV := Clamp(Round(FSkill[skToughness].Value / 1.4) - 4 + Def,
+  DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
+  PV := EnsureRange(Round(FSkill[skToughness].Value / 1.4) - 4 + Def,
     0, PVMax);
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
   //
-  FDamage.Min := Clamp(Dam.Min + Strength div 3, 1, High(Byte) - 1);
-  FDamage.Max := Clamp(Dam.Max + Strength div 2, 2, High(Byte));
+  Self.SetDamage(EnsureRange(Dam.Min + Strength div 3, 1, High(Byte) - 1),
+    EnsureRange(Dam.Max + Strength div 2, 2, High(Byte)));
 end;
 
 constructor TPlayer.Create;
 var
   I: TSkillEnum;
 begin
+  inherited;
   Exp := 0;
   Turn := 0;
   Food := FoodMax;
@@ -279,7 +270,7 @@ procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
   MsgLog.Add(Format(FC, [clAlarm, _('You die...')]));
-  Game.Screenshot := GetTextScreenshot();
+  Game.Screenshot := Terminal.GetTextScreenshot();
   Corpses.Append();
 end;
 
@@ -297,17 +288,17 @@ end;
 
 function TPlayer.GetDV: Byte;
 begin
-  Result := Clamp(Self.DV, 0, DVMax);
+  Result := EnsureRange(Self.DV, 0, DVMax);
 end;
 
 function TPlayer.GetPV: Byte;
 begin
-  Result := Clamp(Self.PV, 0, PVMax);
+  Result := EnsureRange(Self.PV, 0, PVMax);
 end;
 
 function TPlayer.GetRadius: Byte;
 begin
-  Result := Clamp(Self.Radius + 3, 1, RadiusMax);
+  Result := EnsureRange(Self.Radius + 3, 1, RadiusMax);
 end;
 
 function TPlayer.GetSkill(ASkill: TSkillEnum): TSkill;
@@ -366,8 +357,8 @@ begin
       ((Map.InView(LX + AX, LY + AY) and not Map.GetFog(LX + AX, LY + AY)) or
       Game.Wizard) then
     begin
-      LX := Clamp(LX + AX, 0, High(Byte));
-      LY := Clamp(LY + AY, 0, High(Byte));
+      LX := EnsureRange(LX + AX, 0, High(Byte));
+      LY := EnsureRange(LY + AY, 0, High(Byte));
     end;
   end
   else
@@ -382,9 +373,9 @@ begin
       Scenes.SetScene(scWin);
       Exit;
     end;
-    FX := Clamp(X + AX, 0, High(Byte));
-    FY := Clamp(Y + AY, 0, High(Byte));
-    if (Map.GetTileEnum(FX, FY, Map.Deep) in StopTiles) and not Game.Wizard then
+    FX := EnsureRange(X + AX, 0, High(Byte));
+    FY := EnsureRange(Y + AY, 0, High(Byte));
+    if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard then
       Exit;
     if not Mobs.GetFreeTile(FX, FY) then
     begin
@@ -486,7 +477,7 @@ begin
         Value := Self.GetSkillValue(skHealing) + ItemBase[TItemEnum(AItem.ItemID)].Value;
         MsgLog.Add(Format(_('You feel healthy!') + ' ' + F, [_('Life'),
           Min(MaxLife - Life, Value)]));
-        Self.Life := Clamp(Self.Life + Value, 0, MaxLife);
+        Self.Life := EnsureRange(Self.Life + Value, 0, MaxLife);
         Self.Skill(skHealing, 5);
       end;
       iPotionOfMana1, iPotionOfMana2, iPotionOfMana3:
@@ -494,7 +485,7 @@ begin
         Player.Score := Player.Score + 1;
         Value := Self.GetSkillValue(skConcentration) + ItemBase[TItemEnum(AItem.ItemID)].Value;
         MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
-        Self.Mana := Clamp(Self.Mana + Value, 0, MaxMana);
+        Self.Mana := EnsureRange(Self.Mana + Value, 0, MaxMana);
         Self.Skill(skConcentration, 5);
       end;
     end;
@@ -545,7 +536,7 @@ var
     begin
       AItem.X := Player.X;
       AItem.Y := Player.Y;
-      AItem.MapID := Ord(Map.Deep);
+      AItem.MapID := Ord(Map.Current);
       Items_Dungeon_AppendItem(AItem);
       The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
       MsgLog.Add(Format(_('You drop %s.'), [The]));
@@ -554,7 +545,7 @@ var
   end;
 
 begin
-  MapID := Ord(Map.Deep);
+  MapID := Ord(Map.Current);
   AItem := Items_Inventory_GetItem(Index);
   FCount := Items_Inventory_GetItemCount(AItem.ItemID);
   if (AItem.Stack > 1) and (AItem.Amount > 1) then
@@ -574,7 +565,7 @@ var
 begin
   Corpses.DelCorpse(Player.X, Player.Y);
   //// Your backpack is full!
-  MapID := Ord(Map.Deep);
+  MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
 //  if (FItem.Stack > 1) and (FItem.Amount > 1) then
   if (FCount > 0) then
@@ -601,6 +592,14 @@ end;
 function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   SL: TStringList;
+
+  function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
+begin
+  Result := DateToStr(Date) + '-' + TimeToStr(Time);
+  Result := StringReplace(Result, '.', DateSep, [rfReplaceAll]);
+  Result := StringReplace(Result, ':', TimeSep, [rfReplaceAll]);
+end;
+
 begin
   if Game.Wizard then
     Exit;
@@ -658,7 +657,7 @@ begin
       Inc(FSkill[ASkill].Value);
       // Add message {!!!}
       MsgLog.Add(Format(FC, [clAlarm, Format('%s %s +1.', [_('Skill'), Self.GetSkillName(ASkill)])]));
-      FSkill[ASkill].Value := Clamp(FSkill[ASkill].Value, SkillMin, SkillMax);
+      FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin, SkillMax);
       // Add exp
       AddExp();
       // Add scores
@@ -686,12 +685,12 @@ end;
 
 procedure TPlayer.Wait;
 begin
-  if not DeepVis[Map.Deep] then
+  if not Map.GetVis(Map.Current) then
   begin
     MsgLog.Add(Format(FC, [clAlarm, Format(_('You have opened a new territory: %s.'), [Map.GetName])]));
-    DeepVis[Map.Deep] := True;
-    if (Ord(Map.Deep) > 0) then
-      Player.Score := Player.Score + (Ord(Map.Deep) * 15);
+    Map.SetVis(Map.Current, True);
+    if (Ord(Map.Current) > 0) then
+      Player.Score := Player.Score + (Ord(Map.Current) * 15);
   end;
   Move(0, 0);
 end;
@@ -721,7 +720,7 @@ begin
       FinRest;
       Exit;
     end;
-    Player.Food := Clamp(Player.Food - 1, 0, FoodMax);
+    Player.Food := EnsureRange(Player.Food - 1, 0, FoodMax);
     Wait;
   end;  
   FinRest;

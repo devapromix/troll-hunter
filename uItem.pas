@@ -2,11 +2,11 @@ unit uItem;
 
 interface
 
-uses BearLibItems, uCommon, uMap, uPlayer;
+uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
   TItemType = (itCorpse, itKey, itCoin, itPotion, itFood,  itBlade, itAxe,
-  itSpear, itMace, itHelm, itArmour);
+    itSpear, itMace, itHelm, itArmour);
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand,
@@ -23,7 +23,7 @@ type
     Defense: Byte;
     Damage: TDamage;
     Color: Cardinal;
-    Deep: set of TDeepEnum;
+    Deep: set of TMapEnum;
     Value: Word;
   end;
 
@@ -253,12 +253,12 @@ const
     );
 
 type
-  TItems = class(TObject)
+  TItems = class(TEntity)
   public
     constructor Create;
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
-    procedure Add(ADeep: TDeepEnum; AX: Integer = -1; AY: Integer = -1; AID: Integer = -1);
+    procedure Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1; AID: Integer = -1);
     function GetName(AItemEnum: TItemEnum): string;
     function GetItemEnum(AItemID: Integer): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
@@ -276,7 +276,7 @@ var
 
 implementation
 
-uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes, uGame;
+uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes;
 
 { TItems }
 
@@ -320,7 +320,7 @@ begin
   AItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
 end;
 
-procedure TItems.Add(ADeep: TDeepEnum; AX: Integer = -1; AY: Integer = -1;
+procedure TItems.Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1;
   AID: Integer = -1);
 var
   ID, FX, FY: Byte;
@@ -340,7 +340,7 @@ begin
   if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then Exit;
   Make(ID, FItem);
   FItem.MapID := Ord(ADeep);
-  FItem.Amount := Clamp(Math.RandomRange(0, ItemBase[TItemEnum(ID)].MaxStack div 3) + 1, 1, ItemBase[TItemEnum(ID)].MaxStack);
+  FItem.Amount := EnsureRange(Math.RandomRange(0, ItemBase[TItemEnum(ID)].MaxStack div 3) + 1, 1, ItemBase[TItemEnum(ID)].MaxStack);
   IT := ItemBase[TItemEnum(ID)].ItemType;
   case IT of
     itCoin:
@@ -372,7 +372,7 @@ end;
 
 procedure TItems.Drop(AX, AY: Byte; AItemEnum: TItemEnum);
 begin
-  Add(Map.Deep, AX, AY, Ord(AItemEnum));
+  Add(Map.Current, AX, AY, Ord(AItemEnum));
 end;
 
 procedure TItems.Drop(AX, AY: Byte; AIsBoss: Boolean);
@@ -382,24 +382,24 @@ var
 begin
   V := Math.RandomRange(0, 10);
   if (V < 4) then Drop(AX, AY, iGold);
-  if (V < 3) then Add(Map.Deep, AX, AY);
-  if (V < 2) then Add(Map.Deep, AX, AY);
-  if (V < 1) then Add(Map.Deep, AX, AY);
+  if (V < 3) then Add(Map.Current, AX, AY);
+  if (V < 2) then Add(Map.Current, AX, AY);
+  if (V < 1) then Add(Map.Current, AX, AY);
   if AIsBoss then
   begin
     F := False;
-    for I := 1 to Ord(Map.Deep) + 5 do
+    for I := 1 to Ord(Map.Current) + 5 do
     begin
       case Math.RandomRange(0, 3) of
         0..1: Drop(AX, AY, iGold);
         2:
         begin
-          Add(Map.Deep, AX, AY);
+          Add(Map.Current, AX, AY);
           F := True;
         end;
       end;
     end;
-    if not F then Add(Map.Deep, AX, AY);
+    if not F then Add(Map.Current, AX, AY);
   end;
 end;
 
@@ -410,7 +410,7 @@ var
   Color: Cardinal;
   FItem: Item;
 begin
-  MapID := Ord(Map.Deep);
+  MapID := Ord(Map.Current);
   Count := Items_Dungeon_GetMapCount(MapID);
   for I := Count - 1 downto 0 do
   begin
@@ -420,7 +420,7 @@ begin
       Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (GetDist(Player.X, Player.Y, FItem.X, FItem.Y) >
+    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) >
       Player.GetRadius) then
       Color := clFog
     else Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
@@ -660,7 +660,7 @@ var
   MapID: Integer;
   The: string;
 begin
-  MapID := Ord(Map.Deep);
+  MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
   if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
@@ -680,7 +680,7 @@ begin
   Result := '';
   SL := TStringList.Create;
   try
-    FCount := Clamp(Items_Inventory_GetCount(), 0, 26);
+    FCount := EnsureRange(Items_Inventory_GetCount(), 0, 26);
     for I := 0 to FCount - 1 do
     begin
       FItem := Items_Inventory_GetItem(I);
