@@ -76,44 +76,37 @@ const
 
     // Corpse
     (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clGray; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 0;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clGray; Deep: [deDarkWood..deDungeonOfDoom]; Value: 0;),
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 1000; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 0;),
-    // Life Potion
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: [deDarkWood..deDungeonOfDoom]; Value: 0;),
+
+    // Life Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 50;),
-    // Life Potion
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deDarkWood..deDeepCave]; Value: 50;),
+    // Life Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 100;),
-    // Life Potion
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deGrayCave..deBloodCave]; Value: 100;),
+    // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 200;),
-    // Mana potion
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clRed; Deep: [deDeepCave..deDungeonOfDoom]; Value: 200;),
+
+    // Mana potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 50;),
-    // Mana potion
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deDarkWood..deDeepCave]; Value: 50;),
+    // Mana potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 100;),
-    // Mana potion
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deGrayCave..deBloodCave]; Value: 100;),
+    // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 200;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clBlue; Deep: [deDeepCave..deDungeonOfDoom]; Value: 200;),
+
     // Food
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 250;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clWhite; Deep: [deDarkWood..deDungeonOfDoom]; Value: 250;),
     // Key
     (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 10; MaxDurability: 0;
-    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: [deDarkWood, deGrayCave, deDeepCave, deBloodCave,
-    deDungeonOfDoom]; Value: 0;),
+    Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Color: clYellow; Deep: [deDarkWood..deDungeonOfDoom]; Value: 0;),
 
     // == Dark Wood == //
 

@@ -475,8 +475,8 @@ begin
       begin
         Player.Score := Player.Score + 1;
         Value := Self.GetSkillValue(skHealing) + ItemBase[TItemEnum(AItem.ItemID)].Value;
-        MsgLog.Add(Format(_('You feel healthy!') + ' ' + F, [_('Life'),
-          Min(MaxLife - Life, Value)]));
+        MsgLog.Add(_('You feel healthy!'));
+        MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
         Self.Life := EnsureRange(Self.Life + Value, 0, MaxLife);
         Self.Skill(skHealing, 5);
       end;
@@ -750,8 +750,8 @@ begin
   // Add potions and scrolls
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iPotionOfHealth1, ItemBase[iPotionOfHealth1].MaxStack);
-    Items.AddItemToInv(iPotionOfMana1, ItemBase[iPotionOfMana1].MaxStack);
+    Items.AddItemToInv(iPotionOfHealth3, ItemBase[iPotionOfHealth1].MaxStack);
+    Items.AddItemToInv(iPotionOfMana3, ItemBase[iPotionOfMana1].MaxStack);
   end else begin
     Items.AddItemToInv(iPotionOfHealth1, 5);
     Items.AddItemToInv(iPotionOfMana1, 5);
