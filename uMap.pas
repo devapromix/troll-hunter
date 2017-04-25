@@ -13,16 +13,19 @@ type
     Symbol: Char;
     Name: string;
     Color: Cardinal;
-  end;
+  end;   
 
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
-    teFloor3, teUpStairs, teDnStairs, teWater);
+    teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
+    teStoneFloor, teWoodenFloor, teDoor, teGate);
 
 const
-  StopTiles = [teDefaultWall];
+  StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs,
     teDnStairs, teWater];
+  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor,
+    teGate];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
@@ -74,7 +77,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uPlayer, uMob, uItem, GNUGetText, uTerminal;
+uses SysUtils, Math, Types, uPlayer, uMob, uItem, GNUGetText, uTerminal;
 
 { TMap }
 
@@ -134,6 +137,42 @@ begin
   AddTile('=', _('Water'), $FF222266, teWater, deDeepCave);
   AddTile('=', _('Water'), $FF222255, teWater, deBloodCave);
   AddTile('=', _('Water'), $FF222244, teWater, deDungeonOfDoom);
+  // Stone Wall
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDarkWood);
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deGrayCave);
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDeepCave);
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deBloodCave);
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDungeonOfDoom);
+  // Wooden Wall
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDarkWood);
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deGrayCave);
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDeepCave);
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deBloodCave);
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDungeonOfDoom);
+  // Stone Floor
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDarkWood);
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deGrayCave);
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDeepCave);
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deBloodCave);
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDungeonOfDoom);
+  // Wooden Floor
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDarkWood);
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deGrayCave);
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDeepCave);
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deBloodCave);
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDungeonOfDoom);
+  // Door
+  AddTile('+', _('Door'), $FF675725, teDoor, deDarkWood);
+  AddTile('+', _('Door'), $FF675725, teDoor, deGrayCave);
+  AddTile('+', _('Door'), $FF675725, teDoor, deDeepCave);
+  AddTile('+', _('Door'), $FF675725, teDoor, deBloodCave);
+  AddTile('+', _('Door'), $FF675725, teDoor, deDungeonOfDoom);
+  // Gate
+  AddTile('+', _('Gate'), $FF515F55, teGate, deDarkWood);
+  AddTile('+', _('Gate'), $FF515F55, teGate, deGrayCave);
+  AddTile('+', _('Gate'), $FF515F55, teGate, deDeepCave);
+  AddTile('+', _('Gate'), $FF515F55, teGate, deBloodCave);
+  AddTile('+', _('Gate'), $FF515F55, teGate, deDungeonOfDoom);
 end;
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
@@ -300,6 +339,96 @@ var
       ATileEnum);
   end;
 
+  procedure AddRect(AX, AY, AW, AH: Byte; AFloorTileEnum, AWallTileEnum: TTileEnum);
+  var
+    X, Y: Byte;
+    PX, PY: Byte;
+    I: Byte;
+  begin
+    PX := AX - (AW div 2);
+    PY := AY - (AH div 2);
+    for X := PX to PX + AW do
+      for Y := PY to PY + AH do
+      begin
+        if (((X > PX) and (X < (PX + AW))) and ((Y > PY)
+          and (Y < (PY + AH)))) then
+          SetTileEnum(X, Y, Z, AFloorTileEnum)
+            else SetTileEnum(X, Y, Z, AWallTileEnum);
+      end;
+  end;
+
+  procedure AddHouse(AX, AY, CX, CY, D: Byte; AV: Boolean; F: Boolean);
+  var
+    W, H: Byte;
+    IsDoor: Boolean;
+
+    procedure AddDoor(AX, AY: Byte);
+    begin
+      if IsDoor then Exit;
+      SetTileEnum(AX, AY, Z, teDoor);
+      IsDoor := True;
+    end;
+
+  begin
+    IsDoor := False;
+    W := IfThen(AV, 8, RandomRange(2, 5) * 2);
+    H := IfThen(AV, 8, RandomRange(2, 5) * 2);
+    AddRect(AX, AY, W, H, teWoodenFloor, teWoodenWall);
+    // Add door
+    if AV then
+    begin
+      case D of
+        4: AddDoor(AX, AY - (H div 2));
+        5: AddDoor(AX + (H div 2), AY);
+        6: AddDoor(AX - (H div 2), AY);
+        7: AddDoor(AX, AY + (H div 2));
+      end;
+      Exit;
+    end;
+    if F then
+      if (AX <= CX) then AddDoor(AX + (W div 2), AY)
+        else AddDoor(AX - (W div 2), AY)
+    else
+      if (AY <= CY) then AddDoor(AX, AY + (H div 2))
+        else AddDoor(AX, AY - (H div 2));
+  end;
+
+  procedure AddVillage(AX, AY: Byte);
+  var
+    I, J, T: Byte;
+    HP: array [0..7] of Boolean;
+  const
+    House: array[0..7] of TPoint =
+      ((X:-10; Y:-10;),(X:10; Y:-10;),(X:-10; Y:10;),(X:10; Y:10;),
+      (X:0; Y:10;),(X:-10; Y:0;),(X:10; Y:0;),(X:0; Y:-10;));
+  begin
+    AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall);
+    for I := 0 to High(House) do HP[I] := False;
+    // Add gate
+    J := Math.RandomRange(4, 8);
+    case J of
+      4: SetTileEnum(AX, AY - 16, Z, teGate);
+      5: SetTileEnum(AX + 16, AY, Z, teGate);
+      6: SetTileEnum(AX - 16, AY, Z, teGate);
+      7: SetTileEnum(AX, AY + 16, Z, teGate);
+    end;
+    AddRect(AX - House[J].X, AY - House[J].Y, 10, 10, teStoneFloor, teStoneFloor);
+    HP[J] := True;
+    // Add houses
+    T := 0;
+    while (T < High(House)) do
+    begin
+      I := Math.RandomRange(0, 8);
+      if not HP[I] then
+      begin
+        AddHouse(AX - House[I].X, AY - House[I].Y, AX, AY,
+          J, I = (10 - J + 1), (J = 4) or (J = 7));
+        HP[I] := True;
+        Inc(T);
+      end;
+    end;
+  end;
+
 begin
   InitTiles();
   for Z := Low(TMapEnum) to High(TMapEnum) do
@@ -346,10 +475,13 @@ begin
     for I := 0 to 49 do
       AddArea(Z, teDefaultFloor, teFloor3);
   end;
+
   repeat
-    Player.X := RandomRange(64, High(Byte) - 64);
-    Player.Y := RandomRange(64, High(Byte) - 64);
+    Player.X := RandomRange(25, High(Byte) - 25);
+    Player.Y := RandomRange(25, High(Byte) - 25);
   until (not(GetTileEnum(Player.X, Player.Y, Current) in StopTiles));
+
+  AddVillage(Player.X, Player.Y);
 
   for Z := Low(TMapEnum) to High(TMapEnum) do
   begin
@@ -376,6 +508,16 @@ end;
 
 function TMap.GetName: string;
 begin
+  if (GetTileEnum(Player.X, Player.Y, Current) in VillageTiles) then
+  begin
+    case Current of
+      deDarkWood:
+        Result := _('Village Dork');
+      deDeepCave:
+        Result := _('Village Elatrom');
+    end;
+    Exit;
+  end;
   case Current of
     deDarkWood:
       Result := _('Dark Wood');
