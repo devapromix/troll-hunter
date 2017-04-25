@@ -77,7 +77,7 @@ var
 
 implementation
 
-uses SysUtils, Math, Types, uPlayer, uMob, uItem, GNUGetText, uTerminal;
+uses SysUtils, Math, Types, uPlayer, uMob, uItem, GNUGetText, uTerminal, uGame;
 
 { TMap }
 
@@ -413,6 +413,9 @@ var
       ), (X: - 10; Y: 10;), (X: 10; Y: 10;), (X: 0; Y: 10;), (X: - 10; Y: 0;
       ), (X: 10; Y: 0;), (X: 0; Y: - 10;));
   begin
+    // Save to log
+    Game.Log(Format('Village: %dx%d', [AX, AY]));
+    //
     AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall);
     for I := 0 to High(House) do
       HP[I] := False;
