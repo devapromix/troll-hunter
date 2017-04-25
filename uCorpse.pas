@@ -12,7 +12,7 @@ type
 
   TCorpses = class
   private
-    FCorpse: array [0..CorpseMax - 1] of TCorpse;
+    FCorpse: array [0 .. CorpseMax - 1] of TCorpse;
     procedure Save(Index, AX, AY, AZ: Byte);
     procedure Load(Index: Byte);
   public
@@ -47,7 +47,7 @@ begin
       F.WriteInteger(S, 'X', AX);
       F.WriteInteger(S, 'Y', AY);
       F.WriteInteger(S, 'Z', AZ);
-    end; 
+    end;
   finally
     F.Free;
   end;
@@ -55,7 +55,7 @@ end;
 
 procedure TCorpses.Load(Index: Byte);
 var
-  F: TIniFile;  
+  F: TIniFile;
   S: string;
 begin
   F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
@@ -76,7 +76,8 @@ var
   S: string;
 begin
   if (Player.X = 0) or (Player.Y = 0) or (Player.X = High(Byte)) or
-    (Player.Y = High(Byte)) then Exit;
+    (Player.Y = High(Byte)) then
+    Exit;
   F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     for I := 0 to CorpseMax - 1 do
@@ -102,7 +103,8 @@ var
 begin
   F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
-    for I := 0 to CorpseMax - 1 do Load(I);
+    for I := 0 to CorpseMax - 1 do
+      Load(I);
   finally
     F.Free;
   end;
@@ -114,7 +116,8 @@ var
 begin
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then Continue;
+    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
+      Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
     begin
       Save(I, 0, 0, 0);
@@ -137,7 +140,8 @@ begin
   Result := False;
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then Continue;
+    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
+      Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
     begin
       Result := True;
@@ -153,14 +157,17 @@ var
 begin
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then Continue;
+    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
+      Continue;
     if not Map.InView(FCorpse[I].X, FCorpse[I].Y) or
       (not Game.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then
       Continue;
-    if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then Continue;
+    if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then
+      Continue;
     X := FCorpse[I].X - Player.X + AX + View.Left;
     Y := FCorpse[I].Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) > Player.GetRadius) then
+    if not Game.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) >
+      Player.GetRadius) then
       Color := clFog
     else
       Color := clCorpse;

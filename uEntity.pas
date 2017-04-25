@@ -89,9 +89,12 @@ begin
   Result := '';
   for I := 1 to Length(S) do
   begin
-    if (S[I] = '[') then B := False;
-    if B then Result := Result + S[I];
-    if (S[I] = ']') then B := True;
+    if (S[I] = '[') then
+      B := False;
+    if B then
+      Result := Result + S[I];
+    if (S[I] = ']') then
+      B := True;
   end;
 end;
 

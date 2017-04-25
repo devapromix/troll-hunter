@@ -32,15 +32,16 @@ type
     procedure BackgroundColor(Value: Cardinal);
     procedure ForegroundColor(Value: Cardinal);
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
-    procedure Print(AX, AY: Integer; AChar: Char;
-      AForegroundColor: Cardinal; ABackgroundColor: Cardinal = 0); overload;
+    procedure Print(AX, AY: Integer; AChar: Char; AForegroundColor: Cardinal;
+      ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
       Align: Byte); overload;
     function Pick(X, Y: Byte): Byte;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
     function GetColorFromIni(AKey: string): string; overload;
-    function GetColorFromIni(AKey: string; ADefault: string): Cardinal; overload;
+    function GetColorFromIni(AKey: string; ADefault: string): Cardinal;
+      overload;
     function GetTextScreenshot: string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
   end;
@@ -124,10 +125,10 @@ var
   Value: TEntSize;
   Wizard: string;
 begin
-  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'),
-    80), 80, High(Byte));
+  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 80),
+    80, High(Byte));
   Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'),
-    30), 30, High(Byte) div 2); 
+    30), 30, High(Byte) div 2);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
   Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'),
     35), 35, 50);
@@ -137,7 +138,7 @@ begin
   Log := SetEntSize(View.Width + 2, Status.Height + 4, Panel.Width,
     Screen.Height - Panel.Height - 9);
   Info := SetEntSize(View.Width + 2, Screen.Height - 4, Panel.Width, 3);
-  //           
+  //
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
   Wizard := '';
@@ -187,9 +188,11 @@ begin
 end;
 
 initialization
-  Terminal := TTerminal.Create;
+
+Terminal := TTerminal.Create;
 
 finalization
-  FreeAndNil(Terminal);
+
+FreeAndNil(Terminal);
 
 end.

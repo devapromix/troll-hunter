@@ -47,7 +47,7 @@ begin
   FLog.Clear;
 end;
 
-constructor TMsgLog.Create; 
+constructor TMsgLog.Create;
 begin
   FLog := TStringList.Create;
 end;
@@ -69,7 +69,10 @@ begin
     C := Math.Min(ACount, FLog.Count);
     for I := C downto 1 do
     begin
-      if (Odd(I)) then Color := 'dark gray' else Color := 'light gray';
+      if (Odd(I)) then
+        Color := 'dark gray'
+      else
+        Color := 'light gray';
       SL.Append(Format(FC, [Color, FLog[FLog.Count - I]]));
     end;
     Result := SL.Text;
@@ -80,12 +83,13 @@ end;
 
 procedure TMsgLog.Render(const Y: Byte = 0);
 begin
-  if (Trim(MsgLog.Msg) = '') then FAct := '' else
+  if (Trim(MsgLog.Msg) = '') then
+    FAct := ''
+  else
     FAct := Format(FC, [Terminal.GetColorFromIni('Log'), Trim(FMsg)]);
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height,
-    Trim(Self.GetLastMsg(MaxLogCapacity) + FAct),
-    TK_ALIGN_BOTTOM);
+    Trim(Self.GetLastMsg(MaxLogCapacity) + FAct), TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.RenderAllMessages;
@@ -97,12 +101,15 @@ begin
   C := Math.Min(Screen.Height - 3, FLog.Count);
   for I := C downto 1 do
   begin
-    if (Odd(I)) then Color := 'dark gray' else Color := 'light gray';
+    if (Odd(I)) then
+      Color := 'dark gray'
+    else
+      Color := 'light gray';
     S := S + ' ' + Format(FC, [Color, FLog[FLog.Count - I]]);
   end;
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4,
-    Trim(S), TK_ALIGN_BOTTOM);
+  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, Trim(S),
+    TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.Turn;

@@ -13,7 +13,7 @@ type
     Symbol: Char;
     Name: string;
     Color: Cardinal;
-  end;   
+  end;
 
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
@@ -24,8 +24,8 @@ const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs,
     teDnStairs, teWater];
-  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor,
-    teGate];
+  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
+    teDoor, teGate];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
@@ -279,7 +279,8 @@ var
 begin
   for Y := Player.Y - Player.GetRadius to Player.Y + Player.GetRadius do
     for X := Player.X - Player.GetRadius to Player.X + Player.GetRadius do
-      FFOV[EnsureRange(X, 0, High(Byte))][EnsureRange(Y, 0, High(Byte))] := False;
+      FFOV[EnsureRange(X, 0, High(Byte))][EnsureRange(Y, 0, High(Byte))
+        ] := False;
 end;
 
 procedure TMap.Clear(Z: TMapEnum; ATileEnum: TTileEnum);
@@ -339,7 +340,8 @@ var
       ATileEnum);
   end;
 
-  procedure AddRect(AX, AY, AW, AH: Byte; AFloorTileEnum, AWallTileEnum: TTileEnum);
+  procedure AddRect(AX, AY, AW, AH: Byte;
+    AFloorTileEnum, AWallTileEnum: TTileEnum);
   var
     X, Y: Byte;
     PX, PY: Byte;
@@ -350,10 +352,11 @@ var
     for X := PX to PX + AW do
       for Y := PY to PY + AH do
       begin
-        if (((X > PX) and (X < (PX + AW))) and ((Y > PY)
-          and (Y < (PY + AH)))) then
+        if (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
+        then
           SetTileEnum(X, Y, Z, AFloorTileEnum)
-            else SetTileEnum(X, Y, Z, AWallTileEnum);
+        else
+          SetTileEnum(X, Y, Z, AWallTileEnum);
       end;
   end;
 
@@ -364,7 +367,8 @@ var
 
     procedure AddDoor(AX, AY: Byte);
     begin
-      if IsDoor then Exit;
+      if IsDoor then
+        Exit;
       SetTileEnum(AX, AY, Z, teDoor);
       IsDoor := True;
     end;
@@ -378,41 +382,54 @@ var
     if AV then
     begin
       case D of
-        4: AddDoor(AX, AY - (H div 2));
-        5: AddDoor(AX + (H div 2), AY);
-        6: AddDoor(AX - (H div 2), AY);
-        7: AddDoor(AX, AY + (H div 2));
+        4:
+          AddDoor(AX, AY - (H div 2));
+        5:
+          AddDoor(AX + (H div 2), AY);
+        6:
+          AddDoor(AX - (H div 2), AY);
+        7:
+          AddDoor(AX, AY + (H div 2));
       end;
       Exit;
     end;
     if F then
-      if (AX <= CX) then AddDoor(AX + (W div 2), AY)
-        else AddDoor(AX - (W div 2), AY)
+      if (AX <= CX) then
+        AddDoor(AX + (W div 2), AY)
+      else
+        AddDoor(AX - (W div 2), AY)
+    else if (AY <= CY) then
+      AddDoor(AX, AY + (H div 2))
     else
-      if (AY <= CY) then AddDoor(AX, AY + (H div 2))
-        else AddDoor(AX, AY - (H div 2));
+      AddDoor(AX, AY - (H div 2));
   end;
 
   procedure AddVillage(AX, AY: Byte);
   var
     I, J, T: Byte;
-    HP: array [0..7] of Boolean;
+    HP: array [0 .. 7] of Boolean;
   const
-    House: array[0..7] of TPoint =
-      ((X:-10; Y:-10;),(X:10; Y:-10;),(X:-10; Y:10;),(X:10; Y:10;),
-      (X:0; Y:10;),(X:-10; Y:0;),(X:10; Y:0;),(X:0; Y:-10;));
+    House: array [0 .. 7] of TPoint = ((X: - 10; Y: - 10;), (X: 10; Y: - 10;
+      ), (X: - 10; Y: 10;), (X: 10; Y: 10;), (X: 0; Y: 10;), (X: - 10; Y: 0;
+      ), (X: 10; Y: 0;), (X: 0; Y: - 10;));
   begin
     AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall);
-    for I := 0 to High(House) do HP[I] := False;
+    for I := 0 to High(House) do
+      HP[I] := False;
     // Add gate
     J := Math.RandomRange(4, 8);
     case J of
-      4: SetTileEnum(AX, AY - 16, Z, teGate);
-      5: SetTileEnum(AX + 16, AY, Z, teGate);
-      6: SetTileEnum(AX - 16, AY, Z, teGate);
-      7: SetTileEnum(AX, AY + 16, Z, teGate);
+      4:
+        SetTileEnum(AX, AY - 16, Z, teGate);
+      5:
+        SetTileEnum(AX + 16, AY, Z, teGate);
+      6:
+        SetTileEnum(AX - 16, AY, Z, teGate);
+      7:
+        SetTileEnum(AX, AY + 16, Z, teGate);
     end;
-    AddRect(AX - House[J].X, AY - House[J].Y, 10, 10, teStoneFloor, teStoneFloor);
+    AddRect(AX - House[J].X, AY - House[J].Y, 10, 10, teStoneFloor,
+      teStoneFloor);
     HP[J] := True;
     // Add houses
     T := 0;
@@ -421,8 +438,8 @@ var
       I := Math.RandomRange(0, 8);
       if not HP[I] then
       begin
-        AddHouse(AX - House[I].X, AY - House[I].Y, AX, AY,
-          J, I = (10 - J + 1), (J = 4) or (J = 7));
+        AddHouse(AX - House[I].X, AY - House[I].Y, AX, AY, J, I = (10 - J + 1),
+          (J = 4) or (J = 7));
         HP[I] := True;
         Inc(T);
       end;
@@ -542,8 +559,7 @@ begin
   Result := FVis[AZ];
 end;
 
-procedure TMap.SetTileEnum(AX, AY: Byte; AZ: TMapEnum;
-  ATileEnum: TTileEnum);
+procedure TMap.SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
 begin
   FMap[AX][AY][AZ] := ATileEnum;
 end;

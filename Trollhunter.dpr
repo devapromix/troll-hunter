@@ -25,7 +25,7 @@ var
 begin
   Game.LoadConfig;
   repeat
-    if IsRender then                
+    if IsRender then
     begin
       Scenes.Render;
       Terminal.Refresh;
@@ -36,9 +36,10 @@ begin
       Key := terminal_read();
       Scenes.Update(Key);
       IsRender := True;
-      Continue;  
+      Continue;
     end;
     terminal_delay(10);
     IsRender := False;
   until Game.CanClose;
+
 end.

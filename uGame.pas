@@ -22,16 +22,16 @@ const
   clFog = $FF111111;
 
 var
-  clDefault    : Cardinal = $FFFFFF00;
-  clBackground : Cardinal = $00000000;
-  clCorpse     : Cardinal = $FF555555;
-  clLook       : Cardinal = $FFFFFF33;
-  clBkMob      : Cardinal = $FF330000;
-  clPlayer     : Cardinal = $FF009900;
-  clBkPlayer   : Cardinal = $FF003300;
+  clDefault: Cardinal = $FFFFFF00;
+  clBackground: Cardinal = $00000000;
+  clCorpse: Cardinal = $FF555555;
+  clLook: Cardinal = $FFFFFF33;
+  clBkMob: Cardinal = $FF330000;
+  clPlayer: Cardinal = $FF009900;
+  clBkPlayer: Cardinal = $FF003300;
 
 var
-  clAlarm      : string = 'Lightest Green';
+  clAlarm: string = 'Lightest Green';
 
 type
   TGame = class(TObject)
@@ -129,18 +129,18 @@ begin
   Player.StarterSet;
   // Intro
   MsgLog.Clear;
-  MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [
-    _('Welcome to Elvion!'),
-    _('You need to find and kill The King Troll!'),
-    _('Press ? for help.')])]));
+  MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [_('Welcome to Elvion!'),
+    _('You need to find and kill The King Troll!'), _('Press ? for help.')])]));
   //
   Scenes.SetScene(scGame);
 end;
 
-initialization  
-  Game := TGame.Create; 
+initialization
+
+Game := TGame.Create;
 
 finalization
-  FreeAndNil(Game);
+
+FreeAndNil(Game);
 
 end.

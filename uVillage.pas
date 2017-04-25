@@ -23,8 +23,8 @@ implementation
 
 uses SysUtils;
 
-//What can I get you today?
-//The %s just frowns. Maybe you'll return when you have enough gold?
+// What can I get you today?
+// The %s just frowns. Maybe you'll return when you have enough gold?
 
 { TVillages }
 
@@ -40,9 +40,11 @@ begin
 end;
 
 initialization
-  Villages := TVillages.Create;
+
+Villages := TVillages.Create;
 
 finalization
-  FreeAndNil(Villages);
+
+FreeAndNil(Villages);
 
 end.
