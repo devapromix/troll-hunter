@@ -19,7 +19,7 @@ const
   clWhite = $FFDDDDDD;
 
 const
-  clFog = $FF111111;
+  clFog = $FF222222;
 
 var
   clDefault: Cardinal = $FFFFFF00;

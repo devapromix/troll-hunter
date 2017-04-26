@@ -340,18 +340,31 @@ var
       ATileEnum);
   end;
 
-  procedure AddRect(AX, AY, AW, AH: Byte;
-    AFloorTileEnum, AWallTileEnum: TTileEnum);
+  procedure AddFrame(AX, AY, AW, AH: Byte; ABaseTileEnum: TTileEnum);
   var
     X, Y: Byte;
     PX, PY: Byte;
-    I: Byte;
+  begin
+    PX := AX - (AW div 2);
+    PY := AY - (AH div 2);
+    for X := PX to PX + AW do
+      for Y := PY to PY + AH do
+        if not (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
+        then SetTileEnum(X, Y, Z, ABaseTileEnum);
+  end;
+
+  procedure AddRect(AX, AY, AW, AH: Byte;
+    AFloorTileEnum, AWallTileEnum: TTileEnum; IsFog: Boolean = False);
+  var
+    X, Y: Byte;
+    PX, PY: Byte;
   begin
     PX := AX - (AW div 2);
     PY := AY - (AH div 2);
     for X := PX to PX + AW do
       for Y := PY to PY + AH do
       begin
+        if IsFog then Self.SetFog(X, Y, False);
         if (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
         then
           SetTileEnum(X, Y, Z, AFloorTileEnum)
@@ -412,24 +425,41 @@ var
     House: array [0 .. 7] of TPoint = ((X: - 10; Y: - 10;), (X: 10; Y: - 10;
       ), (X: - 10; Y: 10;), (X: 10; Y: 10;), (X: 0; Y: 10;), (X: - 10; Y: 0;
       ), (X: 10; Y: 0;), (X: 0; Y: - 10;));
+
+    procedure AddGate(AX, AY: Byte; SX, SY: ShortInt);
+    begin
+      SetTileEnum(AX + SX, AY + SY, Z, teGate);
+      if (SX = 0) then
+      begin
+        SetTileEnum(AX + 1, AY + SY, Z, teGate);
+        SetTileEnum(AX - 1, AY + SY, Z, teGate);
+      end;
+      if (SY = 0) then
+      begin
+        SetTileEnum(AX + SX, AY + 1, Z, teGate);
+        SetTileEnum(AX + SX, AY - 1, Z, teGate);
+      end;
+    end;
+
   begin
     // Save to log
     Game.Log(Format('Village: %dx%d', [AX, AY]));
     //
-    AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall);
+    AddFrame(AX, AY, 34, 34, teDefaultFloor);
+    AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall, True);
     for I := 0 to High(House) do
       HP[I] := False;
     // Add gate
     J := Math.RandomRange(4, 8);
     case J of
       4:
-        SetTileEnum(AX, AY - 16, Z, teGate);
+        AddGate(AX, AY, 0, -16);
       5:
-        SetTileEnum(AX + 16, AY, Z, teGate);
+        AddGate(AX, AY, 16, 0);
       6:
-        SetTileEnum(AX - 16, AY, Z, teGate);
+        AddGate(AX, AY, -16, 0);
       7:
-        SetTileEnum(AX, AY + 16, Z, teGate);
+        AddGate(AX, AY, 0, 16);
     end;
     AddRect(AX - House[J].X, AY - House[J].Y, 10, 10, teStoneFloor,
       teStoneFloor);
@@ -462,6 +492,9 @@ begin
           for I := 0 to 9999 do
             Self.SetTileEnum(Math.RandomRange(0, High(Byte)),
               Math.RandomRange(0, High(Byte)), Z, teDefaultWall);
+          Player.X := RandomRange(25, High(Byte) - 25);
+          Player.Y := RandomRange(25, High(Byte) - 25);
+          AddVillage(Player.X, Player.Y);
         end;
       deGrayCave:
         begin
@@ -472,6 +505,7 @@ begin
         begin
           Self.Clear(Z, teDefaultWall);
           GenCave(6, 39, 3999);
+          AddVillage(Player.X, Player.Y);
         end;
       deBloodCave:
         begin
@@ -495,13 +529,6 @@ begin
     for I := 0 to 49 do
       AddArea(Z, teDefaultFloor, teFloor3);
   end;
-
-  repeat
-    Player.X := RandomRange(25, High(Byte) - 25);
-    Player.Y := RandomRange(25, High(Byte) - 25);
-  until (not(GetTileEnum(Player.X, Player.Y, Current) in StopTiles));
-
-  AddVillage(Player.X, Player.Y);
 
   for Z := Low(TMapEnum) to High(TMapEnum) do
   begin
