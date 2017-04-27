@@ -10,7 +10,7 @@ type
     X, Y, Z: Byte;
   end;
 
-  TCorpses = class
+  TCorpses = class(TObject)
   private
     FCorpse: array [0 .. CorpseMax - 1] of TCorpse;
     procedure Save(Index, AX, AY, AZ: Byte);
@@ -167,8 +167,7 @@ begin
     X := FCorpse[I].X - Player.X + AX + View.Left;
     Y := FCorpse[I].Y - Player.Y + AY + View.Top;
     if not Game.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) >
-      Player.GetRadius) then
-      Color := clFog
+      Player.GetRadius) then Color := clFog
     else
       Color := clCorpse;
     Terminal.Print(X, Y, '%', Color);

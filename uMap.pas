@@ -380,8 +380,7 @@ var
 
     procedure AddDoor(AX, AY: Byte);
     begin
-      if IsDoor then
-        Exit;
+      if IsDoor then Exit;
       SetTileEnum(AX, AY, Z, teDoor);
       IsDoor := True;
     end;

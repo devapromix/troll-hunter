@@ -239,11 +239,12 @@ const
 
 type
   TMob = class(TEntity)
-    ID: Byte;
+  private
+    FID: Byte;
     Maps: TMapEnum;
-    Alive: Boolean;
     Sleep: Boolean;
     Boss: Boolean;
+  public  
     procedure AddRandom(AZ: TMapEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -252,11 +253,16 @@ type
     procedure Defeat;
     function GetRadius: Byte;
     procedure DropItems;
+    property ID: Byte read FID write FID;
   end;
 
 type
   TMobs = class(TObject)
+  private
     FMob: array of TMob;
+    function GetMob(I: Integer): TMob;
+    procedure SetMob(I: Integer; const Value: TMob);
+  public
     constructor Create();
     destructor Destroy; override;
     procedure Add(AZ: TMapEnum);
@@ -266,6 +272,7 @@ type
     function GetFreeTile(AX, AY: Byte): Boolean;
     function GetIndex(AX, AY: Byte): Integer;
     function GetName(AMobEnum: TMobEnum): string;
+    property Mob[I: Integer]: TMob read GetMob write SetMob;
   end;
 
 type
@@ -566,6 +573,11 @@ begin
       end;
 end;
 
+function TMobs.GetMob(I: Integer): TMob;
+begin
+  Result := FMob[I]
+end;
+
 procedure TMobs.Process;
 var
   I: Integer;
@@ -584,6 +596,11 @@ begin
     for I := 0 to Count - 1 do
       if FMob[I].Alive and (FMob[I].Maps = Map.Current) then
         FMob[I].Render(AX, AY);
+end;
+
+procedure TMobs.SetMob(I: Integer; const Value: TMob);
+begin
+  FMob[I] := Value;
 end;
 
 function TMobs.GetName(AMobEnum: TMobEnum): string;

@@ -444,8 +444,8 @@ var
       if (C > -1) then
       begin
         S := S + Format('%s (%d/%d). ',
-          [Mobs.GetName(TMobEnum(Mobs.FMob[C].ID)), Mobs.FMob[C].Life,
-          Mobs.FMob[C].MaxLife]);
+          [Mobs.GetName(TMobEnum(Mobs.Mob[C].ID)), Mobs.Mob[C].Life,
+          Mobs.Mob[C].MaxLife]);
       end;
     end;
     //

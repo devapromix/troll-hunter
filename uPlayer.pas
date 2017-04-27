@@ -106,7 +106,6 @@ type
     procedure AddExp(Value: Byte = 1);
     procedure SkillSet;
     procedure StarterSet;
-    function IsDead: Boolean;
     procedure Rest(ATurns: Byte);
   end;
 
@@ -143,7 +142,7 @@ var
 begin
   if (Index < 0) then
     Exit;
-  Mob := Mobs.FMob[Index];
+  Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
   The := GetDescThe(Mobs.GetName(TMobEnum(Mob.ID)));
@@ -260,6 +259,7 @@ begin
   Kills := 0;
   Level := 1;
   Killer := '';
+  Alive := True;
   Look := False;
   IsRest := False;
   FWeaponSkill := skLearning;
@@ -347,11 +347,6 @@ end;
 function TPlayer.GetSkillValue(ASkill: TSkillEnum): Byte;
 begin
   Result := FSkill[ASkill].Value;
-end;
-
-function TPlayer.IsDead: Boolean;
-begin
-  Result := Self.Life = 0;
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);

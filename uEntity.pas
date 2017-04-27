@@ -17,6 +17,7 @@ type
     FLife: Word;
     FMaxLife: Word;
     FDamage: TDamage;
+    FAlive: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -26,12 +27,14 @@ type
     property Life: Word read FLife write FLife;
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Damage: TDamage read FDamage write FDamage;
+    property Alive: Boolean read FAlive write FAlive;
     function GetDist(ToX, ToY: Single): Word;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
     function GetDescThe(S: string): string;
     function GetPureText(const S: string): string;
     procedure SetDamage(AMin, AMax: Word);
+    function IsDead: Boolean;
   end;
 
 implementation
@@ -96,6 +99,11 @@ begin
     if (S[I] = ']') then
       B := True;
   end;
+end;
+
+function TEntity.IsDead: Boolean;
+begin
+  Result := Life = 0
 end;
 
 procedure TEntity.SetDamage(AMin, AMax: Word);
