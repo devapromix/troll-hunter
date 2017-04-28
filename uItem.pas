@@ -737,12 +737,21 @@ var
 begin
   MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
-  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
-  then
+  if (FItem.Stack > 1) and (FItem.Amount > 1) then
+  begin
+    Player.ItemIsDrop := False;
+    Player.ItemIndex := Index;
+    Player.ItemAmount := FItem.Amount;
+    Scenes.SetScene(scAmount);
+    Exit;
+  end;
+  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
-    MsgLog.Add(Format(_('You pick up %s.'), [The]));
+    if (FItem.Amount = 1) then
+      MsgLog.Add(Format(_('You pick up %s.'), [The]))
+      else MsgLog.Add(Format(_('You pick up %s (%dx).'), [The, FItem.Amount]));
     Player.Calc;
   end;
 end;

@@ -55,6 +55,9 @@ type
     FKiller: string;
     FSkill: array [TSkillEnum] of TSkill;
     FWeaponSkill: TSkillEnum;
+    FItemIsDrop: Boolean;
+    FItemIndex: Integer;
+    FItemAmount: Integer;
     FIsRest: Boolean;
   public
     constructor Create;
@@ -80,6 +83,9 @@ type
     property Kills: Word read FKills write FKills;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
+    property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
+    property ItemIndex: Integer read FItemIndex write FItemIndex;
+    property ItemAmount: Integer read FItemAmount write FItemAmount;
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
     procedure Calc;
@@ -97,7 +103,9 @@ type
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure PickUp;
+    procedure PickUpAmount(Index: Integer);
     procedure Drop(Index: Integer);
+    procedure DropAmount(Index: Integer);
     procedure Use(Index: Integer);
     procedure Drink(Index: Integer);
     procedure Eat(Index: Integer);
@@ -558,15 +566,37 @@ begin
   MapID := Ord(Map.Current);
   AItem := Items_Inventory_GetItem(Index);
   FCount := Items_Inventory_GetItemCount(AItem.ItemID);
-  if (AItem.Stack > 1) and (AItem.Amount > 1) then
+  if not ((AItem.Stack > 1) and (AItem.Amount > 1)) then
+    DeleteItem else
   begin
-
-    Self.Calc;
-    Exit;
-  end
-  else
-    DeleteItem;
+    Player.ItemIsDrop := True;
+    Player.ItemIndex := Index;
+    Player.ItemAmount := 1;
+    Scenes.SetScene(scAmount);
+  end;
   Self.Calc;
+end;
+
+procedure TPlayer.DropAmount(Index: Integer);
+var
+  I, FCount: Integer;
+  FItem: Item;
+  The: string;
+begin
+  FItem := Items_Inventory_GetItem(Index);
+  FItem.Amount := FItem.Amount - Player.ItemAmount;
+  Items_Inventory_SetItem(Index, FItem);
+  FItem.X := Player.X;
+  FItem.Y := Player.Y;
+  FItem.MapID := Ord(Map.Current);
+  FItem.Amount := Player.ItemAmount;
+  Items_Dungeon_AppendItem(FItem);
+  The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
+  if (FItem.Amount > 1) then
+    MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
+    else MsgLog.Add(Format(_('You drop %s.'), [The]));
+  Scenes.SetScene(scGame);
+  Wait;
 end;
 
 procedure TPlayer.PickUp;
@@ -579,7 +609,6 @@ begin
   /// / Your backpack is full!
   MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
-  // if (FItem.Stack > 1) and (FItem.Amount > 1) then
   if (FCount > 0) then
   begin
     if (FCount = 1) then
@@ -593,6 +622,36 @@ begin
       Scenes.SetScene(scItems);
     end;
   end;
+end;
+
+procedure TPlayer.PickUpAmount(Index: Integer);
+var
+  I, FCount: Integer;
+  FItem: Item;
+  The: string;
+begin
+  FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, Player.X, Player.Y);
+  FItem.Amount := FItem.Amount - Player.ItemAmount;
+  Items.AddItemToInv(Index);
+
+
+
+  
+
+{  FItem := Items_Inventory_GetItem(Index);
+  FItem.Amount := FItem.Amount - Player.ItemAmount;
+  Items_Inventory_SetItem(Index, FItem);
+  FItem.X := Player.X;
+  FItem.Y := Player.Y;
+  FItem.MapID := Ord(Map.Current);
+  FItem.Amount := Player.ItemAmount;
+  Items_Dungeon_AppendItem(FItem);
+  The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
+  if (FItem.Amount > 1) then
+    MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
+    else MsgLog.Add(Format(_('You drop %s.'), [The]));}
+  Scenes.SetScene(scGame);
+  Wait;
 end;
 
 procedure TPlayer.Render(AX, AY: Byte);

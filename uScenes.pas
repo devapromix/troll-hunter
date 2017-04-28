@@ -36,7 +36,7 @@ type
     destructor Destroy; override;
     procedure Render; override;
     procedure Update(var Key: Word); override;
-    property Scene: TSceneEnum read FSceneEnum write FSceneEnum;
+    property SceneEnum: TSceneEnum read FSceneEnum write FSceneEnum;
     function GetScene(I: TSceneEnum): TScene;
     procedure SetScene(SceneEnum: TSceneEnum); overload;
     procedure SetScene(SceneEnum, CurrSceneEnum: TSceneEnum); overload;
@@ -99,6 +99,7 @@ type
 type
   TSceneAmount = class(TScene)
   public
+    MaxAmount: Integer;
     procedure Render; override;
     procedure Update(var Key: Word); override;
   end;
@@ -252,7 +253,7 @@ end;
 
 procedure TScenes.GoBack;
 begin
-  Self.Scene := FPrevSceneEnum;
+  Self.SceneEnum := FPrevSceneEnum;
 end;
 
 procedure TScenes.Render;
@@ -260,17 +261,17 @@ begin
   Terminal.BackgroundColor(clBackground);
   Terminal.ForegroundColor(clDefault);
   Terminal.Clear;
-  if (FScene[Scene] <> nil) then
+  if (FScene[SceneEnum] <> nil) then
   begin
-    FScene[Scene].CX := Terminal.Window.Width div 2;
-    FScene[Scene].CY := Terminal.Window.Height div 2;
-    FScene[Scene].Render;
+    FScene[SceneEnum].CX := Terminal.Window.Width div 2;
+    FScene[SceneEnum].CY := Terminal.Window.Height div 2;
+    FScene[SceneEnum].Render;
   end;
 end;
 
 procedure TScenes.SetScene(SceneEnum: TSceneEnum);
 begin
-  Self.Scene := SceneEnum;
+  Self.SceneEnum := SceneEnum;
   Render;
 end;
 
@@ -282,14 +283,14 @@ end;
 
 procedure TScenes.Update(var Key: Word);
 begin
-  if (FScene[Scene] <> nil) then
-    FScene[Scene].Update(Key);
+  if (FScene[SceneEnum] <> nil) then
+    FScene[SceneEnum].Update(Key);
   case Key of
     TK_CLOSE:
       begin
-        if Game.IsMode and not(Scene in [scWin, scDef, scQuit]) and
+        if Game.IsMode and not(SceneEnum in [scWin, scDef, scQuit]) and
           (Player.Life > 0) then
-          SetScene(scQuit, Scene);
+          SetScene(scQuit, SceneEnum);
       end;
   end;
 end;
@@ -642,7 +643,7 @@ begin
         if (Player.Life = 0) then
           Exit;
         Game.Screenshot := Terminal.GetTextScreenshot();
-        Scenes.SetScene(scQuit, Scenes.Scene);
+        Scenes.SetScene(scQuit, Scenes.SceneEnum);
       end;
     TK_R:
       Player.Rest(100);
@@ -930,27 +931,47 @@ end;
 { TSceneAmount }
 
 procedure TSceneAmount.Render;
-{ var
-  I, FCount: Integer;
-  FItem: Item; }
+var
+  FItem: Item;
 begin
   Self.Title(_('Enter amount'));
 
-  { FCount := Items_Inventory_GetCount();
-    for I := 0 to FCount - 1 do
-    begin
-    FItem := Items_Inventory_GetItem(I);
-    Items.RenderInvItem(5, 2, I, FItem);
-    end; }
+  if Player.ItemIsDrop then
+    FItem := Items_Inventory_GetItem(Player.ItemIndex)
+  else
+    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current),
+      Player.ItemIndex, Player.X, Player.Y);
+  MaxAmount := FItem.Amount;
 
-  AddKey('Esc', _('Close'), True, True);
+  Terminal.Print(CX, CY, Format('%d/%dx',
+    [Player.ItemAmount, FItem.Amount]), TK_ALIGN_LEFT);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('Enter', _('Apply'), False, True);
 end;
 
 procedure TSceneAmount.Update(var Key: Word);
+
+  procedure ChAmount(Value: Integer);
+  begin
+    Player.ItemAmount := EnsureRange(Value, 1, MaxAmount);
+    Render;
+  end;
+
 begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_ENTER, TK_KP_ENTER:
+    begin
+      if Player.ItemIsDrop then
+        Player.DropAmount(Player.ItemIndex)
+        else Player.PickUpAmount(Player.ItemIndex);
+    end;
+    TK_UP, TK_KP_8, TK_W:
+      ChAmount(Player.ItemAmount + 1);
+    TK_DOWN, TK_KP_2, TK_X:
+      ChAmount(Player.ItemAmount - 1);
   end;
 end;
 
