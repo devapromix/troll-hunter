@@ -518,21 +518,19 @@ var
   The: string;
   AItem: Item;
   Value: Word;
-const
-  F = '%s +%d.';
 begin
   AItem := Items_Inventory_GetItem(Index);
   begin
     AItem.Amount := AItem.Amount - 1;
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
-    MsgLog.Add(Format(_('You eat %s.'), [The]));
+    MsgLog.Add(Format(_('You ate %s.'), [The]));
     case Items.GetItemEnum(AItem.ItemID) of
       iFood:
         begin
           Value := ItemBase[TItemEnum(AItem.ItemID)].Value;
           Player.Score := Player.Score + 1;
           Player.Food := Player.Food + Value;
-          MsgLog.Add(Format(F, [_('Food'), Value]));
+          MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
         end;
     end;
     Items_Inventory_SetItem(Index, AItem);
@@ -637,8 +635,8 @@ begin
   Items_Inventory_AppendItem(FItem);
   The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format(_('You pick up %s (%dx).'), [The, FItem.Amount]))
-    else MsgLog.Add(Format(_('You pick up %s.'), [The]));
+    MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]))
+    else MsgLog.Add(Format(_('You picked up %s.'), [The]));
   Scenes.SetScene(scGame);
   Wait;
 end;
@@ -717,11 +715,11 @@ begin
     begin
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
       Inc(FSkill[ASkill].Value);
-      // Add message {!!!}
-      MsgLog.Add(Format(FC, [clAlarm, Format('%s %s +1.',
-        [_('Skill'), Self.GetSkillName(ASkill)])]));
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
+      // Add message {!!!}
+      MsgLog.Add(Format(FC, [clAlarm, Format('Your skill %s has raised to %d!',
+        [Self.GetSkillName(ASkill), Self.GetSkillValue(ASkill)])]));
       // Add exp
       AddExp();
       // Add scores

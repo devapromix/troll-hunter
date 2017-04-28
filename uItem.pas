@@ -750,8 +750,8 @@ begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
     if (FItem.Amount = 1) then
-      MsgLog.Add(Format(_('You pick up %s.'), [The]))
-      else MsgLog.Add(Format(_('You pick up %s (%dx).'), [The, FItem.Amount]));
+      MsgLog.Add(Format(_('You picked up %s.'), [The]))
+      else MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]));
     Player.Calc;
   end;
 end;
