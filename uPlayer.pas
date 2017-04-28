@@ -632,24 +632,13 @@ var
 begin
   FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, Player.X, Player.Y);
   FItem.Amount := FItem.Amount - Player.ItemAmount;
-  Items.AddItemToInv(Index);
-
-
-
-  
-
-{  FItem := Items_Inventory_GetItem(Index);
-  FItem.Amount := FItem.Amount - Player.ItemAmount;
-  Items_Inventory_SetItem(Index, FItem);
-  FItem.X := Player.X;
-  FItem.Y := Player.Y;
-  FItem.MapID := Ord(Map.Current);
+  Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, Player.X, Player.Y, FItem);
   FItem.Amount := Player.ItemAmount;
-  Items_Dungeon_AppendItem(FItem);
+  Items_Inventory_AppendItem(FItem);
   The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
-    else MsgLog.Add(Format(_('You drop %s.'), [The]));}
+    MsgLog.Add(Format(_('You pick up %s (%dx).'), [The, FItem.Amount]))
+    else MsgLog.Add(Format(_('You pick up %s.'), [The]));
   Scenes.SetScene(scGame);
   Wait;
 end;

@@ -947,6 +947,8 @@ begin
     [Player.ItemAmount, FItem.Amount]), TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Close'), True, False);
+  AddKey('W', _('+'), False, False);
+  AddKey('X', _('-'), False, False);
   AddKey('Enter', _('Apply'), False, True);
 end;
 
