@@ -33,26 +33,31 @@ type
     iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iFood, iKey,
     // Dark Wood
+    iQuiltedArmor, iLeatherArmor, // Armor
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
     iShortSpear, iSpear, // Spear
     iSlagHammer, iSpikedCudgel, // Mace
     // Gray Cave
+    iHardLeatherArmor, iBattleArmor, // Armor
     iBroadSword, iLongSword, // Blade
     iMeatAxe, iFleshTearer, // Axe
     iJavelin, iFuscina, // Spear
     iWarhammer, iWarMace, // Mace
     // Deep Cave
+    iBrigantineArmor, iRingMail, // Armor
     iMoonBlade, iScimitar, // Blade
     iWarAxe, iDarkAxe, // Axe
     iWarSpear, iHarpoon, // Spear
     iFlangedMace, iWarGavel, // Mace
     // Blood Cave
+    iChainMail, iScaleMail, // Armor
     iBastardSword, iGreatSword, // Blade
     iBerserkerAxe, iMarauderAxe, // Axe
     iSilvanWhisper, iImpaler, // Spear
     iBarbarousMace, iAdeptHammer, // Mace
     // Dungeon of Doom
+    iPlateMail, iBoneweaveHauberk, // Armor
     iRuneSword, iTrollSlayer, // Blade
     iChopper, iDemonAxe, // Axe
     iSoulReaver, iHonedSpear, // Spear
