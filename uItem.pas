@@ -6,7 +6,7 @@ uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
   TItemType = (itCorpse, itKey, itCoin, itPotion, itFood, itBlade, itAxe,
-    itSpear, itMace, itHelm, itArmour);
+    itSpear, itMace, itHelm, itArmor);
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand, stNeck,
@@ -123,6 +123,14 @@ const
 
     // == Dark Wood == //
 
+    // Quilted Armor
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 25; Level: 1; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deDarkWood];),
+    // Leather Armor
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 50; Level: 2; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deDarkWood];),
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 30; Level: 1; Defense: 1; Damage: (Min: 4; Max: 9;);
@@ -158,6 +166,14 @@ const
 
     // == Gray Cave == //
 
+    // HardLeather Armor
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 75; Level: 3; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deGrayCave];),
+    // Battle Armor
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 100; Level: 4; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deGrayCave];),
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 3; Defense: 3; Damage: (Min: 11; Max: 21;);
@@ -193,6 +209,14 @@ const
 
     // == Deep Cave == //
 
+    // Brigantine Armor
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 125; Level: 5; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deDeepCave];),
+    // Ring Mail
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 150; Level: 6; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deDeepCave];),
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 50; Level: 5; Defense: 5; Damage: (Min: 17; Max: 31;);
@@ -228,6 +252,14 @@ const
 
     // == Blood Cave == //
 
+    // Chain Mail
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 175; Level: 7; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deBloodCave];),
+    // Scale Mail
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 200; Level: 8; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deBloodCave];),
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 60; Level: 7; Defense: 7; Damage: (Min: 24; Max: 43;);
@@ -263,6 +295,14 @@ const
 
     // == Dungeon of Doom == //
 
+    // Plate Mail
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 225; Level: 9; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deDungeonOfDoom];),
+    // Boneweave Hauberk
+    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 250; Level: 10; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Color: clWhite; Deep: [deDungeonOfDoom];),
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: 9; Damage: (Min: 30; Max: 53;);
@@ -568,6 +608,11 @@ begin
 
     // == Dark Wood == //
 
+    // Armor
+    iQuiltedArmor:
+      Result := _('Quilted Armor');
+    iLeatherArmor:
+      Result := _('Leather Armor');
     // Blade
     iRustySword:
       Result := _('Rusty Sword');
@@ -591,6 +636,11 @@ begin
 
     // == Gray Cave == //
 
+    // Armor
+    iHardLeatherArmor:
+      Result := _('HardLeather Armor');
+    iBattleArmor:
+      Result := _('Battle Armor');
     // Blade
     iBroadSword:
       Result := _('Broad Sword');
@@ -614,6 +664,11 @@ begin
 
     // == Deep Cave == //
 
+    // Armor
+    iBrigantineArmor:
+      Result := _('Brigantine Armor');
+    iRingMail:
+      Result := _('Ring Mail');
     // Blade
     iMoonBlade:
       Result := _('Moon Blade');
@@ -637,6 +692,11 @@ begin
 
     // == Blood Cave == //
 
+    // Armor
+    iChainMail:
+      Result := _('Chain Mail');
+    iScaleMail:
+      Result := _('Scale Mail');
     // Blade
     iBastardSword:
       Result := _('Bastard Sword');
@@ -660,6 +720,11 @@ begin
 
     // == Dungeon of Doom == //
 
+    // Armor
+    iPlateMail:
+      Result := _('Plate Mail');
+    iBoneweaveHauberk:
+      Result := _('Boneweave Hauberk');
     // Blade
     iRuneSword:
       Result := _('Rune Sword');
