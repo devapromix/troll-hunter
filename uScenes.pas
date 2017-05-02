@@ -766,13 +766,13 @@ begin
   Self.Title(_('Inventory'));
 
   if Game.Wizard then
-    for I := 0 to 25 do
+    for I := 0 to ItemMax - 1 do
     begin
       Terminal.ForegroundColor(clGray);
       Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
     end;
 
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, 26);
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -808,13 +808,13 @@ begin
   Self.Title(_('Drop an item'));
 
   if Game.Wizard then
-    for I := 0 to 25 do
+    for I := 0 to ItemMax - 1 do
     begin
       Terminal.ForegroundColor(clGray);
       Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
     end;
 
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, 26);
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -988,14 +988,13 @@ begin
   Self.Title(_('Pick up an item'));
 
   if Game.Wizard then
-    for I := 0 to 25 do
+    for I := 0 to ItemMax - 1 do
     begin
       Terminal.ForegroundColor(clGray);
       Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
     end;
 
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X,
-    Player.Y), 0, 26);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);

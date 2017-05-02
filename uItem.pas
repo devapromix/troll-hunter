@@ -30,8 +30,10 @@ type
 type
   TItemEnum = (
     // All maps
-    iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
-    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iFood, iKey,
+    iCorpse, iGold,
+    iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
+    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
+    iFood, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
     iRustySword, iShortSword, // Blade
@@ -124,12 +126,12 @@ const
     // == Dark Wood == //
 
     // Quilted Armor
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 25; Level: 1; Defense: 5; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deDarkWood];),
     // Leather Armor
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 50; Level: 2; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 50; Level: 2; Defense: 10; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deDarkWood];),
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -167,12 +169,12 @@ const
     // == Gray Cave == //
 
     // HardLeather Armor
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 75; Level: 3; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 75; Level: 3; Defense: 15; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deGrayCave];),
     // Battle Armor
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 100; Level: 4; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 100; Level: 4; Defense: 20; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deGrayCave];),
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -210,12 +212,12 @@ const
     // == Deep Cave == //
 
     // Brigantine Armor
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 125; Level: 5; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deDeepCave];),
     // Ring Mail
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 150; Level: 6; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 150; Level: 6; Defense: 30; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deDeepCave];),
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -253,12 +255,12 @@ const
     // == Blood Cave == //
 
     // Chain Mail
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 175; Level: 7; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deBloodCave];),
     // Scale Mail
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 200; Level: 8; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 200; Level: 8; Defense: 40; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deBloodCave];),
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -296,12 +298,12 @@ const
     // == Dungeon of Doom == //
 
     // Plate Mail
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 225; Level: 9; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deDungeonOfDoom];),
     // Boneweave Hauberk
-    (Symbol: '['; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
-    MaxDurability: 250; Level: 10; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 250; Level: 10; Defense: 50; Damage: (Min: 0; Max: 0;);
     Color: clWhite; Deep: [deDungeonOfDoom];),
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -772,19 +774,19 @@ begin
     begin
       case D.SlotType of
         stHead:
-          ;
+          S := _('head');
         stNeck:
-          ;
+          S := _('neck');
         stFinger:
-          ;
+          S := _('finger');
         stMainHand:
-          S := _('in main hand');
+          S := _('main hand');
         stOffHand:
-          ;
+          S := _('off hand');
         stChest:
-          ;
+          S := _('chest');
         stFeet:
-          ;
+          S := _('feet');
       end;
       S := '- ' + S;
     end;
@@ -809,10 +811,7 @@ begin
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
   if (FItem.Stack > 1) and (FItem.Amount > 1) then
   begin
-    Player.ItemIsDrop := False;
-    Player.ItemIndex := Index;
-    Player.ItemAmount := FItem.Amount;
-    Scenes.SetScene(scAmount);
+    Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
   if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
@@ -835,7 +834,7 @@ begin
   Result := '';
   SL := TStringList.Create;
   try
-    FCount := EnsureRange(Items_Inventory_GetCount(), 0, 26);
+    FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
     for I := 0 to FCount - 1 do
     begin
       FItem := Items_Inventory_GetItem(I);

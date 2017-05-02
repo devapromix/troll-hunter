@@ -29,6 +29,7 @@ const
   PVMax = 250;
   ExpMax = 10;
   FoodMax = 250;
+  ItemMax = 26;
 
 type
   TPlayer = class(TEntity)
@@ -86,6 +87,7 @@ type
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
     property ItemIndex: Integer read FItemIndex write FItemIndex;
     property ItemAmount: Integer read FItemAmount write FItemAmount;
+    procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
     procedure Calc;
@@ -210,7 +212,7 @@ begin
   Dam.Min := 0;
   Dam.Max := 0;
   Def := 0;
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, 26);
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -565,13 +567,7 @@ begin
   AItem := Items_Inventory_GetItem(Index);
   FCount := Items_Inventory_GetItemCount(AItem.ItemID);
   if not ((AItem.Stack > 1) and (AItem.Amount > 1)) then
-    DeleteItem else
-  begin
-    Player.ItemIsDrop := True;
-    Player.ItemIndex := Index;
-    Player.ItemAmount := 1;
-    Scenes.SetScene(scAmount);
-  end;
+    DeleteItem else Player.SetAmountScene(True, Index, 1);
   Self.Calc;
 end;
 
@@ -692,6 +688,14 @@ begin
   finally
     SL.Free;
   end;
+end;
+
+procedure TPlayer.SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
+begin
+  ItemIsDrop := IsDrop;
+  ItemIndex := Index;
+  ItemAmount := Amount;
+  Scenes.SetScene(scAmount);
 end;
 
 procedure TPlayer.AddExp(Value: Byte = 1);
