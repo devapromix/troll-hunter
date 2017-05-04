@@ -30,10 +30,8 @@ type
 type
   TItemEnum = (
     // All maps
-    iCorpse, iGold,
-    iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
-    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
-    iFood, iKey,
+    iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
+    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iFood, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
     iRustySword, iShortSword, // Blade
@@ -549,30 +547,6 @@ begin
   inherited;
 end;
 
-// Broadsword, Hilted Sword, Longsword, Bastard Sword
-// Combat Sword, War Sword, Claymore, Ebony Sword
-// Rusty Iron Wood-Chopping Axe, Battle Axe,
-
-// Phantom Axe, Dwarven Battle Axe, War Axe
-// Feathered Spear, Bronze Spear, Rusted Spear
-// Small Dagger, a Rusty Dagger, Flying Dagger
-// Sharpened Daggers, Gemmed Dagger, Carving Knife
-// Boot Knife, Target Knife, Throwing Spike
-// Rapier, Sabre,
-
-// Rusty, Chipped
-// Low Quality, Medium Quality, High Quality
-// Fine, Double Bladed, Enchanted
-// Bronze, Iron, Steel
-
-// Short Bow, Battle Bow, Long Bow, Elven Long Bow
-// Hunter's Bow, Ranger's Bow, Elvish Longbow, Compound Bow
-
-// Tunic, Chainmail, Platemail
-// Padded clothing, Chitin armor, Bone armor, Light armor,
-// Medium armor, Mail hauberk, Brigandine,
-// Heavy armor, Plate armor,
-
 function TItems.GetName(AItemEnum: TItemEnum): string;
 begin
   case AItemEnum of
@@ -814,13 +788,15 @@ begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
+  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
+  then
   begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
     if (FItem.Amount = 1) then
       MsgLog.Add(Format(_('You picked up %s.'), [The]))
-      else MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]));
+    else
+      MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]));
     Player.Calc;
   end;
 end;

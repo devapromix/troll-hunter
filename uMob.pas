@@ -244,7 +244,7 @@ type
     Maps: TMapEnum;
     Sleep: Boolean;
     Boss: Boolean;
-  public  
+  public
     procedure AddRandom(AZ: TMapEnum);
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -325,11 +325,11 @@ begin
       Ord(AZ)]));
     Self.Boss := True;
     IsBoss := True;
-{    if Game.Wizard then
-    begin
+    { if Game.Wizard then
+      begin
       Player.X := EnsureRange(X - 1, 0, High(Byte));
       Player.Y := EnsureRange(Y - 1, 0, High(Byte));
-    end;   }
+      end; }
   end;
 end;
 
