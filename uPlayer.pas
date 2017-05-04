@@ -798,6 +798,13 @@ procedure TPlayer.StarterSet;
 var
   G: Word;
 begin
+  // Add armors
+  if Game.Wizard then
+  begin
+    Items.AddItemToInv(iBoneweaveHauberk, 1, True);
+  end else begin
+    Items.AddItemToInv(iQuiltedArmor, 1, True);
+  end;
   // Add weapon and armor
   if Game.Wizard then
   begin

@@ -68,7 +68,7 @@ const
   NotEquipItems = [iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2,
     iPotionOfHealth3, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iFood, iKey];
-  NotDropItems = [iCorpse, iFood];
+  NotDropItems = [iCorpse, iFood, iKey];
   DrinkItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3];
   EatItems = [iFood];
@@ -428,11 +428,11 @@ begin
     if (AX >= 0) then
       FX := AX
     else
-      FX := Math.RandomRange(0, High(Byte));
+      FX := Math.RandomRange(1, High(Byte) - 1);
     if (AY >= 0) then
       FY := AY
     else
-      FY := Math.RandomRange(0, High(Byte));
+      FY := Math.RandomRange(1, High(Byte) - 1);
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
     (ADeep in ItemBase[TItemEnum(ID)].Deep);
   if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then
@@ -482,7 +482,7 @@ var
   F: Boolean;
 begin
   V := Math.RandomRange(0, 10);
-  if (V < 4) then
+  if (V < 5) then
     Drop(AX, AY, iGold);
   if (V < 3) then
     Add(Map.Current, AX, AY);
@@ -496,13 +496,13 @@ begin
     for I := 1 to Ord(Map.Current) + 5 do
     begin
       case Math.RandomRange(0, 3) of
-        0 .. 1:
-          Drop(AX, AY, iGold);
-        2:
+        0:
           begin
             Add(Map.Current, AX, AY);
             F := True;
           end;
+        else
+          Drop(AX, AY, iGold);
       end;
     end;
     if not F then
