@@ -577,6 +577,16 @@ procedure TSceneGame.Update(var Key: Word);
 begin
   MsgLog.Turn;
   MsgLog.Msg := '';
+  if Player.IsDead then
+  begin
+    Scenes.SetScene(scDef);
+    Exit;
+  end;
+  if Game.Won then
+  begin
+    Scenes.SetScene(scWin);
+    Exit;
+  end;
   case Key of
     TK_LEFT, TK_KP_4, TK_A:
       Player.Move(-1, 0);
@@ -606,28 +616,28 @@ begin
       if Game.Wizard then
         if (Map.Current < High(TMapEnum)) then
         begin
-          Map.Current := succ(Map.Current);
+          Map.Current := Succ(Map.Current);
           Player.Wait;
         end;
     TK_KP_MINUS:
       if Game.Wizard then
         if (Map.Current > Low(TMapEnum)) then
         begin
-          Map.Current := pred(Map.Current);
+          Map.Current := Pred(Map.Current);
           Player.Wait;
         end;
     TK_COMMA:
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
         if (Map.Current > Low(TMapEnum)) then
         begin
-          Map.Current := pred(Map.Current);
+          Map.Current := Pred(Map.Current);
           Player.Wait;
         end;
     TK_PERIOD:
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teDnStairs) then
         if (Map.Current < High(TMapEnum)) then
         begin
-          Map.Current := succ(Map.Current);
+          Map.Current := Succ(Map.Current);
           Player.Wait;
         end;
     TK_KP_MULTIPLY:

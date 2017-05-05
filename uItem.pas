@@ -373,20 +373,28 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0): string;
 var
   ID: Integer;
-  S: string;
+  S, T: string;
 begin
   S := '';
+  T := '';
   ID := AItem.ItemID;
   // Amount
   if (AItem.Stack > 1) then
-    S := '(' + IntToStr(AItem.Amount) + 'x)'
+    S := Format('(%dx)', [AItem.Amount])
     // Corpse
   else if (TItemEnum(ID) = iCorpse) then
     S := ''
     // Durability
   else
-    S := '(' + IntToStr(AItem.Durability) + '/' +
-      IntToStr(ItemBase[TItemEnum(ID)].MaxDurability) + ')';
+  begin
+    case ItemBase[TItemEnum(ID)].ItemType of
+      itHelm, itArmor:
+        T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
+      else
+        T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min, ItemBase[TItemEnum(ID)].Damage.Max]);
+    end;
+    S := Trim(Format('%s (%d/%d)', [T, AItem.Durability, ItemBase[TItemEnum(ID)].MaxDurability]));
+  end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
   // Map's item
   if (IsManyItems or (ACount > 0)) then

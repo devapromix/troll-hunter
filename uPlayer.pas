@@ -375,16 +375,6 @@ begin
   end
   else
   begin
-    if Self.IsDead then
-    begin
-      Scenes.SetScene(scDef);
-      Exit;
-    end;
-    if Game.Won then
-    begin
-      Scenes.SetScene(scWin);
-      Exit;
-    end;
     FX := EnsureRange(X + AX, 0, High(Byte));
     FY := EnsureRange(Y + AY, 0, High(Byte));
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
