@@ -423,11 +423,13 @@ end;
 procedure TItems.Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1;
   AID: Integer = -1);
 var
+  I: Byte;
   ID, FX, FY: Byte;
   FItem: Item;
   Value: Integer;
   IT: TItemType;
 begin
+  I := 0;
   repeat
     if (AID >= 0) then
       ID := AID
@@ -441,6 +443,8 @@ begin
       FY := AY
     else
       FY := Math.RandomRange(1, High(Byte) - 1);
+    Inc(I);
+    if (I >= High(Byte)) then Break;
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
     (ADeep in ItemBase[TItemEnum(ID)].Deep);
   if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then

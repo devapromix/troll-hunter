@@ -22,12 +22,12 @@ type
 const
   SkillMin = 5;
   SkillMax = 75;
-  SkillExp = 65;
+  SkillExpMax = 55;
   AtrMax = 100;
   RadiusMax = 15;
   DVMax = 80;
   PVMax = 250;
-  ExpMax = 10;
+  LevelExpMax = 10;
   FoodMax = 250;
   ItemMax = 26;
 
@@ -146,23 +146,42 @@ end;
 
 procedure TPlayer.Attack(Index: Integer);
 var
+  V, Ch: Byte;
   Mob: TMob;
-  Dam: Word;
-  The: string;
+  Dam, Cr: Word;
+  CrStr, The: string;
+  IsCrit: Boolean;
 begin
-  if (Index < 0) then
-    Exit;
+  if (Index < 0) then Exit;
   Mob := Mobs.Mob[Index];
-  if not Mob.Alive then
-    Exit;
+  if not Mob.Alive then Exit;
   The := GetDescThe(Mobs.GetName(TMobEnum(Mob.ID)));
   if (MobBase[TMobEnum(Mob.ID)].DV < Math.RandomRange(0, 100)) then
   begin
+    CrStr := '';
     // Attack
     Dam := EnsureRange(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0,
       High(Word));
+    // Critical hits...     .
+    Ch := Math.RandomRange(0, 100);
+    Cr := Self.GetSkillValue(FWeaponSkill);
+    if (Ch < Cr) then
+    begin
+      if (Ch > (Cr div 10)) then
+      begin
+        V := 2;
+        CrStr := _('It was a good hit!');
+      end else begin
+        V := 3;
+        CrStr := _('It was an excellent hit!');
+      end;
+      Dam := Dam * V;
+      CrStr := CrStr + Format(' (%dx)', [V]);
+    end;
+    // Attack
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
+    if (CrStr <> '') then MsgLog.Add(Format(FC, [clAlarm, CrStr]));
     case FWeaponSkill of
       skBlade:
         begin
@@ -356,7 +375,11 @@ end;
 
 function TPlayer.GetSkillValue(ASkill: TSkillEnum): Byte;
 begin
-  Result := FSkill[ASkill].Value;
+  try
+    Result := FSkill[ASkill].Value;
+  except
+    Result := 0;
+  end;
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
@@ -691,9 +714,9 @@ end;
 procedure TPlayer.AddExp(Value: Byte = 1);
 begin
   Exp := Exp + Value;
-  if (Exp >= ExpMax) then
+  if (Exp >= LevelExpMax) then
   begin
-    Exp := Exp - ExpMax;
+    Exp := Exp - LevelExpMax;
     FLevel := FLevel + 1;
     MsgLog.Add(Format(FC, [clAlarm, Format('%s +1.', [_('Level')])]));
     Player.Score := Player.Score + (FLevel * FLevel);
@@ -705,9 +728,9 @@ begin
   if (FSkill[ASkill].Value < SkillMax) then
   begin
     Inc(FSkill[ASkill].Exp, Math.RandomRange(0, AExpValue + 1) + 1);
-    if (FSkill[ASkill].Exp >= SkillExp) then
+    if (FSkill[ASkill].Exp >= SkillExpMax) then
     begin
-      FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExp;
+      FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
       Inc(FSkill[ASkill].Value);
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
@@ -734,7 +757,7 @@ begin
     with FSkill[I] do
     begin
       Value := Math.RandomRange(SkillMin, SkillMax);
-      Exp := Math.RandomRange(0, SkillExp);
+      Exp := Math.RandomRange(0, SkillExpMax);
     end;
   Self.Calc;
   Self.Fill;

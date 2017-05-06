@@ -872,7 +872,7 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 2, W, Player.Exp, ExpMax, clDarkRed, clDarkGray);
+  RenderBar(1, 0, Y + 2, W, Player.Exp, LevelExpMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 2, Format('%s %d', [_('Level'), Player.Level]),
     TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
