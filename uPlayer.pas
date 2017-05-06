@@ -150,7 +150,6 @@ var
   Mob: TMob;
   Dam, Cr: Word;
   CrStr, The: string;
-  IsCrit: Boolean;
 begin
   if (Index < 0) then Exit;
   Mob := Mobs.Mob[Index];
@@ -251,6 +250,8 @@ begin
             FWeaponSkill := skSpear;
           itMace:
             FWeaponSkill := skMace;
+          else
+            FWeaponSkill := skLearning;
         end;
     end;
   end;
@@ -420,11 +421,9 @@ procedure TPlayer.Use(Index: Integer);
 var
   The: string;
   AItem: Item;
-  FCount: Integer;
 begin
   AItem := Items_Inventory_GetItem(Index);
   The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
-  FCount := Items_Inventory_GetItemCount(AItem.ItemID);
   if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
   begin
     // Drink a potion
@@ -557,7 +556,6 @@ end;
 procedure TPlayer.Drop(Index: Integer);
 var
   AItem: Item;
-  MapID, FCount: Integer;
 
   procedure DeleteItem;
   var
@@ -576,9 +574,7 @@ var
   end;
 
 begin
-  MapID := Ord(Map.Current);
   AItem := Items_Inventory_GetItem(Index);
-  FCount := Items_Inventory_GetItemCount(AItem.ItemID);
   if not ((AItem.Stack > 1) and (AItem.Amount > 1)) then
     DeleteItem else Player.SetAmountScene(True, Index, 1);
   Self.Calc;
@@ -586,7 +582,6 @@ end;
 
 procedure TPlayer.DropAmount(Index: Integer);
 var
-  I, FCount: Integer;
   FItem: Item;
   The: string;
 begin
@@ -608,14 +603,11 @@ end;
 
 procedure TPlayer.PickUp;
 var
-  The: string;
-  MapID, FCount, Index: Integer;
-  FItem: Item;
+  FCount: Integer;
 begin
   Corpses.DelCorpse(Player.X, Player.Y);
   /// / Your backpack is full!
-  MapID := Ord(Map.Current);
-  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
+  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y);
   if (FCount > 0) then
   begin
     if (FCount = 1) then
@@ -633,7 +625,6 @@ end;
 
 procedure TPlayer.PickUpAmount(Index: Integer);
 var
-  I, FCount: Integer;
   FItem: Item;
   The: string;
 begin

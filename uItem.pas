@@ -80,11 +80,11 @@ const
     // Corpse
     (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Color: clGray; Deep: [deDarkWood .. deDungeonOfDoom]; Value: 0;),
+    Color: clGray; Deep: [deDarkWood .. deDrom]; Value: 0;),
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 1000;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Color: clYellow; Deep: [deDarkWood .. deDungeonOfDoom]; Value: 0;),
+    Color: clYellow; Deep: [deDarkWood .. deDrom]; Value: 0;),
 
     // Life Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -97,7 +97,7 @@ const
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Color: clRed; Deep: [deDeepCave .. deDungeonOfDoom]; Value: 200;),
+    Color: clRed; Deep: [deDeepCave .. deDrom]; Value: 200;),
 
     // Mana potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -110,16 +110,16 @@ const
     // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Color: clBlue; Deep: [deDeepCave .. deDungeonOfDoom]; Value: 200;),
+    Color: clBlue; Deep: [deDeepCave .. deDrom]; Value: 200;),
 
     // Food
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Color: clWhite; Deep: [deDarkWood .. deDungeonOfDoom]; Value: 250;),
+    Color: clWhite; Deep: [deDarkWood .. deDrom]; Value: 250;),
     // Key
     (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Color: clYellow; Deep: [deDarkWood .. deDungeonOfDoom]; Value: 0;),
+    Color: clYellow; Deep: [deDarkWood .. deDrom]; Value: 0;),
 
     // == Dark Wood == //
 
@@ -298,43 +298,43 @@ const
     // Plate Mail
     (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
-    Color: clWhite; Deep: [deDungeonOfDoom];),
+    Color: clWhite; Deep: [deDrom];),
     // Boneweave Hauberk
     (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 250; Level: 10; Defense: 50; Damage: (Min: 0; Max: 0;);
-    Color: clWhite; Deep: [deDungeonOfDoom];),
+    Color: clWhite; Deep: [deDrom];),
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: 9; Damage: (Min: 30; Max: 53;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // Troll Slayer,
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Defense: 10; Damage: (Min: 33; Max: 58;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: 9; Damage: (Min: 36; Max: 49;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // Demon Axe,
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Defense: 10; Damage: (Min: 40; Max: 54;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: 5; Damage: (Min: 10; Max: 84;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Defense: 6; Damage: (Min: 10; Max: 100;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // War Maul
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: 9; Damage: (Min: 30; Max: 61;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];),
+    Color: clDarkRed; Deep: [deDrom];),
     // Doom Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Defense: 10; Damage: (Min: 36; Max: 73;);
-    Color: clDarkRed; Deep: [deDungeonOfDoom];)
+    Color: clDarkRed; Deep: [deDrom];)
 
     );
 

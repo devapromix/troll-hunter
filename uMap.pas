@@ -3,10 +3,10 @@ unit uMap;
 interface
 
 type
-  TMapEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave, deDungeonOfDoom);
+  TMapEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave, deDrom);
 
 const
-  FinalDungeon = deDungeonOfDoom;
+  FinalDungeon = deDrom;
 
 type
   TTile = record
@@ -88,91 +88,91 @@ begin
   AddTile(':', _('Dirt'), $FF331133, teDefaultFloor, deGrayCave);
   AddTile('.', _('Stone'), $FF222111, teDefaultFloor, deDeepCave);
   AddTile(';', _('Stone'), $FF330000, teDefaultFloor, deBloodCave);
-  AddTile('~', _('Stone'), $FF002200, teDefaultFloor, deDungeonOfDoom);
+  AddTile('~', _('Stone'), $FF002200, teDefaultFloor, deDrom);
   // DefaultWall
   AddTile('T', _('Tree'), $FF006622, teDefaultWall, deDarkWood);
   AddTile('#', _('Wall'), $FF444422, teDefaultWall, deGrayCave);
   AddTile('#', _('Wall'), $FF222133, teDefaultWall, deDeepCave);
   AddTile('#', _('Wall'), $FF322118, teDefaultWall, deBloodCave);
-  AddTile('#', _('Wall'), $FF112211, teDefaultWall, deDungeonOfDoom);
+  AddTile('#', _('Wall'), $FF112211, teDefaultWall, deDrom);
   // Rock
   AddTile('^', _('Rock'), $FF556655, teRock, deDarkWood);
   AddTile(':', _('Wall'), $FF444422, teRock, deGrayCave);
   AddTile(':', _('Wall'), $FF222133, teRock, deDeepCave);
   AddTile(':', _('Wall'), $FF322118, teRock, deBloodCave);
-  AddTile(':', _('Wall'), $FF112233, teRock, deDungeonOfDoom);
+  AddTile(':', _('Wall'), $FF112233, teRock, deDrom);
   // Floor #1
   AddTile('"', _('Grass'), $FF446644, teFloor1, deDarkWood);
   AddTile('"', _('Grass'), $FF99AA99, teFloor1, deGrayCave);
   AddTile('.', _('Stone'), $FF224422, teFloor1, deDeepCave);
   AddTile(';', _('Stone'), $FF225533, teFloor1, deBloodCave);
-  AddTile('~', _('Stone'), $FF228833, teFloor1, deDungeonOfDoom);
+  AddTile('~', _('Stone'), $FF228833, teFloor1, deDrom);
   // Floor #2
   AddTile('"', _('Grass'), $FF447755, teFloor2, deDarkWood);
   AddTile('"', _('Grass'), $FF779977, teFloor2, deGrayCave);
   AddTile('.', _('Stone'), $FF22CC44, teFloor2, deDeepCave);
   AddTile(';', _('Stone'), $FF333322, teFloor2, deBloodCave);
-  AddTile('~', _('Stone'), $FF334422, teFloor2, deDungeonOfDoom);
+  AddTile('~', _('Stone'), $FF334422, teFloor2, deDrom);
   // Floor #3
   AddTile('"', _('Grass'), $FF778866, teFloor3, deDarkWood);
   AddTile('"', _('Grass'), $FF668866, teFloor3, deGrayCave);
   AddTile('.', _('Stone'), $FF338855, teFloor3, deDeepCave);
   AddTile(';', _('Stone'), $FF223333, teFloor3, deBloodCave);
-  AddTile('~', _('Stone'), $FF226622, teFloor3, deDungeonOfDoom);
+  AddTile('~', _('Stone'), $FF226622, teFloor3, deDrom);
   // Up Stairs
   AddTile('*', _('Stairs'), $FFFFFF00, teUpStairs, deDarkWood);
   AddTile('<', _('Stairs'), $FFEEEE00, teUpStairs, deGrayCave);
   AddTile('<', _('Stairs'), $FFDDDD00, teUpStairs, deDeepCave);
   AddTile('<', _('Stairs'), $FFCCCC00, teUpStairs, deBloodCave);
-  AddTile('<', _('Stairs'), $FFBBBB00, teUpStairs, deDungeonOfDoom);
+  AddTile('<', _('Stairs'), $FFBBBB00, teUpStairs, deDrom);
   // Down Stairs
   AddTile('*', _('Stairs'), $FFFFFF00, teDnStairs, deDarkWood);
   AddTile('>', _('Stairs'), $FFEEEE00, teDnStairs, deGrayCave);
   AddTile('>', _('Stairs'), $FFDDDD00, teDnStairs, deDeepCave);
   AddTile('>', _('Stairs'), $FFCCCC00, teDnStairs, deBloodCave);
-  AddTile('>', _('Stairs'), $FFBBBB00, teDnStairs, deDungeonOfDoom);
+  AddTile('>', _('Stairs'), $FFBBBB00, teDnStairs, deDrom);
   // Water
   AddTile('=', _('Water'), $FF333388, teWater, deDarkWood);
   AddTile('=', _('Water'), $FF333377, teWater, deGrayCave);
   AddTile('=', _('Water'), $FF222266, teWater, deDeepCave);
   AddTile('=', _('Water'), $FF222255, teWater, deBloodCave);
-  AddTile('=', _('Water'), $FF222244, teWater, deDungeonOfDoom);
+  AddTile('=', _('Water'), $FF222244, teWater, deDrom);
   // Stone Wall
   AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDarkWood);
   AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deGrayCave);
   AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDeepCave);
   AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deBloodCave);
-  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDungeonOfDoom);
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDrom);
   // Wooden Wall
   AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDarkWood);
   AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deGrayCave);
   AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDeepCave);
   AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deBloodCave);
-  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDungeonOfDoom);
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDrom);
   // Stone Floor
   AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDarkWood);
   AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deGrayCave);
   AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDeepCave);
   AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deBloodCave);
-  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDungeonOfDoom);
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDrom);
   // Wooden Floor
   AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDarkWood);
   AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deGrayCave);
   AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDeepCave);
   AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deBloodCave);
-  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDungeonOfDoom);
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDrom);
   // Door
   AddTile('+', _('Door'), $FF675725, teDoor, deDarkWood);
   AddTile('+', _('Door'), $FF675725, teDoor, deGrayCave);
   AddTile('+', _('Door'), $FF675725, teDoor, deDeepCave);
   AddTile('+', _('Door'), $FF675725, teDoor, deBloodCave);
-  AddTile('+', _('Door'), $FF675725, teDoor, deDungeonOfDoom);
+  AddTile('+', _('Door'), $FF675725, teDoor, deDrom);
   // Gate
   AddTile('+', _('Gate'), $FF515F55, teGate, deDarkWood);
   AddTile('+', _('Gate'), $FF515F55, teGate, deGrayCave);
   AddTile('+', _('Gate'), $FF515F55, teGate, deDeepCave);
   AddTile('+', _('Gate'), $FF515F55, teGate, deBloodCave);
-  AddTile('+', _('Gate'), $FF515F55, teGate, deDungeonOfDoom);
+  AddTile('+', _('Gate'), $FF515F55, teGate, deDrom);
 end;
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
@@ -511,7 +511,7 @@ begin
           Self.Clear(Z, teDefaultWall);
           GenCave(3, 29, 2999);
         end;
-      deDungeonOfDoom:
+      deDrom:
         begin
           Self.Clear(Z, teDefaultWall);
           GenCave(2, 19, 1999);
@@ -573,8 +573,8 @@ begin
       Result := _('Deep Cave');
     deBloodCave:
       Result := _('Blood Cave');
-    deDungeonOfDoom:
-      Result := _('Dungeon Of Doom');
+    deDrom:
+      Result := _('Drom');
   end;
 end;
 

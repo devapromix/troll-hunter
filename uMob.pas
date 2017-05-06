@@ -171,28 +171,28 @@ const
     // == Dungeon of Doom == //
 
     // Zombie
-    (Symbol: 'z'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 90; Level: 9;
+    (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9;
     Armor: 12; DV: 55; Damage: (Min: 19; Max: 25;); Color: $FF00BB00;),
     // Ogre
-    (Symbol: 'o'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 92; Level: 9;
+    (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9;
     Armor: 12; DV: 55; Damage: (Min: 19; Max: 26;); Color: $FF559977;),
     // Mummy
-    (Symbol: 'm'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 95; Level: 9;
+    (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9;
     Armor: 12; DV: 55; Damage: (Min: 20; Max: 27;); Color: $FF223333;),
     // Ghoul
-    (Symbol: 'g'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 97; Level: 10;
+    (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
     Armor: 15; DV: 60; Damage: (Min: 20; Max: 27;); Color: $FF223333;),
     // Vampire
-    (Symbol: 'v'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 98; Level: 10;
+    (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
     Armor: 15; DV: 60; Damage: (Min: 20; Max: 28;); Color: $FF223333;),
     // Cyclops
-    (Symbol: 'c'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 100; Level: 10;
+    (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 18; DV: 60; Damage: (Min: 21; Max: 29;); Color: $FF223333;),
     // Skeleton
-    (Symbol: 'c'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 100; Level: 10;
+    (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 18; DV: 60; Damage: (Min: 22; Max: 30;); Color: $FF223333;),
     // Lich
-    (Symbol: 'l'; Boss: False; Maps: [deDungeonOfDoom]; MaxLife: 100; Level: 10;
+    (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 19; DV: 60; Damage: (Min: 23; Max: 30;); Color: $FF223333;),
 
     // == Bosses == //
@@ -234,7 +234,7 @@ const
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 60; Damage: (Min: 25; Max: 30;); Color: $FF223333;),
     // Troll King
-    (Symbol: 't'; Boss: True; Maps: [deDungeonOfDoom]; MaxLife: 20; Level: 15;
+    (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 20; Level: 15;
     Armor: 40; DV: 60; Damage: (Min: 50; Max: 75;); Color: $FFDD7711;));
 
 type
