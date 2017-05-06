@@ -345,8 +345,8 @@ var
   procedure AddKey(Key, Text: string);
   begin
     Terminal.Print(KX + 10, Y + KY, KeyStr(Key, Text), TK_ALIGN_LEFT);
-    Inc(KX, X - 5);
-    if (KX > X + 11) then
+    Inc(KX, CX - 5);
+    if (KX > CX + 11) then
     begin
       KX := 0;
       Inc(KY);
@@ -357,36 +357,35 @@ begin
   Y := 1;
   KX := 0;
   KY := 14;
-  X := Terminal.Window.Width div 2;
   Self.Title(_('Trollhunter'));
 
-  Terminal.Print(X, Y + 2,
+  Terminal.Print(CX, Y + 2,
     _('The land Elvion is surrounded by mountains. In the center of this land'),
     TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 3,
+  Terminal.Print(CX, Y + 3,
     _('there is village, Dork. The land is in danger, because The Troll King and'),
     TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 4,
+  Terminal.Print(CX, Y + 4,
     _('his armies are coming. Only a legendary hero can kill the monster.'),
     TK_ALIGN_CENTER);
 
-  Terminal.Print(X, Y + 6,
+  Terminal.Print(CX, Y + 6,
     _('You play as a lonely hero who has to slay trolls to save your land Elvion.'),
     TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 7,
+  Terminal.Print(CX, Y + 7,
     _('You can gather equipment, fight enemies and try to survive for your final'),
     TK_ALIGN_CENTER);
-  Terminal.Print(X, Y + 8, _('confrontation with boss. Good luck!'),
+  Terminal.Print(CX, Y + 8, _('confrontation with boss. Good luck!'),
     TK_ALIGN_CENTER);
 
   Self.Title(_('Keybindings'), Y + 10);
 
-  Terminal.Print(KX + 10, Y + 12, Format('%s: %s, %s, %s Wait: %s, %s',
+  Terminal.Print(CX, Y + 12, Format('%s: %s, %s, %s %s: %s, %s',
     [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'), KeyStr('QWEADZXC'),
-    KeyStr('5'), KeyStr('S')]), TK_ALIGN_LEFT);
+    _('Wait'), KeyStr('5'), KeyStr('S')]), TK_ALIGN_CENTER);
 
-  AddKey('<', _('Up staris'));
-  AddKey('>', _('Down staris'));
+  AddKey('<', _('Go upstairs'));
+  AddKey('>', _('Go downstairs'));
   AddKey('G', _('Pickup an item'));
   AddKey('F', _('Drop an item'));
   AddKey('L', _('Look mode'));
@@ -397,7 +396,7 @@ begin
   AddKey('?', _('Help'));
 
   Self.Title(_('Character dump'), Terminal.Window.Height - Y - 5);
-  Terminal.Print(X, Terminal.Window.Height - Y - 3,
+  Terminal.Print(CX, Terminal.Window.Height - Y - 3,
     Format(_('The game saves a character dump to %s file.'),
     [KeyStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
 

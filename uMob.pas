@@ -64,64 +64,64 @@ const
 
     // Big Rat
     (Symbol: 'r'; Boss: False; Maps: [deDarkWood]; MaxLife: 5; Level: 1;
-    Armor: 0; DV: 4; Damage: (Min: 2; Max: 3;); Color: $FF249988;),
+    Armor: 0; DV: 2; Damage: (Min: 1; Max: 2;); Color: $FF249988;),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDarkWood]; MaxLife: 7; Level: 1;
-    Armor: 0; DV: 5; Damage: (Min: 4; Max: 5;); Color: $FF33FF66;),
+    Armor: 0; DV: 3; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;),
     // Jackal
     (Symbol: 'j'; Boss: False; Maps: [deDarkWood]; MaxLife: 8; Level: 1;
-    Armor: 0; DV: 7; Damage: (Min: 5; Max: 7;); Color: $FF9955FF;),
+    Armor: 0; DV: 4; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2;
-    Armor: 1; DV: 8; Damage: (Min: 6; Max: 8;); Color: $FF331155;),
+    Armor: 1; DV: 5; Damage: (Min: 3; Max: 4;); Color: $FF331155;),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2;
-    Armor: 1; DV: 10; Damage: (Min: 6; Max: 9;); Color: $FF331155;),
+    Armor: 1; DV: 6; Damage: (Min: 4; Max: 5;); Color: $FF331155;),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2;
-    Armor: 1; DV: 10; Damage: (Min: 7; Max: 9;); Color: $FF331155;),
+    Armor: 1; DV: 7; Damage: (Min: 4; Max: 6;); Color: $FF331155;),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDarkWood]; MaxLife: 22; Level: 3;
-    Armor: 2; DV: 11; Damage: (Min: 8; Max: 9;); Color: $FF331155;),
+    Armor: 2; DV: 8; Damage: (Min: 5; Max: 6;); Color: $FF331155;),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDarkWood]; MaxLife: 23; Level: 3;
-    Armor: 2; DV: 12; Damage: (Min: 8; Max: 9;); Color: $FF249988;),
+    Armor: 2; DV: 10; Damage: (Min: 5; Max: 7;); Color: $FF249988;),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    Armor: 2; DV: 16; Damage: (Min: 6; Max: 10;); Color: $FF777700;),
+    Armor: 2; DV: 12; Damage: (Min: 6; Max: 10;); Color: $FF777700;),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    Armor: 3; DV: 18; Damage: (Min: 7; Max: 10;); Color: $FF777700;),
+    Armor: 3; DV: 14; Damage: (Min: 7; Max: 10;); Color: $FF777700;),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 30; Level: 3;
-    Armor: 4; DV: 20; Damage: (Min: 7; Max: 10;); Color: $FF777700;),
+    Armor: 4; DV: 16; Damage: (Min: 7; Max: 10;); Color: $FF777700;),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGrayCave]; MaxLife: 32; Level: 4;
-    Armor: 4; DV: 22; Damage: (Min: 8; Max: 11;); Color: $FF777700;),
+    Armor: 4; DV: 18; Damage: (Min: 8; Max: 11;); Color: $FF777700;),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGrayCave]; MaxLife: 35; Level: 4;
-    Armor: 5; DV: 25; Damage: (Min: 9; Max: 12;); Color: $FF777700;),
+    Armor: 5; DV: 20; Damage: (Min: 9; Max: 12;); Color: $FF777700;),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 38; Level: 4;
-    Armor: 5; DV: 25; Damage: (Min: 10; Max: 13;); Color: $FF777700;),
+    Armor: 5; DV: 23; Damage: (Min: 10; Max: 13;); Color: $FF777700;),
     // Worm
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 40; Level: 5;
-    Armor: 5; DV: 27; Damage: (Min: 10; Max: 14;); Color: $FF777700;),
+    Armor: 5; DV: 24; Damage: (Min: 10; Max: 14;); Color: $FF777700;),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5;
-    Armor: 5; DV: 28; Damage: (Min: 10; Max: 14;); Color: $FF7777CC;),
+    Armor: 5; DV: 25; Damage: (Min: 10; Max: 14;); Color: $FF7777CC;),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 45; Level: 5;
-    Armor: 5; DV: 30; Damage: (Min: 10; Max: 15;); Color: $FF992233;),
+    Armor: 5; DV: 26; Damage: (Min: 10; Max: 15;); Color: $FF992233;),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 48; Level: 5;
-    Armor: 5; DV: 30; Damage: (Min: 10; Max: 15;); Color: $FF992233;),
+    Armor: 5; DV: 28; Damage: (Min: 10; Max: 15;); Color: $FF992233;),
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 50; Level: 5;
     Armor: 6; DV: 30; Damage: (Min: 11; Max: 16;); Color: $FF992233;),
