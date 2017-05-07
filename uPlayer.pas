@@ -215,7 +215,8 @@ begin
   else
   begin
     // Miss
-    MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
+    MsgLog.Add(Format(_('You miss %s.'), [The]));
+    //MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
   end;
   AddTurn;
 end;
@@ -709,7 +710,7 @@ begin
   begin
     Exp := Exp - LevelExpMax;
     FLevel := FLevel + 1;
-    MsgLog.Add(Format(FC, [clAlarm, Format('%s +1.', [_('Level')])]));
+    MsgLog.Add(Format(FC, [clAlarm, Format(_('You advance to level %d!'), [FLevel])]));
     Player.Score := Player.Score + (FLevel * FLevel);
   end;
 end;

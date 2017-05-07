@@ -340,7 +340,7 @@ end;
 
 procedure TSceneHelp.Render;
 var
-  X, Y, KX, KY: Byte;
+  Y, KX, KY: Byte;
 
   procedure AddKey(Key, Text: string);
   begin

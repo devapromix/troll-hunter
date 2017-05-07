@@ -354,17 +354,22 @@ begin
   else
   begin
     // Miss
-    MsgLog.Add(Format(_('%s hits you, but your armor protects you.'), [The]));
+    MsgLog.Add(Format(_('%s misses you.'), [The]));
+    //MsgLog.Add(Format(_('%s hits you, but your armor protects you.'), [The]));
   end;
 end;
 
 procedure TMob.Defeat;
 var
-  S: string;
+  S, The: string;
   V: Byte;
 begin
   Self.Alive := False;
-  S := Format(_('You kill %s.'), [GetDescThe(Mobs.GetName(TMobEnum(ID)))]);
+  The := GetDescThe(Mobs.GetName(TMobEnum(ID)));
+  case Math.RandomRange(0, 2) + 1 of
+    1: S := Format(_('You kill %s.'), [The]);
+    2: S := Format(_('%s dies.'), [GetCapit(The)]);
+  end;
   if Boss then
     S := Format(FC, [clAlarm, S]);
   MsgLog.Add(S);
