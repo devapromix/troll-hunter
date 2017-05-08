@@ -495,17 +495,19 @@ end;
 procedure TItems.Drop(AX, AY: Byte; AIsBoss: Boolean);
 var
   V, I: Byte;
+const
+  M = 10;
 begin
   V := Math.IfThen(AIsBoss, Ord(Map.Current) + 9, Ord(Map.Current) + 2);
   for I := 1 to V do
   begin
     // Gold
-    if (Math.RandomRange(0, 10) >= 5) then Drop(AX, AY, iGold);
+    if (Math.RandomRange(0, M) >= 5) then Drop(AX, AY, iGold);
     // Potion
-    if ((Math.RandomRange(0, 10) >= 7) or AIsBoss) then Drop(AX, AY,
+    if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Drop(AX, AY,
       TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1)));
     // Item
-    if (Math.RandomRange(0, 10) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
+    if (Math.RandomRange(0, M) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
   end;
 end;
 
