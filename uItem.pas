@@ -345,7 +345,7 @@ type
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
     procedure Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-      AID: Integer = -1);
+      AID: Integer = -1; IsRare: Boolean = False);
     function GetName(AItemEnum: TItemEnum): string;
     function GetItemEnum(AItemID: Integer): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
@@ -421,7 +421,7 @@ begin
 end;
 
 procedure TItems.Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-  AID: Integer = -1);
+  AID: Integer = -1; IsRare: Boolean = False);
 var
   I: Byte;
   ID, FX, FY: Byte;
@@ -444,7 +444,11 @@ begin
     else
       FY := Math.RandomRange(1, High(Byte) - 1);
     Inc(I);
-    if (I >= High(Byte)) then Break;
+    if (I >= High(Byte)) then
+    begin
+      ID := Ord(iGold);
+      Break;
+    end;
   until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
     (ADeep in ItemBase[TItemEnum(ID)].Deep);
   if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then
@@ -491,34 +495,17 @@ end;
 procedure TItems.Drop(AX, AY: Byte; AIsBoss: Boolean);
 var
   V, I: Byte;
-  F: Boolean;
 begin
-  V := Math.RandomRange(0, 10);
-  if (V < 5) then
-    Drop(AX, AY, iGold);
-  if (V < 3) then
-    Add(Map.Current, AX, AY);
-  if (V < 2) then
-    Add(Map.Current, AX, AY);
-  if (V < 1) then
-    Add(Map.Current, AX, AY);
-  if AIsBoss then
+  V := Math.IfThen(AIsBoss, Ord(Map.Current) + 9, Ord(Map.Current) + 2);
+  for I := 1 to V do
   begin
-    F := False;
-    for I := 1 to Ord(Map.Current) + 5 do
-    begin
-      case Math.RandomRange(0, 3) of
-        0:
-          begin
-            Add(Map.Current, AX, AY);
-            F := True;
-          end;
-        else
-          Drop(AX, AY, iGold);
-      end;
-    end;
-    if not F then
-      Add(Map.Current, AX, AY);
+    // Gold
+    if (Math.RandomRange(0, 10) >= 5) then Drop(AX, AY, iGold);
+    // Potion
+    if ((Math.RandomRange(0, 10) >= 7) or AIsBoss) then Drop(AX, AY,
+      TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1)));
+    // Item
+    if (Math.RandomRange(0, 10) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
   end;
 end;
 
