@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses uEntity;
+uses uEntity, uMob;
 
 type
   TSkillEnum = (skLearning,
@@ -117,6 +117,7 @@ type
     procedure SkillSet;
     procedure StarterSet;
     procedure Rest(ATurns: Byte);
+    procedure Dialog(AMob: TMob);
   end;
 
 var
@@ -124,7 +125,7 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uMob, uScenes,
+uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse;
 
 { TPlayer }
@@ -154,6 +155,11 @@ begin
   if (Index < 0) then Exit;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then Exit;
+  if (Mob.Force <> fcEnemy) then
+  begin
+    Self.Dialog(Mob);
+    Exit;
+  end;
   The := GetDescThe(Mobs.GetName(TMobEnum(Mob.ID)));
   if (MobBase[TMobEnum(Mob.ID)].DV < Math.RandomRange(0, 100)) then
   begin
@@ -316,6 +322,11 @@ destructor TPlayer.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TPlayer.Dialog(AMob: TMob);
+begin
+  ShowMessage('++++');
 end;
 
 procedure TPlayer.Fill;

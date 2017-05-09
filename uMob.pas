@@ -238,14 +238,19 @@ const
     Armor: 40; DV: 60; Damage: (Min: 50; Max: 75;); Color: $FFDD7711;));
 
 type
+  TForce = (fcAlly, fcEnemy, fcNPC);
+
+type
   TMob = class(TEntity)
   private
     FID: Byte;
+    FForce: TForce;
     Maps: TMapEnum;
     Sleep: Boolean;
     Boss: Boolean;
   public
     procedure AddRandom(AZ: TMapEnum);
+    procedure AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
     procedure Process;
     procedure Render(AX, AY: Byte);
     procedure Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
@@ -254,6 +259,7 @@ type
     function GetRadius: Byte;
     procedure DropItems;
     property ID: Byte read FID write FID;
+    property Force: TForce read FForce write FForce;
   end;
 
 type
@@ -265,7 +271,7 @@ type
   public
     constructor Create();
     destructor Destroy; override;
-    procedure Add(AZ: TMapEnum);
+    procedure Add(AZ: TMapEnum; AX: Byte = 0; AY: Byte = 0; AForce: TForce = fcEnemy; AID: Byte = 0);
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -297,6 +303,20 @@ end;
 
 { TMob }
 
+procedure TMob.AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
+begin
+  X := AX;
+  Y := AY;
+  Maps := AZ;
+  ID := ANPCID;
+  Boss := False;
+  Alive := True;
+  Sleep := False;
+  Force := fcNPC;
+  MaxLife := 100;
+  Life := MaxLife;
+end;
+
 procedure TMob.AddRandom(AZ: TMapEnum);
 var
   FX, FY: Byte;
@@ -316,6 +336,7 @@ begin
   Maps := AZ;
   Alive := True;
   Sleep := True;
+  Force := fcEnemy;
   MaxLife := MobBase[TMobEnum(ID)].MaxLife;
   Life := MaxLife;
   // Boss
@@ -338,7 +359,7 @@ var
   The: string;
   Dam: Word;
 begin
-  if (Self.Life = 0) or (Player.Life = 0) then
+  if (Self.Life = 0) or (Player.Life = 0) or (Force <> fcEnemy) then
     Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
@@ -407,6 +428,7 @@ procedure TMob.Process;
 var
   NX, NY, Dist: Integer;
 begin
+  if (Force <> fcEnemy) then Exit;
   Dist := GetDist(Player.X, Player.Y);
   if (Dist > GetRadius) then
     Exit;
@@ -512,20 +534,31 @@ end;
 
 { TMobs }
 
-procedure TMobs.Add(AZ: TMapEnum);
+procedure TMobs.Add(AZ: TMapEnum; AX: Byte = 0; AY: Byte = 0; AForce: TForce = fcEnemy; AID: Byte = 0);
 var
   I: Integer;
+
+  procedure AddMob();
+  begin
+    case AForce of
+      fcEnemy:
+        FMob[I].AddRandom(AZ);
+      fcNPC:
+        FMob[I].AddNPC(AX, AY, AZ, AID);
+    end;
+  end;
+
 begin
   for I := 0 to Self.Count - 1 do
     if not FMob[I].Alive then
     begin
-      FMob[I].AddRandom(AZ);
+      AddMob();
       Exit;
     end;
   SetLength(FMob, Length(FMob) + 1);
   I := Length(FMob) - 1;
   FMob[I] := TMob.Create;
-  FMob[I].AddRandom(AZ);
+  AddMob();
 end;
 
 function TMobs.Count: Integer;

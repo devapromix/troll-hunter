@@ -377,6 +377,14 @@ var
   var
     W, H: Byte;
     IsDoor: Boolean;
+    IsNPC: Boolean;
+
+    procedure AddNPC(AX, AY: Byte);
+    begin
+      if IsNPC then Exit;
+      Mobs.Add(Self.Current, AX, AY, fcNPC, 10);
+      IsNPC := True;
+    end;
 
     procedure AddDoor(AX, AY: Byte);
     begin
@@ -387,9 +395,12 @@ var
 
   begin
     IsDoor := False;
+    IsNPC := False;
     W := IfThen(AV, 8, RandomRange(2, 5) * 2);
     H := IfThen(AV, 8, RandomRange(2, 5) * 2);
     AddRect(AX, AY, W, H, teWoodenFloor, teWoodenWall);
+    // Add NPC
+    if F then AddNPC(AX, AY);
     // Add door
     if AV then
     begin
