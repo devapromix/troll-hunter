@@ -34,7 +34,9 @@ type
     // Bosses
     mBlackHound, mGiantNewt, mIguana, mKoboldKing, mSwampWorm, mGiantSlug,
     mCentaur, mSatyr, mTitan, mHillGiant, mStoneGiant, mTwoHeadedOgre,
-    mTrollKing);
+    mTrollKing,
+
+    npcNPC);
 
   // {Black Bear (B)}, {Grizzly Bear (B)}, {Big Rat (R)}
   // Black Viper (S), Ball Python (S), {Anaconda (S)},
@@ -234,11 +236,22 @@ const
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 60; Damage: (Min: 25; Max: 30;); Color: $FF223333;),
     // Troll King
-    (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 20; Level: 15;
-    Armor: 40; DV: 60; Damage: (Min: 50; Max: 75;); Color: $FFDD7711;));
+    (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15;
+    Armor: 40; DV: 60; Damage: (Min: 50; Max: 75;); Color: $FFDD7711;),
+
+    // == NPC == //
+
+    // NPC
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; Damage: (Min: 5; Max: 15;); Color: $FF99AAFF;)
+
+    );
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);
+
+type
+  TNPCType = (ntTavernOwner, ntHealer, ntBlacksmith);
 
 type
   TMob = class(TEntity)
@@ -271,7 +284,7 @@ type
   public
     constructor Create();
     destructor Destroy; override;
-    procedure Add(AZ: TMapEnum; AX: Byte = 0; AY: Byte = 0; AForce: TForce = fcEnemy; AID: Byte = 0);
+    procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1; AForce: TForce = fcEnemy; AID: Integer = -1);
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -327,7 +340,7 @@ begin
     if (AID >= 0) then
       ID := AID
     else
-      ID := Math.RandomRange(0, Ord(High(TMobEnum)) + 1);
+      ID := Math.RandomRange(0, Ord(mTrollKing) + 1);
     if (AX >= 0) then
       FX := AX
     else
@@ -336,12 +349,8 @@ begin
       FY := AY
     else
       FY := Math.RandomRange(1, High(Byte) - 1);
-{    Inc(I);
-    if (I >= High(Byte)) then
-    begin
-      ID := Ord(iGold);
-      Break;
-    end; }
+    Inc(I);
+    if (I >= High(Byte)) then Break;
   until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and (Player.X <> FX) and
     (Player.Y <> FY) and Mobs.GetFreeTile(FX, FY) and
     (AZ in MobBase[TMobEnum(ID)].Maps);
@@ -349,8 +358,8 @@ begin
     Add(AZ);
   X := FX;
   Y := FY;
-  Self.Boss := False;
   Maps := AZ;
+  Boss := False;
   Alive := True;
   Sleep := True;
   Force := AForce;
@@ -441,10 +450,9 @@ procedure TMob.Process;
 var
   NX, NY, Dist: Integer;
 begin
-  if (Force <> fcEnemy) then Exit;
+  if (Force = fcNPC) then Exit;
   Dist := GetDist(Player.X, Player.Y);
-  if (Dist > GetRadius) then
-    Exit;
+  if (Dist > GetRadius) then Exit;
   if Sleep then
   begin
     if (Math.RandomRange(0, 99) <= 15) then
@@ -547,7 +555,7 @@ end;
 
 { TMobs }
 
-procedure TMobs.Add(AZ: TMapEnum; AX: Byte = 0; AY: Byte = 0; AForce: TForce = fcEnemy; AID: Byte = 0);
+procedure TMobs.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1; AForce: TForce = fcEnemy; AID: Integer = -1);
 var
   I: Integer;
 
@@ -781,6 +789,11 @@ begin
     // Dungeon of Doom
     mTrollKing:
       Result := _('Troll King');
+
+    // == NPC == //
+
+    npcNPC:
+      Result := _('NPC');
   end;
 end;
 

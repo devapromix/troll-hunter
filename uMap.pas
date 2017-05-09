@@ -373,18 +373,15 @@ var
       end;
   end;
 
+  procedure AddNPC(AX, AY: Byte);
+  begin
+    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(npcNPC));
+  end;
+
   procedure AddHouse(AX, AY, CX, CY, D: Byte; AV: Boolean; F: Boolean);
   var
     W, H: Byte;
     IsDoor: Boolean;
-    IsNPC: Boolean;
-
-    procedure AddNPC(AX, AY: Byte);
-    begin
-      if IsNPC then Exit;
-      Mobs.Add(Self.Current, AX, AY, fcNPC, 10);
-      IsNPC := True;
-    end;
 
     procedure AddDoor(AX, AY: Byte);
     begin
@@ -395,12 +392,9 @@ var
 
   begin
     IsDoor := False;
-    IsNPC := False;
     W := IfThen(AV, 8, RandomRange(2, 5) * 2);
     H := IfThen(AV, 8, RandomRange(2, 5) * 2);
     AddRect(AX, AY, W, H, teWoodenFloor, teWoodenWall);
-    // Add NPC
-    if F then AddNPC(AX, AY);
     // Add door
     if AV then
     begin
@@ -421,15 +415,16 @@ var
         AddDoor(AX + (W div 2), AY)
       else
         AddDoor(AX - (W div 2), AY)
-    else if (AY <= CY) then
-      AddDoor(AX, AY + (H div 2))
     else
+      if (AY <= CY) then
+        AddDoor(AX, AY + (H div 2))
+      else
       AddDoor(AX, AY - (H div 2));
   end;
 
   procedure AddVillage(AX, AY: Byte);
   var
-    I, J, T: Byte;
+    I, J, T, X, Y, PX, PY: Byte;
     HP: array [0 .. 7] of Boolean;
   const
     House: array [0 .. 7] of TPoint = ((X: - 10; Y: - 10;), (X: 10; Y: - 10;
@@ -471,7 +466,9 @@ var
       7:
         AddGate(AX, AY, 0, 16);
     end;
-    AddRect(AX - House[J].X, AY - House[J].Y, 10, 10, teStoneFloor,
+    PX := AX - House[J].X;
+    PY := AY - House[J].Y;
+    AddRect(PX, PY, 10, 10, teStoneFloor,
       teStoneFloor);
     HP[J] := True;
     // Add houses
@@ -479,10 +476,13 @@ var
     while (T < High(House)) do
     begin
       I := Math.RandomRange(0, 8);
+      X := AX - House[I].X;
+      Y := AY - House[I].Y;
       if not HP[I] then
       begin
-        AddHouse(AX - House[I].X, AY - House[I].Y, AX, AY, J, I = (10 - J + 1),
+        AddHouse(X, Y, AX, AY, J, I = (10 - J + 1),
           (J = 4) or (J = 7));
+        AddNPC(X, Y);
         HP[I] := True;
         Inc(T);
       end;
