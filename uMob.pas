@@ -249,7 +249,7 @@ type
     Sleep: Boolean;
     Boss: Boolean;
   public
-    procedure AddRandom(AZ: TMapEnum);
+    procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1; AID: Integer = -1; AForce: TForce = fcEnemy);
     procedure AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -317,40 +317,53 @@ begin
   Life := MaxLife;
 end;
 
-procedure TMob.AddRandom(AZ: TMapEnum);
+procedure TMob.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
+  AID: Integer = -1; AForce: TForce = fcEnemy);
 var
-  FX, FY: Byte;
+  I, FX, FY: Byte;
 begin
+  I := 0;
   repeat
-    ID := Math.RandomRange(0, Ord(High(TMobEnum)) + 1);
-    FX := Math.RandomRange(0, High(Byte));
-    FY := Math.RandomRange(0, High(Byte));
+    if (AID >= 0) then
+      ID := AID
+    else
+      ID := Math.RandomRange(0, Ord(High(TMobEnum)) + 1);
+    if (AX >= 0) then
+      FX := AX
+    else
+      FX := Math.RandomRange(1, High(Byte) - 1);
+    if (AY >= 0) then
+      FY := AY
+    else
+      FY := Math.RandomRange(1, High(Byte) - 1);
+{    Inc(I);
+    if (I >= High(Byte)) then
+    begin
+      ID := Ord(iGold);
+      Break;
+    end; }
   until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and (Player.X <> FX) and
     (Player.Y <> FY) and Mobs.GetFreeTile(FX, FY) and
     (AZ in MobBase[TMobEnum(ID)].Maps);
   if (MobBase[TMobEnum(ID)].Boss and IsBoss) then
-    AddRandom(AZ);
+    Add(AZ);
   X := FX;
   Y := FY;
   Self.Boss := False;
   Maps := AZ;
   Alive := True;
   Sleep := True;
-  Force := fcEnemy;
+  Force := AForce;
   MaxLife := MobBase[TMobEnum(ID)].MaxLife;
   Life := MaxLife;
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
-    Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)), X, Y,
-      Ord(AZ)]));
+    if Game.Wizard then
+      Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)), X, Y,
+        Ord(AZ)]));
     Self.Boss := True;
     IsBoss := True;
-    { if Game.Wizard then
-      begin
-      Player.X := EnsureRange(X - 1, 0, High(Byte));
-      Player.Y := EnsureRange(Y - 1, 0, High(Byte));
-      end; }
   end;
 end;
 
@@ -540,12 +553,7 @@ var
 
   procedure AddMob();
   begin
-    case AForce of
-      fcEnemy:
-        FMob[I].AddRandom(AZ);
-      fcNPC:
-        FMob[I].AddNPC(AX, AY, AZ, AID);
-    end;
+    FMob[I].Add(AZ, AX, AY, AID, AForce);
   end;
 
 begin

@@ -344,7 +344,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
-    procedure Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1;
+    procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AID: Integer = -1; IsRare: Boolean = False);
     function GetName(AItemEnum: TItemEnum): string;
     function GetItemEnum(AItemID: Integer): TItemEnum;
@@ -420,11 +420,10 @@ begin
   AItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
 end;
 
-procedure TItems.Add(ADeep: TMapEnum; AX: Integer = -1; AY: Integer = -1;
+procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
   AID: Integer = -1; IsRare: Boolean = False);
 var
-  I: Byte;
-  ID, FX, FY: Byte;
+  I, ID, FX, FY: Byte;
   FItem: Item;
   Value: Integer;
   IT: TItemType;
@@ -449,19 +448,19 @@ begin
       ID := Ord(iGold);
       Break;
     end;
-  until (Map.GetTileEnum(FX, FY, ADeep) in SpawnTiles) and
-    (ADeep in ItemBase[TItemEnum(ID)].Deep);
+  until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and
+    (AZ in ItemBase[TItemEnum(ID)].Deep);
   if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then
     Exit;
   Make(ID, FItem);
-  FItem.MapID := Ord(ADeep);
+  FItem.MapID := Ord(AZ);
   FItem.Amount := EnsureRange(Math.RandomRange(0, ItemBase[TItemEnum(ID)
     ].MaxStack div 3) + 1, 1, ItemBase[TItemEnum(ID)].MaxStack);
   IT := ItemBase[TItemEnum(ID)].ItemType;
   case IT of
     itCoin:
       begin
-        Value := Ord(ADeep) + 1;
+        Value := Ord(AZ) + 1;
         FItem.Amount := Math.RandomRange(Value * Value, Value * Value * 10) + 1;
       end;
   end;
