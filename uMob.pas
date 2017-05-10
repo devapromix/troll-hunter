@@ -59,7 +59,7 @@ type
   // {Orc (O)}, {Orc Warrior (O)}, {Orc Warlord (O)}, {Draconian (D)}, {Titan (T)}
   // {Hill Giant (G)}, {Stone Giant (G)}
 
-  // {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, {Skeleton (S)},
+  // {Mummy (M)}, {Ghoul (G)}, {Vampire (V)}, {Zombie (Z)}, {Skeleton (S)}, Burning Dead (d),
   // {Lich (L)}, {Phantom (P)},
   // Stone Golem (G), Fire Golem (G), Frost Golem (G),
   // {Ogre (O)}, {Two-Headed Ogre (O)}, {Cyclops (C)}, {Troll King (T)}
