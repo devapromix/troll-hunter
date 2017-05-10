@@ -442,12 +442,12 @@ begin
       FY := AY
     else
       FY := Math.RandomRange(1, High(Byte) - 1);
-    Inc(I);
     if (I >= High(Byte)) then
     begin
       ID := Ord(iGold);
       Break;
     end;
+    Inc(I);
   until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and
     (AZ in ItemBase[TItemEnum(ID)].Deep);
   if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then

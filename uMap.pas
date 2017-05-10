@@ -545,7 +545,7 @@ begin
     // Add mobs
     IsBoss := False;
     for I := 0 to 255 do
-      Mobs.Add(Z);
+      Mobs.AddGroup(Z);
     // Add items
     IsRare := False;
     for I := 0 to 255 do
