@@ -609,7 +609,7 @@ begin
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
     else MsgLog.Add(Format(_('You drop %s.'), [The]));
-  Scenes.SetScene(scGame);
+  Scenes.SetScene(scDrop);
   Wait;
 end;
 
@@ -649,7 +649,7 @@ begin
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]))
     else MsgLog.Add(Format(_('You picked up %s.'), [The]));
-  Scenes.SetScene(scGame);
+  Scenes.SetScene(scItems);
   Wait;
 end;
 

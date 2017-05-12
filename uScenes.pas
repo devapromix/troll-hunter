@@ -1014,6 +1014,8 @@ begin
 
   AddKey('Esc', _('Close'), True, False);
   AddKey('A-Z', _('Pick up an item'), False, True);
+
+  if (FCount <= 0) then Scenes.SetScene(scGame);
 end;
 
 procedure TSceneItems.Update(var Key: Word);
