@@ -356,6 +356,7 @@ type
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
+    procedure DropGold(const AX, AY: Byte);
     procedure Drop(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Drop(AX, AY: Byte; AIsBoss: Boolean); overload;
   end;
@@ -501,7 +502,7 @@ begin
   for I := 1 to V do
   begin
     // Gold
-    if (Math.RandomRange(0, M) >= 5) then Drop(AX, AY, iGold);
+    if (Math.RandomRange(0, M) >= 5) then DropGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Drop(AX, AY,
       TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1)));
@@ -825,6 +826,19 @@ end;
 function TItems.GetItemEnum(AItemID: Integer): TItemEnum;
 begin
   Result := TItemEnum(AItemID);
+end;
+
+procedure TItems.DropGold(const AX, AY: Byte);
+var
+  X, Y: Byte;
+begin
+  Drop(AX, AY, iGold);
+  if (Math.RandomRange(0, 3) = 0) then
+  begin
+    X := Math.EnsureRange(AX + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
+    Y := Math.EnsureRange(AY + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
+    Drop(X, Y, iGold);
+  end;
 end;
 
 initialization
