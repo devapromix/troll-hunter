@@ -7,7 +7,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages);
+    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics);
 
 type
   TScene = class(TObject)
@@ -49,6 +49,13 @@ var
 
 type
   TSceneTitle = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneStatistics = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -234,6 +241,8 @@ begin
         FScene[I] := TSceneItems.Create;
       scMessages:
         FScene[I] := TSceneMessages.Create;
+      scStatistics:
+        FScene[I] := TSceneStatistics.Create;
     end;
 end;
 
@@ -391,6 +400,7 @@ begin
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
+  AddKey('O', _('Statistics'));
   AddKey('I', _('Inventory'));
   AddKey('P', _('Skills and attributes'));
   AddKey('?', _('Help'));
@@ -666,6 +676,8 @@ begin
       Scenes.SetScene(scDrop);
     TK_P:
       Scenes.SetScene(scPlayer);
+    TK_O:
+      Scenes.SetScene(scStatistics);
     TK_V:
       if Game.Wizard then
         Scenes.SetScene(scWin);
@@ -1038,6 +1050,52 @@ begin
 end;
 
 procedure TSceneMessages.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
+{ TSceneStatistics }
+
+procedure TSceneStatistics.Render;
+var
+  X, Y: Byte;
+
+  procedure Add(AText: string; AValue: Integer);
+  begin
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, Format('%s: %d', [AText, AValue]), TK_ALIGN_LEFT);
+    Inc(X);
+    if (X > 2) then
+    begin
+      X := 1;
+      Inc(Y);
+    end;
+  end;
+
+begin
+  Self.Title(_('Statistics'));
+  X := 1;
+  Y := 3;
+  Add(_('Scores'), Player.Score);
+  Add(_('Tiles Moved'), Player.Turn);
+  Add(_('Monsters Killed'), Player.Kills);
+  Add(_('Items Found'), Player.Found);
+  //Add(_('Chests Found'), );
+  //Add(_('Doors Opened'), );
+  //Add(_('Potions Drunk'), );
+  //Add(_('Spells Cast'), );
+  //Add(_('Melee Attack Performed'), );
+  //Add(_('Ranged Attack Performed'), );
+  //Add(_('Unarmed Attack Performed'), );
+  //Add(_('Times Fallen Into Pit'), );
+  //Add(_(''), );
+
+  AddKey('Esc', _('Close'), True, True);
+end;
+
+procedure TSceneStatistics.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE: // Close

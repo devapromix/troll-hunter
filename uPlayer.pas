@@ -53,6 +53,7 @@ type
     FGold: Integer;
     FScore: Word;
     FKills: Word;
+    FFound: Word;
     FKiller: string;
     FSkill: array [TSkillEnum] of TSkill;
     FWeaponSkill: TSkillEnum;
@@ -82,6 +83,7 @@ type
     property Gold: Integer read FGold write FGold;
     property Score: Word read FScore write FScore;
     property Kills: Word read FKills write FKills;
+    property Found: Word read FFound write FFound;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
@@ -294,6 +296,7 @@ begin
   Gold := 0;
   Score := 0;
   Kills := 0;
+  Found := 0;
   Level := 1;
   Killer := '';
   Alive := True;
@@ -617,6 +620,7 @@ procedure TPlayer.PickUp;
 var
   FCount: Integer;
 begin
+  Inc(FFound);
   Corpses.DelCorpse(Player.X, Player.Y);
   /// / Your backpack is full!
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y);
