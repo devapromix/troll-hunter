@@ -120,6 +120,7 @@ type
     procedure StarterSet;
     procedure Rest(ATurns: Byte);
     procedure Dialog(AMob: TMob);
+    procedure AutoPickup();
   end;
 
 var
@@ -137,13 +138,13 @@ var
   V: Byte;
 begin
   Turn := Turn + 1;
-  V := EnsureRange(100 - Player.GetSkillValue(skToughness), 25, 100);
+  V := EnsureRange(100 - Player.GetSkillValue(skHealing), 25, 100);
   if (Turn mod V = 0) then
-  begin
     Life := EnsureRange(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
-    Mana := EnsureRange(Life + Player.GetSkillValue(skConcentration),
+  V := EnsureRange(100 - Player.GetSkillValue(skConcentration), 25, 100);
+  if (Turn mod V = 0) then
+    Mana := EnsureRange(Mana + Player.GetSkillValue(skConcentration),
       0, MaxMana);
-  end;
   Mobs.Process;
 end;
 
@@ -154,9 +155,11 @@ var
   Dam, Cr: Word;
   CrStr, The: string;
 begin
-  if (Index < 0) then Exit;
+  if (Index < 0) then
+    Exit;
   Mob := Mobs.Mob[Index];
-  if not Mob.Alive then Exit;
+  if not Mob.Alive then
+    Exit;
   if (Mob.Force <> fcEnemy) then
   begin
     Self.Dialog(Mob);
@@ -178,7 +181,9 @@ begin
       begin
         V := 2;
         CrStr := _('It was a good hit!');
-      end else begin
+      end
+      else
+      begin
         V := 3;
         CrStr := _('It was an excellent hit!');
       end;
@@ -188,7 +193,8 @@ begin
     // Attack
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
-    if (CrStr <> '') then MsgLog.Add(Format(FC, [clAlarm, CrStr]));
+    if (CrStr <> '') then
+      MsgLog.Add(Format(FC, [clAlarm, CrStr]));
     case FWeaponSkill of
       skBlade:
         begin
@@ -224,9 +230,24 @@ begin
   begin
     // Miss
     MsgLog.Add(Format(_('You miss %s.'), [The]));
-    //MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
+    // MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
   end;
   AddTurn;
+end;
+
+procedure TPlayer.AutoPickup;
+var
+  FCount: Integer;
+  Index: Byte;
+  FItem: Item;    {?}
+begin
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Z), X, Y), 0, ItemMax);
+  for Index := FCount - 1 downto 0 do
+  begin
+    FItem := Items_Dungeon_GetMapItemXY(Ord(Z), Index, X, Y);
+    if (TItemEnum(FItem.ItemID) in AutoPickupItems) then
+      Items.AddItemToInv(Index, True);
+  end;
 end;
 
 procedure TPlayer.Calc;
@@ -259,8 +280,8 @@ begin
             FWeaponSkill := skSpear;
           itMace:
             FWeaponSkill := skMace;
-          else
-            FWeaponSkill := skLearning;
+        else
+          FWeaponSkill := skLearning;
         end;
     end;
   end;
@@ -427,6 +448,8 @@ begin
     begin
       X := FX;
       Y := FY;
+      if ((AX <> 0) or (AY <> 0)) then
+        AutoPickup;
       AddTurn;
     end;
   end;
@@ -590,8 +613,10 @@ var
 
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if not ((AItem.Stack > 1) and (AItem.Amount > 1)) then
-    DeleteItem else Player.SetAmountScene(True, Index, 1);
+  if not((AItem.Stack > 1) and (AItem.Amount > 1)) then
+    DeleteItem
+  else
+    Player.SetAmountScene(True, Index, 1);
   Self.Calc;
 end;
 
@@ -611,7 +636,8 @@ begin
   The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
-    else MsgLog.Add(Format(_('You drop %s.'), [The]));
+  else
+    MsgLog.Add(Format(_('You drop %s.'), [The]));
   Scenes.SetScene(scDrop);
   Wait;
 end;
@@ -644,15 +670,18 @@ var
   FItem: Item;
   The: string;
 begin
-  FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, Player.X, Player.Y);
+  FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, Player.X,
+    Player.Y);
   FItem.Amount := FItem.Amount - Player.ItemAmount;
-  Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, Player.X, Player.Y, FItem);
+  Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, Player.X,
+    Player.Y, FItem);
   FItem.Amount := Player.ItemAmount;
   Items_Inventory_AppendItem(FItem);
   The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]))
-    else MsgLog.Add(Format(_('You picked up %s.'), [The]));
+  else
+    MsgLog.Add(Format(_('You picked up %s.'), [The]));
   Scenes.SetScene(scItems);
   Wait;
 end;
@@ -725,7 +754,8 @@ begin
   begin
     Exp := Exp - LevelExpMax;
     FLevel := FLevel + 1;
-    MsgLog.Add(Format(FC, [clAlarm, Format(_('You advance to level %d!'), [FLevel])]));
+    MsgLog.Add(Format(FC, [clAlarm, Format(_('You advance to level %d!'),
+      [FLevel])]));
     Player.Score := Player.Score + (FLevel * FLevel);
   end;
 end;
@@ -822,7 +852,9 @@ begin
   if Game.Wizard then
   begin
     Items.AddItemToInv(iBoneweaveHauberk, 1, True);
-  end else begin
+  end
+  else
+  begin
     Items.AddItemToInv(iQuiltedArmor, 1, True);
   end;
   // Add weapon and armor

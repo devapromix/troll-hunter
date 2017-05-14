@@ -72,6 +72,7 @@ const
   DrinkItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3];
   EatItems = [iFood];
+  AutoPickupItems = NotEquipItems - [iCorpse, iKey, iFood];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -352,7 +353,7 @@ type
       ACount: Byte = 0): string;
     function RenderInvItem(X, Y, I: Integer; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True): string;
-    procedure AddItemToInv(Index: Integer); overload;
+    procedure AddItemToInv(Index: Integer; AFlag: Boolean = False); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
@@ -776,7 +777,7 @@ begin
     Result := Result + S;
 end;
 
-procedure TItems.AddItemToInv(Index: Integer);
+procedure TItems.AddItemToInv(Index: Integer; AFlag: Boolean = False);
 var
   FItem: Item;
   MapID: Integer;
@@ -784,7 +785,7 @@ var
 begin
   MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
-  if (FItem.Stack > 1) and (FItem.Amount > 1) then
+  if (FItem.Stack > 1) and (FItem.Amount > 1) and not AFlag then
   begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;

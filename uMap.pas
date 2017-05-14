@@ -349,8 +349,9 @@ var
     PY := AY - (AH div 2);
     for X := PX to PX + AW do
       for Y := PY to PY + AH do
-        if not (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
-        then SetTileEnum(X, Y, Z, ABaseTileEnum);
+        if not(((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
+        then
+          SetTileEnum(X, Y, Z, ABaseTileEnum);
   end;
 
   procedure AddRect(AX, AY, AW, AH: Byte;
@@ -364,7 +365,8 @@ var
     for X := PX to PX + AW do
       for Y := PY to PY + AH do
       begin
-        if IsFog then Self.SetFog(X, Y, False);
+        if IsFog then
+          Self.SetFog(X, Y, False);
         if (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
         then
           SetTileEnum(X, Y, Z, AFloorTileEnum)
@@ -385,7 +387,8 @@ var
 
     procedure AddDoor(AX, AY: Byte);
     begin
-      if IsDoor then Exit;
+      if IsDoor then
+        Exit;
       SetTileEnum(AX, AY, Z, teDoor);
       IsDoor := True;
     end;
@@ -415,10 +418,9 @@ var
         AddDoor(AX + (W div 2), AY)
       else
         AddDoor(AX - (W div 2), AY)
+    else if (AY <= CY) then
+      AddDoor(AX, AY + (H div 2))
     else
-      if (AY <= CY) then
-        AddDoor(AX, AY + (H div 2))
-      else
       AddDoor(AX, AY - (H div 2));
   end;
 
@@ -468,8 +470,7 @@ var
     end;
     PX := AX - House[J].X;
     PY := AY - House[J].Y;
-    AddRect(PX, PY, 10, 10, teStoneFloor,
-      teStoneFloor);
+    AddRect(PX, PY, 10, 10, teStoneFloor, teStoneFloor);
     HP[J] := True;
     // Add houses
     T := 0;
@@ -480,8 +481,7 @@ var
       Y := AY - House[I].Y;
       if not HP[I] then
       begin
-        AddHouse(X, Y, AX, AY, J, I = (10 - J + 1),
-          (J = 4) or (J = 7));
+        AddHouse(X, Y, AX, AY, J, I = (10 - J + 1), (J = 4) or (J = 7));
         AddNPC(X, Y);
         HP[I] := True;
         Inc(T);
