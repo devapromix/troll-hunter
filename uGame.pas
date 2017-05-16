@@ -36,6 +36,7 @@ var
 type
   TGame = class(TObject)
   private
+    FTimer: Byte;
     FWon: Boolean;
     FMode: Boolean;
     FWizard: Boolean;
@@ -44,6 +45,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    property Timer: Byte read FTimer write FTimer;
     property Won: Boolean read FWon write FWon;
     property IsMode: Boolean read FMode write FMode;
     property Wizard: Boolean read FWizard write FWizard;
@@ -71,6 +73,7 @@ var
   I: Byte;
 begin
   Randomize;
+  Timer := 0;
   Won := False;
   IsMode := False;
   Wizard := False;

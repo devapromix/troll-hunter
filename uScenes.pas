@@ -23,6 +23,7 @@ type
     class procedure Title(ATitleStr: string; AY: Byte = 1);
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
       IsRender: Boolean = False);
+    procedure FromAToZ;
   end;
 
 type
@@ -205,6 +206,18 @@ begin
   Terminal.ForegroundColor(Terminal.GetColorFromIni('Title', 'Yellow'));
   Terminal.Print(X, AY, Format(FT, [ATitleStr]), TK_ALIGN_CENTER);
   Terminal.ForegroundColor(clDefault);
+end;
+
+procedure TScene.FromAToZ;
+var
+  I: Byte;
+begin
+  if Game.Wizard then
+    for I := 0 to ItemMax - 1 do
+    begin
+      Terminal.ForegroundColor(clGray);
+      Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
+    end;
 end;
 
 { TScenes }
@@ -669,11 +682,17 @@ begin
     TK_G:
       Player.Pickup;
     TK_I:
-      Scenes.SetScene(scInv);
+      begin
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scInv);
+      end;
     TK_M:
       Scenes.SetScene(scMessages);
     TK_F:
-      Scenes.SetScene(scDrop);
+      begin
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scDrop);
+      end;
     TK_P:
       Scenes.SetScene(scPlayer);
     TK_O:
@@ -782,25 +801,15 @@ end;
 procedure TSceneInv.Render;
 var
   I, FCount: Integer;
-  FItem: Item;
 begin
   Self.Title(_('Inventory'));
 
-  if Game.Wizard then
-    for I := 0 to ItemMax - 1 do
-    begin
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
-    end;
-
+  Self.FromAToZ;
   FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Inventory_GetItem(I);
-    Items.RenderInvItem(5, 2, I, FItem, True);
-  end;
+    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True);
 
-  MsgLog.Render(2);
+  MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True);
   AddKey('Space', _('Skills and attributes'));
@@ -816,6 +825,8 @@ begin
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z: // Use an item
       Player.Use(Key - TK_A);
+    else
+      Game.Timer := High(Byte);
   end;
 end;
 
@@ -828,13 +839,7 @@ var
 begin
   Self.Title(_('Drop an item'));
 
-  if Game.Wizard then
-    for I := 0 to ItemMax - 1 do
-    begin
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
-    end;
-
+  Self.FromAToZ;
   FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
@@ -842,7 +847,7 @@ begin
     Items.RenderInvItem(5, 2, I, FItem);
   end;
 
-  MsgLog.Render(2);
+  MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
   AddKey('A-Z', _('Drop an item'), False, True);
@@ -855,6 +860,8 @@ begin
       Scenes.SetScene(scGame);
     TK_A .. TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
+    else
+      Game.Timer := High(Byte);
   end;
 end;
 
@@ -945,7 +952,10 @@ begin
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
     TK_SPACE: // Inventory
-      Scenes.SetScene(scInv);
+      begin
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scInv);
+      end;
   end;
 end;
 
@@ -1008,13 +1018,7 @@ begin
   MapID := Ord(Map.Current);
   Self.Title(_('Pick up an item'));
 
-  if Game.Wizard then
-    for I := 0 to ItemMax - 1 do
-    begin
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
-    end;
-
+  Self.FromAToZ;
   FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
@@ -1022,7 +1026,7 @@ begin
     Items.RenderInvItem(5, 2, I, FItem);
   end;
 
-  MsgLog.Render(2);
+  MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
   AddKey('A-Z', _('Pick up an item'), False, True);
@@ -1037,6 +1041,8 @@ begin
       Scenes.SetScene(scGame);
     TK_A .. TK_Z:
       Items.AddItemToInv(Key - TK_A);
+    else
+      Game.Timer := High(Byte);
   end;
 end;
 

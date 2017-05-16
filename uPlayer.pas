@@ -237,14 +237,13 @@ end;
 
 procedure TPlayer.AutoPickup;
 var
-  FCount: Integer;
-  Index: Byte;
-  FItem: Item;    {?}
+  Index, FCount: Integer;
+  FItem: Item;
 begin
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Z), X, Y), 0, ItemMax);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y), 0, ItemMax);
   for Index := FCount - 1 downto 0 do
   begin
-    FItem := Items_Dungeon_GetMapItemXY(Ord(Z), Index, X, Y);
+    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
     if (TItemEnum(FItem.ItemID) in AutoPickupItems) then
       Items.AddItemToInv(Index, True);
   end;
@@ -603,6 +602,7 @@ var
     begin
       AItem.X := Player.X;
       AItem.Y := Player.Y;
+      AItem.Equipment := 0;
       AItem.MapID := Ord(Map.Current);
       Items_Dungeon_AppendItem(AItem);
       The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
@@ -613,6 +613,7 @@ var
 
 begin
   AItem := Items_Inventory_GetItem(Index);
+  if (AItem.Equipment > 0) then Exit;
   if not((AItem.Stack > 1) and (AItem.Amount > 1)) then
     DeleteItem
   else
@@ -630,6 +631,7 @@ begin
   Items_Inventory_SetItem(Index, FItem);
   FItem.X := Player.X;
   FItem.Y := Player.Y;
+  FItem.Equipment := 0;
   FItem.MapID := Ord(Map.Current);
   FItem.Amount := Player.ItemAmount;
   Items_Dungeon_AppendItem(FItem);
@@ -660,6 +662,7 @@ begin
     else
     begin
       // Items scene
+      Game.Timer := High(Byte);
       Scenes.SetScene(scItems);
     end;
   end;

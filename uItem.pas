@@ -83,7 +83,7 @@ const
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Color: clGray; Deep: [deDarkWood .. deDrom]; Value: 0;),
     // Gold
-    (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 1000;
+    (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 10000;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Color: clYellow; Deep: [deDarkWood .. deDrom]; Value: 0;),
 
@@ -353,13 +353,14 @@ type
       ACount: Byte = 0): string;
     function RenderInvItem(X, Y, I: Integer; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True): string;
+    function GetSlotName(const SlotType: TSlotType): string;
     procedure AddItemToInv(Index: Integer; AFlag: Boolean = False); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
-    procedure DropGold(const AX, AY: Byte);
-    procedure Drop(AX, AY: Byte; AItemEnum: TItemEnum); overload;
-    procedure Drop(AX, AY: Byte; AIsBoss: Boolean); overload;
+    procedure LootGold(const AX, AY: Byte);
+    procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
+    procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
   end;
 
 var
@@ -398,7 +399,7 @@ begin
     S := Trim(Format('%s (%d/%d)', [T, AItem.Durability, ItemBase[TItemEnum(ID)].MaxDurability]));
   end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
-  // Map's item
+  // Map's item     
   if (IsManyItems or (ACount > 0)) then
   begin
     S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
@@ -488,12 +489,12 @@ begin
   Items_Inventory_AppendItem(FItem);
 end;
 
-procedure TItems.Drop(AX, AY: Byte; AItemEnum: TItemEnum);
+procedure TItems.Loot(AX, AY: Byte; AItemEnum: TItemEnum);
 begin
   Add(Map.Current, AX, AY, Ord(AItemEnum));
 end;
 
-procedure TItems.Drop(AX, AY: Byte; AIsBoss: Boolean);
+procedure TItems.Loot(AX, AY: Byte; AIsBoss: Boolean);
 var
   V, I: Byte;
 const
@@ -503,9 +504,9 @@ begin
   for I := 1 to V do
   begin
     // Gold
-    if (Math.RandomRange(0, M) >= 5) then DropGold(AX, AY);
+    if (Math.RandomRange(0, M) >= 5) then LootGold(AX, AY);
     // Potion
-    if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Drop(AX, AY,
+    if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Loot(AX, AY,
       TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
@@ -726,6 +727,27 @@ begin
   end;
 end;
 
+function TItems.GetSlotName(const SlotType: TSlotType): string;
+begin
+      case SlotType of
+        stHead:
+          Result := _('head');
+        stNeck:
+          Result := _('neck');
+        stFinger:
+          Result := _('finger');
+        stMainHand:
+          Result := _('main hand');
+        stOffHand:
+          Result := _('off hand');
+        stChest:
+          Result := _('chest');
+        stFeet:
+          Result := _('feet');
+      end;
+  Result := Format('{%s}', [Result]);    
+end;
+
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True): string;
 var
@@ -748,23 +770,7 @@ begin
     S := '';
     if (AItem.Equipment > 0) then
     begin
-      case D.SlotType of
-        stHead:
-          S := _('head');
-        stNeck:
-          S := _('neck');
-        stFinger:
-          S := _('finger');
-        stMainHand:
-          S := _('main hand');
-        stOffHand:
-          S := _('off hand');
-        stChest:
-          S := _('chest');
-        stFeet:
-          S := _('feet');
-      end;
-      S := '- ' + S;
+      S := GetSlotName(D.SlotType);
     end;
   end;
   if (S <> '') then
@@ -829,16 +835,16 @@ begin
   Result := TItemEnum(AItemID);
 end;
 
-procedure TItems.DropGold(const AX, AY: Byte);
+procedure TItems.LootGold(const AX, AY: Byte);
 var
   X, Y: Byte;
 begin
-  Drop(AX, AY, iGold);
+  Loot(AX, AY, iGold);
   if (Math.RandomRange(0, 3) = 0) then
   begin
     X := Math.EnsureRange(AX + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
     Y := Math.EnsureRange(AY + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
-    Drop(X, Y, iGold);
+    if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then Loot(X, Y, iGold);
   end;
 end;
 

@@ -518,8 +518,8 @@ end;
 
 procedure TMob.DropItems;
 begin
-  Items.Drop(Self.X, Self.Y, Boss);
-  Items.Drop(Self.X, Self.Y, iCorpse);
+  Items.Loot(Self.X, Self.Y, Boss);
+  Items.Loot(Self.X, Self.Y, iCorpse);
 end;
 
 function TMob.GetRadius: Byte;

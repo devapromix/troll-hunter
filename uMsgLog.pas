@@ -14,7 +14,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Render(const Y: Byte = 0);
+    procedure Render(const Y: Byte = 0; Flag: Boolean = False);
     procedure Clear;
     procedure Add(S: string);
     procedure Turn;
@@ -38,6 +38,7 @@ const
 procedure TMsgLog.Add(S: string);
 begin
   FMsg := FMsg + ' ' + Trim(S);
+  Game.Timer := High(Byte);
 end;
 
 procedure TMsgLog.Clear;
@@ -81,8 +82,9 @@ begin
   end;
 end;
 
-procedure TMsgLog.Render(const Y: Byte = 0);
+procedure TMsgLog.Render(const Y: Byte = 0; Flag: Boolean = False);
 begin
+  if (Flag and (Game.Timer = 0)) then Exit;
   if (Trim(MsgLog.Msg) = '') then
     FAct := ''
   else

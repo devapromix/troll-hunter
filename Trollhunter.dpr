@@ -25,6 +25,11 @@ var
 begin
   Game.LoadConfig;
   repeat
+    if (Game.Timer > 0) then
+    begin
+      Game.Timer := Game.Timer - 1;
+      if (Game.Timer = 0) then IsRender := True;
+    end;
     if IsRender then
     begin
       Scenes.Render;
