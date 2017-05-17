@@ -349,7 +349,9 @@ end;
 
 procedure TPlayer.Dialog(AMob: TMob);
 begin
-  ShowMessage('++++');
+  NPCName := Mobs.GetName(TMobEnum(AMob.ID));
+  NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
+  Scenes.SetScene(scDialog);
 end;
 
 procedure TPlayer.Fill;

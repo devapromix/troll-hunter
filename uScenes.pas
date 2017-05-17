@@ -3,11 +3,11 @@ unit uScenes;
 interface
 
 uses
-  Classes, BeaRLibItems;
+  Classes, BeaRLibItems, uMob;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics);
+    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog);
 
 type
   TScene = class(TObject)
@@ -57,6 +57,13 @@ type
 
 type
   TSceneStatistics = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneDialog = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -153,11 +160,15 @@ type
     procedure Update(var Key: Word); override;
   end;
 
+var
+  NPCName: string = '';
+  NPCType: TNPCType = ntNone;
+
 implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMob, uMsgLog, uItem, gnugettext, uGame, uVillage, uCorpse;
+  uMap, uMsgLog, uItem, gnugettext, uGame, uVillage, uCorpse;
 
 { TScene }
 
@@ -256,6 +267,8 @@ begin
         FScene[I] := TSceneMessages.Create;
       scStatistics:
         FScene[I] := TSceneStatistics.Create;
+      scDialog:
+        FScene[I] := TSceneDialog.Create;
     end;
 end;
 
@@ -1102,6 +1115,27 @@ begin
 end;
 
 procedure TSceneStatistics.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
+  end;
+end;
+
+{ TSceneDialog }
+
+procedure TSceneDialog.Render;
+begin
+  Self.Title(NPCName);
+
+  Self.FromAToZ;
+
+
+
+  AddKey('Esc', _('Close'), True, True);
+end;
+
+procedure TSceneDialog.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE: // Close

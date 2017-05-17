@@ -5,6 +5,10 @@ interface
 uses uMap, uEntity;
 
 type
+  TNPCType = (ntNone, ntTavernOwner, ntHealer, ntBlacksmith, ntWpnTrader,
+    ntAmrTrader, ntPotTrader, ntScrTrader);
+
+type
   TMobBase = record
     Symbol: Char;
     Boss: Boolean;
@@ -16,6 +20,7 @@ type
     MaxCount: Byte;
     Damage: TDamage;
     Color: Cardinal;
+    NPCType: TNPCType;
   end;
 
 type
@@ -310,16 +315,12 @@ const
     // NPC
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF;)
+    Color: $FF99AAFF; NPCType: ntPotTrader;)
 
     );
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);
-
-type
-  TNPCType = (ntTavernOwner, ntHealer, ntBlacksmith, ntWpnTrader, ntAmrTrader,
-    ntPotTrader, ntScrTrader);
 
 type
   TMob = class(TEntity)
