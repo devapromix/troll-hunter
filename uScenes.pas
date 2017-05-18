@@ -7,7 +7,8 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog);
+    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
+    scSell);
 
 type
   TScene = class(TObject)
@@ -64,6 +65,13 @@ type
 
 type
   TSceneDialog = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneSell = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -269,6 +277,8 @@ begin
         FScene[I] := TSceneStatistics.Create;
       scDialog:
         FScene[I] := TSceneDialog.Create;
+      scSell:
+        FScene[I] := TSceneSell.Create;
     end;
 end;
 
@@ -985,6 +995,7 @@ begin
   else
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current),
       Player.ItemIndex, Player.X, Player.Y);
+
   MaxAmount := FItem.Amount;
 
   Terminal.Print(CX, CY, Format('%d/%dx',
@@ -1125,12 +1136,15 @@ end;
 { TSceneDialog }
 
 procedure TSceneDialog.Render;
+
+
+
 begin
   Self.Title(NPCName);
 
-  Self.FromAToZ;
+  Terminal.Print(CX div 2, CY - 1, KeyStr('A') + ' ' +  _('Sell items'), TK_ALIGN_LEFT);
 
-
+  MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, True);
 end;
@@ -1140,6 +1154,46 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_A: // Sell items
+      begin
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scSell);
+      end;
+  end;
+end;
+
+{ TSceneSell }
+
+procedure TSceneSell.Render;
+var
+  I, FCount: Integer;
+  FItem: Item;
+begin
+  Self.Title(_('Selling items'));
+
+  Self.FromAToZ;
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    Items.RenderInvItem(5, 2, I, FItem);
+  end;
+
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Selling an item'), False, True);
+end;
+
+procedure TSceneSell.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scDialog);
+    TK_A .. TK_Z: // Selling an item
+      Player.Sell(Key - TK_A);
+    else
+      Game.Timer := High(Byte);
   end;
 end;
 

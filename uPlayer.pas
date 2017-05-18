@@ -115,6 +115,7 @@ type
     procedure Eat(Index: Integer);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
+    procedure Sell(Index: Integer);
     procedure AddExp(Value: Byte = 1);
     procedure SkillSet;
     procedure StarterSet;
@@ -349,6 +350,7 @@ end;
 
 procedure TPlayer.Dialog(AMob: TMob);
 begin
+  Game.Timer := High(Byte);
   NPCName := Mobs.GetName(TMobEnum(AMob.ID));
   NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
   Scenes.SetScene(scDialog);
@@ -590,6 +592,25 @@ begin
     Self.Calc;
     Wait;
   end;
+end;
+
+procedure TPlayer.Sell(Index: Integer);
+var
+  Value: Integer;
+  AItem: Item;
+  The: string;
+begin
+  Value := 0;
+  AItem := Items_Inventory_GetItem(Index);
+  if ((AItem.Equipment > 0) or (AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
+  if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
+  begin
+    Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
+    Items.AddItemToInv(iGold, Value);
+    The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+    MsgLog.Add(Format(_('You sell %s (+%d gold).'), [The, Value]));
+  end;
+  Self.Calc;
 end;
 
 procedure TPlayer.Drop(Index: Integer);
