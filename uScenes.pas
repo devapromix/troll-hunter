@@ -498,9 +498,8 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%d/%d). ',
-          [Mobs.GetName(TMobEnum(Mobs.Mob[C].ID)), Mobs.Mob[C].Life,
-          Mobs.Mob[C].MaxLife]);
+        S := S + Format('%s (%d/%d). ', [Mobs.GetName(TMobEnum(Mobs.Mob[C].ID)),
+          Mobs.Mob[C].Life, Mobs.Mob[C].MaxLife]);
       end;
     end;
     //
@@ -852,8 +851,8 @@ begin
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z: // Use an item
       Player.Use(Key - TK_A);
-    else
-      Game.Timer := High(Byte);
+  else
+    Game.Timer := High(Byte);
   end;
 end;
 
@@ -878,8 +877,8 @@ begin
       Scenes.SetScene(scGame);
     TK_A .. TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
-    else
-      Game.Timer := High(Byte);
+  else
+    Game.Timer := High(Byte);
   end;
 end;
 
@@ -988,13 +987,13 @@ begin
   if Player.ItemIsDrop then
     FItem := Items_Inventory_GetItem(Player.ItemIndex)
   else
-    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current),
-      Player.ItemIndex, Player.X, Player.Y);
+    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Player.ItemIndex,
+      Player.X, Player.Y);
 
   MaxAmount := FItem.Amount;
 
-  Terminal.Print(CX, CY, Format('%d/%dx',
-    [Player.ItemAmount, FItem.Amount]), TK_ALIGN_LEFT);
+  Terminal.Print(CX, CY, Format('%d/%dx', [Player.ItemAmount, FItem.Amount]),
+    TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Close'), True, False);
   AddKey('W', _('+'), False, False);
@@ -1015,11 +1014,12 @@ begin
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
     TK_ENTER, TK_KP_ENTER:
-    begin
-      if Player.ItemIsDrop then
-        Player.DropAmount(Player.ItemIndex)
-        else Player.PickUpAmount(Player.ItemIndex);
-    end;
+      begin
+        if Player.ItemIsDrop then
+          Player.DropAmount(Player.ItemIndex)
+        else
+          Player.PickUpAmount(Player.ItemIndex);
+      end;
     TK_UP, TK_KP_8, TK_W:
       ChAmount(Player.ItemAmount + 1);
     TK_DOWN, TK_KP_2, TK_X:
@@ -1038,7 +1038,8 @@ begin
   Self.Title(_('Pick up an item'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, ItemMax);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
+    0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
@@ -1049,7 +1050,8 @@ begin
   AddKey('Esc', _('Close'), True, False);
   AddKey('A-Z', _('Pick up an item'), False, True);
 
-  if (FCount <= 0) then Scenes.SetScene(scGame);
+  if (FCount <= 0) then
+    Scenes.SetScene(scGame);
 end;
 
 procedure TSceneItems.Update(var Key: Word);
@@ -1059,8 +1061,8 @@ begin
       Scenes.SetScene(scGame);
     TK_A .. TK_Z:
       Items.AddItemToInv(Key - TK_A);
-    else
-      Game.Timer := High(Byte);
+  else
+    Game.Timer := High(Byte);
   end;
 end;
 
@@ -1089,7 +1091,8 @@ var
 
   procedure Add(AText: string; AValue: Integer);
   begin
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, Format('%s: %d', [AText, AValue]), TK_ALIGN_LEFT);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, Format('%s: %d', [AText, AValue]
+      ), TK_ALIGN_LEFT);
     Inc(X);
     if (X > 2) then
     begin
@@ -1106,15 +1109,15 @@ begin
   Add(_('Tiles Moved'), Player.Turn);
   Add(_('Monsters Killed'), Player.Kills);
   Add(_('Items Found'), Player.Found);
-  //Add(_('Chests Found'), );
-  //Add(_('Doors Opened'), );
-  //Add(_('Potions Drunk'), );
-  //Add(_('Spells Cast'), );
-  //Add(_('Melee Attack Performed'), );
-  //Add(_('Ranged Attack Performed'), );
-  //Add(_('Unarmed Attack Performed'), );
-  //Add(_('Times Fallen Into Pit'), );
-  //Add(_(''), );
+  // Add(_('Chests Found'), );
+  // Add(_('Doors Opened'), );
+  // Add(_('Potions Drunk'), );
+  // Add(_('Spells Cast'), );
+  // Add(_('Melee Attack Performed'), );
+  // Add(_('Ranged Attack Performed'), );
+  // Add(_('Unarmed Attack Performed'), );
+  // Add(_('Times Fallen Into Pit'), );
+  // Add(_(''), );
 
   AddKey('Esc', _('Close'), True, True);
 end;
@@ -1131,13 +1134,13 @@ end;
 
 procedure TSceneDialog.Render;
 
-
-
 begin
   Self.Title(NPCName);
 
-  Terminal.Print(CX div 2, CY - 1, KeyStr('A') + ' ' +  _('Sell items'), TK_ALIGN_LEFT);
-  Terminal.Print(CX div 2, CY, KeyStr('B') + ' ' +  _('Repair items'), TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY - 1, KeyStr('A') + ' ' + _('Sell items'),
+    TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY, KeyStr('B') + ' ' + _('Repair items'),
+    TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
@@ -1183,8 +1186,8 @@ begin
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Selling an item
       Player.Sell(Key - TK_A);
-    else
-      Game.Timer := High(Byte);
+  else
+    Game.Timer := High(Byte);
   end;
 end;
 
@@ -1209,8 +1212,8 @@ begin
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Repairing an item
       Player.Repair(Key - TK_A);
-    else
-      Game.Timer := High(Byte);
+  else
+    Game.Timer := High(Byte);
   end;
 end;
 

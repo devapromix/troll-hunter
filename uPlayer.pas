@@ -242,7 +242,8 @@ var
   Index, FCount: Integer;
   FItem: Item;
 begin
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y), 0, ItemMax);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y),
+    0, ItemMax);
   for Index := FCount - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
@@ -602,7 +603,8 @@ var
   The: string;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Equipment > 0) or (AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
+  if ((AItem.Equipment > 0) or (AItem.Stack > 1) or (AItem.Amount > 1)) then
+    Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
   begin
     Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
@@ -620,7 +622,8 @@ var
   The: string;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
+  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
+    Exit;
   MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
   RepairCost := (MaxDurability - AItem.Durability) * 10;
   if (RepairCost > 0) then
@@ -631,12 +634,12 @@ begin
       Exit;
     end;
     AItem.Durability := MaxDurability;
-    if ((Items_Inventory_DeleteItemAmount(Ord(iGold), RepairCost) > 0)
-      and (Items_Inventory_SetItem(Index, AItem) > 0)) then
-      begin
-        The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
-        MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
-      end;
+    if ((Items_Inventory_DeleteItemAmount(Ord(iGold), RepairCost) > 0) and
+      (Items_Inventory_SetItem(Index, AItem) > 0)) then
+    begin
+      The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+      MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
+    end;
   end;
   Self.Calc;
 end;
@@ -664,7 +667,8 @@ var
 
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if (AItem.Equipment > 0) then Exit;
+  if (AItem.Equipment > 0) then
+    Exit;
   if not((AItem.Stack > 1) and (AItem.Amount > 1)) then
     DeleteItem
   else
