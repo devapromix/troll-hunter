@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell);
+    scSell, scRepair);
 
 type
   TScene = class(TObject)
@@ -72,6 +72,13 @@ type
 
 type
   TSceneSell = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneRepair = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -279,6 +286,8 @@ begin
         FScene[I] := TSceneDialog.Create;
       scSell:
         FScene[I] := TSceneSell.Create;
+      scRepair:
+        FScene[I] := TSceneRepair.Create;
     end;
 end;
 
@@ -1128,6 +1137,7 @@ begin
   Self.Title(NPCName);
 
   Terminal.Print(CX div 2, CY - 1, KeyStr('A') + ' ' +  _('Sell items'), TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY, KeyStr('B') + ' ' +  _('Repair items'), TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
@@ -1139,10 +1149,15 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
-    TK_A: // Sell items
+    TK_A: // Selling items
       begin
         Game.Timer := High(Byte);
         Scenes.SetScene(scSell);
+      end;
+    TK_B: // Repairing items
+      begin
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scRepair);
       end;
   end;
 end;
@@ -1168,6 +1183,32 @@ begin
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Selling an item
       Player.Sell(Key - TK_A);
+    else
+      Game.Timer := High(Byte);
+  end;
+end;
+
+{ TSceneRepair }
+
+procedure TSceneRepair.Render;
+begin
+  Self.Title(_('Repairing items'));
+
+  Self.FromAToZ;
+  Items.RenderInventory;
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Repairing an item'), False, True);
+end;
+
+procedure TSceneRepair.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scDialog);
+    TK_A .. TK_Z: // Repairing an item
+      Player.Repair(Key - TK_A);
     else
       Game.Timer := High(Byte);
   end;

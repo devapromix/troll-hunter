@@ -116,6 +116,7 @@ type
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure Sell(Index: Integer);
+    procedure Repair(Index: Integer);
     procedure AddExp(Value: Byte = 1);
     procedure SkillSet;
     procedure StarterSet;
@@ -607,7 +608,34 @@ begin
     Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
     Items.AddItemToInv(iGold, Value);
     The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
-    MsgLog.Add(Format(_('You sell %s (+%d gold).'), [The, Value]));
+    MsgLog.Add(Format(_('You sold %s (+%d gold).'), [The, Value]));
+  end;
+  Self.Calc;
+end;
+
+procedure TPlayer.Repair(Index: Integer);
+var
+  MaxDurability, RepairCost: Word;
+  AItem: Item;
+  The: string;
+begin
+  AItem := Items_Inventory_GetItem(Index);
+  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
+  MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
+  RepairCost := (MaxDurability - AItem.Durability) * 10;
+  if (RepairCost > 0) then
+  begin
+    if (Gold < RepairCost) then
+    begin
+      MsgLog.Add(_('You need more gold.'));
+      Exit;
+    end;
+    AItem.Durability := MaxDurability;
+    if (Items_Inventory_SetItem(Index, AItem) > 0) then
+    begin
+      The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+      MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
+    end;
   end;
   Self.Calc;
 end;
