@@ -631,11 +631,12 @@ begin
       Exit;
     end;
     AItem.Durability := MaxDurability;
-    if (Items_Inventory_SetItem(Index, AItem) > 0) then
-    begin
-      The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
-      MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
-    end;
+    if ((Items_Inventory_DeleteItemAmount(Ord(iGold), RepairCost) > 0)
+      and (Items_Inventory_SetItem(Index, AItem) > 0)) then
+      begin
+        The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+        MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
+      end;
   end;
   Self.Calc;
 end;
