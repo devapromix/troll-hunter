@@ -600,7 +600,6 @@ var
   AItem: Item;
   The: string;
 begin
-  Value := 0;
   AItem := Items_Inventory_GetItem(Index);
   if ((AItem.Equipment > 0) or (AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
