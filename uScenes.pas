@@ -822,16 +822,11 @@ end;
 { TSceneInv }
 
 procedure TSceneInv.Render;
-var
-  I, FCount: Integer;
 begin
   Self.Title(_('Inventory'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
-  for I := 0 to FCount - 1 do
-    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True);
-
+  Items.RenderInventory;
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True);
@@ -856,20 +851,11 @@ end;
 { TSceneDrop }
 
 procedure TSceneDrop.Render;
-var
-  I, FCount: Integer;
-  FItem: Item;
 begin
   Self.Title(_('Drop an item'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Inventory_GetItem(I);
-    Items.RenderInvItem(5, 2, I, FItem);
-  end;
-
+  Items.RenderInventory;
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
@@ -1049,7 +1035,6 @@ begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
     Items.RenderInvItem(5, 2, I, FItem);
   end;
-
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
@@ -1165,20 +1150,11 @@ end;
 { TSceneSell }
 
 procedure TSceneSell.Render;
-var
-  I, FCount: Integer;
-  FItem: Item;
 begin
   Self.Title(_('Selling items'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Inventory_GetItem(I);
-    Items.RenderInvItem(5, 2, I, FItem);
-  end;
-
+  Items.RenderInventory;
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);

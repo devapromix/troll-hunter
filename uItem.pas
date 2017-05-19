@@ -358,6 +358,7 @@ type
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
+    procedure RenderInventory;
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
@@ -822,7 +823,7 @@ begin
     for I := 0 to FCount - 1 do
     begin
       FItem := Items_Inventory_GetItem(I);
-      SL.Append(Items.RenderInvItem(5, 2, I, FItem, False, False));
+      SL.Append(Items.RenderInvItem(5, 2, I, FItem, True, False));
     end;
     Result := SL.Text;
   finally
@@ -846,6 +847,15 @@ begin
     Y := Math.EnsureRange(AY + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
     if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then Loot(X, Y, iGold);
   end;
+end;
+
+procedure TItems.RenderInventory;
+var
+  I, C: Integer;
+begin
+  C := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  for I := 0 to C - 1 do
+    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True);
 end;
 
 initialization
