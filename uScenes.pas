@@ -1141,6 +1141,8 @@ begin
     TK_ALIGN_LEFT);
   Terminal.Print(CX div 2, CY, KeyStr('B') + ' ' + _('Repair items'),
     TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY + 1, KeyStr('C') + ' ' + _('Receive healing'),
+    TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
@@ -1161,6 +1163,10 @@ begin
       begin
         Game.Timer := High(Byte);
         Scenes.SetScene(scRepair);
+      end;
+    TK_C: // Receive healing
+      begin
+        Player.ReceiveHealing;
       end;
   end;
 end;

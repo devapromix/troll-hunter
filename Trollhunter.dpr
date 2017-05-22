@@ -3,7 +3,7 @@ program Trollhunter;
 uses
   SysUtils,
   Dialogs,
-  gnugettext in 'gnugettext.pas',
+  GNUGetText in 'GNUGetText.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
   uTerminal in 'uTerminal.pas',

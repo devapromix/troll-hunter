@@ -106,6 +106,7 @@ type
     function GetSkillValue(ASkill: TSkillEnum): Byte;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
+    procedure ReceiveHealing;
     procedure PickUp;
     procedure PickUpAmount(Index: Integer);
     procedure Drop(Index: Integer);
@@ -615,6 +616,21 @@ begin
   Self.Calc;
 end;
 
+procedure TPlayer.ReceiveHealing;
+var
+  Cost: Word;
+begin
+  Cost := MaxLife - Life;
+  if (Self.Gold >= Cost) then
+  begin
+    if (Items_Inventory_DeleteItemAmount(Ord(iGold), Cost) > 0) then
+    begin
+      Life := MaxLife;
+      MsgLog.Add(Format(_('You feel better (-%d gold).'), [Cost]));
+    end;
+  end else MsgLog.Add(_('You need more gold.'));
+end;
+
 procedure TPlayer.Repair(Index: Integer);
 var
   MaxDurability, RepairCost: Word;
@@ -874,13 +890,6 @@ end;
 procedure TPlayer.Rest(ATurns: Byte);
 var
   T: Byte;
-
-  procedure FinRest;
-  begin
-    MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
-    IsRest := False;
-  end;
-
 begin
   if (Player.Food = 0) then
   begin
@@ -891,15 +900,12 @@ begin
   MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));
   for T := 1 to ATurns do
   begin
-    if not IsRest or (Player.Food = 0) then
-    begin
-      FinRest;
-      Exit;
-    end;
+    if not IsRest or (Player.Food = 0) then Break;
     Player.Food := EnsureRange(Player.Food - 1, 0, FoodMax);
     Wait;
   end;
-  FinRest;
+  MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
+  IsRest := False;
 end;
 
 procedure TPlayer.StarterSet;
