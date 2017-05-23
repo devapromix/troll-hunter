@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair);
+    scSell, scRepair, scBuy);
 
 type
   TScene = class(TObject)
@@ -65,6 +65,13 @@ type
 
 type
   TSceneDialog = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneBuy = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -1143,6 +1150,8 @@ begin
     TK_ALIGN_LEFT);
   Terminal.Print(CX div 2, CY + 1, KeyStr('C') + ' ' + _('Receive healing'),
     TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY + 2, KeyStr('D') + ' ' + _('Buy items'),
+    TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
@@ -1168,6 +1177,10 @@ begin
       begin
         Player.ReceiveHealing;
       end;
+    TK_D: // Buy items
+      begin
+        Player.Buy;
+      end;
   end;
 end;
 
@@ -1192,6 +1205,32 @@ begin
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Selling an item
       Player.Sell(Key - TK_A);
+  else
+    Game.Timer := High(Byte);
+  end;
+end;
+
+{ TSceneBuy }
+
+procedure TSceneBuy.Render;
+begin
+  Self.Title(_('Buy items'));
+
+  Self.FromAToZ;
+//  Items.RenderInventory;
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Buy an item'), False, True);
+end;
+
+procedure TSceneBuy.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scDialog);
+    TK_A .. TK_Z: // Buy items
+      Player.Buy(Key - TK_A);
   else
     Game.Timer := High(Byte);
   end;

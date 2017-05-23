@@ -107,6 +107,7 @@ type
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
+    procedure Buy(Index: Integer);
     procedure PickUp;
     procedure PickUpAmount(Index: Integer);
     procedure Drop(Index: Integer);
@@ -629,6 +630,11 @@ begin
       MsgLog.Add(Format(_('You feel better (-%d gold).'), [Cost]));
     end;
   end else MsgLog.Add(_('You need more gold.'));
+end;
+
+procedure TPlayer.Buy(Index: Integer);
+begin
+
 end;
 
 procedure TPlayer.Repair(Index: Integer);
