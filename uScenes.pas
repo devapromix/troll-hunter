@@ -291,6 +291,8 @@ begin
         FScene[I] := TSceneStatistics.Create;
       scDialog:
         FScene[I] := TSceneDialog.Create;
+      scBuy:
+        FScene[I] := TSceneBuy.Create;
       scSell:
         FScene[I] := TSceneSell.Create;
       scRepair:
@@ -1140,6 +1142,9 @@ end;
 { TSceneDialog }
 
 procedure TSceneDialog.Render;
+var
+  V: Integer;
+  S: string;
 
 begin
   Self.Title(NPCName);
@@ -1148,8 +1153,13 @@ begin
     TK_ALIGN_LEFT);
   Terminal.Print(CX div 2, CY, KeyStr('B') + ' ' + _('Repair items'),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX div 2, CY + 1, KeyStr('C') + ' ' + _('Receive healing'),
-    TK_ALIGN_LEFT);
+
+  // Heal 
+  V := Player.MaxLife - Player.Life;
+  if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
+  Terminal.Print(CX div 2, CY + 1, KeyStr('C') + ' ' +
+    _('Receive healing') + S, TK_ALIGN_LEFT);
+
   Terminal.Print(CX div 2, CY + 2, KeyStr('D') + ' ' + _('Buy items'),
     TK_ALIGN_LEFT);
 
@@ -1179,7 +1189,8 @@ begin
       end;
     TK_D: // Buy items
       begin
-        Player.Buy;
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scBuy);
       end;
   end;
 end;
@@ -1214,10 +1225,10 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  Self.Title(_('Buy items'));
+  Self.Title(Format(_('Buying at %s (%d gold left)'), [NPCName, Player.Gold]));
 
   Self.FromAToZ;
-//  Items.RenderInventory;
+  Items.RenderStore;
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);

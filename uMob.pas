@@ -37,7 +37,7 @@ type
     // Blood Cave
     mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian, mOrc,
     mOrcWarrior, mOrcWarlord,
-    // Dungeon of Doom
+    // Drom
     mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton,
     mLich, mPhantom,
     // Bosses
@@ -219,7 +219,7 @@ const
     Armor: 12; DV: 54; MaxCount: 3; Damage: (Min: 18; Max: 25;);
     Color: $FF445544;),
 
-    // == Dungeon of Doom == //
+    // == Drom == //
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; Armor: 12;
@@ -852,7 +852,7 @@ begin
     mOrcWarlord:
       Result := _('Orc Warlord');
 
-    // == Dungeon of Doom == //
+    // == Drom == //
 
     mZombie:
       Result := _('Zombie');
@@ -903,7 +903,7 @@ begin
       Result := _('Stone Giant');
     mTwoHeadedOgre:
       Result := _('Two-Headed Ogre');
-    // Dungeon of Doom
+    // Drom
     mTrollKing:
       Result := _('Troll King');
 
