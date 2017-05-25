@@ -64,7 +64,7 @@ begin
   Result := LowerCase(S);
   if (GetCurrentLanguage <> 'en') then
     Exit;
-  if (S[1] in ['a', 'e', 'i', 'o', 'u']) then
+  if (AnsiString(S)[1] in ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + Result
   else
     Result := 'a ' + Result;
