@@ -45,6 +45,7 @@ type
     FDV: Byte;
     FPV: Byte;
     FExp: Byte;
+    FMaxMap: Byte;
     FLook: Boolean;
     FStrength: Byte;
     FDexterity: Byte;
@@ -75,6 +76,7 @@ type
     property DV: Byte read FDV write FDV;
     property PV: Byte read FPV write FPV;
     property Exp: Byte read FExp write FExp;
+    property MaxMap: Byte read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
     property Strength: Byte read FStrength write FStrength;
     property Dexterity: Byte read FDexterity write FDexterity;
@@ -323,6 +325,7 @@ begin
   Kills := 0;
   Found := 0;
   Level := 1;
+  MaxMap := 0;
   Killer := '';
   Alive := True;
   Look := False;
@@ -888,7 +891,8 @@ begin
       Format(_('You have opened a new territory: %s.'), [Map.GetName])]));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
-      Player.Score := Player.Score + (Ord(Map.Current) * 15);
+      Score := Score + (Ord(Map.Current) * 15);
+    MaxMap := MaxMap + 1;
   end;
   Move(0, 0);
 end;

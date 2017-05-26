@@ -745,6 +745,9 @@ begin
         Scenes.SetScene(scDef);
     TK_SLASH:
       Scenes.SetScene(scHelp);
+    TK_Y:
+      if Game.Wizard then
+        Items.NewStores;
   end;
 end;
 

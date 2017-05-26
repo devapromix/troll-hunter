@@ -341,6 +341,9 @@ const
     );
 
 type
+  TStoreEnum = (sePotion);
+
+type
   TItemsStore = array [0..ItemMax - 1] of Item;
 
 type
@@ -359,11 +362,10 @@ type
 type
   TItems = class(TEntity)
   private
-    FPotionStore: TStore;
+    FStore: array [TStoreEnum] of TStore;
   public
     constructor Create;
     destructor Destroy; override;
-    property PotionStore: TStore read FPotionStore write FPotionStore;
     procedure Render(AX, AY: Byte);
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AID: Integer = -1; IsRare: Boolean = False);
@@ -407,7 +409,10 @@ begin
   ID := AItem.ItemID;
   // Amount
   if (AItem.Stack > 1) then
-    S := Format('(%dx)', [AItem.Amount])
+  begin
+    if (AItem.Amount > 1) then
+      S := Format('(%dx)', [AItem.Amount])
+  end
     // Corpse
   else if (TItemEnum(ID) = iCorpse) then
     S := ''
@@ -564,14 +569,20 @@ begin
 end;
 
 constructor TItems.Create;
+var
+  I: TStoreEnum;
 begin
   Items_Open;
-  FPotionStore := TStore.Create;
+  for I := Low(TStoreEnum) to High(TStoreEnum) do
+    FStore[I] := TStore.Create;
 end;
 
 destructor TItems.Destroy;
+var
+  I: TStoreEnum;
 begin
-  FreeAndNil(FPotionStore);
+  for I := Low(TStoreEnum) to High(TStoreEnum) do
+    FreeAndNil(FStore[I]);
   Items_Close;
   inherited;
 end;
@@ -809,8 +820,8 @@ begin
     Terminal.Print(X + 2, Y + I, S);
     if IsPrice then
     begin
-      if ((D.Price > 1) and (AItem.Equipment = 0) and (AItem.Stack = 1)
-        and (AItem.Amount = 1)) then S := Format(FC, ['lighter yellow',
+      if ((D.Price > 1) and (AItem.Equipment = 0){ and (AItem.Stack = 1)
+        and (AItem.Amount = 1)}) then S := Format(FC, ['lighter yellow',
         '$' + IntToStr(D.Price)]) else S := '------';
       Terminal.Print(Screen.Width - 7, Y + I, S);
     end;
@@ -893,17 +904,29 @@ begin
 end;
 
 procedure TItems.NewStores;
+var
+  I, V: Byte;
+  FItem: Item;
 begin
-
+  // Add potions
+  FStore[sePotion].Clear;
+  for I := 0 to ItemMax - 1 do
+  begin
+    repeat
+      V := Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1);
+    until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(V)].Deep);
+    Make(V, FItem);
+    FStore[sePotion].Add(FItem);
+  end;
 end;
 
 procedure TItems.RenderStore;
 var
   I, C: Integer;
 begin
-  C := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  C := EnsureRange(FStore[sePotion].Count, 0, ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, True);
+    Items.RenderInvItem(5, 2, I, FStore[sePotion].GetItem(I), True, True, True);
 end;
 
 { TStore }
