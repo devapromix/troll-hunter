@@ -100,6 +100,11 @@ end;
 function TGame.GetVersion: string;
 begin
   Result := '0.9';
+  if Wizard then
+  begin
+    Result := Result + Format(' (terminal: v.%s', [BearLibTerminal.terminal_get('version')]);
+    Result := Result + ')';
+  end;
 end;
 
 procedure TGame.Log(S: string);
