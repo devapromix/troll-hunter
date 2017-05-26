@@ -341,10 +341,29 @@ const
     );
 
 type
+  TItemsStore = array [0..ItemMax - 1] of Item;
+
+type
+  TStore = class
+  private
+    FItemsStore: TItemsStore;
+    FCount: Byte;
+  public
+    constructor Create;
+    procedure Clear;
+    property Count: Byte read FCount;
+    procedure Add(const AItem: Item);
+    function GetItem(const Index: Byte): Item;
+  end;
+
+type
   TItems = class(TEntity)
+  private
+    FPotionStore: TStore;
   public
     constructor Create;
     destructor Destroy; override;
+    property PotionStore: TStore read FPotionStore write FPotionStore;
     procedure Render(AX, AY: Byte);
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AID: Integer = -1; IsRare: Boolean = False);
@@ -364,6 +383,7 @@ type
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
+    procedure NewStores;
     procedure RenderStore;
   end;
 
@@ -546,10 +566,12 @@ end;
 constructor TItems.Create;
 begin
   Items_Open;
+  FPotionStore := TStore.Create;
 end;
 
 destructor TItems.Destroy;
 begin
+  FreeAndNil(FPotionStore);
   Items_Close;
   inherited;
 end;
@@ -870,6 +892,11 @@ begin
     Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True);
 end;
 
+procedure TItems.NewStores;
+begin
+
+end;
+
 procedure TItems.RenderStore;
 var
   I, C: Integer;
@@ -877,6 +904,33 @@ begin
   C := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to C - 1 do
     Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, True);
+end;
+
+{ TStore }
+
+procedure TStore.Add(const AItem: Item);
+begin
+  FItemsStore[FCount] := AItem;
+  Inc(FCount);
+end;
+
+procedure TStore.Clear;
+var
+  I: Byte;
+begin
+  for I := Low(FItemsStore) to High(FItemsStore) do
+    Items_Clear_Item(FItemsStore[I]);
+  FCount := 0;
+end;
+
+constructor TStore.Create;
+begin
+  Self.Clear;
+end;
+
+function TStore.GetItem(const Index: Byte): Item;
+begin
+  Result := FItemsStore[EnsureRange(Index, 0, ItemMax)];
 end;
 
 initialization

@@ -135,6 +135,7 @@ begin
   IsMode := True;
   Player.SkillSet;
   Player.StarterSet;
+  Items.NewStores;
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [_('Welcome to Elvion!'),
