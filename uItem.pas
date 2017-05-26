@@ -8,6 +8,11 @@ type
   TItemType = (itCorpse, itKey, itCoin, itPotion, itFood, itBlade, itAxe,
     itSpear, itMace, itHelm, itArmor);
 
+const
+  ArmorTypeItems = [itHelm, itArmor];
+  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
+
+
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand, stNeck,
     stFinger);
@@ -339,9 +344,6 @@ const
     Price: 600; Color: clDarkRed; Deep: [deDrom];)
 
     );
-
-type
-  TStoreEnum = (sePotion);
 
 type
   TItemsStore = array [0..ItemMax - 1] of Item;
@@ -905,18 +907,42 @@ end;
 
 procedure TItems.NewStores;
 var
-  I, V: Byte;
+  I, ID, Max: Byte;
   FItem: Item;
-begin
-  // Add potions
-  FStore[sePotion].Clear;
-  for I := 0 to ItemMax - 1 do
+  J: TStoreEnum;
+
+  function GetID(): Byte;
   begin
-    repeat
-      V := Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1);
-    until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(V)].Deep);
-    Make(V, FItem);
-    FStore[sePotion].Add(FItem);
+    Result := Math.RandomRange(Ord(Low(TItemEnum)), Ord(High(TItemEnum)) + 1);
+  end;
+
+begin
+  for J := Low(TStoreEnum) to High(TStoreEnum) do
+  begin
+    FStore[J].Clear;
+    Max := EnsureRange(Player.Level * 4, 4, ItemMax);
+    for I := 0 to Max - 1 do
+    begin
+      ID := Ord(Low(TItemEnum));
+      repeat
+        case J of
+          sePotions:
+            repeat
+              ID := GetID();
+            until (ItemBase[TItemEnum(ID)].ItemType in [itPotion]);
+          seArmors:
+            repeat
+              ID := GetID();
+            until (ItemBase[TItemEnum(ID)].ItemType in ArmorTypeItems);
+          seWeapons:
+            repeat
+              ID := GetID();
+            until (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems);
+        end;
+      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+      Make(ID, FItem);
+      FStore[J].Add(FItem);
+    end;
   end;
 end;
 
@@ -924,9 +950,9 @@ procedure TItems.RenderStore;
 var
   I, C: Integer;
 begin
-  C := EnsureRange(FStore[sePotion].Count, 0, ItemMax);
+  C := EnsureRange(FStore[Player.Store].Count, 0, ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, FStore[sePotion].GetItem(I), True, True, True);
+    Items.RenderInvItem(5, 2, I, FStore[Player.Store].GetItem(I), True, True, True);
 end;
 
 { TStore }

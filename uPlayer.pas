@@ -5,6 +5,9 @@ interface
 uses uEntity, uMob;
 
 type
+  TStoreEnum = (sePotions, seArmors, seWeapons);
+
+type
   TSkillEnum = (skLearning,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
@@ -46,6 +49,7 @@ type
     FPV: Byte;
     FExp: Byte;
     FMaxMap: Byte;
+    FStore: TStoreEnum;
     FLook: Boolean;
     FStrength: Byte;
     FDexterity: Byte;
@@ -77,6 +81,7 @@ type
     property PV: Byte read FPV write FPV;
     property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
+    property Store: TStoreEnum read FStore write FStore;
     property Look: Boolean read FLook write FLook;
     property Strength: Byte read FStrength write FStrength;
     property Dexterity: Byte read FDexterity write FDexterity;
@@ -326,6 +331,7 @@ begin
   Found := 0;
   Level := 1;
   MaxMap := 0;
+  Store := sePotions;
   Killer := '';
   Alive := True;
   Look := False;

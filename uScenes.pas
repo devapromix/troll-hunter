@@ -1152,18 +1152,22 @@ var
 begin
   Self.Title(NPCName);
 
-  Terminal.Print(CX div 2, CY - 1, KeyStr('A') + ' ' + _('Sell items'),
+  Terminal.Print(CX div 2, CY - 3, KeyStr('A') + ' ' + _('Sell items'),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX div 2, CY, KeyStr('B') + ' ' + _('Repair items'),
+  Terminal.Print(CX div 2, CY - 2, KeyStr('B') + ' ' + _('Repair items'),
     TK_ALIGN_LEFT);
 
-  // Heal 
+  // Heal
   V := Player.MaxLife - Player.Life;
   if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
-  Terminal.Print(CX div 2, CY + 1, KeyStr('C') + ' ' +
+  Terminal.Print(CX div 2, CY - 1, KeyStr('C') + ' ' +
     _('Receive healing') + S, TK_ALIGN_LEFT);
 
-  Terminal.Print(CX div 2, CY + 2, KeyStr('D') + ' ' + _('Buy items'),
+  Terminal.Print(CX div 2, CY + 0, KeyStr('D') + ' ' + _('Buy items (potions)'),
+    TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY + 1, KeyStr('E') + ' ' + _('Buy items (armors)'),
+    TK_ALIGN_LEFT);
+  Terminal.Print(CX div 2, CY + 2, KeyStr('F') + ' ' + _('Buy items (weapons)'),
     TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
@@ -1190,9 +1194,22 @@ begin
       begin
         Player.ReceiveHealing;
       end;
-    TK_D: // Buy items
+    TK_D: // Buy items (potions)
       begin
         Game.Timer := High(Byte);
+        Player.Store := sePotions;
+        Scenes.SetScene(scBuy);
+      end;
+    TK_E: // Buy items (armors)
+      begin
+        Game.Timer := High(Byte);
+        Player.Store := seArmors;
+        Scenes.SetScene(scBuy);
+      end;
+    TK_F: // Buy items (weapons)
+      begin
+        Game.Timer := High(Byte);
+        Player.Store := seWeapons;
         Scenes.SetScene(scBuy);
       end;
   end;
