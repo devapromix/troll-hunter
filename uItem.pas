@@ -5,13 +5,14 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itCorpse, itKey, itCoin, itPotion, itFood, itBlade, itAxe,
+  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itFood, itBlade, itAxe,
     itSpear, itMace, itHelm, itArmor);
 
 const
+  PotionTypeItems = [itPotion];
   ArmorTypeItems = [itHelm, itArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
-
+  FoodTypeItems = [itFood];
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand, stNeck,
@@ -36,8 +37,10 @@ type
 type
   TItemEnum = (
     // All maps
-    iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
-    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iFood, iKey,
+    iNone, iCorpse, iGold,
+    iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
+    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
+    iFood, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
     iRustySword, iShortSword, // Blade
@@ -84,6 +87,10 @@ const
   ItemBase: array [TItemEnum] of TItemBase = (
     // == All maps == //
 
+    // None
+    (Symbol: ' '; ItemType: itNone; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clGray; Deep: []; Value: 0;),
     // Corpse
     (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
@@ -362,6 +369,9 @@ type
   end;
 
 type
+  TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
+
+type
   TItems = class(TEntity)
   private
     FStore: array [TStoreEnum] of TStore;
@@ -377,18 +387,19 @@ type
       ACount: Byte = 0): string;
     function RenderInvItem(X, Y, I: Integer; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
-      IsPrice: Boolean = False): string;
+      PriceType: TPriceType = ptNone): string;
     function GetSlotName(const SlotType: TSlotType): string;
     procedure AddItemToInv(Index: Integer; AFlag: Boolean = False); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
-    procedure RenderInventory;
+    procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
     procedure NewStores;
     procedure RenderStore;
+    function GetStoreItem(Index: Byte): Item;
   end;
 
 var
@@ -408,26 +419,29 @@ var
 begin
   S := '';
   T := '';
+  Result := '';
   ID := AItem.ItemID;
   // Amount
   if (AItem.Stack > 1) then
   begin
     if (AItem.Amount > 1) then
-      S := Format('(%dx)', [AItem.Amount])
+      S := Format('(%dx)', [AItem.Amount]);
   end
-    // Corpse
+  // Corpse
   else if (TItemEnum(ID) = iCorpse) then
     S := ''
-    // Durability
+  // Durability
   else
   begin
     case ItemBase[TItemEnum(ID)].ItemType of
       itHelm, itArmor:
         T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
       else
-        T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min, ItemBase[TItemEnum(ID)].Damage.Max]);
+        T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min,
+          ItemBase[TItemEnum(ID)].Damage.Max]);
     end;
-    S := Trim(Format('%s (%d/%d)', [T, AItem.Durability, ItemBase[TItemEnum(ID)].MaxDurability]));
+    S := Trim(Format('%s (%d/%d)', [T, AItem.Durability,
+      ItemBase[TItemEnum(ID)].MaxDurability]));
   end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
   // Map's item     
@@ -443,6 +457,8 @@ begin
     else
       Result := Format(_('%s is lying here.'), [S]);
   end;
+  if Game.Wizard then
+    Result := Result + Format(' ID: %d', [ID]);
 end;
 
 procedure Make(ID: Byte; var AItem: Item);
@@ -593,6 +609,9 @@ function TItems.GetName(AItemEnum: TItemEnum): string;
 begin
   case AItemEnum of
     // == All maps == //
+    // None
+    iNone:
+      Result := _('None');
     // Corpse
     iCorpse:
       Result := _('Corpse');
@@ -789,10 +808,17 @@ end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
-  IsPrice: Boolean = False): string;
+  PriceType: TPriceType = ptNone): string;
 var
   S: string;
   D: TItemBase;
+  MaxDurability, RepairCost: Word;
+
+  function GetPrice(Price: Word): string;
+  begin
+    Result := Format('[color=lighter yellow]$%d[/color]', [Price]);
+  end;
+
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
@@ -808,25 +834,40 @@ begin
   if IsAdvInfo then
   begin
     S := '';
-    if (AItem.Equipment > 0) then
-    begin
+    if (D.SlotType <> stNone) and (AItem.Equipment > 0) then
       S := GetSlotName(D.SlotType);
-    end;
   end;
   if (S <> '') then
     S := Format(FC, [clAlarm, Items.GetItemInfo(AItem) + ' ' + S])
   else
-    S := Trim(Items.GetItemInfo(AItem) + ' ' + S);
+    S := Trim(Items.GetItemInfo(AItem));
   if IsRender then
   begin
     Terminal.Print(X + 2, Y + I, S);
-    if IsPrice then
-    begin
-      if ((D.Price > 1) and (AItem.Equipment = 0){ and (AItem.Stack = 1)
-        and (AItem.Amount = 1)}) then S := Format(FC, ['lighter yellow',
-        '$' + IntToStr(D.Price)]) else S := '------';
-      Terminal.Print(Screen.Width - 7, Y + I, S);
+    S := '';
+    case PriceType of
+      ptSell:
+      begin
+        S := '------';
+        if ((D.Price > 1) and (AItem.Equipment = 0) and (AItem.Stack = 1)
+          and (AItem.Amount = 1)) then S := GetPrice(D.Price div 2);
+      end;
+      ptBuy:
+      begin
+        S := GetPrice(D.Price);
+      end;
+      ptRepair:
+      begin
+        S := '------';
+        if ((AItem.Stack = 1) and (AItem.Amount = 1)) then
+        begin
+          MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
+          RepairCost := (MaxDurability - AItem.Durability) * 10;
+          if (RepairCost > 0) then S := GetPrice(RepairCost);
+        end;
+      end;
     end;
+    Terminal.Print(Screen.Width - 7, Y + I, S);
   end else
     Result := Result + S;
 end;
@@ -896,13 +937,13 @@ begin
   end;
 end;
 
-procedure TItems.RenderInventory;
+procedure TItems.RenderInventory(PriceType: TPriceType = ptNone);
 var
   I, C: Integer;
 begin
   C := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True);
+    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, PriceType);
 end;
 
 procedure TItems.NewStores;
@@ -929,7 +970,7 @@ begin
           sePotions:
             repeat
               ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in [itPotion]);
+            until (ItemBase[TItemEnum(ID)].ItemType in PotionTypeItems);
           seArmors:
             repeat
               ID := GetID();
@@ -938,6 +979,10 @@ begin
             repeat
               ID := GetID();
             until (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems);
+          seFoods:
+            repeat
+              ID := GetID();
+            until (ItemBase[TItemEnum(ID)].ItemType in FoodTypeItems);
         end;
       until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
       Make(ID, FItem);
@@ -952,7 +997,12 @@ var
 begin
   C := EnsureRange(FStore[Player.Store].Count, 0, ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, FStore[Player.Store].GetItem(I), True, True, True);
+    Items.RenderInvItem(5, 2, I, FStore[Player.Store].GetItem(I), True, True, ptBuy);
+end;
+
+function TItems.GetStoreItem(Index: Byte): Item;
+begin
+  Result := FStore[Player.Store].GetItem(Index)
 end;
 
 { TStore }

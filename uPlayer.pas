@@ -5,7 +5,7 @@ interface
 uses uEntity, uMob;
 
 type
-  TStoreEnum = (sePotions, seArmors, seWeapons);
+  TStoreEnum = (sePotions, seArmors, seWeapons, seFoods);
 
 type
   TSkillEnum = (skLearning,
@@ -618,12 +618,29 @@ begin
     Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
   begin
-    Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
+    Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].Price div 2;
     Items.AddItemToInv(iGold, Value);
     The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You sold %s (+%d gold).'), [The, Value]));
   end;
   Self.Calc;
+end;
+
+procedure TPlayer.Buy(Index: Integer);
+var
+  Price: Word;
+  AItem: Item;
+  The: string;
+begin
+  AItem := Items.GetStoreItem(Index);
+  Price := ItemBase[Items.GetItemEnum(AItem.ItemID)].Price;
+  if (Items_Inventory_DeleteItemAmount(Ord(iGold), Price) > 0) then
+  begin
+    The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, Price]));
+    Items_Inventory_AppendItem(AItem);
+    Self.Calc;
+  end else MsgLog.Add(_('You need more gold.'));
 end;
 
 procedure TPlayer.ReceiveHealing;
@@ -639,11 +656,6 @@ begin
       MsgLog.Add(Format(_('You feel better (-%d gold).'), [Cost]));
     end;
   end else MsgLog.Add(_('You need more gold.'));
-end;
-
-procedure TPlayer.Buy(Index: Integer);
-begin
-
 end;
 
 procedure TPlayer.Repair(Index: Integer);

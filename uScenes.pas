@@ -190,7 +190,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, gnugettext, uGame, uVillage, uCorpse;
+  uMap, uMsgLog, uItem, GNUGetText, uGame, uVillage, uCorpse;
 
 { TScene }
 
@@ -1043,20 +1043,50 @@ end;
 
 procedure TSceneItems.Render;
 var
-  I, FCount, MapID: Integer;
+  I, J, FCount, MapID: Integer;
   FItem: Item;
+  S: string;
 begin
   MapID := Ord(Map.Current);
   Self.Title(_('Pick up an item'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
-    0, ItemMax);
+//  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
+
+  //
+  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
     Items.RenderInvItem(5, 2, I, FItem);
   end;
+
+  //
+  FCount := Items_Dungeon_GetMapCount(MapID);
+  J := 0;
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Dungeon_GetMapItem(MapID, I);
+    if (FItem.X = Player.X) and (FItem.Y = Player.Y) then
+    begin
+      Items.RenderInvItem(CX - 10, 2, J, FItem);
+      Inc(J);
+    end;
+  end;
+
+  //
+  FCount := Items_Dungeon_GetCount();
+  J := 0;
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Dungeon_GetItem(I);
+    if (FItem.MapID = MapID) and (FItem.X = Player.X) and (FItem.Y = Player.Y) then
+    begin
+      Items.RenderInvItem(CX + 10, 2, J, FItem);
+      Inc(J);
+    end;
+  end;
+
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
@@ -1148,26 +1178,29 @@ procedure TSceneDialog.Render;
 var
   V: Integer;
   S: string;
-
 begin
-  Self.Title(NPCName);
+  Self.Title(Format('%s ' + _('(%d gold left)'), [NPCName, Player.Gold]));
 
-  Terminal.Print(CX div 2, CY - 3, KeyStr('A') + ' ' + _('Sell items'),
+  Self.FromAToZ;
+
+  Terminal.Print(1, 2, KeyStr('A') + ' ' + _('Sell items'),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX div 2, CY - 2, KeyStr('B') + ' ' + _('Repair items'),
+  Terminal.Print(1, 3, KeyStr('B') + ' ' + _('Repair items'),
     TK_ALIGN_LEFT);
 
   // Heal
   V := Player.MaxLife - Player.Life;
   if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
-  Terminal.Print(CX div 2, CY - 1, KeyStr('C') + ' ' +
+  Terminal.Print(1, 4, KeyStr('C') + ' ' +
     _('Receive healing') + S, TK_ALIGN_LEFT);
 
-  Terminal.Print(CX div 2, CY + 0, KeyStr('D') + ' ' + _('Buy items (potions)'),
+  Terminal.Print(1, 5, KeyStr('D') + ' ' + _('Buy items (potions)'),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX div 2, CY + 1, KeyStr('E') + ' ' + _('Buy items (armors)'),
+  Terminal.Print(1, 6, KeyStr('E') + ' ' + _('Buy items (armors)'),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX div 2, CY + 2, KeyStr('F') + ' ' + _('Buy items (weapons)'),
+  Terminal.Print(1, 7, KeyStr('F') + ' ' + _('Buy items (weapons)'),
+    TK_ALIGN_LEFT);
+  Terminal.Print(1, 8, KeyStr('G') + ' ' + _('Buy items (foods)'),
     TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
@@ -1212,6 +1245,12 @@ begin
         Player.Store := seWeapons;
         Scenes.SetScene(scBuy);
       end;
+    TK_G: // Buy items (foods)
+      begin
+        Game.Timer := High(Byte);
+        Player.Store := seFoods;
+        Scenes.SetScene(scBuy);
+      end;
   end;
 end;
 
@@ -1219,10 +1258,10 @@ end;
 
 procedure TSceneSell.Render;
 begin
-  Self.Title(_('Selling items'));
+  Self.Title(Format(_('Selling items') + ' ' + _('(%d gold left)'), [Player.Gold]));
 
   Self.FromAToZ;
-  Items.RenderInventory;
+  Items.RenderInventory(ptSell);
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
@@ -1245,7 +1284,7 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  Self.Title(Format(_('Buying at %s (%d gold left)'), [NPCName, Player.Gold]));
+  Self.Title(Format(_('Buying at %s') + ' ' + _('(%d gold left)'), [NPCName, Player.Gold]));
 
   Self.FromAToZ;
   Items.RenderStore;
@@ -1271,10 +1310,10 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  Self.Title(_('Repairing items'));
+  Self.Title(Format(_('Repairing items') + ' ' + _('(%d gold left)'), [Player.Gold]));
 
   Self.FromAToZ;
-  Items.RenderInventory;
+  Items.RenderInventory(ptRepair);
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
