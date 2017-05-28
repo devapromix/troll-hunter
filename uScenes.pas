@@ -1051,40 +1051,12 @@ begin
   Self.Title(_('Pick up an item'));
 
   Self.FromAToZ;
-//  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
-
-  //
-  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
+    0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
     Items.RenderInvItem(5, 2, I, FItem);
-  end;
-
-  //
-  FCount := Items_Dungeon_GetMapCount(MapID);
-  J := 0;
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Dungeon_GetMapItem(MapID, I);
-    if (FItem.X = Player.X) and (FItem.Y = Player.Y) then
-    begin
-      Items.RenderInvItem(CX - 10, 2, J, FItem);
-      Inc(J);
-    end;
-  end;
-
-  //
-  FCount := Items_Dungeon_GetCount();
-  J := 0;
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Dungeon_GetItem(I);
-    if (FItem.MapID = MapID) and (FItem.X = Player.X) and (FItem.Y = Player.Y) then
-    begin
-      Items.RenderInvItem(CX + 10, 2, J, FItem);
-      Inc(J);
-    end;
   end;
 
   MsgLog.Render(2, True);
@@ -1101,7 +1073,7 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
-    TK_A .. TK_Z:
+    TK_A .. TK_Z: // Pick up
       Items.AddItemToInv(Key - TK_A);
   else
     Game.Timer := High(Byte);
