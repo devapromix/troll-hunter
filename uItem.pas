@@ -619,12 +619,10 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
     if not Map.InView(FItem.X, FItem.Y) or
-      (not Game.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
-      Continue;
+      (not Game.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.GetRadius)
-    then
+    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.GetRadius) then
       Color := clFog
     else
       Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
@@ -957,8 +955,7 @@ begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
-  then
+  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
@@ -1074,7 +1071,7 @@ end;
 
 function TItems.GetStoreItem(Index: Byte): Item;
 begin
-  Result := FStore[Player.Store].GetItem(Index)
+  Result := FStore[Player.Store].GetItem(Index);
 end;
 
 { TStore }

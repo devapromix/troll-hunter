@@ -559,7 +559,6 @@ begin
     // Life
     if (Potion in HealPotItems) then
     begin
-      Player.Score := Player.Score + 1;
       Value := Self.GetSkillValue(skHealing) + ItemBase
         [TItemEnum(AItem.ItemID)].Value;
       MsgLog.Add(_('You feel healthy!'));
@@ -570,13 +569,13 @@ begin
     // Mana
     if (Potion in ManaPotItems) then
     begin
-      Player.Score := Player.Score + 1;
       Value := Self.GetSkillValue(skConcentration) +
         ItemBase[TItemEnum(AItem.ItemID)].Value;
       MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
       Self.Mana := EnsureRange(Self.Mana + Value, 0, MaxMana);
       Self.Skill(skConcentration, 5);
     end;
+    Player.Score := Player.Score + 1;
     Items_Inventory_SetItem(Index, AItem);
     Self.Calc;
     Wait;
