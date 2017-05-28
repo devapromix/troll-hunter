@@ -1043,16 +1043,14 @@ end;
 
 procedure TSceneItems.Render;
 var
-  I, J, FCount, MapID: Integer;
+  I, FCount, MapID: Integer;
   FItem: Item;
-  S: string;
 begin
   MapID := Ord(Map.Current);
   Self.Title(_('Pick up an item'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
-    0, ItemMax);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);

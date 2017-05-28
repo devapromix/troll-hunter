@@ -74,10 +74,10 @@ type
     );
 
 const
-  NotEquipItems = [iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2,
+  NotEquipItems = [iNone, iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2,
     iPotionOfHealth3, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iFood, iKey];
-  NotDropItems = [iCorpse, iFood, iKey];
+  NotDropItems = [iNone, iCorpse, iFood, iKey];
   DrinkItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3];
   EatItems = [iFood];
