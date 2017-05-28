@@ -34,6 +34,22 @@ type
     Value: Word;
   end;
 
+// , Mask,
+// , Red Hat,
+// , Wizard Hat,
+// , Skull, Party hat,
+// , Tiara
+
+// Малое лечебное зелье (Lesser Healing Potion)
+// Лечебное зелье (Healing Potion)
+// Огромное лечебное зелье (Greater Healing Potion)
+// Малое зелье маны (Lesser Mana Potion)
+// Зелье маны (Mana Potion)
+// Огромное зелье маны (Greater Mana Potion)
+// Превосходное зелье маны (Super Mana Potion)
+// Малое восстанавливающее зелье (Lesser Restoration Potion)
+// Восстанавливающее зелье (Restoration Potion)
+
 type
   TItemEnum = (
     // All maps
