@@ -39,6 +39,7 @@ type
     // All maps
     iNone, iCorpse, iGold,
     iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing,
+    iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
     iFood, iKey,
     // Dark Wood
@@ -75,8 +76,8 @@ type
 
 const
   EatItems = [iFood];
-  HealPotItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing];
-  ManaPotItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana];
+  HealPotItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4];
+  ManaPotItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4];
   DrinkItems = HealPotItems + ManaPotItems + [];
   NotDropItems = [iNone, iCorpse, iFood, iKey];
   NotEquipItems = DrinkItems + NotDropItems + EatItems + [iGold];
@@ -115,6 +116,23 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clRed; Deep: [deBloodCave .. deDrom]; Value: 1000;),
+
+    // Rejuvenation Potion 1
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 75; Color: clYellow; Deep: [deDarkWood .. deDeepCave]; Value: 50;),
+    // Rejuvenation Potion 2
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 150; Color: clYellow; Deep: [deGrayCave .. deBloodCave]; Value: 100;),
+    // Rejuvenation Potion 3
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom]; Value: 200;),
+    // Rejuvenation Potion 4
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 750; Color: clYellow; Deep: [deBloodCave .. deDrom]; Value: 1000;),
 
     // Mana potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -625,6 +643,20 @@ begin
     // Gold
     iGold:
       Result := _('Gold');
+
+    // Potion of rejuvenation
+    iPotionOfRejuvenation1:
+      Result := _('Potion of rejuvenation1');
+    // Potion of rejuvenation
+    iPotionOfRejuvenation2:
+      Result := _('Potion of rejuvenation2');
+    // Potion of rejuvenation
+    iPotionOfRejuvenation3:
+      Result := _('Potion of rejuvenation3');
+    // Potion of rejuvenation
+    iPotionOfRejuvenation4:
+      Result := _('Potion of rejuvenation4');
+
     // Potion of health
     iPotionOfHealth1:
       Result := _('Potion of health1');
@@ -637,6 +669,7 @@ begin
     // Potion of health
     iPotionOfFullHealing:
       Result := _('Potion of full healing');
+
     // Potion of mana
     iPotionOfMana1:
       Result := _('Potion of mana1');
@@ -649,6 +682,7 @@ begin
     // Potion of mana
     iPotionOfFullMana:
       Result := _('Potion of full mana');
+
     // Food
     iFood:
       Result := _('Food');
