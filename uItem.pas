@@ -41,7 +41,7 @@ type
     iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing,
     iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
-    iFood, iKey,
+    iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
     iRustySword, iShortSword, // Blade
@@ -75,11 +75,11 @@ type
     );
 
 const
-  EatItems = [iFood];
+  EatItems = [iValleyRoot, iRatPod];
   HealPotItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4];
   ManaPotItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4];
   DrinkItems = HealPotItems + ManaPotItems + [];
-  NotDropItems = [iNone, iCorpse, iFood, iKey];
+  NotDropItems = EatItems + [iNone, iCorpse, iValleyRoot, iKey];
   NotEquipItems = DrinkItems + NotDropItems + EatItems + [iGold];
   AutoPickupItems = NotEquipItems - NotDropItems;
 
@@ -151,12 +151,17 @@ const
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clBlue; Deep: [deBloodCave .. deDrom]; Value: 1000;),
 
-    // Food
-    (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 10;
+    // Valley root
+    (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 75; Color: clWhite; Deep: [deDarkWood .. deDrom]; Value: 250;),
+    Price: 175; Color: clWhite; Deep: [deDarkWood .. deDrom]; Value: 250;),
+    // Rat pod
+    (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 200; Color: clWhite; Deep: [deDarkWood .. deDrom]; Value: 300;),
+
     // Key
-    (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 10;
+    (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom]; Value: 0;),
 
@@ -683,9 +688,13 @@ begin
     iPotionOfFullMana:
       Result := _('Potion of full mana');
 
-    // Food
-    iFood:
-      Result := _('Food');
+    // Valley root
+    iValleyRoot:
+      Result := _('Valley root');
+    // Rat pod
+    iRatPod:
+      Result := _('Rat pod');
+
     // Key
     iKey:
       Result := _('Key');

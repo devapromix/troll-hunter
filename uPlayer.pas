@@ -594,14 +594,12 @@ begin
     AItem.Amount := AItem.Amount - 1;
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You ate %s.'), [The]));
-    case Items.GetItemEnum(AItem.ItemID) of
-      iFood:
-        begin
-          Value := ItemBase[TItemEnum(AItem.ItemID)].Value;
-          Player.Score := Player.Score + 1;
-          Player.Food := Player.Food + Value;
-          MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
-        end;
+    if (Items.GetItemEnum(AItem.ItemID) in EatItems) then
+    begin
+      Value := ItemBase[TItemEnum(AItem.ItemID)].Value;
+      Player.Score := Player.Score + 1;
+      Player.Food := Player.Food + Value;
+      MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
     end;
     Items_Inventory_SetItem(Index, AItem);
     Self.Calc;
