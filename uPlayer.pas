@@ -546,6 +546,7 @@ var
   The: string;
   AItem: Item;
   Value: Word;
+  Potion: TItemEnum;
 const
   F = '%s +%d.';
 begin
@@ -554,26 +555,27 @@ begin
     AItem.Amount := AItem.Amount - 1;
     The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You drink %s.'), [The]));
-    case Items.GetItemEnum(AItem.ItemID) of
-      iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3:
-        begin
-          Player.Score := Player.Score + 1;
-          Value := Self.GetSkillValue(skHealing) + ItemBase
-            [TItemEnum(AItem.ItemID)].Value;
-          MsgLog.Add(_('You feel healthy!'));
-          MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
-          Self.Life := EnsureRange(Self.Life + Value, 0, MaxLife);
-          Self.Skill(skHealing, 5);
-        end;
-      iPotionOfMana1, iPotionOfMana2, iPotionOfMana3:
-        begin
-          Player.Score := Player.Score + 1;
-          Value := Self.GetSkillValue(skConcentration) +
-            ItemBase[TItemEnum(AItem.ItemID)].Value;
-          MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
-          Self.Mana := EnsureRange(Self.Mana + Value, 0, MaxMana);
-          Self.Skill(skConcentration, 5);
-        end;
+    Potion := Items.GetItemEnum(AItem.ItemID);
+    // Life
+    if (Potion in HealPotItems) then
+    begin
+      Player.Score := Player.Score + 1;
+      Value := Self.GetSkillValue(skHealing) + ItemBase
+        [TItemEnum(AItem.ItemID)].Value;
+      MsgLog.Add(_('You feel healthy!'));
+      MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
+      Self.Life := EnsureRange(Self.Life + Value, 0, MaxLife);
+      Self.Skill(skHealing, 5);
+    end;
+    // Mana
+    if (Potion in ManaPotItems) then
+    begin
+      Player.Score := Player.Score + 1;
+      Value := Self.GetSkillValue(skConcentration) +
+        ItemBase[TItemEnum(AItem.ItemID)].Value;
+      MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
+      Self.Mana := EnsureRange(Self.Mana + Value, 0, MaxMana);
+      Self.Skill(skConcentration, 5);
     end;
     Items_Inventory_SetItem(Index, AItem);
     Self.Calc;

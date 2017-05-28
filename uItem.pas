@@ -38,8 +38,8 @@ type
   TItemEnum = (
     // All maps
     iNone, iCorpse, iGold,
-    iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
-    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
+    iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing,
+    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
     iFood, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
@@ -74,13 +74,12 @@ type
     );
 
 const
-  NotEquipItems = [iNone, iCorpse, iGold, iPotionOfHealth1, iPotionOfHealth2,
-    iPotionOfHealth3, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
-    iFood, iKey];
-  NotDropItems = [iNone, iCorpse, iFood, iKey];
-  DrinkItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
-    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3];
   EatItems = [iFood];
+  HealPotItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing];
+  ManaPotItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana];
+  DrinkItems = HealPotItems + ManaPotItems + [];
+  NotDropItems = [iNone, iCorpse, iFood, iKey];
+  NotEquipItems = DrinkItems + NotDropItems + EatItems + [iGold];
   AutoPickupItems = NotEquipItems - NotDropItems;
 
 const
@@ -112,6 +111,10 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Value: 200;),
+    // Potion of Full Healign
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 500; Color: clRed; Deep: [deBloodCave .. deDrom]; Value: 1000;),
 
     // Mana potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -125,6 +128,10 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Value: 200;),
+    // Potion of Full Mana
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 500; Color: clBlue; Deep: [deBloodCave .. deDrom]; Value: 1000;),
 
     // Food
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 10;
@@ -554,7 +561,7 @@ begin
     if (Math.RandomRange(0, M) >= 5) then LootGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Loot(AX, AY,
-      TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfMana3) + 1)));
+      TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfFullMana) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
   end;
@@ -627,6 +634,9 @@ begin
     // Potion of health
     iPotionOfHealth3:
       Result := _('Potion of health3');
+    // Potion of health
+    iPotionOfFullHealing:
+      Result := _('Potion of full healing');
     // Potion of mana
     iPotionOfMana1:
       Result := _('Potion of mana1');
@@ -636,6 +646,9 @@ begin
     // Potion of mana
     iPotionOfMana3:
       Result := _('Potion of mana3');
+    // Potion of mana
+    iPotionOfFullMana:
+      Result := _('Potion of full mana');
     // Food
     iFood:
       Result := _('Food');
