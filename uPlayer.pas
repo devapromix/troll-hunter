@@ -506,7 +506,17 @@ var
   The: string;
   AItem, AUnEquipItem: Item;
   I: Integer;
+  ItemLevel: Byte;
 begin
+  // Need level
+  AItem := Items_Inventory_GetItem(Index);
+  ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
+  if (Player.Level < ItemLevel) then
+  begin
+    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'), [ItemLevel]));
+    Self.Calc;
+    Exit;
+  end;
   // Replace
   I := Items_Inventory_EquipItem(Index);
   if (I > -1) then
@@ -519,7 +529,6 @@ begin
     Wait;
   end;
   // Equip
-  AItem := Items_Inventory_GetItem(Index);
   The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
   MsgLog.Add(Format(_('You equip %s.'), [The]));
   Self.Calc;
