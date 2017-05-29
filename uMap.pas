@@ -306,6 +306,9 @@ begin
   inherited;
 end;
 
+var
+  BNPC: array[0..6] of Boolean;
+
 procedure TMap.Gen;
 var
   I: Word;
@@ -376,8 +379,14 @@ var
   end;
 
   procedure AddNPC(AX, AY: Byte);
+  var
+    I: Byte;
   begin
-    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(npcNPC));
+    repeat
+      I := Math.RandomRange(0, 7);
+    until not BNPC[I];
+    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(npcNPC1) + I);
+    BNPC[I] := True;
   end;
 
   procedure AddHouse(AX, AY, CX, CY, D: Byte; AV: Boolean; F: Boolean);
@@ -385,12 +394,13 @@ var
     W, H: Byte;
     IsDoor: Boolean;
 
-    procedure AddDoor(AX, AY: Byte);
+    procedure AddDoor(X, Y: Byte);
     begin
       if IsDoor then
         Exit;
-      SetTileEnum(AX, AY, Z, teDoor);
+      SetTileEnum(X, Y, Z, teDoor);
       IsDoor := True;
+      AddNPC(AX, AY);
     end;
 
   begin
@@ -482,7 +492,6 @@ var
       if not HP[I] then
       begin
         AddHouse(X, Y, AX, AY, J, I = (10 - J + 1), (J = 4) or (J = 7));
-        AddNPC(X, Y);
         HP[I] := True;
         Inc(T);
       end;
@@ -490,6 +499,8 @@ var
   end;
 
 begin
+  for I := 0 to 6 do
+    BNPC[I] := False;
   InitTiles();
   for Z := Low(TMapEnum) to High(TMapEnum) do
   begin

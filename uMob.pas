@@ -5,7 +5,7 @@ interface
 uses uMap, uEntity;
 
 type
-  TNPCType = (ntNone, ntTavernOwner, ntHealer, ntBlacksmith, ntWpnTrader,
+  TNPCType = (ntNone, ntSell, ntTavernOwner, ntHealer, ntBlacksmith, ntWpnTrader,
     ntAmrTrader, ntPotTrader, ntScrTrader);
 
 type
@@ -20,7 +20,7 @@ type
     MaxCount: Byte;
     Damage: TDamage;
     Color: Cardinal;
-    NPCType: TNPCType;
+    NPCType: set of TNPCType;
   end;
 
 type
@@ -41,11 +41,13 @@ type
     mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton,
     mLich, mPhantom,
     // Bosses
-    mBlackHound, mGiantNewt, mIguana, mKoboldKing, mSwampWorm, mGiantSlug,
-    mCentaur, mSatyr, mTitan, mHillGiant, mStoneGiant, mTwoHeadedOgre,
-    mTrollKing,
+    mBlackHound, mGiantNewt, mIguana,                 // Dark Wood
+    mKoboldKing, mSwampWorm, mGiantSlug,              // Gray Cave
+    mCentaur, mSatyr, mTitan,                         // Deep Cave
+    mHillGiant, mStoneGiant, mTwoHeadedOgre,          // Blood Cave
+    mTrollKing,                                       // Drom
 
-    npcNPC);
+    npcNPC1, npcNPC2, npcNPC3, npcNPC4, npcNPC5, npcNPC6, npcNPC7);
 
   // {Black Bear (B)}, {Grizzly Bear (B)}, {Big Rat (R)}
   // Black Viper (S), Ball Python (S), {Anaconda (S)},
@@ -312,10 +314,40 @@ const
 
     // == NPC == //
 
-    // NPC
+    // NPC #1
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: ntPotTrader;)
+    Color: $FF99AAFF; NPCType: [ntSell];),
+
+    // NPC #2
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
+    Color: $FF99AAFF; NPCType: [];),
+
+    // NPC #3
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
+    Color: $FF99AAFF; NPCType: [];),
+
+    // NPC #4
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
+    Color: $FF99AAFF; NPCType: [];),
+
+    // NPC #5
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
+    Color: $FF99AAFF; NPCType: [];),
+
+    // NPC #6
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
+    Color: $FF99AAFF; NPCType: [];),
+
+    // NPC #7
+    (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
+    Color: $FF99AAFF; NPCType: [];)
 
     );
 
@@ -913,8 +945,26 @@ begin
 
     // == NPC == //
 
-    npcNPC:
-      Result := _('NPC');
+    npcNPC1:
+      Result := _('NPC #1');
+
+    npcNPC2:
+      Result := _('NPC #2');
+
+    npcNPC3:
+      Result := _('NPC #3');
+
+    npcNPC4:
+      Result := _('NPC #4');
+
+    npcNPC5:
+      Result := _('NPC #5');
+
+    npcNPC6:
+      Result := _('NPC #6');
+
+    npcNPC7:
+      Result := _('NPC #7');
   end;
 end;
 

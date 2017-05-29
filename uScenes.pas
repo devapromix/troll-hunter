@@ -184,7 +184,7 @@ type
 
 var
   NPCName: string = '';
-  NPCType: TNPCType = ntNone;
+  NPCType: set of TNPCType = [];
 
 implementation
 
@@ -1153,10 +1153,10 @@ begin
 
   Self.FromAToZ;
 
-  Terminal.Print(1, 2, KeyStr('A') + ' ' + _('Sell items'),
-    TK_ALIGN_LEFT);
-  Terminal.Print(1, 3, KeyStr('B') + ' ' + _('Repair items'),
-    TK_ALIGN_LEFT);
+  if (ntSell in NPCType) then
+    Terminal.Print(1, 2, KeyStr('A') + ' ' + _('Sell items'), TK_ALIGN_LEFT);
+
+  Terminal.Print(1, 3, KeyStr('B') + ' ' + _('Repair items'), TK_ALIGN_LEFT);
 
   // Heal
   V := Player.MaxLife - Player.Life;
