@@ -317,37 +317,37 @@ const
     // NPC #1
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [ntSell];),
+    Color: $FF99AAFF; NPCType: [ntScrTrader, ntSell];),
 
     // NPC #2
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF44FF88; NPCType: [ntHealer];),
+    Color: $FF44FF88; NPCType: [ntPotTrader, ntSell];),
 
     // NPC #3
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFAA5533; NPCType: [ntBlacksmith];),
+    Color: $FFAA5533; NPCType: [ntBlacksmith, ntSell];),
 
     // NPC #4
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF66AA66; NPCType: [];),
+    Color: $FF66AA88; NPCType: [ntFoodTrader, ntSell];),
 
     // NPC #5
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [];),
+    Color: $FF77DDAA; NPCType: [ntWpnTrader, ntSell];),
 
     // NPC #6
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [];),
+    Color: $FF99DD77; NPCType: [ntArmTrader, ntSell];),
 
     // NPC #7
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [];)
+    Color: $FFAB3396; NPCType: [ntHealer, ntSell];)
 
     );
 

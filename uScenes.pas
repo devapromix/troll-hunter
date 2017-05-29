@@ -1148,42 +1148,66 @@ procedure TSceneDialog.Render;
 var
   V: Integer;
   S: string;
+  Y: Byte;
 begin
   Self.Title(Format('%s ' + _('(%d gold left)'), [NPCName, Player.Gold]));
 
   Self.FromAToZ;
-
-  // Sell
-  if (ntSell in NPCType) then
-    Terminal.Print(1, 2, KeyStr('A') + ' ' + _('Sell items'), TK_ALIGN_LEFT);
-
-  // Repair 
-  if (ntBlacksmith in NPCType) then
-    Terminal.Print(1, 3, KeyStr('B') + ' ' + _('Repair items'), TK_ALIGN_LEFT);
+  Y := 1;
 
   // Heal
   if (ntHealer in NPCType) then
   begin
+    Inc(Y);
     V := Player.MaxLife - Player.Life;
     if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
-    Terminal.Print(1, 4, KeyStr('C') + ' ' +
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
       _('Receive healing') + S, TK_ALIGN_LEFT);
   end;
 
   if (ntPotTrader in NPCType) then
-    Terminal.Print(1, 5, KeyStr('D') + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
+  end;
 
   if (ntScrTrader in NPCType) then
-    Terminal.Print(1, 6, KeyStr('E') + ' ' + _('Buy items (scrolls)'), TK_ALIGN_LEFT);
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (scrolls)'), TK_ALIGN_LEFT);
+  end;
 
   if (ntArmTrader in NPCType) then
-    Terminal.Print(1, 7, KeyStr('F') + ' ' + _('Buy items (armors)'), TK_ALIGN_LEFT);
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (armors)'), TK_ALIGN_LEFT);
+  end;
 
   if (ntWpnTrader in NPCType) then
-    Terminal.Print(1, 8, KeyStr('G') + ' ' + _('Buy items (weapons)'), TK_ALIGN_LEFT);
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (weapons)'), TK_ALIGN_LEFT);
+  end;
 
   if (ntFoodTrader in NPCType) then
-    Terminal.Print(1, 9, KeyStr('H') + ' ' + _('Buy items (foods)'), TK_ALIGN_LEFT);
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (foods)'), TK_ALIGN_LEFT);
+  end;
+
+  // Repair
+  if (ntBlacksmith in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Repair items'), TK_ALIGN_LEFT);
+  end;
+
+  // Sell
+  if (ntSell in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Sell items'), TK_ALIGN_LEFT);
+  end;
 
   MsgLog.Render(2, True);
 
@@ -1195,43 +1219,53 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
-    TK_A: // Selling items
+    TK_A: //
       begin
+        if (ntHealer in NPCType) then
+        begin
+          Player.ReceiveHealing;
+        end;
+        if (ntPotTrader in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := sePotions;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntScrTrader in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seScrolls;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntArmTrader in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seArmors;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntWpnTrader in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seWeapons;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntFoodTrader in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seFoods;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntBlacksmith in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Scenes.SetScene(scRepair);
+        end;
+      end;
+    TK_B: // Selling items
+     if (ntSell in NPCType) then
+     begin
         Game.Timer := High(Byte);
         Scenes.SetScene(scSell);
-      end;
-    TK_B: // Repairing items
-      begin
-        Game.Timer := High(Byte);
-        Scenes.SetScene(scRepair);
-      end;
-    TK_C: // Receive healing
-      begin
-        Player.ReceiveHealing;
-      end;
-    TK_D: // Buy items (potions)
-      begin
-        Game.Timer := High(Byte);
-        Player.Store := sePotions;
-        Scenes.SetScene(scBuy);
-      end;
-    TK_E: // Buy items (armors)
-      begin
-        Game.Timer := High(Byte);
-        Player.Store := seArmors;
-        Scenes.SetScene(scBuy);
-      end;
-    TK_F: // Buy items (weapons)
-      begin
-        Game.Timer := High(Byte);
-        Player.Store := seWeapons;
-        Scenes.SetScene(scBuy);
-      end;
-    TK_G: // Buy items (foods)
-      begin
-        Game.Timer := High(Byte);
-        Player.Store := seFoods;
-        Scenes.SetScene(scBuy);
       end;
   end;
 end;

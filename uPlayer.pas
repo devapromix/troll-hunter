@@ -5,7 +5,7 @@ interface
 uses uEntity, uMob;
 
 type
-  TStoreEnum = (sePotions, seArmors, seWeapons, seFoods);
+  TStoreEnum = (sePotions, seScrolls, seArmors, seWeapons, seFoods);
 
 type
   TSkillEnum = (skLearning,

@@ -10,6 +10,7 @@ type
 
 const
   PotionTypeItems = [itPotion];
+  ScrollTypeItems = [itPotion];
   ArmorTypeItems = [itHelm, itArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   FoodTypeItems = [itFood];
@@ -1041,6 +1042,10 @@ begin
             repeat
               ID := GetID();
             until (ItemBase[TItemEnum(ID)].ItemType in PotionTypeItems);
+          seScrolls:
+            repeat
+              ID := GetID();
+            until (ItemBase[TItemEnum(ID)].ItemType in ScrollTypeItems);
           seArmors:
             repeat
               ID := GetID();
