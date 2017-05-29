@@ -6,7 +6,7 @@ uses uMap, uEntity;
 
 type
   TNPCType = (ntNone, ntSell, ntTavernOwner, ntHealer, ntBlacksmith, ntWpnTrader,
-    ntAmrTrader, ntPotTrader, ntScrTrader);
+    ntArmTrader, ntPotTrader, ntScrTrader, ntFoodTrader);
 
 type
   TMobBase = record
@@ -322,17 +322,17 @@ const
     // NPC #2
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [];),
+    Color: $FF44FF88; NPCType: [ntHealer];),
 
     // NPC #3
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [];),
+    Color: $FFAA5533; NPCType: [ntBlacksmith];),
 
     // NPC #4
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [];),
+    Color: $FF66AA66; NPCType: [];),
 
     // NPC #5
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;

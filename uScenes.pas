@@ -1153,25 +1153,37 @@ begin
 
   Self.FromAToZ;
 
+  // Sell
   if (ntSell in NPCType) then
     Terminal.Print(1, 2, KeyStr('A') + ' ' + _('Sell items'), TK_ALIGN_LEFT);
 
-  Terminal.Print(1, 3, KeyStr('B') + ' ' + _('Repair items'), TK_ALIGN_LEFT);
+  // Repair 
+  if (ntBlacksmith in NPCType) then
+    Terminal.Print(1, 3, KeyStr('B') + ' ' + _('Repair items'), TK_ALIGN_LEFT);
 
   // Heal
-  V := Player.MaxLife - Player.Life;
-  if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
-  Terminal.Print(1, 4, KeyStr('C') + ' ' +
-    _('Receive healing') + S, TK_ALIGN_LEFT);
+  if (ntHealer in NPCType) then
+  begin
+    V := Player.MaxLife - Player.Life;
+    if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
+    Terminal.Print(1, 4, KeyStr('C') + ' ' +
+      _('Receive healing') + S, TK_ALIGN_LEFT);
+  end;
 
-  Terminal.Print(1, 5, KeyStr('D') + ' ' + _('Buy items (potions)'),
-    TK_ALIGN_LEFT);
-  Terminal.Print(1, 6, KeyStr('E') + ' ' + _('Buy items (armors)'),
-    TK_ALIGN_LEFT);
-  Terminal.Print(1, 7, KeyStr('F') + ' ' + _('Buy items (weapons)'),
-    TK_ALIGN_LEFT);
-  Terminal.Print(1, 8, KeyStr('G') + ' ' + _('Buy items (foods)'),
-    TK_ALIGN_LEFT);
+  if (ntPotTrader in NPCType) then
+    Terminal.Print(1, 5, KeyStr('D') + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
+
+  if (ntScrTrader in NPCType) then
+    Terminal.Print(1, 6, KeyStr('E') + ' ' + _('Buy items (scrolls)'), TK_ALIGN_LEFT);
+
+  if (ntArmTrader in NPCType) then
+    Terminal.Print(1, 7, KeyStr('F') + ' ' + _('Buy items (armors)'), TK_ALIGN_LEFT);
+
+  if (ntWpnTrader in NPCType) then
+    Terminal.Print(1, 8, KeyStr('G') + ' ' + _('Buy items (weapons)'), TK_ALIGN_LEFT);
+
+  if (ntFoodTrader in NPCType) then
+    Terminal.Print(1, 9, KeyStr('H') + ' ' + _('Buy items (foods)'), TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
