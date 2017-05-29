@@ -535,19 +535,17 @@ procedure TMob.Process;
 var
   NX, NY, Dist: Integer;
 begin
-  if (Force = fcNPC) then
-    Exit;
+  if (Force = fcNPC) then Exit;
   Dist := GetDist(Player.X, Player.Y);
-  if (Dist > GetRadius) then
-    Exit;
+  if (Dist > GetRadius) then Exit;
   if Sleep then
   begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
       Sleep := False;
+      Player.Skill(skStealth);
       Exit;
     end;
-    Player.Skill(skStealth);
     Exit;
   end;
   if (Dist <= 2) and Player.IsRest then
@@ -672,8 +670,11 @@ var
 begin
   repeat
     ID := Math.RandomRange(0, Ord(mTrollKing) + 1);
-    FX := Math.RandomRange(1, High(Byte) - 1);
-    FY := Math.RandomRange(1, High(Byte) - 1);
+    repeat
+      FX := Math.RandomRange(1, High(Byte) - 1);
+      FY := Math.RandomRange(1, High(Byte) - 1);
+      if (Ord(AZ) > 0) then Break;
+    until (Player.GetDist(FX, FY) > 50);
   until ChMapTile(ID, FX, FY, AZ);
   FCount := MobBase[TMobEnum(ID)].MaxCount;
   FCount := Math.EnsureRange(Math.RandomRange(FCount div 2, FCount), 1, FCount);

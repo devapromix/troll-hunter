@@ -911,6 +911,7 @@ begin
     S := Format(FC, [clAlarm, Items.GetItemInfo(AItem) + ' ' + S])
   else
     S := Trim(Items.GetItemInfo(AItem));
+  if (D.Level > 0) then S := Format('(%d) %s', [D.Level, S]);
   if IsRender then
   begin
     Terminal.Print(X + 2, Y + I, S);

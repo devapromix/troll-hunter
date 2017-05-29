@@ -515,7 +515,7 @@ begin
         begin
           Self.Clear(Z, teDefaultWall);
           GenCave(6, 39, 3999);
-          AddVillage(Player.X, Player.Y);
+          //AddVillage(Player.X, Player.Y);
         end;
       deBloodCave:
         begin
@@ -546,10 +546,6 @@ begin
     IsBoss := False;
     for I := 0 to 255 do
       Mobs.AddGroup(Z);
-    // Add items
-    IsRare := False;
-    for I := 0 to 255 do
-      Items.Add(Z);
   end;
 end;
 
