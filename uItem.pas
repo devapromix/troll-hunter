@@ -32,7 +32,7 @@ type
     Price: Word;
     Color: Cardinal;
     Deep: set of TMapEnum;
-    Effect: set of TEffect;
+    Effects: TEffects;
     Value: Word;
   end;
 
@@ -110,85 +110,85 @@ const
     // None
     (Symbol: ' '; ItemType: itNone; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clGray; Deep: []; Effect: []; Value: 0;),
+    Price: 0; Color: clGray; Deep: []; Effects: []; Value: 0;),
     // Corpse
     (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clGray; Deep: [deDarkWood .. deDrom]; Effect: []; Value: 0;),
+    Price: 0; Color: clGray; Deep: [deDarkWood .. deDrom]; Effects: []; Value: 0;),
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 10000;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 1; Color: clYellow; Deep: [deDarkWood .. deDrom]; Effect: []; Value: 0;),
+    Price: 1; Color: clYellow; Deep: [deDarkWood .. deDrom]; Effects: []; Value: 0;),
 
     // Life Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 50; Color: clRed; Deep: [deDarkWood .. deDeepCave]; Effect: []; Value: 50;),
+    Price: 50; Color: clRed; Deep: [deDarkWood .. deDeepCave]; Effects: []; Value: 50;),
     // Life Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 100; Color: clRed; Deep: [deGrayCave .. deBloodCave]; Effect: []; Value: 100;),
+    Price: 100; Color: clRed; Deep: [deGrayCave .. deBloodCave]; Effects: []; Value: 100;),
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effect: []; Value: 200;),
+    Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effects: []; Value: 200;),
     // Potion of Full Healign
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 500; Color: clRed; Deep: [deBloodCave .. deDrom]; Effect: []; Value: 1000;),
+    Price: 500; Color: clRed; Deep: [deBloodCave .. deDrom]; Effects: []; Value: 1000;),
 
     // Rejuvenation Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 75; Color: clYellow; Deep: [deDarkWood .. deDeepCave]; Effect: []; Value: 50;),
+    Price: 75; Color: clYellow; Deep: [deDarkWood .. deDeepCave]; Effects: []; Value: 50;),
     // Rejuvenation Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 150; Color: clYellow; Deep: [deGrayCave .. deBloodCave]; Effect: []; Value: 100;),
+    Price: 150; Color: clYellow; Deep: [deGrayCave .. deBloodCave]; Effects: []; Value: 100;),
     // Rejuvenation Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom]; Effect: []; Value: 200;),
+    Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom]; Effects: []; Value: 200;),
     // Rejuvenation Potion 4
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 750; Color: clYellow; Deep: [deBloodCave .. deDrom]; Effect: []; Value: 1000;),
+    Price: 750; Color: clYellow; Deep: [deBloodCave .. deDrom]; Effects: []; Value: 1000;),
 
     // Mana potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 50; Color: clBlue; Deep: [deDarkWood .. deDeepCave]; Effect: []; Value: 50;),
+    Price: 50; Color: clBlue; Deep: [deDarkWood .. deDeepCave]; Effects: []; Value: 50;),
     // Mana potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 100; Color: clBlue; Deep: [deGrayCave .. deBloodCave]; Effect: []; Value: 100;),
+    Price: 100; Color: clBlue; Deep: [deGrayCave .. deBloodCave]; Effects: []; Value: 100;),
     // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effect: []; Value: 200;),
+    Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: []; Value: 200;),
     // Potion of Full Mana
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 500; Color: clBlue; Deep: [deBloodCave .. deDrom]; Effect: []; Value: 1000;),
+    Price: 500; Color: clBlue; Deep: [deBloodCave .. deDrom]; Effects: []; Value: 1000;),
 
     // Scroll of healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 250; Color: clBlue; Deep: [deDarkWood .. deDrom]; Effect: []; Value: 1000;),
+    Price: 250; Color: clBlue; Deep: [deDarkWood .. deDrom]; Effects: []; Value: 1000;),
 
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 175; Color: clWhite; Deep: [deDarkWood .. deDrom]; Effect: []; Value: 250;),
+    Price: 175; Color: clWhite; Deep: [deDarkWood .. deDrom]; Effects: []; Value: 250;),
     // Rat pod
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clWhite; Deep: [deDarkWood .. deDrom]; Effect: []; Value: 300;),
+    Price: 200; Color: clWhite; Deep: [deDarkWood .. deDrom]; Effects: []; Value: 300;),
 
     // Key
     (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom]; Effect: []; Value: 0;),
+    Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom]; Effects: []; Value: 0;),
 
     // == Dark Wood == //
 

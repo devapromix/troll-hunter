@@ -23,7 +23,8 @@ type
   end;
 
 type
-  TEffect = (efHeal);
+  TEffect = (efLife, efMana, efFood);
+  TEffects = set of TEffect;
 
 const
   SkillMin = 5;
@@ -123,7 +124,7 @@ type
     procedure Drop(Index: Integer);
     procedure DropAmount(Index: Integer);
     procedure Use(Index: Integer);
-    procedure DoEffect(const Effect: TEffect);
+    procedure DoEffects(const Effects: TEffects; const Value: Word);
     procedure Drink(Index: Integer);
     procedure Read(Index: Integer);
     procedure Eat(Index: Integer);
@@ -510,7 +511,7 @@ end;
 procedure TPlayer.Equip(Index: Integer);
 var
   The: string;
-  AItem, AUnEquipItem: Item;
+  AItem: Item;
   I: Integer;
   ItemLevel: Byte;
 begin
@@ -557,37 +558,15 @@ procedure TPlayer.Drink(Index: Integer);
 var
   The: string;
   AItem: Item;
-  Value: Word;
-  Potion: TItemEnum;
-const
-  F = '%s +%d.';
+  I: TItemEnum;
 begin
   AItem := Items_Inventory_GetItem(Index);
   begin
+    I := TItemEnum(AItem.ItemID);
     AItem.Amount := AItem.Amount - 1;
-    The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
+    The := GetDescThe(Items.GetName(I));
     MsgLog.Add(Format(_('You drink %s.'), [The]));
-    Potion := Items.GetItemEnum(AItem.ItemID);
-    // Life
-    if (Potion in HealPotItems) then
-    begin
-      Value := Self.GetSkillValue(skHealing) + ItemBase
-        [TItemEnum(AItem.ItemID)].Value;
-      MsgLog.Add(_('You feel healthy!'));
-      MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, Value)]));
-      Self.Life := EnsureRange(Self.Life + Value, 0, MaxLife);
-      Self.Skill(skHealing, 5);
-    end;
-    // Mana
-    if (Potion in ManaPotItems) then
-    begin
-      Value := Self.GetSkillValue(skConcentration) +
-        ItemBase[TItemEnum(AItem.ItemID)].Value;
-      MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, Value)]));
-      Self.Mana := EnsureRange(Self.Mana + Value, 0, MaxMana);
-      Self.Skill(skConcentration, 5);
-    end;
-    Player.Score := Player.Score + 1;
+    DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
     Items_Inventory_SetItem(Index, AItem);
     Self.Calc;
     Wait;
@@ -1005,9 +984,29 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.DoEffect(const Effect: TEffect);
+procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word);
+var
+  V: Word;
+const
+  F = '%s +%d.';
 begin
-
+  // Life
+  if (efLife in Effects) then
+  begin
+    V := Self.GetSkillValue(skHealing) + Value;
+    MsgLog.Add(_('You feel healthy!'));
+    MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
+    Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
+    Self.Skill(skHealing, 5);
+  end;
+  // Mana
+  if (efMana in Effects) then
+  begin
+    V := Self.GetSkillValue(skConcentration) + Value;
+    MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
+    Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
+    Self.Skill(skConcentration, 5);
+  end;
 end;
 
 initialization
