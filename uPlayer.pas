@@ -22,6 +22,9 @@ type
     Exp: Integer;
   end;
 
+type
+  TEffect = (efHeal);
+
 const
   SkillMin = 5;
   SkillMax = 75;
@@ -120,7 +123,9 @@ type
     procedure Drop(Index: Integer);
     procedure DropAmount(Index: Integer);
     procedure Use(Index: Integer);
+    procedure DoEffect(const Effect: TEffect);
     procedure Drink(Index: Integer);
+    procedure Read(Index: Integer);
     procedure Eat(Index: Integer);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
@@ -484,6 +489,10 @@ begin
     if (Items.GetItemEnum(AItem.ItemID) in DrinkItems) then
       Self.Drink(Index)
     else
+      // Read a scroll
+      if (Items.GetItemEnum(AItem.ItemID) in ReadItems) then
+        Self.Read(Index)
+    else
       // Eat a food
       if (Items.GetItemEnum(AItem.ItemID) in EatItems) then
         Self.Eat(Index)
@@ -548,6 +557,11 @@ begin
     Self.Calc;
     Wait;
   end;
+end;
+
+procedure TPlayer.Read(Index: Integer);
+begin
+
 end;
 
 procedure TPlayer.Drink(Index: Integer);
@@ -1000,6 +1014,11 @@ begin
   G := IfThen(Game.Wizard, RandomRange(6666, 9999), 50); // :)
   Items.AddItemToInv(iGold, G);
   Self.Calc;
+end;
+
+procedure TPlayer.DoEffect(const Effect: TEffect);
+begin
+
 end;
 
 initialization

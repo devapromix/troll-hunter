@@ -322,7 +322,7 @@ const
     // NPC #2
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF44FF88; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: $FFAAFF88; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // NPC #3
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
