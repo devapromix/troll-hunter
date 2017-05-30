@@ -624,10 +624,12 @@ begin
   for I := 1 to V do
   begin
     // Gold
-    if (Math.RandomRange(0, M) >= 5) then LootGold(AX, AY);
+    if (Math.RandomRange(0, M) >= 6) then LootGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Loot(AX, AY,
       TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfFullMana) + 1)));
+    // Scroll
+    if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then Loot(AX, AY, iScrollOfHealing);
     // Item
     if (Math.RandomRange(0, M) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
   end;
@@ -917,8 +919,6 @@ begin
 end;
 
 function TItems.GetLevel(L: Byte): string;
-var
-  Color: string;
 begin
   if (L > Player.Level) then
     Result := Format('[color=light red]%d[/color]', [L])
