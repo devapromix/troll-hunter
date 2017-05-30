@@ -481,19 +481,23 @@ procedure TPlayer.Use(Index: Integer);
 var
   The: string;
   AItem: Item;
+  I: TItemEnum;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
   if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
   begin
+    I := TItemEnum(AItem.ItemID);
+    AItem.Amount := AItem.Amount - 1;
+    The := GetDescThe(Items.GetName(I));
     case ItemBase[TItemEnum(AItem.ItemID)].ItemType of
-      // Drink a potion
-      itPotion: Drink(Index);
-      // Read a scroll
-      itScroll: Read(Index);
-      // Eat a food
-      itFood: Eat(Index);
+      itPotion: MsgLog.Add(Format(_('You drink %s.'), [The]));
+      itScroll: MsgLog.Add(Format(_('You read %s.'), [The]));
+      itFood: MsgLog.Add(Format(_('You ate %s.'), [The]));
     end;
+    DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
+    Items_Inventory_SetItem(Index, AItem);
+    Self.Calc;
+    Wait;
   end
   else
   begin
@@ -555,22 +559,8 @@ begin
 end;
 
 procedure TPlayer.Drink(Index: Integer);
-var
-  The: string;
-  AItem: Item;
-  I: TItemEnum;
 begin
-  AItem := Items_Inventory_GetItem(Index);
-  begin
-    I := TItemEnum(AItem.ItemID);
-    AItem.Amount := AItem.Amount - 1;
-    The := GetDescThe(Items.GetName(I));
-    MsgLog.Add(Format(_('You drink %s.'), [The]));
-    DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
-    Items_Inventory_SetItem(Index, AItem);
-    Self.Calc;
-    Wait;
-  end;
+
 end;
 
 procedure TPlayer.Eat(Index: Integer);
@@ -587,7 +577,6 @@ begin
     if (Items.GetItemEnum(AItem.ItemID) in EatItems) then
     begin
       Value := ItemBase[TItemEnum(AItem.ItemID)].Value;
-      Player.Score := Player.Score + 1;
       Player.Food := Player.Food + Value;
       MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
     end;
@@ -1006,6 +995,12 @@ begin
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
     Self.Skill(skConcentration, 5);
+  end;
+  // Eat
+  if (efFood in Effects) then
+  begin
+    Player.Food := Player.Food + V;
+    MsgLog.Add(Format(_('You have sated %d hunger.'), [V]));
   end;
 end;
 
