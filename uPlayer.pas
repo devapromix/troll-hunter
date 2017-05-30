@@ -485,17 +485,14 @@ begin
   The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
   if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
   begin
-    // Drink a potion
-    if (Items.GetItemEnum(AItem.ItemID) in DrinkItems) then
-      Self.Drink(Index)
-    else
+    case ItemBase[TItemEnum(AItem.ItemID)].ItemType of
+      // Drink a potion
+      itPotion: Drink(Index);
       // Read a scroll
-      if (Items.GetItemEnum(AItem.ItemID) in ReadItems) then
-        Self.Read(Index)
-    else
+      itScroll: Read(Index);
       // Eat a food
-      if (Items.GetItemEnum(AItem.ItemID) in EatItems) then
-        Self.Eat(Index)
+      itFood: Eat(Index);
+    end;
   end
   else
   begin
@@ -528,15 +525,7 @@ begin
   end;
   // Replace
   I := Items_Inventory_EquipItem(Index);
-  if (I > -1) then
-  begin
-    AUnEquipItem := Items_Inventory_GetItem(I);
-    // Items.GetItemEnum(AUnEquipItem.ItemID)
-    The := GetDescThe(Items.GetName(Items.GetItemEnum(AUnEquipItem.ItemID)));
-    MsgLog.Add(Format(_('You unequip %s.'), [The]));
-    Self.Calc;
-    Wait;
-  end;
+  if (I > -1) then UnEquip(I);
   // Equip
   The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
   MsgLog.Add(Format(_('You equip %s.'), [The]));
