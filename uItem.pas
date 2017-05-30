@@ -465,6 +465,7 @@ type
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
     function GetPrice(Price: Word; F: Boolean = False): string;
+    function GetLevel(L: Byte): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
@@ -915,6 +916,15 @@ begin
   Result := Format('[color=%s]$%d[/color]', [Color, Price]);
 end;
 
+function TItems.GetLevel(L: Byte): string;
+var
+  Color: string;
+begin
+  if (L > Player.Level) then
+    Result := Format('[color=light red]%d[/color]', [L])
+    else Result := IntToStr(L);
+end;
+
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
@@ -944,7 +954,7 @@ begin
     S := Format(FC, [clAlarm, Items.GetItemInfo(AItem) + ' ' + S])
   else
     S := Trim(Items.GetItemInfo(AItem));
-  if (D.Level > 0) then S := Format('(%d) %s', [D.Level, S]);
+  if (D.Level > 0) then S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
   if IsRender then
   begin
     Terminal.Print(X + 2, Y + I, S);
