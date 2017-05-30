@@ -664,6 +664,7 @@ begin
       MsgLog.Add(Format(_('You feel better (-%d gold).'), [Cost]));
     end;
   end else MsgLog.Add(_('You need more gold.'));
+  Self.Calc;
 end;
 
 procedure TPlayer.Repair(Index: Integer);

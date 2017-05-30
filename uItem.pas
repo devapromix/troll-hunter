@@ -5,15 +5,15 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itFood, itBlade, itAxe,
-    itSpear, itMace, itHelm, itArmor);
+  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll,
+    itFood, itBlade, itAxe, itSpear, itMace, itHelm, itArmor);
 
 const
   PotionTypeItems = [itPotion];
-  ScrollTypeItems = [itPotion];
-  ArmorTypeItems = [itHelm, itArmor];
+  ScrollTypeItems = [itScroll];
+  ArmorTypeItems  = [itHelm, itArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
-  FoodTypeItems = [itFood];
+  FoodTypeItems   = [itFood];
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand, stNeck,
@@ -58,6 +58,7 @@ type
     iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing,
     iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
+    iScrollOfHealing,
     iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
@@ -96,8 +97,9 @@ const
   HealPotItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4];
   ManaPotItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4];
   DrinkItems = HealPotItems + ManaPotItems + [];
-  NotDropItems = EatItems + [iNone, iCorpse, iValleyRoot, iKey];
-  NotEquipItems = DrinkItems + NotDropItems + EatItems + [iGold];
+  ReadItems = [iScrollOfHealing];
+  NotDropItems = [iNone, iCorpse, iKey];
+  NotEquipItems = DrinkItems + ReadItems + NotDropItems + EatItems + [iGold];
   AutoPickupItems = NotEquipItems - NotDropItems;
 
 const
@@ -167,6 +169,11 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clBlue; Deep: [deBloodCave .. deDrom]; Value: 1000;),
+
+    // Scroll of healing
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 250; Color: clBlue; Deep: [deDarkWood .. deDrom]; Value: 1000;),
 
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -440,6 +447,7 @@ type
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
+    function GetPrice(Price: Word; F: Boolean = False): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
@@ -703,6 +711,10 @@ begin
     iPotionOfFullMana:
       Result := _('Potion of full mana');
 
+    // Scroll of healing
+    iScrollOfHealing:
+      Result := _('Scroll of healing');
+
     // Valley root
     iValleyRoot:
       Result := _('Valley root');
@@ -877,6 +889,15 @@ begin
   Result := Format('{%s}', [Result]);    
 end;
 
+function TItems.GetPrice(Price: Word; F: Boolean = False): string;
+var
+  Color: string;
+begin
+  if (F or (Player.Gold >= Price)) then Color := 'lighter yellow'
+    else Color := 'light red';
+  Result := Format('[color=%s]$%d[/color]', [Color, Price]);
+end;
+
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
@@ -884,12 +905,6 @@ var
   S: string;
   D: TItemBase;
   MaxDurability, RepairCost: Word;
-
-  function GetPrice(Price: Word): string;
-  begin
-    Result := Format('[color=lighter yellow]$%d[/color]', [Price]);
-  end;
-
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
@@ -922,7 +937,7 @@ begin
       begin
         S := '------';
         if ((D.Price > 1) and (AItem.Equipment = 0) and (AItem.Stack = 1)
-          and (AItem.Amount = 1)) then S := GetPrice(D.Price div 2);
+          and (AItem.Amount = 1)) then S := GetPrice(D.Price div 2, True);
       end;
       ptBuy:
       begin

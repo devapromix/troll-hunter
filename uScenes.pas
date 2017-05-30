@@ -1101,10 +1101,36 @@ procedure TSceneStatistics.Render;
 var
   X, Y: Byte;
 
-  procedure Add(AText: string; AValue: Integer);
+  procedure Add(); overload;
   begin
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, Format('%s: %d', [AText, AValue]
-      ), TK_ALIGN_LEFT);
+    Inc(X);
+    if (X > 2) then
+    begin
+      X := 1;
+      Inc(Y);
+    end;
+  end;
+
+  procedure Add(AText: string; AValue: Integer); overload;
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clGreen);
+    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue), TK_ALIGN_RIGHT);
+    Inc(X);
+    if (X > 2) then
+    begin
+      X := 1;
+      Inc(Y);
+    end;
+  end;
+
+  procedure Add(AText: string; AValue: string); overload;
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clGreen);
+    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue, TK_ALIGN_RIGHT);
     Inc(X);
     if (X > 2) then
     begin
@@ -1131,6 +1157,19 @@ begin
   // Add(_('Times Fallen Into Pit'), );
   // Add(_(''), );
 
+  if Game.Wizard then
+  begin
+    Y := Y + 2;
+    Self.Title(_('Wizard Mode'), Y - 1);
+    Y := Y + 1;
+    Add(_('Version'), Game.GetVersion);
+    Add();
+    Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
+    Add(_('BeaRLibItems'), BearLibItems.Items_GetVersion);
+    Add(_('Monsters'), Ord(High(MobBase)));
+    Add(_('Items'), Ord(High(ItemBase)));
+  end;
+
   AddKey('Esc', _('Close'), True, True);
 end;
 
@@ -1156,54 +1195,54 @@ begin
   Y := 1;
 
   // Heal
-  if (ntHealer in NPCType) then
+  if (ntHealer_A in NPCType) then
   begin
     Inc(Y);
     V := Player.MaxLife - Player.Life;
-    if (V > 0) then S := Format(' (-%d gold)', [V]) else S := '';
+    if (V > 0) then S := ' (-' + Items.GetPrice(V) + ')' else S := '';
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
       _('Receive healing') + S, TK_ALIGN_LEFT);
   end;
 
-  if (ntPotTrader in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
-  end;
-
-  if (ntScrTrader in NPCType) then
+  if (ntScrTrader_A in NPCType) then
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (scrolls)'), TK_ALIGN_LEFT);
   end;
 
-  if (ntArmTrader in NPCType) then
+  if (ntArmTrader_A in NPCType) then
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (armors)'), TK_ALIGN_LEFT);
   end;
 
-  if (ntWpnTrader in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (weapons)'), TK_ALIGN_LEFT);
-  end;
-
-  if (ntFoodTrader in NPCType) then
+  if (ntFoodTrader_A in NPCType) then
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (foods)'), TK_ALIGN_LEFT);
   end;
 
   // Repair
-  if (ntBlacksmith in NPCType) then
+  if (ntBlacksmith_A in NPCType) then
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Repair items'), TK_ALIGN_LEFT);
   end;
 
+  if (ntPotTrader_B in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
+  end;
+
+  if (ntWpnTrader_B in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (weapons)'), TK_ALIGN_LEFT);
+  end;
+
   // Sell
-  if (ntSell in NPCType) then
+  if (ntSell_C in NPCType) then
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Sell items'), TK_ALIGN_LEFT);
@@ -1221,51 +1260,56 @@ begin
       Scenes.SetScene(scGame);
     TK_A: //
       begin
-        if (ntHealer in NPCType) then
+        if (ntHealer_A in NPCType) then
         begin
           Player.ReceiveHealing;
         end;
-        if (ntPotTrader in NPCType) then
+        if (ntBlacksmith_A in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := sePotions;
-          Scenes.SetScene(scBuy);
+          Scenes.SetScene(scRepair);
         end;
-        if (ntScrTrader in NPCType) then
-        begin
-          Game.Timer := High(Byte);
-          Player.Store := seScrolls;
-          Scenes.SetScene(scBuy);
-        end;
-        if (ntArmTrader in NPCType) then
-        begin
-          Game.Timer := High(Byte);
-          Player.Store := seArmors;
-          Scenes.SetScene(scBuy);
-        end;
-        if (ntWpnTrader in NPCType) then
-        begin
-          Game.Timer := High(Byte);
-          Player.Store := seWeapons;
-          Scenes.SetScene(scBuy);
-        end;
-        if (ntFoodTrader in NPCType) then
+        if (ntFoodTrader_A in NPCType) then
         begin
           Game.Timer := High(Byte);
           Player.Store := seFoods;
           Scenes.SetScene(scBuy);
         end;
-        if (ntBlacksmith in NPCType) then
+        if (ntScrTrader_A in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Scenes.SetScene(scRepair);
+          Player.Store := seScrolls;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntArmTrader_A in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seArmors;
+          Scenes.SetScene(scBuy);
         end;
       end;
-    TK_B: // Selling items
-     if (ntSell in NPCType) then
-     begin
-        Game.Timer := High(Byte);
-        Scenes.SetScene(scSell);
+    TK_B:
+      begin
+        if (ntPotTrader_B in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := sePotions;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntWpnTrader_B in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seWeapons;
+          Scenes.SetScene(scBuy);
+        end;
+      end;
+    TK_C: // Selling items
+      begin
+        if (ntSell_C in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Scenes.SetScene(scSell);
+        end;
       end;
   end;
 end;

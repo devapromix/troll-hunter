@@ -5,8 +5,8 @@ interface
 uses uMap, uEntity;
 
 type
-  TNPCType = (ntNone, ntSell, ntTavernOwner, ntHealer, ntBlacksmith, ntWpnTrader,
-    ntArmTrader, ntPotTrader, ntScrTrader, ntFoodTrader);
+  TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
+    ntArmTrader_A, ntPotTrader_B, ntScrTrader_A, ntFoodTrader_A);
 
 type
   TMobBase = record
@@ -317,37 +317,37 @@ const
     // NPC #1
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [ntScrTrader, ntSell];),
+    Color: $FF99AAFF; NPCType: [ntScrTrader_A, ntPotTrader_B, ntSell_C];),
 
     // NPC #2
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF44FF88; NPCType: [ntPotTrader, ntSell];),
+    Color: $FF44FF88; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // NPC #3
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFAA5533; NPCType: [ntBlacksmith, ntSell];),
+    Color: $FFAA5533; NPCType: [ntBlacksmith_A, ntWpnTrader_B, ntSell_C];),
 
     // NPC #4
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF66AA88; NPCType: [ntFoodTrader, ntSell];),
+    Color: $FF66AA88; NPCType: [ntFoodTrader_A, ntPotTrader_B, ntSell_C];),
 
     // NPC #5
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF77DDAA; NPCType: [ntWpnTrader, ntSell];),
+    Color: $FF77DDAA; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // NPC #6
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99DD77; NPCType: [ntArmTrader, ntSell];),
+    Color: $FF99DD77; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // NPC #7
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFAB3396; NPCType: [ntHealer, ntSell];)
+    Color: $FFDDDD77; NPCType: [ntHealer_A, ntPotTrader_B, ntSell_C];)
 
     );
 
