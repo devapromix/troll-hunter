@@ -125,9 +125,6 @@ type
     procedure DropAmount(Index: Integer);
     procedure Use(Index: Integer);
     procedure DoEffects(const Effects: TEffects; const Value: Word);
-    procedure Drink(Index: Integer);
-    procedure Read(Index: Integer);
-    procedure Eat(Index: Integer);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure Sell(Index: Integer);
@@ -553,39 +550,6 @@ begin
   end;
 end;
 
-procedure TPlayer.Read(Index: Integer);
-begin
-
-end;
-
-procedure TPlayer.Drink(Index: Integer);
-begin
-
-end;
-
-procedure TPlayer.Eat(Index: Integer);
-var
-  The: string;
-  AItem: Item;
-  Value: Word;
-begin
-  AItem := Items_Inventory_GetItem(Index);
-  begin
-    AItem.Amount := AItem.Amount - 1;
-    The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
-    MsgLog.Add(Format(_('You ate %s.'), [The]));
-    if (Items.GetItemEnum(AItem.ItemID) in EatItems) then
-    begin
-      Value := ItemBase[TItemEnum(AItem.ItemID)].Value;
-      Player.Food := Player.Food + Value;
-      MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
-    end;
-    Items_Inventory_SetItem(Index, AItem);
-    Self.Calc;
-    Wait;
-  end;
-end;
-
 procedure TPlayer.Sell(Index: Integer);
 var
   Value: Integer;
@@ -996,11 +960,11 @@ begin
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
     Self.Skill(skConcentration, 5);
   end;
-  // Eat
+  // Food
   if (efFood in Effects) then
   begin
-    Player.Food := Player.Food + V;
-    MsgLog.Add(Format(_('You have sated %d hunger.'), [V]));
+    Player.Food := Player.Food + Value;
+    MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
   end;
 end;
 
