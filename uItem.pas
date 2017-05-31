@@ -967,6 +967,12 @@ var
   S: string;
   D: TItemBase;
   MaxDurability, RepairCost: Word;
+
+  function GetRedPrice(Price: Word): string;
+  begin
+    Result := Format('[color=%s]$%d[/color]', ['light red', Price]);
+  end;
+
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
@@ -998,8 +1004,13 @@ begin
       ptSell:
       begin
         S := '------';
-        if ((D.Price > 1) and (AItem.Equipment = 0) and (AItem.Stack = 1)
-          and (AItem.Amount = 1)) then S := GetPrice(D.Price div 4, True);
+        if ((D.Price > 1) and (AItem.Stack = 1)
+          and (AItem.Amount = 1)) then
+          begin
+            S := GetPrice(D.Price div 4, True);
+            if (AItem.Equipment > 0) then
+              S := GetRedPrice(D.Price div 4);
+          end;
       end;
       ptBuy:
       begin
@@ -1077,7 +1088,7 @@ var
   X, Y: Byte;
 begin
   Loot(AX, AY, iGold);
-  if (Math.RandomRange(0, 3) = 0) then
+  if (Math.RandomRange(0, 4) = 0) then
   begin
     X := Math.EnsureRange(AX + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
     Y := Math.EnsureRange(AY + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
