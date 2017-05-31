@@ -588,7 +588,7 @@ begin
     Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
   begin
-    Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].Price div 2;
+    Value := ItemBase[Items.GetItemEnum(AItem.ItemID)].Price div 4;
     Items.AddItemToInv(iGold, Value);
     The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
     MsgLog.Add(Format(_('You sold %s (+%d gold).'), [The, Value]));
