@@ -1229,10 +1229,34 @@ begin
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Repair items'), TK_ALIGN_LEFT);
   end;
 
+  if (ntSmithTrader_B in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (blacksmith)'), TK_ALIGN_LEFT);
+  end;
+
+  if (ntHealTrader_B in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (healing)'), TK_ALIGN_LEFT);
+  end;
+
+  if (ntPotManaTrader_B in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions of mana)'), TK_ALIGN_LEFT);
+  end;
+
   if (ntPotTrader_B in NPCType) then
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
+  end;
+
+  if (ntTavTrader_B in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (tavern)'), TK_ALIGN_LEFT);
   end;
 
   if (ntWpnTrader_B in NPCType) then
@@ -1290,6 +1314,30 @@ begin
       end;
     TK_B:
       begin
+        if (ntSmithTrader_B in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seSmith;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntTavTrader_B in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seTavern;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntHealTrader_B in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seHealer;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntPotManaTrader_B in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Player.Store := seMana;
+          Scenes.SetScene(scBuy);
+        end;
         if (ntPotTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);

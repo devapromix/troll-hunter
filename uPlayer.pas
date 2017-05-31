@@ -5,7 +5,8 @@ interface
 uses uEntity, uMob;
 
 type
-  TStoreEnum = (sePotions, seScrolls, seArmors, seWeapons, seFoods);
+  TStoreEnum = (sePotions, seScrolls, seHealer, seMana, seSmith, seArmors,
+    seWeapons, seFoods, seTavern);
 
 type
   TSkillEnum = (skLearning,
@@ -23,7 +24,7 @@ type
   end;
 
 type
-  TEffect = (efLife, efMana, efFood);
+  TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood);
   TEffects = set of TEffect;
 
 const
@@ -70,6 +71,7 @@ type
     FItemIndex: Integer;
     FItemAmount: Integer;
     FIsRest: Boolean;
+    procedure GenNPCText;
   public
     constructor Create;
     destructor Destroy; override;
@@ -177,6 +179,7 @@ begin
   if (Mob.Force <> fcEnemy) then
   begin
     Self.Dialog(Mob);
+    GenNPCText;
     Exit;
   end;
   The := GetDescThe(Mobs.GetName(TMobEnum(Mob.ID)));
@@ -378,6 +381,17 @@ begin
   Mana := MaxMana;
 end;
 
+procedure TPlayer.GenNPCText;
+var
+  S: string;
+begin
+  case Math.RandomRange(0, 2) of
+    0: S := _('What can I do for you?');
+    else S := _('Good day!');
+  end;
+  MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
+end;
+
 function TPlayer.GetDV: Byte;
 begin
   Result := EnsureRange(Self.DV, 0, DVMax);
@@ -479,20 +493,33 @@ var
   The: string;
   AItem: Item;
   I: TItemEnum;
+  T: TItemType;
 begin
   AItem := Items_Inventory_GetItem(Index);
   if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
   begin
-    I := TItemEnum(AItem.ItemID);
     AItem.Amount := AItem.Amount - 1;
+    I := TItemEnum(AItem.ItemID);
+    T := ItemBase[I].ItemType;
     The := GetDescThe(Items.GetName(I));
-    case ItemBase[TItemEnum(AItem.ItemID)].ItemType of
+    case T of
       itPotion: MsgLog.Add(Format(_('You drink %s.'), [The]));
       itScroll: MsgLog.Add(Format(_('You read %s.'), [The]));
       itFood: MsgLog.Add(Format(_('You ate %s.'), [The]));
     end;
-    DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
     Items_Inventory_SetItem(Index, AItem);
+    if (T = itScroll) then
+    begin
+      if (Self.Mana >= ItemBase[I].ManaCost) then
+      Self.Mana := Self.Mana - ItemBase[I].ManaCost else
+      begin
+        MsgLog.Add(_('You need more mana!'));
+        Self.Calc;
+        Wait;
+        Exit;
+      end;
+    end;
+    DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
     Self.Calc;
     Wait;
   end
@@ -923,12 +950,12 @@ begin
   // Add potions and scrolls
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iPotionOfHealth3, ItemBase[iPotionOfHealth1].MaxStack);
-    Items.AddItemToInv(iPotionOfMana3, ItemBase[iPotionOfMana1].MaxStack);
+    Items.AddItemToInv(iPotionOfFullHealing, 10);
+    Items.AddItemToInv(iPotionOfFullMana, 10);
   end
   else
   begin
-    Items.AddItemToInv(iPotionOfHealth1, 5);
+    Items.AddItemToInv(iPotionOfHealing1, 5);
     Items.AddItemToInv(iPotionOfMana1, 5);
   end;
   // Add coins
@@ -943,13 +970,21 @@ var
 const
   F = '%s +%d.';
 begin
-  // Life
-  if (efLife in Effects) then
+  // Heal
+  if (efHeal in Effects) then
   begin
     V := Self.GetSkillValue(skHealing) + Value;
     MsgLog.Add(_('You feel healthy!'));
     MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
     Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
+    Self.Skill(skHealing, 5);
+  end;
+  // Full heal
+  if (efFullHeal in Effects) then
+  begin
+    MsgLog.Add(_('You feel healthy!'));
+    MsgLog.Add(Format(F, [_('Life'), MaxLife - Life]));
+    Self.Life := MaxLife;
     Self.Skill(skHealing, 5);
   end;
   // Mana
@@ -958,6 +993,13 @@ begin
     V := Self.GetSkillValue(skConcentration) + Value;
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
+    Self.Skill(skConcentration, 5);
+  end;
+  // Full mana
+  if (efFullMana in Effects) then
+  begin
+    MsgLog.Add(Format(F, [_('Mana'), MaxMana - Mana]));
+    Self.Mana := MaxMana;
     Self.Skill(skConcentration, 5);
   end;
   // Food

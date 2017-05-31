@@ -5,8 +5,9 @@ interface
 uses uMap, uEntity;
 
 type
-  TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
-    ntArmTrader_A, ntPotTrader_B, ntScrTrader_A, ntFoodTrader_A);
+  TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B, ntSmithTrader_B,
+    ntArmTrader_A, ntPotTrader_B, ntHealTrader_B, ntTavTrader_B, ntPotManaTrader_B,
+    ntScrTrader_A, ntFoodTrader_A);
 
 type
   TMobBase = record
@@ -314,40 +315,40 @@ const
 
     // == NPC == //
 
-    // NPC #1
+    // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99AAFF; NPCType: [ntScrTrader_A, ntPotTrader_B, ntSell_C];),
+    Color: $FF3333FF; NPCType: [ntScrTrader_A, ntPotManaTrader_B];),
 
-    // NPC #2
+    // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFAAFF88; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: $FF33FFFF; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
-    // NPC #3
+    // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFAA5533; NPCType: [ntBlacksmith_A, ntWpnTrader_B, ntSell_C];),
+    Color: $FFFFFFFF; NPCType: [ntBlacksmith_A, ntSmithTrader_B];),
 
-    // NPC #4
+    // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF66AA88; NPCType: [ntFoodTrader_A, ntPotTrader_B, ntSell_C];),
+    Color: $FF33FF33; NPCType: [ntFoodTrader_A, ntTavTrader_B];),
 
-    // NPC #5
+    // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
     Color: $FF77DDAA; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
-    // NPC #6
+    // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
     Color: $FF99DD77; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
-    // NPC #7
+    // Healer
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFDDDD77; NPCType: [ntHealer_A, ntPotTrader_B, ntSell_C];)
+    Color: $FFFF4444; NPCType: [ntHealer_A, ntHealTrader_B];)
 
     );
 
@@ -946,25 +947,25 @@ begin
     // == NPC == //
 
     npcNPC1:
-      Result := _('NPC #1');
+      Result := _('Eldan (the magic trader)');
 
     npcNPC2:
-      Result := _('NPC #2');
+      Result := _('Petra (the trader)');
 
     npcNPC3:
-      Result := _('NPC #3');
+      Result := _('Bran (the blacksmith)');
 
     npcNPC4:
-      Result := _('NPC #4');
+      Result := _('Tarn (the tavern owner)');
 
     npcNPC5:
-      Result := _('NPC #5');
+      Result := _('Sirius (the trader)');
 
     npcNPC6:
-      Result := _('NPC #6');
+      Result := _('Thor (the trader)');
 
     npcNPC7:
-      Result := _('NPC #7');
+      Result := _('Virna (the healer)');
   end;
 end;
 

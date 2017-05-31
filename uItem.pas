@@ -13,6 +13,7 @@ const
   ScrollTypeItems = [itScroll];
   ArmorTypeItems  = [itHelm, itArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
+  SmithTypeItems  = [itBlade, itAxe, itSpear, itMace];
   FoodTypeItems   = [itFood];
 
 type
@@ -34,6 +35,7 @@ type
     Deep: set of TMapEnum;
     Effects: TEffects;
     Value: Word;
+    ManaCost: Byte;
   end;
 
 // , Mask,
@@ -56,10 +58,10 @@ type
   TItemEnum = (
     // All maps
     iNone, iCorpse, iGold,
-    iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3, iPotionOfFullHealing,
+    iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3, iPotionOfFullHealing,
     iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
-    iScrollOfHealing,
+    iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing,
     iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
@@ -94,12 +96,20 @@ type
     );
 
 const
-  DrinkItems = [iPotionOfHealth1, iPotionOfHealth2, iPotionOfHealth3,
+  DrinkItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
     iPotionOfFullHealing, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
     iPotionOfRejuvenation3, iPotionOfRejuvenation4];
+  ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
+    iPotionOfFullMana];
   FoodItems = [iValleyRoot, iRatPod];
-  ReadItems = [iScrollOfHealing];
+  ReadItems = [iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
+    iScrollOfFullHealing];
+  HealItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
+    iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
+    iPotionOfRejuvenation3, iPotionOfRejuvenation4, iScrollOfHealing1,
+    iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
+  TavernItems = [iKey];
   NotDropItems = [iNone, iCorpse, iKey];
   NotEquipItems = DrinkItems + FoodItems + ReadItems + NotDropItems + [iGold];
   AutoPickupItems = NotEquipItems - NotDropItems;
@@ -125,43 +135,43 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 50; Color: clRed; Deep: [deDarkWood .. deDeepCave];
-    Effects: [efLife]; Value: 50;),
+    Effects: [efHeal]; Value: 50;),
     // Life Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 100; Color: clRed; Deep: [deGrayCave .. deBloodCave];
-    Effects: [efLife]; Value: 100;),
+    Effects: [efHeal]; Value: 100;),
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom];
-    Effects: [efLife]; Value: 200;),
+    Effects: [efHeal]; Value: 200;),
     // Potion of Full Healing
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clRed; Deep: [deBloodCave .. deDrom];
-    Effects: [efLife]; Value: 1000;),
+    Effects: [efFullHeal];),
 
     // Rejuvenation Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 75; Color: clYellow; Deep: [deDarkWood .. deDeepCave];
-    Effects: [efLife, efMana]; Value: 50;),
+    Effects: [efHeal, efMana]; Value: 50;),
     // Rejuvenation Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 150; Color: clYellow; Deep: [deGrayCave .. deBloodCave];
-    Effects: [efLife, efMana]; Value: 100;),
+    Effects: [efHeal, efMana]; Value: 100;),
     // Rejuvenation Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom];
-    Effects: [efLife, efMana]; Value: 200;),
+    Effects: [efHeal, efMana]; Value: 200;),
     // Rejuvenation Potion 4
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 750; Color: clYellow; Deep: [deBloodCave .. deDrom];
-    Effects: [efLife, efMana]; Value: 1000;),
+    Effects: [efFullHeal, efFullMana];),
 
     // Mana potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -182,13 +192,28 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clBlue; Deep: [deBloodCave .. deDrom];
-    Effects: [efMana]; Value: 1000;),
+    Effects: [efFullMana];),
 
-    // Scroll of healing
-    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 10;
+    // Scroll of healing 1
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 450; Color: clBlue; Deep: [deDarkWood .. deDrom];
-    Effects: [efLife]; Value: 1000;),
+    Price: 40; Color: clBlue; Deep: [deDarkWood .. deDeepCave];
+    Effects: [efHeal]; Value: 50; ManaCost: 20;),
+    // Scroll of healing 2
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 80; Color: clBlue; Deep: [deGrayCave .. deBloodCave];
+    Effects: [efHeal]; Value: 100; ManaCost: 30;),
+    // Scroll of healing 3
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom];
+    Effects: [efHeal]; Value: 200; ManaCost: 40;),
+    // Scroll of healing
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 300; Color: clBlue; Deep: [deBloodCave .. deDrom];
+    Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
 
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -627,9 +652,10 @@ begin
     if (Math.RandomRange(0, M) >= 6) then LootGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Loot(AX, AY,
-      TItemEnum(Math.RandomRange(Ord(iPotionOfHealth1), Ord(iPotionOfFullMana) + 1)));
+      TItemEnum(Math.RandomRange(Ord(iPotionOfHealing1), Ord(iPotionOfFullMana) + 1)));
     // Scroll
-    if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then Loot(AX, AY, iScrollOfHealing);
+    if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then Loot(AX, AY,
+      TItemEnum(Math.RandomRange(Ord(iScrollOfHealing1), Ord(iScrollOfFullHealing) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
   end;
@@ -706,14 +732,14 @@ begin
       Result := _('Potion of rejuvenation4');
 
     // Potion of health
-    iPotionOfHealth1:
-      Result := _('Potion of health1');
+    iPotionOfHealing1:
+      Result := _('Potion of healing1');
     // Potion of health
-    iPotionOfHealth2:
-      Result := _('Potion of health2');
+    iPotionOfHealing2:
+      Result := _('Potion of healing2');
     // Potion of health
-    iPotionOfHealth3:
-      Result := _('Potion of health3');
+    iPotionOfHealing3:
+      Result := _('Potion of healing3');
     // Potion of health
     iPotionOfFullHealing:
       Result := _('Potion of full healing');
@@ -732,8 +758,17 @@ begin
       Result := _('Potion of full mana');
 
     // Scroll of healing
-    iScrollOfHealing:
-      Result := _('Scroll of healing');
+    iScrollOfHealing1:
+      Result := _('Scroll of healing1');
+    // Scroll of healing
+    iScrollOfHealing2:
+      Result := _('Scroll of healing2');
+    // Scroll of healing
+    iScrollOfHealing3:
+      Result := _('Scroll of healing3');
+    // Scroll of healing
+    iScrollOfFullHealing:
+      Result := _('Scroll of full healing');
 
     // Valley root
     iValleyRoot:
@@ -1088,6 +1123,14 @@ begin
             repeat
               ID := GetID();
             until (ItemBase[TItemEnum(ID)].ItemType in ScrollTypeItems);
+          seHealer:
+            repeat
+              ID := GetID();
+            until (TItemEnum(ID) in HealItems);
+          seMana:
+            repeat
+              ID := GetID();
+            until (TItemEnum(ID) in ManaPotionsItems);
           seArmors:
             repeat
               ID := GetID();
@@ -1096,6 +1139,14 @@ begin
             repeat
               ID := GetID();
             until (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems);
+          seSmith:
+            repeat
+              ID := GetID();
+            until (ItemBase[TItemEnum(ID)].ItemType in SmithTypeItems);
+          seTavern:
+            repeat
+              ID := GetID();
+            until (TItemEnum(ID) in TavernItems);
           seFoods:
             repeat
               ID := GetID();
