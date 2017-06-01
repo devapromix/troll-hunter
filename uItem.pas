@@ -38,11 +38,15 @@ type
     ManaCost: Byte;
   end;
 
-  // , Mask,
-  // , Red Hat,
-  // , Wizard Hat,
-  // , Skull, Party hat,
-  // , Tiara
+  Cap, War Cap, Red Hat,
+  Helm, Grand Helm, Mask,
+  Great Helm, Full Helm, Wizard Hat,
+  Bone Helm, Spired Helm, Tiara,
+  Casque, Winged Helm, Crown,
+
+
+
+  // , , ,
 
   // Малое лечебное зелье (Lesser Healing Potion)
   // Лечебное зелье (Healing Potion)
