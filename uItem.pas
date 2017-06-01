@@ -5,16 +5,16 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll,
-    itFood, itBlade, itAxe, itSpear, itMace, itHelm, itArmor);
+  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itFood,
+    itBlade, itAxe, itSpear, itMace, itHelm, itArmor);
 
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
-  ArmorTypeItems  = [itHelm, itArmor];
+  ArmorTypeItems = [itHelm, itArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
-  SmithTypeItems  = [itBlade, itAxe, itSpear, itMace];
-  FoodTypeItems   = [itFood];
+  SmithTypeItems = [itBlade, itAxe, itSpear, itMace];
+  FoodTypeItems = [itFood];
 
 type
   TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand, stNeck,
@@ -38,31 +38,31 @@ type
     ManaCost: Byte;
   end;
 
-// , Mask,
-// , Red Hat,
-// , Wizard Hat,
-// , Skull, Party hat,
-// , Tiara
+  // , Mask,
+  // , Red Hat,
+  // , Wizard Hat,
+  // , Skull, Party hat,
+  // , Tiara
 
-// Малое лечебное зелье (Lesser Healing Potion)
-// Лечебное зелье (Healing Potion)
-// Огромное лечебное зелье (Greater Healing Potion)
-// Малое зелье маны (Lesser Mana Potion)
-// Зелье маны (Mana Potion)
-// Огромное зелье маны (Greater Mana Potion)
-// Превосходное зелье маны (Super Mana Potion)
-// Малое восстанавливающее зелье (Lesser Restoration Potion)
-// Восстанавливающее зелье (Restoration Potion)
+  // Малое лечебное зелье (Lesser Healing Potion)
+  // Лечебное зелье (Healing Potion)
+  // Огромное лечебное зелье (Greater Healing Potion)
+  // Малое зелье маны (Lesser Mana Potion)
+  // Зелье маны (Mana Potion)
+  // Огромное зелье маны (Greater Mana Potion)
+  // Превосходное зелье маны (Super Mana Potion)
+  // Малое восстанавливающее зелье (Lesser Restoration Potion)
+  // Восстанавливающее зелье (Restoration Potion)
 
 type
   TItemEnum = (
     // All maps
-    iNone, iCorpse, iGold,
-    iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3, iPotionOfFullHealing,
-    iPotionOfRejuvenation1, iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
+    iNone, iCorpse, iGold, iPotionOfHealing1, iPotionOfHealing2,
+    iPotionOfHealing3, iPotionOfFullHealing, iPotionOfRejuvenation1,
+    iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
-    iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing,
-    iValleyRoot, iRatPod, iKey,
+    iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
+    iScrollOfFullHealing, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iQuiltedArmor, iLeatherArmor, // Armor
     iRustySword, iShortSword, // Blade
@@ -120,16 +120,16 @@ const
 
     // None
     (Symbol: ' '; ItemType: itNone; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clGray; Deep: [];),
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 0;
+    Color: clGray; Deep: [];),
     // Corpse
     (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clGray; Deep: [deDarkWood .. deDrom];),
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 0;
+    Color: clGray; Deep: [deDarkWood .. deDrom];),
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 10000;
-    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 1; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 1;
+    Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     // Life Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -144,8 +144,8 @@ const
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom];
-    Effects: [efHeal]; Value: 200;),
+    Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
+    Value: 200;),
     // Potion of Full Healing
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
@@ -186,8 +186,8 @@ const
     // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom];
-    Effects: [efMana]; Value: 200;),
+    Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efMana];
+    Value: 200;),
     // Potion of Full Mana
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
@@ -207,8 +207,8 @@ const
     // Scroll of healing 3
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom];
-    Effects: [efHeal]; Value: 200; ManaCost: 40;),
+    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
+    Value: 200; ManaCost: 40;),
     // Scroll of healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
@@ -218,13 +218,13 @@ const
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 175; Color: clWhite; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 250;),
+    Price: 175; Color: clWhite; Deep: [deDarkWood .. deDrom]; Effects: [efFood];
+    Value: 250;),
     // Rat pod
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clWhite; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 300;),
+    Price: 200; Color: clWhite; Deep: [deDarkWood .. deDrom]; Effects: [efFood];
+    Value: 300;),
 
     // Key
     (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16;
@@ -449,7 +449,7 @@ const
     );
 
 type
-  TItemsStore = array [0..ItemMax - 1] of Item;
+  TItemsStore = array [0 .. ItemMax - 1] of Item;
 
 type
   TStore = class
@@ -528,21 +528,21 @@ begin
   // Corpse
   else if (TItemEnum(ID) = iCorpse) then
     S := ''
-  // Durability
+    // Durability
   else
   begin
     case ItemBase[TItemEnum(ID)].ItemType of
       itHelm, itArmor:
         T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
-      else
-        T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min,
-          ItemBase[TItemEnum(ID)].Damage.Max]);
+    else
+      T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min,
+        ItemBase[TItemEnum(ID)].Damage.Max]);
     end;
     S := Trim(Format('%s (%d/%d)', [T, AItem.Durability,
       ItemBase[TItemEnum(ID)].MaxDurability]));
   end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
-  // Map's item     
+  // Map's item
   if (IsManyItems or (ACount > 0)) then
   begin
     S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
@@ -649,15 +649,19 @@ begin
   for I := 1 to V do
   begin
     // Gold
-    if (Math.RandomRange(0, M) >= 6) then LootGold(AX, AY);
+    if (Math.RandomRange(0, M) >= 6) then
+      LootGold(AX, AY);
     // Potion
-    if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then Loot(AX, AY,
-      TItemEnum(Math.RandomRange(Ord(iPotionOfHealing1), Ord(iPotionOfFullMana) + 1)));
+    if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iPotionOfHealing1),
+        Ord(iPotionOfFullMana) + 1)));
     // Scroll
-    if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then Loot(AX, AY,
-      TItemEnum(Math.RandomRange(Ord(iScrollOfHealing1), Ord(iScrollOfFullHealing) + 1)));
+    if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iScrollOfHealing1),
+        Ord(iScrollOfFullHealing) + 1)));
     // Item
-    if (Math.RandomRange(0, M) >= 9) then Add(Map.Current, AX, AY, -1, AIsBoss);
+    if (Math.RandomRange(0, M) >= 9) then
+      Add(Map.Current, AX, AY, -1, AIsBoss);
   end;
 end;
 
@@ -674,10 +678,12 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
     if not Map.InView(FItem.X, FItem.Y) or
-      (not Game.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then Continue;
+      (not Game.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
+      Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.GetRadius) then
+    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.GetRadius)
+    then
       Color := clFog
     else
       Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
@@ -925,31 +931,33 @@ end;
 
 function TItems.GetSlotName(const SlotType: TSlotType): string;
 begin
-      case SlotType of
-        stHead:
-          Result := _('head');
-        stNeck:
-          Result := _('neck');
-        stFinger:
-          Result := _('finger');
-        stMainHand:
-          Result := _('main hand');
-        stOffHand:
-          Result := _('off hand');
-        stChest:
-          Result := _('chest');
-        stFeet:
-          Result := _('feet');
-      end;
-  Result := Format('{%s}', [Result]);    
+  case SlotType of
+    stHead:
+      Result := _('head');
+    stNeck:
+      Result := _('neck');
+    stFinger:
+      Result := _('finger');
+    stMainHand:
+      Result := _('main hand');
+    stOffHand:
+      Result := _('off hand');
+    stChest:
+      Result := _('chest');
+    stFeet:
+      Result := _('feet');
+  end;
+  Result := Format('{%s}', [Result]);
 end;
 
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;
 var
   Color: string;
 begin
-  if (F or (Player.Gold >= Price)) then Color := 'lighter yellow'
-    else Color := 'light red';
+  if (F or (Player.Gold >= Price)) then
+    Color := 'lighter yellow'
+  else
+    Color := 'light red';
   Result := Format('[color=%s]$%d[/color]', [Color, Price]);
 end;
 
@@ -957,7 +965,8 @@ function TItems.GetLevel(L: Byte): string;
 begin
   if (L > Player.Level) then
     Result := Format('[color=light red]%d[/color]', [L])
-    else Result := IntToStr(L);
+  else
+    Result := IntToStr(L);
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
@@ -995,40 +1004,43 @@ begin
     S := Format(FC, [clAlarm, Items.GetItemInfo(AItem) + ' ' + S])
   else
     S := Trim(Items.GetItemInfo(AItem));
-  if (D.Level > 0) then S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
+  if (D.Level > 0) then
+    S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
   if IsRender then
   begin
     Terminal.Print(X + 2, Y + I, S);
     S := '';
     case PriceType of
       ptSell:
-      begin
-        S := '------';
-        if ((D.Price > 1) and (AItem.Stack = 1)
-          and (AItem.Amount = 1)) then
+        begin
+          S := '------';
+          if ((D.Price > 1) and (AItem.Stack = 1) and (AItem.Amount = 1)) then
           begin
             S := GetPrice(D.Price div 4, True);
             if (AItem.Equipment > 0) then
               S := GetRedPrice(D.Price div 4);
           end;
-      end;
-      ptBuy:
-      begin
-        S := GetPrice(D.Price);
-      end;
-      ptRepair:
-      begin
-        S := '------';
-        if ((AItem.Stack = 1) and (AItem.Amount = 1)) then
-        begin
-          MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
-          RepairCost := (MaxDurability - AItem.Durability) * 10;
-          if (RepairCost > 0) then S := GetPrice(RepairCost);
         end;
-      end;
+      ptBuy:
+        begin
+          S := GetPrice(D.Price);
+        end;
+      ptRepair:
+        begin
+          S := '------';
+          if ((AItem.Stack = 1) and (AItem.Amount = 1)) then
+          begin
+            MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)
+              ].MaxDurability;
+            RepairCost := (MaxDurability - AItem.Durability) * 10;
+            if (RepairCost > 0) then
+              S := GetPrice(RepairCost);
+          end;
+        end;
     end;
     Terminal.Print(Screen.Width - 7, Y + I, S);
-  end else
+  end
+  else
     Result := Result + S;
 end;
 
@@ -1045,7 +1057,8 @@ begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
+  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
+  then
   begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
@@ -1092,7 +1105,8 @@ begin
   begin
     X := Math.EnsureRange(AX + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
     Y := Math.EnsureRange(AY + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
-    if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then Loot(X, Y, iGold);
+    if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then
+      Loot(X, Y, iGold);
   end;
 end;
 
@@ -1102,7 +1116,8 @@ var
 begin
   C := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, PriceType);
+    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True,
+      PriceType);
 end;
 
 procedure TItems.NewStores;
@@ -1162,54 +1177,55 @@ begin
             repeat
               ID := GetID();
             until (ItemBase[TItemEnum(ID)].ItemType in FoodTypeItems);
-        end;
-      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
-      Make(ID, FItem);
-      FStore[J].Add(FItem);
-    end;
-  end;
-end;
+          end;
+          until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+          Make(ID, FItem);
+          FStore[J].Add(FItem);
+          end;
+          end;
+          end;
 
-procedure TItems.RenderStore;
-var
-  I, C: Integer;
-begin
-  C := EnsureRange(FStore[Player.Store].Count, 0, ItemMax);
-  for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, FStore[Player.Store].GetItem(I), True, True, ptBuy);
-end;
+          procedure TItems.RenderStore;
+          var I, C:
+            Integer;
+          begin
+            C := EnsureRange(FStore[Player.Store].Count, 0, ItemMax);
+            for I := 0 to C - 1 do
+              Items.RenderInvItem(5, 2, I, FStore[Player.Store].GetItem(I),
+                True, True, ptBuy);
+          end;
 
-function TItems.GetStoreItem(Index: Byte): Item;
-begin
-  Result := FStore[Player.Store].GetItem(Index);
-end;
+          function TItems.GetStoreItem(Index: Byte): Item;
+          begin
+            Result := FStore[Player.Store].GetItem(Index);
+          end;
 
-{ TStore }
+          { TStore }
 
-procedure TStore.Add(const AItem: Item);
-begin
-  FItemsStore[FCount] := AItem;
-  Inc(FCount);
-end;
+          procedure TStore.Add(const AItem: Item);
+          begin
+            FItemsStore[FCount] := AItem;
+            Inc(FCount);
+          end;
 
-procedure TStore.Clear;
-var
-  I: Byte;
-begin
-  for I := Low(FItemsStore) to High(FItemsStore) do
-    Items_Clear_Item(FItemsStore[I]);
-  FCount := 0;
-end;
+          procedure TStore.Clear;
+          var
+            I: Byte;
+          begin
+            for I := Low(FItemsStore) to High(FItemsStore) do
+              Items_Clear_Item(FItemsStore[I]);
+            FCount := 0;
+          end;
 
-constructor TStore.Create;
-begin
-  Self.Clear;
-end;
+          constructor TStore.Create;
+          begin
+            Self.Clear;
+          end;
 
-function TStore.GetItem(const Index: Byte): Item;
-begin
-  Result := FItemsStore[EnsureRange(Index, 0, ItemMax)];
-end;
+          function TStore.GetItem(const Index: Byte): Item;
+          begin
+            Result := FItemsStore[EnsureRange(Index, 0, ItemMax)];
+          end;
 
 initialization
 

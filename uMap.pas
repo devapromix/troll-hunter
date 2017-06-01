@@ -307,7 +307,7 @@ begin
 end;
 
 var
-  BNPC: array[0..6] of Boolean;
+  BNPC: array [0 .. 6] of Boolean;
 
 procedure TMap.Gen;
 var
@@ -526,7 +526,7 @@ begin
         begin
           Self.Clear(Z, teDefaultWall);
           GenCave(6, 39, 3999);
-          //AddVillage(Player.X, Player.Y);
+          // AddVillage(Player.X, Player.Y);
         end;
       deBloodCave:
         begin

@@ -1050,7 +1050,8 @@ begin
   Self.Title(_('Pick up an item'));
 
   Self.FromAToZ;
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y), 0, ItemMax);
+  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
+    0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
@@ -1116,7 +1117,8 @@ var
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
     Terminal.ForegroundColor(clGreen);
-    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue), TK_ALIGN_RIGHT);
+    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
+      TK_ALIGN_RIGHT);
     Inc(X);
     if (X > 2) then
     begin
@@ -1130,7 +1132,8 @@ var
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
     Terminal.ForegroundColor(clGreen);
-    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue, TK_ALIGN_RIGHT);
+    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
+      TK_ALIGN_RIGHT);
     Inc(X);
     if (X > 2) then
     begin
@@ -1165,7 +1168,7 @@ begin
     Add(_('Version'), Game.GetVersion);
     Add();
     Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
-    Add(_('BeaRLibItems'), BearLibItems.Items_GetVersion);
+    Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
     Add(_('Monsters'), Ord(High(MobBase)));
     Add(_('Items'), Ord(High(ItemBase)));
   end;
@@ -1199,77 +1202,91 @@ begin
   begin
     Inc(Y);
     V := Player.MaxLife - Player.Life;
-    if (V > 0) then S := ' (-' + Items.GetPrice(V) + ')' else S := '';
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
-      _('Receive healing') + S, TK_ALIGN_LEFT);
+    if (V > 0) then
+      S := ' (-' + Items.GetPrice(V) + ')'
+    else
+      S := '';
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Receive healing') + S,
+      TK_ALIGN_LEFT);
   end;
 
   if (ntScrTrader_A in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (scrolls)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (scrolls)'),
+      TK_ALIGN_LEFT);
   end;
 
   if (ntArmTrader_A in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (armors)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (armors)'),
+      TK_ALIGN_LEFT);
   end;
 
   if (ntFoodTrader_A in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (foods)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (foods)'),
+      TK_ALIGN_LEFT);
   end;
 
   // Repair
   if (ntBlacksmith_A in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Repair items'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Repair items'),
+      TK_ALIGN_LEFT);
   end;
 
   if (ntSmithTrader_B in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (blacksmith)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
+      _('Buy items (blacksmith)'), TK_ALIGN_LEFT);
   end;
 
   if (ntHealTrader_B in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (healing)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (healing)'),
+      TK_ALIGN_LEFT);
   end;
 
   if (ntPotManaTrader_B in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions of mana)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
+      _('Buy items (potions of mana)'), TK_ALIGN_LEFT);
   end;
 
   if (ntPotTrader_B in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'),
+      TK_ALIGN_LEFT);
   end;
 
   if (ntTavTrader_B in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (tavern)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (tavern)'),
+      TK_ALIGN_LEFT);
   end;
 
   if (ntWpnTrader_B in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (weapons)'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (weapons)'),
+      TK_ALIGN_LEFT);
   end;
 
   // Sell
   if (ntSell_C in NPCType) then
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Sell items'), TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Sell items'),
+      TK_ALIGN_LEFT);
   end;
 
   MsgLog.Render(2, True);
@@ -1366,7 +1383,8 @@ end;
 
 procedure TSceneSell.Render;
 begin
-  Self.Title(Format(_('Selling items') + ' ' + _('(%d gold left)'), [Player.Gold]));
+  Self.Title(Format(_('Selling items') + ' ' + _('(%d gold left)'),
+    [Player.Gold]));
 
   Self.FromAToZ;
   Items.RenderInventory(ptSell);
@@ -1392,7 +1410,8 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  Self.Title(Format(_('Buying at %s') + ' ' + _('(%d gold left)'), [NPCName, Player.Gold]));
+  Self.Title(Format(_('Buying at %s') + ' ' + _('(%d gold left)'),
+    [NPCName, Player.Gold]));
 
   Self.FromAToZ;
   Items.RenderStore;
@@ -1418,7 +1437,8 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  Self.Title(Format(_('Repairing items') + ' ' + _('(%d gold left)'), [Player.Gold]));
+  Self.Title(Format(_('Repairing items') + ' ' + _('(%d gold left)'),
+    [Player.Gold]));
 
   Self.FromAToZ;
   Items.RenderInventory(ptRepair);

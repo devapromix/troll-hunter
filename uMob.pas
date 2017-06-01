@@ -5,9 +5,9 @@ interface
 uses uMap, uEntity;
 
 type
-  TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B, ntSmithTrader_B,
-    ntArmTrader_A, ntPotTrader_B, ntHealTrader_B, ntTavTrader_B, ntPotManaTrader_B,
-    ntScrTrader_A, ntFoodTrader_A);
+  TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
+    ntSmithTrader_B, ntArmTrader_A, ntPotTrader_B, ntHealTrader_B,
+    ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A, ntFoodTrader_A);
 
 type
   TMobBase = record
@@ -42,11 +42,11 @@ type
     mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton,
     mLich, mPhantom,
     // Bosses
-    mBlackHound, mGiantNewt, mIguana,                 // Dark Wood
-    mKoboldKing, mSwampWorm, mGiantSlug,              // Gray Cave
-    mCentaur, mSatyr, mTitan,                         // Deep Cave
-    mHillGiant, mStoneGiant, mTwoHeadedOgre,          // Blood Cave
-    mTrollKing,                                       // Drom
+    mBlackHound, mGiantNewt, mIguana, // Dark Wood
+    mKoboldKing, mSwampWorm, mGiantSlug, // Gray Cave
+    mCentaur, mSatyr, mTitan, // Deep Cave
+    mHillGiant, mStoneGiant, mTwoHeadedOgre, // Blood Cave
+    mTrollKing, // Drom
 
     npcNPC1, npcNPC2, npcNPC3, npcNPC4, npcNPC5, npcNPC6, npcNPC7);
 
@@ -533,7 +533,8 @@ begin
   MsgLog.Add(S);
   Player.Kills := Player.Kills + 1;
 
-  if (Player.Kills mod 50 = 0) then Items.NewStores;
+  if (Player.Kills mod 50 = 0) then
+    Items.NewStores;
 
   if Boss then
     V := 25
@@ -568,9 +569,11 @@ procedure TMob.Process;
 var
   NX, NY, Dist: Integer;
 begin
-  if (Force = fcNPC) then Exit;
+  if (Force = fcNPC) then
+    Exit;
   Dist := GetDist(Player.X, Player.Y);
-  if (Dist > GetRadius) then Exit;
+  if (Dist > GetRadius) then
+    Exit;
   if Sleep then
   begin
     if (Math.RandomRange(0, 99) <= 15) then
@@ -706,7 +709,8 @@ begin
     repeat
       FX := Math.RandomRange(1, High(Byte) - 1);
       FY := Math.RandomRange(1, High(Byte) - 1);
-      if (Ord(AZ) > 0) then Break;
+      if (Ord(AZ) > 0) then
+        Break;
     until (Player.GetDist(FX, FY) > 50);
   until ChMapTile(ID, FX, FY, AZ);
   FCount := MobBase[TMobEnum(ID)].MaxCount;
