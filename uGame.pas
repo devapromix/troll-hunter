@@ -53,6 +53,7 @@ type
     property Screenshot: string read FScreenshot write FScreenshot;
     function GetPath(SubDir: string = ''): string;
     function GetVersion: string;
+    function GetTitle: string;
     procedure LoadConfig;
     procedure Start;
     procedure Log(S: string);
@@ -120,9 +121,6 @@ begin
   clPlayer := Terminal.GetColorFromIni('Player', 'Yellow');
   clBkPlayer := Terminal.GetColorFromIni('BkPlayer', 'Darkest Green');
   clAlarm := Terminal.GetColorFromIni('Alarm');
-  // Save to log
-  Game.Log(Format('Items: count=%d', [Length(ItemBase)]));
-  Game.Log(Format('Mobs: count=%d', [Length(MobBase)]));
 end;
 
 procedure TGame.Start;
@@ -137,6 +135,11 @@ begin
     _('You need to find and kill The King Troll!'), _('Press ? for help.')])]));
   //
   Scenes.SetScene(scGame);
+end;
+
+function TGame.GetTitle: string;
+begin
+  Result := _('Trollhunter');
 end;
 
 initialization

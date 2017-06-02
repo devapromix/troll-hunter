@@ -782,7 +782,7 @@ begin
     Exit;
   SL := TStringList.Create;
   try
-    SL.Append(Format(FT, [_('Trollhunter')]));
+    SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
     SL.Append('');

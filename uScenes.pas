@@ -365,7 +365,7 @@ begin
   if Game.Wizard then
     Terminal.Print(CX, CY - 5,
       '1 [color=red] 2 [color=green] 3 [/color] 2 [/color] 1', TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY - 3, Format('%s v.%s', [_('Trollhunter'),
+  Terminal.Print(CX, CY - 3, Format('%s v.%s', [Game.GetTitle,
     Game.GetVersion]), TK_ALIGN_CENTER);
   Terminal.Print(CX, CY - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
   Terminal.Print(CX, CY + 1, Format(_('Press %s to continue...'),
@@ -420,7 +420,7 @@ begin
   Y := 1;
   KX := 0;
   KY := 14;
-  Self.Title(_('Trollhunter'));
+  Self.Title(_('Help'));
 
   Terminal.Print(CX, Y + 2,
     _('The land Elvion is surrounded by mountains. In the center of this land'),
@@ -457,7 +457,7 @@ begin
   AddKey('O', _('Statistics'));
   AddKey('I', _('Inventory'));
   AddKey('P', _('Skills and attributes'));
-  AddKey('?', _('Help'));
+  AddKey('?', _('Help (this page)'));
 
   Self.Title(_('Character dump'), Terminal.Window.Height - Y - 5);
   Terminal.Print(CX, Terminal.Window.Height - Y - 3,
@@ -606,7 +606,7 @@ begin
   // Player info
   Terminal.BackgroundColor(clBackground);
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top, _('Trollhunter'));
+  Terminal.Print(Status.Left, Status.Top, _('Player'));
   if Game.Wizard then
     S := Format('%s (%d:%d)', [Map.GetName, Player.X, Player.Y])
   else
@@ -903,7 +903,7 @@ end;
 
 procedure TScenePlayer.Render;
 begin
-  Self.Title(_('Trollhunter'));
+  Self.Title(_('Player'));
 
   Self.RenderPlayer;
   Self.RenderSkills;
@@ -1165,7 +1165,7 @@ begin
     Y := Y + 2;
     Self.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    Add(_('Trollhuner version'), Game.GetVersion);
+    Add(_('Game version'), Game.GetVersion);
     Add();
     Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
     Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
