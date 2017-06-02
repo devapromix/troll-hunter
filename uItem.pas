@@ -38,12 +38,6 @@ type
     ManaCost: Byte;
   end;
 
-{  Cap, War Cap, Hood, Red Hat,
-  Helm, Grand Helm, Leather Cap, Mask,
-  Great Helm, Full Helm, Bone Helmet, Wizard Hat,
-  Horned Helmet, Spired Helm, Diadem, Tiara,
-  Casque, Winged Helm, Magic Helmet, Crown,
- }
 
   // Малое лечебное зелье (Lesser Healing Potion)
   // Лечебное зелье (Healing Potion)
@@ -65,30 +59,35 @@ type
     iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
     iScrollOfFullHealing, iValleyRoot, iRatPod, iKey,
     // Dark Wood
+    iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
     iShortSpear, iSpear, // Spear
     iSlagHammer, iSpikedCudgel, // Mace
     // Gray Cave
+    iHelm, iGrandHelm, iLeatherCap, iMask, // Headgear
     iHardLeatherArmor, iBattleArmor, iFancyClothes, iRobe, // Body Armor
     iBroadSword, iLongSword, // Blade
     iMeatAxe, iFleshTearer, // Axe
     iJavelin, iFuscina, // Spear
     iWarhammer, iWarMace, // Mace
     // Deep Cave
+    iGreatHelm, iFullHelm, iBoneHelmet, iWizardHat, // Headgear
     iBrigantineArmor, iRingMail, iLightFurs, iCleanRobe, // Body Armor
     iMoonBlade, iScimitar, // Blade
     iWarAxe, iDarkAxe, // Axe
     iWarSpear, iHarpoon, // Spear
     iFlangedMace, iWarGavel, // Mace
     // Blood Cave
+    iHornedHelmet, iSpiredHelm, iDiadem, iTiara, // Headgear
     iChainMail, iScaleMail, iThickFurs, iHardRobe, // Body Armor
     iBastardSword, iGreatSword, // Blade
     iBerserkerAxe, iMarauderAxe, // Axe
     iSilvanWhisper, iImpaler, // Spear
     iBarbarousMace, iAdeptHammer, // Mace
     // Drom
+    iCasque, iWingedHelm, iMagicHelmet, iCrown, // Headgear
     iSplintMail, iPlateMail, iMolochRobe, iBoneweaveHauberk, // Body Armor
     iRuneSword, iTrollSlayer, // Blade
     iChopper, iDemonAxe, // Axe
@@ -234,6 +233,22 @@ const
 
     // == Dark Wood == //
 
+    // Cap
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 15; Level: 1; Defense: 2; Damage: (Min: 0; Max: 0;);
+    Price: 100; Color: clWhite; Deep: [deDarkWood];),
+    // War Cap
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 20; Level: 2; Defense: 4; Damage: (Min: 0; Max: 0;);
+    Price: 150; Color: clWhite; Deep: [deDarkWood];),
+    // Hood
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 10; Level: 1; Defense: 1; Damage: (Min: 0; Max: 0;);
+    Price: 200; Color: clWhite; Deep: [deDarkWood];),
+    // Red Hat
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 12; Level: 2; Defense: 2; Damage: (Min: 0; Max: 0;);
+    Price: 300; Color: clWhite; Deep: [deDarkWood];),
     // Quilted Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 25; Level: 1; Defense: 5; Damage: (Min: 0; Max: 0;);
@@ -286,6 +301,22 @@ const
 
     // == Gray Cave == //
 
+    // Helm
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 25; Level: 3; Defense: 6; Damage: (Min: 0; Max: 0;);
+    Price: 700; Color: clWhite; Deep: [deGrayCave];),
+    // Grand Helm
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 30; Level: 4; Defense: 8; Damage: (Min: 0; Max: 0;);
+    Price: 700; Color: clWhite; Deep: [deGrayCave];),
+    // Leather Cap
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 15; Level: 3; Defense: 3; Damage: (Min: 0; Max: 0;);
+    Price: 700; Color: clWhite; Deep: [deGrayCave];),
+    // Mask
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 18; Level: 4; Defense: 4; Damage: (Min: 0; Max: 0;);
+    Price: 700; Color: clWhite; Deep: [deGrayCave];),
     // HardLeather Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 75; Level: 3; Defense: 15; Damage: (Min: 0; Max: 0;);
@@ -338,6 +369,22 @@ const
 
     // == Deep Cave == //
 
+    // Great Helm
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
+    // Full Helm
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 125; Level: 6; Defense: 25; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
+    // Bone Helmet
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
+    // Wizard Hat
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 125; Level: 6; Defense: 25; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
     // Brigantine Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
@@ -390,6 +437,22 @@ const
 
     // == Blood Cave == //
 
+    // Horned Helmet
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
+    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
+    // Spired Helm
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 175; Level: 8; Defense: 35; Damage: (Min: 0; Max: 0;);
+    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
+    // Diadem
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
+    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
+    // Tiara
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 175; Level: 8; Defense: 35; Damage: (Min: 0; Max: 0;);
+    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
     // Chain Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
@@ -442,6 +505,22 @@ const
 
     // == Drom == //
 
+    //Casque
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
+    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    // Winged Helm
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 225; Level: 10; Defense: 45; Damage: (Min: 0; Max: 0;);
+    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    // Magic Helmet
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
+    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    // Crown
+    (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
+    MaxDurability: 225; Level: 10; Defense: 45; Damage: (Min: 0; Max: 0;);
+    Price: 1900; Color: clWhite; Deep: [deDrom];),
     // Splint Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
@@ -935,9 +1014,9 @@ begin
     iScaleMail:
       Result := _('Scale Mail');
     iThickFurs:
-      Result := _('ThickFurs');
+      Result := _('Thick Furs');
     iHardRobe:
-      Result := _('HardRobe');
+      Result := _('Hard Robe');
     // Blade
     iBastardSword:
       Result := _('Bastard Sword');
