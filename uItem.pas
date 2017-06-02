@@ -913,6 +913,15 @@ begin
 
     // == Dark Wood == //
 
+    // Helm
+    iCap:
+      Result := _('Cap');
+    iWarCap:
+      Result := _('War Cap');
+    iHood:
+      Result := _('Hood');
+    iRedHat:
+      Result := _('Red Hat');
     // Armor
     iQuiltedArmor:
       Result := _('Quilted Armor');
@@ -945,6 +954,15 @@ begin
 
     // == Gray Cave == //
 
+    // Helm
+    iHelm:
+      Result := _('Helm');
+    iGrandHelm:
+      Result := _('Grand Helm');
+    iLeatherCap:
+      Result := _('Leather Cap');
+    iMask:
+      Result := _('Mask');
     // Armor
     iHardLeatherArmor:
       Result := _('HardLeather Armor');
@@ -977,6 +995,15 @@ begin
 
     // == Deep Cave == //
 
+    // Helm
+    iGreatHelm:
+      Result := _('Great Helm');
+    iFullHelm:
+      Result := _('Full Helm');
+    iBoneHelmet:
+      Result := _('Bone Helmet');
+    iWizardHat:
+      Result := _('Wizard Hat');
     // Armor
     iBrigantineArmor:
       Result := _('Brigantine Armor');
@@ -1009,6 +1036,15 @@ begin
 
     // == Blood Cave == //
 
+    // Helm
+    iHornedHelmet:
+      Result := _('Horned Helmet');
+    iSpiredHelm:
+      Result := _('Spired Helm');
+    iDiadem:
+      Result := _('Diadem');
+    iTiara:
+      Result := _('Tiara');
     // Armor
     iChainMail:
       Result := _('Chain Mail');
@@ -1041,6 +1077,15 @@ begin
 
     // == Drom == //
 
+    // Helm
+    iCasque:
+      Result := _('Casque');
+    iWingedHelm:
+      Result := _('Winged Helm');
+    iMagicHelmet:
+      Result := _('Magic Helmet');
+    iCrown:
+      Result := _('Crown');
     // Armor
     iSplintMail:
       Result := _('Splint Mail');
