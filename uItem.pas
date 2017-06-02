@@ -116,7 +116,7 @@ const
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
-    // == All maps == //
+    //// == All maps == ////
 
     // None
     (Symbol: ' '; ItemType: itNone; SlotType: stNone; MaxStack: 1;
@@ -268,35 +268,35 @@ const
 
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Defense: 1; Damage: (Min: 4; Max: 9;);
+    MaxDurability: 30; Level: 1; Defense: 0; Damage: (Min: 4; Max: 9;);
     Price: 185; Color: clDarkRed; Deep: [deDarkWood];),
     // Short Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Defense: 2; Damage: (Min: 7; Max: 14;);
+    MaxDurability: 35; Level: 2; Defense: 0; Damage: (Min: 7; Max: 14;);
     Price: 210; Color: clWhite; Deep: [deDarkWood];),
     // Hatchet
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Defense: 1; Damage: (Min: 5; Max: 8;);
+    MaxDurability: 30; Level: 1; Defense: 0; Damage: (Min: 5; Max: 8;);
     Price: 165; Color: clDarkRed; Deep: [deDarkWood];),
     // Battle Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Defense: 2; Damage: (Min: 9; Max: 14;);
+    MaxDurability: 35; Level: 2; Defense: 0; Damage: (Min: 9; Max: 14;);
     Price: 195; Color: clDarkRed; Deep: [deDarkWood];),
     // Short Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Defense: 1; Damage: (Min: 2; Max: 4;);
+    MaxDurability: 30; Level: 1; Defense: 0; Damage: (Min: 2; Max: 4;);
     Price: 150; Color: clDarkRed; Deep: [deDarkWood];),
     // Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Defense: 2; Damage: (Min: 3; Max: 7;);
+    MaxDurability: 35; Level: 2; Defense: 0; Damage: (Min: 3; Max: 7;);
     Price: 180; Color: clDarkRed; Deep: [deDarkWood];),
     // Slag Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Defense: 1; Damage: (Min: 3; Max: 5;);
+    MaxDurability: 30; Level: 1; Defense: 0; Damage: (Min: 3; Max: 5;);
     Price: 175; Color: clDarkRed; Deep: [deDarkWood];),
     // Spiked Cudgel
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Defense: 2; Damage: (Min: 4; Max: 9;);
+    MaxDurability: 35; Level: 2; Defense: 0; Damage: (Min: 4; Max: 9;);
     Price: 220; Color: clDarkRed; Deep: [deDarkWood];),
 
     // == Gray Cave == //
