@@ -1165,12 +1165,16 @@ begin
     Y := Y + 2;
     Self.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    Add(_('Version'), Game.GetVersion);
+    Add(_('Trollhuner version'), Game.GetVersion);
     Add();
     Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
     Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
-    Add(_('Monsters'), Ord(High(MobBase)));
-    Add(_('Items'), Ord(High(ItemBase)));
+    Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
+    Add(_('Bosses'), 13);
+    Add(_('NPC'), 7);
+    Add();
+    Add(_('Items'), Ord(Length(ItemBase)));
+    Add(_('Shops'), Items.GetShopCount);
   end;
 
   AddKey('Esc', _('Close'), True, True);

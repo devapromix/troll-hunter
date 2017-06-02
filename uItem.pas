@@ -623,6 +623,7 @@ type
     procedure NewStores;
     procedure RenderStore;
     function GetStoreItem(Index: Byte): Item;
+    function GetShopCount: Byte;
   end;
 
 var
@@ -1343,7 +1344,12 @@ begin
             Result := FStore[Player.Store].GetItem(Index);
           end;
 
-          { TStore }
+          function TItems.GetShopCount: Byte;
+begin
+  Result := Length(FStore);
+end;
+
+{ TStore }
 
           procedure TStore.Add(const AItem: Item);
           begin
