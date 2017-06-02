@@ -209,7 +209,7 @@ const
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
     Value: 200; ManaCost: 40;),
-    // Scroll of healing
+    // Scroll of Full Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 300; Color: clBlue; Deep: [deBloodCave .. deDrom];
@@ -231,7 +231,7 @@ const
     MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
-    // == Dark Wood == //
+    //// == Dark Wood == ////
 
     // Cap
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
@@ -304,15 +304,15 @@ const
     // Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
     MaxDurability: 25; Level: 3; Defense: 6; Damage: (Min: 0; Max: 0;);
-    Price: 700; Color: clWhite; Deep: [deGrayCave];),
+    Price: 300; Color: clWhite; Deep: [deGrayCave];),
     // Grand Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
     MaxDurability: 30; Level: 4; Defense: 8; Damage: (Min: 0; Max: 0;);
-    Price: 700; Color: clWhite; Deep: [deGrayCave];),
+    Price: 400; Color: clWhite; Deep: [deGrayCave];),
     // Leather Cap
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
     MaxDurability: 15; Level: 3; Defense: 3; Damage: (Min: 0; Max: 0;);
-    Price: 700; Color: clWhite; Deep: [deGrayCave];),
+    Price: 600; Color: clWhite; Deep: [deGrayCave];),
     // Mask
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
     MaxDurability: 18; Level: 4; Defense: 4; Damage: (Min: 0; Max: 0;);
@@ -371,20 +371,20 @@ const
 
     // Great Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
-    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
+    MaxDurability: 35; Level: 5; Defense: 10; Damage: (Min: 0; Max: 0;);
+    Price: 500; Color: clWhite; Deep: [deDeepCave];),
     // Full Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 125; Level: 6; Defense: 25; Damage: (Min: 0; Max: 0;);
-    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
+    MaxDurability: 40; Level: 6; Defense: 12; Damage: (Min: 0; Max: 0;);
+    Price: 750; Color: clWhite; Deep: [deDeepCave];),
     // Bone Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 20; Level: 5; Defense: 5; Damage: (Min: 0; Max: 0;);
     Price: 1000; Color: clWhite; Deep: [deDeepCave];),
     // Wizard Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 125; Level: 6; Defense: 25; Damage: (Min: 0; Max: 0;);
-    Price: 1000; Color: clWhite; Deep: [deDeepCave];),
+    MaxDurability: 25; Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;);
+    Price: 1200; Color: clWhite; Deep: [deDeepCave];),
     // Brigantine Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
@@ -439,20 +439,20 @@ const
 
     // Horned Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
-    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
+    MaxDurability: 45; Level: 7; Defense: 14; Damage: (Min: 0; Max: 0;);
+    Price: 850; Color: clWhite; Deep: [deBloodCave];),
     // Spired Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 175; Level: 8; Defense: 35; Damage: (Min: 0; Max: 0;);
-    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
+    MaxDurability: 50; Level: 8; Defense: 16; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clWhite; Deep: [deBloodCave];),
     // Diadem
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 30; Level: 7; Defense: 7; Damage: (Min: 0; Max: 0;);
     Price: 1300; Color: clWhite; Deep: [deBloodCave];),
     // Tiara
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 175; Level: 8; Defense: 35; Damage: (Min: 0; Max: 0;);
-    Price: 1300; Color: clWhite; Deep: [deBloodCave];),
+    MaxDurability: 35; Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;);
+    Price: 1700; Color: clWhite; Deep: [deBloodCave];),
     // Chain Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
@@ -507,20 +507,20 @@ const
 
     //Casque
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
-    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    MaxDurability: 60; Level: 9; Defense: 18; Damage: (Min: 0; Max: 0;);
+    Price: 1300; Color: clWhite; Deep: [deDrom];),
     // Winged Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 225; Level: 10; Defense: 45; Damage: (Min: 0; Max: 0;);
-    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    MaxDurability: 75; Level: 10; Defense: 20; Damage: (Min: 0; Max: 0;);
+    Price: 1500; Color: clWhite; Deep: [deDrom];),
     // Magic Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
-    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    MaxDurability: 40; Level: 9; Defense: 10; Damage: (Min: 0; Max: 0;);
+    Price: 2300; Color: clWhite; Deep: [deDrom];),
     // Crown
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 225; Level: 10; Defense: 45; Damage: (Min: 0; Max: 0;);
-    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    MaxDurability: 50; Level: 10; Defense: 12; Damage: (Min: 0; Max: 0;);
+    Price: 2800; Color: clWhite; Deep: [deDrom];),
     // Splint Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
