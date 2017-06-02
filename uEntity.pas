@@ -3,6 +3,12 @@ unit uEntity;
 interface
 
 type
+  TMinMax = record
+    Min: Word;
+    Max: Word;
+  end;
+
+type
   TDamage = record
     Min: Word;
     Max: Word;

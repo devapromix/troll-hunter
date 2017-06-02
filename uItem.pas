@@ -6,12 +6,12 @@ uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
   TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itFood,
-    itBlade, itAxe, itSpear, itMace, itHelm, itArmor);
+    itBlade, itAxe, itSpear, itMace, itHeadgear, itBodyArmor);
 
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
-  ArmorTypeItems = [itHelm, itArmor];
+  ArmorTypeItems = [itHeadgear, itBodyArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = [itBlade, itAxe, itSpear, itMace];
   FoodTypeItems = [itFood];
@@ -38,15 +38,12 @@ type
     ManaCost: Byte;
   end;
 
-  Cap, War Cap, Red Hat,
-  Helm, Grand Helm, Mask,
-  Great Helm, Full Helm, Wizard Hat,
-  Bone Helm, Spired Helm, Tiara,
-  Casque, Winged Helm, Crown,
-
-
-
-  // , , ,
+{  Cap, War Cap, Hood, Red Hat,
+  Helm, Grand Helm, Leather Cap, Mask,
+  Great Helm, Full Helm, Bone Helmet, Wizard Hat,
+  Horned Helmet, Spired Helm, Diadem, Tiara,
+  Casque, Winged Helm, Magic Helmet, Crown,
+ }
 
   // Малое лечебное зелье (Lesser Healing Potion)
   // Лечебное зелье (Healing Potion)
@@ -68,31 +65,31 @@ type
     iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
     iScrollOfFullHealing, iValleyRoot, iRatPod, iKey,
     // Dark Wood
-    iQuiltedArmor, iLeatherArmor, // Armor
+    iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
     iShortSpear, iSpear, // Spear
     iSlagHammer, iSpikedCudgel, // Mace
     // Gray Cave
-    iHardLeatherArmor, iBattleArmor, // Armor
+    iHardLeatherArmor, iBattleArmor, iFancyClothes, iRobe, // Body Armor
     iBroadSword, iLongSword, // Blade
     iMeatAxe, iFleshTearer, // Axe
     iJavelin, iFuscina, // Spear
     iWarhammer, iWarMace, // Mace
     // Deep Cave
-    iBrigantineArmor, iRingMail, // Armor
+    iBrigantineArmor, iRingMail, iLightFurs, iCleanRobe, // Body Armor
     iMoonBlade, iScimitar, // Blade
     iWarAxe, iDarkAxe, // Axe
     iWarSpear, iHarpoon, // Spear
     iFlangedMace, iWarGavel, // Mace
     // Blood Cave
-    iChainMail, iScaleMail, // Armor
+    iChainMail, iScaleMail, iThickFurs, iHardRobe, // Body Armor
     iBastardSword, iGreatSword, // Blade
     iBerserkerAxe, iMarauderAxe, // Axe
     iSilvanWhisper, iImpaler, // Spear
     iBarbarousMace, iAdeptHammer, // Mace
     // Drom
-    iPlateMail, iBoneweaveHauberk, // Armor
+    iSplintMail, iPlateMail, iMolochRobe, iBoneweaveHauberk, // Body Armor
     iRuneSword, iTrollSlayer, // Blade
     iChopper, iDemonAxe, // Axe
     iSoulReaver, iHonedSpear, // Spear
@@ -238,13 +235,22 @@ const
     // == Dark Wood == //
 
     // Quilted Armor
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 25; Level: 1; Defense: 5; Damage: (Min: 0; Max: 0;);
     Price: 300; Color: clWhite; Deep: [deDarkWood];),
     // Leather Armor
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 50; Level: 2; Defense: 10; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clWhite; Deep: [deDarkWood];),
+    // Light Clothes
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 20; Level: 1; Defense: 2; Damage: (Min: 0; Max: 0;);
+    Price: 600; Color: clWhite; Deep: [deDarkWood];),
+    // Leather Apron
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 40; Level: 2; Defense: 4; Damage: (Min: 0; Max: 0;);
+    Price: 800; Color: clWhite; Deep: [deDarkWood];),
+
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 30; Level: 1; Defense: 1; Damage: (Min: 4; Max: 9;);
@@ -281,13 +287,22 @@ const
     // == Gray Cave == //
 
     // HardLeather Armor
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 75; Level: 3; Defense: 15; Damage: (Min: 0; Max: 0;);
     Price: 700; Color: clWhite; Deep: [deGrayCave];),
     // Battle Armor
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 100; Level: 4; Defense: 20; Damage: (Min: 0; Max: 0;);
     Price: 900; Color: clWhite; Deep: [deGrayCave];),
+    // Fancy Clothes
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 60; Level: 3; Defense: 6; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clWhite; Deep: [deGrayCave];),
+    // Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 75; Level: 4; Defense: 8; Damage: (Min: 0; Max: 0;);
+    Price: 1300; Color: clWhite; Deep: [deGrayCave];),
+
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 3; Defense: 3; Damage: (Min: 11; Max: 21;);
@@ -324,13 +339,22 @@ const
     // == Deep Cave == //
 
     // Brigantine Armor
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
     Price: 1000; Color: clWhite; Deep: [deDeepCave];),
     // Ring Mail
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 150; Level: 6; Defense: 30; Damage: (Min: 0; Max: 0;);
     Price: 1200; Color: clWhite; Deep: [deDeepCave];),
+    //
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 85; Level: 5; Defense: 10; Damage: (Min: 0; Max: 0;);
+    Price: 1500; Color: clWhite; Deep: [deDeepCave];),
+    //
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 100; Level: 6; Defense: 12; Damage: (Min: 0; Max: 0;);
+    Price: 1700; Color: clWhite; Deep: [deDeepCave];),
+
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 50; Level: 5; Defense: 5; Damage: (Min: 17; Max: 31;);
@@ -367,13 +391,22 @@ const
     // == Blood Cave == //
 
     // Chain Mail
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
     Price: 1300; Color: clWhite; Deep: [deBloodCave];),
     // Scale Mail
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 200; Level: 8; Defense: 40; Damage: (Min: 0; Max: 0;);
-    Price: 1500; Color: clWhite; Deep: [deBloodCave];),
+    Price: 1600; Color: clWhite; Deep: [deBloodCave];),
+    // Thick Furs
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 120; Level: 7; Defense: 14; Damage: (Min: 0; Max: 0;);
+    Price: 1900; Color: clWhite; Deep: [deBloodCave];),
+    // Hard Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 150; Level: 8; Defense: 16; Damage: (Min: 0; Max: 0;);
+    Price: 2100; Color: clWhite; Deep: [deBloodCave];),
+
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 60; Level: 7; Defense: 7; Damage: (Min: 24; Max: 43;);
@@ -409,14 +442,23 @@ const
 
     // == Drom == //
 
-    // Plate Mail
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    // Splint Mail
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
-    Price: 1700; Color: clWhite; Deep: [deDrom];),
-    // Boneweave Hauberk
-    (Symbol: '&'; ItemType: itArmor; SlotType: stChest; MaxStack: 1;
+    Price: 1900; Color: clWhite; Deep: [deDrom];),
+    // Plate Mail
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
     MaxDurability: 250; Level: 10; Defense: 50; Damage: (Min: 0; Max: 0;);
-    Price: 2000; Color: clWhite; Deep: [deDrom];),
+    Price: 2500; Color: clWhite; Deep: [deDrom];),
+    // Moloch Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 180; Level: 9; Defense: 18; Damage: (Min: 0; Max: 0;);
+    Price: 2600; Color: clWhite; Deep: [deDrom];),
+    // Boneweave Hauberk
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    MaxDurability: 200; Level: 10; Defense: 20; Damage: (Min: 0; Max: 0;);
+    Price: 3000; Color: clWhite; Deep: [deDrom];),
+
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: 9; Damage: (Min: 30; Max: 53;);
@@ -535,13 +577,11 @@ begin
     // Durability
   else
   begin
-    case ItemBase[TItemEnum(ID)].ItemType of
-      itHelm, itArmor:
+    if (ItemBase[TItemEnum(ID)].ItemType in ArmorTypeItems) then
         T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
-    else
+    if (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems) then
       T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min,
         ItemBase[TItemEnum(ID)].Damage.Max]);
-    end;
     S := Trim(Format('%s (%d/%d)', [T, AItem.Durability,
       ItemBase[TItemEnum(ID)].MaxDurability]));
   end;
@@ -798,6 +838,10 @@ begin
       Result := _('Quilted Armor');
     iLeatherArmor:
       Result := _('Leather Armor');
+    iLightClothes:
+      Result := _('Light Clothes');
+    iLeatherApron:
+      Result := _('Leather Apron');
     // Blade
     iRustySword:
       Result := _('Rusty Sword');
@@ -826,6 +870,10 @@ begin
       Result := _('HardLeather Armor');
     iBattleArmor:
       Result := _('Battle Armor');
+    iFancyClothes:
+      Result := _('Fancy Clothes');
+    iRobe:
+      Result := _('Robe');
     // Blade
     iBroadSword:
       Result := _('Broad Sword');
@@ -854,6 +902,10 @@ begin
       Result := _('Brigantine Armor');
     iRingMail:
       Result := _('Ring Mail');
+    iLightFurs:
+      Result := _('Light Furs');
+    iCleanRobe:
+      Result := _('Clean Robe');
     // Blade
     iMoonBlade:
       Result := _('Moon Blade');
@@ -882,6 +934,10 @@ begin
       Result := _('Chain Mail');
     iScaleMail:
       Result := _('Scale Mail');
+    iThickFurs:
+      Result := _('ThickFurs');
+    iHardRobe:
+      Result := _('HardRobe');
     // Blade
     iBastardSword:
       Result := _('Bastard Sword');
@@ -906,8 +962,12 @@ begin
     // == Drom == //
 
     // Armor
+    iSplintMail:
+      Result := _('Splint Mail');
     iPlateMail:
       Result := _('Plate Mail');
+    iMolochRobe:
+      Result := _('Moloch Robe');
     iBoneweaveHauberk:
       Result := _('Boneweave Hauberk');
     // Blade
