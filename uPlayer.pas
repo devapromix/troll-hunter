@@ -914,10 +914,12 @@ begin
   // Add armors
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iBoneweaveHauberk, 1, True);
+    Items.AddItemToInv(iWingedHelm, 1, True);
+    Items.AddItemToInv(iPlateMail, 1, True);
   end
   else
   begin
+    Items.AddItemToInv(iCap, 1, True);
     Items.AddItemToInv(iQuiltedArmor, 1, True);
   end;
   // Add weapon and armor
