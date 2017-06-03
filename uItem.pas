@@ -54,7 +54,7 @@ type
     // All maps
     iNone, iCorpse, iGold, iPotionOfHealing1, iPotionOfHealing2,
     iPotionOfHealing3, iPotionOfFullHealing, iPotionOfRejuvenation1,
-    iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfRejuvenation4,
+    iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfFullRejuvenation,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
     iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
     iScrollOfFullHealing, iValleyRoot, iRatPod, iKey,
@@ -99,7 +99,7 @@ const
   DrinkItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
     iPotionOfFullHealing, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
-    iPotionOfRejuvenation3, iPotionOfRejuvenation4];
+    iPotionOfRejuvenation3, iPotionOfFullRejuvenation];
   ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iPotionOfFullMana];
   FoodItems = [iValleyRoot, iRatPod];
@@ -107,7 +107,7 @@ const
     iScrollOfFullHealing];
   HealItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
     iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
-    iPotionOfRejuvenation3, iPotionOfRejuvenation4, iScrollOfHealing1,
+    iPotionOfRejuvenation3, iPotionOfFullRejuvenation, iScrollOfHealing1,
     iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
   TavernItems = [iKey];
   NotDropItems = [iNone, iCorpse, iKey];
@@ -858,8 +858,8 @@ begin
     iPotionOfRejuvenation3:
       Result := _('Potion of rejuvenation3');
     // Potion of rejuvenation
-    iPotionOfRejuvenation4:
-      Result := _('Potion of rejuvenation4');
+    iPotionOfFullRejuvenation:
+      Result := _('Potion of full rejuvenation');
 
     // Potion of health
     iPotionOfHealing1:

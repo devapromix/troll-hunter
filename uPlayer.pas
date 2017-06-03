@@ -976,7 +976,7 @@ begin
   if (efHeal in Effects) then
   begin
     V := Self.GetSkillValue(skHealing) + Value;
-    MsgLog.Add(_('You feel healthy!'));
+    MsgLog.Add(_('You feel healthy.'));
     MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
     Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
     Self.Skill(skHealing, 5);
@@ -984,7 +984,7 @@ begin
   // Full heal
   if (efFullHeal in Effects) then
   begin
-    MsgLog.Add(_('You feel healthy!'));
+    MsgLog.Add(_('You feel like new.'));
     MsgLog.Add(Format(F, [_('Life'), MaxLife - Life]));
     Self.Life := MaxLife;
     Self.Skill(skHealing, 5);
@@ -993,6 +993,7 @@ begin
   if (efMana in Effects) then
   begin
     V := Self.GetSkillValue(skConcentration) + Value;
+    MsgLog.Add(_('You feel megical energies restoring.'));
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
     Self.Skill(skConcentration, 5);
@@ -1000,6 +1001,7 @@ begin
   // Full mana
   if (efFullMana in Effects) then
   begin
+    MsgLog.Add(_('You feel magically fully restored.'));
     MsgLog.Add(Format(F, [_('Mana'), MaxMana - Mana]));
     Self.Mana := MaxMana;
     Self.Skill(skConcentration, 5);
