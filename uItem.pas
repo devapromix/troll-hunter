@@ -38,6 +38,12 @@ type
     ManaCost: Byte;
   end;
 
+  // Buckler, TargeShield,
+  // SmallShield, KiteShield,
+  // BoneShield, HeaterShield,
+  // HeavyShield, LargeShield,
+  // TowerShield, GothicShield,
+
 
   // Малое лечебное зелье (Lesser Healing Potion)
   // Лечебное зелье (Healing Potion)

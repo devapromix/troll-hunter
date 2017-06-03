@@ -993,7 +993,7 @@ begin
   if (efMana in Effects) then
   begin
     V := Self.GetSkillValue(skConcentration) + Value;
-    MsgLog.Add(_('You feel megical energies restoring.'));
+    MsgLog.Add(_('You feel magical energies restoring.'));
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
     Self.Skill(skConcentration, 5);
