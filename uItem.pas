@@ -17,7 +17,7 @@ const
   FoodTypeItems = [itFood];
 
 type
-  TSlotType = (stNone, stHead, stChest, stFeet, stMainHand, stOffHand, stNeck,
+  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand, stNeck,
     stFinger);
 
 type
@@ -254,19 +254,19 @@ const
     MaxDurability: 12; Level: 2; Defense: 2; Damage: (Min: 0; Max: 0;);
     Price: 300; Color: clWhite; Deep: [deDarkWood];),
     // Quilted Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 25; Level: 1; Defense: 5; Damage: (Min: 0; Max: 0;);
     Price: 300; Color: clWhite; Deep: [deDarkWood];),
     // Leather Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 50; Level: 2; Defense: 10; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clWhite; Deep: [deDarkWood];),
     // Light Clothes
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 20; Level: 1; Defense: 2; Damage: (Min: 0; Max: 0;);
     Price: 600; Color: clWhite; Deep: [deDarkWood];),
     // Leather Apron
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 40; Level: 2; Defense: 4; Damage: (Min: 0; Max: 0;);
     Price: 800; Color: clWhite; Deep: [deDarkWood];),
 
@@ -322,19 +322,19 @@ const
     MaxDurability: 18; Level: 4; Defense: 4; Damage: (Min: 0; Max: 0;);
     Price: 700; Color: clWhite; Deep: [deGrayCave];),
     // HardLeather Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 75; Level: 3; Defense: 15; Damage: (Min: 0; Max: 0;);
     Price: 700; Color: clWhite; Deep: [deGrayCave];),
     // Battle Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 100; Level: 4; Defense: 20; Damage: (Min: 0; Max: 0;);
     Price: 900; Color: clWhite; Deep: [deGrayCave];),
     // Fancy Clothes
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 60; Level: 3; Defense: 6; Damage: (Min: 0; Max: 0;);
     Price: 1000; Color: clWhite; Deep: [deGrayCave];),
     // Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 75; Level: 4; Defense: 8; Damage: (Min: 0; Max: 0;);
     Price: 1300; Color: clWhite; Deep: [deGrayCave];),
 
@@ -390,19 +390,19 @@ const
     MaxDurability: 25; Level: 6; Defense: 6; Damage: (Min: 0; Max: 0;);
     Price: 1200; Color: clWhite; Deep: [deDeepCave];),
     // Brigantine Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 125; Level: 5; Defense: 25; Damage: (Min: 0; Max: 0;);
     Price: 1000; Color: clWhite; Deep: [deDeepCave];),
     // Ring Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 150; Level: 6; Defense: 30; Damage: (Min: 0; Max: 0;);
     Price: 1200; Color: clWhite; Deep: [deDeepCave];),
     //
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 85; Level: 5; Defense: 10; Damage: (Min: 0; Max: 0;);
     Price: 1500; Color: clWhite; Deep: [deDeepCave];),
     //
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 100; Level: 6; Defense: 12; Damage: (Min: 0; Max: 0;);
     Price: 1700; Color: clWhite; Deep: [deDeepCave];),
 
@@ -458,19 +458,19 @@ const
     MaxDurability: 35; Level: 8; Defense: 8; Damage: (Min: 0; Max: 0;);
     Price: 1700; Color: clWhite; Deep: [deBloodCave];),
     // Chain Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 175; Level: 7; Defense: 35; Damage: (Min: 0; Max: 0;);
     Price: 1300; Color: clWhite; Deep: [deBloodCave];),
     // Scale Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 200; Level: 8; Defense: 40; Damage: (Min: 0; Max: 0;);
     Price: 1600; Color: clWhite; Deep: [deBloodCave];),
     // Thick Furs
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 120; Level: 7; Defense: 14; Damage: (Min: 0; Max: 0;);
     Price: 1900; Color: clWhite; Deep: [deBloodCave];),
     // Hard Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 150; Level: 8; Defense: 16; Damage: (Min: 0; Max: 0;);
     Price: 2100; Color: clWhite; Deep: [deBloodCave];),
 
@@ -526,19 +526,19 @@ const
     MaxDurability: 50; Level: 10; Defense: 12; Damage: (Min: 0; Max: 0;);
     Price: 2800; Color: clWhite; Deep: [deDrom];),
     // Splint Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 225; Level: 9; Defense: 45; Damage: (Min: 0; Max: 0;);
     Price: 1900; Color: clWhite; Deep: [deDrom];),
     // Plate Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 250; Level: 10; Defense: 50; Damage: (Min: 0; Max: 0;);
     Price: 2500; Color: clWhite; Deep: [deDrom];),
     // Moloch Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 180; Level: 9; Defense: 18; Damage: (Min: 0; Max: 0;);
     Price: 2600; Color: clWhite; Deep: [deDrom];),
     // Boneweave Hauberk
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stChest; MaxStack: 1;
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 200; Level: 10; Defense: 20; Damage: (Min: 0; Max: 0;);
     Price: 3000; Color: clWhite; Deep: [deDrom];),
 
@@ -1160,8 +1160,10 @@ begin
       Result := _('main hand');
     stOffHand:
       Result := _('off hand');
-    stChest:
-      Result := _('chest');
+    stTorso:
+      Result := _('Torso');
+    stHands:
+      Result := _('hands');
     stFeet:
       Result := _('feet');
   end;
