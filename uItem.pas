@@ -13,7 +13,7 @@ const
   ScrollTypeItems = [itScroll];
   ArmorTypeItems = [itHeadgear, itBodyArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
-  SmithTypeItems = [itBlade, itAxe, itSpear, itMace];
+  SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itHeadgear, itBodyArmor];
   FoodTypeItems = [itFood];
 
 type
