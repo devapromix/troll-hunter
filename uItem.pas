@@ -6,7 +6,7 @@ uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
   TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itFood,
-    itBlade, itAxe, itSpear, itMace, itHeadgear, itBodyArmor);
+    itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor);
 
 const
   PotionTypeItems = [itPotion];
@@ -38,13 +38,6 @@ type
     ManaCost: Byte;
   end;
 
-  // Buckler, TargeShield,
-  // SmallShield, KiteShield,
-  // BoneShield, HeaterShield,
-  // HeavyShield, LargeShield,
-  // TowerShield, GothicShield,
-
-
   // Малое лечебное зелье (Lesser Healing Potion)
   // Лечебное зелье (Healing Potion)
   // Огромное лечебное зелье (Greater Healing Potion)
@@ -67,6 +60,7 @@ type
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
+    iBuckler, iTargeShield, // Shield
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
     iShortSpear, iSpear, // Spear
@@ -74,6 +68,7 @@ type
     // Gray Cave
     iHelm, iGrandHelm, iLeatherCap, iMask, // Headgear
     iHardLeatherArmor, iBattleArmor, iFancyClothes, iRobe, // Body Armor
+    iSmallShield, iKiteShield, // Shield
     iBroadSword, iLongSword, // Blade
     iMeatAxe, iFleshTearer, // Axe
     iJavelin, iFuscina, // Spear
@@ -81,6 +76,7 @@ type
     // Deep Cave
     iGreatHelm, iFullHelm, iBoneHelmet, iWizardHat, // Headgear
     iBrigantineArmor, iRingMail, iLightFurs, iCleanRobe, // Body Armor
+    iBoneShield, iHeaterShield, // Shield
     iMoonBlade, iScimitar, // Blade
     iWarAxe, iDarkAxe, // Axe
     iWarSpear, iHarpoon, // Spear
@@ -88,6 +84,7 @@ type
     // Blood Cave
     iHornedHelmet, iSpiredHelm, iDiadem, iTiara, // Headgear
     iChainMail, iScaleMail, iThickFurs, iHardRobe, // Body Armor
+    iHeavyShield, iLargeShield, // Shield
     iBastardSword, iGreatSword, // Blade
     iBerserkerAxe, iMarauderAxe, // Axe
     iSilvanWhisper, iImpaler, // Spear
@@ -95,6 +92,7 @@ type
     // Drom
     iCasque, iWingedHelm, iMagicHelmet, iCrown, // Headgear
     iSplintMail, iPlateMail, iMolochRobe, iBoneweaveHauberk, // Body Armor
+    iTowerShield, iGothicShield, // Shield
     iRuneSword, iTrollSlayer, // Blade
     iChopper, iDemonAxe, // Axe
     iSoulReaver, iHonedSpear, // Spear
@@ -937,6 +935,11 @@ begin
       Result := _('Light Clothes');
     iLeatherApron:
       Result := _('Leather Apron');
+	// Shield
+	iBuckler:
+	  Result := _('Buckler');
+	iTargeShield:
+	  Result := _('Targe Shield');
     // Blade
     iRustySword:
       Result := _('Rusty Sword');
@@ -978,6 +981,11 @@ begin
       Result := _('Fancy Clothes');
     iRobe:
       Result := _('Robe');
+	// Shield
+	iSmallShield:
+	  Result := _('Small Shield');
+	iKiteShield:
+	  Result := _('Kite Shield');
     // Blade
     iBroadSword:
       Result := _('Broad Sword');
@@ -1019,6 +1027,11 @@ begin
       Result := _('Light Furs');
     iCleanRobe:
       Result := _('Clean Robe');
+	// Shield
+	iBoneShield:
+	  Result := _('Bone Shield');
+	iHeaterShield:
+	  Result := _('Heater Shield');
     // Blade
     iMoonBlade:
       Result := _('Moon Blade');
@@ -1060,6 +1073,11 @@ begin
       Result := _('Thick Furs');
     iHardRobe:
       Result := _('Hard Robe');
+	// Shield
+	iHeavyShield:
+	  Result := _('Heavy Shield');
+	iLargeShield:
+	  Result := _('Large Shield');
     // Blade
     iBastardSword:
       Result := _('Bastard Sword');
@@ -1101,6 +1119,11 @@ begin
       Result := _('Moloch Robe');
     iBoneweaveHauberk:
       Result := _('Boneweave Hauberk');
+	// Shield
+	iTowerShield:
+	  Result := _('Tower Shield');
+	iGothicShield:
+	  Result := _('Gothic Shield');
     // Blade
     iRuneSword:
       Result := _('Rune Sword');
