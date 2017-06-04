@@ -557,7 +557,8 @@ end;
 procedure TMob.DropItems;
 begin
   Items.Loot(Self.X, Self.Y, Boss);
-  Items.Loot(Self.X, Self.Y, iCorpse);
+  if not Game.Wizard then
+    Items.Loot(Self.X, Self.Y, iCorpse);
 end;
 
 function TMob.GetRadius: Byte;

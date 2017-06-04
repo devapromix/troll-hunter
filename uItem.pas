@@ -13,7 +13,7 @@ const
   ScrollTypeItems = [itScroll];
   ArmorTypeItems = [itHeadgear, itBodyArmor];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
-  SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itHeadgear, itBodyArmor];
+  SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor];
   FoodTypeItems = [itFood];
 
 type
@@ -270,6 +270,15 @@ const
     MaxDurability: 40; Level: 2; Defense: 4; Damage: (Min: 0; Max: 0;);
     Price: 800; Color: clWhite; Deep: [deDarkWood];),
 
+    // Buckler
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 1; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deDarkWood];),
+    // Targe Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 2; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deDarkWood];),
+
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 30; Level: 1; Defense: 0; Damage: (Min: 4; Max: 9;);
@@ -337,6 +346,15 @@ const
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 75; Level: 4; Defense: 8; Damage: (Min: 0; Max: 0;);
     Price: 1300; Color: clWhite; Deep: [deGrayCave];),
+
+    // Small Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deGrayCave];),
+    // Kite Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 4; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deGrayCave];),
 
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -406,6 +424,15 @@ const
     MaxDurability: 100; Level: 6; Defense: 12; Damage: (Min: 0; Max: 0;);
     Price: 1700; Color: clWhite; Deep: [deDeepCave];),
 
+    // Bone Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deDeepCave];),
+    // Heater Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 6; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deDeepCave];),
+
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 50; Level: 5; Defense: 0; Damage: (Min: 17; Max: 31;);
@@ -474,6 +501,15 @@ const
     MaxDurability: 150; Level: 8; Defense: 16; Damage: (Min: 0; Max: 0;);
     Price: 2100; Color: clWhite; Deep: [deBloodCave];),
 
+    // Heavy Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deBloodCave];),
+    // Large Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 8; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deBloodCave];),
+
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 60; Level: 7; Defense: 0; Damage: (Min: 24; Max: 43;);
@@ -541,6 +577,15 @@ const
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 200; Level: 10; Defense: 20; Damage: (Min: 0; Max: 0;);
     Price: 3000; Color: clWhite; Deep: [deDrom];),
+
+    // Tower Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deDrom];),
+    // Gothic Shield
+    (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
+    MaxDurability: 0; Level: 10; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 0; Color: clBlue; Deep: [deDrom];),
 
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -1151,21 +1196,21 @@ function TItems.GetSlotName(const SlotType: TSlotType): string;
 begin
   case SlotType of
     stHead:
-      Result := _('head');
+      Result := _('Head');
     stNeck:
-      Result := _('neck');
+      Result := _('Neck');
     stFinger:
-      Result := _('finger');
+      Result := _('Finger');
     stMainHand:
-      Result := _('main hand');
+      Result := _('Main Hand');
     stOffHand:
-      Result := _('off hand');
+      Result := _('Off-Hand');
     stTorso:
       Result := _('Torso');
     stHands:
-      Result := _('hands');
+      Result := _('Hands');
     stFeet:
-      Result := _('feet');
+      Result := _('Feet');
   end;
   Result := Format('{%s}', [Result]);
 end;
