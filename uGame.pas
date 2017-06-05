@@ -7,6 +7,7 @@ const
   FC = '[color=%s]%s[/color]';
 
 const
+  clGray = $FF777777;
   clRed = $FFFF0000;
   clGreen = $FF00FF00;
   clBlue = $FF0000FF;
@@ -14,9 +15,11 @@ const
   clDarkRed = $FF880000;
   clDarkGreen = $FF008800;
   clDarkBlue = $FF000088;
-  clYellow = $FFFFFF00;
-  clGray = $FF777777;
   clWhite = $FFDDDDDD;
+  clLightRed = $FFFF8888;
+  clLightGreen = $FF88FF88;
+  clLightBlue = $FF8888FF;
+  clYellow = $FFFFFF00;
 
 const
   clFog = $FF222222;

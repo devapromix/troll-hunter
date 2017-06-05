@@ -272,12 +272,12 @@ const
 
     // Buckler
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 1; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deDarkWood];),
+    MaxDurability: 25; Level: 1; Defense: 6; Damage: (Min: 0; Max: 0;);
+    Price: 120; Color: clLightBlue; Deep: [deDarkWood];),
     // Targe Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 2; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deDarkWood];),
+    MaxDurability: 30; Level: 2; Defense: 10; Damage: (Min: 0; Max: 0;);
+    Price: 200; Color: clLightBlue; Deep: [deDarkWood];),
 
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -349,12 +349,12 @@ const
 
     // Small Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 3; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deGrayCave];),
+    MaxDurability: 35; Level: 3; Defense: 12; Damage: (Min: 0; Max: 0;);
+    Price: 275; Color: clLightBlue; Deep: [deGrayCave];),
     // Kite Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 4; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deGrayCave];),
+    MaxDurability: 40; Level: 4; Defense: 15; Damage: (Min: 0; Max: 0;);
+    Price: 380; Color: clLightBlue; Deep: [deGrayCave];),
 
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -426,12 +426,12 @@ const
 
     // Bone Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 5; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deDeepCave];),
+    MaxDurability: 45; Level: 5; Defense: 18; Damage: (Min: 0; Max: 0;);
+    Price: 450; Color: clLightBlue; Deep: [deDeepCave];),
     // Heater Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 6; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deDeepCave];),
+    MaxDurability: 50; Level: 6; Defense: 21; Damage: (Min: 0; Max: 0;);
+    Price: 590; Color: clLightBlue; Deep: [deDeepCave];),
 
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -503,12 +503,12 @@ const
 
     // Heavy Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 7; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deBloodCave];),
+    MaxDurability: 60; Level: 7; Defense: 24; Damage: (Min: 0; Max: 0;);
+    Price: 740; Color: clLightBlue; Deep: [deBloodCave];),
     // Large Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 8; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deBloodCave];),
+    MaxDurability: 75; Level: 8; Defense: 27; Damage: (Min: 0; Max: 0;);
+    Price: 860; Color: clLightBlue; Deep: [deBloodCave];),
 
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
@@ -580,12 +580,12 @@ const
 
     // Tower Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 9; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deDrom];),
+    MaxDurability: 100; Level: 9; Defense: 30; Damage: (Min: 0; Max: 0;);
+    Price: 920; Color: clLightBlue; Deep: [deDrom];),
     // Gothic Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 0; Level: 10; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 0; Color: clBlue; Deep: [deDrom];),
+    MaxDurability: 150; Level: 10; Defense: 35; Damage: (Min: 0; Max: 0;);
+    Price: 1000; Color: clLightBlue; Deep: [deDrom];),
 
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
