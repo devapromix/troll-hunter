@@ -284,8 +284,8 @@ begin
     if (FItem.Equipment > 0) then
     begin
       FI := TItemEnum(FItem.ItemID);
-      Dam.Min := Dam.Min + ItemBase[FI].Damage.Min;
-      Dam.Max := Dam.Max + ItemBase[FI].Damage.Max;
+      Dam.Min := Dam.Min + FItem.MinDamage;
+      Dam.Max := Dam.Max + FItem.MaxDamage;
       Def := Def + ItemBase[FI].Defense;
       if (ItemBase[FI].SlotType = stMainHand) then
         case ItemBase[FI].ItemType of

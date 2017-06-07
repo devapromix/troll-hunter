@@ -709,8 +709,7 @@ begin
     if (ItemBase[TItemEnum(ID)].ItemType in ArmorTypeItems) then
         T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
     if (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems) then
-      T := Format('<%d-%d>', [ItemBase[TItemEnum(ID)].Damage.Min,
-        ItemBase[TItemEnum(ID)].Damage.Max]);
+      T := Format('<%d-%d>', [AItem.MinDamage, AItem.MaxDamage]);
     S := Trim(Format('%s (%d/%d)', [T, AItem.Durability,
       ItemBase[TItemEnum(ID)].MaxDurability]));
   end;
@@ -738,6 +737,8 @@ begin
   AItem.ItemID := ID;
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
+  AItem.MinDamage := ItemBase[TItemEnum(ID)].Damage.Min;
+  AItem.MaxDamage := ItemBase[TItemEnum(ID)].Damage.Max;
   AItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
 end;
 
