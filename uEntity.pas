@@ -15,6 +15,12 @@ type
   end;
 
 type
+  TBaseDamage = record
+    MinDamage: TDamage;
+    MaxDamage: TDamage;
+  end;
+
+type
   TEntity = class(TObject)
   private
     FX: Byte;
