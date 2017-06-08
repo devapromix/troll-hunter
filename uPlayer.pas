@@ -631,15 +631,14 @@ end;
 
 procedure TPlayer.Repair(Index: Integer);
 var
-  MaxDurability, RepairCost: Word;
+  RepairCost: Word;
   AItem: Item;
   The: string;
 begin
   AItem := Items_Inventory_GetItem(Index);
   if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
     Exit;
-  MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)].MaxDurability;
-  RepairCost := (MaxDurability - AItem.Durability) * 10;
+  RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
   if (RepairCost > 0) then
   begin
     if (Gold < RepairCost) then
@@ -647,7 +646,7 @@ begin
       MsgLog.Add(_('You need more gold.'));
       Exit;
     end;
-    AItem.Durability := MaxDurability;
+    AItem.Durability := AItem.MaxDurability;
     if ((Items_Inventory_DeleteItemAmount(Ord(iGold), RepairCost) > 0) and
       (Items_Inventory_SetItem(Index, AItem) > 0)) then
     begin

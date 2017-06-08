@@ -750,8 +750,7 @@ begin
         T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
     if (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems) then
       T := Format('<%d-%d>', [AItem.MinDamage, AItem.MaxDamage]);
-    S := Trim(Format('%s (%d/%d)', [T, AItem.Durability,
-      ItemBase[TItemEnum(ID)].MaxDurability]));
+    S := Trim(Format('%s (%d/%d)', [T, AItem.Durability, AItem.MaxDurability]));
   end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
   // Map's item
@@ -781,7 +780,9 @@ begin
     ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1);
   AItem.MaxDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
     ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1);
-  AItem.Durability := ItemBase[TItemEnum(ID)].MaxDurability;
+  AItem.MaxDurability := Math.RandomRange(ItemBase[TItemEnum(ID)].MaxDurability - 5,
+    ItemBase[TItemEnum(ID)].MaxDurability + 6);
+  AItem.Durability := AItem.MaxDurability;
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
@@ -829,10 +830,7 @@ begin
       end;
   end;
   if ((FItem.Stack = 1) and (IT <> itCorpse)) then
-  begin
-    Value := ItemBase[TItemEnum(ID)].MaxDurability;
-    FItem.Durability := Math.RandomRange(Value div 4, Value) + 1;
-  end;
+    FItem.Durability := Math.RandomRange(FItem.MaxDurability div 4, FItem.MaxDurability) + 1;
   FItem.X := FX;
   FItem.Y := FY;
   FItem.Equipment := 0;
@@ -1283,7 +1281,7 @@ function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
 var
   S: string;
   D: TItemBase;
-  MaxDurability, RepairCost: Word;
+  RepairCost: Word;
 
   function GetRedPrice(Price: Word): string;
   begin
@@ -1338,9 +1336,7 @@ begin
           S := '------';
           if ((AItem.Stack = 1) and (AItem.Amount = 1)) then
           begin
-            MaxDurability := ItemBase[Items.GetItemEnum(AItem.ItemID)
-              ].MaxDurability;
-            RepairCost := (MaxDurability - AItem.Durability) * 10;
+            RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
             if (RepairCost > 0) then
               S := GetPrice(RepairCost);
           end;

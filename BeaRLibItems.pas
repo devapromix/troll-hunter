@@ -13,6 +13,7 @@ type
     MinDamage: Integer;
     MaxDamage: Integer;
     Durability: Integer;
+    MaxDurability: Integer;
     Weight: Integer;
     Size: Integer;
     SlotID: Integer;
