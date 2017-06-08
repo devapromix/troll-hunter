@@ -747,7 +747,7 @@ begin
   else
   begin
     if (ItemBase[TItemEnum(ID)].ItemType in ArmorTypeItems) then
-        T := Format('<%d>', [ItemBase[TItemEnum(ID)].Defense]);
+        T := Format('<%d>', [AItem.Defense]);
     if (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems) then
       T := Format('<%d-%d>', [AItem.MinDamage, AItem.MaxDamage]);
     S := Trim(Format('%s (%d/%d)', [T, AItem.Durability, AItem.MaxDurability]));
@@ -776,6 +776,7 @@ begin
   AItem.ItemID := ID;
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
+  AItem.Defense := ItemBase[TItemEnum(ID)].Defense;
   AItem.MinDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
     ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1);
   AItem.MaxDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,

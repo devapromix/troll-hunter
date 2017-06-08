@@ -12,6 +12,7 @@ type
     Amount: Integer;
     MinDamage: Integer;
     MaxDamage: Integer;
+    Defense: Integer;
     Durability: Integer;
     MaxDurability: Integer;
     Weight: Integer;

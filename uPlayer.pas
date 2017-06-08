@@ -286,7 +286,7 @@ begin
       FI := TItemEnum(FItem.ItemID);
       Dam.Min := Dam.Min + FItem.MinDamage;
       Dam.Max := Dam.Max + FItem.MaxDamage;
-      Def := Def + ItemBase[FI].Defense;
+      Def := Def + FItem.Defense;
       if (ItemBase[FI].SlotType = stMainHand) then
         case ItemBase[FI].ItemType of
           itBlade:
