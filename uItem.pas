@@ -776,7 +776,8 @@ begin
   AItem.ItemID := ID;
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
-  AItem.Defense := ItemBase[TItemEnum(ID)].Defense;
+  AItem.Defense := Math.RandomRange(ItemBase[TItemEnum(ID)].Defense - 1,
+    ItemBase[TItemEnum(ID)].Defense + 2);
   AItem.MinDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
     ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1);
   AItem.MaxDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
