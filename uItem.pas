@@ -776,14 +776,14 @@ begin
   AItem.ItemID := ID;
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
-  AItem.Defense := Math.RandomRange(ItemBase[TItemEnum(ID)].Defense - 1,
-    ItemBase[TItemEnum(ID)].Defense + 2);
-  AItem.MinDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
-    ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1);
-  AItem.MaxDamage := Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
-    ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1);
-  AItem.MaxDurability := Math.RandomRange(ItemBase[TItemEnum(ID)].MaxDurability - 5,
-    ItemBase[TItemEnum(ID)].MaxDurability + 6);
+  AItem.Defense := Math.EnsureRange(Math.RandomRange(ItemBase[TItemEnum(ID)].Defense - 1,
+    ItemBase[TItemEnum(ID)].Defense + 2), 1, High(Byte));
+  AItem.MinDamage := Math.EnsureRange(Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
+    ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1), 1, High(Byte) - 1);
+  AItem.MaxDamage := Math.EnsureRange(Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
+    ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1), 2, High(Byte));
+  AItem.MaxDurability := Math.EnsureRange(Math.RandomRange(ItemBase[TItemEnum(ID)].MaxDurability - 5,
+    ItemBase[TItemEnum(ID)].MaxDurability + 6), 10, High(Byte));
   AItem.Durability := AItem.MaxDurability;
 end;
 
