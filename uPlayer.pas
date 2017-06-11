@@ -921,7 +921,7 @@ begin
     Items.AddItemToInv(iCap, 1, True);
     Items.AddItemToInv(iQuiltedArmor, 1, True);
   end;
-  // Add weapon and armor
+  // Add weapon
   if Game.Wizard then
   begin
     case Math.RandomRange(0, 4) of
