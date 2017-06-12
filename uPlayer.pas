@@ -39,7 +39,6 @@ const
   SkillMax = 75;
   SkillExpMax = 55;
   // Satiation
-  SatiationCost = 4;
   StarvingMax = 500;
   SatiatedMax = 8000;
   EngorgedMax = 15000;
@@ -77,6 +76,7 @@ type
     FItemIsDrop: Boolean;
     FItemIndex: Integer;
     FItemAmount: Integer;
+    FSatPerTurn: Byte;
     FIsRest: Boolean;
     procedure GenNPCText;
   public
@@ -109,6 +109,7 @@ type
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
     property ItemIndex: Integer read FItemIndex write FItemIndex;
     property ItemAmount: Integer read FItemAmount write FItemAmount;
+    property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
@@ -163,7 +164,7 @@ var
 begin
   Turn := Turn + 1;
   if (Satiation > 0) then
-    Satiation := Satiation - SatiationCost;
+    Satiation := Satiation - SatPerTurn;
   if (Satiation < StarvingMax) then
   begin
     Life := EnsureRange(Life - 1, 0, MaxLife);;
@@ -233,23 +234,27 @@ begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics, 2);
           Skill(skDodge, 2);
+    SatPerTurn := 5;
         end;
       skAxe:
         begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics, 3);
           Skill(skDodge);
+    SatPerTurn := 6;
         end;
       skSpear:
         begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics);
           Skill(skDodge, 3);
+    SatPerTurn := 4;
         end;
       skMace:
         begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics, 4);
+    SatPerTurn := 7;
         end;
     end;
     // Victory
@@ -263,6 +268,7 @@ begin
     // Miss
     MsgLog.Add(Format(_('You miss %s.'), [The]));
     // MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
+    SatPerTurn := 3;
   end;
   AddTurn;
 end;
@@ -345,7 +351,6 @@ begin
   inherited;
   Exp := 0;
   Turn := 0;
-  Satiation := SatiatedMax;
   Gold := 0;
   Score := 0;
   Kills := 0;
@@ -357,6 +362,8 @@ begin
   Alive := True;
   Look := False;
   IsRest := False;
+  SatPerTurn := 2;
+  Satiation := SatiatedMax;
   FWeaponSkill := skLearning;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
     with FSkill[I] do
@@ -518,6 +525,7 @@ begin
     end
     else
     begin
+      SatPerTurn := 2;
       X := FX;
       Y := FY;
       if ((AX <> 0) or (AY <> 0)) then
