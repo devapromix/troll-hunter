@@ -28,15 +28,22 @@ type
   TEffects = set of TEffect;
 
 const
-  SkillMin = 5;
-  SkillMax = 75;
-  SkillExpMax = 55;
+  // Player
   AtrMax = 100;
   RadiusMax = 15;
   DVMax = 80;
   PVMax = 250;
   LevelExpMax = 10;
-  FoodMax = 250;
+  // Skills
+  SkillMin = 5;
+  SkillMax = 75;
+  SkillExpMax = 55;
+  // Satiation
+  SatiationCost = 4;
+  StarvingMax = 500;
+  SatiatedMax = 8000;
+  EngorgedMax = 15000;
+  // Inventory
   ItemMax = 26;
 
 type
@@ -45,7 +52,7 @@ type
     FLX: Byte;
     FLY: Byte;
     FTurn: Word;
-    FFood: Word;
+    FSatiation: Word;
     FLevel: Byte;
     FMana: Word;
     FMaxMana: Word;
@@ -78,7 +85,7 @@ type
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
-    property Food: Word read FFood write FFood;
+    property Satiation: Word read FSatiation write FSatiation;
     property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
@@ -112,6 +119,7 @@ type
     function GetRadius: Byte;
     function GetDV: Byte;
     function GetPV: Byte;
+    function GetSatiation: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetSkill(ASkill: TSkillEnum): TSkill;
@@ -154,13 +162,20 @@ var
   V: Byte;
 begin
   Turn := Turn + 1;
-  V := EnsureRange(100 - Player.GetSkillValue(skHealing), 25, 100);
-  if (Turn mod V = 0) then
-    Life := EnsureRange(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
-  V := EnsureRange(100 - Player.GetSkillValue(skConcentration), 25, 100);
-  if (Turn mod V = 0) then
-    Mana := EnsureRange(Mana + Player.GetSkillValue(skConcentration),
-      0, MaxMana);
+  if (Satiation > 0) then
+    Satiation := Satiation - SatiationCost;
+  if (Satiation < StarvingMax) then
+  begin
+    Life := EnsureRange(Life - 1, 0, MaxLife);;
+  end else begin
+    V := EnsureRange(100 - Player.GetSkillValue(skHealing), 25, 100);
+    if (Turn mod V = 0) then
+      Life := EnsureRange(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
+    V := EnsureRange(100 - Player.GetSkillValue(skConcentration), 25, 100);
+    if (Turn mod V = 0) then
+      Mana := EnsureRange(Mana + Player.GetSkillValue(skConcentration),
+        0, MaxMana);
+  end;
   Mobs.Process;
 end;
 
@@ -330,7 +345,7 @@ begin
   inherited;
   Exp := 0;
   Turn := 0;
-  Food := FoodMax;
+  Satiation := SatiatedMax;
   Gold := 0;
   Score := 0;
   Kills := 0;
@@ -405,6 +420,30 @@ end;
 function TPlayer.GetRadius: Byte;
 begin
   Result := EnsureRange(Self.Radius + 3, 1, RadiusMax);
+end;
+
+function TPlayer.GetSatiation: string;
+begin
+  Result := '';
+  case Satiation of
+    0..StarvingMax: Result := _('Starving');
+    StarvingMax + 1..1500  : Result := _('Near starving');
+    1501..2000  : Result := _('Very hungry');
+    2001..2500  : Result := _('Hungry');
+    SatiatedMax + 1..10000 : Result := _('Full');
+    10001..11000: Result := _('Very full');
+    11001..EngorgedMax: Result := _('Engorged');
+  end;
+  if Game.Wizard then
+  begin
+    if (Result = '') then Result := _('Satiated');
+    Result := Result + Format(' (%d)', [Satiation]);
+  end;
+  case Satiation of
+    0..StarvingMax: Result := Format('[color=light red]%s[/color]', [Result]);
+    StarvingMax + 1 .. SatiatedMax: Result := Format('[color=light yellow]%s[/color]', [Result]);
+    else Result := Format('[color=light green]%s[/color]', [Result]);
+  end;
 end;
 
 function TPlayer.GetSkill(ASkill: TSkillEnum): TSkill;
@@ -889,17 +928,11 @@ procedure TPlayer.Rest(ATurns: Byte);
 var
   T: Byte;
 begin
-  if (Player.Food = 0) then
-  begin
-    MsgLog.Add(_('Need food!'));
-    Exit;
-  end;
   IsRest := True;
   MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));
   for T := 1 to ATurns do
   begin
-    if not IsRest or (Player.Food = 0) then Break;
-    Player.Food := EnsureRange(Player.Food - 1, 0, FoodMax);
+    if not IsRest then Break;
     Wait;
   end;
   MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
@@ -1008,7 +1041,7 @@ begin
   // Food
   if (efFood in Effects) then
   begin
-    Player.Food := Player.Food + Value;
+    Satiation := EnsureRange(Satiation + Value, 0, EngorgedMax);
     MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
   end;
 end;

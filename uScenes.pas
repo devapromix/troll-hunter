@@ -619,11 +619,11 @@ begin
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 3,
-    Format(_('Turn: %d Gold: %d Food: %d'), [Player.Turn, Player.Gold,
-    Player.Food]));
+    Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
+    Player.GetSatiation]));
   Terminal.Print(Status.Left, Status.Top + 4,
     Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
-    Player.Damage.Max, Player.PV, Player.DV]));
+    Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
   Terminal.Print(Status.Left, Status.Top + 5, Format(_('Score: %d Kills: %d'),
     [Player.Score, Player.Kills]));
   // Bars
