@@ -10,7 +10,6 @@ uses
   uScenes in 'uScenes.pas',
   uPlayer in 'uPlayer.pas',
   uMap in 'uMap.pas',
-  uVillage in 'uVillage.pas',
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
   uGame in 'uGame.pas',
