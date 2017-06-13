@@ -33,14 +33,14 @@ type
     mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm, mNaga,
     mFireVortex,
     // Deep Cave
-    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab,
+    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab, mDireWolf,
     mPan, mFaun,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mGargoyle, mWarg, mDraconian, mOrc,
-    mOrcWarrior, mOrcWarlord,
+    mGoblin, mDarkGoblin, mBlackGoblin, mHobgoblin, mGargoyle, mWarg, mDraconian,
+    mOrc, mOrcBrute, mOrcWarrior, mOrcWarlord,
     // Drom
-    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton,
-    mLich, mPhantom,
+    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton, mWraith,
+    mLich, mPhantom, mTrollBrute,
     // Bosses
     mBlackHound, mGiantNewt, mIguana, // Dark Wood
     mKoboldKing, mSwampWorm, mGiantSlug, // Gray Cave
@@ -174,6 +174,10 @@ const
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     Armor: 7; DV: 40; MaxCount: 8; Damage: (Min: 15; Max: 20;);
     Color: $FF992233;),
+    // DireWolf
+    (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
+    Armor: 7; DV: 41; MaxCount: 3; Damage: (Min: 15; Max: 20;);
+    Color: $FF888888;),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeepCave]; MaxLife: 72; Level: 7;
     Armor: 7; DV: 42; MaxCount: 1; Damage: (Min: 15; Max: 20;);
@@ -187,30 +191,38 @@ const
 
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 8; DV: 44; MaxCount: 9; Damage: (Min: 15; Max: 20;);
+    Armor: 5; DV: 30; MaxCount: 9; Damage: (Min: 12; Max: 20;);
     Color: $FF00AA00;),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 8; DV: 45; MaxCount: 7; Damage: (Min: 15; Max: 21;);
+    Armor: 5; DV: 35; MaxCount: 7; Damage: (Min: 12; Max: 21;);
     Color: $FF116610;),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 78; Level: 7;
-    Armor: 8; DV: 45; MaxCount: 5; Damage: (Min: 15; Max: 22;);
+    Armor: 5; DV: 35; MaxCount: 5; Damage: (Min: 15; Max: 22;);
     Color: $FF445544;),
+    // Hobgoblin
+    (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
+    Armor: 5; DV: 35; MaxCount: 9; Damage: (Min: 12; Max: 22;);
+    Color: $FF55AA55;),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
-    Armor: 9; DV: 45; MaxCount: 1; Damage: (Min: 15; Max: 23;);
+    Armor: 20; DV: 45; MaxCount: 1; Damage: (Min: 15; Max: 23;);
     Color: $FF445544;),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 82; Level: 8;
-    Armor: 10; DV: 50; MaxCount: 4; Damage: (Min: 16; Max: 24;);
+    Armor: 10; DV: 50; MaxCount: 4; Damage: (Min: 16; Max: 23;);
     Color: $FF445544;),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
-    Armor: 10; DV: 50; MaxCount: 1; Damage: (Min: 17; Max: 24;);
+    Armor: 10; DV: 50; MaxCount: 1; Damage: (Min: 16; Max: 24;);
     Color: $FF445544;),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 88; Level: 8;
+    Armor: 10; DV: 50; MaxCount: 5; Damage: (Min: 16; Max: 25;);
+    Color: $FF445544;),
+    // Orc Brute
+    (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 8;
     Armor: 10; DV: 50; MaxCount: 5; Damage: (Min: 17; Max: 25;);
     Color: $FF445544;),
     // Orc Warrior
@@ -247,8 +259,12 @@ const
     Color: $FF223333;),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 18; DV: 60; MaxCount: 9; Damage: (Min: 22; Max: 29;);
+    Armor: 18; DV: 60; MaxCount: 9; Damage: (Min: 21; Max: 29;);
     Color: $FF223333;),
+    // Wraith
+    (Symbol: 'w'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
+    Armor: 19; DV: 60; MaxCount: 9; Damage: (Min: 21; Max: 30;);
+    Color: $FF22FFFF;),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 19; DV: 60; MaxCount: 1; Damage: (Min: 22; Max: 30;);
@@ -256,6 +272,10 @@ const
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 60; MaxCount: 1; Damage: (Min: 23; Max: 30;);
+    Color: $FF223333;),
+    // Troll Brute
+    (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
+    Armor: 20; DV: 60; MaxCount: 1; Damage: (Min: 25; Max: 30;);
     Color: $FF223333;),
 
     // == Bosses == //
@@ -868,6 +888,8 @@ begin
       Result := _('Big Spider');
     mFireCrab:
       Result := _('Fire Crab');
+    mDireWolf:
+      Result := _('Dire Wolf');
     mPan:
       Result := _('Pan');
     mFaun:
@@ -881,6 +903,8 @@ begin
       Result := _('Dark Goblin');
     mBlackGoblin:
       Result := _('Black Goblin');
+    mHobgoblin:
+      Result := _('Hobgoblin');
     mGargoyle:
       Result := _('Gargoyle');
     mWarg:
@@ -889,6 +913,8 @@ begin
       Result := _('Draconian');
     mOrc:
       Result := _('Orc');
+    mOrcBrute:
+      Result := _('Orc Brute');
     mOrcWarrior:
       Result := _('Orc Warrior');
     mOrcWarlord:
@@ -910,10 +936,14 @@ begin
       Result := _('Cyclops');
     mSkeleton:
       Result := _('Skeleton');
+    mWraith:
+      Result := _('Wraith');
     mLich:
       Result := _('Lich');
     mPhantom:
       Result := _('Phantom');
+    mTrollBrute:
+      Result := _('Troll Brute');
 
     // == Bosses == //
 
