@@ -105,18 +105,19 @@ const
     iPotionOfFullHealing, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
     iPotionOfRejuvenation3, iPotionOfFullRejuvenation];
-  ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
-    iPotionOfFullMana];
   FoodItems = [iValleyRoot, iRatPod];
   ReadItems = [iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
     iScrollOfFullHealing];
+  ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
+    iPotionOfFullMana];
   HealItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
     iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
     iPotionOfRejuvenation3, iPotionOfFullRejuvenation, iScrollOfHealing1,
     iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
   TavernItems = [iKey];
   NotDropItems = [iNone, iCorpse, iKey];
-  NotEquipItems = DrinkItems + FoodItems + ReadItems + NotDropItems + [iGold];
+  UseItems = DrinkItems + FoodItems + ReadItems;
+  NotEquipItems = UseItems + NotDropItems + [iGold];
   AutoPickupItems = NotEquipItems - NotDropItems;
 
 const
@@ -1392,6 +1393,7 @@ begin
       MsgLog.Add(Format(_('You picked up %s.'), [The]))
     else
       MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]));
+    Player.Wait;  
     Player.Calc;
   end;
 end;

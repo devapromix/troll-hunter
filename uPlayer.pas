@@ -284,7 +284,10 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
     if (TItemEnum(FItem.ItemID) in AutoPickupItems) then
+    begin
       Items.AddItemToInv(Index, True);
+      Wait;
+    end;
   end;
 end;
 
@@ -525,11 +528,13 @@ begin
     end
     else
     begin
-      SatPerTurn := 2;
       X := FX;
       Y := FY;
       if ((AX <> 0) or (AY <> 0)) then
+      begin
+        SatPerTurn := 2;
         AutoPickup;
+      end;
       AddTurn;
     end;
   end;
@@ -545,30 +550,33 @@ begin
   AItem := Items_Inventory_GetItem(Index);
   if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
   begin
-    AItem.Amount := AItem.Amount - 1;
-    I := TItemEnum(AItem.ItemID);
-    T := ItemBase[I].ItemType;
-    The := GetDescThe(Items.GetName(I));
-    case T of
-      itPotion: MsgLog.Add(Format(_('You drink %s.'), [The]));
-      itScroll: MsgLog.Add(Format(_('You read %s.'), [The]));
-      itFood: MsgLog.Add(Format(_('You ate %s.'), [The]));
-    end;
-    Items_Inventory_SetItem(Index, AItem);
-    if (T = itScroll) then
+    if (Items.GetItemEnum(AItem.ItemID) in UseItems) then
     begin
-      if (Self.Mana >= ItemBase[I].ManaCost) then
-      Self.Mana := Self.Mana - ItemBase[I].ManaCost else
-      begin
-        MsgLog.Add(_('You need more mana!'));
-        Self.Calc;
-        Wait;
-        Exit;
+      AItem.Amount := AItem.Amount - 1;
+      I := TItemEnum(AItem.ItemID);
+      T := ItemBase[I].ItemType;
+      The := GetDescThe(Items.GetName(I));
+      case T of
+        itPotion: MsgLog.Add(Format(_('You drink %s.'), [The]));
+        itScroll: MsgLog.Add(Format(_('You read %s.'), [The]));
+        itFood: MsgLog.Add(Format(_('You ate %s.'), [The]));
       end;
+      Items_Inventory_SetItem(Index, AItem);
+      if (T = itScroll) then
+      begin
+        if (Self.Mana >= ItemBase[I].ManaCost) then
+        Self.Mana := Self.Mana - ItemBase[I].ManaCost else
+        begin
+          MsgLog.Add(_('You need more mana!'));
+          Self.Calc;
+          Wait;
+          Exit;
+        end;
+      end;
+      DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
+      Self.Calc;
+      Wait;
     end;
-    DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
-    Self.Calc;
-    Wait;
   end
   else
   begin
@@ -929,6 +937,7 @@ begin
       Score := Score + (Ord(Map.Current) * 15);
     MaxMap := MaxMap + 1;
   end;
+  SatPerTurn := 1;
   Move(0, 0);
 end;
 
