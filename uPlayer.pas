@@ -548,12 +548,12 @@ var
   T: TItemType;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if (Items.GetItemEnum(AItem.ItemID) in NotEquipItems) then
+  I := TItemEnum(AItem.ItemID);
+  if (I in NotEquipItems) then
   begin
-    if (Items.GetItemEnum(AItem.ItemID) in UseItems) then
+    if (I in UseItems) then
     begin
       AItem.Amount := AItem.Amount - 1;
-      I := TItemEnum(AItem.ItemID);
       T := ItemBase[I].ItemType;
       The := GetDescThe(Items.GetName(I));
       case T of
