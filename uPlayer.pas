@@ -410,8 +410,9 @@ procedure TPlayer.GenNPCText;
 var
   S: string;
 begin
-  case Math.RandomRange(0, 2) of
+  case Math.RandomRange(0, 3) of
     0: S := _('What can I do for you?');
+    1: S := _('What can I get you today?');
     else S := _('Good day!');
   end;
   MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
@@ -665,6 +666,7 @@ begin
     MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, Price]));
     Items_Inventory_AppendItem(AItem);
     Self.Calc;
+    //The %s just frowns. Maybe you'll return when you have enough gold?
   end else MsgLog.Add(_('You need more gold.'));
 end;
 

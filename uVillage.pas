@@ -23,8 +23,8 @@ implementation
 
 uses SysUtils;
 
-// What can I get you today?
-// The %s just frowns. Maybe you'll return when you have enough gold?
+// 
+// 
 
 { TVillages }
 
