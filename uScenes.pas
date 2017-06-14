@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy);
+    scSell, scRepair, scBuy, scCalendar);
 
 type
   TScene = class(TObject)
@@ -58,6 +58,13 @@ type
 
 type
   TSceneStatistics = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneCalendar = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -190,7 +197,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, GNUGetText, uGame, uVillage, uCorpse;
+  uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar;
 
 { TScene }
 
@@ -297,6 +304,8 @@ begin
         FScene[I] := TSceneSell.Create;
       scRepair:
         FScene[I] := TSceneRepair.Create;
+      scCalendar:
+        FScene[I] := TSceneCalendar.Create;
     end;
 end;
 
@@ -457,6 +466,7 @@ begin
   AddKey('O', _('Statistics'));
   AddKey('I', _('Inventory'));
   AddKey('P', _('Skills and attributes'));
+  AddKey('K', _('Calendar'));
   AddKey('?', _('Help (this page)'));
 
   Self.Title(_('Character dump'), Terminal.Window.Height - Y - 5);
@@ -717,6 +727,8 @@ begin
         Game.Screenshot := Terminal.GetTextScreenshot();
         Scenes.SetScene(scQuit, Scenes.SceneEnum);
       end;
+    TK_K:
+      Scenes.SetScene(scCalendar);
     TK_R:
       Player.Rest(100);
     TK_G:
@@ -1461,6 +1473,59 @@ begin
       Player.Repair(Key - TK_A);
   else
     Game.Timer := High(Byte);
+  end;
+end;
+
+{ TSceneCalendar }
+
+procedure TSceneCalendar.Render;
+var
+  Y: Byte;
+
+  procedure Add(const AText: string; AValue: string; AAdvValue: string = ''); overload;
+  var
+    S: string;
+    X: Word;
+  begin
+    X := Screen.Width div 3;
+    S := '';
+    if (AAdvValue <> '') then S := AADvValue;
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(X, Y, AText, TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clGreen);
+    Terminal.Print(X + 10, Y, AValue, TK_ALIGN_LEFT);
+    if (S <> '') then
+    begin
+      Terminal.ForegroundColor(clLightBlue);
+      Terminal.Print(X + 20, Y, AAdvValue, TK_ALIGN_LEFT);
+    end;
+    Inc(Y);
+  end;
+
+  procedure Add(const AText: string; AValue: Integer; AAdvValue: string = ''); overload;
+  begin
+    Add(AText, IntToStr(AValue), AAdvValue);
+  end;
+
+begin
+  Self.Title(_('Calendar'));
+
+  Y := 12;
+  Add(_('Turn'), Player.Turn);
+  Add(_('Time'), Calendar.GetTime, Calendar.GetTimeStr);
+  Add(_('Day'), Calendar.Day, Calendar.GetDayName);
+  Add(_('Month'), Calendar.Month, Calendar.GetMonthName);
+  Add(_('Year'), Calendar.Year);
+  Add(_('Map'), Map.GetName);
+
+  AddKey('Esc', _('Close'), True, True);
+end;
+
+procedure TSceneCalendar.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE: // Close
+      Scenes.SetScene(scGame);
   end;
 end;
 

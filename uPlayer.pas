@@ -154,7 +154,7 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uScenes,
-  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse;
+  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse, uCalendar;
 
 { TPlayer }
 
@@ -163,6 +163,7 @@ var
   V: Byte;
 begin
   Turn := Turn + 1;
+  Calendar.Turn;
   if (Satiation > 0) then
     Satiation := Satiation - SatPerTurn;
   if (Satiation < StarvingMax) then

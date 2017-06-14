@@ -15,7 +15,8 @@ uses
   uGame in 'uGame.pas',
   uMsgLog in 'uMsgLog.pas',
   uCorpse in 'uCorpse.pas',
-  uEntity in 'uEntity.pas';
+  uEntity in 'uEntity.pas',
+  uCalendar in 'uCalendar.pas';
 
 var
   Key: Word = 0;
