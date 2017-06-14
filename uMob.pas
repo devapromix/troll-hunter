@@ -553,9 +553,6 @@ begin
   MsgLog.Add(S);
   Player.Kills := Player.Kills + 1;
 
-  if (Player.Kills mod 50 = 0) then
-    Items.NewStores;
-
   if Boss then
     V := 25
   else
