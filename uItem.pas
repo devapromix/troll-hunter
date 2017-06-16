@@ -12,6 +12,7 @@ const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
   ArmorTypeItems = [itHeadgear, itBodyArmor];
+  ShieldTypeItems = [itShield];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor];
   FoodTypeItems = [itFood];
@@ -665,28 +666,10 @@ const
     );
 
 type
-  TItemsStore = array [0 .. ItemMax - 1] of Item;
-
-type
-  TStore = class
-  private
-    FItemsStore: TItemsStore;
-    FCount: Byte;
-  public
-    constructor Create;
-    procedure Clear;
-    property Count: Byte read FCount;
-    procedure Add(const AItem: Item);
-    function GetItem(const Index: Byte): Item;
-  end;
-
-type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
   TItems = class(TEntity)
-  private
-    FStore: array [TStoreEnum] of TStore;
   public
     constructor Create;
     destructor Destroy; override;
@@ -713,9 +696,6 @@ type
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
     procedure NewStores;
-    procedure RenderStore;
-    function GetStoreItem(Index: Byte): Item;
-    function GetShopCount: Byte;
   end;
 
 var
@@ -723,7 +703,8 @@ var
 
 implementation
 
-uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes;
+uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
+  uShop;
 
 { TItems }
 
@@ -922,20 +903,12 @@ begin
 end;
 
 constructor TItems.Create;
-var
-  I: TStoreEnum;
 begin
   Items_Open;
-  for I := Low(TStoreEnum) to High(TStoreEnum) do
-    FStore[I] := TStore.Create;
 end;
 
 destructor TItems.Destroy;
-var
-  I: TStoreEnum;
 begin
-  for I := Low(TStoreEnum) to High(TStoreEnum) do
-    FreeAndNil(FStore[I]);
   Items_Close;
   inherited;
 end;
@@ -1450,115 +1423,50 @@ end;
 
 procedure TItems.NewStores;
 var
-  I, ID, Max: Byte;
   FItem: Item;
-  J: TStoreEnum;
+  I, Max: Byte;
+  ID: TItemEnum;
+  Shop: TShopEnum;
 
-  function GetID(): Byte;
+  function GetItemID(): TItemEnum;
   begin
-    Result := Math.RandomRange(Ord(Low(TItemEnum)), Ord(High(TItemEnum)) + 1);
+    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
+      Ord(High(TItemEnum)) + 1));
+  end;
+
+  function Check: Boolean;
+  begin
+    ID := GetItemID();
+    case Shop of
+      shTavern: Result := ID in TavernItems;
+      shHealer: Result := ID in HealItems;
+      shMana: Result := ID in ManaPotionsItems;
+      shPotions: Result := ItemBase[ID].ItemType in PotionTypeItems;
+      shScrolls: Result := ItemBase[ID].ItemType in ScrollTypeItems;
+      shArmors: Result := ItemBase[ID].ItemType in ArmorTypeItems;
+      shShields: Result := ItemBase[ID].ItemType in ShieldTypeItems;
+      shWeapons: Result := ItemBase[ID].ItemType in WeaponTypeItems;
+      shSmith: Result := ItemBase[ID].ItemType in SmithTypeItems;
+      shFoods: Result := ItemBase[ID].ItemType in FoodTypeItems;
+      else Result := False;
+    end;
   end;
 
 begin
-  for J := Low(TStoreEnum) to High(TStoreEnum) do
+  for Shop := Low(TShopEnum) to High(TShopEnum) do
   begin
-    FStore[J].Clear;
+    Shops.Shop[Shop].Clear;
     Max := EnsureRange(Player.Level * 4, 4, ItemMax);
     for I := 0 to Max - 1 do
     begin
-      ID := Ord(Low(TItemEnum));
       repeat
-        case J of
-          sePotions:
-            repeat
-              ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in PotionTypeItems);
-          seScrolls:
-            repeat
-              ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in ScrollTypeItems);
-          seHealer:
-            repeat
-              ID := GetID();
-            until (TItemEnum(ID) in HealItems);
-          seMana:
-            repeat
-              ID := GetID();
-            until (TItemEnum(ID) in ManaPotionsItems);
-          seArmors:
-            repeat
-              ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in ArmorTypeItems);
-          seWeapons:
-            repeat
-              ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems);
-          seSmith:
-            repeat
-              ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in SmithTypeItems);
-          seTavern:
-            repeat
-              ID := GetID();
-            until (TItemEnum(ID) in TavernItems);
-          seFoods:
-            repeat
-              ID := GetID();
-            until (ItemBase[TItemEnum(ID)].ItemType in FoodTypeItems);
-          end;
-          until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
-          Make(ID, FItem);
-          FStore[J].Add(FItem);
-          end;
-          end;
-          end;
-
-          procedure TItems.RenderStore;
-          var I, C:
-            Integer;
-          begin
-            C := EnsureRange(FStore[Player.Store].Count, 0, ItemMax);
-            for I := 0 to C - 1 do
-              Items.RenderInvItem(5, 2, I, FStore[Player.Store].GetItem(I),
-                True, True, ptBuy);
-          end;
-
-          function TItems.GetStoreItem(Index: Byte): Item;
-          begin
-            Result := FStore[Player.Store].GetItem(Index);
-          end;
-
-          function TItems.GetShopCount: Byte;
-begin
-  Result := Length(FStore);
+        repeat until Check;
+      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+      Make(Ord(ID), FItem);
+      Shops.Shop[Shop].Add(FItem);
+    end;
+  end;
 end;
-
-{ TStore }
-
-          procedure TStore.Add(const AItem: Item);
-          begin
-            FItemsStore[FCount] := AItem;
-            Inc(FCount);
-          end;
-
-          procedure TStore.Clear;
-          var
-            I: Byte;
-          begin
-            for I := Low(FItemsStore) to High(FItemsStore) do
-              Items_Clear_Item(FItemsStore[I]);
-            FCount := 0;
-          end;
-
-          constructor TStore.Create;
-          begin
-            Self.Clear;
-          end;
-
-          function TStore.GetItem(const Index: Byte): Item;
-          begin
-            Result := FItemsStore[EnsureRange(Index, 0, ItemMax)];
-          end;
 
 initialization
 

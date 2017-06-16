@@ -2,11 +2,11 @@ unit uMob;
 
 interface
 
-uses uMap, uEntity;
+uses uGame, uMap, uEntity;
 
 type
   TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
-    ntSmithTrader_B, ntArmTrader_A, ntPotTrader_B, ntHealTrader_B,
+    ntSmithTrader_B, ntArmTrader_A, ntShTrader_A, ntPotTrader_B, ntHealTrader_B,
     ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A, ntFoodTrader_A);
 
 type
@@ -338,37 +338,37 @@ const
     // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF3333FF; NPCType: [ntScrTrader_A, ntPotManaTrader_B];),
+    Color: clBlue; NPCType: [ntScrTrader_A, ntPotManaTrader_B];),
 
     // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF33FFFF; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: clWhite; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFFFFFFF; NPCType: [ntBlacksmith_A, ntSmithTrader_B];),
+    Color: clRed; NPCType: [ntBlacksmith_A, ntSmithTrader_B];),
 
     // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF33FF33; NPCType: [ntFoodTrader_A, ntTavTrader_B];),
+    Color: clLightYellow; NPCType: [ntFoodTrader_A, ntTavTrader_B];),
 
     // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF77DDAA; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
-    // Trader
+    // Shield Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FF99DD77; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: clLightBlue; NPCType: [ntShTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: $FFFF4444; NPCType: [ntHealer_A, ntHealTrader_B];)
+    Color: clGreen; NPCType: [ntHealer_A, ntHealTrader_B];)
 
     );
 
@@ -427,7 +427,7 @@ var
 
 implementation
 
-uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext, uGame,
+uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext,
   uItem, BearLibTerminal;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;

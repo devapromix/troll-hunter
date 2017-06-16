@@ -5,10 +5,6 @@ interface
 uses uEntity, uMob;
 
 type
-  TStoreEnum = (sePotions, seScrolls, seHealer, seMana, seSmith, seArmors,
-    seWeapons, seFoods, seTavern);
-
-type
   TSkillEnum = (skLearning,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
@@ -60,7 +56,6 @@ type
     FPV: Byte;
     FExp: Byte;
     FMaxMap: Byte;
-    FStore: TStoreEnum;
     FLook: Boolean;
     FStrength: Byte;
     FDexterity: Byte;
@@ -94,7 +89,6 @@ type
     property PV: Byte read FPV write FPV;
     property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
-    property Store: TStoreEnum read FStore write FStore;
     property Look: Boolean read FLook write FLook;
     property Strength: Byte read FStrength write FStrength;
     property Dexterity: Byte read FDexterity write FDexterity;
@@ -154,7 +148,8 @@ var
 implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uScenes,
-  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse, uCalendar;
+  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse, uCalendar,
+  uShop;
 
 { TPlayer }
 
@@ -361,7 +356,6 @@ begin
   Found := 0;
   Level := 1;
   MaxMap := 0;
-  Store := sePotions;
   Killer := '';
   Alive := True;
   Look := False;
@@ -659,7 +653,7 @@ var
   AItem: Item;
   The: string;
 begin
-  AItem := Items.GetStoreItem(Index);
+  AItem := Shops.Shop[Shops.Current].GetItem(Index);
   Price := Items.GetPrice(AItem);
   if (Items_Inventory_DeleteItemAmount(Ord(iGold), Price) > 0) then
   begin

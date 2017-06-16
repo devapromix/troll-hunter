@@ -16,7 +16,8 @@ uses
   uMsgLog in 'uMsgLog.pas',
   uCorpse in 'uCorpse.pas',
   uEntity in 'uEntity.pas',
-  uCalendar in 'uCalendar.pas';
+  uCalendar in 'uCalendar.pas',
+  uShop in 'uShop.pas';
 
 var
   Key: Word = 0;

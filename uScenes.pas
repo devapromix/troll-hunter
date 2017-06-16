@@ -197,7 +197,7 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar;
+  uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar, uShop;
 
 { TScene }
 
@@ -1186,7 +1186,7 @@ begin
     Add(_('NPC'), 7);
     Add();
     Add(_('Items'), Ord(Length(ItemBase)));
-    Add(_('Shops'), Items.GetShopCount);
+    Add(_('Shops'), Shops.Count);
   end;
 
   AddKey('Esc', _('Close'), True, True);
@@ -1237,6 +1237,13 @@ begin
   begin
     Inc(Y);
     Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (armors)'),
+      TK_ALIGN_LEFT);
+  end;
+
+  if (ntShTrader_A in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (shields)'),
       TK_ALIGN_LEFT);
   end;
 
@@ -1329,19 +1336,25 @@ begin
         if (ntFoodTrader_A in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seFoods;
+          Shops.Current := shFoods;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntShTrader_A in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Shops.Current := shShields;
           Scenes.SetScene(scBuy);
         end;
         if (ntScrTrader_A in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seScrolls;
+          Shops.Current := shScrolls;
           Scenes.SetScene(scBuy);
         end;
         if (ntArmTrader_A in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seArmors;
+          Shops.Current := shArmors;
           Scenes.SetScene(scBuy);
         end;
       end;
@@ -1350,37 +1363,37 @@ begin
         if (ntSmithTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seSmith;
+          Shops.Current := shSmith;
           Scenes.SetScene(scBuy);
         end;
         if (ntTavTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seTavern;
+          Shops.Current := shTavern;
           Scenes.SetScene(scBuy);
         end;
         if (ntHealTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seHealer;
+          Shops.Current := shHealer;
           Scenes.SetScene(scBuy);
         end;
         if (ntPotManaTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seMana;
+          Shops.Current := shMana;
           Scenes.SetScene(scBuy);
         end;
         if (ntPotTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := sePotions;
+          Shops.Current := shPotions;
           Scenes.SetScene(scBuy);
         end;
         if (ntWpnTrader_B in NPCType) then
         begin
           Game.Timer := High(Byte);
-          Player.Store := seWeapons;
+          Shops.Current := shWeapons;
           Scenes.SetScene(scBuy);
         end;
       end;
@@ -1430,7 +1443,7 @@ begin
     [NPCName, Player.Gold]));
 
   Self.FromAToZ;
-  Items.RenderStore;
+  Shops.Render;
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
