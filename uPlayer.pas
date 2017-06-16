@@ -80,7 +80,7 @@ type
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
-    property Satiation: Word read FSatiation write FSatiation;
+    property Satiation: Word read FSatiation write FSatiation; // Nutrition
     property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;

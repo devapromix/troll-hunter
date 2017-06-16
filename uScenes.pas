@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar);
+    scSell, scRepair, scBuy, scCalendar);  // scSpells, scIdentification, scRest
 
 type
   TScene = class(TObject)

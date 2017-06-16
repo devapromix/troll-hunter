@@ -57,6 +57,7 @@ type
     iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfFullRejuvenation,
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
     iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing,
+    iScrollOfHunger,
     iValleyRoot, iRatPod,
     iKey,
     // Dark Wood
@@ -115,7 +116,7 @@ const
     iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
     iPotionOfRejuvenation3, iPotionOfFullRejuvenation, iScrollOfHealing1,
     iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
-  TavernItems = [iKey];
+  TavernItems = [iKey, iScrollOfHunger];
   NotDropItems = [iNone, iCorpse, iKey];
   UseItems = DrinkItems + FoodItems + ReadItems;
   NotEquipItems = UseItems + NotDropItems + [iGold];
@@ -193,8 +194,8 @@ const
     // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efMana];
-    Value: 200;),
+    Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom];
+    Effects: [efMana]; Value: 200;),
     // Potion of Full Mana
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
@@ -214,24 +215,30 @@ const
     // Scroll of healing 3
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
-    Value: 200; ManaCost: 40;),
+    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom];
+    Effects: [efHeal]; Value: 200; ManaCost: 40;),
     // Scroll of Full Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 300; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
     Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
 
+    // Scroll of Hunger
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 350; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efFood]; Value: 400; ManaCost: 100;),
+
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 175; Color: clLightestYellow; Deep: [deDarkWood .. deDrom]; Effects: [efFood];
-    Value: 250;),
+    Price: 175; Color: clLightestYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efFood]; Value: 250;),
     // Rat pod
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 200; Color: clLightestGreen; Deep: [deDarkWood .. deDrom]; Effects: [efFood];
-    Value: 300;),
+    Price: 200; Color: clLightestGreen; Deep: [deDarkWood .. deDrom];
+    Effects: [efFood]; Value: 300;),
 
     // Key
     (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16;
@@ -978,6 +985,9 @@ begin
     // Scroll of healing
     iScrollOfFullHealing:
       Result := _('Scroll of full healing');
+    // Scroll of hunger
+    iScrollOfHunger:
+      Result := _('Scroll of hunger');
 
     // Valley root
     iValleyRoot:
