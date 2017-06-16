@@ -58,7 +58,7 @@ type
     iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
     iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing,
     iScrollOfHunger,
-    iValleyRoot, iRatPod,
+    iBreadRation, iValleyRoot, iRatPod,
     iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
@@ -107,7 +107,7 @@ const
     iPotionOfFullHealing, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
     iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
     iPotionOfRejuvenation3, iPotionOfFullRejuvenation];
-  FoodItems = [iValleyRoot, iRatPod];
+  FoodItems = [iBreadRation, iValleyRoot, iRatPod];
   ReadItems = [iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
     iScrollOfFullHealing];
   ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
@@ -229,6 +229,11 @@ const
     Price: 350; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 400; ManaCost: 100;),
 
+    // Bread ration
+    (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
+    //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 100; Color: clYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efFood]; Value: 150;),
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
@@ -989,6 +994,9 @@ begin
     iScrollOfHunger:
       Result := _('Scroll of hunger');
 
+    // Bread ration
+    iBreadRation:
+      Result := _('Bread ration');
     // Valley root
     iValleyRoot:
       Result := _('Valley root');
