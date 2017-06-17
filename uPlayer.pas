@@ -954,8 +954,6 @@ begin
 end;
 
 procedure TPlayer.StarterSet;
-var
-  G: Word;
 begin
   // Add armors
   if Game.Wizard then
@@ -1006,9 +1004,10 @@ begin
     Items.AddItemToInv(iPotionOfHealing1, 5);
     Items.AddItemToInv(iPotionOfMana1, 5);
   end;
+  // Add foods
+  Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));
   // Add coins
-  G := IfThen(Game.Wizard, RandomRange(6666, 9999), 50); // :)
-  Items.AddItemToInv(iGold, G);
+  Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), 50));
   Self.Calc;
 end;
 

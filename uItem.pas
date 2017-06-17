@@ -233,7 +233,7 @@ const
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 100; Color: clYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 150;),
+    Effects: [efFood]; Value: 450;),
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     //MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
