@@ -74,6 +74,8 @@ type
     FSatPerTurn: Byte;
     FIsRest: Boolean;
     procedure GenNPCText;
+    function GetDV: Byte;
+    function GetPV: Byte;
   public
     constructor Create;
     destructor Destroy; override;
@@ -85,8 +87,8 @@ type
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
     property Radius: Byte read FRadius write FRadius;
-    property DV: Byte read FDV write FDV;
-    property PV: Byte read FPV write FPV;
+    property DV: Byte read GetDV write FDV;
+    property PV: Byte read GetPV write FPV;
     property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
@@ -112,8 +114,6 @@ type
     procedure Wait;
     procedure AddTurn;
     function GetRadius: Byte;
-    function GetDV: Byte;
-    function GetPV: Byte;
     function GetSatiation: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
@@ -230,27 +230,27 @@ begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics, 2);
           Skill(skDodge, 2);
-    SatPerTurn := 5;
+          SatPerTurn := 5;
         end;
       skAxe:
         begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics, 3);
           Skill(skDodge);
-    SatPerTurn := 6;
+          SatPerTurn := 6;
         end;
       skSpear:
         begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics);
           Skill(skDodge, 3);
-    SatPerTurn := 4;
+          SatPerTurn := 4;
         end;
       skMace:
         begin
           Skill(FWeaponSkill, 2);
           Skill(skAthletics, 4);
-    SatPerTurn := 7;
+          SatPerTurn := 7;
         end;
     end;
     // Victory

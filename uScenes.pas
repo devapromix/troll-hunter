@@ -948,12 +948,12 @@ begin
   Terminal.Print(X, Y + 10, Format('%s %d/%d', [_('Perception'),
     Player.Perception, AtrMax]), TK_ALIGN_CENTER);
 
-  RenderBar(1, 0, Y + 14, W, Player.GetDV, DVMax, clDarkGreen, clDarkGray);
+  RenderBar(1, 0, Y + 14, W, Player.DV, DVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d', [_('Defensive Value (DV)'),
-    Player.GetDV, DVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 16, W, Player.GetPV, PVMax, clDarkGreen, clDarkGray);
+    Player.DV, DVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 16, W, Player.PV, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [_('Protection Value (PV)'),
-    Player.GetPV, PVMax]), TK_ALIGN_CENTER);
+    Player.PV, PVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clDarkRed,
     clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [_('Life'), Player.Life,
