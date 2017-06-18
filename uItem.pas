@@ -683,6 +683,7 @@ type
 type
   TItems = class(TEntity)
   public
+    class procedure Make(ID: Byte; var AItem: Item);
     constructor Create;
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
@@ -707,7 +708,6 @@ type
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
-    procedure NewStores;
   end;
 
 var
@@ -766,7 +766,7 @@ begin
     Result := Result + Format(' ID: %d', [ID]);
 end;
 
-procedure Make(ID: Byte; var AItem: Item);
+class procedure TItems.Make(ID: Byte; var AItem: Item);
 begin
   Items_Clear_Item(AItem);
   AItem.ItemID := ID;
@@ -1437,53 +1437,6 @@ begin
   for I := 0 to C - 1 do
     Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True,
       PriceType);
-end;
-
-procedure TItems.NewStores;
-var
-  FItem: Item;
-  I, Max: Byte;
-  ID: TItemEnum;
-  Shop: TShopEnum;
-
-  function GetItemID(): TItemEnum;
-  begin
-    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
-      Ord(High(TItemEnum)) + 1));
-  end;
-
-  function Check: Boolean;
-  begin
-    ID := GetItemID();
-    case Shop of
-      shTavern: Result := ID in TavernItems;
-      shHealer: Result := ID in HealItems;
-      shMana: Result := ID in ManaPotionsItems;
-      shPotions: Result := ItemBase[ID].ItemType in PotionTypeItems;
-      shScrolls: Result := ItemBase[ID].ItemType in ScrollTypeItems;
-      shArmors: Result := ItemBase[ID].ItemType in ArmorTypeItems;
-      shShields: Result := ItemBase[ID].ItemType in ShieldTypeItems;
-      shWeapons: Result := ItemBase[ID].ItemType in WeaponTypeItems;
-      shSmith: Result := ItemBase[ID].ItemType in SmithTypeItems;
-      shFoods: Result := ItemBase[ID].ItemType in FoodTypeItems;
-      else Result := False;
-    end;
-  end;
-
-begin
-  for Shop := Low(TShopEnum) to High(TShopEnum) do
-  begin
-    Shops.Shop[Shop].Clear;
-    Max := EnsureRange(Player.Level * 4, 4, ItemMax);
-    for I := 0 to Max - 1 do
-    begin
-      repeat
-        repeat until Check;
-      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
-      Make(Ord(ID), FItem);
-      Shops.Shop[Shop].Add(FItem);
-    end;
-  end;
 end;
 
 initialization

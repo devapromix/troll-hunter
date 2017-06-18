@@ -34,6 +34,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure New;
     procedure Clear;
     procedure Render;
     function Count: Byte;
@@ -47,7 +48,7 @@ var
 implementation
 
 uses
-  SysUtils, Math;
+  SysUtils, Math, uMap;
 
 { TShop }
 
@@ -111,6 +112,53 @@ end;
 function TShops.GetShop(I: TShopEnum): TShop;
 begin
   Result := FShop[I];
+end;
+
+procedure TShops.New;
+var
+  FItem: Item;
+  I, Max: Byte;
+  ID: TItemEnum;
+  Shop: TShopEnum;
+
+  function GetItemID(): TItemEnum;
+  begin
+    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
+      Ord(High(TItemEnum)) + 1));
+  end;
+
+  function Check: Boolean;
+  begin
+    ID := GetItemID();
+    case Shop of
+      shTavern: Result := ID in TavernItems;
+      shHealer: Result := ID in HealItems;
+      shMana: Result := ID in ManaPotionsItems;
+      shPotions: Result := ItemBase[ID].ItemType in PotionTypeItems;
+      shScrolls: Result := ItemBase[ID].ItemType in ScrollTypeItems;
+      shArmors: Result := ItemBase[ID].ItemType in ArmorTypeItems;
+      shShields: Result := ItemBase[ID].ItemType in ShieldTypeItems;
+      shWeapons: Result := ItemBase[ID].ItemType in WeaponTypeItems;
+      shSmith: Result := ItemBase[ID].ItemType in SmithTypeItems;
+      shFoods: Result := ItemBase[ID].ItemType in FoodTypeItems;
+      else Result := False;
+    end;
+  end;
+
+begin
+  for Shop := Low(TShopEnum) to High(TShopEnum) do
+  begin
+    Shops.Shop[Shop].Clear;
+    Max := EnsureRange(Player.Level * 4, 4, ItemMax);
+    for I := 0 to Max - 1 do
+    begin
+      repeat
+        repeat until Check;
+      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+      Items.Make(Ord(ID), FItem);
+      Shops.Shop[Shop].Add(FItem);
+    end;
+  end;
 end;
 
 procedure TShops.Render;

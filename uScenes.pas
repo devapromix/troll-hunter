@@ -759,7 +759,7 @@ begin
       Scenes.SetScene(scHelp);
     TK_Y:
       if Game.Wizard then
-        Items.NewStores;
+        Shops.New;
   end;
 end;
 

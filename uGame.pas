@@ -80,7 +80,7 @@ var
 implementation
 
 uses SysUtils, Math, Dialogs, uPlayer, uMsgLog, uScenes, gnugettext,
-  BearLibTerminal, uItem, uMob, uTerminal;
+  BearLibTerminal, uItem, uMob, uTerminal, uShop;
 
 { TGame }
 
@@ -143,7 +143,7 @@ begin
   IsMode := True;
   Player.SkillSet;
   Player.StarterSet;
-  Items.NewStores;
+  Shops.New;
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [_('Welcome to Elvion!'),

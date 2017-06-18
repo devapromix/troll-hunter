@@ -383,6 +383,7 @@ type
     Maps: TMapEnum;
     Sleep: Boolean;
     Boss: Boolean;
+    function GetRadius: Byte;
   public
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AID: Integer = -1; AForce: TForce = fcEnemy);
@@ -392,10 +393,10 @@ type
     procedure Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
     procedure Attack;
     procedure Defeat;
-    function GetRadius: Byte;
     procedure DropItems;
     property ID: Byte read FID write FID;
     property Force: TForce read FForce write FForce;
+    property Radius: Byte read GetRadius;
   end;
 
 type
@@ -415,8 +416,8 @@ type
     procedure Render(AX, AY: Byte);
     function GetFreeTile(AX, AY: Byte): Boolean;
     function GetIndex(AX, AY: Byte): Integer;
-    function GetName(AMobEnum: TMobEnum): string;
     property Mob[I: Integer]: TMob read GetMob write SetMob;
+    function GetName(AMobEnum: TMobEnum): string;
   end;
 
 type

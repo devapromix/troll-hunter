@@ -38,7 +38,7 @@ var
 
 implementation
 
-uses SysUtils, Math, GNUGetText, uItem;
+uses SysUtils, Math, GNUGetText, uItem, uShop;
 
 { TCalendar }
 
@@ -128,7 +128,7 @@ end;
 
 procedure TCalendar.OnWeek;
 begin
-  Items.NewStores;
+  Shops.New;
 end;
 
 procedure TCalendar.OnYear;
