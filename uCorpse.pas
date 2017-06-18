@@ -167,7 +167,7 @@ begin
     X := FCorpse[I].X - Player.X + AX + View.Left;
     Y := FCorpse[I].Y - Player.Y + AY + View.Top;
     if not Game.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) >
-      Player.GetRadius) then
+      Player.Radius) then
       Color := clFog
     else
       Color := clCorpse;

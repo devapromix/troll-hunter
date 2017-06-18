@@ -546,7 +546,7 @@ var
 
 begin
   // Map
-  R := Player.GetRadius;
+  R := Player.Radius;
   if not Game.Wizard then
   begin
     Min.X := Player.X - R;
@@ -962,8 +962,8 @@ begin
     clDarkGray);
   Terminal.Print(X, Y + 20, Format('%s %d/%d', [_('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 22, W, Player.GetRadius, RadiusMax, clGray, clDarkGray);
-  Terminal.Print(X, Y + 22, Format('%s %d/%d', [_('Radius'), Player.GetRadius,
+  RenderBar(1, 0, Y + 22, W, Player.Radius, RadiusMax, clGray, clDarkGray);
+  Terminal.Print(X, Y + 22, Format('%s %d/%d', [_('Radius'), Player.Radius,
     RadiusMax]), TK_ALIGN_CENTER);
 end;
 

@@ -76,6 +76,7 @@ type
     procedure GenNPCText;
     function GetDV: Byte;
     function GetPV: Byte;
+    function GetRadius: Byte;
   public
     constructor Create;
     destructor Destroy; override;
@@ -86,7 +87,7 @@ type
     property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
-    property Radius: Byte read FRadius write FRadius;
+    property Radius: Byte read GetRadius write FRadius;
     property DV: Byte read GetDV write FDV;
     property PV: Byte read GetPV write FPV;
     property Exp: Byte read FExp write FExp;
@@ -113,7 +114,6 @@ type
     procedure Fill;
     procedure Wait;
     procedure AddTurn;
-    function GetRadius: Byte;
     function GetSatiation: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
@@ -415,17 +415,17 @@ end;
 
 function TPlayer.GetDV: Byte;
 begin
-  Result := EnsureRange(Self.DV, 0, DVMax);
+  Result := EnsureRange(FDV, 0, DVMax);
 end;
 
 function TPlayer.GetPV: Byte;
 begin
-  Result := EnsureRange(Self.PV, 0, PVMax);
+  Result := EnsureRange(FPV, 0, PVMax);
 end;
 
 function TPlayer.GetRadius: Byte;
 begin
-  Result := EnsureRange(Self.Radius + 3, 1, RadiusMax);
+  Result := EnsureRange(FRadius + 3, 1, RadiusMax);
 end;
 
 function TPlayer.GetSatiation: string;

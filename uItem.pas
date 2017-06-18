@@ -905,7 +905,7 @@ begin
       Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.GetRadius)
+    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Radius)
     then
       Color := clFog
     else

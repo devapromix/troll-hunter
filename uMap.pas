@@ -277,8 +277,8 @@ procedure TMap.ClearFOV;
 var
   X, Y: Integer;
 begin
-  for Y := Player.Y - Player.GetRadius to Player.Y + Player.GetRadius do
-    for X := Player.X - Player.GetRadius to Player.X + Player.GetRadius do
+  for Y := Player.Y - Player.Radius to Player.Y + Player.Radius do
+    for X := Player.X - Player.Radius to Player.X + Player.Radius do
       FFOV[EnsureRange(X, 0, High(Byte))][EnsureRange(Y, 0, High(Byte))
         ] := False;
 end;

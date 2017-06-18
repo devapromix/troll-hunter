@@ -627,7 +627,7 @@ var
 begin
   if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then
     Exit;
-  if not Game.Wizard and (Player.GetDist(X, Y) > Player.GetRadius) then
+  if not Game.Wizard and (Player.GetDist(X, Y) > Player.Radius) then
     Exit;
   C := MobBase[TMobEnum(ID)].Symbol;
   if (Self.Boss) then
