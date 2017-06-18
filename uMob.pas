@@ -405,6 +405,7 @@ type
     FMob: array of TMob;
     function GetMob(I: Integer): TMob;
     procedure SetMob(I: Integer; const Value: TMob);
+    function GetName(I: TMobEnum): string;
   public
     constructor Create();
     destructor Destroy; override;
@@ -417,7 +418,7 @@ type
     function GetFreeTile(AX, AY: Byte): Boolean;
     function GetIndex(AX, AY: Byte): Integer;
     property Mob[I: Integer]: TMob read GetMob write SetMob;
-    function GetName(AMobEnum: TMobEnum): string;
+    property Name[I: TMobEnum]: string read GetName;
   end;
 
 type
@@ -824,9 +825,9 @@ begin
   FMob[I] := Value;
 end;
 
-function TMobs.GetName(AMobEnum: TMobEnum): string;
+function TMobs.GetName(I: TMobEnum): string;
 begin
-  case AMobEnum of
+  case I of
 
     // == Dark Wood == //
 

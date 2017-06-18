@@ -46,6 +46,7 @@ type
     procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
       ATile: TTileEnum; AZ: TMapEnum);
     procedure InitTiles;
+    function GetName: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -65,7 +66,7 @@ type
     function GetTile(ATileEnum: TTileEnum): TTile; overload;
     procedure SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
     function GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
-    function GetName: string;
+    property Name: string read GetName;
   end;
 
 var

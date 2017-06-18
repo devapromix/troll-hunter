@@ -517,7 +517,7 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%d/%d). ', [Mobs.GetName(TMobEnum(Mobs.Mob[C].ID)),
+        S := S + Format('%s (%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
           Mobs.Mob[C].Life, Mobs.Mob[C].MaxLife]);
       end;
     end;
@@ -618,9 +618,9 @@ begin
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top, _('Player'));
   if Game.Wizard then
-    S := Format('%s (%d:%d)', [Map.GetName, Player.X, Player.Y])
+    S := Format('%s (%d:%d)', [Map.Name, Player.X, Player.Y])
   else
-    S := Map.GetName;
+    S := Map.Name;
   Terminal.Print(Status.Left + Status.Width - 1, Status.Top, S, TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 1,
@@ -1529,7 +1529,7 @@ begin
   Add(_('Day'), Calendar.Day, Calendar.GetDayName);
   Add(_('Month'), Calendar.Month, Calendar.GetMonthName);
   Add(_('Year'), Calendar.Year);
-  Add(_('Map'), Map.GetName);
+  Add(_('Map'), Map.Name);
 
   AddKey('Esc', _('Close'), True, True);
 end;

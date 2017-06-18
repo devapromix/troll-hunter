@@ -682,6 +682,8 @@ type
 
 type
   TItems = class(TEntity)
+  private
+    function GetName(I: TItemEnum): string;
   public
     class procedure Make(ID: Byte; var AItem: Item);
     constructor Create;
@@ -689,7 +691,6 @@ type
     procedure Render(AX, AY: Byte);
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AID: Integer = -1; IsRare: Boolean = False);
-    function GetName(AItemEnum: TItemEnum): string;
     function GetItemEnum(AItemID: Integer): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
       ACount: Byte = 0): string;
@@ -708,6 +709,7 @@ type
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
+    property Name[I: TItemEnum]: string read GetName;
   end;
 
 var
@@ -925,9 +927,9 @@ begin
   inherited;
 end;
 
-function TItems.GetName(AItemEnum: TItemEnum): string;
+function TItems.GetName(I: TItemEnum): string;
 begin
-  case AItemEnum of
+  case I of
     // == All maps == //
     // None
     iNone:

@@ -194,7 +194,7 @@ begin
     GenNPCText;
     Exit;
   end;
-  The := GetDescThe(Mobs.GetName(TMobEnum(Mob.ID)));
+  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   if (MobBase[TMobEnum(Mob.ID)].DV < Math.RandomRange(0, 100)) then
   begin
     CrStr := '';
@@ -390,7 +390,7 @@ end;
 procedure TPlayer.Dialog(AMob: TMob);
 begin
   Game.Timer := High(Byte);
-  NPCName := Mobs.GetName(TMobEnum(AMob.ID));
+  NPCName := Mobs.Name[TMobEnum(AMob.ID)];
   NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
   Scenes.SetScene(scDialog);
 end;
@@ -551,7 +551,7 @@ begin
     begin
       AItem.Amount := AItem.Amount - 1;
       T := ItemBase[I].ItemType;
-      The := GetDescThe(Items.GetName(I));
+      The := GetDescThe(Items.Name[I]);
       case T of
         itPotion: MsgLog.Add(Format(_('You drink %s.'), [The]));
         itScroll: MsgLog.Add(Format(_('You read %s.'), [The]));
@@ -607,7 +607,7 @@ begin
   I := Items_Inventory_EquipItem(Index);
   if (I > -1) then UnEquip(I);
   // Equip
-  The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
+  The := GetDescThe(Items.Name[Items.GetItemEnum(AItem.ItemID)]);
   MsgLog.Add(Format(_('You equip %s.'), [The]));
   Self.Calc;
   Wait;
@@ -621,7 +621,7 @@ begin
   if (Items_Inventory_UnEquipItem(Index) > 0) then
   begin
     AItem := Items_Inventory_GetItem(Index);
-    The := GetDescThe(Items.GetName(Items.GetItemEnum(AItem.ItemID)));
+    The := GetDescThe(Items.Name[Items.GetItemEnum(AItem.ItemID)]);
     MsgLog.Add(Format(_('You unequip %s.'), [The]));
     Self.Calc;
     Wait;
@@ -641,7 +641,7 @@ begin
   begin
     Value := Items.GetPrice(AItem) div 4;
     Items.AddItemToInv(iGold, Value);
-    The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+    The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
     MsgLog.Add(Format(_('You sold %s (+%d gold).'), [The, Value]));
   end;
   Self.Calc;
@@ -657,7 +657,7 @@ begin
   Price := Items.GetPrice(AItem);
   if (Items_Inventory_DeleteItemAmount(Ord(iGold), Price) > 0) then
   begin
-    The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+    The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
     MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, Price]));
     Items_Inventory_AppendItem(AItem);
     Self.Calc;
@@ -702,7 +702,7 @@ begin
     if ((Items_Inventory_DeleteItemAmount(Ord(iGold), RepairCost) > 0) and
       (Items_Inventory_SetItem(Index, AItem) > 0)) then
     begin
-      The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+      The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
       MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
     end;
   end;
@@ -724,7 +724,7 @@ var
       AItem.Equipment := 0;
       AItem.MapID := Ord(Map.Current);
       Items_Dungeon_AppendItem(AItem);
-      The := GetDescThe(Items.GetName(TItemEnum(AItem.ItemID)));
+      The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
       MsgLog.Add(Format(_('You drop %s.'), [The]));
       Wait;
     end;
@@ -755,7 +755,7 @@ begin
   FItem.MapID := Ord(Map.Current);
   FItem.Amount := Player.ItemAmount;
   Items_Dungeon_AppendItem(FItem);
-  The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
+  The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
   else
@@ -800,7 +800,7 @@ begin
     Player.Y, FItem);
   FItem.Amount := Player.ItemAmount;
   Items_Inventory_AppendItem(FItem);
-  The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
+  The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]))
   else
@@ -928,7 +928,7 @@ begin
   if not Map.GetVis(Map.Current) then
   begin
     MsgLog.Add(Format(FC, [clAlarm,
-      Format(_('You have opened a new territory: %s.'), [Map.GetName])]));
+      Format(_('You have opened a new territory: %s.'), [Map.Name])]));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
       Score := Score + (Ord(Map.Current) * 15);
