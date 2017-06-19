@@ -630,7 +630,7 @@ begin
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 3,
     Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
-    Player.GetSatiation]));
+    Player.GetSatiationStr]));
   Terminal.Print(Status.Left, Status.Top + 4,
     Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));

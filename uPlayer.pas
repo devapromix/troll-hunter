@@ -77,13 +77,14 @@ type
     function GetDV: Byte;
     function GetPV: Byte;
     function GetRadius: Byte;
+    function GetSatiation: Word;
   public
     constructor Create;
     destructor Destroy; override;
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
-    property Satiation: Word read FSatiation write FSatiation; // Nutrition
+    property Satiation: Word read GetSatiation write FSatiation; // Nutrition
     property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
@@ -114,7 +115,7 @@ type
     procedure Fill;
     procedure Wait;
     procedure AddTurn;
-    function GetSatiation: string;
+    function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetSkill(ASkill: TSkillEnum): TSkill;
@@ -428,7 +429,7 @@ begin
   Result := EnsureRange(FRadius + 3, 1, RadiusMax);
 end;
 
-function TPlayer.GetSatiation: string;
+function TPlayer.GetSatiationStr: string;
 begin
   Result := '';
   case Satiation of
@@ -450,6 +451,11 @@ begin
     StarvingMax + 1 .. SatiatedMax: Result := Format('[color=light yellow]%s[/color]', [Result]);
     else Result := Format('[color=light green]%s[/color]', [Result]);
   end;
+end;
+
+function TPlayer.GetSatiation: Word;
+begin
+  Result := EnsureRange(FSatiation, 0, EngorgedMax);
 end;
 
 function TPlayer.GetSkill(ASkill: TSkillEnum): TSkill;
@@ -1054,7 +1060,7 @@ begin
   // Food
   if (efFood in Effects) then
   begin
-    Satiation := EnsureRange(Satiation + Value, 0, EngorgedMax);
+    FSatiation := FSatiation + Value;
     MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
   end;
 end;
