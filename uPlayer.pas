@@ -29,11 +29,11 @@ const
   RadiusMax = 15;
   DVMax = 80;
   PVMax = 250;
-  LevelExpMax = 10;
+  LevelExpMax = 8;
   // Skills
   SkillMin = 5;
   SkillMax = 75;
-  SkillExpMax = 55;
+  SkillExpMax = 50;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
