@@ -50,6 +50,15 @@ implementation
 uses
   SysUtils, Math, uMap;
 
+const
+  ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
+    iPotionOfFullMana];
+  HealItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
+    iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
+    iPotionOfRejuvenation3, iPotionOfFullRejuvenation, iScrollOfHealing1,
+    iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
+  TavernItems = [iKey, iScrollOfHunger];
+
 { TShop }
 
 procedure TShop.Add(const AItem: Item);

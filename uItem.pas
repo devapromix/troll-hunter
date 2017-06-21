@@ -11,15 +11,19 @@ type
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
+  FoodTypeItems = [itFood];
+  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems;
+  NotDropTypeItems = [itNone, itCorpse, itKey];
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin];
+  AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   ArmorTypeItems = [itHeadgear, itBodyArmor];
   ShieldTypeItems = [itShield];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor];
-  FoodTypeItems = [itFood];
 
 type
-  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand, stNeck,
-    stFinger);
+  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
+    stNeck, stFinger);
 
 type
   TItemBase = record
@@ -101,26 +105,6 @@ type
     iSoulReaver, iHonedSpear, // Spear
     iWarMaul, iDoomHammer // Mace
     );
-
-const
-  DrinkItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
-    iPotionOfFullHealing, iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
-    iPotionOfFullMana, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
-    iPotionOfRejuvenation3, iPotionOfFullRejuvenation];
-  FoodItems = [iBreadRation, iValleyRoot, iRatPod];
-  ReadItems = [iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
-    iScrollOfFullHealing];
-  ManaPotionsItems = [iPotionOfMana1, iPotionOfMana2, iPotionOfMana3,
-    iPotionOfFullMana];
-  HealItems = [iPotionOfHealing1, iPotionOfHealing2, iPotionOfHealing3,
-    iPotionOfFullHealing, iPotionOfRejuvenation1, iPotionOfRejuvenation2,
-    iPotionOfRejuvenation3, iPotionOfFullRejuvenation, iScrollOfHealing1,
-    iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
-  TavernItems = [iKey, iScrollOfHunger];
-  NotDropItems = [iNone, iCorpse, iKey];
-  UseItems = DrinkItems + FoodItems + ReadItems;
-  NotEquipItems = UseItems + NotDropItems + [iGold];
-  AutoPickupItems = NotEquipItems - NotDropItems;
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -826,13 +810,12 @@ begin
     Inc(I);
   until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and
     (AZ in ItemBase[TItemEnum(ID)].Deep);
-  if ((AID < 0) and (TItemEnum(ID) in NotDropItems)) then
+  IT := ItemBase[TItemEnum(ID)].ItemType;
+  if ((AID < 0) and (IT in NotDropTypeItems)) then
     Exit;
   Make(ID, FItem);
+  FItem.Amount := 1;
   FItem.MapID := Ord(AZ);
-  FItem.Amount := EnsureRange(Math.RandomRange(0, ItemBase[TItemEnum(ID)
-    ].MaxStack div 3) + 1, 1, ItemBase[TItemEnum(ID)].MaxStack);
-  IT := ItemBase[TItemEnum(ID)].ItemType;
   case IT of
     itCoin:
       begin

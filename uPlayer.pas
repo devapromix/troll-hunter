@@ -280,7 +280,7 @@ begin
   for Index := FCount - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
-    if (TItemEnum(FItem.ItemID) in AutoPickupItems) then
+    if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in AutoPickupItems) then
     begin
       Items.AddItemToInv(Index, True);
       Wait;
@@ -551,12 +551,12 @@ var
 begin
   AItem := Items_Inventory_GetItem(Index);
   I := TItemEnum(AItem.ItemID);
-  if (I in NotEquipItems) then
+  T := ItemBase[I].ItemType;
+  if (T in NotEquipTypeItems) then
   begin
-    if (I in UseItems) then
+    if (T in UseTypeItems) then
     begin
       AItem.Amount := AItem.Amount - 1;
-      T := ItemBase[I].ItemType;
       The := GetDescThe(Items.Name[I]);
       case T of
         itPotion: MsgLog.Add(Format(_('You drink %s.'), [The]));
