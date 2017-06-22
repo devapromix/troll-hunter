@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar);  // scSpells, scIdentification, scRest
+    scSell, scRepair, scBuy, scCalendar, scDif);  // scSpells, scIdentification, scRest
 
 type
   TScene = class(TObject)
@@ -58,6 +58,13 @@ type
 
 type
   TSceneStatistics = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneDif = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -306,6 +313,8 @@ begin
         FScene[I] := TSceneRepair.Create;
       scCalendar:
         FScene[I] := TSceneCalendar.Create;
+      scDif:
+        FScene[I] := TSceneDif.Create;
     end;
 end;
 
@@ -387,13 +396,7 @@ begin
     TK_ESCAPE:
       Game.CanClose := True;
     TK_ENTER, TK_KP_ENTER:
-      begin
-        Scenes.SetScene(scLoad);
-        Terminal.Refresh;
-        Map.Gen;
-        terminal_delay(1000);
-        Game.Start();
-      end;
+      Scenes.SetScene(scDif);
   end;
 end;
 
@@ -1539,6 +1542,28 @@ begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+  end;
+end;
+
+{ TSceneDif }
+
+procedure TSceneDif.Render;
+begin
+  Terminal.Print(CX, CY + 1, Format(_('Press %s to continue...'),
+    [KeyStr('ENTER')]), TK_ALIGN_CENTER);
+end;
+
+procedure TSceneDif.Update(var Key: Word);
+begin
+  case Key of
+    TK_ENTER, TK_KP_ENTER:
+      begin
+        Scenes.SetScene(scLoad);
+        Terminal.Refresh;
+        Map.Gen;
+        terminal_delay(1000);
+        Game.Start();
+      end;
   end;
 end;
 
