@@ -49,8 +49,12 @@ var
   clAlarm: string = 'Lightest Green';
 
 type
+  TDifficulty = (dfEasy, dfNormal, dfHard);
+
+type
   TGame = class(TObject)
   private
+    FDifficulty: TDifficulty;
     FTimer: Byte;
     FWon: Boolean;
     FMode: Boolean;
@@ -60,6 +64,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    property Difficulty: TDifficulty read FDifficulty write FDifficulty;
     property Timer: Byte read FTimer write FTimer;
     property Won: Boolean read FWon write FWon;
     property IsMode: Boolean read FMode write FMode;
@@ -94,6 +99,7 @@ begin
   IsMode := False;
   Wizard := False;
   CanClose := False;
+  Difficulty := dfNormal;
   for I := 1 to ParamCount do
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
