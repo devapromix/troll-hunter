@@ -1142,11 +1142,11 @@ var
     end;
   end;
 
-  procedure Add(AText: string; AValue: string); overload;
+  procedure Add(AText: string; AValue: string; AColor: Cardinal = clGreen); overload;
   begin
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(clGreen);
+    Terminal.ForegroundColor(AColor);
     Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
       TK_ALIGN_RIGHT);
     Inc(X);
@@ -1161,6 +1161,12 @@ begin
   Self.Title(_('Statistics'));
   X := 1;
   Y := 3;
+  case Game.Difficulty of
+    dfEasy: Add(_('Difficulty'), _('Easy'));
+    dfNormal: Add(_('Difficulty'), _('Normal'));
+    dfHard: Add(_('Difficulty'), _('Hard'), clRed);
+  end;
+  Add();
   Add(_('Scores'), Player.Score);
   Add(_('Tiles Moved'), Player.Turn);
   Add(_('Monsters Killed'), Player.Kills);
@@ -1177,12 +1183,13 @@ begin
 
   if Game.Wizard then
   begin
-    Y := Y + 2;
+    X := 1;
+    Y := Y + 3;
     Self.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
     Add(_('Game version'), Game.GetVersion);
-    Add();
     Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
+    Add();
     Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
@@ -1549,7 +1556,7 @@ end;
 
 procedure TSceneDifficulty.Render;
 begin
-  Self.Title(_('Select difficulty'));
+  Self.Title(_('Difficulty'));
 
   Terminal.Print(CX - 5, CY - 2, Format('%s %s', [KeyStr('A'), _('Easy')]), TK_ALIGN_LEFT);
   Terminal.Print(CX - 5, CY, Format('%s %s', [KeyStr('B'), _('Normal')]), TK_ALIGN_LEFT);
