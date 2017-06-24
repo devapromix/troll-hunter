@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDif);  // scSpells, scIdentification, scRest
+    scSell, scRepair, scBuy, scCalendar, scDifficulty);  // scSpells, scIdentification, scRest
 
 type
   TScene = class(TObject)
@@ -64,7 +64,7 @@ type
   end;
 
 type
-  TSceneDif = class(TScene)
+  TSceneDifficulty = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -313,8 +313,8 @@ begin
         FScene[I] := TSceneRepair.Create;
       scCalendar:
         FScene[I] := TSceneCalendar.Create;
-      scDif:
-        FScene[I] := TSceneDif.Create;
+      scDifficulty:
+        FScene[I] := TSceneDifficulty.Create;
     end;
 end;
 
@@ -396,7 +396,7 @@ begin
     TK_ESCAPE:
       Game.CanClose := True;
     TK_ENTER, TK_KP_ENTER:
-      Scenes.SetScene(scDif);
+      Scenes.SetScene(scDifficulty);
   end;
 end;
 
@@ -1545,25 +1545,37 @@ begin
   end;
 end;
 
-{ TSceneDif }
+{ TSceneDifficulty }
 
-procedure TSceneDif.Render;
+procedure TSceneDifficulty.Render;
 begin
-  Terminal.Print(CX, CY + 1, Format(_('Press %s to continue...'),
-    [KeyStr('ENTER')]), TK_ALIGN_CENTER);
+  Self.Title(_('Select difficulty'));
+
+  Terminal.Print(CX - 5, CY - 2, Format('%s %s', [KeyStr('A'), _('Easy')]), TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY, Format('%s %s', [KeyStr('B'), _('Normal')]), TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY + 2, Format('%s %s', [KeyStr('C'), _('Hard')]), TK_ALIGN_LEFT);
+
+  AddKey('Esc', _('Back'), True, True);
 end;
 
-procedure TSceneDif.Update(var Key: Word);
+procedure TSceneDifficulty.Update(var Key: Word);
 begin
   case Key of
-    TK_ENTER, TK_KP_ENTER:
+    TK_A, TK_B, TK_C:
       begin
+        case Key of
+          TK_A: Game.Difficulty := dfEasy;
+          TK_B: Game.Difficulty := dfNormal;
+          TK_C: Game.Difficulty := dfHard;
+        end;
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
         Map.Gen;
         terminal_delay(1000);
         Game.Start();
       end;
+    TK_ESCAPE:
+      Scenes.SetScene(scTitle);
   end;
 end;
 
