@@ -462,13 +462,15 @@ var
   begin
     // Save to log
     Game.Log(Format('Village: %dx%d', [AX, AY]));
+    Player.X := AX;
+    Player.Y := AY;
     //
     AddFrame(AX, AY, 34, 34, teDefaultFloor);
     AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall, True);
     for I := 0 to High(House) do
       HP[I] := False;
     // Add gate
-    J := Math.RandomRange(4, 8);
+    J := Math.RandomRange(4, 8);   
     case J of
       4:
         AddGate(AX, AY, 0, -16);
@@ -514,9 +516,9 @@ begin
           for I := 0 to 9999 do
             Self.SetTileEnum(Math.RandomRange(0, High(Byte)),
               Math.RandomRange(0, High(Byte)), Z, teDefaultWall);
-          Player.X := RandomRange(25, High(Byte) - 25);
-          Player.Y := RandomRange(25, High(Byte) - 25);
-          AddVillage(Player.X, Player.Y);
+          Game.Spawn.X := RandomRange(25, High(Byte) - 25);
+          Game.Spawn.Y := RandomRange(25, High(Byte) - 25);
+          AddVillage(Game.Spawn.X, Game.Spawn.Y);
         end;
       deGrayCave:
         begin

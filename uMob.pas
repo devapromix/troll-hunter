@@ -498,7 +498,8 @@ begin
   Alive := True;
   Sleep := True;
   Force := AForce;
-  MaxLife := MobBase[TMobEnum(ID)].MaxLife;
+  MaxLife := MobBase[TMobEnum(ID)].MaxLife
+    + (Ord(Game.Difficulty * MobBase[TMobEnum(ID)].Level));
   Life := MaxLife;
   // Boss
   if MobBase[TMobEnum(ID)].Boss then

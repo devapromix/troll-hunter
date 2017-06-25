@@ -820,7 +820,7 @@ begin
     itCoin:
       begin
         Value := Ord(AZ) + 1;
-        FItem.Amount := Math.RandomRange(Value * Value, Value * Value * 10) + 1;
+        FItem.Amount := Math.RandomRange(Value * Value, Value * Value * (5 - Ord(Game.Difficulty))) + 1;
       end;
   end;
   if ((FItem.Stack = 1) and (IT <> itCorpse)) then

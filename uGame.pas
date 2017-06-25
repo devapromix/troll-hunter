@@ -2,6 +2,8 @@ unit uGame;
 
 interface
 
+uses uEntity;
+
 const
   FT = '== %s ==';
   FC = '[color=%s]%s[/color]';
@@ -50,6 +52,7 @@ var
 
 type
   TDifficulty = (dfEasy, dfNormal, dfHard);
+  TSpawn = class(TEntity);
 
 type
   TGame = class(TObject)
@@ -61,6 +64,7 @@ type
     FWizard: Boolean;
     FCanClose: Boolean;
     FScreenshot: string;
+    FSpawn: TSpawn;
   public
     constructor Create;
     destructor Destroy; override;
@@ -71,6 +75,7 @@ type
     property Wizard: Boolean read FWizard write FWizard;
     property CanClose: Boolean read FCanClose write FCanClose;
     property Screenshot: string read FScreenshot write FScreenshot;
+    property Spawn: TSpawn read FSpawn write FSpawn;
     function GetPath(SubDir: string = ''): string;
     function GetVersion: string;
     function GetTitle: string;
@@ -100,6 +105,7 @@ begin
   Wizard := False;
   CanClose := False;
   Difficulty := dfNormal;
+  Spawn := TSpawn.Create;
   for I := 1 to ParamCount do
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
@@ -109,7 +115,7 @@ end;
 
 destructor TGame.Destroy;
 begin
-
+  Spawn.Free;
   inherited;
 end;
 

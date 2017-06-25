@@ -378,8 +378,16 @@ procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
   MsgLog.Add(Format(FC, [clAlarm, _('You die...')]));
-  Game.Screenshot := Terminal.GetTextScreenshot();
   Corpses.Append();
+  if (Game.Difficulty = dfEasy) then
+  begin
+    Player.Fill;
+    Player.X := Game.Spawn.X;
+    Player.Y := Game.Spawn.Y;
+    Map.Current := deDarkWood;
+    Exit;
+  end;
+  Game.Screenshot := Terminal.GetTextScreenshot();
 end;
 
 destructor TPlayer.Destroy;
