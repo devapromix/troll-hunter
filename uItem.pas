@@ -831,17 +831,6 @@ begin
   Items_Dungeon_AppendItem(FItem);
 end;
 
-procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-  EqFlag: Boolean = False);
-var
-  FItem: Item;
-begin
-  Make(Ord(AItemEnum), FItem);
-  FItem.Amount := AAmount;
-  FItem.Equipment := IfThen(EqFlag, 1, 0);
-  Items_Inventory_AppendItem(FItem);
-end;
-
 procedure TItems.Loot(AX, AY: Byte; AItemEnum: TItemEnum);
 begin
   Add(Map.Current, AX, AY, Ord(AItemEnum));
@@ -1347,6 +1336,17 @@ begin
     Result := Result + S;
 end;
 
+procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
+  EqFlag: Boolean = False);
+var
+  FItem: Item;
+begin
+  Make(Ord(AItemEnum), FItem);
+  FItem.Amount := AAmount;
+  FItem.Equipment := IfThen(EqFlag, 1, 0);
+  Items_Inventory_AppendItem(FItem);
+end;
+
 procedure TItems.AddItemToInv(Index: Integer; AFlag: Boolean = False);
 var
   FItem: Item;
@@ -1360,8 +1360,7 @@ begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
-  then
+  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
     Items_Inventory_AppendItem(FItem);
     The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
