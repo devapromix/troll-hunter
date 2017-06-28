@@ -1173,13 +1173,24 @@ begin
   Add(_('Items Found'), Player.Found);
   // Add(_('Chests Found'), );
   // Add(_('Doors Opened'), );
-  // Add(_('Potions Drunk'), );
-  // Add(_('Spells Cast'), );
+  Add(_('Potions Drunk'), Player.PotDrunk);
+  Add(_('Scrolls Read'), Player.ScrRead);
+  Add(_('Spells Cast'), Player.SpCast);
   // Add(_('Melee Attack Performed'), );
   // Add(_('Ranged Attack Performed'), );
   // Add(_('Unarmed Attack Performed'), );
   // Add(_('Times Fallen Into Pit'), );
   // Add(_(''), );
+
+  // Version
+  X := 1;
+  Y := Y + 3;
+  Self.Title(_('Version'), Y - 1);
+  Y := Y + 1;
+  Add(_('Game version'), Game.GetVersion);
+  Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
+  Add();
+  Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
 
   if Game.Wizard then
   begin
@@ -1187,10 +1198,6 @@ begin
     Y := Y + 3;
     Self.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    Add(_('Game version'), Game.GetVersion);
-    Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
-    Add();
-    Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
     Add(_('NPC'), 7);
