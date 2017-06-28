@@ -507,7 +507,7 @@ begin
     if Game.Wizard then
       Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)), X, Y,
         Ord(AZ)]));
-    Self.Boss := True;
+    Boss := True;
     IsBoss := True;
   end;
 end;
@@ -523,8 +523,9 @@ begin
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
-    Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min,
-      MobBase[TMobEnum(ID)].Damage.Max + 1), 0, High(Word));
+    Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min
+      + Ord(Game.Difficulty),
+      MobBase[TMobEnum(ID)].Damage.Max + (Ord(Game.Difficulty) * 5) + 1), 0, High(Word));
     Player.Life := EnsureRange(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if Player.Life = 0 then
