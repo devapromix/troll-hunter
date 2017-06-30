@@ -172,7 +172,7 @@ begin
 end;
 
 initialization
-  Calendar := TCalendar.Create(1, 1, 1177);
+  Calendar := TCalendar.Create(1, 1, 1297);
 
 finalization
   FreeAndNil(Calendar);

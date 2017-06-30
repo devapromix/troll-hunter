@@ -388,14 +388,6 @@ begin
   Killer := AKiller;
   MsgLog.Add(Format(FC, [clAlarm, _('You die...')]));
   Corpses.Append();
-  if (Game.Difficulty = dfEasy) then
-  begin
-    Player.Fill;
-    Player.X := Game.Spawn.X;
-    Player.Y := Game.Spawn.Y;
-    Map.Current := deDarkWood;
-    Exit;
-  end;
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
 

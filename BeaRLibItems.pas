@@ -24,7 +24,7 @@ type
 // Library
 procedure Items_Open(); stdcall; external 'BeaRLibItems.dll';
 procedure Items_Close(); stdcall; external 'BeaRLibItems.dll';
-function Items_GetVersion(): PChar; stdcall; external 'BeaRLibItems.dll';
+function Items_GetVersion(): PWideChar; stdcall; external 'BeaRLibItems.dll';
 procedure Items_Clear_Item(var AItem: Item); external 'BeaRLibItems.dll';
 
 // Dungeon
@@ -78,6 +78,9 @@ function Items_Inventory_DeleteItem(Index: Integer; var AItem: Item): Integer; s
 
 function Items_Inventory_EquipItem(Index: Integer): Integer; stdcall; external 'BeaRLibItems.dll';
 function Items_Inventory_UnEquipItem(Index: Integer): Integer; stdcall; external 'BeaRLibItems.dll';
+
+procedure Items_Inventory_SetSlotCount(ACount: Integer); stdcall; external 'BeaRLibItems.dll';
+function Items_Inventory_GetSlotCount: Integer; stdcall; external 'BeaRLibItems.dll';
 
 implementation
 

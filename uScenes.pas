@@ -8,7 +8,8 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty);  // scSpells, scIdentification, scRest
+    scSell, scRepair, scBuy, scCalendar, scDifficulty);
+  // scSpells, scIdentification, scRest
 
 type
   TScene = class(TObject)
@@ -383,8 +384,8 @@ begin
   if Game.Wizard then
     Terminal.Print(CX, CY - 5,
       '1 [color=red] 2 [color=green] 3 [/color] 2 [/color] 1', TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY - 3, Format('%s v.%s', [Game.GetTitle,
-    Game.GetVersion]), TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY - 3, Format('%s v.%s', [Game.GetTitle, Game.GetVersion]
+    ), TK_ALIGN_CENTER);
   Terminal.Print(CX, CY - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
   Terminal.Print(CX, CY + 1, Format(_('Press %s to continue...'),
     [KeyStr('ENTER')]), TK_ALIGN_CENTER);
@@ -631,9 +632,8 @@ begin
   Terminal.Print(Status.Left, Status.Top + 2,
     Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top + 3,
-    Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
-    Player.GetSatiationStr]));
+  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d %s'),
+    [Player.Turn, Player.Gold, Player.GetSatiationStr]));
   Terminal.Print(Status.Left, Status.Top + 4,
     Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
@@ -654,6 +654,14 @@ begin
   MsgLog.Msg := '';
   if Player.IsDead then
   begin
+    if (Game.Difficulty = dfEasy) then
+    begin
+      Player.Fill;
+      Player.X := Game.Spawn.X;
+      Player.Y := Game.Spawn.Y;
+      Map.Current := deDarkWood;
+      Exit;
+    end;
     Scenes.SetScene(scDef);
     Exit;
   end;
@@ -1142,7 +1150,8 @@ var
     end;
   end;
 
-  procedure Add(AText: string; AValue: string; AColor: Cardinal = clGreen); overload;
+  procedure Add(AText: string; AValue: string;
+    AColor: Cardinal = clGreen); overload;
   begin
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
@@ -1162,9 +1171,12 @@ begin
   X := 1;
   Y := 3;
   case Game.Difficulty of
-    dfEasy: Add(_('Difficulty'), _('Easy'));
-    dfNormal: Add(_('Difficulty'), _('Normal'));
-    dfHard: Add(_('Difficulty'), _('Hard'), clRed);
+    dfEasy:
+      Add(_('Difficulty'), _('Easy'));
+    dfNormal:
+      Add(_('Difficulty'), _('Normal'));
+    dfHard:
+      Add(_('Difficulty'), _('Hard'), clRed);
   end;
   Add();
   Add(_('Scores'), Player.Score);
@@ -1512,14 +1524,16 @@ procedure TSceneCalendar.Render;
 var
   Y: Byte;
 
-  procedure Add(const AText: string; AValue: string; AAdvValue: string = ''); overload;
+  procedure Add(const AText: string; AValue: string;
+    AAdvValue: string = ''); overload;
   var
     S: string;
     X: Word;
   begin
     X := Screen.Width div 3;
     S := '';
-    if (AAdvValue <> '') then S := AADvValue;
+    if (AAdvValue <> '') then
+      S := AAdvValue;
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(X, Y, AText, TK_ALIGN_LEFT);
     Terminal.ForegroundColor(clGreen);
@@ -1532,7 +1546,8 @@ var
     Inc(Y);
   end;
 
-  procedure Add(const AText: string; AValue: Integer; AAdvValue: string = ''); overload;
+  procedure Add(const AText: string; AValue: Integer;
+    AAdvValue: string = ''); overload;
   begin
     Add(AText, IntToStr(AValue), AAdvValue);
   end;
@@ -1565,9 +1580,12 @@ procedure TSceneDifficulty.Render;
 begin
   Self.Title(_('Difficulty'));
 
-  Terminal.Print(CX - 5, CY - 2, Format('%s %s', [KeyStr('A'), _('Easy')]), TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY, Format('%s %s', [KeyStr('B'), _('Normal')]), TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 2, Format('%s %s', [KeyStr('C'), _('Hard')]), TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY - 2, Format('%s %s', [KeyStr('A'), _('Easy')]),
+    TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY, Format('%s %s', [KeyStr('B'), _('Normal')]),
+    TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY + 2, Format('%s %s', [KeyStr('C'), _('Hard')]),
+    TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Back'), True, True);
 end;
@@ -1578,9 +1596,12 @@ begin
     TK_A, TK_B, TK_C:
       begin
         case Key of
-          TK_A: Game.Difficulty := dfEasy;
-          TK_B: Game.Difficulty := dfNormal;
-          TK_C: Game.Difficulty := dfHard;
+          TK_A:
+            Game.Difficulty := dfEasy;
+          TK_B:
+            Game.Difficulty := dfNormal;
+          TK_C:
+            Game.Difficulty := dfHard;
         end;
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
