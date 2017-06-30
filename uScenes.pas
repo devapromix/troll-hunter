@@ -1023,8 +1023,8 @@ begin
     TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Close'), True, False);
-  AddKey('W', _('+'), False, False);
-  AddKey('X', _('-'), False, False);
+  AddKey('W', _('More'), False, False);
+  AddKey('X', _('Less'), False, False);
   AddKey('Enter', _('Apply'), False, True);
 end;
 
