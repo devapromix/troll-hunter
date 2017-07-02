@@ -6,8 +6,8 @@ uses uGame, uMap, uEntity;
 
 type
   TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
-    ntSmithTrader_B, ntArmTrader_A, ntShTrader_A, ntPotTrader_B, ntHealTrader_B,
-    ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A, ntFoodTrader_A);
+    ntSmithTrader_B, ntArmTrader_A, ntShTrader_A, ntHelmTrader_A, ntPotTrader_B,
+    ntHealTrader_B, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A, ntFoodTrader_A);
 
 type
   TMobBase = record
@@ -358,7 +358,7 @@ const
     // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: clLightestGreen; NPCType: [ntHelmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // Shield Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
@@ -546,10 +546,10 @@ var
 begin
   Self.Alive := False;
   The := GetDescThe(Mobs.GetName(TMobEnum(ID)));
-  case Math.RandomRange(0, 2) + 1 of
-    1:
+  case Math.RandomRange(0, 2) of
+    0:
       S := Format(_('You kill %s.'), [The]);
-    2:
+    else
       S := Format(_('%s dies.'), [GetCapit(The)]);
   end;
   if Boss then

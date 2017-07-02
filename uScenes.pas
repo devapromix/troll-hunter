@@ -1276,6 +1276,13 @@ begin
       TK_ALIGN_LEFT);
   end;
 
+  if (ntHelmTrader_A in NPCType) then
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (helms)'),
+      TK_ALIGN_LEFT);
+  end;
+
   if (ntFoodTrader_A in NPCType) then
   begin
     Inc(Y);
@@ -1372,6 +1379,12 @@ begin
         begin
           Game.Timer := High(Byte);
           Shops.Current := shShields;
+          Scenes.SetScene(scBuy);
+        end;
+        if (ntHelmTrader_A in NPCType) then
+        begin
+          Game.Timer := High(Byte);
+          Shops.Current := shHelms;
           Scenes.SetScene(scBuy);
         end;
         if (ntScrTrader_A in NPCType) then

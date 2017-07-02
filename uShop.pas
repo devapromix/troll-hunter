@@ -7,7 +7,7 @@ uses
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
-    shWeapons, shFoods, shTavern, shShields);
+    shWeapons, shFoods, shTavern, shShields, shHelms);
 
 type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
@@ -146,6 +146,7 @@ var
       shPotions: Result := ItemBase[ID].ItemType in PotionTypeItems;
       shScrolls: Result := ItemBase[ID].ItemType in ScrollTypeItems;
       shArmors: Result := ItemBase[ID].ItemType in ArmorTypeItems;
+      shHelms: Result := ItemBase[ID].ItemType in HelmTypeItems;
       shShields: Result := ItemBase[ID].ItemType in ShieldTypeItems;
       shWeapons: Result := ItemBase[ID].ItemType in WeaponTypeItems;
       shSmith: Result := ItemBase[ID].ItemType in SmithTypeItems;

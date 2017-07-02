@@ -18,6 +18,7 @@ const
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   ArmorTypeItems = [itHeadgear, itBodyArmor];
   ShieldTypeItems = [itShield];
+  HelmTypeItems = [itHeadgear];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor];
 
