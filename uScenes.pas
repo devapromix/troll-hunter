@@ -778,8 +778,7 @@ end;
 
 procedure TSceneLoad.Render;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height div 2,
-    _('Creating the world, please wait...'), TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY, _('Creating the world, please wait...'), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneLoad.Update(var Key: Word);
@@ -1606,7 +1605,7 @@ end;
 procedure TSceneDifficulty.Update(var Key: Word);
 begin
   case Key of
-    TK_A, TK_B, TK_C:
+    TK_A, TK_B, TK_C, TK_ENTER, TK_KP_ENTER:
       begin
         case Key of
           TK_A:
@@ -1615,6 +1614,9 @@ begin
             Game.Difficulty := dfNormal;
           TK_C:
             Game.Difficulty := dfHard;
+          TK_ENTER, TK_KP_ENTER:
+            if Game.Wizard then
+              Game.Difficulty := dfNormal else Exit;
         end;
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
