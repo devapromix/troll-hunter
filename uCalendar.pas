@@ -104,9 +104,9 @@ end;
 function TCalendar.GetTimeStr: string;
 begin
   case Hour of
-    6..8: Result := _('Day');
+    6..8: Result := _('Morning');
     9..17: Result := _('Day');
-    18..20: Result := _('Day');
+    18..20: Result := _('Evening');
     else Result := _('Night');
   end;
 end;

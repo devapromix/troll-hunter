@@ -1652,9 +1652,9 @@ begin
   Self.FromAToZ;
   Y := 1;
 
-  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest 10 turns'), TK_ALIGN_LEFT);
-  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest 100 turns'), TK_ALIGN_LEFT);
-  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest 1000 turns'), TK_ALIGN_LEFT);
+  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'), TK_ALIGN_LEFT);
+  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'), TK_ALIGN_LEFT);
+  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'), TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
