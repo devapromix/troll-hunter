@@ -144,7 +144,7 @@ type
     procedure AddExp(Value: Byte = 1);
     procedure SkillSet;
     procedure StarterSet;
-    procedure Rest(ATurns: Byte);
+    procedure Rest(ATurns: Word);
     procedure Dialog(AMob: TMob);
     procedure AutoPickup();
   end;
@@ -963,9 +963,9 @@ begin
   Move(0, 0);
 end;
 
-procedure TPlayer.Rest(ATurns: Byte);
+procedure TPlayer.Rest(ATurns: Word);
 var
-  T: Byte;
+  T: Word;
 begin
   IsRest := True;
   MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));

@@ -8,8 +8,8 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty);
-  // scSpells, scIdentification, scRest
+    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest);
+  // scSpells, scIdentification
 
 type
   TScene = class(TObject)
@@ -73,6 +73,13 @@ type
 
 type
   TSceneCalendar = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneRest = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -316,6 +323,8 @@ begin
         FScene[I] := TSceneCalendar.Create;
       scDifficulty:
         FScene[I] := TSceneDifficulty.Create;
+      scRest:
+        FScene[I] := TSceneRest.Create;
     end;
 end;
 
@@ -741,7 +750,10 @@ begin
     TK_K:
       Scenes.SetScene(scCalendar);
     TK_R:
-      Player.Rest(100);
+      begin
+        Game.Timer := High(Byte);
+        Scenes.SetScene(scRest);
+      end;
     TK_G:
       Player.Pickup;
     TK_I:
@@ -1627,6 +1639,36 @@ begin
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
   end;
+end;
+
+{ TSceneRest }
+
+procedure TSceneRest.Render;
+var
+  Y: Byte;
+begin
+  Self.Title(_('Rest'));
+
+  Self.FromAToZ;
+  Y := 1;
+
+  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest 10 turns'), TK_ALIGN_LEFT);
+  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest 100 turns'), TK_ALIGN_LEFT);
+  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest 1000 turns'), TK_ALIGN_LEFT);
+
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Back'), True, True);
+end;
+
+procedure TSceneRest.Update(var Key: Word);
+begin
+  case Key of
+    TK_A, TK_B, TK_C:
+      Player.Rest(StrToInt('1' + StringOfChar('0', Key - TK_A + 1)));
+    TK_ESCAPE:
+      Scenes.SetScene(scGame);
+  end
 end;
 
 initialization
