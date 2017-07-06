@@ -171,7 +171,9 @@ begin
   if (Satiation < StarvingMax) then
   begin
     Life := EnsureRange(Life - 1, 0, MaxLife);;
-  end else begin
+  end
+  else
+  begin
     V := EnsureRange(100 - Player.GetSkillValue(skHealing), 25, 100);
     if (Turn mod V = 0) then
       Life := EnsureRange(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
@@ -416,9 +418,12 @@ var
   S: string;
 begin
   case Math.RandomRange(0, 3) of
-    0: S := _('What can I do for you?');
-    1: S := _('What can I get you today?');
-    else S := _('Good day!');
+    0:
+      S := _('What can I do for you?');
+    1:
+      S := _('What can I get you today?');
+  else
+    S := _('Good day!');
   end;
   MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
 end;
@@ -442,23 +447,34 @@ function TPlayer.GetSatiationStr: string;
 begin
   Result := '';
   case Satiation of
-    0..StarvingMax: Result := _('Starving');
-    StarvingMax + 1..1500  : Result := _('Near starving');
-    1501..2000  : Result := _('Very hungry');
-    2001..2500  : Result := _('Hungry');
-    SatiatedMax + 1..10000 : Result := _('Full');
-    10001..11000: Result := _('Very full');
-    11001..EngorgedMax: Result := _('Engorged');
+    0 .. StarvingMax:
+      Result := _('Starving');
+    StarvingMax + 1 .. 1500:
+      Result := _('Near starving');
+    1501 .. 2000:
+      Result := _('Very hungry');
+    2001 .. 2500:
+      Result := _('Hungry');
+    SatiatedMax + 1 .. 10000:
+      Result := _('Full');
+    10001 .. 11000:
+      Result := _('Very full');
+    11001 .. EngorgedMax:
+      Result := _('Engorged');
   end;
   if Game.Wizard then
   begin
-    if (Result = '') then Result := _('Satiated');
+    if (Result = '') then
+      Result := _('Satiated');
     Result := Result + Format(' (%d)', [Satiation]);
   end;
   case Satiation of
-    0..StarvingMax: Result := Format('[color=light red]%s[/color]', [Result]);
-    StarvingMax + 1 .. SatiatedMax: Result := Format('[color=light yellow]%s[/color]', [Result]);
-    else Result := Format('[color=light green]%s[/color]', [Result]);
+    0 .. StarvingMax:
+      Result := Format('[color=light red]%s[/color]', [Result]);
+    StarvingMax + 1 .. SatiatedMax:
+      Result := Format('[color=light yellow]%s[/color]', [Result]);
+  else
+    Result := Format('[color=light green]%s[/color]', [Result]);
   end;
 end;
 
@@ -569,16 +585,17 @@ begin
       The := GetDescThe(Items.Name[I]);
       case T of
         itPotion:
-        begin
-          MsgLog.Add(Format(_('You drink %s.'), [The]));
-          PotDrunk := PotDrunk + 1;
-        end;
+          begin
+            MsgLog.Add(Format(_('You drink %s.'), [The]));
+            PotDrunk := PotDrunk + 1;
+          end;
         itScroll:
-        begin
-          MsgLog.Add(Format(_('You read %s.'), [The]));
-          ScrRead := ScrRead + 1;
-        end;
-        itFood: MsgLog.Add(Format(_('You ate %s.'), [The]));
+          begin
+            MsgLog.Add(Format(_('You read %s.'), [The]));
+            ScrRead := ScrRead + 1;
+          end;
+        itFood:
+          MsgLog.Add(Format(_('You ate %s.'), [The]));
       end;
       Items_Inventory_SetItem(Index, AItem);
       if (T = itScroll) then
@@ -587,7 +604,9 @@ begin
         begin
           Self.Mana := Self.Mana - ItemBase[I].ManaCost;
           SpCast := SpCast + 1;
-        end else begin
+        end
+        else
+        begin
           MsgLog.Add(_('You need more mana!'));
           Self.Calc;
           Wait;
@@ -624,13 +643,15 @@ begin
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
   if (Player.Level < ItemLevel) then
   begin
-    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'), [ItemLevel]));
+    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
+      [ItemLevel]));
     Self.Calc;
     Exit;
   end;
   // Replace
   I := Items_Inventory_EquipItem(Index);
-  if (I > -1) then UnEquip(I);
+  if (I > -1) then
+    UnEquip(I);
   // Equip
   The := GetDescThe(Items.Name[Items.GetItemEnum(AItem.ItemID)]);
   MsgLog.Add(Format(_('You equip %s.'), [The]));
@@ -686,8 +707,10 @@ begin
     MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, Price]));
     Items_Inventory_AppendItem(AItem);
     Self.Calc;
-    //The %s just frowns. Maybe you'll return when you have enough gold?
-  end else MsgLog.Add(_('You need more gold.'));
+    // The %s just frowns. Maybe you'll return when you have enough gold?
+  end
+  else
+    MsgLog.Add(_('You need more gold.'));
 end;
 
 procedure TPlayer.ReceiveHealing;
@@ -702,7 +725,9 @@ begin
       Life := MaxLife;
       MsgLog.Add(Format(_('You feel better (-%d gold).'), [Cost]));
     end;
-  end else MsgLog.Add(_('You need more gold.'));
+  end
+  else
+    MsgLog.Add(_('You need more gold.'));
   Self.Calc;
 end;
 
@@ -971,7 +996,8 @@ begin
   MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));
   for T := 1 to ATurns do
   begin
-    if not IsRest then Break;
+    if not IsRest then
+      Break;
     Wait;
   end;
   MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));

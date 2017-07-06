@@ -7,7 +7,8 @@ uses uGame, uMap, uEntity;
 type
   TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
     ntSmithTrader_B, ntArmTrader_A, ntShTrader_A, ntHelmTrader_A, ntPotTrader_B,
-    ntHealTrader_B, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A, ntFoodTrader_A);
+    ntHealTrader_B, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
+    ntFoodTrader_A);
 
 type
   TMobBase = record
@@ -33,11 +34,11 @@ type
     mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm, mNaga,
     mFireVortex,
     // Deep Cave
-    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab, mDireWolf,
-    mPan, mFaun,
+    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab,
+    mDireWolf, mPan, mFaun,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mHobgoblin, mGargoyle, mWarg, mDraconian,
-    mOrc, mOrcBrute, mOrcWarrior, mOrcWarlord,
+    mGoblin, mDarkGoblin, mBlackGoblin, mHobgoblin, mGargoyle, mWarg,
+    mDraconian, mOrc, mOrcBrute, mOrcWarrior, mOrcWarlord,
     // Drom
     mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton, mWraith,
     mLich, mPhantom, mTrollBrute,
@@ -337,18 +338,18 @@ const
 
     // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
-    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: clBlue; NPCType: [ntScrTrader_A, ntPotManaTrader_B];),
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;); Color: clBlue;
+    NPCType: [ntScrTrader_A, ntPotManaTrader_B];),
 
     // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
-    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: clWhite; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;); Color: clWhite;
+    NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
-    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: clRed; NPCType: [ntBlacksmith_A, ntSmithTrader_B];),
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;); Color: clRed;
+    NPCType: [ntBlacksmith_A, ntSmithTrader_B];),
 
     // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
@@ -358,7 +359,8 @@ const
     // Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: clLightestGreen; NPCType: [ntHelmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: clLightestGreen; NPCType: [ntHelmTrader_A, ntWpnTrader_B,
+    ntSell_C];),
 
     // Shield Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
@@ -367,8 +369,8 @@ const
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
-    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;);
-    Color: clGreen; NPCType: [ntHealer_A, ntHealTrader_B];)
+    Armor: 50; DV: 60; MaxCount: 1; Damage: (Min: 5; Max: 15;); Color: clGreen;
+    NPCType: [ntHealer_A, ntHealTrader_B];)
 
     );
 
@@ -498,8 +500,8 @@ begin
   Alive := True;
   Sleep := True;
   Force := AForce;
-  MaxLife := MobBase[TMobEnum(ID)].MaxLife
-    + (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level);
+  MaxLife := MobBase[TMobEnum(ID)].MaxLife +
+    (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level);
   Life := MaxLife;
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
@@ -523,9 +525,9 @@ begin
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
     // Attack
-    Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min
-      + Ord(Game.Difficulty),
-      MobBase[TMobEnum(ID)].Damage.Max + (Ord(Game.Difficulty) * 5) + 1), 0, High(Word));
+    Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
+      Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
+      (Ord(Game.Difficulty) * 5) + 1), 0, High(Word));
     Player.Life := EnsureRange(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if Player.Life = 0 then
@@ -549,8 +551,8 @@ begin
   case Math.RandomRange(0, 2) of
     0:
       S := Format(_('You kill %s.'), [The]);
-    else
-      S := Format(_('%s dies.'), [GetCapit(The)]);
+  else
+    S := Format(_('%s dies.'), [GetCapit(The)]);
   end;
   if Boss then
     S := Format(FC, [clAlarm, S]);

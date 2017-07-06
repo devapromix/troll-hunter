@@ -59,7 +59,7 @@ const
     iScrollOfHealing2, iScrollOfHealing3, iScrollOfFullHealing];
   TavernItems = [iKey, iScrollOfHunger];
 
-{ TShop }
+  { TShop }
 
 procedure TShop.Add(const AItem: Item);
 begin
@@ -140,18 +140,30 @@ var
   begin
     ID := GetItemID();
     case Shop of
-      shTavern: Result := ID in TavernItems;
-      shHealer: Result := ID in HealItems;
-      shMana: Result := ID in ManaPotionsItems;
-      shPotions: Result := ItemBase[ID].ItemType in PotionTypeItems;
-      shScrolls: Result := ItemBase[ID].ItemType in ScrollTypeItems;
-      shArmors: Result := ItemBase[ID].ItemType in ArmorTypeItems;
-      shHelms: Result := ItemBase[ID].ItemType in HelmTypeItems;
-      shShields: Result := ItemBase[ID].ItemType in ShieldTypeItems;
-      shWeapons: Result := ItemBase[ID].ItemType in WeaponTypeItems;
-      shSmith: Result := ItemBase[ID].ItemType in SmithTypeItems;
-      shFoods: Result := ItemBase[ID].ItemType in FoodTypeItems;
-      else Result := False;
+      shTavern:
+        Result := ID in TavernItems;
+      shHealer:
+        Result := ID in HealItems;
+      shMana:
+        Result := ID in ManaPotionsItems;
+      shPotions:
+        Result := ItemBase[ID].ItemType in PotionTypeItems;
+      shScrolls:
+        Result := ItemBase[ID].ItemType in ScrollTypeItems;
+      shArmors:
+        Result := ItemBase[ID].ItemType in ArmorTypeItems;
+      shHelms:
+        Result := ItemBase[ID].ItemType in HelmTypeItems;
+      shShields:
+        Result := ItemBase[ID].ItemType in ShieldTypeItems;
+      shWeapons:
+        Result := ItemBase[ID].ItemType in WeaponTypeItems;
+      shSmith:
+        Result := ItemBase[ID].ItemType in SmithTypeItems;
+      shFoods:
+        Result := ItemBase[ID].ItemType in FoodTypeItems;
+    else
+      Result := False;
     end;
   end;
 
@@ -163,7 +175,8 @@ begin
     for I := 0 to Max - 1 do
     begin
       repeat
-        repeat until Check;
+        repeat
+        until Check;
       until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
       Items.Make(Ord(ID), FItem);
       Shops.Shop[Shop].Add(FItem);
@@ -177,8 +190,8 @@ var
 begin
   C := EnsureRange(Shops.Shop[Shops.Current].Count, 0, ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I),
-      True, True, ptBuy);
+    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True,
+      True, ptBuy);
 end;
 
 procedure TShops.SetShop(I: TShopEnum; const Value: TShop);
@@ -187,10 +200,12 @@ begin
 end;
 
 initialization
-  Shops := TShops.Create;
-  Shops.Current := shPotions;
+
+Shops := TShops.Create;
+Shops.Current := shPotions;
 
 finalization
-  FreeAndNil(Shops);
+
+FreeAndNil(Shops);
 
 end.

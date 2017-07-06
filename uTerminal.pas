@@ -145,7 +145,8 @@ begin
   if Game.Wizard then
     Wizard := '[WIZARD]';
   terminal_set(Format('window: size=%dx%d, title=%s',
-    [Screen.Width, Screen.Height, Format(Trim('%s %s'), [Game.GetTitle, Wizard])]));
+    [Screen.Width, Screen.Height, Format(Trim('%s %s'), [Game.GetTitle,
+    Wizard])]));
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
 end;

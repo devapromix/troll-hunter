@@ -470,7 +470,7 @@ var
     for I := 0 to High(House) do
       HP[I] := False;
     // Add gate
-    J := Math.RandomRange(4, 8);   
+    J := Math.RandomRange(4, 8);
     case J of
       4:
         AddGate(AX, AY, 0, -16);

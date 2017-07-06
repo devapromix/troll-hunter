@@ -790,7 +790,8 @@ end;
 
 procedure TSceneLoad.Render;
 begin
-  Terminal.Print(CX, CY, _('Creating the world, please wait...'), TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY, _('Creating the world, please wait...'),
+    TK_ALIGN_CENTER);
 end;
 
 procedure TSceneLoad.Update(var Key: Word);
@@ -1628,7 +1629,9 @@ begin
             Game.Difficulty := dfHard;
           TK_ENTER, TK_KP_ENTER:
             if Game.Wizard then
-              Game.Difficulty := dfNormal else Exit;
+              Game.Difficulty := dfNormal
+            else
+              Exit;
         end;
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
@@ -1652,9 +1655,15 @@ begin
   Self.FromAToZ;
   Y := 1;
 
-  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'), TK_ALIGN_LEFT);
-  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'), TK_ALIGN_LEFT);
-  Inc(Y); Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'), TK_ALIGN_LEFT);
+  Inc(Y);
+  Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
+    TK_ALIGN_LEFT);
+  Inc(Y);
+  Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
+    TK_ALIGN_LEFT);
+  Inc(Y);
+  Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'),
+    TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
