@@ -45,24 +45,14 @@ type
     ManaCost: Byte;
   end;
 
-  // Малое лечебное зелье (Lesser Healing Potion)
-  // Лечебное зелье (Healing Potion)
-  // Огромное лечебное зелье (Greater Healing Potion)
-  // Малое зелье маны (Lesser Mana Potion)
-  // Зелье маны (Mana Potion)
-  // Огромное зелье маны (Greater Mana Potion)
-  // Превосходное зелье маны (Super Mana Potion)
-  // Малое восстанавливающее зелье (Lesser Restoration Potion)
-  // Восстанавливающее зелье (Restoration Potion)
-
 type
   TItemEnum = (
     // All maps
-    iNone, iCorpse, iGold, iPotionOfHealing1, iPotionOfHealing2,
-    iPotionOfHealing3, iPotionOfFullHealing, iPotionOfRejuvenation1,
-    iPotionOfRejuvenation2, iPotionOfRejuvenation3, iPotionOfFullRejuvenation,
-    iPotionOfMana1, iPotionOfMana2, iPotionOfMana3, iPotionOfFullMana,
-    iScrollOfHealing1, iScrollOfHealing2, iScrollOfHealing3,
+    iNone, iCorpse, iGold, iLesserHealingPotion, iGreaterHealingPotion,
+    iHeroicHealingPotion, iPotionOfFullHealing, iLesserRejuvenationPotion,
+    iGreaterRejuvenationPotion, iHeroicRejuvenationPotion, iPotionOfFullRejuvenation,
+    iLesserManaPotion, iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana,
+    iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iBreadRation, iValleyRoot,
     iRatPod, iKey,
     // Dark Wood
@@ -124,7 +114,7 @@ const
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 1;
     Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
-    // Life Potion 1
+    // Lesser Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 50; Color: clLightestRed; Deep: [deDarkWood .. deDeepCave];
@@ -166,7 +156,7 @@ const
     Price: 750; Color: clDarkYellow; Deep: [deBloodCave .. deDrom];
     Effects: [efFullHeal, efFullMana];),
 
-    // Mana potion 1
+    // Lesser Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 50; Color: clLightestBlue; Deep: [deDarkWood .. deDeepCave];
@@ -861,11 +851,11 @@ begin
       LootGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iPotionOfHealing1),
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iLesserHealingPotion),
         Ord(iPotionOfFullMana) + 1)));
     // Scroll
     if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iScrollOfHealing1),
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iScrollOfMinorHealing),
         Ord(iScrollOfFullHealing) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then
@@ -925,53 +915,53 @@ begin
       Result := _('Gold');
 
     // Potion of rejuvenation
-    iPotionOfRejuvenation1:
-      Result := _('Potion of rejuvenation1');
+    iLesserRejuvenationPotion:
+      Result := _('Lesser rejuvenation potion');
     // Potion of rejuvenation
-    iPotionOfRejuvenation2:
-      Result := _('Potion of rejuvenation2');
+    iGreaterRejuvenationPotion:
+      Result := _('Greater rejuvenation potion');
     // Potion of rejuvenation
-    iPotionOfRejuvenation3:
-      Result := _('Potion of rejuvenation3');
+    iHeroicRejuvenationPotion:
+      Result := _('Heroic rejuvenation potion');
     // Potion of rejuvenation
     iPotionOfFullRejuvenation:
       Result := _('Potion of full rejuvenation');
 
     // Potion of health
-    iPotionOfHealing1:
-      Result := _('Potion of healing1');
+    iLesserHealingPotion:
+      Result := _('Lesser healing potion');
     // Potion of health
-    iPotionOfHealing2:
-      Result := _('Potion of healing2');
+    iGreaterHealingPotion:
+      Result := _('Greater healing potion');
     // Potion of health
-    iPotionOfHealing3:
-      Result := _('Potion of healing3');
+    iHeroicHealingPotion:
+      Result := _('Heroic healing potion');
     // Potion of health
     iPotionOfFullHealing:
       Result := _('Potion of full healing');
 
     // Potion of mana
-    iPotionOfMana1:
-      Result := _('Potion of mana1');
+    iLesserManaPotion:
+      Result := _('Lesser mana potion');
     // Potion of mana
-    iPotionOfMana2:
-      Result := _('Potion of mana2');
+    iGreaterManaPotion:
+      Result := _('Greater mana potion');
     // Potion of mana
-    iPotionOfMana3:
-      Result := _('Potion of mana3');
+    iHeroicManaPotion:
+      Result := _('Heroic mana potion');
     // Potion of mana
     iPotionOfFullMana:
       Result := _('Potion of full mana');
 
     // Scroll of healing
-    iScrollOfHealing1:
-      Result := _('Scroll of healing1');
+    iScrollOfMinorHealing:
+      Result := _('Scroll of minor healing');
     // Scroll of healing
-    iScrollOfHealing2:
-      Result := _('Scroll of healing2');
+    iScrollOfLesserHealing:
+      Result := _('Scroll of lesser healing');
     // Scroll of healing
-    iScrollOfHealing3:
-      Result := _('Scroll of healing3');
+    iScrollOfGreaterHealing:
+      Result := _('Scroll of greater healing');
     // Scroll of healing
     iScrollOfFullHealing:
       Result := _('Scroll of full healing');

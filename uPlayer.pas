@@ -1052,8 +1052,8 @@ begin
   end
   else
   begin
-    Items.AddItemToInv(iPotionOfHealing1, 5);
-    Items.AddItemToInv(iPotionOfMana1, 5);
+    Items.AddItemToInv(iLesserHealingPotion, 5);
+    Items.AddItemToInv(iLesserManaPotion, 5);
   end;
   // Add foods
   Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));
