@@ -50,11 +50,11 @@ type
     // All maps
     iNone, iCorpse, iGold, iLesserHealingPotion, iGreaterHealingPotion,
     iHeroicHealingPotion, iPotionOfFullHealing, iLesserRejuvenationPotion,
-    iGreaterRejuvenationPotion, iHeroicRejuvenationPotion, iPotionOfFullRejuvenation,
-    iLesserManaPotion, iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana,
-    iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
-    iScrollOfFullHealing, iScrollOfHunger, iBreadRation, iValleyRoot,
-    iRatPod, iKey,
+    iGreaterRejuvenationPotion, iHeroicRejuvenationPotion,
+    iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
+    iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
+    iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
+    iScrollOfHunger, iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor

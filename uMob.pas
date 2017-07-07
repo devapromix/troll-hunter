@@ -611,7 +611,7 @@ begin
   if (Dist <= 2) and Player.IsRest then
     Player.IsRest := False;
   // A*
-  if not DoAStar(High(Byte), High(Byte), X, Y, Player.X, Player.Y, @MyCallback,
+  if not DoAStar(High(Byte) + 1, High(Byte) + 1, X, Y, Player.X, Player.Y, @MyCallback,
     NX, NY) then
     Exit;
   if (NX = Player.X) and (NY = Player.Y) then
