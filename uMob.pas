@@ -408,6 +408,7 @@ type
     function GetMob(I: Integer): TMob;
     procedure SetMob(I: Integer; const Value: TMob);
     function GetName(I: TMobEnum): string;
+    function ChMob(I: Integer; AX, AY: Byte): Boolean;
   public
     constructor Create();
     destructor Destroy; override;
@@ -771,18 +772,23 @@ begin
   inherited;
 end;
 
+function TMobs.ChMob(I: Integer; AX, AY: Byte): Boolean;
+begin
+  with FMob[I] do
+    Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y);
+end;
+
 function TMobs.GetFreeTile(AX, AY: Byte): Boolean;
 var
   I: Integer;
 begin
   Result := True;
   for I := 0 to Count - 1 do
-    with FMob[I] do
-      if Alive and (Maps = Map.Current) and (AX = X) and (AY = Y) then
-      begin
-        Result := False;
-        Exit;
-      end;
+    if ChMob(I, AX, AY) then
+    begin
+      Result := False;
+      Exit;
+    end;
 end;
 
 function TMobs.GetIndex(AX, AY: Byte): Integer;
@@ -791,12 +797,11 @@ var
 begin
   Result := -1;
   for I := 0 to Count - 1 do
-    with FMob[I] do
-      if Alive and (Maps = Map.Current) and (AX = X) and (AY = Y) then
-      begin
-        Result := I;
-        Exit;
-      end;
+    if ChMob(I, AX, AY) then
+    begin
+      Result := I;
+      Exit;
+    end;
 end;
 
 function TMobs.GetMob(I: Integer): TMob;
