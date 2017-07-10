@@ -650,45 +650,101 @@ var
 begin
   NX := 0;
   NY := 0;
-  case Math.RandomRange(0, 8) + 1 of
-    // North
-    0:
+  //
+  if (AX < PX) then
+  begin
+    case Math.RandomRange(0, 4) of
+      0:
       begin
         NY := -1;
       end;
-    1:
+      1:
+      begin
+        NY := +1;
+      end;
+      2:
       begin
         NX := +1;
         NY := -1;
       end;
-    2:
-      begin
-        NX := +1;
-      end;
-    3:
+      3:
       begin
         NX := +1;
         NY := +1;
       end;
-    4:
-      begin
-        NY := +1;
-      end;
-    5:
-      begin
-        NX := -1;
-        NY := +1;
-      end;
-    6:
-      begin
-        NX := -1;
-      end;
-    7:
-      begin
-        NX := -1;
-        NY := -1;
-      end;
+    end;
   end;
+  if (AX > PX) then
+  begin
+    case Math.RandomRange(0, 4) of
+      0:
+      begin
+        NY := -1;
+      end;
+      1:
+      begin
+        NY := +1;
+      end;
+      2:
+      begin
+        NX := -1;
+        NY := +1;
+      end;
+      3:
+      begin
+        NX := -1;
+        NY := -1;
+      end;
+    end;
+  end;
+  //
+  if (AY < PY) then
+  begin
+    case Math.RandomRange(0, 4) of
+      0:
+      begin
+        NX := +1;
+      end;
+      1:
+      begin
+        NX := -1;
+      end;
+      2:
+      begin
+        NX := -1;
+        NY := +1;
+      end;
+      3:
+      begin
+        NX := +1;
+        NY := +1;
+      end;
+    end;
+  end;
+  if (AY > PY) then
+  begin
+    case Math.RandomRange(0, 4) of
+      0:
+      begin
+        NX := +1;
+      end;
+      1:
+      begin
+        NX := -1;
+      end;
+      2:
+      begin
+        NX := -1;
+        NY := -1;
+      end;
+      3:
+      begin
+        NX := +1;
+        NY := -1;
+      end;
+    end;
+  end;
+  //
   FX := EnsureRange(X + NX, 0, High(Byte));
   FY := EnsureRange(Y + NY, 0, High(Byte));
   if Mobs.GetFreeTile(FX, FY) and (Map.GetTileEnum(FX, FY, Map.Current)
@@ -752,12 +808,12 @@ end;
 
 function TMobs.Count: Integer;
 begin
-  Result := Length(FMob);
+  Result := Length(FMob)
 end;
 
 constructor TMobs.Create;
 begin
-  SetLength(FMob, 0);
+  SetLength(FMob, 0)
 end;
 
 destructor TMobs.Destroy;
@@ -774,8 +830,7 @@ end;
 
 function TMobs.ChMob(I: Integer; AX, AY: Byte): Boolean;
 begin
-  with FMob[I] do
-    Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y);
+  with FMob[I] do Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y)
 end;
 
 function TMobs.GetFreeTile(AX, AY: Byte): Boolean;
