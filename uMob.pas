@@ -110,188 +110,188 @@ const
 
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    Armor: 2; DV: 12; MaxCount: 7; Damage: (Min: 1; Max: 4;);
+    Armor: 2; DV: 11; MaxCount: 7; Damage: (Min: 1; Max: 4;);
     Color: $FF777700;),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    Armor: 3; DV: 14; MaxCount: 5; Damage: (Min: 2; Max: 4;);
+    Armor: 3; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4;);
     Color: $FF777700;),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 30; Level: 3;
-    Armor: 4; DV: 16; MaxCount: 5; Damage: (Min: 3; Max: 4;);
+    Armor: 4; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4;);
     Color: $FF777700;),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGrayCave]; MaxLife: 32; Level: 4;
-    Armor: 4; DV: 18; MaxCount: 3; Damage: (Min: 4; Max: 5;);
+    Armor: 4; DV: 14; MaxCount: 3; Damage: (Min: 4; Max: 5;);
     Color: $FF777700;),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGrayCave]; MaxLife: 35; Level: 4;
-    Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 4; Max: 5;);
+    Armor: 5; DV: 15; MaxCount: 1; Damage: (Min: 4; Max: 5;);
     Color: $FF777700;),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 38; Level: 4;
-    Armor: 5; DV: 23; MaxCount: 3; Damage: (Min: 2; Max: 3;);
+    Armor: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3;);
     Color: $FF777700;),
     // Worm
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 40; Level: 5;
-    Armor: 5; DV: 24; MaxCount: 3; Damage: (Min: 3; Max: 5;);
+    Armor: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5;);
     Color: $FF777700;),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5;
-    Armor: 5; DV: 25; MaxCount: 1; Damage: (Min: 4; Max: 6;);
+    Armor: 5; DV: 18; MaxCount: 1; Damage: (Min: 4; Max: 6;);
     Color: $FF7777CC;),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGrayCave]; MaxLife: 43; Level: 5;
-    Armor: 5; DV: 25; MaxCount: 1; Damage: (Min: 5; Max: 6;);
+    Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 5; Max: 6;);
     Color: $FF299AFF;),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 45; Level: 5;
-    Armor: 5; DV: 26; MaxCount: 7; Damage: (Min: 3; Max: 5;);
+    Armor: 5; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5;);
     Color: $FF992233;),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 48; Level: 5;
-    Armor: 5; DV: 28; MaxCount: 5; Damage: (Min: 4; Max: 5;);
+    Armor: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5;);
     Color: $FF992233;),
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 50; Level: 5;
-    Armor: 6; DV: 30; MaxCount: 9; Damage: (Min: 2; Max: 6;);
+    Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6;);
     Color: $FF992233;),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 55; Level: 6;
-    Armor: 6; DV: 35; MaxCount: 9; Damage: (Min: 2; Max: 7;);
+    Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7;);
     Color: $FF992233;),
     // Scarab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 60; Level: 6;
-    Armor: 6; DV: 35; MaxCount: 7; Damage: (Min: 3; Max: 6;);
+    Armor: 6; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6;);
     Color: $FF992233;),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 65; Level: 6;
-    Armor: 7; DV: 40; MaxCount: 4; Damage: (Min: 1; Max: 9;);
+    Armor: 7; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 9;);
     Color: $FF992233;),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
-    Armor: 7; DV: 40; MaxCount: 8; Damage: (Min: 3; Max: 5;);
+    Armor: 7; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5;);
     Color: $FF992233;),
     // DireWolf
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
-    Armor: 7; DV: 41; MaxCount: 3; Damage: (Min: 6; Max: 7;);
+    Armor: 7; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7;);
     Color: $FF888888;),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeepCave]; MaxLife: 72; Level: 7;
-    Armor: 7; DV: 42; MaxCount: 1; Damage: (Min: 7; Max: 8;);
+    Armor: 7; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8;);
     Color: $FF992233;),
     // Faun
     (Symbol: 'f'; Boss: False; Maps: [deDeepCave]; MaxLife: 73; Level: 7;
-    Armor: 7; DV: 43; MaxCount: 1; Damage: (Min: 7; Max: 9;);
+    Armor: 7; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9;);
     Color: $FF992233;),
 
     // == Blood Cave == //
 
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 5; DV: 30; MaxCount: 9; Damage: (Min: 6; Max: 8;);
+    Armor: 5; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8;);
     Color: $FF00AA00;),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 5; DV: 35; MaxCount: 7; Damage: (Min: 7; Max: 9;);
+    Armor: 5; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9;);
     Color: $FF116610;),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 78; Level: 7;
-    Armor: 5; DV: 35; MaxCount: 5; Damage: (Min: 8; Max: 10;);
+    Armor: 5; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10;);
     Color: $FF445544;),
     // Hobgoblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 5; DV: 35; MaxCount: 9; Damage: (Min: 7; Max: 10;);
+    Armor: 5; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10;);
     Color: $FF55AA55;),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
-    Armor: 20; DV: 45; MaxCount: 1; Damage: (Min: 15; Max: 23;);
+    Armor: 20; DV: 34; MaxCount: 1; Damage: (Min: 15; Max: 23;);
     Color: $FF445544;),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 82; Level: 8;
-    Armor: 10; DV: 50; MaxCount: 4; Damage: (Min: 10; Max: 13;);
+    Armor: 10; DV: 35; MaxCount: 4; Damage: (Min: 10; Max: 13;);
     Color: $FF445544;),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
-    Armor: 10; DV: 50; MaxCount: 1; Damage: (Min: 16; Max: 24;);
+    Armor: 10; DV: 35; MaxCount: 1; Damage: (Min: 16; Max: 24;);
     Color: $FF445544;),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 88; Level: 8;
-    Armor: 10; DV: 50; MaxCount: 5; Damage: (Min: 10; Max: 15;);
+    Armor: 10; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15;);
     Color: $FF445544;),
     // Orc Brute
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 8;
-    Armor: 10; DV: 50; MaxCount: 5; Damage: (Min: 11; Max: 16;);
+    Armor: 10; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 16;);
     Color: $FF445544;),
     // Orc Warrior
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9;
-    Armor: 11; DV: 53; MaxCount: 4; Damage: (Min: 12; Max: 17;);
+    Armor: 11; DV: 39; MaxCount: 4; Damage: (Min: 12; Max: 17;);
     Color: $FF445544;),
     // Orc Warlord
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9;
-    Armor: 12; DV: 54; MaxCount: 3; Damage: (Min: 15; Max: 18;);
+    Armor: 12; DV: 40; MaxCount: 3; Damage: (Min: 15; Max: 18;);
     Color: $FF445544;),
 
     // == Drom == //
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; Armor: 12;
-    DV: 55; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00;),
+    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00;),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; Armor: 12;
-    DV: 55; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977;),
+    DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977;),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; Armor: 12;
-    DV: 55; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333;),
+    DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333;),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
-    Armor: 15; DV: 60; MaxCount: 5; Damage: (Min: 15; Max: 22;);
+    Armor: 15; DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 22;);
     Color: $FF223333;),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
-    Armor: 15; DV: 60; MaxCount: 3; Damage: (Min: 18; Max: 22;);
+    Armor: 15; DV: 45; MaxCount: 3; Damage: (Min: 18; Max: 22;);
     Color: $FF223333;),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 18; DV: 60; MaxCount: 1; Damage: (Min: 19; Max: 23;);
+    Armor: 18; DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23;);
     Color: $FF223333;),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 18; DV: 60; MaxCount: 9; Damage: (Min: 15; Max: 20;);
+    Armor: 18; DV: 46; MaxCount: 9; Damage: (Min: 15; Max: 20;);
     Color: $FF223333;),
     // Wraith
     (Symbol: 'w'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 19; DV: 60; MaxCount: 9; Damage: (Min: 12; Max: 16;);
+    Armor: 19; DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 16;);
     Color: $FF22FFFF;),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 19; DV: 60; MaxCount: 1; Damage: (Min: 22; Max: 30;);
+    Armor: 19; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 30;);
     Color: $FF223333;),
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 20; DV: 60; MaxCount: 1; Damage: (Min: 23; Max: 30;);
+    Armor: 20; DV: 49; MaxCount: 1; Damage: (Min: 23; Max: 30;);
     Color: $FF223333;),
     // Troll Brute
     (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 20; DV: 60; MaxCount: 1; Damage: (Min: 25; Max: 30;);
+    Armor: 20; DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30;);
     Color: $FF223333;),
 
     // == Bosses == //
 
     // Black Hound
     (Symbol: 'h'; Boss: True; Maps: [deDarkWood]; MaxLife: 45; Level: 3;
-    Armor: 8; DV: 25; MaxCount: 1; Damage: (Min: 8; Max: 10;);
+    Armor: 8; DV: 22; MaxCount: 1; Damage: (Min: 8; Max: 10;);
     Color: $FFCC8899;),
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDarkWood]; MaxLife: 50; Level: 3;
-    Armor: 9; DV: 27; MaxCount: 1; Damage: (Min: 9; Max: 11;);
+    Armor: 9; DV: 25; MaxCount: 1; Damage: (Min: 9; Max: 11;);
     Color: $FF66DD99;),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDarkWood]; MaxLife: 55; Level: 3;
-    Armor: 10; DV: 30; MaxCount: 1; Damage: (Min: 10; Max: 12;);
+    Armor: 10; DV: 28; MaxCount: 1; Damage: (Min: 10; Max: 12;);
     Color: $FF44FF77;),
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGrayCave]; MaxLife: 60; Level: 5;
@@ -315,19 +315,19 @@ const
     Color: $FF3388AA;),
     // Titan
     (Symbol: 't'; Boss: True; Maps: [deDeepCave]; MaxLife: 95; Level: 8;
-    Armor: 30; DV: 55; MaxCount: 1; Damage: (Min: 22; Max: 25;);
+    Armor: 30; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;);
     Color: $FFAABB77;),
     // Hill Giant
     (Symbol: 'g'; Boss: True; Maps: [deBloodCave]; MaxLife: 96; Level: 9;
-    Armor: 18; DV: 60; MaxCount: 1; Damage: (Min: 23; Max: 25;);
+    Armor: 18; DV: 50; MaxCount: 1; Damage: (Min: 23; Max: 25;);
     Color: $FF2233FF;),
     // Stone Giant
     (Symbol: 'g'; Boss: True; Maps: [deBloodCave]; MaxLife: 99; Level: 9;
-    Armor: 19; DV: 60; MaxCount: 1; Damage: (Min: 24; Max: 25;);
+    Armor: 19; DV: 54; MaxCount: 1; Damage: (Min: 24; Max: 25;);
     Color: $FF22FF33;),
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10;
-    Armor: 20; DV: 60; MaxCount: 1; Damage: (Min: 25; Max: 30;);
+    Armor: 20; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30;);
     Color: $FF223333;),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15;
