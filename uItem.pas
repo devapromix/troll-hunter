@@ -612,12 +612,12 @@ const
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 30; Max: 33;);
-    MaxDamage: (Min: 50; Max: 53;)); Price: 930; Color: clDarkRed;
+    MaxDamage: (Min: 50; Max: 54;)); Price: 930; Color: clDarkRed;
     Deep: [deDrom];),
     // Troll Slayer,
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 33; Max: 37;);
-    MaxDamage: (Min: 55; Max: 58;)); Price: 990; Color: clDarkRed;
+    MaxDamage: (Min: 55; Max: 60;)); Price: 990; Color: clDarkRed;
     Deep: [deDrom];),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
@@ -627,12 +627,12 @@ const
     // Demon Axe,
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 40; Max: 45;);
-    MaxDamage: (Min: 50; Max: 54;)); Price: 980; Color: clDarkRed;
+    MaxDamage: (Min: 50; Max: 55;)); Price: 980; Color: clDarkRed;
     Deep: [deDrom];),
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 10; Max: 12;);
-    MaxDamage: (Min: 80; Max: 85;)); Price: 940; Color: clDarkRed;
+    MaxDamage: (Min: 80; Max: 89;)); Price: 940; Color: clDarkRed;
     Deep: [deDrom];),
     // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
@@ -642,7 +642,7 @@ const
     // War Maul
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 30; Max: 35;);
-    MaxDamage: (Min: 55; Max: 60;)); Price: 950; Color: clDarkRed;
+    MaxDamage: (Min: 65; Max: 69;)); Price: 950; Color: clDarkRed;
     Deep: [deDrom];),
     // Doom Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
