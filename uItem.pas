@@ -647,7 +647,7 @@ const
     // Doom Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 36; Max: 40;);
-    MaxDamage: (Min: 70; Max: 75;)); Price: 1000; Color: clDarkRed;
+    MaxDamage: (Min: 70; Max: 80;)); Price: 1000; Color: clDarkRed;
     Deep: [deDrom];)
 
     );
