@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest);
+    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName);
   // scSpells, scIdentification
 
 type
@@ -108,6 +108,13 @@ type
 
 type
   TSceneRepair = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneName = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -325,6 +332,8 @@ begin
         FScene[I] := TSceneDifficulty.Create;
       scRest:
         FScene[I] := TSceneRest.Create;
+      scName:
+        FScene[I] := TSceneName.Create;
     end;
 end;
 
@@ -938,7 +947,7 @@ end;
 
 procedure TScenePlayer.Render;
 begin
-  Self.Title(_('Player'));
+  Self.Title(Player.Name);
 
   Self.RenderPlayer;
   Self.RenderSkills;
@@ -1182,6 +1191,8 @@ begin
   Self.Title(_('Statistics'));
   X := 1;
   Y := 3;
+
+  Add(_('Name'), Player.Name);
   case Game.Difficulty of
     dfEasy:
       Add(_('Difficulty'), _('Easy'));
@@ -1190,7 +1201,6 @@ begin
     dfHard:
       Add(_('Difficulty'), _('Hard'), clRed);
   end;
-  Add();
   Add(_('Scores'), Player.Score);
   Add(_('Tiles Moved'), Player.Turn);
   Add(_('Monsters Killed'), Player.Kills);
@@ -1633,11 +1643,7 @@ begin
             else
               Exit;
         end;
-        Scenes.SetScene(scLoad);
-        Terminal.Refresh;
-        Map.Gen;
-        terminal_delay(1000);
-        Game.Start();
+        Scenes.SetScene(scName);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1678,6 +1684,45 @@ begin
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end
+end;
+
+{ TSceneName }
+
+procedure TSceneName.Render;
+begin
+  Self.Title(_('Name'));
+
+  Terminal.Print(CX - 10, CY, _('Name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
+
+  AddKey('Esc', _('Back'), True, True);
+end;
+
+procedure TSceneName.Update(var Key: Word);
+begin
+  case Key of
+    TK_BACKSPACE:
+    begin
+      if (Player.Name <> '') then
+        Player.Name := Copy(Player.Name, 1, Length(Player.Name) - 1);
+    end;
+    TK_ENTER, TK_KP_ENTER:
+    begin
+      if (Player.Name = '') then
+        Player.Name := _('PLAYER');
+      Scenes.SetScene(scLoad);
+      Terminal.Refresh;
+      Map.Gen;
+      Terminal_Delay(1000);
+      Game.Start();
+    end;
+    TK_A..TK_Z:
+    begin
+      if (Length(Player.Name) < 10) then
+        Player.Name := Player.Name + Chr(Key - TK_A + 65);
+    end;
+    TK_ESCAPE:
+      Scenes.SetScene(scDifficulty);
+  end;
 end;
 
 initialization

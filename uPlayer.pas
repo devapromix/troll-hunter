@@ -374,7 +374,7 @@ begin
   Alive := True;
   Look := False;
   IsRest := False;
-  Name := _('Player');
+  Name := _('PLAYER');
   SatPerTurn := 2;
   Satiation := SatiatedMax;
   FWeaponSkill := skLearning;

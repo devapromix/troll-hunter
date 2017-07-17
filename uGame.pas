@@ -82,6 +82,7 @@ type
     procedure LoadConfig;
     procedure Start;
     procedure Log(S: string);
+    function GetCursor: string;
   end;
 
 var
@@ -117,6 +118,11 @@ destructor TGame.Destroy;
 begin
   Spawn.Free;
   inherited;
+end;
+
+function TGame.GetCursor: string;
+begin
+  Result := '_';
 end;
 
 function TGame.GetPath(SubDir: string): string;
