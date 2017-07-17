@@ -629,7 +629,7 @@ begin
   // Player info
   Terminal.BackgroundColor(clBackground);
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top, _('Player'));
+  Terminal.Print(Status.Left, Status.Top, Player.Name);
   if Game.Wizard then
     S := Format('%s (%d:%d)', [Map.Name, Player.X, Player.Y])
   else

@@ -76,6 +76,7 @@ type
     FItemAmount: Integer;
     FSatPerTurn: Byte;
     FIsRest: Boolean;
+    FName: string;
     procedure GenNPCText;
     function GetDV: Byte;
     function GetPV: Byte;
@@ -114,6 +115,7 @@ type
     property ItemIndex: Integer read FItemIndex write FItemIndex;
     property ItemAmount: Integer read FItemAmount write FItemAmount;
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
+    property Name: string read FName write FName;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
@@ -372,6 +374,7 @@ begin
   Alive := True;
   Look := False;
   IsRest := False;
+  Name := _('Player');
   SatPerTurn := 2;
   Satiation := SatiatedMax;
   FWeaponSkill := skLearning;
