@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName);
+    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scOptions);
   // scSpells, scIdentification
 
 type
@@ -59,6 +59,13 @@ type
 
 type
   TSceneStatistics = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneOptions = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -334,6 +341,8 @@ begin
         FScene[I] := TSceneRest.Create;
       scName:
         FScene[I] := TSceneName.Create;
+      scOptions:
+        FScene[I] := TSceneOptions.Create;
     end;
 end;
 
@@ -485,7 +494,8 @@ begin
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
-  AddKey('O', _('Statistics'));
+  AddKey('N', _('Statistics'));
+  AddKey('O', _('Options'));
   AddKey('I', _('Inventory'));
   AddKey('P', _('Skills and attributes'));
   AddKey('K', _('Calendar'));
@@ -779,8 +789,10 @@ begin
       end;
     TK_P:
       Scenes.SetScene(scPlayer);
-    TK_O:
+    TK_N:
       Scenes.SetScene(scStatistics);
+    TK_O:
+      Scenes.SetScene(scOptions);
     TK_V:
       if Game.Wizard then
         Scenes.SetScene(scWin);
@@ -1199,7 +1211,9 @@ begin
     dfNormal:
       Add(_('Difficulty'), _('Normal'));
     dfHard:
-      Add(_('Difficulty'), _('Hard'), clRed);
+      Add(_('Difficulty'), _('Hard'), clLightRed);
+    dfHell:
+      Add(_('Difficulty'), _('Hell'), clRed);
   end;
   Add(_('Scores'), Player.Score);
   Add(_('Tiles Moved'), Player.Turn);
@@ -1615,11 +1629,13 @@ procedure TSceneDifficulty.Render;
 begin
   Self.Title(_('Difficulty'));
 
-  Terminal.Print(CX - 5, CY - 2, Format('%s %s', [KeyStr('A'), _('Easy')]),
+  Terminal.Print(CX - 5, CY - 3, Format('%s %s', [KeyStr('A'), _('Easy')]),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY, Format('%s %s', [KeyStr('B'), _('Normal')]),
+  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [KeyStr('B'), _('Normal')]),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 2, Format('%s %s', [KeyStr('C'), _('Hard')]),
+  Terminal.Print(CX - 5, CY + 1, Format('%s %s', [KeyStr('C'), _('Hard')]),
+    TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY + 3, Format('%s %s', [KeyStr('D'), _('Hell')]),
     TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Back'), True, True);
@@ -1628,7 +1644,7 @@ end;
 procedure TSceneDifficulty.Update(var Key: Word);
 begin
   case Key of
-    TK_A, TK_B, TK_C, TK_ENTER, TK_KP_ENTER:
+    TK_A .. TK_D, TK_ENTER, TK_KP_ENTER:
       begin
         case Key of
           TK_A:
@@ -1637,6 +1653,8 @@ begin
             Game.Difficulty := dfNormal;
           TK_C:
             Game.Difficulty := dfHard;
+          TK_D:
+            Game.Difficulty := dfHell;
           TK_ENTER, TK_KP_ENTER:
             if Game.Wizard then
               Game.Difficulty := dfNormal
@@ -1723,6 +1741,77 @@ begin
     TK_ESCAPE:
       Scenes.SetScene(scDifficulty);
   end;
+end;
+
+{ TSceneOptions }
+
+procedure TSceneOptions.Render;
+var
+  X, Y: Byte;
+
+  procedure Add(); overload;
+  begin
+    Inc(X);
+    if (X > 2) then
+    begin
+      X := 1;
+      Inc(Y);
+    end;
+  end;
+
+  procedure Add(AHotKey, AText: string; AOption: Boolean; AColor: Cardinal = clWhite); overload;
+  begin
+    Terminal.ForegroundColor(AColor);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clLightBlue);
+    Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, '[['
+      + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
+    Inc(X);
+    if (X > 2) then
+    begin
+      X := 1;
+      Inc(Y);
+    end;
+  end;
+
+begin
+  Self.Title(_('Options'));
+
+  X := 1;
+  Y := 3;
+  Add('C', _('Auto pickup coins'), Game.APCoin);
+  Add('F', _('Auto pickup foods'), Game.APFood);
+  Add('P', _('Auto pickup potions'), Game.APPotion);
+  Add('S', _('Auto pickup scrolls'), Game.APScroll);
+
+  if Game.Wizard then
+  begin
+    X := 1;
+    Y := Y + 3;
+    Self.Title(_('Wizard Mode'), Y - 1);
+    Y := Y + 1;
+    Add('W', _('Wizard Mode'), Game.Wizard, clRed);
+  end;
+
+  AddKey('Esc', _('Back'), True, True);
+end;
+
+procedure TSceneOptions.Update(var Key: Word);
+begin
+  case Key of
+    TK_C:
+      Game.APCoin := not Game.APCoin;
+    TK_F:
+      Game.APFood := not Game.APFood;
+    TK_P:
+      Game.APPotion := not Game.APPotion;
+    TK_S:
+      Game.APScroll := not Game.APScroll;
+    TK_W:
+      Game.Wizard := False;
+    TK_ESCAPE:
+      Scenes.SetScene(scGame);
+  end
 end;
 
 initialization

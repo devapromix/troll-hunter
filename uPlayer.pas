@@ -283,6 +283,7 @@ end;
 procedure TPlayer.AutoPickup;
 var
   Index, FCount: Integer;
+  ItemType: TItemType;
   FItem: Item;
 begin
   FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y),
@@ -290,8 +291,13 @@ begin
   for Index := FCount - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
-    if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in AutoPickupItems) then
+    ItemType := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
+    if (ItemType in AutoPickupItems) then
     begin
+      if ((ItemType = itCoin) and not Game.APCoin) then Exit;
+      if ((ItemType = itFood) and not Game.APFood) then Exit;
+      if ((ItemType = itPotion) and not Game.APPotion) then Exit;
+      if ((ItemType = itScroll) and not Game.APScroll) then Exit;
       Items.AddItemToInv(Index, True);
       Wait;
     end;

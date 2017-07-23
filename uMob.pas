@@ -796,6 +796,8 @@ begin
   until ChMapTile(ID, FX, FY, AZ);
   FCount := MobBase[TMobEnum(ID)].MaxCount;
   FCount := Math.EnsureRange(Math.RandomRange(FCount div 2, FCount), 1, FCount);
+  if (FCount > 1) then
+    FCount := Math.RandomRange(FCount, FCount + (Ord(Game.Difficulty) * 2));
   for I := 1 to FCount do
   begin
     repeat

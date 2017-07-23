@@ -51,7 +51,7 @@ var
   clAlarm: string = 'Lightest Green';
 
 type
-  TDifficulty = (dfEasy, dfNormal, dfHard);
+  TDifficulty = (dfEasy, dfNormal, dfHard, dfHell);
   TSpawn = class(TEntity);
 
 type
@@ -62,6 +62,10 @@ type
     FWon: Boolean;
     FMode: Boolean;
     FWizard: Boolean;
+    FAPCoin: Boolean;
+    FAPFood: Boolean;
+    FAPPotion: Boolean;
+    FAPScroll: Boolean;
     FCanClose: Boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
@@ -73,6 +77,10 @@ type
     property Won: Boolean read FWon write FWon;
     property IsMode: Boolean read FMode write FMode;
     property Wizard: Boolean read FWizard write FWizard;
+    property APCoin: Boolean read FAPCoin write FAPCoin;
+    property APFood: Boolean read FAPFood write FAPFood;
+    property APPotion: Boolean read FAPPotion write FAPPotion;
+    property APScroll: Boolean read FAPScroll write FAPScroll;
     property CanClose: Boolean read FCanClose write FCanClose;
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
@@ -83,7 +91,9 @@ type
     procedure Start;
     procedure Log(S: string);
     function GetCursor: string;
+    function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string;
   end;
+
 
 var
   Game: TGame;
@@ -104,6 +114,10 @@ begin
   Won := False;
   IsMode := False;
   Wizard := False;
+  APCoin := True;
+  APFood := True;
+  APPotion := True;
+  APScroll := True;
   CanClose := False;
   Difficulty := dfNormal;
   Spawn := TSpawn.Create;
@@ -118,6 +132,14 @@ destructor TGame.Destroy;
 begin
   Spawn.Free;
   inherited;
+end;
+
+function TGame.IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string;
+begin
+  if AValue then
+    Result := ATrue
+  else
+    Result := AFalse;
 end;
 
 function TGame.GetCursor: string;
