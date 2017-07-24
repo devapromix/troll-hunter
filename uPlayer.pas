@@ -547,14 +547,14 @@ begin
       ((Map.InView(LX + AX, LY + AY) and not Map.GetFog(LX + AX, LY + AY)) or
       Game.Wizard) then
     begin
-      LX := EnsureRange(LX + AX, 0, High(Byte));
-      LY := EnsureRange(LY + AY, 0, High(Byte));
+      LX := Map.EnsureRange(LX + AX);
+      LY := Map.EnsureRange(LY + AY);
     end;
   end
   else
   begin
-    FX := EnsureRange(X + AX, 0, High(Byte));
-    FY := EnsureRange(Y + AY, 0, High(Byte));
+    FX := Map.EnsureRange(X + AX);
+    FY := Map.EnsureRange(Y + AY);
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
     then
       Exit;
@@ -1014,6 +1014,8 @@ begin
 end;
 
 procedure TPlayer.StarterSet;
+var
+  D: Byte;
 begin
   // Add armors
   if Game.Wizard then
@@ -1067,7 +1069,8 @@ begin
   // Add foods
   Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));
   // Add coins
-  Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), 50));
+  D := IfThen(Game.Difficulty <> dfHell, 250, 50);
+  Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), D));
   Self.Calc;
 end;
 

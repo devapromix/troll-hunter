@@ -745,8 +745,8 @@ begin
     end;
   end;
   //
-  FX := EnsureRange(X + NX, 0, High(Byte));
-  FY := EnsureRange(Y + NY, 0, High(Byte));
+  FX := Map.EnsureRange(X + NX);
+  FY := Map.EnsureRange(Y + NY);
   if Mobs.GetFreeTile(FX, FY) and (Map.GetTileEnum(FX, FY, Map.Current)
     in FreeTiles) then
   begin

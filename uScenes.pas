@@ -568,8 +568,8 @@ var
     for I := 1 to L do
     begin
       LR := I / L;
-      AX := EnsureRange(Player.X + Trunc((X - Player.X) * LR), 0, High(Byte));
-      AY := EnsureRange(Player.Y + Trunc((Y - Player.Y) * LR), 0, High(Byte));
+      AX := Map.EnsureRange(Player.X + Trunc((X - Player.X) * LR));
+      AY := Map.EnsureRange(Player.Y + Trunc((Y - Player.Y) * LR));
       Map.SetFOV(AX, AY, True);
       if (Map.GetTileEnum(AX, AY, Map.Current) in StopTiles) then
         Exit;

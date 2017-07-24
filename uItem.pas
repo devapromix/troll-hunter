@@ -201,7 +201,7 @@ const
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 350; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
+    Price: 450; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 400; ManaCost: 100;),
 
     // Bread ration
@@ -1241,7 +1241,8 @@ end;
 function TItems.GetPrice(AItem: Item): Integer;
 begin
   Result := ItemBase[TItemEnum(AItem.ItemID)].Price + (AItem.MaxDurability * 3)
-    + (AItem.Defense * 4) + (AItem.MaxDamage * 5);
+    + (AItem.Defense * 4) + (AItem.MaxDamage * 5)
+    + Round(ItemBase[TItemEnum(AItem.ItemID)].Level * (Ord(Game.Difficulty) * 10));
 end;
 
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;
@@ -1408,8 +1409,8 @@ begin
   Loot(AX, AY, iGold);
   if (Math.RandomRange(0, 4) = 0) then
   begin
-    X := Math.EnsureRange(AX + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
-    Y := Math.EnsureRange(AY + (Math.RandomRange(0, 3) - 1), 0, High(Byte));
+    X := Map.EnsureRange(AX + (Math.RandomRange(0, 3) - 1));
+    Y := Map.EnsureRange(AY + (Math.RandomRange(0, 3) - 1));
     if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then
       Loot(X, Y, iGold);
   end;
