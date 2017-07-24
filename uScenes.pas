@@ -1175,12 +1175,7 @@ var
     Terminal.ForegroundColor(clGreen);
     Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
       TK_ALIGN_RIGHT);
-    Inc(X);
-    if (X > 2) then
-    begin
-      X := 1;
-      Inc(Y);
-    end;
+    Add();
   end;
 
   procedure Add(AText: string; AValue: string;
@@ -1191,12 +1186,7 @@ var
     Terminal.ForegroundColor(AColor);
     Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
       TK_ALIGN_RIGHT);
-    Inc(X);
-    if (X > 2) then
-    begin
-      X := 1;
-      Inc(Y);
-    end;
+    Add();
   end;
 
 begin
@@ -1766,12 +1756,7 @@ var
     Terminal.ForegroundColor(clLightBlue);
     Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, '[['
       + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
-    Inc(X);
-    if (X > 2) then
-    begin
-      X := 1;
-      Inc(Y);
-    end;
+    Add();
   end;
 
 begin
