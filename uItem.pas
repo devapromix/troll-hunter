@@ -673,7 +673,7 @@ type
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
     function GetSlotName(const SlotType: TSlotType): string;
-    procedure AddItemToInv(Index: Integer; AFlag: Boolean = False); overload;
+    procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
@@ -1349,7 +1349,7 @@ begin
   Items_Inventory_AppendItem(FItem);
 end;
 
-procedure TItems.AddItemToInv(Index: Integer; AFlag: Boolean = False);
+procedure TItems.AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
 var
   FItem: Item;
   MapID: Integer;

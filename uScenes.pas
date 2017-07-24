@@ -1117,6 +1117,7 @@ begin
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
+  AddKey('Space', _('Pick up all items'), False, False);
   AddKey('A-Z', _('Pick up an item'), False, True);
 
   if (FCount <= 0) then
@@ -1124,10 +1125,19 @@ begin
 end;
 
 procedure TSceneItems.Update(var Key: Word);
+var
+  I, FCount: Integer;
 begin
   case Key of
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
+    TK_SPACE:
+    begin
+      FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y),
+        0, ItemMax);
+      for I := 0 to FCount - 1 do
+        Items.AddItemToInv;
+    end;
     TK_A .. TK_Z: // Pick up
       Items.AddItemToInv(Key - TK_A);
   else
