@@ -1786,6 +1786,7 @@ begin
     Self.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
     Add('W', _('Wizard Mode'), Game.Wizard, clRed);
+    Add('R', _('Reload all shops'), False);
   end;
 
   AddKey('Esc', _('Back'), True, True);
@@ -1804,6 +1805,8 @@ begin
       Game.APScroll := not Game.APScroll;
     TK_W:
       Game.Wizard := False;
+    TK_R:
+      if Game.Wizard then Shops.New;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end
