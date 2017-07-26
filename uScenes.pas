@@ -8,8 +8,9 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scOptions);
-  // scSpells, scIdentification
+    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpells,
+    scOptions);
+  // scClasses, scRaces, scIdentification
 
 type
   TScene = class(TObject)
@@ -66,6 +67,13 @@ type
 
 type
   TSceneOptions = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneSpells = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -343,6 +351,8 @@ begin
         FScene[I] := TSceneName.Create;
       scOptions:
         FScene[I] := TSceneOptions.Create;
+      scSpells:
+        FScene[I] := TSceneSpells.Create;
     end;
 end;
 
@@ -494,6 +504,7 @@ begin
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
+  AddKey('B', _('Spell book'));
   AddKey('N', _('Statistics'));
   AddKey('O', _('Options'));
   AddKey('I', _('Inventory'));
@@ -793,12 +804,8 @@ begin
       Scenes.SetScene(scStatistics);
     TK_O:
       Scenes.SetScene(scOptions);
-    TK_V:
-      if Game.Wizard then
-        Scenes.SetScene(scWin);
     TK_B:
-      if Game.Wizard then
-        Scenes.SetScene(scDef);
+      Scenes.SetScene(scSpells);
     TK_SLASH:
       Scenes.SetScene(scHelp);
     TK_Y:
@@ -1807,6 +1814,23 @@ begin
       Game.Wizard := False;
     TK_R:
       if Game.Wizard then Shops.New;
+    TK_ESCAPE:
+      Scenes.SetScene(scGame);
+  end
+end;
+
+{ TSceneSpells }
+
+procedure TSceneSpells.Render;
+begin
+  Self.Title(_('Spell book'));
+
+  AddKey('Esc', _('Back'), True, True);
+end;
+
+procedure TSceneSpells.Update(var Key: Word);
+begin
+  case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end
