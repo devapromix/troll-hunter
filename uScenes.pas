@@ -1231,10 +1231,15 @@ begin
   Add(_('Potions Drunk'), Player.PotDrunk);
   Add(_('Scrolls Read'), Player.ScrRead);
   Add(_('Spells Cast'), Player.SpCast);
+  // Add(_('Foods Eaten'), );
   // Add(_('Melee Attack Performed'), );
   // Add(_('Ranged Attack Performed'), );
   // Add(_('Unarmed Attack Performed'), );
   // Add(_('Times Fallen Into Pit'), );
+  // Add(_('Items Sold'), );
+  // Add(_('Items Identified'), );
+  // Add(_('Items Crafted'), );
+  // Add(_('Gold from Sales'), );
   // Add(_(''), );
 
   // Version
