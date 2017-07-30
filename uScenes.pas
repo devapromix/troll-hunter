@@ -8,7 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpells,
+    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook,
     scOptions);
   // scClasses, scRaces, scIdentification
 
@@ -73,7 +73,7 @@ type
   end;
 
 type
-  TSceneSpells = class(TScene)
+  TSceneSpellbook = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -351,8 +351,8 @@ begin
         FScene[I] := TSceneName.Create;
       scOptions:
         FScene[I] := TSceneOptions.Create;
-      scSpells:
-        FScene[I] := TSceneSpells.Create;
+      scSpellbook:
+        FScene[I] := TSceneSpellbook.Create;
     end;
 end;
 
@@ -504,7 +504,7 @@ begin
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
-  AddKey('B', _('Spell book'));
+  AddKey('B', _('Spellbook'));
   AddKey('N', _('Statistics'));
   AddKey('O', _('Options'));
   AddKey('I', _('Inventory'));
@@ -805,7 +805,7 @@ begin
     TK_O:
       Scenes.SetScene(scOptions);
     TK_B:
-      Scenes.SetScene(scSpells);
+      Scenes.SetScene(scSpellbook);
     TK_SLASH:
       Scenes.SetScene(scHelp);
     TK_Y:
@@ -1826,14 +1826,14 @@ end;
 
 { TSceneSpells }
 
-procedure TSceneSpells.Render;
+procedure TSceneSpellbook.Render;
 begin
-  Self.Title(_('Spell book'));
+  Self.Title(_('Spellbook'));
 
   AddKey('Esc', _('Back'), True, True);
 end;
 
-procedure TSceneSpells.Update(var Key: Word);
+procedure TSceneSpellbook.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE:
