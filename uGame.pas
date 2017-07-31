@@ -4,6 +4,30 @@ interface
 
 uses uEntity;
 
+{
+var
+  BattleJournals: array of string;
+
+procedure BattleLog(s: string);
+begin
+  SetLength(BattleJournals, Length(BattleJournals) + 1);
+  BattleJournals[Length(BattleJournals) - 1] := s;
+end;
+
+function BattleJournal: string;
+var
+  s: string;
+  i: integer;
+begin
+  s := '';
+  for i := max(0, Length(BattleJournals) - N_BTL_LOG_LINES)
+    to Length(BattleJournals) - 1 do
+    s := s + BattleJournals[i] + #10;
+  SetLength(s, Length(s) - 1);
+  Result := s;
+end;
+}
+
 const
   FT = '== %s ==';
   FC = '[color=%s]%s[/color]';

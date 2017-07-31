@@ -32,7 +32,8 @@ type
     procedure BackgroundColor(Value: Cardinal);
     procedure ForegroundColor(Value: Cardinal);
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
-    procedure Print(AX, AY: Integer; AChar: Char; AForegroundColor: Cardinal;
+    procedure Print(AX, AY: Integer; AChar: Char;
+      AForegroundColor: Cardinal = $00FFFFFF;
       ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
       Align: Byte); overload;
@@ -168,7 +169,8 @@ begin
 end;
 
 procedure TTerminal.Print(AX, AY: Integer; AChar: Char;
-  AForegroundColor: Cardinal; ABackgroundColor: Cardinal = 0);
+  AForegroundColor: Cardinal = $00FFFFFF;
+  ABackgroundColor: Cardinal = 0);
 begin
   terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);
