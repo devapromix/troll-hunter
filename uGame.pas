@@ -91,6 +91,7 @@ type
     FAPPotion: Boolean;
     FAPScroll: Boolean;
     FCanClose: Boolean;
+    FShowMap: Boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
   public
@@ -106,6 +107,7 @@ type
     property APPotion: Boolean read FAPPotion write FAPPotion;
     property APScroll: Boolean read FAPScroll write FAPScroll;
     property CanClose: Boolean read FCanClose write FCanClose;
+    property ShowMap: Boolean read FShowMap write FShowMap;
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
     function GetPath(SubDir: string = ''): string;
@@ -143,6 +145,7 @@ begin
   APPotion := True;
   APScroll := True;
   CanClose := False;
+  ShowMap := False;
   Difficulty := dfNormal;
   Spawn := TSpawn.Create;
   for I := 1 to ParamCount do

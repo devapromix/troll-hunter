@@ -38,7 +38,7 @@ var
 
 implementation
 
-uses SysUtils, Math, GNUGetText, uItem, uShop;
+uses SysUtils, Math, GNUGetText, uItem, uShop, uGame;
 
 { TCalendar }
 
@@ -118,7 +118,7 @@ end;
 
 procedure TCalendar.OnHour;
 begin
-
+  Game.Log('Hour');
 end;
 
 procedure TCalendar.OnMonth;
@@ -138,7 +138,7 @@ end;
 
 procedure TCalendar.Turn;
 begin
-  Inc(FMinute, Math.RandomRange(10, 15));
+  Inc(FMinute, 10);
   if (Minute > SysUtils.MinsPerHour - 1) then
   begin
     FMinute := Minute - SysUtils.MinsPerHour;

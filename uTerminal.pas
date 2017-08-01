@@ -33,7 +33,7 @@ type
     procedure ForegroundColor(Value: Cardinal);
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
     procedure Print(AX, AY: Integer; AChar: Char;
-      AForegroundColor: Cardinal = $00FFFFFF;
+      AForegroundColor: Cardinal;
       ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
       Align: Byte); overload;
@@ -169,9 +169,11 @@ begin
 end;
 
 procedure TTerminal.Print(AX, AY: Integer; AChar: Char;
-  AForegroundColor: Cardinal = $00FFFFFF;
+  AForegroundColor: Cardinal;
   ABackgroundColor: Cardinal = 0);
 begin
+  if Game.Wizard and not Game.ShowMap then
+  AForegroundColor := $00FFFFFF;
   terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);
   terminal_print(AX, AY, TK_ALIGN_DEFAULT, AChar);
