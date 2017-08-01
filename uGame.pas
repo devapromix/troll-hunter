@@ -145,7 +145,7 @@ begin
   APPotion := True;
   APScroll := True;
   CanClose := False;
-  ShowMap := False;
+  ShowMap := True;
   Difficulty := dfNormal;
   Spawn := TSpawn.Create;
   for I := 1 to ParamCount do

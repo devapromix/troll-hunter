@@ -172,8 +172,6 @@ procedure TTerminal.Print(AX, AY: Integer; AChar: Char;
   AForegroundColor: Cardinal;
   ABackgroundColor: Cardinal = 0);
 begin
-  if Game.Wizard and not Game.ShowMap then
-  AForegroundColor := $00FFFFFF;
   terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);
   terminal_print(AX, AY, TK_ALIGN_DEFAULT, AChar);
