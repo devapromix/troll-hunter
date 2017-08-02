@@ -581,7 +581,7 @@ end;
 procedure TMob.DropItems;
 begin
   Items.Loot(Self.X, Self.Y, Boss);
-  if not Game.Wizard then
+  if Game.LCorpses then
     Items.Loot(Self.X, Self.Y, iCorpse);
 end;
 

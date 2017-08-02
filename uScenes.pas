@@ -1801,6 +1801,7 @@ begin
     Add('W', _('Wizard Mode'), Game.Wizard, clRed);
     Add('M', _('Show map'), Game.ShowMap);
     Add('R', _('Reload all shops'), False);
+    Add('L', _('Leave corpses'), Game.LCorpses);
   end;
 
   AddKey('Esc', _('Back'), True, True);
@@ -1821,6 +1822,8 @@ begin
       Game.Wizard := False;
     TK_M:
       if Game.Wizard then Game.ShowMap := not Game.ShowMap;
+    TK_L:
+      if Game.Wizard then Game.LCorpses := not Game.LCorpses;
     TK_R:
       if Game.Wizard then Shops.New;
     TK_ESCAPE:
