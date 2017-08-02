@@ -24,6 +24,10 @@ var
   IsRender: Boolean = True;
 
 begin
+  Randomize;
+  {$IF COMPILERVERSION >= 18}
+  ReportMemoryLeaksOnShutdown := True;
+  {$IFEND}
   Game.LoadConfig;
   repeat
     if (Game.Timer > 0) then
