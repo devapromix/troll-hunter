@@ -609,7 +609,7 @@ begin
   Terminal.BackgroundColor(clBackground);
   PX := View.Width div 2;
   PY := View.Height div 2;
-  if Game.Wizard and Game.ShowMap then
+  if Game.ShowMap then
   for DY := 0 to View.Height - 1 do
     for DX := 0 to View.Width - 1 do
     begin
