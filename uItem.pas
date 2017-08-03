@@ -54,8 +54,8 @@ type
     iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
-    iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
-    iBreadRation, iValleyRoot, iRatPod, iKey,
+    iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal, iBreadRation,
+    iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -684,7 +684,8 @@ type
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
     function GetSlotName(const SlotType: TSlotType): string;
-    procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False); overload;
+    procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
+      overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
@@ -1259,8 +1260,9 @@ end;
 function TItems.GetPrice(AItem: Item): Integer;
 begin
   Result := ItemBase[TItemEnum(AItem.ItemID)].Price + (AItem.MaxDurability * 3)
-    + (AItem.Defense * 4) + (AItem.MaxDamage * 5)
-    + Round(ItemBase[TItemEnum(AItem.ItemID)].Level * (Ord(Game.Difficulty) * 10));
+    + (AItem.Defense * 4) + (AItem.MaxDamage * 5) +
+    Round(ItemBase[TItemEnum(AItem.ItemID)].Level *
+    (Ord(Game.Difficulty) * 10));
 end;
 
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;

@@ -295,10 +295,14 @@ begin
     ItemType := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
     if (ItemType in AutoPickupItems) then
     begin
-      if ((ItemType = itCoin) and not Game.APCoin) then Exit;
-      if ((ItemType = itFood) and not Game.APFood) then Exit;
-      if ((ItemType = itPotion) and not Game.APPotion) then Exit;
-      if ((ItemType = itScroll) and not Game.APScroll) then Exit;
+      if ((ItemType = itCoin) and not Game.APCoin) then
+        Exit;
+      if ((ItemType = itFood) and not Game.APFood) then
+        Exit;
+      if ((ItemType = itPotion) and not Game.APPotion) then
+        Exit;
+      if ((ItemType = itScroll) and not Game.APScroll) then
+        Exit;
       Items.AddItemToInv(Index, True);
       Wait;
     end;
