@@ -54,7 +54,8 @@ type
     iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
-    iScrollOfHunger, iScrollOfTeleportation, iBreadRation, iValleyRoot, iRatPod, iKey,
+    iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
+    iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -208,6 +209,11 @@ const
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
     Effects: [efTeleportation]; Value: 5; ManaCost: 250;),
+    // Scroll of Town Portal
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 250; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
+    Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -977,6 +983,9 @@ begin
     // Scroll of teleportation
     iScrollOfTeleportation:
       Result := _('Scroll of teleportation');
+    // Scroll of Town Portal
+    iScrollOfTownPortal:
+      Result := _('Scroll of town portal');
 
     // Bread ration
     iBreadRation:

@@ -20,7 +20,8 @@ type
   end;
 
 type
-  TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood, efTeleportation);
+  TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood, efTeleportation,
+    efTownPortal);
   TEffects = set of TEffect;
 
 const
@@ -1128,6 +1129,14 @@ begin
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));
+  end;
+  // Town Portal
+  if (efTownPortal in Effects) then
+  begin
+    X := Game.Spawn.X;
+    Y := Game.Spawn.Y;
+    Map.Current := deDarkWood;
+    MsgLog.Add(_('You have teleported into town!'));
   end;
 end;
 
