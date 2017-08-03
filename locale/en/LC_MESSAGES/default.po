@@ -91,10 +91,16 @@ msgid "December"
 msgstr ""
 
 #: uCalendar.pas:107
+msgid "Morning"
+msgstr ""
+
 #: uCalendar.pas:108
-#: uCalendar.pas:109
-#: uScenes.pas:1546
+#: uScenes.pas:1623
 msgid "Day"
+msgstr ""
+
+#: uCalendar.pas:109
+msgid "Evening"
 msgstr ""
 
 #: uCalendar.pas:110
@@ -102,1762 +108,1859 @@ msgid "Night"
 msgstr ""
 
 #. Intro
-#: uGame.pas:161
+#: uGame.pas:219
 msgid "Welcome to Elvion!"
 msgstr ""
 
-#: uGame.pas:162
+#: uGame.pas:220
 msgid "You need to find and kill The King Troll!"
 msgstr ""
 
-#: uGame.pas:162
+#: uGame.pas:220
 msgid "Press ? for help."
 msgstr ""
 
-#: uGame.pas:169
+#: uGame.pas:227
 msgid "Trollhunter"
 msgstr ""
 
 #. Map's item
-#: uItem.pas:745
+#: uItem.pas:747
 msgid "Several items (%dx) are lying here (%s)."
 msgstr ""
 
-#: uItem.pas:749
+#: uItem.pas:751
 msgid "%s is lying here."
 msgstr ""
 
 #. None
-#: uItem.pas:908
+#: uItem.pas:920
 msgid "None"
 msgstr ""
 
 #. Corpse
-#: uItem.pas:911
-#: uScenes.pas:511
+#: uItem.pas:923
+#: uScenes.pas:551
 msgid "Corpse"
 msgstr ""
 
 #. Gold
-#: uItem.pas:914
-#: uPlayer.pas:891
+#: uItem.pas:926
+#: uPlayer.pas:918
 msgid "Gold"
 msgstr ""
 
 #. Potion of rejuvenation
-#: uItem.pas:918
-msgid "Potion of rejuvenation1"
+#: uItem.pas:930
+msgid "Lesser rejuvenation potion"
 msgstr ""
 
 #. Potion of rejuvenation
-#: uItem.pas:921
-msgid "Potion of rejuvenation2"
+#: uItem.pas:933
+msgid "Greater rejuvenation potion"
 msgstr ""
 
 #. Potion of rejuvenation
-#: uItem.pas:924
-msgid "Potion of rejuvenation3"
+#: uItem.pas:936
+msgid "Heroic rejuvenation potion"
 msgstr ""
 
 #. Potion of rejuvenation
-#: uItem.pas:927
+#: uItem.pas:939
 msgid "Potion of full rejuvenation"
 msgstr ""
 
 #. Potion of health
-#: uItem.pas:931
-msgid "Potion of healing1"
+#: uItem.pas:943
+msgid "Lesser healing potion"
 msgstr ""
 
 #. Potion of health
-#: uItem.pas:934
-msgid "Potion of healing2"
+#: uItem.pas:946
+msgid "Greater healing potion"
 msgstr ""
 
 #. Potion of health
-#: uItem.pas:937
-msgid "Potion of healing3"
+#: uItem.pas:949
+msgid "Heroic healing potion"
 msgstr ""
 
 #. Potion of health
-#: uItem.pas:940
+#: uItem.pas:952
 msgid "Potion of full healing"
 msgstr ""
 
 #. Potion of mana
-#: uItem.pas:944
-msgid "Potion of mana1"
+#: uItem.pas:956
+msgid "Lesser mana potion"
 msgstr ""
 
 #. Potion of mana
-#: uItem.pas:947
-msgid "Potion of mana2"
+#: uItem.pas:959
+msgid "Greater mana potion"
 msgstr ""
 
 #. Potion of mana
-#: uItem.pas:950
-msgid "Potion of mana3"
+#: uItem.pas:962
+msgid "Heroic mana potion"
 msgstr ""
 
 #. Potion of mana
-#: uItem.pas:953
+#: uItem.pas:965
 msgid "Potion of full mana"
 msgstr ""
 
 #. Scroll of healing
-#: uItem.pas:957
-msgid "Scroll of healing1"
+#: uItem.pas:969
+msgid "Scroll of minor healing"
 msgstr ""
 
 #. Scroll of healing
-#: uItem.pas:960
-msgid "Scroll of healing2"
+#: uItem.pas:972
+msgid "Scroll of lesser healing"
 msgstr ""
 
 #. Scroll of healing
-#: uItem.pas:963
-msgid "Scroll of healing3"
+#: uItem.pas:975
+msgid "Scroll of greater healing"
 msgstr ""
 
 #. Scroll of healing
-#: uItem.pas:966
+#: uItem.pas:978
 msgid "Scroll of full healing"
 msgstr ""
 
 #. Scroll of hunger
-#: uItem.pas:969
+#: uItem.pas:982
 msgid "Scroll of hunger"
 msgstr ""
 
+#. Scroll of teleportation
+#: uItem.pas:985
+msgid "Scroll of teleportation"
+msgstr ""
+
+#. Scroll of Town Portal
+#: uItem.pas:988
+msgid "Scroll of town portal"
+msgstr ""
+
 #. Bread ration
-#: uItem.pas:973
+#: uItem.pas:992
 msgid "Bread ration"
 msgstr ""
 
 #. Valley root
-#: uItem.pas:976
+#: uItem.pas:995
 msgid "Valley root"
 msgstr ""
 
 #. Rat pod
-#: uItem.pas:979
+#: uItem.pas:998
 msgid "Rat pod"
 msgstr ""
 
 #. Key
-#: uItem.pas:983
+#: uItem.pas:1002
 msgid "Key"
 msgstr ""
 
 #. Helm
-#: uItem.pas:989
+#: uItem.pas:1008
 msgid "Cap"
 msgstr ""
 
-#: uItem.pas:991
+#: uItem.pas:1010
 msgid "War Cap"
 msgstr ""
 
-#: uItem.pas:993
+#: uItem.pas:1012
 msgid "Hood"
 msgstr ""
 
-#: uItem.pas:995
+#: uItem.pas:1014
 msgid "Red Hat"
 msgstr ""
 
 #. Armor
-#: uItem.pas:998
+#: uItem.pas:1017
 msgid "Quilted Armor"
 msgstr ""
 
-#: uItem.pas:1000
+#: uItem.pas:1019
 msgid "Leather Armor"
 msgstr ""
 
-#: uItem.pas:1002
+#: uItem.pas:1021
 msgid "Light Clothes"
 msgstr ""
 
-#: uItem.pas:1004
+#: uItem.pas:1023
 msgid "Leather Apron"
 msgstr ""
 
 #. Shield
-#: uItem.pas:1007
+#: uItem.pas:1026
 msgid "Buckler"
 msgstr ""
 
-#: uItem.pas:1009
+#: uItem.pas:1028
 msgid "Targe Shield"
 msgstr ""
 
 #. Blade
-#: uItem.pas:1012
+#: uItem.pas:1031
 msgid "Rusty Sword"
 msgstr ""
 
-#: uItem.pas:1014
+#: uItem.pas:1033
 msgid "Short Sword"
 msgstr ""
 
 #. Axe
-#: uItem.pas:1017
+#: uItem.pas:1036
 msgid "Hatchet"
 msgstr ""
 
-#: uItem.pas:1019
+#: uItem.pas:1038
 msgid "Battle Axe"
 msgstr ""
 
 #. Spear
-#: uItem.pas:1022
+#: uItem.pas:1041
 msgid "Short Spear"
 msgstr ""
 
-#: uItem.pas:1024
-#: uPlayer.pas:503
+#: uItem.pas:1043
+#: uPlayer.pas:521
 msgid "Spear"
 msgstr ""
 
 #. Mace
-#: uItem.pas:1027
+#: uItem.pas:1046
 msgid "Slag Hammer"
 msgstr ""
 
-#: uItem.pas:1029
+#: uItem.pas:1048
 msgid "Spiked Cudgel"
 msgstr ""
 
 #. Helm
-#: uItem.pas:1035
+#: uItem.pas:1054
 msgid "Helm"
 msgstr ""
 
-#: uItem.pas:1037
+#: uItem.pas:1056
 msgid "Grand Helm"
 msgstr ""
 
-#: uItem.pas:1039
+#: uItem.pas:1058
 msgid "Leather Cap"
 msgstr ""
 
-#: uItem.pas:1041
+#: uItem.pas:1060
 msgid "Mask"
 msgstr ""
 
 #. Armor
-#: uItem.pas:1044
+#: uItem.pas:1063
 msgid "HardLeather Armor"
 msgstr ""
 
-#: uItem.pas:1046
+#: uItem.pas:1065
 msgid "Battle Armor"
 msgstr ""
 
-#: uItem.pas:1048
+#: uItem.pas:1067
 msgid "Fancy Clothes"
 msgstr ""
 
-#: uItem.pas:1050
+#: uItem.pas:1069
 msgid "Robe"
 msgstr ""
 
 #. Shield
-#: uItem.pas:1053
+#: uItem.pas:1072
 msgid "Small Shield"
 msgstr ""
 
-#: uItem.pas:1055
+#: uItem.pas:1074
 msgid "Kite Shield"
 msgstr ""
 
 #. Blade
-#: uItem.pas:1058
+#: uItem.pas:1077
 msgid "Broad Sword"
 msgstr ""
 
-#: uItem.pas:1060
+#: uItem.pas:1079
 msgid "Long Sword"
 msgstr ""
 
 #. Axe
-#: uItem.pas:1063
+#: uItem.pas:1082
 msgid "Meat Axe"
 msgstr ""
 
-#: uItem.pas:1065
+#: uItem.pas:1084
 msgid "Flesh Tearer"
 msgstr ""
 
 #. Spear
-#: uItem.pas:1068
+#: uItem.pas:1087
 msgid "Javelin"
 msgstr ""
 
-#: uItem.pas:1070
+#: uItem.pas:1089
 msgid "Fuscina"
 msgstr ""
 
 #. Mace
-#: uItem.pas:1073
+#: uItem.pas:1092
 msgid "Warhammer"
 msgstr ""
 
-#: uItem.pas:1075
+#: uItem.pas:1094
 msgid "War Mace"
 msgstr ""
 
 #. Helm
-#: uItem.pas:1081
+#: uItem.pas:1100
 msgid "Great Helm"
 msgstr ""
 
-#: uItem.pas:1083
+#: uItem.pas:1102
 msgid "Full Helm"
 msgstr ""
 
-#: uItem.pas:1085
+#: uItem.pas:1104
 msgid "Bone Helmet"
 msgstr ""
 
-#: uItem.pas:1087
+#: uItem.pas:1106
 msgid "Wizard Hat"
 msgstr ""
 
 #. Armor
-#: uItem.pas:1090
+#: uItem.pas:1109
 msgid "Brigantine Armor"
 msgstr ""
 
-#: uItem.pas:1092
+#: uItem.pas:1111
 msgid "Ring Mail"
 msgstr ""
 
-#: uItem.pas:1094
+#: uItem.pas:1113
 msgid "Light Furs"
 msgstr ""
 
-#: uItem.pas:1096
+#: uItem.pas:1115
 msgid "Clean Robe"
 msgstr ""
 
 #. Shield
-#: uItem.pas:1099
+#: uItem.pas:1118
 msgid "Bone Shield"
 msgstr ""
 
-#: uItem.pas:1101
+#: uItem.pas:1120
 msgid "Heater Shield"
 msgstr ""
 
 #. Blade
-#: uItem.pas:1104
+#: uItem.pas:1123
 msgid "Moon Blade"
 msgstr ""
 
-#: uItem.pas:1106
+#: uItem.pas:1125
 msgid "Scimitar"
 msgstr ""
 
 #. Axe
-#: uItem.pas:1109
+#: uItem.pas:1128
 msgid "War Axe"
 msgstr ""
 
-#: uItem.pas:1111
+#: uItem.pas:1130
 msgid "Dark Axe"
 msgstr ""
 
 #. Spear
-#: uItem.pas:1114
+#: uItem.pas:1133
 msgid "War Spear"
 msgstr ""
 
-#: uItem.pas:1116
+#: uItem.pas:1135
 msgid "Harpoon"
 msgstr ""
 
 #. Mace
-#: uItem.pas:1119
+#: uItem.pas:1138
 msgid "Flanged Mace"
 msgstr ""
 
-#: uItem.pas:1121
+#: uItem.pas:1140
 msgid "War Gavel"
 msgstr ""
 
 #. Helm
-#: uItem.pas:1127
+#: uItem.pas:1146
 msgid "Horned Helmet"
 msgstr ""
 
-#: uItem.pas:1129
+#: uItem.pas:1148
 msgid "Spired Helm"
 msgstr ""
 
-#: uItem.pas:1131
+#: uItem.pas:1150
 msgid "Diadem"
 msgstr ""
 
-#: uItem.pas:1133
+#: uItem.pas:1152
 msgid "Tiara"
 msgstr ""
 
 #. Armor
-#: uItem.pas:1136
+#: uItem.pas:1155
 msgid "Chain Mail"
 msgstr ""
 
-#: uItem.pas:1138
+#: uItem.pas:1157
 msgid "Scale Mail"
 msgstr ""
 
-#: uItem.pas:1140
+#: uItem.pas:1159
 msgid "Thick Furs"
 msgstr ""
 
-#: uItem.pas:1142
+#: uItem.pas:1161
 msgid "Hard Robe"
 msgstr ""
 
 #. Shield
-#: uItem.pas:1145
+#: uItem.pas:1164
 msgid "Heavy Shield"
 msgstr ""
 
-#: uItem.pas:1147
+#: uItem.pas:1166
 msgid "Large Shield"
 msgstr ""
 
 #. Blade
-#: uItem.pas:1150
+#: uItem.pas:1169
 msgid "Bastard Sword"
 msgstr ""
 
-#: uItem.pas:1152
+#: uItem.pas:1171
 msgid "Great Sword"
 msgstr ""
 
 #. Axe
-#: uItem.pas:1155
+#: uItem.pas:1174
 msgid "Berserker Axe"
 msgstr ""
 
-#: uItem.pas:1157
+#: uItem.pas:1176
 msgid "Marauder Axe"
 msgstr ""
 
 #. Spear
-#: uItem.pas:1160
+#: uItem.pas:1179
 msgid "Silvan Whisper"
 msgstr ""
 
-#: uItem.pas:1162
+#: uItem.pas:1181
 msgid "Impaler"
 msgstr ""
 
 #. Mace
-#: uItem.pas:1165
+#: uItem.pas:1184
 msgid "Barbarous Mace"
 msgstr ""
 
-#: uItem.pas:1167
+#: uItem.pas:1186
 msgid "Adept Hammer"
 msgstr ""
 
 #. Helm
-#: uItem.pas:1173
+#: uItem.pas:1192
 msgid "Casque"
 msgstr ""
 
-#: uItem.pas:1175
+#: uItem.pas:1194
 msgid "Winged Helm"
 msgstr ""
 
-#: uItem.pas:1177
+#: uItem.pas:1196
 msgid "Magic Helmet"
 msgstr ""
 
-#: uItem.pas:1179
+#: uItem.pas:1198
 msgid "Crown"
 msgstr ""
 
 #. Armor
-#: uItem.pas:1182
+#: uItem.pas:1201
 msgid "Splint Mail"
 msgstr ""
 
-#: uItem.pas:1184
+#: uItem.pas:1203
 msgid "Plate Mail"
 msgstr ""
 
-#: uItem.pas:1186
+#: uItem.pas:1205
 msgid "Moloch Robe"
 msgstr ""
 
-#: uItem.pas:1188
+#: uItem.pas:1207
 msgid "Boneweave Hauberk"
 msgstr ""
 
 #. Shield
-#: uItem.pas:1191
+#: uItem.pas:1210
 msgid "Tower Shield"
 msgstr ""
 
-#: uItem.pas:1193
+#: uItem.pas:1212
 msgid "Gothic Shield"
 msgstr ""
 
 #. Blade
-#: uItem.pas:1196
+#: uItem.pas:1215
 msgid "Rune Sword"
 msgstr ""
 
-#: uItem.pas:1198
+#: uItem.pas:1217
 msgid "Troll Slayer"
 msgstr ""
 
 #. Axe
-#: uItem.pas:1201
+#: uItem.pas:1220
 msgid "Chopper"
 msgstr ""
 
-#: uItem.pas:1203
+#: uItem.pas:1222
 msgid "Demon Axe"
 msgstr ""
 
 #. Spear
-#: uItem.pas:1206
+#: uItem.pas:1225
 msgid "Soul Reaver"
 msgstr ""
 
-#: uItem.pas:1208
+#: uItem.pas:1227
 msgid "Honed Spear"
 msgstr ""
 
 #. Mace
-#: uItem.pas:1211
+#: uItem.pas:1230
 msgid "War Maul"
 msgstr ""
 
-#: uItem.pas:1213
+#: uItem.pas:1232
 msgid "Doom Hammer"
 msgstr ""
 
-#: uItem.pas:1221
+#: uItem.pas:1240
 msgid "Head"
 msgstr ""
 
-#: uItem.pas:1223
+#: uItem.pas:1242
 msgid "Neck"
 msgstr ""
 
-#: uItem.pas:1225
+#: uItem.pas:1244
 msgid "Finger"
 msgstr ""
 
-#: uItem.pas:1227
+#: uItem.pas:1246
 msgid "Main Hand"
 msgstr ""
 
-#: uItem.pas:1229
+#: uItem.pas:1248
 msgid "Off-Hand"
 msgstr ""
 
-#: uItem.pas:1231
+#: uItem.pas:1250
 msgid "Torso"
 msgstr ""
 
-#: uItem.pas:1233
+#: uItem.pas:1252
 msgid "Hands"
 msgstr ""
 
-#: uItem.pas:1235
+#: uItem.pas:1254
 msgid "Feet"
 msgstr ""
 
-#: uItem.pas:1368
-#: uPlayer.pas:840
+#: uItem.pas:1389
+#: uPlayer.pas:867
 msgid "You picked up %s."
 msgstr ""
 
-#: uItem.pas:1370
-#: uPlayer.pas:838
+#: uItem.pas:1391
+#: uPlayer.pas:865
 msgid "You picked up %s (%dx)."
 msgstr ""
 
 #. DefaultFloor
-#: uMap.pas:88
+#: uMap.pas:89
 #. Floor #1
-#: uMap.pas:106
 #: uMap.pas:107
+#: uMap.pas:108
 #. Floor #2
-#: uMap.pas:112
 #: uMap.pas:113
+#: uMap.pas:114
 #. Floor #3
-#: uMap.pas:118
 #: uMap.pas:119
+#: uMap.pas:120
 msgid "Grass"
 msgstr ""
 
-#: uMap.pas:89
+#: uMap.pas:90
 msgid "Dirt"
 msgstr ""
 
-#: uMap.pas:90
 #: uMap.pas:91
 #: uMap.pas:92
-#: uMap.pas:108
+#: uMap.pas:93
 #: uMap.pas:109
 #: uMap.pas:110
-#: uMap.pas:114
+#: uMap.pas:111
 #: uMap.pas:115
 #: uMap.pas:116
-#: uMap.pas:120
+#: uMap.pas:117
 #: uMap.pas:121
 #: uMap.pas:122
+#: uMap.pas:123
 msgid "Stone"
 msgstr ""
 
 #. DefaultWall
-#: uMap.pas:94
+#: uMap.pas:95
 msgid "Tree"
 msgstr ""
 
-#: uMap.pas:95
 #: uMap.pas:96
 #: uMap.pas:97
 #: uMap.pas:98
-#: uMap.pas:101
+#: uMap.pas:99
 #: uMap.pas:102
 #: uMap.pas:103
 #: uMap.pas:104
+#: uMap.pas:105
 msgid "Wall"
 msgstr ""
 
 #. Rock
-#: uMap.pas:100
+#: uMap.pas:101
 msgid "Rock"
 msgstr ""
 
 #. Up Stairs
-#: uMap.pas:124
 #: uMap.pas:125
 #: uMap.pas:126
 #: uMap.pas:127
 #: uMap.pas:128
+#: uMap.pas:129
 #. Down Stairs
-#: uMap.pas:130
 #: uMap.pas:131
 #: uMap.pas:132
 #: uMap.pas:133
 #: uMap.pas:134
+#: uMap.pas:135
 msgid "Stairs"
 msgstr ""
 
 #. Water
-#: uMap.pas:136
 #: uMap.pas:137
 #: uMap.pas:138
 #: uMap.pas:139
 #: uMap.pas:140
+#: uMap.pas:141
 msgid "Water"
 msgstr ""
 
 #. Stone Wall
-#: uMap.pas:142
 #: uMap.pas:143
 #: uMap.pas:144
 #: uMap.pas:145
 #: uMap.pas:146
+#: uMap.pas:147
 msgid "Stone Wall"
 msgstr ""
 
 #. Wooden Wall
-#: uMap.pas:148
 #: uMap.pas:149
 #: uMap.pas:150
 #: uMap.pas:151
 #: uMap.pas:152
+#: uMap.pas:153
 msgid "Wooden Wall"
 msgstr ""
 
 #. Stone Floor
-#: uMap.pas:154
 #: uMap.pas:155
 #: uMap.pas:156
 #: uMap.pas:157
 #: uMap.pas:158
+#: uMap.pas:159
 msgid "Stone Floor"
 msgstr ""
 
 #. Wooden Floor
-#: uMap.pas:160
 #: uMap.pas:161
 #: uMap.pas:162
 #: uMap.pas:163
 #: uMap.pas:164
+#: uMap.pas:165
 msgid "Wooden Floor"
 msgstr ""
 
 #. Door
-#: uMap.pas:166
 #: uMap.pas:167
 #: uMap.pas:168
 #: uMap.pas:169
 #: uMap.pas:170
+#: uMap.pas:171
 msgid "Door"
 msgstr ""
 
 #. Gate
-#: uMap.pas:172
 #: uMap.pas:173
 #: uMap.pas:174
 #: uMap.pas:175
 #: uMap.pas:176
+#: uMap.pas:177
 msgid "Gate"
 msgstr ""
 
-#: uMap.pas:582
+#: uMap.pas:587
 msgid "Village Dork"
 msgstr ""
 
-#: uMap.pas:584
+#: uMap.pas:589
 msgid "Village Elatrom"
 msgstr ""
 
-#: uMap.pas:590
+#: uMap.pas:595
 msgid "Dark Wood"
 msgstr ""
 
-#: uMap.pas:592
+#: uMap.pas:597
 msgid "Gray Cave"
 msgstr ""
 
-#: uMap.pas:594
+#: uMap.pas:599
 msgid "Deep Cave"
 msgstr ""
 
-#: uMap.pas:596
+#: uMap.pas:601
 msgid "Blood Cave"
 msgstr ""
 
-#: uMap.pas:598
+#: uMap.pas:603
 msgid "Drom"
 msgstr ""
 
 #. Attack
-#: uMob.pas:530
+#: uMob.pas:533
 msgid "%s hits you (%d)."
 msgstr ""
 
 #. Miss
-#: uMob.pas:537
+#: uMob.pas:540
 msgid "%s misses you."
 msgstr ""
 
-#: uMob.pas:551
+#: uMob.pas:554
 msgid "You kill %s."
 msgstr ""
 
-#: uMob.pas:553
+#: uMob.pas:556
 msgid "%s dies."
 msgstr ""
 
 #. Boss
-#: uMob.pas:572
+#: uMob.pas:575
 msgid "You have won!!!"
 msgstr ""
 
-#: uMob.pas:837
+#: uMob.pas:901
 msgid "Big Rat"
 msgstr ""
 
-#: uMob.pas:839
+#: uMob.pas:903
 msgid "Spiny Frog"
 msgstr ""
 
-#: uMob.pas:841
+#: uMob.pas:905
 msgid "Giant Gecko"
 msgstr ""
 
-#: uMob.pas:843
+#: uMob.pas:907
 msgid "Jackal"
 msgstr ""
 
-#: uMob.pas:845
+#: uMob.pas:909
 msgid "Black Bear"
 msgstr ""
 
-#: uMob.pas:847
+#: uMob.pas:911
 msgid "Grizzly Bear"
 msgstr ""
 
-#: uMob.pas:849
+#: uMob.pas:913
 msgid "Anaconda"
 msgstr ""
 
-#: uMob.pas:851
+#: uMob.pas:915
 msgid "Wolf"
 msgstr ""
 
-#: uMob.pas:853
+#: uMob.pas:917
 msgid "Hound"
 msgstr ""
 
-#: uMob.pas:858
+#: uMob.pas:922
 msgid "Kobold"
 msgstr ""
 
-#: uMob.pas:860
+#: uMob.pas:924
 msgid "Big Kobold"
 msgstr ""
 
-#: uMob.pas:862
+#: uMob.pas:926
 msgid "Red Kobold"
 msgstr ""
 
-#: uMob.pas:864
+#: uMob.pas:928
 msgid "Gnoll"
 msgstr ""
 
-#: uMob.pas:866
+#: uMob.pas:930
 msgid "Basilisk"
 msgstr ""
 
-#: uMob.pas:868
+#: uMob.pas:932
 msgid "Wisp"
 msgstr ""
 
-#: uMob.pas:870
+#: uMob.pas:934
 msgid "Worm"
 msgstr ""
 
-#: uMob.pas:872
+#: uMob.pas:936
 msgid "Naga"
 msgstr ""
 
-#: uMob.pas:874
+#: uMob.pas:938
 msgid "Fire Vortex"
 msgstr ""
 
-#: uMob.pas:879
+#: uMob.pas:943
 msgid "Scorpion"
 msgstr ""
 
-#: uMob.pas:881
+#: uMob.pas:945
 msgid "Wasp"
 msgstr ""
 
-#: uMob.pas:883
+#: uMob.pas:947
 msgid "Ant"
 msgstr ""
 
-#: uMob.pas:885
+#: uMob.pas:949
 msgid "Soldier Ant"
 msgstr ""
 
-#: uMob.pas:887
+#: uMob.pas:951
 msgid "Scarab"
 msgstr ""
 
-#: uMob.pas:889
+#: uMob.pas:953
 msgid "Big Spider"
 msgstr ""
 
-#: uMob.pas:891
+#: uMob.pas:955
 msgid "Fire Crab"
 msgstr ""
 
-#: uMob.pas:893
+#: uMob.pas:957
 msgid "Dire Wolf"
 msgstr ""
 
-#: uMob.pas:895
+#: uMob.pas:959
 msgid "Pan"
 msgstr ""
 
-#: uMob.pas:897
+#: uMob.pas:961
 msgid "Faun"
 msgstr ""
 
-#: uMob.pas:902
+#: uMob.pas:966
 msgid "Goblin"
 msgstr ""
 
-#: uMob.pas:904
+#: uMob.pas:968
 msgid "Dark Goblin"
 msgstr ""
 
-#: uMob.pas:906
+#: uMob.pas:970
 msgid "Black Goblin"
 msgstr ""
 
-#: uMob.pas:908
+#: uMob.pas:972
 msgid "Hobgoblin"
 msgstr ""
 
-#: uMob.pas:910
+#: uMob.pas:974
 msgid "Gargoyle"
 msgstr ""
 
-#: uMob.pas:912
+#: uMob.pas:976
 msgid "Warg"
 msgstr ""
 
-#: uMob.pas:914
+#: uMob.pas:978
 msgid "Draconian"
 msgstr ""
 
-#: uMob.pas:916
+#: uMob.pas:980
 msgid "Orc"
 msgstr ""
 
-#: uMob.pas:918
+#: uMob.pas:982
 msgid "Orc Brute"
 msgstr ""
 
-#: uMob.pas:920
+#: uMob.pas:984
 msgid "Orc Warrior"
 msgstr ""
 
-#: uMob.pas:922
+#: uMob.pas:986
 msgid "Orc Warlord"
 msgstr ""
 
-#: uMob.pas:927
+#: uMob.pas:991
 msgid "Zombie"
 msgstr ""
 
-#: uMob.pas:929
+#: uMob.pas:993
 msgid "Ogre"
 msgstr ""
 
-#: uMob.pas:931
+#: uMob.pas:995
 msgid "Mummy"
 msgstr ""
 
-#: uMob.pas:933
+#: uMob.pas:997
 msgid "Ghoul"
 msgstr ""
 
-#: uMob.pas:935
+#: uMob.pas:999
 msgid "Vampire"
 msgstr ""
 
-#: uMob.pas:937
+#: uMob.pas:1001
 msgid "Cyclops"
 msgstr ""
 
-#: uMob.pas:939
+#: uMob.pas:1003
 msgid "Skeleton"
 msgstr ""
 
-#: uMob.pas:941
+#: uMob.pas:1005
 msgid "Wraith"
 msgstr ""
 
-#: uMob.pas:943
+#: uMob.pas:1007
 msgid "Lich"
 msgstr ""
 
-#: uMob.pas:945
+#: uMob.pas:1009
 msgid "Phantom"
 msgstr ""
 
-#: uMob.pas:947
+#: uMob.pas:1011
 msgid "Troll Brute"
 msgstr ""
 
 #. Dark Wood
-#: uMob.pas:953
+#: uMob.pas:1017
 msgid "Black Hound"
 msgstr ""
 
-#: uMob.pas:955
+#: uMob.pas:1019
 msgid "Giant Newt"
 msgstr ""
 
-#: uMob.pas:957
+#: uMob.pas:1021
 msgid "Iguana"
 msgstr ""
 
 #. Gray Cave
-#: uMob.pas:960
+#: uMob.pas:1024
 msgid "Kobold King"
 msgstr ""
 
-#: uMob.pas:962
+#: uMob.pas:1026
 msgid "Swamp Worm"
 msgstr ""
 
-#: uMob.pas:964
+#: uMob.pas:1028
 msgid "Giant Slug"
 msgstr ""
 
 #. Deep Cave
-#: uMob.pas:967
+#: uMob.pas:1031
 msgid "Centaur"
 msgstr ""
 
-#: uMob.pas:969
+#: uMob.pas:1033
 msgid "Satyr"
 msgstr ""
 
-#: uMob.pas:971
+#: uMob.pas:1035
 msgid "Titan"
 msgstr ""
 
 #. Blood Cave
-#: uMob.pas:974
+#: uMob.pas:1038
 msgid "Hill Giant"
 msgstr ""
 
-#: uMob.pas:976
+#: uMob.pas:1040
 msgid "Stone Giant"
 msgstr ""
 
-#: uMob.pas:978
+#: uMob.pas:1042
 msgid "Two-Headed Ogre"
 msgstr ""
 
 #. Drom
-#: uMob.pas:981
+#: uMob.pas:1045
 msgid "Troll King"
 msgstr ""
 
-#: uMob.pas:986
+#: uMob.pas:1050
 msgid "Eldan (the magic trader)"
 msgstr ""
 
-#: uMob.pas:989
+#: uMob.pas:1053
 msgid "Petra (the trader)"
 msgstr ""
 
-#: uMob.pas:992
+#: uMob.pas:1056
 msgid "Bran (the blacksmith)"
 msgstr ""
 
-#: uMob.pas:995
+#: uMob.pas:1059
 msgid "Tarn (the tavern owner)"
 msgstr ""
 
-#: uMob.pas:998
+#: uMob.pas:1062
 msgid "Sirius (the trader)"
 msgstr ""
 
-#: uMob.pas:1001
+#: uMob.pas:1065
 msgid "Thor (the trader)"
 msgstr ""
 
-#: uMob.pas:1004
+#: uMob.pas:1068
 msgid "Virna (the healer)"
 msgstr ""
 
 #. Critical hits...     .
-#: uPlayer.pas:219
+#: uPlayer.pas:224
 msgid "It was a good hit!"
 msgstr ""
 
-#: uPlayer.pas:224
+#: uPlayer.pas:229
 msgid "It was an excellent hit!"
 msgstr ""
 
 #. Attack
-#: uPlayer.pas:231
+#: uPlayer.pas:236
 msgid "You hit %s (%d)."
 msgstr ""
 
 #. Miss
-#: uPlayer.pas:272
+#: uPlayer.pas:277
 msgid "You miss %s."
 msgstr ""
 
-#: uPlayer.pas:389
+#: uPlayer.pas:384
+#: uScenes.pas:1742
+msgid "PLAYER"
+msgstr ""
+
+#: uPlayer.pas:401
 msgid "You die..."
 msgstr ""
 
-#: uPlayer.pas:427
+#: uPlayer.pas:432
 msgid "What can I do for you?"
 msgstr ""
 
-#: uPlayer.pas:428
+#: uPlayer.pas:434
 msgid "What can I get you today?"
 msgstr ""
 
-#: uPlayer.pas:429
+#: uPlayer.pas:436
 msgid "Good day!"
 msgstr ""
 
-#: uPlayer.pas:431
+#: uPlayer.pas:438
 msgid "%s says: \"%s\""
 msgstr ""
 
-#: uPlayer.pas:453
+#: uPlayer.pas:461
 msgid "Starving"
 msgstr ""
 
-#: uPlayer.pas:454
+#: uPlayer.pas:463
 msgid "Near starving"
 msgstr ""
 
-#: uPlayer.pas:455
+#: uPlayer.pas:465
 msgid "Very hungry"
 msgstr ""
 
-#: uPlayer.pas:456
+#: uPlayer.pas:467
 msgid "Hungry"
 msgstr ""
 
-#: uPlayer.pas:457
+#: uPlayer.pas:469
 msgid "Full"
 msgstr ""
 
-#: uPlayer.pas:458
+#: uPlayer.pas:471
 msgid "Very full"
 msgstr ""
 
-#: uPlayer.pas:459
+#: uPlayer.pas:473
 msgid "Engorged"
 msgstr ""
 
-#: uPlayer.pas:463
+#: uPlayer.pas:478
 msgid "Satiated"
 msgstr ""
 
-#: uPlayer.pas:487
+#: uPlayer.pas:505
 msgid "Learning"
 msgstr ""
 
 #. Attributes skills
-#: uPlayer.pas:490
+#: uPlayer.pas:508
 msgid "Athletics"
 msgstr ""
 
-#: uPlayer.pas:492
+#: uPlayer.pas:510
 msgid "Dodge"
 msgstr ""
 
-#: uPlayer.pas:494
+#: uPlayer.pas:512
 msgid "Concentration"
 msgstr ""
 
-#: uPlayer.pas:496
+#: uPlayer.pas:514
 msgid "Toughness"
 msgstr ""
 
 #. Weapon skills
-#: uPlayer.pas:499
+#: uPlayer.pas:517
 msgid "Blade"
 msgstr ""
 
-#: uPlayer.pas:501
+#: uPlayer.pas:519
 msgid "Axe"
 msgstr ""
 
-#: uPlayer.pas:505
+#: uPlayer.pas:523
 msgid "Mace"
 msgstr ""
 
 #. Skills
-#: uPlayer.pas:508
+#: uPlayer.pas:526
 msgid "Stealth"
 msgstr ""
 
-#: uPlayer.pas:510
+#: uPlayer.pas:528
 msgid "Healing"
 msgstr ""
 
-#: uPlayer.pas:581
+#: uPlayer.pas:599
 msgid "You drink %s."
 msgstr ""
 
-#: uPlayer.pas:586
+#: uPlayer.pas:604
 msgid "You read %s."
 msgstr ""
 
-#: uPlayer.pas:589
+#: uPlayer.pas:608
 msgid "You ate %s."
 msgstr ""
 
-#: uPlayer.pas:599
+#: uPlayer.pas:620
 msgid "You need more mana!"
 msgstr ""
 
 #. Need level
-#: uPlayer.pas:635
+#: uPlayer.pas:656
 msgid "You can not use this yet (need level "
 "%d)!"
 msgstr ""
 
 #. Equip
-#: uPlayer.pas:644
+#: uPlayer.pas:667
 msgid "You equip %s."
 msgstr ""
 
-#: uPlayer.pas:658
+#: uPlayer.pas:681
 msgid "You unequip %s."
 msgstr ""
 
-#: uPlayer.pas:678
+#: uPlayer.pas:701
 msgid "You sold %s (+%d gold)."
 msgstr ""
 
-#: uPlayer.pas:694
+#: uPlayer.pas:717
 msgid "You bought %s (-%d gold)."
 msgstr ""
 
 #. The %s just frowns. Maybe you'll return when you have enough gold?
-#: uPlayer.pas:698
-#: uPlayer.pas:713
-#: uPlayer.pas:731
+#: uPlayer.pas:723
+#: uPlayer.pas:740
+#: uPlayer.pas:758
 msgid "You need more gold."
 msgstr ""
 
-#: uPlayer.pas:711
+#: uPlayer.pas:736
 msgid "You feel better (-%d gold)."
 msgstr ""
 
-#: uPlayer.pas:739
+#: uPlayer.pas:766
 msgid "You repaired %s (-%d gold)."
 msgstr ""
 
-#: uPlayer.pas:761
-#: uPlayer.pas:795
+#: uPlayer.pas:788
+#: uPlayer.pas:822
 msgid "You drop %s."
 msgstr ""
 
-#: uPlayer.pas:793
+#: uPlayer.pas:820
 msgid "You drop %s (%dx)."
 msgstr ""
 
-#: uPlayer.pas:875
+#: uPlayer.pas:902
 msgid "He scored %d points."
 msgstr ""
 
-#: uPlayer.pas:877
+#: uPlayer.pas:904
 msgid "He has scored %d points so far."
 msgstr ""
 
-#: uPlayer.pas:879
+#: uPlayer.pas:906
 msgid "Screenshot"
 msgstr ""
 
-#: uPlayer.pas:881
+#: uPlayer.pas:908
 msgid "Defeated foes"
 msgstr ""
 
-#: uPlayer.pas:885
-#: uScenes.pas:468
-#: uScenes.pas:1101
+#: uPlayer.pas:912
+#: uScenes.pas:506
+#: uScenes.pas:1160
 msgid "Last messages"
 msgstr ""
 
-#: uPlayer.pas:888
-#: uScenes.pas:470
-#: uScenes.pas:861
-#: uScenes.pas:927
+#: uPlayer.pas:915
+#: uScenes.pas:510
+#: uScenes.pas:910
+#: uScenes.pas:976
 msgid "Inventory"
 msgstr ""
 
-#: uPlayer.pas:913
+#: uPlayer.pas:940
 msgid "You advance to level %d!"
 msgstr ""
 
-#: uPlayer.pas:964
+#: uPlayer.pas:991
 msgid "You have opened a new territory: %s."
 msgstr ""
 
-#: uPlayer.pas:979
+#: uPlayer.pas:1006
 msgid "Start rest (%d turns)!"
 msgstr ""
 
-#: uPlayer.pas:985
+#: uPlayer.pas:1013
 msgid "Finish rest (%d turns)!"
 msgstr ""
 
 #. Heal
-#: uPlayer.pas:1057
+#: uPlayer.pas:1088
 msgid "You feel healthy."
 msgstr ""
 
-#: uPlayer.pas:1058
-#: uPlayer.pas:1066
-#: uScenes.pas:630
-#: uScenes.pas:962
+#: uPlayer.pas:1089
+#: uPlayer.pas:1097
+#. Player info
+#: uScenes.pas:671
+#: uScenes.pas:1011
 msgid "Life"
 msgstr ""
 
 #. Full heal
-#: uPlayer.pas:1065
+#: uPlayer.pas:1096
 msgid "You feel like new."
 msgstr ""
 
 #. Mana
-#: uPlayer.pas:1074
+#: uPlayer.pas:1105
 msgid "You feel magical energies restoring."
 msgstr ""
 
-#: uPlayer.pas:1075
-#: uPlayer.pas:1083
-#: uScenes.pas:632
-#: uScenes.pas:966
+#: uPlayer.pas:1106
+#: uPlayer.pas:1114
+#: uScenes.pas:673
+#: uScenes.pas:1015
 msgid "Mana"
 msgstr ""
 
 #. Full mana
-#: uPlayer.pas:1082
+#: uPlayer.pas:1113
 msgid "You feel magically fully restored."
 msgstr ""
 
 #. Food
-#: uPlayer.pas:1091
+#: uPlayer.pas:1122
 msgid "You have sated %d hunger."
 msgstr ""
 
-#: uScenes.pas:389
-#: uScenes.pas:814
+#. Teleportation
+#: uPlayer.pas:1131
+msgid "You have teleported into new place!"
+msgstr ""
+
+#. Town Portal
+#: uPlayer.pas:1139
+msgid "You have teleported into town!"
+msgstr ""
+
+#: uScenes.pas:427
+#: uScenes.pas:863
 msgid "Press %s to continue..."
 msgstr ""
 
-#: uScenes.pas:435
+#: uScenes.pas:473
 msgid "Help"
 msgstr ""
 
-#: uScenes.pas:438
+#: uScenes.pas:476
 msgid "The land Elvion is surrounded by mountains. In the center of this "
 "land"
 msgstr ""
 
-#: uScenes.pas:441
+#: uScenes.pas:479
 msgid "there is village, Dork. The land is in danger, because The Troll King "
 "and"
 msgstr ""
 
-#: uScenes.pas:444
+#: uScenes.pas:482
 msgid "his armies are coming. Only a legendary hero can kill the "
 "monster."
 msgstr ""
 
-#: uScenes.pas:448
+#: uScenes.pas:486
 msgid "You play as a lonely hero who has to slay trolls to save your land "
 "Elvion."
 msgstr ""
 
-#: uScenes.pas:451
+#: uScenes.pas:489
 msgid "You can gather equipment, fight enemies and try to survive for your "
 "final"
 msgstr ""
 
-#: uScenes.pas:453
+#: uScenes.pas:491
 msgid "confrontation with boss. Good luck!"
 msgstr ""
 
-#: uScenes.pas:456
+#: uScenes.pas:494
 msgid "Keybindings"
 msgstr ""
 
-#: uScenes.pas:459
+#: uScenes.pas:497
 msgid "Move"
 msgstr ""
 
-#: uScenes.pas:460
+#: uScenes.pas:498
 msgid "Wait"
 msgstr ""
 
-#: uScenes.pas:462
+#: uScenes.pas:500
 msgid "Go upstairs"
 msgstr ""
 
-#: uScenes.pas:463
+#: uScenes.pas:501
 msgid "Go downstairs"
 msgstr ""
 
-#: uScenes.pas:464
+#: uScenes.pas:502
 msgid "Pickup an item"
 msgstr ""
 
-#: uScenes.pas:465
-#: uScenes.pas:890
-#: uScenes.pas:897
+#: uScenes.pas:503
+#: uScenes.pas:939
+#: uScenes.pas:946
 msgid "Drop an item"
 msgstr ""
 
-#: uScenes.pas:466
+#: uScenes.pas:504
 msgid "Look mode"
 msgstr ""
 
-#: uScenes.pas:467
+#: uScenes.pas:505
+#: uScenes.pas:1690
 msgid "Rest"
 msgstr ""
 
-#: uScenes.pas:469
-#: uScenes.pas:1161
+#: uScenes.pas:507
+#: uScenes.pas:1838
+msgid "Spellbook"
+msgstr ""
+
+#: uScenes.pas:508
+#: uScenes.pas:1211
 msgid "Statistics"
 msgstr ""
 
-#: uScenes.pas:471
-#: uScenes.pas:868
+#: uScenes.pas:509
+#: uScenes.pas:1786
+msgid "Options"
+msgstr ""
+
+#: uScenes.pas:511
+#: uScenes.pas:917
 msgid "Skills and attributes"
 msgstr ""
 
-#: uScenes.pas:472
-#: uScenes.pas:1541
+#: uScenes.pas:512
+#: uScenes.pas:1618
 msgid "Calendar"
 msgstr ""
 
-#: uScenes.pas:473
+#: uScenes.pas:513
 msgid "Help (this page)"
 msgstr ""
 
-#: uScenes.pas:475
+#: uScenes.pas:515
 msgid "Character dump"
 msgstr ""
 
-#: uScenes.pas:477
+#: uScenes.pas:517
 msgid "The game saves a character dump to %s "
 "file."
 msgstr ""
 
-#: uScenes.pas:480
-#: uScenes.pas:867
-#: uScenes.pas:896
-#: uScenes.pas:926
-#: uScenes.pas:1025
-#: uScenes.pas:1078
-#: uScenes.pas:1103
-#: uScenes.pas:1209
-#: uScenes.pas:1334
-#: uScenes.pas:1439
-#: uScenes.pas:1466
-#: uScenes.pas:1493
-#: uScenes.pas:1551
+#: uScenes.pas:520
+#: uScenes.pas:916
+#: uScenes.pas:945
+#: uScenes.pas:975
+#: uScenes.pas:1074
+#: uScenes.pas:1127
+#: uScenes.pas:1162
+#: uScenes.pas:1270
+#: uScenes.pas:1402
+#: uScenes.pas:1513
+#: uScenes.pas:1540
+#: uScenes.pas:1567
+#: uScenes.pas:1628
 msgid "Close"
 msgstr ""
 
-#. Player info
-#: uScenes.pas:622
-#: uScenes.pas:921
-msgid "Player"
-msgstr ""
-
-#: uScenes.pas:635
+#: uScenes.pas:675
 msgid "Turn: %d Gold: %d %s"
 msgstr ""
 
-#: uScenes.pas:638
+#: uScenes.pas:678
 msgid "Damage: %d-%d PV: %d DV: %d"
 msgstr ""
 
-#: uScenes.pas:640
+#: uScenes.pas:680
 msgid "Score: %d Kills: %d"
 msgstr ""
 
-#: uScenes.pas:774
+#: uScenes.pas:822
 msgid "Creating the world, please wait..."
 msgstr ""
 
-#: uScenes.pas:787
+#: uScenes.pas:836
 msgid "Are you sure?"
 msgstr ""
 
-#: uScenes.pas:789
+#: uScenes.pas:838
 msgid "Wish to leave? %s/%s"
 msgstr ""
 
-#: uScenes.pas:798
+#: uScenes.pas:847
 msgid "Quit the game"
 msgstr ""
 
-#: uScenes.pas:810
+#: uScenes.pas:859
 msgid "Game over!!!"
 msgstr ""
 
-#: uScenes.pas:811
+#: uScenes.pas:860
 msgid "Killed by %s. Press %s"
 msgstr ""
 
-#: uScenes.pas:824
+#: uScenes.pas:873
 msgid "Killed by %s"
 msgstr ""
 
-#: uScenes.pas:840
+#: uScenes.pas:889
 msgid "Congratulations!!!"
 msgstr ""
 
-#: uScenes.pas:842
+#: uScenes.pas:891
 msgid "You have won. Press %s"
 msgstr ""
 
-#: uScenes.pas:851
+#: uScenes.pas:900
 msgid "Won the game"
 msgstr ""
 
-#: uScenes.pas:869
+#: uScenes.pas:918
 msgid "Use an item"
 msgstr ""
 
-#: uScenes.pas:937
+#: uScenes.pas:986
 msgid "Attributes"
 msgstr ""
 
-#: uScenes.pas:939
+#: uScenes.pas:988
 msgid "Level"
 msgstr ""
 
-#: uScenes.pas:942
+#: uScenes.pas:991
 msgid "Strength"
 msgstr ""
 
-#: uScenes.pas:945
+#: uScenes.pas:994
 msgid "Dexterity"
 msgstr ""
 
-#: uScenes.pas:948
+#: uScenes.pas:997
 msgid "Willpower"
 msgstr ""
 
-#: uScenes.pas:951
+#: uScenes.pas:1000
 msgid "Perception"
 msgstr ""
 
-#: uScenes.pas:955
+#: uScenes.pas:1004
 msgid "Defensive Value (DV)"
 msgstr ""
 
-#: uScenes.pas:958
+#: uScenes.pas:1007
 msgid "Protection Value (PV)"
 msgstr ""
 
-#: uScenes.pas:969
+#: uScenes.pas:1018
 msgid "Radius"
 msgstr ""
 
-#: uScenes.pas:982
+#: uScenes.pas:1031
 msgid "Skills"
 msgstr ""
 
-#: uScenes.pas:1012
+#: uScenes.pas:1061
 msgid "Enter amount"
 msgstr ""
 
-#: uScenes.pas:1026
-msgid "+"
+#: uScenes.pas:1075
+msgid "More"
 msgstr ""
 
-#: uScenes.pas:1027
-msgid "-"
+#: uScenes.pas:1076
+msgid "Less"
 msgstr ""
 
-#: uScenes.pas:1028
+#: uScenes.pas:1077
 msgid "Apply"
 msgstr ""
 
-#: uScenes.pas:1065
-#: uScenes.pas:1079
+#: uScenes.pas:1114
+#: uScenes.pas:1129
 msgid "Pick up an item"
 msgstr ""
 
-#: uScenes.pas:1165
-#: uScenes.pas:1166
-#: uScenes.pas:1167
-#: uScenes.pas:1566
+#: uScenes.pas:1128
+msgid "Pick up all items"
+msgstr ""
+
+#: uScenes.pas:1215
+#: uScenes.pas:1724
+#: uScenes.pas:1726
+msgid "Name"
+msgstr ""
+
+#: uScenes.pas:1218
+#: uScenes.pas:1220
+#: uScenes.pas:1222
+#: uScenes.pas:1224
+#: uScenes.pas:1643
 msgid "Difficulty"
 msgstr ""
 
-#: uScenes.pas:1165
-#: uScenes.pas:1568
+#: uScenes.pas:1218
+#: uScenes.pas:1645
 msgid "Easy"
 msgstr ""
 
-#: uScenes.pas:1166
-#: uScenes.pas:1569
+#: uScenes.pas:1220
+#: uScenes.pas:1647
 msgid "Normal"
 msgstr ""
 
-#: uScenes.pas:1167
-#: uScenes.pas:1570
+#: uScenes.pas:1222
+#: uScenes.pas:1649
 msgid "Hard"
 msgstr ""
 
-#: uScenes.pas:1170
+#: uScenes.pas:1224
+#: uScenes.pas:1651
+msgid "Hell"
+msgstr ""
+
+#: uScenes.pas:1226
 msgid "Scores"
 msgstr ""
 
-#: uScenes.pas:1171
+#: uScenes.pas:1227
 msgid "Tiles Moved"
 msgstr ""
 
-#: uScenes.pas:1172
+#: uScenes.pas:1228
 msgid "Monsters Killed"
 msgstr ""
 
-#: uScenes.pas:1173
+#: uScenes.pas:1229
 msgid "Items Found"
 msgstr ""
 
 #. Add(_('Doors Opened'), );
-#: uScenes.pas:1176
+#: uScenes.pas:1232
 msgid "Potions Drunk"
 msgstr ""
 
-#: uScenes.pas:1177
+#: uScenes.pas:1233
 msgid "Scrolls Read"
 msgstr ""
 
-#: uScenes.pas:1178
+#: uScenes.pas:1234
 msgid "Spells Cast"
 msgstr ""
 
 #. Version
-#: uScenes.pas:1188
+#: uScenes.pas:1249
 msgid "Version"
 msgstr ""
 
-#: uScenes.pas:1190
+#: uScenes.pas:1251
 msgid "Game version"
 msgstr ""
 
-#: uScenes.pas:1191
+#: uScenes.pas:1252
 msgid "BeaRLibTerminal"
 msgstr ""
 
-#: uScenes.pas:1193
+#: uScenes.pas:1254
 msgid "BeaRLibItems"
 msgstr ""
 
-#: uScenes.pas:1199
+#: uScenes.pas:1260
+#: uScenes.pas:1799
+#: uScenes.pas:1801
 msgid "Wizard Mode"
 msgstr ""
 
-#: uScenes.pas:1201
+#: uScenes.pas:1262
 msgid "Monsters"
 msgstr ""
 
-#: uScenes.pas:1202
+#: uScenes.pas:1263
 msgid "Bosses"
 msgstr ""
 
-#: uScenes.pas:1203
+#: uScenes.pas:1264
 msgid "NPC"
 msgstr ""
 
-#: uScenes.pas:1205
+#: uScenes.pas:1266
 msgid "Items"
 msgstr ""
 
-#: uScenes.pas:1206
+#: uScenes.pas:1267
 msgid "Shops"
 msgstr ""
 
-#: uScenes.pas:1228
-#: uScenes.pas:1432
-#: uScenes.pas:1459
-#: uScenes.pas:1486
+#: uScenes.pas:1289
+#: uScenes.pas:1506
+#: uScenes.pas:1533
+#: uScenes.pas:1560
 msgid "(%d gold left)"
 msgstr ""
 
 #. Heal
-#: uScenes.pas:1242
+#: uScenes.pas:1303
 msgid "Receive healing"
 msgstr ""
 
-#: uScenes.pas:1249
+#: uScenes.pas:1310
 msgid "Buy items (scrolls)"
 msgstr ""
 
-#: uScenes.pas:1256
+#: uScenes.pas:1317
 msgid "Buy items (armors)"
 msgstr ""
 
-#: uScenes.pas:1263
+#: uScenes.pas:1324
 msgid "Buy items (shields)"
 msgstr ""
 
-#: uScenes.pas:1270
+#: uScenes.pas:1331
+msgid "Buy items (helms)"
+msgstr ""
+
+#: uScenes.pas:1338
 msgid "Buy items (foods)"
 msgstr ""
 
 #. Repair
-#: uScenes.pas:1278
+#: uScenes.pas:1346
 msgid "Repair items"
 msgstr ""
 
-#: uScenes.pas:1286
+#: uScenes.pas:1354
 msgid "Buy items (blacksmith)"
 msgstr ""
 
-#: uScenes.pas:1292
+#: uScenes.pas:1360
 msgid "Buy items (healing)"
 msgstr ""
 
-#: uScenes.pas:1300
+#: uScenes.pas:1368
 msgid "Buy items (potions of mana)"
 msgstr ""
 
-#: uScenes.pas:1306
+#: uScenes.pas:1374
 msgid "Buy items (potions)"
 msgstr ""
 
-#: uScenes.pas:1313
+#: uScenes.pas:1381
 msgid "Buy items (tavern)"
 msgstr ""
 
-#: uScenes.pas:1320
+#: uScenes.pas:1388
 msgid "Buy items (weapons)"
 msgstr ""
 
 #. Sell
-#: uScenes.pas:1328
+#: uScenes.pas:1396
 msgid "Sell items"
 msgstr ""
 
-#: uScenes.pas:1432
+#: uScenes.pas:1506
 msgid "Selling items"
 msgstr ""
 
-#: uScenes.pas:1440
+#: uScenes.pas:1514
 msgid "Selling an item"
 msgstr ""
 
-#: uScenes.pas:1459
+#: uScenes.pas:1533
 msgid "Buying at %s"
 msgstr ""
 
-#: uScenes.pas:1467
+#: uScenes.pas:1541
 msgid "Buy an item"
 msgstr ""
 
-#: uScenes.pas:1486
+#: uScenes.pas:1560
 msgid "Repairing items"
 msgstr ""
 
-#: uScenes.pas:1494
+#: uScenes.pas:1568
 msgid "Repairing an item"
 msgstr ""
 
-#: uScenes.pas:1544
+#: uScenes.pas:1621
 msgid "Turn"
 msgstr ""
 
-#: uScenes.pas:1545
+#: uScenes.pas:1622
 msgid "Time"
 msgstr ""
 
-#: uScenes.pas:1547
+#: uScenes.pas:1624
 msgid "Month"
 msgstr ""
 
-#: uScenes.pas:1548
+#: uScenes.pas:1625
 msgid "Year"
 msgstr ""
 
-#: uScenes.pas:1549
+#: uScenes.pas:1626
 msgid "Map"
 msgstr ""
 
-#: uScenes.pas:1572
+#: uScenes.pas:1654
+#: uScenes.pas:1707
+#: uScenes.pas:1728
+#: uScenes.pas:1807
+#: uScenes.pas:1840
 msgid "Back"
+msgstr ""
+
+#: uScenes.pas:1696
+msgid "Rest for 10 turns"
+msgstr ""
+
+#: uScenes.pas:1699
+msgid "Rest for 100 turns"
+msgstr ""
+
+#: uScenes.pas:1702
+msgid "Rest for 1000 turns"
+msgstr ""
+
+#: uScenes.pas:1790
+msgid "Auto pickup coins"
+msgstr ""
+
+#: uScenes.pas:1791
+msgid "Auto pickup foods"
+msgstr ""
+
+#: uScenes.pas:1792
+msgid "Auto pickup potions"
+msgstr ""
+
+#: uScenes.pas:1793
+msgid "Auto pickup scrolls"
+msgstr ""
+
+#: uScenes.pas:1802
+msgid "Show map"
+msgstr ""
+
+#: uScenes.pas:1803
+msgid "Reload all shops"
+msgstr ""
+
+#: uScenes.pas:1804
+msgid "Leave corpses"
 msgstr ""
 
