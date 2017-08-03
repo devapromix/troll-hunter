@@ -970,9 +970,13 @@ begin
     // Scroll of healing
     iScrollOfFullHealing:
       Result := _('Scroll of full healing');
+
     // Scroll of hunger
     iScrollOfHunger:
       Result := _('Scroll of hunger');
+    // Scroll of teleportation
+    iScrollOfTeleportation:
+      Result := _('Scroll of teleportation');
 
     // Bread ration
     iBreadRation:

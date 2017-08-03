@@ -1076,7 +1076,7 @@ end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word);
 var
-  V: Word;
+  V, VX, VY: Word;
 const
   F = '%s +%d.';
 begin
@@ -1123,9 +1123,11 @@ begin
   // Teleportation
   if (efTeleportation in Effects) then
   begin
-    X := Map.EnsureRange(X + Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value));
-    Y := Map.EnsureRange(Y + Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value));
-    //MsgLog.Add(_(''));
+    VX := Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value);
+    VY := Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value);
+    X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
+    Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
+    MsgLog.Add(_('You have teleported into new place!'));
   end;
 end;
 
