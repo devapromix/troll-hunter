@@ -54,7 +54,7 @@ type
     iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
-    iScrollOfHunger, iBreadRation, iValleyRoot, iRatPod, iKey,
+    iScrollOfHunger, iScrollOfTeleportation, iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -202,7 +202,12 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 450; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 400; ManaCost: 100;),
+    Effects: [efFood]; Value: 400; ManaCost: 200;),
+    // Scroll of Teleportation
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    Price: 500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efTeleportation]; Value: 5; ManaCost: 250;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;

@@ -20,7 +20,7 @@ type
   end;
 
 type
-  TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood);
+  TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood, efTeleportation);
   TEffects = set of TEffect;
 
 const
@@ -1119,6 +1119,12 @@ begin
   begin
     FSatiation := FSatiation + Value;
     MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
+  end;
+  // Teleportation
+  if (efTeleportation in Effects) then
+  begin
+    X := Map.EnsureRange(X + Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value));
+    Y := Map.EnsureRange(Y + Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value));
   end;
 end;
 
