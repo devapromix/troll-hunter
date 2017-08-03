@@ -1125,6 +1125,7 @@ begin
   begin
     X := Map.EnsureRange(X + Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value));
     Y := Map.EnsureRange(Y + Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value));
+    //MsgLog.Add(_(''));
   end;
 end;
 
