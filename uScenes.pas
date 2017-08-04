@@ -234,7 +234,8 @@ implementation
 
 uses
   SysUtils, Types, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar, uShop;
+  uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar, uShop,
+  uSpellbook;
 
 { TScene }
 
@@ -1834,10 +1835,29 @@ end;
 { TSceneSpells }
 
 procedure TSceneSpellbook.Render;
+var
+  I: TSpellEnum;
+  S: string;
+  V, Y: Byte;
 begin
   Self.Title(_('Spellbook'));
 
-  AddKey('Esc', _('Back'), True, True);
+  V := 0;
+  Y := 2;
+  Self.FromAToZ;
+  for I := Low(TSpellEnum) to High(TSpellEnum) do
+  begin
+    Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
+    S := Spellbook.GetSpellName(I);
+    Terminal.ForegroundColor(clYellow);
+    Terminal.Print(5, Y, S);
+    Inc(Y);
+    Inc(V);
+  end;
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Cast spell'), False, True);
 end;
 
 procedure TSceneSpellbook.Update(var Key: Word);
