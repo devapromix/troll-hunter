@@ -1,9 +1,9 @@
 # Trollhunter
 
-##Introduction
+## Introduction
 Trollhunter is a single-player roguelike game.
 
-##Current State
+## Current State
 Current version is 0.9.
 The game is currently in demo stage with very limited contents.
 
