@@ -17,7 +17,8 @@ uses
   uCorpse in 'uCorpse.pas',
   uEntity in 'uEntity.pas',
   uCalendar in 'uCalendar.pas',
-  uShop in 'uShop.pas';
+  uShop in 'uShop.pas',
+  uSpellbook in 'uSpellbook.pas';
 
 var
   Key: Word = 0;
