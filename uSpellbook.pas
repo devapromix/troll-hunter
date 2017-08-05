@@ -43,7 +43,7 @@ var
 
 implementation
 
-uses SysUtils, GNUGetText, uGame;
+uses Math, SysUtils, GNUGetText, uGame;
 
 { TSpellbook }
 
@@ -84,7 +84,8 @@ begin
   with FSpell[I] do
   begin
     Level := SpellBase[I].Level;
-    ManaCost := SpellBase[I].ManaCost + (Ord(Game.Difficulty) * Ord(Game.Difficulty));
+    ManaCost := SpellBase[I].ManaCost + Math.RandomRange(Ord(Game.Difficulty),
+      Ord(Game.Difficulty) * Ord(Game.Difficulty));
   end;
 end;
 
