@@ -1837,8 +1837,14 @@ end;
 procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
-  S: string;
   V, Y: Byte;
+
+  function IsSpell(I: TSpellEnum): Boolean;
+  begin
+    Result := Spellbook.GetSpell(I).Enable;
+    if Game.Wizard then Result := True;
+  end;
+
 begin
   Self.Title(_('Spellbook'));
 
@@ -1846,12 +1852,13 @@ begin
   Y := 2;
   Self.FromAToZ;
   for I := Low(TSpellEnum) to High(TSpellEnum) do
+  if IsSpell(I) then
   begin
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
-    S := Items.GetLevel() + ' ';
-    S := S + Spellbook.GetSpellName(I);
-    Terminal.ForegroundColor(clYellow);
-    Terminal.Print(5, Y, S);
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(5, Y, Format('(%s) %s [[%d]]', [
+      Items.GetLevel(Spellbook.GetSpell(I).Level),
+      Spellbook.GetSpellName(I), Spellbook.GetSpell(I).ManaCost]));
     Inc(Y);
     Inc(V);
   end;

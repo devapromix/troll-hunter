@@ -3,23 +3,27 @@ unit uSpellbook;
 interface
 
 type
-  TSpellEnum = (spHeal);
+  TSpellEnum = (spHeal, spCurePoison);
 
 type
   TSpellBase = record
     Level: Byte;
+    ManaCost: Byte;
   end;
 
 const
   SpellBase: array [TSpellEnum] of TSpellBase = (
   // Heal
-  (Level: 1;)
+  (Level: 1; ManaCost: 20;),
+  // Cure Poison
+  (Level: 2; ManaCost: 30;)
   );
 
 type
   TSpell = record
     Enable: Boolean;
     Level: Byte;
+    ManaCost: Byte;
   end;
 
 type
@@ -27,12 +31,11 @@ type
   private
     FSpell: array[TSpellEnum] of TSpell;
   public
-    constructor Create;
-    destructor Destroy; override;
     procedure Clear;
     function GetSpellName(ASpellEnum: TSpellEnum): string;
     procedure AddSpell(ASpellEnum: TSpellEnum);
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
+    procedure Start;
   end;
 
 var
@@ -40,7 +43,7 @@ var
 
 implementation
 
-uses SysUtils, GNUGetText;
+uses SysUtils, GNUGetText, uGame;
 
 { TSpellbook }
 
@@ -54,22 +57,7 @@ var
   I: TSpellEnum;
 begin
   for I := Low(TSpellEnum) to High(TSpellEnum) do
-    with FSpell[I] do
-    begin
-      Enable := False;
-      Level := 1;
-    end;
-end;
-
-constructor TSpellbook.Create;
-begin
-  Self.Clear;
-end;
-
-destructor TSpellbook.Destroy;
-begin
-
-  inherited;
+    FSpell[I].Enable := False;
 end;
 
 function TSpellbook.GetSpell(ASpellEnum: TSpellEnum): TSpell;
@@ -82,6 +70,21 @@ begin
   case ASpellEnum of
     spHeal:
       Result := _('Heal');
+    spCurePoison:
+      Result := _('Cure poison');
+  end;
+end;
+
+procedure TSpellbook.Start;
+var
+  I: TSpellEnum;
+begin
+  Self.Clear;
+  for I := Low(TSpellEnum) to High(TSpellEnum) do
+  with FSpell[I] do
+  begin
+    Level := SpellBase[I].Level;
+    ManaCost := SpellBase[I].ManaCost + (Ord(Game.Difficulty) * Ord(Game.Difficulty));
   end;
 end;
 

@@ -129,7 +129,7 @@ var
 implementation
 
 uses SysUtils, Math, Dialogs, uPlayer, uMsgLog, uScenes, gnugettext,
-  BearLibTerminal, uItem, uMob, uTerminal, uShop;
+  BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook;
 
 { TGame }
 
@@ -211,6 +211,7 @@ end;
 procedure TGame.Start;
 begin
   IsMode := True;
+  Spellbook.Start;
   Player.SkillSet;
   Player.StarterSet;
   Shops.New;
