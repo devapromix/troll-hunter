@@ -3,7 +3,7 @@ unit uSpellbook;
 interface
 
 type
-  TSpellEnum = (spHeal, spCurePoison);
+  TSpellEnum = (spHeal, spCurePoison, spTeleportation);
 
 type
   TSpellBase = record
@@ -16,7 +16,9 @@ const
   // Heal
   (Level: 1; ManaCost: 20;),
   // Cure Poison
-  (Level: 2; ManaCost: 30;)
+  (Level: 2; ManaCost: 30;),
+  // Teleportation
+  (Level: 3; ManaCost: 40;)
   );
 
 type
@@ -72,6 +74,8 @@ begin
       Result := _('Heal');
     spCurePoison:
       Result := _('Cure poison');
+    spTeleportation:
+      Result := _('Teleportation');
   end;
 end;
 
