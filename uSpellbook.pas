@@ -6,8 +6,20 @@ type
   TSpellEnum = (spHeal);
 
 type
+  TSpellBase = record
+    Level: Byte;
+  end;
+
+const
+  SpellBase: array [TSpellEnum] of TSpellBase = (
+  // Heal
+  (Level: 1;)
+  );
+
+type
   TSpell = record
     Enable: Boolean;
+    Level: Byte;
   end;
 
 type
@@ -45,6 +57,7 @@ begin
     with FSpell[I] do
     begin
       Enable := False;
+      Level := 1;
     end;
 end;
 

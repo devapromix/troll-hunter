@@ -1848,7 +1848,8 @@ begin
   for I := Low(TSpellEnum) to High(TSpellEnum) do
   begin
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
-    S := Spellbook.GetSpellName(I);
+    S := Items.GetLevel() + ' ';
+    S := S + Spellbook.GetSpellName(I);
     Terminal.ForegroundColor(clYellow);
     Terminal.Print(5, Y, S);
     Inc(Y);
