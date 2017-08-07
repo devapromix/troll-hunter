@@ -1857,8 +1857,8 @@ begin
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clGray);
     Terminal.Print(5, Y, Format('(%s) %s [[%d]]', [
-      Items.GetLevel(Spellbook.GetSpell(I).Level),
-      Spellbook.GetSpellName(I), Spellbook.GetSpell(I).ManaCost]));
+      Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
+      Spellbook.GetSpellName(I), Spellbook.GetSpell(I).Spell.ManaCost]));
     Inc(Y);
     Inc(V);
   end;
@@ -1873,6 +1873,8 @@ begin
   case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
+    TK_A..TK_Z:
+      Spellbook.DoSpell(Key - TK_A);
   end
 end;
 

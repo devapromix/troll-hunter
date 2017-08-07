@@ -5,14 +5,15 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itFood,
+  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itRune, itFood,
     itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor);
 
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
   FoodTypeItems = [itFood];
-  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems;
+  RuneTypeItems = [itRune];
+  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems + RuneTypeItems;
   NotDropTypeItems = [itNone, itCorpse, itKey];
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
@@ -54,8 +55,9 @@ type
     iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
-    iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal, iBreadRation,
-    iValleyRoot, iRatPod, iKey,
+    iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
+    iRuneOfMinorHealing,
+    iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -178,7 +180,7 @@ const
     Price: 500; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
     Effects: [efFullMana];),
 
-    // Scroll of healing 1
+    // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 40; Color: clLightestBlue; Deep: [deDarkWood .. deDeepCave];
@@ -214,6 +216,11 @@ const
     // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
     Price: 250; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
+
+    // Rune of minor healing
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
+    Price: 800; Color: clLightestRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efHeal]; Value: 75; ManaCost: 20;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -987,6 +994,10 @@ begin
     // Scroll of Town Portal
     iScrollOfTownPortal:
       Result := _('Scroll of town portal');
+
+    // Rune Of Minor Healing
+    iRuneOfMinorHealing:
+      Result := _('Rune of minor healing');
 
     // Bread ration
     iBreadRation:

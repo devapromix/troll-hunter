@@ -21,7 +21,7 @@ type
 
 type
   TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood, efTeleportation,
-    efTownPortal);
+    efTownPortal, efMagicEye, efCurePoison);
   TEffects = set of TEffect;
 
 const
@@ -595,7 +595,8 @@ begin
   begin
     if (T in UseTypeItems) then
     begin
-      AItem.Amount := AItem.Amount - 1;
+      if not (T in RuneTypeItems) then
+        AItem.Amount := AItem.Amount - 1;
       The := GetDescThe(Items.Name[I]);
       case T of
         itPotion:
@@ -611,11 +612,13 @@ begin
         itFood:
           MsgLog.Add(Format(_('You ate %s.'), [The]));
       end;
-      Items_Inventory_SetItem(Index, AItem);
-      if (T = itScroll) then
+      if not (T in RuneTypeItems) then
+        Items_Inventory_SetItem(Index, AItem);
+      if (T in ScrollTypeItems + RuneTypeItems) then
       begin
         if (Self.Mana >= ItemBase[I].ManaCost) then
         begin
+          Player.Skill(skConcentration);
           Self.Mana := Self.Mana - ItemBase[I].ManaCost;
           SpCast := SpCast + 1;
         end
@@ -1022,6 +1025,8 @@ procedure TPlayer.StarterSet;
 var
   D: Byte;
 begin
+  // Add runes
+  Items.AddItemToInv(iRuneOfMinorHealing);
   // Add armors
   if Game.Wizard then
   begin
@@ -1133,6 +1138,7 @@ begin
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));
+    Scenes.SetScene(scGame);
   end;
   // Town Portal
   if (efTownPortal in Effects) then
@@ -1141,6 +1147,15 @@ begin
     Y := Game.Spawn.Y;
     Map.Current := deDarkWood;
     MsgLog.Add(_('You have teleported into town!'));
+    Scenes.SetScene(scGame);
+  end;
+  if (efMagicEye in Effects) then
+  begin
+
+  end;
+  if (efCurePoison in Effects) then
+  begin
+  
   end;
 end;
 
