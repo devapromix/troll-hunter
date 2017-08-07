@@ -56,7 +56,7 @@ type
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
     iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
-    iRuneOfMinorHealing,
+    iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing, iRuneOfFullHealing,
     iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
@@ -219,8 +219,20 @@ const
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
-    Price: 800; Color: clLightestRed; Deep: [deDarkWood .. deDrom];
+    Price: 1000; Color: clLightestRed; Deep: [deDarkWood .. deDrom];
     Effects: [efHeal]; Value: 75; ManaCost: 20;),
+    // Rune of lesser healing
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 4;
+    Price: 1500; Color: clLightRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efHeal]; Value: 150; ManaCost: 30;),
+    // Rune of greater healing
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 6;
+    Price: 2000; Color: clRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efHeal]; Value: 250; ManaCost: 40;),
+    // Rune of full healing
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 8;
+    Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -998,7 +1010,16 @@ begin
     // Rune Of Minor Healing
     iRuneOfMinorHealing:
       Result := _('Rune of minor healing');
-
+    // Rune Of Lesser Healing
+    iRuneOfLesserHealing:
+      Result := _('Rune of lesser healing');
+    // Rune Of Greater Healing
+    iRuneOfGreaterHealing:
+      Result := _('Rune of greater healing');
+    // Rune Of Full Healing
+    iRuneOfFullHealing:
+      Result := _('Rune of full healing');
+      
     // Bread ration
     iBreadRation:
       Result := _('Bread ration');

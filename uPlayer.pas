@@ -1025,8 +1025,6 @@ procedure TPlayer.StarterSet;
 var
   D: Byte;
 begin
-  // Add runes
-  Items.AddItemToInv(iRuneOfMinorHealing);
   // Add armors
   if Game.Wizard then
   begin
@@ -1065,9 +1063,10 @@ begin
         Items.AddItemToInv(iSlagHammer, 1, True);
     end;
   end;
-  // Add potions and scrolls
+  // Add runes, potions and scrolls
   if Game.Wizard then
   begin
+    Items.AddItemToInv(iRuneOfFullHealing);
     Items.AddItemToInv(iPotionOfFullHealing, 10);
     Items.AddItemToInv(iPotionOfFullMana, 10);
   end
