@@ -237,9 +237,9 @@ const
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
     Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
     // Rune of teleportation
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efTeleportation]; Value: 0; ManaCost: 250;),
+    Effects: [efTeleportation]; Value: 7; ManaCost: 250;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -1026,7 +1026,10 @@ begin
     // Rune Of Full Healing
     iRuneOfFullHealing:
       Result := _('Rune of full healing');
-      
+    // Rune Of Teleportation
+    iRuneOfTeleportation:
+      Result := _('Rune of teleportation');
+
     // Bread ration
     iBreadRation:
       Result := _('Bread ration');
