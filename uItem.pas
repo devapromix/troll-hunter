@@ -56,7 +56,10 @@ type
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
     iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
-    iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing, iRuneOfFullHealing,
+    // Runes
+    iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
+    iRuneOfFullHealing, iRuneOfTeleportation,
+    //
     iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
@@ -233,6 +236,10 @@ const
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 8;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
     Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
+    // Rune of teleportation
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
+    Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efTeleportation]; Value: 0; ManaCost: 250;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
