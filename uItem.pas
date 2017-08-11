@@ -58,7 +58,7 @@ type
     iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
-    iRuneOfFullHealing, iRuneOfTeleportation,
+    iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
     //
     iBreadRation, iValleyRoot, iRatPod, iKey,
     // Dark Wood
@@ -240,6 +240,10 @@ const
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
     Effects: [efTeleportation]; Value: 7; ManaCost: 250;),
+    // Rune of town portal
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
+    Price: 3000; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
+    Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
@@ -1029,6 +1033,9 @@ begin
     // Rune Of Teleportation
     iRuneOfTeleportation:
       Result := _('Rune of teleportation');
+    // Rune Of Town Portal
+    iRuneOfTownPortal:
+      Result := _('Rune of town portal');
 
     // Bread ration
     iBreadRation:
