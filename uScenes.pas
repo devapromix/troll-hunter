@@ -1972,9 +1972,12 @@ procedure TSceneTalents.Render;
 var
   V, Y: Byte;
 
-  procedure Add(const S, H: string);
+  procedure Add(const S, H: string; F: Boolean = True);
   begin
-    Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
+    if F then
+      Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))))
+        else
+          Terminal.Print(1, Y, '[[' + Chr(V + Ord('A')) + ']]');
     Terminal.ForegroundColor(clGray);
     Terminal.Print(5, Y, S);
     Terminal.Print(20, Y, H);
@@ -1990,10 +1993,8 @@ begin
   Self.FromAToZ;
 
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(CX, Y, Player.GetTalentName(Player.Talent));
-  Terminal.Print(CX + 15, Y, Player.GetTalentHint(Player.Talent));
 
-  Add(Player.GetTalentName(Player.Talent), Player.GetTalentHint(Player.Talent));
+  Add(Player.GetTalentName(Player.Talent), Player.GetTalentHint(Player.Talent), False);
 
   MsgLog.Render(2, True);
 
