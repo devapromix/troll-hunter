@@ -9,7 +9,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook,
-    scOptions);
+    scOptions, scTalents);
   // scClasses, scRaces, scIdentification
 
 type
@@ -109,6 +109,13 @@ type
 
 type
   TSceneBuy = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneTalents = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -354,6 +361,8 @@ begin
         FScene[I] := TSceneOptions.Create;
       scSpellbook:
         FScene[I] := TSceneSpellbook.Create;
+      scTalents:
+        FScene[I] := TSceneTalents.Create;
     end;
 end;
 
@@ -506,6 +515,7 @@ begin
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
   AddKey('B', _('Spellbook'));
+  AddKey('T', _('Talents'));
   AddKey('N', _('Statistics'));
   AddKey('O', _('Options'));
   AddKey('I', _('Inventory'));
@@ -808,6 +818,8 @@ begin
       Scenes.SetScene(scOptions);
     TK_B:
       Scenes.SetScene(scSpellbook);
+    TK_T:
+      Scenes.SetScene(scTalents);
     TK_SLASH:
       Scenes.SetScene(scHelp);
     TK_Y:
@@ -1856,7 +1868,7 @@ begin
   begin
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clGray);
-    Terminal.Print(5, Y, Format('(%s) %s [[%d]]', [
+    Terminal.Print(5, Y, Format('(%s) %s [[[color=lush]%d[/color]]]', [
       Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
       Spellbook.GetSpellName(I), Spellbook.GetSpell(I).Spell.ManaCost]));
     Inc(Y);
@@ -1875,6 +1887,30 @@ begin
       Scenes.SetScene(scGame);
     TK_A..TK_Z:
       Spellbook.DoSpell(Key - TK_A);
+  end
+end;
+
+{ TSceneTalents }
+
+procedure TSceneTalents.Render;
+begin
+  Self.Title(_('Spellbook'));
+
+  Self.FromAToZ;
+
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Teach talent'), False, True);
+end;
+
+procedure TSceneTalents.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE:
+      Scenes.SetScene(scGame);
+    TK_A..TK_Z:
+      ;
   end
 end;
 
