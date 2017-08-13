@@ -9,7 +9,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook,
-    scOptions, scTalents);
+    scOptions, scTalent, scTalents);
   // scClasses, scRaces, scIdentification
 
 type
@@ -109,6 +109,13 @@ type
 
 type
   TSceneBuy = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneTalent = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -361,6 +368,8 @@ begin
         FScene[I] := TSceneOptions.Create;
       scSpellbook:
         FScene[I] := TSceneSpellbook.Create;
+      scTalent:
+        FScene[I] := TSceneTalent.Create;
       scTalents:
         FScene[I] := TSceneTalents.Create;
     end;
@@ -1237,6 +1246,7 @@ begin
       Add(_('Difficulty'), _('Hell'), clRed);
   end;
   Add(_('Scores'), Player.Score);
+  Add(_('Talent'), Player.GetTalentName(Player.Talent));
   Add(_('Tiles Moved'), Player.Turn);
   Add(_('Monsters Killed'), Player.Kills);
   Add(_('Items Found'), Player.Found);
@@ -1687,7 +1697,7 @@ begin
             else
               Exit;
         end;
-        Scenes.SetScene(scName);
+        Scenes.SetScene(scTalent);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1765,7 +1775,7 @@ begin
         Player.Name := Player.Name + Chr(Key - TK_A + 65);
     end;
     TK_ESCAPE:
-      Scenes.SetScene(scDifficulty);
+      Scenes.SetScene(scTalent);
   end;
 end;
 
@@ -1890,11 +1900,75 @@ begin
   end
 end;
 
+{ TSceneTalent }
+
+procedure TSceneTalent.Render;
+var
+  V, Y: Byte;
+
+  procedure Add(const S, H: string);
+  begin
+    Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(5, Y, S);
+    Terminal.Print(20, Y, Format('[color=dark white]%s[/color]', [H]));
+    Inc(Y);
+    Inc(V);
+  end;
+
+begin
+  Self.Title(_('Talent'));
+
+  V := 0;
+  Y := 2;
+  Self.FromAToZ;
+  Add(_('Strong'), _('+10 to Athletics'));
+  Add(_('Dextrous'), _('+10 to Dodge'));
+  Add(_('...'), _('+10 to Concentration'));
+  Add(_('Tough'), _('+10 to Toughness'));
+  Add(_('Wealthy'), _('+250 to Gold'));
+
+
+  AddKey('Esc', _('Back'), True, True);
+end;
+
+procedure TSceneTalent.Update(var Key: Word);
+begin
+  case Key of
+    TK_A .. TK_Z:
+      begin
+        case Key of
+          TK_A:
+            begin
+              Player.Talent := tlStrong;
+            end;
+          TK_B:
+            begin
+              Player.Talent := tlDextrous;
+            end;
+
+          TK_D:
+            begin
+              Player.Talent := tlTough;
+            end;
+
+          TK_E:
+            begin
+              Player.Talent := tlWealthy;
+            end;
+        end;
+        Scenes.SetScene(scName);
+      end;
+    TK_ESCAPE:
+      Scenes.SetScene(scDifficulty);
+  end;
+end;
+
 { TSceneTalents }
 
 procedure TSceneTalents.Render;
 begin
-  Self.Title(_('Spellbook'));
+  Self.Title(_('Talents'));
 
   Self.FromAToZ;
 

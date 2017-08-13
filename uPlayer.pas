@@ -24,6 +24,10 @@ type
     efTownPortal, efMagicEye, efCurePoison);
   TEffects = set of TEffect;
 
+type
+  TTalentEnum = (tlNone, tlStrong {Сильный}, tlDextrous {Ловкий}, tlTough {Тяжелый},
+    tlWealthy {Богатый}, tlMiser {Скряга});
+
 const
   // Player
   AtrMax = 100;
@@ -77,6 +81,7 @@ type
     FItemAmount: Integer;
     FSatPerTurn: Byte;
     FIsRest: Boolean;
+    FTalent: TTalentEnum;
     FName: string;
     procedure GenNPCText;
     function GetDV: Byte;
@@ -107,6 +112,7 @@ type
     property Score: Word read FScore write FScore;
     property Kills: Word read FKills write FKills;
     property Found: Word read FFound write FFound;
+    property Talent: TTalentEnum read FTalent write FTalent;
     property PotDrunk: Word read FPotDrunk write FPotDrunk;
     property ScrRead: Word read FScrRead write FScrRead;
     property Killer: string read FKiller write FKiller;
@@ -130,6 +136,7 @@ type
     function GetSkill(ASkill: TSkillEnum): TSkill;
     function GetSkillName(ASkill: TSkillEnum): string;
     function GetSkillValue(ASkill: TSkillEnum): Byte;
+    function GetTalentName(ATalent: TTalentEnum): string;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
@@ -387,6 +394,7 @@ begin
   IsRest := False;
   Name := _('PLAYER');
   SatPerTurn := 2;
+  Talent := tlNone;
   Satiation := SatiatedMax;
   FWeaponSkill := skLearning;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
@@ -539,6 +547,24 @@ begin
     Result := FSkill[ASkill].Value;
   except
     Result := 0;
+  end;
+end;
+
+function TPlayer.GetTalentName(ATalent: TTalentEnum): string;
+begin
+  case ATalent of
+    tlStrong:
+      Result := _('Strong');
+    tlDextrous:
+      Result := _('Dextrous');
+    tlTough:
+      Result := _('Tough');
+    tlWealthy:
+      Result := _('Wealthy');
+    tlMiser:
+      Result := _('Miser');
+    else
+      Result := '-';
   end;
 end;
 
