@@ -122,103 +122,103 @@ const
 
     // Lesser Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 50; Color: clLightestRed; Deep: [deDarkWood .. deDeepCave];
     Effects: [efHeal]; Value: 50;),
     // Life Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 2;
     Price: 100; Color: clLightRed; Deep: [deGrayCave .. deBloodCave];
     Effects: [efHeal]; Value: 100;),
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 3;
     Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
     Value: 200;),
     // Potion of Full Healing
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 5;
     Price: 500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
     Effects: [efFullHeal];),
 
     // Rejuvenation Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 75; Color: clLightestYellow; Deep: [deDarkWood .. deDeepCave];
     Effects: [efHeal, efMana]; Value: 50;),
     // Rejuvenation Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 2;
     Price: 150; Color: clLightYellow; Deep: [deGrayCave .. deBloodCave];
     Effects: [efHeal, efMana]; Value: 100;),
     // Rejuvenation Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 3;
     Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom];
     Effects: [efHeal, efMana]; Value: 200;),
     // Rejuvenation Potion 4
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 5;
     Price: 750; Color: clDarkYellow; Deep: [deBloodCave .. deDrom];
     Effects: [efFullHeal, efFullMana];),
 
     // Lesser Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 50; Color: clLightestBlue; Deep: [deDarkWood .. deDeepCave];
     Effects: [efMana]; Value: 50;),
     // Mana potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 2;
     Price: 100; Color: clLightBlue; Deep: [deGrayCave .. deBloodCave];
     Effects: [efMana]; Value: 100;),
     // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 3;
     Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efMana];
     Value: 200;),
     // Potion of Full Mana
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 4;
     Price: 500; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
     Effects: [efFullMana];),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 40; Color: clLightestBlue; Deep: [deDarkWood .. deDeepCave];
     Effects: [efHeal]; Value: 50; ManaCost: 20;),
     // Scroll of healing 2
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 2;
     Price: 80; Color: clLightBlue; Deep: [deGrayCave .. deBloodCave];
     Effects: [efHeal]; Value: 100; ManaCost: 30;),
     // Scroll of healing 3
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 3;
     Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
     Value: 200; ManaCost: 40;),
     // Scroll of Full Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 4;
     Price: 300; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
     Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
 
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 0;
     Price: 450; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 400; ManaCost: 200;),
+    Effects: [efFood]; Value: 400; ManaCost: 25;),
     // Scroll of Teleportation
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 0;
     Price: 500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efTeleportation]; Value: 5; ManaCost: 250;),
+    Effects: [efTeleportation]; Value: 5; ManaCost: 50;),
     // Scroll of Town Portal
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
-    Price: 250; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
-    Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
+    MaxDurability: 0; Level: 0;
+    Price: 600; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
+    Effects: [efTownPortal]; Value: 0; ManaCost: 75;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
@@ -239,34 +239,33 @@ const
     // Rune of teleportation
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efTeleportation]; Value: 7; ManaCost: 250;),
+    Effects: [efTeleportation]; Value: 7; ManaCost: 50;),
     // Rune of town portal
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 3000; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
-    Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
+    Effects: [efTownPortal]; Value: 0; ManaCost: 75;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 100; Color: clYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 450;),
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 175; Color: clLightestYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 250;),
     // Rat pod
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    MaxDurability: 0; Level: 1;
     Price: 200; Color: clLightestGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 300;),
 
     // Key
-    (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;);
+    (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16; Level: 1;
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
-    /// / == Dark Wood == ////
+    //// == Dark Wood == ////
 
     // Cap
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;

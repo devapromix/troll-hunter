@@ -587,8 +587,18 @@ var
   AItem: Item;
   I: TItemEnum;
   T: TItemType;
+  ItemLevel: Byte;
 begin
   AItem := Items_Inventory_GetItem(Index);
+  // Need level
+  ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
+  if (Player.Level < ItemLevel) and not Game.Wizard then
+  begin
+    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
+      [ItemLevel]));
+    Self.Calc;
+    Exit;
+  end;
   I := TItemEnum(AItem.ItemID);
   T := ItemBase[I].ItemType;
   if (T in NotEquipTypeItems) then
@@ -658,7 +668,7 @@ begin
   // Need level
   AItem := Items_Inventory_GetItem(Index);
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Player.Level < ItemLevel) then
+  if (Player.Level < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
