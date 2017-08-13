@@ -1911,7 +1911,7 @@ var
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clGray);
     Terminal.Print(5, Y, S);
-    Terminal.Print(20, Y, Format('[color=dark white]%s[/color]', [H]));
+    Terminal.Print(20, Y, H);
     Inc(Y);
     Inc(V);
   end;
@@ -1926,7 +1926,7 @@ begin
   Add(_('Dextrous'), _('+10 to Dodge'));
   Add(_('...'), _('+10 to Concentration'));
   Add(_('Tough'), _('+10 to Toughness'));
-  Add(_('Wealthy'), _('+250 to Gold'));
+  Add(_('Wealthy'), Format(_('+%d to Gold'), [StartGold]));
 
 
   AddKey('Esc', _('Back'), True, True);
@@ -1946,15 +1946,18 @@ begin
             begin
               Player.Talent := tlDextrous;
             end;
-
+          TK_C:
+            begin
+              Player.Talent := tlTough;
+            end;
           TK_D:
             begin
               Player.Talent := tlTough;
             end;
-
           TK_E:
             begin
               Player.Talent := tlWealthy;
+              Items.AddItemToInv(iGold, StartGold);
             end;
         end;
         Scenes.SetScene(scName);
@@ -1967,10 +1970,29 @@ end;
 { TSceneTalents }
 
 procedure TSceneTalents.Render;
+var
+  V, Y: Byte;
+
+  procedure Add(const S, H: string);
+  begin
+    Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(5, Y, S);
+    Terminal.Print(20, Y, H);
+    Inc(Y);
+    Inc(V);
+  end;
+
 begin
   Self.Title(_('Talents'));
 
+  V := 0;
+  Y := 2;
   Self.FromAToZ;
+
+  Terminal.ForegroundColor(clGray);
+  Terminal.Print(CX, Y, Player.GetTalentName(Player.Talent));
+//  Terminal.Print(CX + 15, Y, Player.GetTalentHint(Player.Talent));
 
   MsgLog.Render(2, True);
 

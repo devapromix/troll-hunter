@@ -45,6 +45,7 @@ const
   EngorgedMax = 15000;
   // Inventory
   ItemMax = 26;
+  StartGold = 250;
 
 type
   TPlayer = class(TEntity)
@@ -1114,7 +1115,7 @@ begin
   // Add foods
   Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));
   // Add coins
-  D := IfThen(Game.Difficulty <> dfHell, 250, 50);
+  D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), D));
   Self.Calc;
 end;
