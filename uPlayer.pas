@@ -138,6 +138,7 @@ type
     function GetSkillName(ASkill: TSkillEnum): string;
     function GetSkillValue(ASkill: TSkillEnum): Byte;
     function GetTalentName(ATalent: TTalentEnum): string;
+    function GetTalentHint(ATalent: TTalentEnum): string;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
@@ -564,6 +565,24 @@ begin
       Result := _('Wealthy');
     tlMiser:
       Result := _('Miser');
+    else
+      Result := '-';
+  end;
+end;
+
+function TPlayer.GetTalentHint(ATalent: TTalentEnum): string;
+begin
+  case ATalent of
+    tlStrong:
+      Result := _('+10 to Athletics');
+    tlDextrous:
+      Result := _('+10 to Dodge');
+    tlTough:
+      Result := _('+10 to Toughness');
+    tlWealthy:
+      Result := Format(_('+%d to Gold'), [StartGold]);
+    tlMiser:
+      Result := _('x2 to Gold');
     else
       Result := '-';
   end;
@@ -1011,22 +1030,6 @@ begin
   end;
 end;
 
-procedure TPlayer.SkillSet;
-var
-  I: TSkillEnum;
-begin
-  if not Game.Wizard then
-    Exit;
-  for I := Low(TSkillEnum) to High(TSkillEnum) do
-    with FSkill[I] do
-    begin
-      Value := Math.RandomRange(SkillMin, SkillMax);
-      Exp := Math.RandomRange(0, SkillExpMax);
-    end;
-  Self.Calc;
-  Self.Fill;
-end;
-
 procedure TPlayer.Wait;
 begin
   if not Map.GetVis(Map.Current) then
@@ -1056,6 +1059,33 @@ begin
   end;
   MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
   IsRest := False;
+end;
+
+procedure TPlayer.SkillSet;
+var
+  I: TSkillEnum;
+begin
+  // Talents
+  case Talent of
+    tlStrong:
+      FSkill[skAthletics].Value := FSkill[skAthletics].Value + 10;
+    tlDextrous:
+      FSkill[skDodge].Value := FSkill[skDodge].Value + 10;
+    tlTough:
+      FSkill[skToughness].Value := FSkill[skToughness].Value + 10;
+  end;
+  // Wizard
+  if not Game.Wizard then
+    Exit;
+  //
+  for I := Low(TSkillEnum) to High(TSkillEnum) do
+    with FSkill[I] do
+    begin
+      Value := Math.RandomRange(SkillMin, SkillMax);
+      Exp := Math.RandomRange(0, SkillExpMax);
+    end;
+  Self.Calc;
+  Self.Fill;
 end;
 
 procedure TPlayer.StarterSet;
@@ -1117,6 +1147,11 @@ begin
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), D));
+  // Talents
+  case Self.Talent of
+    tlWealthy:
+      Items.AddItemToInv(iGold, StartGold);
+  end;
   Self.Calc;
 end;
 

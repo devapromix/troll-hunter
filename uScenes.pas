@@ -122,7 +122,7 @@ type
   end;
 
 type
-  TSceneTalents = class(TScene)
+  TSceneTalents = class(TSceneTalent)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -1765,8 +1765,8 @@ begin
         Player.Name := _('PLAYER');
       Scenes.SetScene(scLoad);
       Terminal.Refresh;
-      Map.Gen;
       Terminal_Delay(1000);
+      Map.Gen;
       Game.Start();
     end;
     TK_A..TK_Z:
@@ -1922,12 +1922,12 @@ begin
   V := 0;
   Y := 2;
   Self.FromAToZ;
-  Add(_('Strong'), _('+10 to Athletics'));
-  Add(_('Dextrous'), _('+10 to Dodge'));
-  Add(_('...'), _('+10 to Concentration'));
-  Add(_('Tough'), _('+10 to Toughness'));
-  Add(_('Wealthy'), Format(_('+%d to Gold'), [StartGold]));
 
+  Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
+  Add(Player.GetTalentName(tlDextrous), Player.GetTalentHint(tlDextrous));
+  Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
+  Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
+  Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy));
 
   AddKey('Esc', _('Back'), True, True);
 end;
@@ -1948,7 +1948,7 @@ begin
             end;
           TK_C:
             begin
-              Player.Talent := tlTough;
+              //Player.Talent := tlTough;
             end;
           TK_D:
             begin
@@ -1957,7 +1957,6 @@ begin
           TK_E:
             begin
               Player.Talent := tlWealthy;
-              Items.AddItemToInv(iGold, StartGold);
             end;
         end;
         Scenes.SetScene(scName);
@@ -1992,7 +1991,9 @@ begin
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX, Y, Player.GetTalentName(Player.Talent));
-//  Terminal.Print(CX + 15, Y, Player.GetTalentHint(Player.Talent));
+  Terminal.Print(CX + 15, Y, Player.GetTalentHint(Player.Talent));
+
+  Add(Player.GetTalentName(Player.Talent), Player.GetTalentHint(Player.Talent));
 
   MsgLog.Render(2, True);
 
