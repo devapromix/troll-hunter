@@ -18,7 +18,7 @@ type
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
     teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
-    teStoneFloor, teWoodenFloor, teDoor, teGate);
+    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
@@ -175,6 +175,18 @@ begin
   AddTile('+', _('Gate'), $FF515F55, teGate, deDeepCave);
   AddTile('+', _('Gate'), $FF515F55, teGate, deBloodCave);
   AddTile('+', _('Gate'), $FF515F55, teGate, deDrom);
+  // Portal
+  AddTile('O', _('Portal'), $FF9999FF, tePortal, deDarkWood);
+  AddTile('O', _('Portal'), $FF9999FF, tePortal, deGrayCave);
+  AddTile('O', _('Portal'), $FF9999FF, tePortal, deDeepCave);
+  AddTile('O', _('Portal'), $FF9999FF, tePortal, deBloodCave);
+  AddTile('O', _('Portal'), $FF9999FF, tePortal, deDrom);
+  // Town Portal
+  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deDarkWood);
+  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deGrayCave);
+  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deDeepCave);
+  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deBloodCave);
+  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deDrom);
 end;
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
@@ -523,6 +535,8 @@ begin
               Math.RandomRange(0, High(Byte)), Z, teDefaultWall);
           Game.Spawn.X := RandomRange(25, High(Byte) - 25);
           Game.Spawn.Y := RandomRange(25, High(Byte) - 25);
+          Game.Portal.X := Game.Spawn.X;
+          Game.Portal.Y := Game.Spawn.Y;
           AddVillage(Game.Spawn.X, Game.Spawn.Y);
         end;
       deGrayCave:
@@ -534,7 +548,6 @@ begin
         begin
           Self.Clear(Z, teDefaultWall);
           GenCave(6, 39, 3999);
-          // AddVillage(Player.X, Player.Y);
         end;
       deBloodCave:
         begin

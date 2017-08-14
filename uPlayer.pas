@@ -1175,6 +1175,7 @@ begin
     Items.AddItemToInv(iRuneOfFullHealing);
     Items.AddItemToInv(iPotionOfFullHealing, 10);
     Items.AddItemToInv(iPotionOfFullMana, 10);
+    Items.AddItemToInv(iScrollOfTownPortal, 10);
   end
   else
   begin
@@ -1237,10 +1238,14 @@ begin
   // Town Portal
   if (efTownPortal in Effects) then
   begin
-    X := Game.Spawn.X;
-    Y := Game.Spawn.Y;
-    Map.Current := deDarkWood;
-    MsgLog.Add(_('You have teleported into town!'));
+    Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap, Game.PortalTile);
+    if ((Player.X = Game.Spawn.X) and (Player.Y = Game.Spawn.Y)) then Exit;
+    Game.PortalTile := Map.GetTileEnum(X, Y, Map.Current);
+    Game.PortalMap := Map.Current;
+    Game.Portal.X := X;
+    Game.Portal.Y := Y;
+    Map.SetTileEnum(X, Y, Map.Current, tePortal);
+    Map.SetTileEnum(Game.Spawn.X, Game.Spawn.Y, deDarkWood, teTownPortal);
     Scenes.SetScene(scGame);
   end;
   if (efMagicEye in Effects) then

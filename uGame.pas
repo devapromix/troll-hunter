@@ -2,7 +2,7 @@ unit uGame;
 
 interface
 
-uses uEntity;
+uses uEntity, uMap;
 
 {
 var
@@ -99,6 +99,9 @@ type
     FLCorpses: Boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
+    FPortal: TSpawn;
+    FPortalMap: TMapEnum;
+    FPortalTile: TTileEnum;
   public
     constructor Create;
     destructor Destroy; override;
@@ -118,9 +121,12 @@ type
     property LCorpses: Boolean read FLCorpses write FLCorpses;
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
+    property Portal: TSpawn read FPortal write FPortal;
     function GetPath(SubDir: string = ''): string;
     function GetStrDifficulty: string;
     function GetVersion: string;
+    property PortalMap: TMapEnum read FPortalMap write FPortalMap;
+    property PortalTile: TTileEnum read FPortalTile write FPortalTile;
     function GetTitle: string;
     procedure LoadConfig;
     procedure Start;
@@ -135,7 +141,7 @@ var
 
 implementation
 
-uses SysUtils, Math, Dialogs, uPlayer, uMsgLog, uScenes, gnugettext,
+uses SysUtils, Math, Dialogs, uPlayer, uMsgLog, uScenes, GNUGetText,
   BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook;
 
 { TGame }
@@ -160,6 +166,9 @@ begin
   LCorpses := True;
   Difficulty := dfNormal;
   Spawn := TSpawn.Create;
+  Portal := TSpawn.Create;
+  PortalMap := deDarkWood;
+  PortalTile := teStoneFloor;
   for I := 1 to ParamCount do
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
@@ -169,6 +178,7 @@ end;
 
 destructor TGame.Destroy;
 begin
+  Portal.Free;
   Spawn.Free;
   inherited;
 end;

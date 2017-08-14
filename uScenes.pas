@@ -760,12 +760,35 @@ begin
           Player.Wait;
         end;
     TK_PERIOD:
+      begin
+      // Portal in town
+      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = tePortal) then
+      begin
+        Player.X := Game.Spawn.X;
+        Player.Y := Game.Spawn.Y;
+        Map.Current := deDarkWood;
+        Scenes.SetScene(scGame);
+        Exit;
+      end;
+      // Portal
+      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teTownPortal) then
+      begin
+        Map.SetTileEnum(Player.X, Player.Y, deDarkWood, teStoneFloor);
+        Player.X := Game.Portal.X;
+        Player.Y := Game.Portal.Y;
+        Map.Current := Game.PortalMap;
+        Map.SetTileEnum(Player.X, Player.Y, Game.PortalMap, Game.PortalTile);
+        Scenes.SetScene(scGame);
+        Exit;
+      end;
+      // Down stairs
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teDnStairs) then
         if (Map.Current < High(TMapEnum)) then
         begin
           Map.Current := Succ(Map.Current);
           Player.Wait;
         end;
+      end;
     TK_KP_MULTIPLY:
       if Game.Wizard then
         Player.Fill;
