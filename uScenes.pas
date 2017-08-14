@@ -687,13 +687,6 @@ begin
     S := Map.Name;
   Terminal.Print(Status.Left + Status.Width - 1, Status.Top, S, TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d %s'),
-    [Player.Turn, Player.Gold, Player.GetSatiationStr]));
-  Terminal.Print(Status.Left, Status.Top + 4,
-    Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
-    Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
-  Terminal.Print(Status.Left, Status.Top + 5, Format(_('Score: %d Kills: %d'),
-    [Player.Score, Player.Kills]));
   // Log
   MsgLog.Render;
 end;
@@ -1018,11 +1011,11 @@ begin
   RenderBar(1, 0, Y + 16, W, Player.PV, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [_('Protection Value (PV)'),
     Player.PV, PVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clDarkRed,
+  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife,
     clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [_('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clDarkBlue,
+  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana,
     clDarkGray);
   Terminal.Print(X, Y + 20, Format('%s %d/%d', [_('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);

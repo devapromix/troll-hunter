@@ -130,7 +130,7 @@ type
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
-    procedure RenderBars;
+    procedure RenderInfo;
     procedure Calc;
     procedure Fill;
     procedure Wait;
@@ -958,7 +958,7 @@ begin
     Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
 end;
 
-procedure TPlayer.RenderBars;
+procedure TPlayer.RenderInfo;
 begin
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 1,
@@ -970,6 +970,12 @@ begin
     Player.Life, Player.MaxLife, clLife, clDarkGray);
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
+  //
+  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d %s'),
+    [Player.Turn, Player.Gold, Player.GetSatiationStr]));
+  Terminal.Print(Status.Left, Status.Top + 4,
+    Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
+    Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;
