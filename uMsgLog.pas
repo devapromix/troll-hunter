@@ -86,6 +86,7 @@ procedure TMsgLog.Render(const Y: Byte = 0; Flag: Boolean = False);
 begin
   if (Flag and (Game.Timer = 0)) then
     Exit;
+  Player.RenderBars;  
   if (Trim(MsgLog.Msg) = '') then
     FAct := ''
   else

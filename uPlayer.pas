@@ -130,6 +130,7 @@ type
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
+    procedure RenderBars;
     procedure Calc;
     procedure Fill;
     procedure Wait;
@@ -955,6 +956,20 @@ begin
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
     Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
+end;
+
+procedure TPlayer.RenderBars;
+begin
+  Terminal.ForegroundColor(clDefault);
+  Terminal.Print(Status.Left, Status.Top + 1,
+    Format('[color=life]%s %d/%d[/color]', [_('Life'), Player.Life, Player.MaxLife]));
+  Terminal.Print(Status.Left, Status.Top + 2,
+    Format('[color=mana]%s %d/%d[/color]', [_('Mana'), Player.Mana, Player.MaxMana]));
+  // Bars
+  Scenes.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
+    Player.Life, Player.MaxLife, clLife, clDarkGray);
+  Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
+    Player.Mana, Player.MaxMana, clMana, clDarkGray);
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;

@@ -523,7 +523,7 @@ begin
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
-  AddKey('B', _('Spellbook'));
+//  AddKey('B', _('Spellbook'));
   AddKey('T', _('Talents'));
   AddKey('N', _('Statistics'));
   AddKey('O', _('Options'));
@@ -687,11 +687,6 @@ begin
     S := Map.Name;
   Terminal.Print(Status.Left + Status.Width - 1, Status.Top, S, TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top + 1,
-    Format('%s %d/%d', [_('Life'), Player.Life, Player.MaxLife]));
-  Terminal.Print(Status.Left, Status.Top + 2,
-    Format('%s %d/%d', [_('Mana'), Player.Mana, Player.MaxMana]));
-  Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d %s'),
     [Player.Turn, Player.Gold, Player.GetSatiationStr]));
   Terminal.Print(Status.Left, Status.Top + 4,
@@ -699,11 +694,6 @@ begin
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
   Terminal.Print(Status.Left, Status.Top + 5, Format(_('Score: %d Kills: %d'),
     [Player.Score, Player.Kills]));
-  // Bars
-  Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
-    Player.Life, Player.MaxLife, clLife, clDarkGray);
-  Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
-    Player.Mana, Player.MaxMana, clMana, clDarkGray);
   // Log
   MsgLog.Render;
 end;
@@ -825,8 +815,8 @@ begin
       Scenes.SetScene(scStatistics);
     TK_O:
       Scenes.SetScene(scOptions);
-    TK_B:
-      Scenes.SetScene(scSpellbook);
+//    TK_B:
+//      Scenes.SetScene(scSpellbook);
     TK_T:
       Scenes.SetScene(scTalents);
     TK_SLASH:
