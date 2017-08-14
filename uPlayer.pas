@@ -22,6 +22,8 @@ type
 type
   TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood, efTeleportation,
     efTownPortal, efMagicEye, efCurePoison);
+
+type
   TEffects = set of TEffect;
 
 type

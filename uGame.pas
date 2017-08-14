@@ -70,6 +70,8 @@ var
   clBkMob: Cardinal = $FF330000;
   clPlayer: Cardinal = $FF009900;
   clBkPlayer: Cardinal = $FF003300;
+  clLife: Cardinal = $FF990000;
+  clMana: Cardinal = $FF000099;
 
 var
   clAlarm: string = 'Lightest Green';
@@ -228,6 +230,8 @@ begin
   clPlayer := Terminal.GetColorFromIni('Player', 'Yellow');
   clBkPlayer := Terminal.GetColorFromIni('BkPlayer', 'Darkest Green');
   clAlarm := Terminal.GetColorFromIni('Alarm');
+  clLife := Terminal.GetColorFromIni('LifeBar', 'Life');
+  clMana := Terminal.GetColorFromIni('ManaBar', 'Mana');
 end;
 
 procedure TGame.Start;

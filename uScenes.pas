@@ -701,9 +701,9 @@ begin
     [Player.Score, Player.Kills]));
   // Bars
   Self.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
-    Player.Life, Player.MaxLife, clDarkRed, clDarkGray);
+    Player.Life, Player.MaxLife, clLife, clDarkGray);
   Self.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
-    Player.Mana, Player.MaxMana, clDarkBlue, clDarkGray);
+    Player.Mana, Player.MaxMana, clMana, clDarkGray);
   // Log
   MsgLog.Render;
 end;
@@ -1875,9 +1875,9 @@ begin
   begin
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clGray);
-    Terminal.Print(5, Y, Format('(%s) %s [[[color=lush]%d[/color]]]', [
+    Terminal.Print(5, Y, Format('(%s) %s %s', [
       Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
-      Spellbook.GetSpellName(I), Spellbook.GetSpell(I).Spell.ManaCost]));
+      Spellbook.GetSpellName(I), Items.GetManaCost(Spellbook.GetSpell(I).Spell.ManaCost)]));
     Inc(Y);
     Inc(V);
   end;

@@ -13,7 +13,7 @@ const
   ScrollTypeItems = [itScroll];
   FoodTypeItems = [itFood];
   RuneTypeItems = [itRune];
-  BookTypeItems = [itRune];
+  BookTypeItems = [itBook];
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     RuneTypeItems + BookTypeItems;
   NotDropTypeItems = [itNone, itCorpse, itKey] + RuneTypeItems;
@@ -51,18 +51,23 @@ type
 type
   TItemEnum = (
     // All maps
-    iNone, iCorpse, iGold, iLesserHealingPotion, iGreaterHealingPotion,
+    iNone, iCorpse, iGold,
+    // Potions
+    iLesserHealingPotion, iGreaterHealingPotion,
     iHeroicHealingPotion, iPotionOfFullHealing, iLesserRejuvenationPotion,
     iGreaterRejuvenationPotion, iHeroicRejuvenationPotion,
     iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
     iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
+    // Scrolls
     iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
     iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
+    // Foods
+    iBreadRation, iValleyRoot, iRatPod,
     //
-    iBreadRation, iValleyRoot, iRatPod, iKey,
+    iKey,
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -723,6 +728,7 @@ type
     function GetPrice(Price: Word; F: Boolean = False): string; overload;
     function GetPrice(AItem: Item): Integer; overload;
     function GetLevel(L: Byte): string;
+    function GetManaCost(Mana: Byte): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
@@ -745,28 +751,37 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
 var
   ID: Integer;
   S, T: string;
+  IT: TItemType;
+  V: Byte;
 begin
   S := '';
   T := '';
   Result := '';
   ID := AItem.ItemID;
+  IT := ItemBase[TItemEnum(ID)].ItemType;
+  // Mana
+  if (IT in RuneTypeItems + ScrollTypeItems) then
+  begin
+    V := ItemBase[TItemEnum(ID)].ManaCost;
+    if (V > 0) then
+      S := S + Items.GetManaCost(V) + ' ';
+  end;
   // Amount
   if (AItem.Stack > 1) then
   begin
     if (AItem.Amount > 1) then
-      S := Format('(%dx)', [AItem.Amount]);
+      S := S + Format('(%dx)', [AItem.Amount]);
   end
   // Corpse
   else if (TItemEnum(ID) = iCorpse) then
     S := ''
-    // Durability
   else
   begin
-    if (ItemBase[TItemEnum(ID)].ItemType in ArmorTypeItems) then
+    if (IT in ArmorTypeItems) then
       T := Format('<%d>', [AItem.Defense]);
-    if (ItemBase[TItemEnum(ID)].ItemType in WeaponTypeItems) then
+    if (IT in WeaponTypeItems) then
       T := Format('<%d-%d>', [AItem.MinDamage, AItem.MaxDamage]);
-    S := Trim(Format('%s (%d/%d)', [T, AItem.Durability, AItem.MaxDurability]));
+    S := S + Trim(Format('%s (%d/%d)', [T, AItem.Durability, AItem.MaxDurability]));
   end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
   // Map's item
@@ -1332,6 +1347,13 @@ begin
     Result := Format('[color=light red]%d[/color]', [L])
   else
     Result := IntToStr(L);
+end;
+
+function TItems.GetManaCost(Mana: Byte): string;
+begin
+  Result := '';
+  if (Mana > 0) then
+    Result := Format('[[[color=mana]@%d[/color]]]', [Mana]);
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
