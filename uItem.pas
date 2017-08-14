@@ -129,43 +129,43 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1;
     Price: 50; Color: clLightestRed; Deep: [deDarkWood .. deDeepCave];
-    Effects: [efHeal]; Value: 50;),
+    Effects: [efLife]; Value: 50;),
     // Life Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 2;
     Price: 100; Color: clLightRed; Deep: [deGrayCave .. deBloodCave];
-    Effects: [efHeal]; Value: 100;),
+    Effects: [efLife]; Value: 100;),
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 3;
-    Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
+    Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effects: [efLife];
     Value: 200;),
     // Potion of Full Healing
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5;
     Price: 500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
-    Effects: [efHeal]; Value: 250;),
+    Effects: [efLife]; Value: 250;),
 
     // Rejuvenation Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1;
     Price: 75; Color: clLightestYellow; Deep: [deDarkWood .. deDeepCave];
-    Effects: [efHeal, efMana]; Value: 50;),
+    Effects: [efLife, efMana]; Value: 50;),
     // Rejuvenation Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 2;
     Price: 150; Color: clLightYellow; Deep: [deGrayCave .. deBloodCave];
-    Effects: [efHeal, efMana]; Value: 100;),
+    Effects: [efLife, efMana]; Value: 100;),
     // Rejuvenation Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 3;
     Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom];
-    Effects: [efHeal, efMana]; Value: 200;),
+    Effects: [efLife, efMana]; Value: 200;),
     // Rejuvenation Potion 4
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5;
     Price: 750; Color: clDarkYellow; Deep: [deBloodCave .. deDrom];
-    Effects: [efHeal, efMana]; Value: 250;),
+    Effects: [efLife, efMana]; Value: 250;),
 
     // Lesser Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -192,22 +192,22 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
     Price: 40; Color: clLightestBlue; Deep: [deDarkWood .. deDeepCave];
-    Effects: [efHeal]; Value: 50; ManaCost: 20;),
+    Effects: [efLife]; Value: 50; ManaCost: 20;),
     // Scroll of healing 2
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 2;
     Price: 80; Color: clLightBlue; Deep: [deGrayCave .. deBloodCave];
-    Effects: [efHeal]; Value: 100; ManaCost: 30;),
+    Effects: [efLife]; Value: 100; ManaCost: 30;),
     // Scroll of healing 3
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 3;
-    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efHeal];
+    Price: 160; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efLife];
     Value: 200; ManaCost: 40;),
     // Scroll of Full Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 4;
     Price: 300; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
-    Effects: [efHeal]; Value: 250; ManaCost: 50;),
+    Effects: [efLife]; Value: 250; ManaCost: 50;),
 
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -228,19 +228,19 @@ const
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
     Price: 1000; Color: clLightestRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efHeal]; Value: 75; ManaCost: 20;),
+    Effects: [efLife]; Value: 75; ManaCost: 20;),
     // Rune of lesser healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 4;
     Price: 1500; Color: clLightRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efHeal]; Value: 150; ManaCost: 30;),
+    Effects: [efLife]; Value: 150; ManaCost: 30;),
     // Rune of greater healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 6;
     Price: 2000; Color: clRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efHeal]; Value: 250; ManaCost: 40;),
+    Effects: [efLife]; Value: 250; ManaCost: 40;),
     // Rune of full healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 8;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efHeal]; Value: 250; ManaCost: 50;),
+    Effects: [efLife]; Value: 250; ManaCost: 50;),
     // Rune of teleportation
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 4000; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
@@ -782,7 +782,7 @@ begin
       F := True;
     end;
   end;
-  if (efHeal in ItemBase[TItemEnum(ID)].Effects) then
+  if (efLife in ItemBase[TItemEnum(ID)].Effects) then
   begin
     V := ItemBase[TItemEnum(ID)].Value;
     if (V > 0) then

@@ -19,7 +19,7 @@ type
 const
   SpellBase: array [TSpellEnum] of TSpellBase = (
   // Heal
-  (Level: 1; Effects:[efHeal]; Value: 100; ManaCost: 20; Price: 200;),
+  (Level: 1; Effects:[efLife]; Value: 100; ManaCost: 20; Price: 200;),
   // Town Portal
   (Level: 2; Effects:[efTownPortal]; Value: 0; ManaCost: 24; Price: 500;),
   // Cure Poison

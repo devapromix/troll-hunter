@@ -20,7 +20,7 @@ type
   end;
 
 type
-  TEffect = (efHeal, efMana, efFood, efTeleportation,
+  TEffect = (efLife, efMana, efFood, efTeleportation,
     efTownPortal, efMagicEye, efCurePoison);
 
 type
@@ -1201,8 +1201,8 @@ var
 const
   F = '%s +%d.';
 begin
-  // Heal
-  if (efHeal in Effects) then
+  // Life
+  if (efLife in Effects) then
   begin
     V := Self.GetSkillValue(skHealing) + Value;
     MsgLog.Add(_('You feel healthy.'));
@@ -1248,10 +1248,12 @@ begin
     Map.SetTileEnum(Game.Spawn.X, Game.Spawn.Y, deDarkWood, teTownPortal);
     Scenes.SetScene(scGame);
   end;
+  // Magic Eye
   if (efMagicEye in Effects) then
   begin
 
   end;
+  // Cure poison
   if (efCurePoison in Effects) then
   begin
   
