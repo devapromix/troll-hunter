@@ -53,17 +53,15 @@ type
     // All maps
     iNone, iCorpse, iGold,
     // Potions
-    iLesserHealingPotion, iGreaterHealingPotion,
-    iHeroicHealingPotion, iPotionOfFullHealing, iLesserRejuvenationPotion,
-    iGreaterRejuvenationPotion, iHeroicRejuvenationPotion,
-    iPotionOfFullRejuvenation, iLesserManaPotion, iGreaterManaPotion,
-    iHeroicManaPotion, iPotionOfFullMana, iScrollOfMinorHealing,
+    iLesserHealingPotion, iGreaterHealingPotion, iHeroicHealingPotion, iPotionOfFullHealing,
+    iLesserRejuvenationPotion, iGreaterRejuvenationPotion, iHeroicRejuvenationPotion, iPotionOfFullRejuvenation,
+    iLesserManaPotion, iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana,
     // Scrolls
-    iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing,
-    iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
+    iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
+    iScrollOfFullHealing, iScrollOfHunger, iScrollOfTeleportation, iScrollOfTownPortal,
     // Runes
-    iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
-    iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
+    iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing, iRuneOfFullHealing,
+    iRuneOfTeleportation, iRuneOfTownPortal,
     // Foods
     iBreadRation, iValleyRoot, iRatPod,
     //
@@ -214,18 +212,18 @@ const
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
-    Price: 450; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 400; ManaCost: 25;),
+    Price: 500; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efFood]; Value: 250; ManaCost: 25;),
     // Scroll of Teleportation
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
-    Price: 500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efTeleportation]; Value: 5; ManaCost: 50;),
+    Price: 750; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efTeleportation]; Value: 5; ManaCost: 100;),
     // Scroll of Town Portal
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
     Price: 600; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
-    Effects: [efTownPortal]; Value: 0; ManaCost: 75;),
+    Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
@@ -245,27 +243,27 @@ const
     Effects: [efHeal]; Value: 250; ManaCost: 50;),
     // Rune of teleportation
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
-    Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efTeleportation]; Value: 7; ManaCost: 50;),
+    Price: 4000; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efTeleportation]; Value: 7; ManaCost: 100;),
     // Rune of town portal
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 3000; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
-    Effects: [efTownPortal]; Value: 0; ManaCost: 75;),
+    Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
     // Bread ration
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
-    Price: 100; Color: clYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efFood]; Value: 450;),
+    Price: 200; Color: clYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efFood]; Value: 400;),
     // Valley root
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
-    Price: 175; Color: clLightestYellow; Deep: [deDarkWood .. deDrom];
+    Price: 125; Color: clLightestYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 250;),
     // Rat pod
     (Symbol: ';'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1;
-    Price: 200; Color: clLightestGreen; Deep: [deDarkWood .. deDrom];
+    Price: 150; Color: clLightestGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 300;),
 
     // Key
@@ -952,7 +950,7 @@ begin
     // Scroll
     if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
       Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iScrollOfMinorHealing),
-        Ord(iScrollOfFullHealing) + 1)));
+        Ord(iScrollOfTownPortal) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then
       Add(Map.Current, AX, AY, -1, AIsBoss);
@@ -1405,7 +1403,7 @@ function TItems.GetFood(Sign: string; Value: Word): string;
 begin
   Result := '';
   if (Value > 0) then
-    Result := Format('[color=yellow]%s@%d[/color]', [Sign, Value]);
+    Result := Format('[color=dark yellow]%s@%d[/color]', [Sign, Value]);
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
