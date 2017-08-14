@@ -90,6 +90,8 @@ type
     FAPFood: Boolean;
     FAPPotion: Boolean;
     FAPScroll: Boolean;
+    FAPRune: Boolean;
+    FAPBook: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
     FLCorpses: Boolean;
@@ -107,12 +109,15 @@ type
     property APFood: Boolean read FAPFood write FAPFood;
     property APPotion: Boolean read FAPPotion write FAPPotion;
     property APScroll: Boolean read FAPScroll write FAPScroll;
+    property APRune: Boolean read FAPRune write FAPRune;
+    property APBook: Boolean read FAPBook write FAPBook;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
     property LCorpses: Boolean read FLCorpses write FLCorpses;
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
     function GetPath(SubDir: string = ''): string;
+    function GetStrDifficulty: string;
     function GetVersion: string;
     function GetTitle: string;
     procedure LoadConfig;
@@ -146,6 +151,8 @@ begin
   APFood := True;
   APPotion := True;
   APScroll := True;
+  APRune := True;
+  APBook := True;
   CanClose := False;
   ShowMap := True;
   LCorpses := True;
@@ -183,6 +190,21 @@ begin
   Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
+function TGame.GetStrDifficulty: string;
+begin
+  case Difficulty of
+    dfEasy:
+      Result := _('Easy');
+    dfNormal:
+      Result := _('Normal');
+    dfHard:
+      Result := _('Hard');
+    else
+      Result := '[color=red]' + _('Hell') + '[/color]';
+  end;
+
+end;
+
 function TGame.GetVersion: string;
 begin
   Result := '1.0';
@@ -215,6 +237,8 @@ begin
   Player.SkillSet;
   Player.StarterSet;
   Shops.New;
+  Player.Calc;
+  Player.Fill;
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [_('Welcome to Elvion!'),

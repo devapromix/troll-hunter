@@ -25,8 +25,8 @@ type
   TEffects = set of TEffect;
 
 type
-  TTalentEnum = (tlNone, tlStrong {Сильный}, tlDextrous {Ловкий}, tlTough {Тяжелый},
-    tlWealthy {Богатый}, tlMiser {Скряга});
+  TTalentEnum = (tlNone, tlStrong {Сильный}, tlDextrous {Ловкий}, tlMage {Маг},
+    tlTough {Тяжелый}, tlWealthy {Богатый}, tlMiser {Скряга});
 
 const
   // Player
@@ -39,6 +39,7 @@ const
   SkillMin = 5;
   SkillMax = 75;
   SkillExpMax = 50;
+  StartSkill = 5;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
@@ -312,6 +313,10 @@ begin
         Exit;
       if ((ItemType = itScroll) and not Game.APScroll) then
         Exit;
+      if ((ItemType = itRune) and not Game.APRune) then
+        Exit;
+      if ((ItemType = itBook) and not Game.APBook) then
+        Exit;
       Items.AddItemToInv(Index, True);
       Wait;
     end;
@@ -357,8 +362,8 @@ begin
   Self.Gold := EnsureRange(Items_Inventory_GetItemAmount(Ord(iGold)), 0,
     High(Integer));
   //
-  Strength := EnsureRange(Round(FSkill[skAthletics].Value * 0.5) +
-    Round(FSkill[skToughness].Value * 0.9), 1, AtrMax);
+  Strength := EnsureRange(Round(FSkill[skAthletics].Value * 1.2) +
+    Round(FSkill[skToughness].Value * 0.2), 1, AtrMax);
   Dexterity := EnsureRange(Round(FSkill[skDodge].Value * 1.4), 1, AtrMax);
   Willpower := EnsureRange(Round(FSkill[skConcentration].Value * 1.4),
     1, AtrMax);
@@ -559,6 +564,8 @@ begin
       Result := _('Strong');
     tlDextrous:
       Result := _('Dextrous');
+    tlMage:
+      Result := _('Mage');
     tlTough:
       Result := _('Tough');
     tlWealthy:
@@ -571,16 +578,20 @@ begin
 end;
 
 function TPlayer.GetTalentHint(ATalent: TTalentEnum): string;
+const
+  F = '+%d to %s';
 begin
   case ATalent of
     tlStrong:
-      Result := _('+10 to Athletics');
+      Result := Format(F, [StartSkill, _('Athletics')]);
     tlDextrous:
-      Result := _('+10 to Dodge');
+      Result := Format(F, [StartSkill, _('Dodge')]);
+    tlMage:
+      Result := Format(F, [StartSkill, _('Concentration')]);
     tlTough:
-      Result := _('+10 to Toughness');
+      Result := Format(F, [StartSkill, _('Toughness')]);
     tlWealthy:
-      Result := Format(_('+%d to Gold'), [StartGold]);
+      Result := Format(F, [StartGold, _('Gold')]);
     tlMiser:
       Result := _('x2 to Gold');
     else
@@ -667,6 +678,10 @@ begin
           end;
         itFood:
           MsgLog.Add(Format(_('You ate %s.'), [The]));
+        itRune:
+          MsgLog.Add(Format(_('You read %s.'), [The]));
+        itBook:
+          MsgLog.Add(Format(_('You read %s.'), [The]));
       end;
       if not (T in RuneTypeItems) then
         Items_Inventory_SetItem(Index, AItem);
@@ -959,6 +974,7 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
+    SL.Append(Format(_('%s: %s.'), [_('Difficulty'), GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(AReason);
     if Player.IsDead then
@@ -1068,11 +1084,13 @@ begin
   // Talents
   case Talent of
     tlStrong:
-      FSkill[skAthletics].Value := FSkill[skAthletics].Value + 10;
+      FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
     tlDextrous:
-      FSkill[skDodge].Value := FSkill[skDodge].Value + 10;
+      FSkill[skDodge].Value := FSkill[skDodge].Value + StartSkill;
+    tlMage:
+      FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
     tlTough:
-      FSkill[skToughness].Value := FSkill[skToughness].Value + 10;
+      FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
   end;
   // Wizard
   if not Game.Wizard then
@@ -1084,8 +1102,6 @@ begin
       Value := Math.RandomRange(SkillMin, SkillMax);
       Exp := Math.RandomRange(0, SkillExpMax);
     end;
-  Self.Calc;
-  Self.Fill;
 end;
 
 procedure TPlayer.StarterSet;

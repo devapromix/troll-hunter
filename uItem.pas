@@ -5,16 +5,18 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itRune, itFood,
-    itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor);
+  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itRune, itBook,
+    itFood, itBlade, itAxe, itSpear, itMace, itShield, itHeadgear, itBodyArmor);
 
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
   FoodTypeItems = [itFood];
   RuneTypeItems = [itRune];
-  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems + RuneTypeItems;
-  NotDropTypeItems = [itNone, itCorpse, itKey];
+  BookTypeItems = [itRune];
+  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
+    RuneTypeItems + BookTypeItems;
+  NotDropTypeItems = [itNone, itCorpse, itKey] + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   ArmorTypeItems = [itHeadgear, itBodyArmor];
@@ -206,17 +208,17 @@ const
 
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 0;
+    MaxDurability: 0; Level: 1;
     Price: 450; Color: clDarkYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efFood]; Value: 400; ManaCost: 25;),
     // Scroll of Teleportation
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 0;
+    MaxDurability: 0; Level: 1;
     Price: 500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
     Effects: [efTeleportation]; Value: 5; ManaCost: 50;),
     // Scroll of Town Portal
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 0;
+    MaxDurability: 0; Level: 1;
     Price: 600; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 75;),
 

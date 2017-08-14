@@ -1235,16 +1235,7 @@ begin
   Y := 3;
 
   Add(_('Name'), Player.Name);
-  case Game.Difficulty of
-    dfEasy:
-      Add(_('Difficulty'), _('Easy'));
-    dfNormal:
-      Add(_('Difficulty'), _('Normal'));
-    dfHard:
-      Add(_('Difficulty'), _('Hard'), clLightRed);
-    dfHell:
-      Add(_('Difficulty'), _('Hell'), clRed);
-  end;
+  Add(_('Difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Score);
   Add(_('Talent'), Player.GetTalentName(Player.Talent));
   Add(_('Tiles Moved'), Player.Turn);
@@ -1814,6 +1805,8 @@ begin
   Add('F', _('Auto pickup foods'), Game.APFood);
   Add('P', _('Auto pickup potions'), Game.APPotion);
   Add('S', _('Auto pickup scrolls'), Game.APScroll);
+  Add('R', _('Auto pickup runes'), Game.APRune);
+  Add('B', _('Auto pickup books'), Game.APBook);
 
   if Game.Wizard then
   begin
@@ -1823,7 +1816,7 @@ begin
     Y := Y + 1;
     Add('W', _('Wizard Mode'), Game.Wizard, clRed);
     Add('M', _('Show map'), Game.ShowMap);
-    Add('R', _('Reload all shops'), False);
+    Add('T', _('Reload all shops'), False);
     Add('L', _('Leave corpses'), Game.LCorpses);
   end;
 
@@ -1841,13 +1834,17 @@ begin
       Game.APPotion := not Game.APPotion;
     TK_S:
       Game.APScroll := not Game.APScroll;
+    TK_R:
+      Game.APRune := not Game.APRune;
+    TK_B:
+      Game.APBook := not Game.APBook;
     TK_W:
       Game.Wizard := False;
     TK_M:
       if Game.Wizard then Game.ShowMap := not Game.ShowMap;
     TK_L:
       if Game.Wizard then Game.LCorpses := not Game.LCorpses;
-    TK_R:
+    TK_T:
       if Game.Wizard then Shops.New;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
@@ -1909,8 +1906,9 @@ var
   procedure Add(const S, H: string);
   begin
     Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
-    Terminal.ForegroundColor(clGray);
+    Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, S);
+    Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, H);
     Inc(Y);
     Inc(V);
@@ -1925,7 +1923,7 @@ begin
 
   Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
   Add(Player.GetTalentName(tlDextrous), Player.GetTalentHint(tlDextrous));
-  Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
+  Add(Player.GetTalentName(tlMage), Player.GetTalentHint(tlMage));
   Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
   Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy));
 
@@ -1948,7 +1946,7 @@ begin
             end;
           TK_C:
             begin
-              //Player.Talent := tlTough;
+              Player.Talent := tlMage;
             end;
           TK_D:
             begin
@@ -1977,9 +1975,13 @@ var
     if F then
       Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))))
         else
+        begin
+          Terminal.ForegroundColor(clWhite);
           Terminal.Print(1, Y, '[[' + Chr(V + Ord('A')) + ']]');
-    Terminal.ForegroundColor(clGray);
+        end;
+    Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, S);
+    Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, H);
     Inc(Y);
     Inc(V);
@@ -1999,7 +2001,7 @@ begin
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Teach talent'), False, True);
+  AddKey('A-Z', _('Teach new talent'), False, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);

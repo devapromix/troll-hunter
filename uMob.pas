@@ -573,7 +573,7 @@ begin
     if not Game.Wizard then
       Game.Won := True;
     MsgLog.Add(Format(FC, [clAlarm, _('You have won!!!')]));
-    Player.Score := Player.Score + 1000;
+    Player.Score := Player.Score + 2000;
     Game.Screenshot := Terminal.GetTextScreenshot();
   end;
 end;
