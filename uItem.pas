@@ -19,7 +19,7 @@ const
   NotDropTypeItems = [itNone, itCorpse, itKey] + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
-  ArmorTypeItems = [itHeadgear, itBodyArmor];
+  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
@@ -146,7 +146,7 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5;
     Price: 500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
-    Effects: [efFullHeal];),
+    Effects: [efHeal]; Value: 250;),
 
     // Rejuvenation Potion 1
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -167,7 +167,7 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5;
     Price: 750; Color: clDarkYellow; Deep: [deBloodCave .. deDrom];
-    Effects: [efFullHeal, efFullMana];),
+    Effects: [efHeal, efMana]; Value: 250;),
 
     // Lesser Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -188,7 +188,7 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 4;
     Price: 500; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
-    Effects: [efFullMana];),
+    Effects: [efMana]; Value: 250;),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -209,7 +209,7 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 4;
     Price: 300; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
-    Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
+    Effects: [efHeal]; Value: 250; ManaCost: 50;),
 
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -242,7 +242,7 @@ const
     // Rune of full healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 8;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efFullHeal]; Value: 0; ManaCost: 50;),
+    Effects: [efHeal]; Value: 250; ManaCost: 50;),
     // Rune of teleportation
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
@@ -728,7 +728,9 @@ type
     function GetPrice(Price: Word; F: Boolean = False): string; overload;
     function GetPrice(AItem: Item): Integer; overload;
     function GetLevel(L: Byte): string;
-    function GetManaCost(Mana: Byte): string;
+    function GetMana(Sign: string; Value: Byte): string;
+    function GetLife(Sign: string; Value: Byte): string;
+    function GetFood(Sign: string; Value: Word): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
@@ -752,19 +754,55 @@ var
   ID: Integer;
   S, T: string;
   IT: TItemType;
-  V: Byte;
+  F: Boolean;
+  V: Word;
 begin
   S := '';
   T := '';
+  F := False;
   Result := '';
   ID := AItem.ItemID;
   IT := ItemBase[TItemEnum(ID)].ItemType;
-  // Mana
+  // Info
+  if not IsManyItems then
+  begin
   if (IT in RuneTypeItems + ScrollTypeItems) then
   begin
     V := ItemBase[TItemEnum(ID)].ManaCost;
     if (V > 0) then
-      S := S + Items.GetManaCost(V) + ' ';
+    begin
+      S := S + Items.GetMana('-', V) + ' ';
+      F := True;
+    end;
+  end;
+  if (efMana in ItemBase[TItemEnum(ID)].Effects) then
+  begin
+    V := ItemBase[TItemEnum(ID)].Value;
+    if (V > 0) then
+    begin
+      S := S + Items.GetMana('+', V) + ' ';
+      F := True;
+    end;
+  end;
+  if (efHeal in ItemBase[TItemEnum(ID)].Effects) then
+  begin
+    V := ItemBase[TItemEnum(ID)].Value;
+    if (V > 0) then
+    begin
+      S := S + Items.GetLife('+', V) + ' ';
+      F := True;
+    end;
+  end;
+  if (efFood in ItemBase[TItemEnum(ID)].Effects) then
+  begin
+    V := ItemBase[TItemEnum(ID)].Value;
+    if (V > 0) then
+    begin
+      S := S + Items.GetFood('+', V) + ' ';
+      F := True;
+    end;
+  end;
+  if F then S := '[[' + Trim(S) + ']] ';
   end;
   // Amount
   if (AItem.Stack > 1) then
@@ -808,20 +846,20 @@ begin
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
   // Defense
-  if (AItem.Stack = 1) then
+  if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Defense.Min > 0) then
     AItem.Defense := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].Defense.Min,
       ItemBase[TItemEnum(ID)].Defense.Max + 1), 1, High(Byte))
   else
     AItem.Defense := 0;
   // Damage
-  if (AItem.Stack = 1) then
+  if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Damage.MinDamage.Min > 0) then
     AItem.MinDamage := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
       ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1), 1, High(Byte) - 1)
   else
     AItem.MinDamage := 0;
-  if (AItem.Stack = 1) then
+  if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min > 0) then
     AItem.MaxDamage := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
       ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1), 2, High(Byte))
@@ -1349,11 +1387,25 @@ begin
     Result := IntToStr(L);
 end;
 
-function TItems.GetManaCost(Mana: Byte): string;
+function TItems.GetLife(Sign: string; Value: Byte): string;
 begin
   Result := '';
-  if (Mana > 0) then
-    Result := Format('[[[color=mana]@%d[/color]]]', [Mana]);
+  if (Value > 0) then
+    Result := Format('[color=life]%s@%d[/color]', [Sign, Value]);
+end;
+
+function TItems.GetMana(Sign: string; Value: Byte): string;
+begin
+  Result := '';
+  if (Value > 0) then
+    Result := Format('[color=mana]%s@%d[/color]', [Sign, Value]);
+end;
+
+function TItems.GetFood(Sign: string; Value: Word): string;
+begin
+  Result := '';
+  if (Value > 0) then
+    Result := Format('[color=yellow]%s@%d[/color]', [Sign, Value]);
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
@@ -1392,7 +1444,10 @@ begin
   else
     S := Trim(Items.GetItemInfo(AItem));
   if (D.Level > 0) then
-    S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
+  begin
+    if ((Player.Level < D.Level) or not (D.ItemType in NotEquipTypeItems)) then
+      S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
+  end;
   if IsRender then
   begin
     Terminal.Print(X + 2, Y + I, S);

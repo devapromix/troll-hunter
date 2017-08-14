@@ -20,7 +20,7 @@ type
   end;
 
 type
-  TEffect = (efHeal, efFullHeal, efMana, efFullMana, efFood, efTeleportation,
+  TEffect = (efHeal, efMana, efFood, efTeleportation,
     efTownPortal, efMagicEye, efCurePoison);
 
 type
@@ -1209,14 +1209,6 @@ begin
     Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
     Self.Skill(skHealing, 5);
   end;
-  // Full heal
-  if (efFullHeal in Effects) then
-  begin
-    MsgLog.Add(_('You feel like new.'));
-    MsgLog.Add(Format(F, [_('Life'), MaxLife - Life]));
-    Self.Life := MaxLife;
-    Self.Skill(skHealing, 5);
-  end;
   // Mana
   if (efMana in Effects) then
   begin
@@ -1224,14 +1216,6 @@ begin
     MsgLog.Add(_('You feel magical energies restoring.'));
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
-    Self.Skill(skConcentration, 5);
-  end;
-  // Full mana
-  if (efFullMana in Effects) then
-  begin
-    MsgLog.Add(_('You feel magically fully restored.'));
-    MsgLog.Add(Format(F, [_('Mana'), MaxMana - Mana]));
-    Self.Mana := MaxMana;
     Self.Skill(skConcentration, 5);
   end;
   // Food
