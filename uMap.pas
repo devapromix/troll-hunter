@@ -182,11 +182,11 @@ begin
   AddTile('O', _('Portal'), $FF9999FF, tePortal, deBloodCave);
   AddTile('O', _('Portal'), $FF9999FF, tePortal, deDrom);
   // Town Portal
-  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deDarkWood);
-  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deGrayCave);
-  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deDeepCave);
-  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deBloodCave);
-  AddTile('O', _('Portal'), $FF99FF99, teTownPortal, deDrom);
+  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDarkWood);
+  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deGrayCave);
+  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDeepCave);
+  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deBloodCave);
+  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDrom);
 end;
 
 procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
