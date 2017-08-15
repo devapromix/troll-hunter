@@ -1939,9 +1939,12 @@ end;
 procedure TSceneTalent.Update(var Key: Word);
 begin
   case Key of
-    TK_A .. TK_Z:
+    TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
         case Key of
+          TK_ENTER, TK_KP_ENTER:
+            if Game.Wizard then
+              Player.Talent := tlNone;
           TK_A:
             begin
               Player.Talent := tlStrong;
