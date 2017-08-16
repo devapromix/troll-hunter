@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes, BeaRLibItems, uMob;
+  Classes, BeaRLibItems, uMob, Types;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -17,6 +17,7 @@ type
   private
     KStr: string;
     CX, CY: Byte;
+    P: TPoint;
   public
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
@@ -27,6 +28,7 @@ type
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
       IsRender: Boolean = False);
     procedure FromAToZ;
+    procedure AddKeyLabel(AKey: string; S: string; AColor: Cardinal = clWhite);
   end;
 
 type
@@ -247,7 +249,7 @@ var
 implementation
 
 uses
-  SysUtils, Types, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
+  SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar, uShop,
   uSpellbook;
 
@@ -298,6 +300,11 @@ begin
   Terminal.ForegroundColor(Terminal.GetColorFromIni('Title', 'Yellow'));
   Terminal.Print(X, AY, Format(FT, [ATitleStr]), TK_ALIGN_CENTER);
   Terminal.ForegroundColor(clDefault);
+end;
+
+procedure TScene.AddKeyLabel(AKey, S: string; AColor: Cardinal);
+begin
+
 end;
 
 procedure TScene.FromAToZ;
@@ -1983,8 +1990,7 @@ var
   begin
     if F then
       Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))))
-        else
-        begin
+        else begin
           Terminal.ForegroundColor(clWhite);
           Terminal.Print(1, Y, '[[' + Chr(V + Ord('A')) + ']]');
         end;
