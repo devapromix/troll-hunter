@@ -18,7 +18,8 @@ uses
   uEntity in 'uEntity.pas',
   uCalendar in 'uCalendar.pas',
   uShop in 'uShop.pas',
-  uSpellbook in 'uSpellbook.pas';
+  uSpellbook in 'uSpellbook.pas',
+  uTalent in 'uTalent.pas';
 
 var
   Key: Word = 0;

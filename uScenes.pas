@@ -17,7 +17,6 @@ type
   private
     KStr: string;
     CX, CY: Byte;
-    P: TPoint;
   public
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
@@ -28,7 +27,7 @@ type
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
       IsRender: Boolean = False);
     procedure FromAToZ;
-    procedure AddKeyLabel(AKey: string; S: string; AColor: Cardinal = clWhite);
+    procedure AddKeyLabel(AKey: string; S: string; AColor: Cardinal = $FFFFFFFF);
   end;
 
 type
@@ -251,7 +250,7 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar, uShop,
-  uSpellbook;
+  uSpellbook, uTalent;
 
 { TScene }
 
@@ -1250,7 +1249,7 @@ begin
   Add(_('Name'), Player.Name);
   Add(_('Difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Score);
-  Add(_('Talent'), Player.GetTalentName(Player.Talent));
+//  Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Turn);
   Add(_('Monsters Killed'), Player.Kills);
   Add(_('Items Found'), Player.Found);
@@ -1934,11 +1933,11 @@ begin
   Y := 2;
   Self.FromAToZ;
 
-  Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
+{  Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
   Add(Player.GetTalentName(tlDextrous), Player.GetTalentHint(tlDextrous));
   Add(Player.GetTalentName(tlMage), Player.GetTalentHint(tlMage));
   Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
-  Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy));
+  Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy));}
 
   AddKey('Esc', _('Back'), True, True);
 end;
@@ -1948,7 +1947,7 @@ begin
   case Key of
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
-        case Key of
+        {case Key of
           TK_ENTER, TK_KP_ENTER:
             if Game.Wizard then
               Player.Talent := tlNone;
@@ -1972,7 +1971,7 @@ begin
             begin
               Player.Talent := tlWealthy;
             end;
-        end;
+        end;}
         Scenes.SetScene(scName);
       end;
     TK_ESCAPE:
@@ -1984,7 +1983,7 @@ end;
 
 procedure TSceneTalents.Render;
 var
-  V, Y: Byte;
+  I, V, Y: Byte;
 
   procedure Add(const S, H: string; F: Boolean = True);
   begin
@@ -2011,12 +2010,14 @@ begin
 
   Terminal.ForegroundColor(clGray);
 
-  Add(Player.GetTalentName(Player.Talent), Player.GetTalentHint(Player.Talent), False);
+  for I := 0 to TalentMax - 1 do
+    if (Talents.Talent[I].Enum <> tlNone) then
+      Add(Talents.GetName(TTalentEnum(0)), Talents.GetHint(TTalentEnum(0)), False);
 
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Teach new talent'), False, True);
+  AddKey('A-Z', _('Teach talent'), False, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);

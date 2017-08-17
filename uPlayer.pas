@@ -21,14 +21,10 @@ type
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation,
-    efTownPortal, efMagicEye, efCurePoison);
+    efTownPortal, efMagicEye, efCurePoison, efPrmGold);
 
 type
   TEffects = set of TEffect;
-
-type
-  TTalentEnum = (tlNone, tlStrong {Сильный}, tlDextrous {Ловкий}, tlMage {Маг},
-    tlTough {Тяжелый}, tlWealthy {Богатый}, tlMiser {Скряга});
 
 const
   // Player
@@ -85,7 +81,6 @@ type
     FItemAmount: Integer;
     FSatPerTurn: Byte;
     FIsRest: Boolean;
-    FTalent: TTalentEnum;
     FName: string;
     procedure GenNPCText;
     function GetDV: Byte;
@@ -116,7 +111,6 @@ type
     property Score: Word read FScore write FScore;
     property Kills: Word read FKills write FKills;
     property Found: Word read FFound write FFound;
-    property Talent: TTalentEnum read FTalent write FTalent;
     property PotDrunk: Word read FPotDrunk write FPotDrunk;
     property ScrRead: Word read FScrRead write FScrRead;
     property Killer: string read FKiller write FKiller;
@@ -141,8 +135,6 @@ type
     function GetSkill(ASkill: TSkillEnum): TSkill;
     function GetSkillName(ASkill: TSkillEnum): string;
     function GetSkillValue(ASkill: TSkillEnum): Byte;
-    function GetTalentName(ATalent: TTalentEnum): string;
-    function GetTalentHint(ATalent: TTalentEnum): string;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
@@ -404,7 +396,6 @@ begin
   IsRest := False;
   Name := _('PLAYER');
   SatPerTurn := 2;
-  Talent := tlNone;
   Satiation := SatiatedMax;
   FWeaponSkill := skLearning;
   for I := Low(TSkillEnum) to High(TSkillEnum) do
@@ -557,48 +548,6 @@ begin
     Result := FSkill[ASkill].Value;
   except
     Result := 0;
-  end;
-end;
-
-function TPlayer.GetTalentName(ATalent: TTalentEnum): string;
-begin
-  case ATalent of
-    tlStrong:
-      Result := _('Strong');
-    tlDextrous:
-      Result := _('Dextrous');
-    tlMage:
-      Result := _('Mage');
-    tlTough:
-      Result := _('Tough');
-    tlWealthy:
-      Result := _('Wealthy');
-    tlMiser:
-      Result := _('Miser');
-    else
-      Result := '-';
-  end;
-end;
-
-function TPlayer.GetTalentHint(ATalent: TTalentEnum): string;
-const
-  F = '+%d to %s';
-begin
-  case ATalent of
-    tlStrong:
-      Result := Format(F, [StartSkill, _('Athletics')]);
-    tlDextrous:
-      Result := Format(F, [StartSkill, _('Dodge')]);
-    tlMage:
-      Result := Format(F, [StartSkill, _('Concentration')]);
-    tlTough:
-      Result := Format(F, [StartSkill, _('Toughness')]);
-    tlWealthy:
-      Result := Format(F, [StartGold, _('Gold')]);
-    tlMiser:
-      Result := _('x2 to Gold');
-    else
-      Result := '-';
   end;
 end;
 
@@ -1104,7 +1053,7 @@ procedure TPlayer.SkillSet;
 var
   I: TSkillEnum;
 begin
-  // Talents
+{  // Talents
   case Talent of
     tlStrong:
       FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
@@ -1114,7 +1063,7 @@ begin
       FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
     tlTough:
       FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
-  end;
+  end;  }
   // Wizard
   if not Game.Wizard then
     Exit;
@@ -1187,11 +1136,11 @@ begin
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), D));
-  // Talents
+{  // Talents
   case Self.Talent of
     tlWealthy:
       Items.AddItemToInv(iGold, StartGold);
-  end;
+  end;}
   Self.Calc;
 end;
 
@@ -1257,6 +1206,11 @@ begin
   if (efCurePoison in Effects) then
   begin
   
+  end;
+  // Gold
+  if (efPrmGold in Effects) then
+  begin
+
   end;
 end;
 
