@@ -21,7 +21,9 @@ type
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation,
-    efTownPortal, efMagicEye, efCurePoison, efPrmGold);
+    efTownPortal, efMagicEye, efCurePoison, efPrmGold,
+    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness,
+    efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace);
 
 type
   TEffects = set of TEffect;
@@ -1209,6 +1211,46 @@ begin
   end;
   // Gold
   if (efPrmGold in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmAthletics in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmDodge in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmConcentration in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmToughness in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmBlade in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmAxe in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmSpear in Effects) then
+  begin
+
+  end;
+  //
+  if (efPrmMace in Effects) then
   begin
 
   end;
