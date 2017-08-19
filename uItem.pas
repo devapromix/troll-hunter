@@ -1438,7 +1438,7 @@ begin
       S := GetSlotName(D.SlotType);
   end;
   if (S <> '') then
-    S := Format(FC, [clAlarm, Items.GetItemInfo(AItem) + ' ' + S])
+    S := Terminal.Colorize(Items.GetItemInfo(AItem) + ' ' + S, clAlarm)
   else
     S := Trim(Items.GetItemInfo(AItem));
   if (D.Level > 0) then

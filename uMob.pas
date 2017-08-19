@@ -556,7 +556,7 @@ begin
     S := Format(_('%s dies.'), [GetCapit(The)]);
   end;
   if Boss then
-    S := Format(FC, [clAlarm, S]);
+    S := Terminal.Colorize(S, clAlarm);
   MsgLog.Add(S);
   Player.Kills := Player.Kills + 1;
 
@@ -572,7 +572,7 @@ begin
   begin
     if not Game.Wizard then
       Game.Won := True;
-    MsgLog.Add(Format(FC, [clAlarm, _('You have won!!!')]));
+    MsgLog.Add(Terminal.Colorize(_('You have won!!!'), clAlarm));
     Player.Score := Player.Score + 2000;
     Game.Screenshot := Terminal.GetTextScreenshot();
   end;

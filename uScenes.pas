@@ -8,8 +8,8 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook,
-    scOptions, scTalent, scTalents);
+    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
+    scSpellbook, scOptions, scTalent, scTalents);
   // scClasses, scRaces, scIdentification
 
 type
@@ -27,7 +27,8 @@ type
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
       IsRender: Boolean = False);
     procedure FromAToZ;
-    procedure AddKeyLabel(AKey: string; S: string; AColor: Cardinal = $FFFFFFFF);
+    procedure AddKeyLabel(AKey: string; S: string;
+      AColor: Cardinal = $FFFFFFFF);
   end;
 
 type
@@ -270,8 +271,8 @@ end;
 
 class function TScene.KeyStr(AKey: string; AStr: string = ''): string;
 begin
-  Result := Trim(Format(FC + ' %s', [Terminal.GetColorFromIni('Key'),
-    Format('[[%s]]', [UpperCase(AKey)]), AStr]));
+  Result := Trim(Terminal.Colorize(Format('[[%s]]', [UpperCase(AKey)]),
+    Terminal.GetColorFromIni('Key')) + ' ' + AStr);
 end;
 
 procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
@@ -526,7 +527,7 @@ begin
   AddKey('L', _('Look mode'));
   AddKey('R', _('Rest'));
   AddKey('M', _('Last messages'));
-//  AddKey('B', _('Spellbook'));
+  // AddKey('B', _('Spellbook'));
   AddKey('T', _('Talents'));
   AddKey('N', _('Statistics'));
   AddKey('O', _('Options'));
@@ -633,48 +634,48 @@ begin
   PX := View.Width div 2;
   PY := View.Height div 2;
   if Game.ShowMap then
-  for DY := 0 to View.Height - 1 do
-    for DX := 0 to View.Width - 1 do
-    begin
-      X := DX - PX + Player.X;
-      Y := DY - PY + Player.Y;
-      if not Map.InMap(X, Y) then
-        Continue;
-      if not Game.Wizard then
-        if (Player.GetDist(X, Y) > R) and Map.GetFog(X, Y) then
+    for DY := 0 to View.Height - 1 do
+      for DX := 0 to View.Width - 1 do
+      begin
+        X := DX - PX + Player.X;
+        Y := DY - PY + Player.Y;
+        if not Map.InMap(X, Y) then
           Continue;
-      T := Map.GetTile(X, Y);
-      if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
-      begin
-        Terminal.BackgroundColor(clLook);
-        Terminal.Print(DX + View.Left, DY + View.Top, ' ');
-        RenderLook(X, Y, T, True);
-      end;
-      if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
-        RenderLook(X, Y, T, False);
-      if not Game.Wizard then
-      begin
-        if (Player.GetDist(X, Y) <= R) then
+        if not Game.Wizard then
+          if (Player.GetDist(X, Y) > R) and Map.GetFog(X, Y) then
+            Continue;
+        T := Map.GetTile(X, Y);
+        if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
         begin
-          if not Map.GetFog(X, Y) then
-            Terminal.ForegroundColor(clFog);
-          if Map.GetFOV(X, Y) then
+          Terminal.BackgroundColor(clLook);
+          Terminal.Print(DX + View.Left, DY + View.Top, ' ');
+          RenderLook(X, Y, T, True);
+        end;
+        if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
+          RenderLook(X, Y, T, False);
+        if not Game.Wizard then
+        begin
+          if (Player.GetDist(X, Y) <= R) then
           begin
-            Terminal.ForegroundColor(T.Color);
-            Map.SetFog(X, Y, False);
+            if not Map.GetFog(X, Y) then
+              Terminal.ForegroundColor(clFog);
+            if Map.GetFOV(X, Y) then
+            begin
+              Terminal.ForegroundColor(T.Color);
+              Map.SetFog(X, Y, False);
+            end;
+          end
+          else
+          begin
+            if not Map.GetFog(X, Y) then
+              Terminal.ForegroundColor(clFog);
           end;
         end
         else
-        begin
-          if not Map.GetFog(X, Y) then
-            Terminal.ForegroundColor(clFog);
-        end;
-      end
-      else
-        Terminal.ForegroundColor(T.Color);
-      if Game.Wizard or not Map.GetFog(X, Y) then
-        Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
-    end;
+          Terminal.ForegroundColor(T.Color);
+        if Game.Wizard or not Map.GetFog(X, Y) then
+          Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
+      end;
   // Items, player's corpses, player, mobs
   Items.Render(PX, PY);
   Corpses.Render(PX, PY);
@@ -764,33 +765,34 @@ begin
         end;
     TK_PERIOD:
       begin
-      // Portal in town
-      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = tePortal) then
-      begin
-        Player.X := Game.Spawn.X;
-        Player.Y := Game.Spawn.Y;
-        Map.Current := deDarkWood;
-        Scenes.SetScene(scGame);
-        Exit;
-      end;
-      // Portal
-      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teTownPortal) then
-      begin
-        Map.SetTileEnum(Player.X, Player.Y, deDarkWood, teStoneFloor);
-        Player.X := Game.Portal.X;
-        Player.Y := Game.Portal.Y;
-        Map.Current := Game.PortalMap;
-        Map.SetTileEnum(Player.X, Player.Y, Game.PortalMap, Game.PortalTile);
-        Scenes.SetScene(scGame);
-        Exit;
-      end;
-      // Down stairs
-      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teDnStairs) then
-        if (Map.Current < High(TMapEnum)) then
+        // Portal in town
+        if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = tePortal) then
         begin
-          Map.Current := Succ(Map.Current);
-          Player.Wait;
+          Player.X := Game.Spawn.X;
+          Player.Y := Game.Spawn.Y;
+          Map.Current := deDarkWood;
+          Scenes.SetScene(scGame);
+          Exit;
         end;
+        // Portal
+        if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teTownPortal)
+        then
+        begin
+          Map.SetTileEnum(Player.X, Player.Y, deDarkWood, teStoneFloor);
+          Player.X := Game.Portal.X;
+          Player.Y := Game.Portal.Y;
+          Map.Current := Game.PortalMap;
+          Map.SetTileEnum(Player.X, Player.Y, Game.PortalMap, Game.PortalTile);
+          Scenes.SetScene(scGame);
+          Exit;
+        end;
+        // Down stairs
+        if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teDnStairs) then
+          if (Map.Current < High(TMapEnum)) then
+          begin
+            Map.Current := Succ(Map.Current);
+            Player.Wait;
+          end;
       end;
     TK_KP_MULTIPLY:
       if Game.Wizard then
@@ -834,8 +836,8 @@ begin
       Scenes.SetScene(scStatistics);
     TK_O:
       Scenes.SetScene(scOptions);
-//    TK_B:
-//      Scenes.SetScene(scSpellbook);
+    // TK_B:
+    // Scenes.SetScene(scSpellbook);
     TK_T:
       Scenes.SetScene(scTalents);
     TK_SLASH:
@@ -889,7 +891,8 @@ procedure TSceneDef.Render;
 begin
   Terminal.Print(CX, CY - 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
   Terminal.Print(CX, CY + 1, Format(_('Killed by %s. Press %s'),
-    [Format(FC, [clAlarm, Player.Killer]), KeyStr('ENTER')]), TK_ALIGN_CENTER);
+    [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
+    TK_ALIGN_CENTER);
   if Game.Wizard then
     Terminal.Print(CX, CY + 3, Format(_('Press %s to continue...'),
       [KeyStr('SPACE')]), TK_ALIGN_CENTER);
@@ -1037,12 +1040,10 @@ begin
   RenderBar(1, 0, Y + 16, W, Player.PV, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [_('Protection Value (PV)'),
     Player.PV, PVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife,
-    clDarkGray);
+  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [_('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana,
-    clDarkGray);
+  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
   Terminal.Print(X, Y + 20, Format('%s %d/%d', [_('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 22, W, Player.Radius, RadiusMax, clGray, clDarkGray);
@@ -1171,12 +1172,12 @@ begin
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
     TK_SPACE:
-    begin
-      FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y),
-        0, ItemMax);
-      for I := 0 to FCount - 1 do
-        Items.AddItemToInv;
-    end;
+      begin
+        FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current),
+          Player.X, Player.Y), 0, ItemMax);
+        for I := 0 to FCount - 1 do
+          Items.AddItemToInv;
+      end;
     TK_A .. TK_Z: // Pick up
       Items.AddItemToInv(Key - TK_A);
   else
@@ -1246,7 +1247,7 @@ begin
   Add(_('Name'), Player.Name);
   Add(_('Difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Score);
-//  Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
+  // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Turn);
   Add(_('Monsters Killed'), Player.Kills);
   Add(_('Items Found'), Player.Found);
@@ -1746,7 +1747,8 @@ procedure TSceneName.Render;
 begin
   Self.Title(_('Name'));
 
-  Terminal.Print(CX - 10, CY, _('Name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
+  Terminal.Print(CX - 10, CY, _('Name') + ': ' + Player.Name + Game.GetCursor,
+    TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Back'), True, True);
 end;
@@ -1755,25 +1757,25 @@ procedure TSceneName.Update(var Key: Word);
 begin
   case Key of
     TK_BACKSPACE:
-    begin
-      if (Player.Name <> '') then
-        Player.Name := Copy(Player.Name, 1, Length(Player.Name) - 1);
-    end;
+      begin
+        if (Player.Name <> '') then
+          Player.Name := Copy(Player.Name, 1, Length(Player.Name) - 1);
+      end;
     TK_ENTER, TK_KP_ENTER:
-    begin
-      if (Player.Name = '') then
-        Player.Name := _('PLAYER');
-      Scenes.SetScene(scLoad);
-      Terminal.Refresh;
-      Terminal_Delay(1000);
-      Map.Gen;
-      Game.Start();
-    end;
-    TK_A..TK_Z:
-    begin
-      if (Length(Player.Name) < 10) then
-        Player.Name := Player.Name + Chr(Key - TK_A + 65);
-    end;
+      begin
+        if (Player.Name = '') then
+          Player.Name := _('PLAYER');
+        Scenes.SetScene(scLoad);
+        Terminal.Refresh;
+        Terminal_Delay(1000);
+        Map.Gen;
+        Game.Start();
+      end;
+    TK_A .. TK_Z:
+      begin
+        if (Length(Player.Name) < 10) then
+          Player.Name := Player.Name + Chr(Key - TK_A + 65);
+      end;
     TK_ESCAPE:
       Scenes.SetScene(scTalent);
   end;
@@ -1795,13 +1797,15 @@ var
     end;
   end;
 
-  procedure Add(AHotKey, AText: string; AOption: Boolean; AColor: Cardinal = clWhite); overload;
+  procedure Add(AHotKey, AText: string; AOption: Boolean;
+    AColor: Cardinal = clWhite); overload;
   begin
     Terminal.ForegroundColor(AColor);
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText + ':', TK_ALIGN_LEFT);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText +
+      ':', TK_ALIGN_LEFT);
     Terminal.ForegroundColor(clLightBlue);
-    Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, '[['
-      + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
+    Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y,
+      '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
     Add();
   end;
 
@@ -1850,11 +1854,14 @@ begin
     TK_W:
       Game.Wizard := False;
     TK_M:
-      if Game.Wizard then Game.ShowMap := not Game.ShowMap;
+      if Game.Wizard then
+        Game.ShowMap := not Game.ShowMap;
     TK_L:
-      if Game.Wizard then Game.LCorpses := not Game.LCorpses;
+      if Game.Wizard then
+        Game.LCorpses := not Game.LCorpses;
     TK_T:
-      if Game.Wizard then Shops.New;
+      if Game.Wizard then
+        Shops.New;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end
@@ -1870,7 +1877,8 @@ var
   function IsSpell(I: TSpellEnum): Boolean;
   begin
     Result := Spellbook.GetSpell(I).Enable;
-    if Game.Wizard then Result := True;
+    if Game.Wizard then
+      Result := True;
   end;
 
 begin
@@ -1880,16 +1888,17 @@ begin
   Y := 2;
   Self.FromAToZ;
   for I := Low(TSpellEnum) to High(TSpellEnum) do
-  if IsSpell(I) then
-  begin
-    Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
-    Terminal.ForegroundColor(clGray);
-    Terminal.Print(5, Y, Format('(%s) %s %s', [
-      Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
-      Spellbook.GetSpellName(I), Items.GetMana('-', Spellbook.GetSpell(I).Spell.ManaCost)]));
-    Inc(Y);
-    Inc(V);
-  end;
+    if IsSpell(I) then
+    begin
+      Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
+      Terminal.ForegroundColor(clGray);
+      Terminal.Print(5, Y, Format('(%s) %s %s',
+        [Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
+        Spellbook.GetSpellName(I), Items.GetMana('-',
+        Spellbook.GetSpell(I).Spell.ManaCost)]));
+      Inc(Y);
+      Inc(V);
+    end;
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
@@ -1901,7 +1910,7 @@ begin
   case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
-    TK_A..TK_Z:
+    TK_A .. TK_Z:
       Spellbook.DoSpell(Key - TK_A);
   end
 end;
@@ -1930,11 +1939,11 @@ begin
   Y := 2;
   Self.FromAToZ;
 
-{  Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
-  Add(Player.GetTalentName(tlDextrous), Player.GetTalentHint(tlDextrous));
-  Add(Player.GetTalentName(tlMage), Player.GetTalentHint(tlMage));
-  Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
-  Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy));}
+  { Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
+    Add(Player.GetTalentName(tlDextrous), Player.GetTalentHint(tlDextrous));
+    Add(Player.GetTalentName(tlMage), Player.GetTalentHint(tlMage));
+    Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
+    Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy)); }
 
   AddKey('Esc', _('Back'), True, True);
 end;
@@ -1944,31 +1953,31 @@ begin
   case Key of
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
-        {case Key of
+        { case Key of
           TK_ENTER, TK_KP_ENTER:
-            if Game.Wizard then
-              Player.Talent := tlNone;
+          if Game.Wizard then
+          Player.Talent := tlNone;
           TK_A:
-            begin
-              Player.Talent := tlStrong;
-            end;
+          begin
+          Player.Talent := tlStrong;
+          end;
           TK_B:
-            begin
-              Player.Talent := tlDextrous;
-            end;
+          begin
+          Player.Talent := tlDextrous;
+          end;
           TK_C:
-            begin
-              Player.Talent := tlMage;
-            end;
+          begin
+          Player.Talent := tlMage;
+          end;
           TK_D:
-            begin
-              Player.Talent := tlTough;
-            end;
+          begin
+          Player.Talent := tlTough;
+          end;
           TK_E:
-            begin
-              Player.Talent := tlWealthy;
-            end;
-        end;}
+          begin
+          Player.Talent := tlWealthy;
+          end;
+          end; }
         Scenes.SetScene(scName);
       end;
     TK_ESCAPE:
@@ -1986,10 +1995,11 @@ var
   begin
     if F then
       Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))))
-        else begin
-          Terminal.ForegroundColor(clWhite);
-          Terminal.Print(1, Y, '[[' + Chr(V + Ord('A')) + ']]');
-        end;
+    else
+    begin
+      Terminal.ForegroundColor(clWhite);
+      Terminal.Print(1, Y, '[[' + Chr(V + Ord('A')) + ']]');
+    end;
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, S);
     Terminal.ForegroundColor(clGray);
@@ -2009,7 +2019,8 @@ begin
 
   for I := 0 to TalentMax - 1 do
     if (Talents.Talent[I].Enum <> tlNone) then
-      Add(Talents.GetName(TTalentEnum(0)), Talents.GetHint(TTalentEnum(0)), False);
+      Add(Talents.GetName(TTalentEnum(0)),
+        Talents.GetHint(TTalentEnum(0)), False);
 
   MsgLog.Render(2, True);
 
@@ -2022,7 +2033,7 @@ begin
   case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
-    TK_A..TK_Z:
+    TK_A .. TK_Z:
       ;
   end
 end;

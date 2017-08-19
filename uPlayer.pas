@@ -242,7 +242,7 @@ begin
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     if (CrStr <> '') then
-      MsgLog.Add(Format(FC, [clAlarm, CrStr]));
+      MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     case FWeaponSkill of
       skBlade:
         begin
@@ -413,7 +413,7 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(Format(FC, [clAlarm, _('You die...')]));
+  MsgLog.Add(Terminal.Colorize(_('You die...'), clAlarm));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -990,8 +990,8 @@ begin
   begin
     Exp := Exp - LevelExpMax;
     FLevel := FLevel + 1;
-    MsgLog.Add(Format(FC, [clAlarm, Format(_('You advance to level %d!'),
-      [FLevel])]));
+    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
+      [FLevel]), clAlarm));
     Player.Score := Player.Score + (FLevel * FLevel);
   end;
 end;
@@ -1008,8 +1008,8 @@ begin
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
       // Add message {!!!}
-      MsgLog.Add(Format(FC, [clAlarm, Format('Your skill %s has raised to %d!',
-        [Self.GetSkillName(ASkill), Self.GetSkillValue(ASkill)])]));
+      MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
+        [Self.GetSkillName(ASkill), Self.GetSkillValue(ASkill)]), clAlarm));
       // Add exp
       AddExp();
       // Add scores
@@ -1024,8 +1024,8 @@ procedure TPlayer.Wait;
 begin
   if not Map.GetVis(Map.Current) then
   begin
-    MsgLog.Add(Format(FC, [clAlarm,
-      Format(_('You have opened a new territory: %s.'), [Map.Name])]));
+    MsgLog.Add(Terminal.Colorize(
+      Format(_('You have opened a new territory: %s.'), [Map.Name]),clAlarm));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
       Score := Score + (Ord(Map.Current) * 15);

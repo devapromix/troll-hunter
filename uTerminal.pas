@@ -69,7 +69,7 @@ end;
 
 function TTerminal.Colorize(const AStr, AColor: string): string;
 begin
-  Result := Format('[color=%s]%s[/color]', [AStr, AColor]);
+  Result := Format('[color=%s]%s[/color]', [LowerCase(AColor), AStr]);
 end;
 
 constructor TTerminal.Create;

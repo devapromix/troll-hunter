@@ -30,7 +30,6 @@ end;
 
 const
   FT = '== %s ==';
-  FC = '[color=%s]%s[/color]';
 
 const
   clWhite = $FFDDDDDD;
@@ -212,7 +211,7 @@ begin
     dfHard:
       Result := _('Hard');
     else
-      Result := '[color=red]' + _('Hell') + '[/color]';
+      Result := Terminal.Colorize(_('Hell'), 'Red');
   end;
 
 end;
@@ -255,8 +254,8 @@ begin
   Player.Fill;
   // Intro
   MsgLog.Clear;
-  MsgLog.Add(Format(FC, [clAlarm, Format('%s %s %s', [_('Welcome to Elvion!'),
-    _('You need to find and kill The King Troll!'), _('Press ? for help.')])]));
+  MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'),
+    _('You need to find and kill The King Troll!'), _('Press ? for help.')]), clAlarm));
   //
   Scenes.SetScene(scGame);
 end;

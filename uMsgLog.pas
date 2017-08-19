@@ -74,7 +74,7 @@ begin
         Color := 'dark gray'
       else
         Color := 'light gray';
-      SL.Append(Format(FC, [Color, FLog[FLog.Count - I]]));
+      SL.Append(Terminal.Colorize(FLog[FLog.Count - I], Color));
     end;
     Result := SL.Text;
   finally
@@ -90,7 +90,7 @@ begin
   if (Trim(MsgLog.Msg) = '') then
     FAct := ''
   else
-    FAct := Format(FC, [Terminal.GetColorFromIni('Log'), Trim(FMsg)]);
+    FAct := Terminal.Colorize(Trim(FMsg), Terminal.GetColorFromIni('Log'));
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height,
     Trim(Self.GetLastMsg(MaxLogCapacity) + FAct), TK_ALIGN_BOTTOM);
@@ -109,7 +109,7 @@ begin
       Color := 'dark gray'
     else
       Color := 'light gray';
-    S := S + ' ' + Format(FC, [Color, FLog[FLog.Count - I]]);
+    S := S + ' ' + Terminal.Colorize(FLog[FLog.Count - I], Color);
   end;
   Terminal.ForegroundColor(clGray);
   Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, Trim(S),
