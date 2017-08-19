@@ -443,9 +443,6 @@ end;
 
 procedure TSceneTitle.Render;
 begin
-  if Game.Wizard then
-    Terminal.Print(CX, CY - 5,
-      '1 [color=red] 2 [color=green] 3 [/color] 2 [/color] 1', TK_ALIGN_CENTER);
   Terminal.Print(CX, CY - 3, Format('%s v.%s', [Game.GetTitle, Game.GetVersion]
     ), TK_ALIGN_CENTER);
   Terminal.Print(CX, CY - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
