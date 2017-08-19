@@ -495,11 +495,11 @@ begin
   end;
   case Satiation of
     0 .. StarvingMax:
-      Result := Format('[color=light red]%s[/color]', [Result]);
+      Result := Terminal.Colorize(Result, 'Light Red');
     StarvingMax + 1 .. SatiatedMax:
-      Result := Format('[color=light yellow]%s[/color]', [Result]);
+      Result := Terminal.Colorize(Result, 'Light Yellow');
   else
-    Result := Format('[color=light green]%s[/color]', [Result]);
+    Result := Terminal.Colorize(Result, 'Light Green');
   end;
 end;
 
@@ -910,22 +910,24 @@ begin
 end;
 
 procedure TPlayer.RenderInfo;
+const
+  F = '%s %d/%d';
 begin
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(Status.Left, Status.Top + 1,
-    Format('[color=life]%s %d/%d[/color]', [_('Life'), Player.Life, Player.MaxLife]));
-  Terminal.Print(Status.Left, Status.Top + 2,
-    Format('[color=mana]%s %d/%d[/color]', [_('Mana'), Player.Mana, Player.MaxMana]));
+  Terminal.Print(Status.Left - 1, Status.Top + 1,
+    ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]), 'Life'));
+  Terminal.Print(Status.Left - 1, Status.Top + 2,
+    ' ' + Terminal.Colorize(Format(F, [_('Mana'), Player.Mana, Player.MaxMana]), 'Mana'));
   // Bars
   Scenes.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
     Player.Life, Player.MaxLife, clLife, clDarkGray);
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   //
-  Terminal.Print(Status.Left, Status.Top + 3, Format(_('Turn: %d Gold: %d %s'),
+  Terminal.Print(Status.Left - 1, Status.Top + 3, ' ' + Format(_('Turn: %d Gold: %d %s'),
     [Player.Turn, Player.Gold, Player.GetSatiationStr]));
-  Terminal.Print(Status.Left, Status.Top + 4,
-    Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
+  Terminal.Print(Status.Left - 1, Status.Top + 4,
+    ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
 end;
 

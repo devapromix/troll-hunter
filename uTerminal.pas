@@ -43,7 +43,8 @@ type
     function GetColorFromIni(AKey: string): string; overload;
     function GetColorFromIni(AKey: string; ADefault: string): Cardinal;
       overload;
-    function Colorize(const AStr, AColor: string): string;
+    function Colorize(const AStr, AColor: string): string; overload;
+    function Colorize(const ANum: Integer; const AColor: string): string; overload;
     function GetTextScreenshot: string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
   end;
@@ -65,6 +66,11 @@ end;
 procedure TTerminal.Clear;
 begin
   terminal_clear;
+end;
+
+function TTerminal.Colorize(const ANum: Integer; const AColor: string): string;
+begin
+  Result := Format('[color=%s]%d[/color]', [LowerCase(AColor), ANum]);
 end;
 
 function TTerminal.Colorize(const AStr, AColor: string): string;

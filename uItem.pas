@@ -1374,13 +1374,13 @@ begin
     Color := 'lighter yellow'
   else
     Color := 'light red';
-  Result := Format('[color=%s]$%d[/color]', [Color, Price]);
+  Result := Terminal.Colorize('$' + IntToStr(Price), Color);
 end;
 
 function TItems.GetLevel(L: Byte): string;
 begin
   if (L > Player.Level) then
-    Result := Format('[color=light red]%d[/color]', [L])
+    Result := Terminal.Colorize(L, 'Light Red')
   else
     Result := IntToStr(L);
 end;
@@ -1389,21 +1389,21 @@ function TItems.GetLife(Sign: string; Value: Byte): string;
 begin
   Result := '';
   if (Value > 0) then
-    Result := Format('[color=life]%s@%d[/color]', [Sign, Value]);
+    Result := Terminal.Colorize(Sign + '@' + IntToStr(Value), 'Life');
 end;
 
 function TItems.GetMana(Sign: string; Value: Byte): string;
 begin
   Result := '';
   if (Value > 0) then
-    Result := Format('[color=mana]%s@%d[/color]', [Sign, Value]);
+    Result := Terminal.Colorize(Sign + '@' + IntToStr(Value), 'Mana');
 end;
 
 function TItems.GetFood(Sign: string; Value: Word): string;
 begin
   Result := '';
   if (Value > 0) then
-    Result := Format('[color=dark yellow]%s@%d[/color]', [Sign, Value]);
+    Result := Terminal.Colorize(Sign + '@' + IntToStr(Value), 'Food');
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
@@ -1416,7 +1416,7 @@ var
 
   function GetRedPrice(Price: Word): string;
   begin
-    Result := Format('[color=%s]$%d[/color]', ['light red', Price]);
+    Result := Terminal.Colorize('$' + IntToStr(Price), 'Light Red');
   end;
 
 begin
