@@ -742,7 +742,7 @@ var
 implementation
 
 uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
-  uShop;
+  uShop, uTalent;
 
 { TItems }
 
@@ -915,6 +915,8 @@ begin
         Value := Ord(AZ) + 1;
         FItem.Amount := Math.RandomRange(Value * Value,
           Value * Value * (5 - Ord(Game.Difficulty))) + 1;
+        if Talents.IsTalent(tlMiser) then
+          FItem.Amount := FItem.Amount * 2;
       end;
   end;
   if ((FItem.Stack = 1) and (IT <> itCorpse)) then

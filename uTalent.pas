@@ -55,6 +55,7 @@ type
     function GetName(I: TTalentEnum): string;
     function GetHint(I: TTalentEnum): string;
     procedure Add(const ATalent: TTalentEnum);
+    function IsTalent(const ATalent: TTalentEnum): Boolean;
   end;
 
 var
@@ -138,6 +139,19 @@ end;
 function TTalents.GetTalent(I: Byte): TTalent;
 begin
   Result := FTalent[I]
+end;
+
+function TTalents.IsTalent(const ATalent: TTalentEnum): Boolean;
+var
+  I: Byte;
+begin
+  Result := False;
+  for I := 0 to TalentMax - 1 do
+    if (FTalent[I].Enum = ATalent) then
+    begin
+      Result := True;
+      Exit;
+    end;
 end;
 
 procedure TTalents.SetTalent(I: Byte; const Value: TTalent);
