@@ -33,7 +33,7 @@ const
   // Wealthy
   (Level: 0; Effects: [efPrmGold];),
   // Miser
-  (Level: 0; Effects: [];)
+  (Level: 5; Effects: [];)
   );
 
 type
@@ -74,6 +74,7 @@ begin
     if (FTalent[I].Enum = tlNone) then
     begin
       FTalent[I].Enum := ATalent;
+      Player.DoEffects(TalentBase[ATalent].Effects);
       Exit;
     end;
 end;

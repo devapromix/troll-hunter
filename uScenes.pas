@@ -2025,7 +2025,7 @@ begin
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Teach talent'), False, True);
+  AddKey('A-Z', _('Select a talent'), False, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);

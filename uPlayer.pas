@@ -146,7 +146,7 @@ type
     procedure Drop(Index: Integer);
     procedure DropAmount(Index: Integer);
     procedure Use(Index: Integer);
-    procedure DoEffects(const Effects: TEffects; const Value: Word);
+    procedure DoEffects(const Effects: TEffects; const Value: Word = 0);
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure Sell(Index: Integer);
@@ -1148,7 +1148,7 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word);
+procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word = 0);
 var
   V, VX, VY: Word;
 const
