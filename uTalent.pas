@@ -9,9 +9,10 @@ const
   TalentMax = 10;
 
 type
-  TTalentEnum = (tlNone, tlStrong {Сильный}, tlDextrous {Ловкий}, tlMage {Маг},
-    tlTough {Тяжелый}, tlWealthy {Богатый}, tlMiser {Скряга},
-    tlAffWithSwords, tlAffWithAxes, tlAffWithPolearms, tlAffWithMaces);
+  TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
+    tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
+    tlAffWithSwords, tlAffWithAxes, tlAffWithPolearms, tlAffWithMaces,
+    tlMiser { Скряга } );
 
 type
   TTalentBase = record
@@ -21,21 +22,28 @@ type
 
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
-  // None
-  (Level: 0; Effects: [];),
-  // Strong
-  (Level: 0; Effects: [efPrmAthletics];),
-  // Dextrous
-  (Level: 0; Effects: [efPrmDodge];),
-  // Mage
-  (Level: 0; Effects: [efPrmConcentration];),
-  // Tough
-  (Level: 0; Effects: [efPrmToughness];),
-  // Wealthy
-  (Level: 0; Effects: [efPrmGold];),
-  // Miser
-  (Level: 5; Effects: [ef2xGold];)
-  );
+    // None
+    (Level: 0; Effects: [];),
+    // Strong
+    (Level: 0; Effects: [efPrmAthletics];),
+    // Dextrous
+    (Level: 0; Effects: [efPrmDodge];),
+    // Mage
+    (Level: 0; Effects: [efPrmConcentration];),
+    // Tough
+    (Level: 0; Effects: [efPrmToughness];),
+    // Wealthy
+    (Level: 0; Effects: [efPrmGold];),
+    // Affinity with Swords
+    (Level: 3; Effects: [efPrmBlade];),
+    // Affinity with Axes
+    (Level: 3; Effects: [efPrmAxe];),
+    // Affinity with Polearms
+    (Level: 3; Effects: [efPrmSpear];),
+    // Affinity with Maces
+    (Level: 3; Effects: [efPrmMace];),
+    // Miser
+    (Level: 5; Effects: [ef2xGold];));
 
 type
   TTalent = record
@@ -46,7 +54,7 @@ type
 type
   TTalents = class(TObject)
   private
-    FTalent: array [0..TalentMax - 1] of TTalent;
+    FTalent: array [0 .. TalentMax - 1] of TTalent;
     function GetTalent(I: Byte): TTalent;
     procedure SetTalent(I: Byte; const Value: TTalent);
   public
@@ -120,8 +128,8 @@ begin
       Result := Format(F, [StartSkill, _('Mace')]);
     tlMiser:
       Result := _('x2 to Gold');
-    else
-      Result := '-';
+  else
+    Result := '-';
   end;
 end;
 
@@ -148,8 +156,8 @@ begin
       Result := _('Affinity with Maces');
     tlMiser:
       Result := _('Miser');
-    else
-      Result := '-';
+  else
+    Result := '-';
   end;
 end;
 
@@ -177,9 +185,11 @@ begin
 end;
 
 initialization
-  Talents := TTalents.Create;
+
+Talents := TTalents.Create;
 
 finalization
-  FreeAndNil(Talents);
+
+FreeAndNil(Talents);
 
 end.
