@@ -10,7 +10,8 @@ const
 
 type
   TTalentEnum = (tlNone, tlStrong {Сильный}, tlDextrous {Ловкий}, tlMage {Маг},
-    tlTough {Тяжелый}, tlWealthy {Богатый}, tlMiser {Скряга});
+    tlTough {Тяжелый}, tlWealthy {Богатый}, tlMiser {Скряга},
+    tlAffWithSwords, tlAffWithAxes, tlAffWithPolearms, tlAffWithMaces);
 
 type
   TTalentBase = record
@@ -109,6 +110,14 @@ begin
       Result := Format(F, [StartSkill, _('Toughness')]);
     tlWealthy:
       Result := Format(F, [StartGold, _('Gold')]);
+    tlAffWithSwords:
+      Result := Format(F, [StartSkill, _('Blade')]);
+    tlAffWithAxes:
+      Result := Format(F, [StartSkill, _('Axe')]);
+    tlAffWithPolearms:
+      Result := Format(F, [StartSkill, _('Spear')]);
+    tlAffWithMaces:
+      Result := Format(F, [StartSkill, _('Mace')]);
     tlMiser:
       Result := _('x2 to Gold');
     else
@@ -129,6 +138,14 @@ begin
       Result := _('Tough');
     tlWealthy:
       Result := _('Wealthy');
+    tlAffWithSwords:
+      Result := _('Affinity with Swords');
+    tlAffWithAxes:
+      Result := _('Affinity with Axes');
+    tlAffWithPolearms:
+      Result := _('Affinity with Spears');
+    tlAffWithMaces:
+      Result := _('Affinity with Maces');
     tlMiser:
       Result := _('Miser');
     else
