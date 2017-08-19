@@ -23,17 +23,17 @@ const
   // None
   (Level: 0; Effects: [];),
   // Strong
-  (Level: 0; Effects: [];),
+  (Level: 0; Effects: [efPrmAthletics];),
   // Dextrous
-  (Level: 0; Effects: [];),
+  (Level: 0; Effects: [efPrmDodge];),
   // Mage
-  (Level: 0; Effects: [];),
+  (Level: 0; Effects: [efPrmConcentration];),
   // Tough
-  (Level: 0; Effects: [];),
+  (Level: 0; Effects: [efPrmToughness];),
   // Wealthy
   (Level: 0; Effects: [efPrmGold];),
   // Miser
-  (Level: 5; Effects: [];)
+  (Level: 5; Effects: [ef2xGold];)
   );
 
 type

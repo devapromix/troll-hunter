@@ -23,7 +23,7 @@ type
   TEffect = (efLife, efMana, efFood, efTeleportation,
     efTownPortal, efMagicEye, efCurePoison, efPrmGold,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness,
-    efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace);
+    efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold);
 
 type
   TEffects = set of TEffect;
@@ -1216,43 +1216,48 @@ begin
   begin
 
   end;
-  //
+  // Athletics
   if (efPrmAthletics in Effects) then
   begin
 
   end;
-  //
+  // Dodge
   if (efPrmDodge in Effects) then
   begin
 
   end;
-  //
+  // Concentration
   if (efPrmConcentration in Effects) then
   begin
 
   end;
-  //
+  // Toughness
   if (efPrmToughness in Effects) then
   begin
 
   end;
-  //
+  // Blade
   if (efPrmBlade in Effects) then
   begin
 
   end;
-  //
+  // Axe
   if (efPrmAxe in Effects) then
   begin
 
   end;
-  //
+  // Spear
   if (efPrmSpear in Effects) then
   begin
 
   end;
-  //
+  // Mace
   if (efPrmMace in Effects) then
+  begin
+
+  end;
+  // 2x to gold
+  if (ef2xGold in Effects) then
   begin
 
   end;
