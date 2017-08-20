@@ -1875,8 +1875,8 @@ begin
       Terminal.ForegroundColor(clGray);
       Terminal.Print(5, Y, Format('(%s) %s %s',
         [Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
-        Spellbook.GetSpellName(I), Items.GetMana('-',
-        Spellbook.GetSpell(I).Spell.ManaCost)]));
+        Spellbook.GetSpellName(I), Items.GetInfo('-',
+        Spellbook.GetSpell(I).Spell.ManaCost, 'Mana')]));
       Inc(Y);
       Inc(V);
     end;

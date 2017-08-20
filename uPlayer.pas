@@ -1132,6 +1132,7 @@ begin
     Items.AddItemToInv(iPotionOfFullHealing, 10);
     Items.AddItemToInv(iPotionOfFullMana, 10);
     Items.AddItemToInv(iScrollOfTownPortal, 10);
+    Items.AddItemToInv(iAntidote, 10);
   end
   else
   begin

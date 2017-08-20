@@ -30,6 +30,7 @@ type
     FMaxLife: Word;
     FDamage: TDamage;
     FAlive: Boolean;
+    FPoison: Word;
   public
     constructor Create;
     destructor Destroy; override;
@@ -40,6 +41,7 @@ type
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Damage: TDamage read FDamage write FDamage;
     property Alive: Boolean read FAlive write FAlive;
+    property Poison: Word read FPoison write FPoison;
     function GetDist(ToX, ToY: Single): Word;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
@@ -57,7 +59,7 @@ uses SysUtils, GNUGetText;
 
 constructor TEntity.Create;
 begin
-
+  Poison := 0;
 end;
 
 destructor TEntity.Destroy;

@@ -757,9 +757,7 @@ type
     function GetPrice(Price: Word; F: Boolean = False): string; overload;
     function GetPrice(AItem: Item): Integer; overload;
     function GetLevel(L: Byte): string;
-    function GetMana(Sign: string; Value: Byte): string;
-    function GetLife(Sign: string; Value: Byte): string;
-    function GetFood(Sign: string; Value: Word): string;
+    function GetInfo(Sign: string; Value: Word; Color: string): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
@@ -800,7 +798,7 @@ begin
       V := ItemBase[TItemEnum(ID)].ManaCost;
       if (V > 0) then
       begin
-        S := S + Items.GetMana('-', V) + ' ';
+        S := S + Items.GetInfo('-', V, 'Mana') + ' ';
         F := True;
       end;
     end;
@@ -809,7 +807,7 @@ begin
       V := ItemBase[TItemEnum(ID)].Value;
       if (V > 0) then
       begin
-        S := S + Items.GetMana('+', V) + ' ';
+        S := S + Items.GetInfo('+', V, 'Mana') + ' ';
         F := True;
       end;
     end;
@@ -818,7 +816,7 @@ begin
       V := ItemBase[TItemEnum(ID)].Value;
       if (V > 0) then
       begin
-        S := S + Items.GetLife('+', V) + ' ';
+        S := S + Items.GetInfo('+', V, 'Life') + ' ';
         F := True;
       end;
     end;
@@ -827,7 +825,16 @@ begin
       V := ItemBase[TItemEnum(ID)].Value;
       if (V > 0) then
       begin
-        S := S + Items.GetFood('+', V) + ' ';
+        S := S + Items.GetInfo('+', V, 'Food') + ' ';
+        F := True;
+      end;
+    end;
+    if (efCurePoison in ItemBase[TItemEnum(ID)].Effects) then
+    begin
+      V := ItemBase[TItemEnum(ID)].Value;
+      if (V > 0) then
+      begin
+        S := S + Items.GetInfo('-', V, 'Poison') + ' ';
         F := True;
       end;
     end;
@@ -1441,25 +1448,11 @@ begin
     Result := IntToStr(L);
 end;
 
-function TItems.GetLife(Sign: string; Value: Byte): string;
+function TItems.GetInfo(Sign: string; Value: Word; Color: string): string;
 begin
   Result := '';
   if (Value > 0) then
-    Result := Terminal.Colorize(Sign + '@' + IntToStr(Value), 'Life');
-end;
-
-function TItems.GetMana(Sign: string; Value: Byte): string;
-begin
-  Result := '';
-  if (Value > 0) then
-    Result := Terminal.Colorize(Sign + '@' + IntToStr(Value), 'Mana');
-end;
-
-function TItems.GetFood(Sign: string; Value: Word): string;
-begin
-  Result := '';
-  if (Value > 0) then
-    Result := Terminal.Colorize(Sign + '@' + IntToStr(Value), 'Food');
+    Result := Terminal.Colorize(Format('%s@%d', [Sign, Value]), Color);
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
