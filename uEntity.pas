@@ -3,7 +3,8 @@ unit uEntity;
 interface
 
 type
-  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen, abSleeping);
+  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
+    abSleeping);
 
 type
   TAbility = array [TAbilityEnum] of Word;
@@ -76,6 +77,7 @@ end;
 procedure TEntity.OnTurn;
 var
   I: TAbilityEnum;
+  Value: Byte;
 begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
   if (Ability[I] > 0) then
@@ -83,7 +85,17 @@ begin
     if (I in [abSleeping]) then Continue;
     Ability[I] := Ability[I] - 1;
     if (I in [abPoisoned, abBurning]) and not IsDead then
-      Life := Math.EnsureRange(Life - (Ability[I] div 10), 0, MaxLife);
+    begin
+      case I of
+        abPoisoned:
+          Value := Ability[I] div 10;
+        abBurning:
+          Value := Math.RandomRange(3, 5);
+        else
+          Value := 0;
+      end;
+      Life := Math.EnsureRange(Life - Value, 0, MaxLife);
+    end;
   end;
 end;
 

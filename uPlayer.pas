@@ -466,7 +466,7 @@ end;
 
 function TPlayer.GetRadius: Byte;
 begin
-  Result := EnsureRange(FRadius + 3, 1, RadiusMax);
+  Result := EnsureRange((FRadius - Ability[abBlinded]) + 3, 0, RadiusMax);
 end;
 
 function TPlayer.GetSatiationStr: string;
@@ -575,8 +575,8 @@ begin
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
     then
       Exit;
-    // Stunned
-    if (Self.Ability[abStunned] > 0) then
+    // Stunned or burning
+    if (Self.IsAbility(abStunned) or Self.IsAbility(abBurning)) then
     begin
       AddTurn;
       Exit;
@@ -934,7 +934,7 @@ begin
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   // Effects
-  if Game.Wizard and (Ability[abPoisoned] > 0) then
+  if Game.Wizard and IsAbility(abPoisoned) then
   begin
     Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
       Terminal.Colorize(Format('P%d', [Ability[abPoisoned]]), 'Poison'),
@@ -1176,7 +1176,7 @@ begin
     MsgLog.Add(_('You feel healthy.'));
     MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
     Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
-    Self.Skill(skHealing, 5);
+    Self.Skill(skHealing);
   end;
   // Mana
   if (efMana in Effects) then
@@ -1226,7 +1226,15 @@ begin
   // Cure poison
   if (efCurePoison in Effects) then
   begin
-
+    if IsAbility(abPoisoned) then
+    begin
+      V := Self.GetSkillValue(skHealing) + Value;
+      Ability[abPoisoned] := Math.EnsureRange(Ability[abPoisoned] - V, 0, High(Word));
+      Self.Skill(skHealing);
+      if IsAbility(abPoisoned) then
+        MsgLog.Add(_('You feel better.'))
+          else MsgLog.Add(_('You are better now.'));
+    end;
   end;
   // Gold
   if (efPrmGold in Effects) then
