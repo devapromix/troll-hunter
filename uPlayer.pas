@@ -204,8 +204,7 @@ var
   Dam, Cr: Word;
   CrStr, The: string;
 begin
-  if (Index < 0) then
-    Exit;
+  if (Index < 0) then Exit;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
@@ -394,7 +393,6 @@ begin
   ScrRead := 0;
   Level := 1;
   MaxMap := 0;
-  Poison := 0;
   Killer := '';
   Alive := True;
   Look := False;
@@ -577,6 +575,13 @@ begin
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
     then
       Exit;
+    // Stunned
+    if (Self.Ability[abStunned] > 0) then
+    begin
+      AddTurn;
+      Exit;
+    end;
+    //
     if not Mobs.GetFreeTile(FX, FY) then
     begin
       Self.Attack(Mobs.GetIndex(FX, FY));
@@ -929,10 +934,10 @@ begin
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   // Effects
-  if Game.Wizard and (Poison > 0) then
+  if Game.Wizard and (Ability[abPoisoned] > 0) then
   begin
     Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
-      Terminal.Colorize(Format('P%d', [Poison]), 'Poison'),
+      Terminal.Colorize(Format('P%d', [Ability[abPoisoned]]), 'Poison'),
         TK_ALIGN_RIGHT);
   end;
   //

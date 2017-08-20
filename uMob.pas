@@ -5,9 +5,6 @@ interface
 uses uGame, uMap, uEntity;
 
 type
-  TAbility = (abPoison);
-
-type
   TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
     ntSmithTrader_B, ntArmTrader_A, ntShTrader_A, ntHelmTrader_A, ntPotTrader_B,
     ntHealTrader_B, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
@@ -26,7 +23,7 @@ type
     Damage: TDamage;
     Color: Cardinal;
     NPCType: set of TNPCType;
-    Abilities: set of TAbility;
+    Abilities: set of TAbilityEnum;
   end;
 
 type
@@ -88,11 +85,11 @@ const
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDarkWood]; MaxLife: 7; Level: 1;
     Armor: 0; DV: 3; MaxCount: 7; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;
-    Abilities: [abPoison];),
+    Abilities: [abPoisoned];),
     // Giant Gecko
     (Symbol: 'g'; Boss: False; Maps: [deDarkWood]; MaxLife: 8; Level: 1;
     Armor: 0; DV: 3; MaxCount: 5; Damage: (Min: 2; Max: 3;); Color: $FF993377;
-    Abilities: [abPoison];),
+    Abilities: [abPoisoned, abStunned];),
     // Jackal
     (Symbol: 'j'; Boss: False; Maps: [deDarkWood]; MaxLife: 9; Level: 1;
     Armor: 0; DV: 4; MaxCount: 4; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;
@@ -100,15 +97,15 @@ const
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2;
     Armor: 1; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 6;); Color: $FF331155;
-    Abilities: [];),
+    Abilities: [abStunned];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2;
     Armor: 1; DV: 6; MaxCount: 1; Damage: (Min: 4; Max: 6;); Color: $FF331155;
-    Abilities: [];),
+    Abilities: [abStunned];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2;
     Armor: 1; DV: 7; MaxCount: 1; Damage: (Min: 1; Max: 3;); Color: $FF339955;
-    Abilities: [abPoison];),
+    Abilities: [abPoisoned];),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDarkWood]; MaxLife: 22; Level: 3;
     Armor: 2; DV: 8; MaxCount: 3; Damage: (Min: 2; Max: 5;); Color: $FF666666;
@@ -139,7 +136,7 @@ const
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGrayCave]; MaxLife: 35; Level: 4;
     Armor: 5; DV: 15; MaxCount: 1; Damage: (Min: 4; Max: 5;);
-    Color: $FF777700;Abilities: [abPoison];),
+    Color: $FF777700;Abilities: [abPoisoned, abStunned];),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 38; Level: 4;
     Armor: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3;);
@@ -151,7 +148,7 @@ const
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5;
     Armor: 5; DV: 18; MaxCount: 1; Damage: (Min: 4; Max: 6;);
-    Color: $FF7777CC;Abilities: [abPoison];),
+    Color: $FF7777CC;Abilities: [abPoisoned];),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGrayCave]; MaxLife: 43; Level: 5;
     Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 5; Max: 6;);
@@ -162,7 +159,7 @@ const
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 45; Level: 5;
     Armor: 5; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5;);
-    Color: $FF992233;Abilities: [abPoison];),
+    Color: $FF992233;Abilities: [abPoisoned];),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 48; Level: 5;
     Armor: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5;);
@@ -170,19 +167,19 @@ const
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 50; Level: 5;
     Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6;);
-    Color: $FF992233;Abilities: [abPoison];),
+    Color: $FF992233;Abilities: [abPoisoned];),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 55; Level: 6;
     Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7;);
-    Color: $FF992233;Abilities: [abPoison];),
+    Color: $FF992233;Abilities: [abPoisoned];),
     // Scarab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 60; Level: 6;
     Armor: 6; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6;);
-    Color: $FF992233; Abilities: [abPoison];),
+    Color: $FF992233; Abilities: [abPoisoned];),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 65; Level: 6;
     Armor: 7; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 9;);
-    Color: $FF992233; Abilities: [abPoison];),
+    Color: $FF992233; Abilities: [abPoisoned];),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     Armor: 7; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5;);
@@ -190,7 +187,7 @@ const
     // DireWolf
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     Armor: 7; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7;);
-    Color: $FF888888; Abilities: [];),
+    Color: $FF888888; Abilities: [abStunned];),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeepCave]; MaxLife: 72; Level: 7;
     Armor: 7; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8;);
@@ -221,7 +218,7 @@ const
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
     Armor: 20; DV: 34; MaxCount: 1; Damage: (Min: 15; Max: 23;);
-    Color: $FF445544; Abilities: [abPoison];),
+    Color: $FF445544; Abilities: [abPoisoned];),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 82; Level: 8;
     Armor: 10; DV: 35; MaxCount: 4; Damage: (Min: 10; Max: 13;);
@@ -229,7 +226,7 @@ const
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
     Armor: 10; DV: 35; MaxCount: 1; Damage: (Min: 16; Max: 24;);
-    Color: $FF445544; Abilities: [];),
+    Color: $FF445544; Abilities: [abStunned];),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 88; Level: 8;
     Armor: 10; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15;);
@@ -251,17 +248,17 @@ const
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; Armor: 12;
-    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00; Abilities: [abPoison];),
+    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00; Abilities: [abPoisoned];),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; Armor: 12;
-    DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977; Abilities: [];),
+    DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977; Abilities: [abStunned];),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; Armor: 12;
-    DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333; Abilities: [abPoison];),
+    DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333; Abilities: [abPoisoned];),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
     Armor: 15; DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 22;);
-    Color: $FF223333; Abilities: [abPoison];),
+    Color: $FF223333; Abilities: [abPoisoned];),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
     Armor: 15; DV: 45; MaxCount: 3; Damage: (Min: 18; Max: 22;);
@@ -269,7 +266,7 @@ const
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 18; DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23;);
-    Color: $FF223333; Abilities: [];),
+    Color: $FF223333; Abilities: [abStunned];),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 18; DV: 46; MaxCount: 9; Damage: (Min: 15; Max: 20;);
@@ -289,7 +286,7 @@ const
     // Troll Brute
     (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30;);
-    Color: $FF223333; Abilities: [];),
+    Color: $FF223333; Abilities: [abStunned];),
 
     // == Bosses == //
 
@@ -300,23 +297,23 @@ const
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDarkWood]; MaxLife: 50; Level: 3;
     Armor: 9; DV: 25; MaxCount: 1; Damage: (Min: 9; Max: 11;);
-    Color: $FF66DD99; Abilities: [abPoison];),
+    Color: $FF66DD99; Abilities: [abPoisoned, abStunned];),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDarkWood]; MaxLife: 55; Level: 3;
     Armor: 10; DV: 28; MaxCount: 1; Damage: (Min: 10; Max: 12;);
-    Color: $FF44FF77; Abilities: [abPoison];),
+    Color: $FF44FF77; Abilities: [abPoisoned];),
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGrayCave]; MaxLife: 60; Level: 5;
     Armor: 12; DV: 32; MaxCount: 1; Damage: (Min: 10; Max: 15;);
-    Color: $FFAA77CC; Abilities: [];),
+    Color: $FFAA77CC; Abilities: [abStunned];),
     // Swamp Worm
     (Symbol: 'w'; Boss: True; Maps: [deGrayCave]; MaxLife: 63; Level: 5;
     Armor: 14; DV: 35; MaxCount: 1; Damage: (Min: 12; Max: 18;);
-    Color: $FF6699BB; Abilities: [abPoison];),
+    Color: $FF6699BB; Abilities: [abPoisoned];),
     // Giant Slug
     (Symbol: 's'; Boss: True; Maps: [deGrayCave]; MaxLife: 67; Level: 5;
     Armor: 16; DV: 38; MaxCount: 1; Damage: (Min: 14; Max: 20;);
-    Color: $FFCCAADD; Abilities: [abPoison];),
+    Color: $FFCCAADD; Abilities: [abPoisoned];),
     // Centaur
     (Symbol: 'c'; Boss: True; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     Armor: 25; DV: 40; MaxCount: 1; Damage: (Min: 18; Max: 23;);
@@ -328,23 +325,23 @@ const
     // Titan
     (Symbol: 't'; Boss: True; Maps: [deDeepCave]; MaxLife: 95; Level: 8;
     Armor: 30; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;);
-    Color: $FFAABB77; Abilities: [];),
+    Color: $FFAABB77; Abilities: [abStunned];),
     // Hill Giant
     (Symbol: 'g'; Boss: True; Maps: [deBloodCave]; MaxLife: 96; Level: 9;
     Armor: 18; DV: 50; MaxCount: 1; Damage: (Min: 23; Max: 25;);
-    Color: $FF2233FF; Abilities: [];),
+    Color: $FF2233FF; Abilities: [abStunned];),
     // Stone Giant
     (Symbol: 'g'; Boss: True; Maps: [deBloodCave]; MaxLife: 99; Level: 9;
     Armor: 19; DV: 54; MaxCount: 1; Damage: (Min: 24; Max: 25;);
-    Color: $FF22FF33; Abilities: [];),
+    Color: $FF22FF33; Abilities: [abStunned];),
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30;);
-    Color: $FF223333; Abilities: [];),
+    Color: $FF223333; Abilities: [abStunned];),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15;
     Armor: 40; DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75;);
-    Color: $FFDD7711; Abilities: [];),
+    Color: $FFDD7711; Abilities: [abStunned, abPoisoned];),
 
     // == NPC == //
 
@@ -538,13 +535,21 @@ begin
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
-    // Poison (25%)
-    if (abPoison in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 8) <= 1) then
+    // Stunned (33%)
+    if (abStunned in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 3) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(1, L + 3), 0, High(Byte));
+      Player.Ability[abStunned] := Player.Ability[abStunned] + Dam;
+      MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'), 'Lightest Red'), [The, Dam]));
+    end;
+    // Poisoned (20%)
+    if (abPoisoned in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * 15, L * 25), 0, High(Byte));
-      Player.Poison := Player.Poison + Dam;
-      MsgLog.Add(Format(_('%s is poisoning you (%d).'), [The, Dam]));
+      Player.Ability[abPoisoned] := Player.Ability[abPoisoned] + Dam;
+      MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'), 'Lighter Green'), [The, Dam]));
       Exit;
     end;
     // Attack

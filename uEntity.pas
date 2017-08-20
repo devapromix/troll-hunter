@@ -3,6 +3,12 @@ unit uEntity;
 interface
 
 type
+  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen);
+
+type
+  TAbility = array [TAbilityEnum] of Word;
+
+type
   TMinMax = record
     Min: Word;
     Max: Word;
@@ -30,10 +36,13 @@ type
     FMaxLife: Word;
     FDamage: TDamage;
     FAlive: Boolean;
-    FPoison: Word;
+    FAbility: TAbility;
+    function GetAbility(I: TAbilityEnum): Word;
+    procedure SetAbility(I: TAbilityEnum; const Value: Word);
   public
     constructor Create;
     destructor Destroy; override;
+    procedure ClearAbilities;
     property X: Byte read FX write FX;
     property Y: Byte read FY write FY;
     property Z: Byte read FZ write FZ;
@@ -41,7 +50,7 @@ type
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Damage: TDamage read FDamage write FDamage;
     property Alive: Boolean read FAlive write FAlive;
-    property Poison: Word read FPoison write FPoison;
+    property Ability[I: TAbilityEnum]: Word read GetAbility write SetAbility;
     function GetDist(ToX, ToY: Single): Word;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
@@ -60,13 +69,31 @@ uses SysUtils, GNUGetText, Math;
 
 constructor TEntity.Create;
 begin
-  Poison := 0;
+  ClearAbilities;
+end;
+
+procedure TEntity.OnTurn;
+var
+  I: TAbilityEnum;
+begin
+  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
+  if (Ability[I] > 0) then
+  begin
+    Ability[I] := Ability[I] - 1;
+    if (I in [abPoisoned, abBurning]) and not IsDead then
+      Life := Math.EnsureRange(Life - (Ability[I] div 10), 0, MaxLife);
+  end;
 end;
 
 destructor TEntity.Destroy;
 begin
 
   inherited;
+end;
+
+function TEntity.GetAbility(I: TAbilityEnum): Word;
+begin
+  Result := FAbility[I]
 end;
 
 function TEntity.GetCapit(S: string): string;
@@ -121,20 +148,22 @@ begin
   Result := Life = 0
 end;
 
-procedure TEntity.OnTurn;
+procedure TEntity.SetAbility(I: TAbilityEnum; const Value: Word);
 begin
-  if (Poison > 0) then
-  begin
-    Poison := Poison - 1;
-    if (Life > 0) then
-      Life := Math.EnsureRange(Life - (Poison div 10), 0, MaxLife);
-  end;
+  FAbility[I] := Value;
 end;
 
 procedure TEntity.SetDamage(AMin, AMax: Word);
 begin
   FDamage.Min := AMin;
   FDamage.Max := AMax;
+end;
+
+procedure TEntity.ClearAbilities;
+var
+  I: TAbilityEnum;
+begin
+  for I := Low(TAbilityEnum) to High(TAbilityEnum) do Ability[I] := 0;
 end;
 
 end.
