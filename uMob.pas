@@ -519,12 +519,22 @@ procedure TMob.Attack;
 var
   The: string;
   Dam: Word;
+  L: Byte;
 begin
   if (Self.Life = 0) or (Player.Life = 0) or (Force <> fcEnemy) then
     Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
+    // Venom
+    if (Math.RandomRange(0, 9) = 1) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, High(Byte));
+      Player.Poison := Player.Poison + Dam;
+      MsgLog.Add(Format(_('%s is poisoning you (%d).'), [The, Dam]));
+      Exit;
+    end;
     // Attack
     Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
       Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
@@ -607,7 +617,7 @@ begin
       Sleep := False;
       Player.Skill(skStealth);
       The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-      MsgLog.Add(Format('%s notices you!', [The]));
+      MsgLog.Add(Format(_('%s notices you!'), [The]));
       Exit;
     end;
     Exit;
@@ -629,6 +639,8 @@ begin
   end
   else
     Self.Walk(X, Y, Player.X, Player.Y);
+  OnTurn();
+  if (Self.Life = 0) then Self.Defeat;
 end;
 
 procedure TMob.Render(AX, AY: Byte);

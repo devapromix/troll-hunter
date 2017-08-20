@@ -165,7 +165,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse, uCalendar,
-  uShop;
+  uShop, BearLibTerminal;
 
 { TPlayer }
 
@@ -191,6 +191,9 @@ begin
       Mana := EnsureRange(Mana + Player.GetSkillValue(skConcentration),
         0, MaxMana);
   end;
+  OnTurn();
+  if (Life = 0) then
+    Defeat(Terminal.Colorize(_('Venom'), 'Poison'));
   Mobs.Process;
 end;
 
@@ -391,6 +394,7 @@ begin
   ScrRead := 0;
   Level := 1;
   MaxMap := 0;
+  Poison := 0;
   Killer := '';
   Alive := True;
   Look := False;
@@ -924,6 +928,13 @@ begin
     Player.Life, Player.MaxLife, clLife, clDarkGray);
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
+  // Effects
+  if Game.Wizard and (Poison > 0) then
+  begin
+    Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
+      Terminal.Colorize(Format('P%d', [Poison]), 'Poison'),
+        TK_ALIGN_RIGHT);
+  end;
   //
   Terminal.Print(Status.Left - 1, Status.Top + 3,
     ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,

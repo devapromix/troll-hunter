@@ -49,11 +49,12 @@ type
     function GetPureText(const S: string): string;
     procedure SetDamage(AMin, AMax: Word);
     function IsDead: Boolean;
+    procedure OnTurn;
   end;
 
 implementation
 
-uses SysUtils, GNUGetText;
+uses SysUtils, GNUGetText, Math;
 
 { TEntity }
 
@@ -118,6 +119,16 @@ end;
 function TEntity.IsDead: Boolean;
 begin
   Result := Life = 0
+end;
+
+procedure TEntity.OnTurn;
+begin
+  if (Poison > 0) then
+  begin
+    Poison := Poison - 1;
+    if (Life > 0) then
+      Life := Math.EnsureRange(Life - (Poison div 10), 0, MaxLife);
+  end;
 end;
 
 procedure TEntity.SetDamage(AMin, AMax: Word);
