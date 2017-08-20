@@ -876,7 +876,7 @@ begin
       Game.Timer := High(Byte);
       Scenes.SetScene(scItems);
     end;
-  end;
+  end else MsgLog.Add(_('There is nothing here.'));
 end;
 
 procedure TPlayer.PickUpAmount(Index: Integer);

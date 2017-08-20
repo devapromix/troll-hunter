@@ -58,6 +58,7 @@ type
     iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
     iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
     iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana,
+    iSoothingBalm,
     // Scrolls
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfTeleportation,
@@ -178,6 +179,11 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 4; Price: 500; Color: clDarkBlue;
     Deep: [deBloodCave .. deDrom]; Effects: [efMana]; Value: 250;),
+
+    // Soothing Balm
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Price: 90; Color: clDarkYellow;
+    Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana, efFood]; Value: 40;),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -1038,6 +1044,10 @@ begin
     // Potion of mana
     iPotionOfFullMana:
       Result := _('Potion of full mana');
+
+    // Soothing Balm
+    iSoothingBalm:
+      Result := _('Soothing balm');
 
     // Scroll of healing
     iScrollOfMinorHealing:

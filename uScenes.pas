@@ -890,7 +890,7 @@ end;
 procedure TSceneDef.Render;
 begin
   Terminal.Print(CX, CY - 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 1, Format(_('Killed by %s. Press %s'),
+  Terminal.Print(CX, CY + 1, Format(_('You were slain by %s. Press %s'),
     [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
     TK_ALIGN_CENTER);
   if Game.Wizard then
