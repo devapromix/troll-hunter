@@ -90,6 +90,8 @@
         <DCCReference Include="uEntity.pas"/>
         <DCCReference Include="uCalendar.pas"/>
         <DCCReference Include="uShop.pas"/>
+        <DCCReference Include="uSpellbook.pas"/>
+        <DCCReference Include="uTalent.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

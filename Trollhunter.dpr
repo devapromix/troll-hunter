@@ -27,15 +27,16 @@ var
 
 begin
   Randomize;
-  {$IF COMPILERVERSION >= 18}
+{$IF COMPILERVERSION >= 18}
   ReportMemoryLeaksOnShutdown := True;
-  {$IFEND}
+{$IFEND}
   Game.LoadConfig;
   repeat
     if (Game.Timer > 0) then
     begin
       Game.Timer := Game.Timer - 1;
-      if (Game.Timer = 0) then IsRender := True;
+      if (Game.Timer = 0) then
+        IsRender := True;
     end;
     if IsRender then
     begin

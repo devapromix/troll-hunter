@@ -20,10 +20,9 @@ type
   end;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation,
-    efTownPortal, efMagicEye, efCurePoison, efPrmGold,
-    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness,
-    efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold);
+  TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
+    efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
+    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold);
 
 type
   TEffects = set of TEffect;
@@ -180,7 +179,7 @@ begin
     Satiation := Satiation - SatPerTurn;
   if (Satiation < StarvingMax) then
   begin
-    Life := EnsureRange(Life - 1, 0, MaxLife);;
+    Life := EnsureRange(Life - 1, 0, MaxLife);
   end
   else
   begin
@@ -616,7 +615,7 @@ begin
   begin
     if (T in UseTypeItems) then
     begin
-      if not (T in RuneTypeItems) then
+      if not(T in RuneTypeItems) then
         AItem.Amount := AItem.Amount - 1;
       The := GetDescThe(Items.Name[I]);
       case T of
@@ -637,7 +636,7 @@ begin
         itBook:
           MsgLog.Add(Format(_('You read %s.'), [The]));
       end;
-      if not (T in RuneTypeItems) then
+      if not(T in RuneTypeItems) then
         Items_Inventory_SetItem(Index, AItem);
       if (T in ScrollTypeItems + RuneTypeItems) then
       begin
@@ -915,17 +914,20 @@ const
 begin
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left - 1, Status.Top + 1,
-    ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]), 'Life'));
+    ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]
+    ), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2,
-    ' ' + Terminal.Colorize(Format(F, [_('Mana'), Player.Mana, Player.MaxMana]), 'Mana'));
+    ' ' + Terminal.Colorize(Format(F, [_('Mana'), Player.Mana, Player.MaxMana]
+    ), 'Mana'));
   // Bars
   Scenes.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
     Player.Life, Player.MaxLife, clLife, clDarkGray);
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   //
-  Terminal.Print(Status.Left - 1, Status.Top + 3, ' ' + Format(_('Turn: %d Gold: %d %s'),
-    [Player.Turn, Player.Gold, Player.GetSatiationStr]));
+  Terminal.Print(Status.Left - 1, Status.Top + 3,
+    ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
+    Player.GetSatiationStr]));
   Terminal.Print(Status.Left - 1, Status.Top + 4,
     ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
@@ -950,7 +952,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format(_('%s: %s.'), [_('Difficulty'), GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format(_('%s: %s.'), [_('Difficulty'),
+      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(AReason);
     if Player.IsDead then
@@ -1026,8 +1029,8 @@ procedure TPlayer.Wait;
 begin
   if not Map.GetVis(Map.Current) then
   begin
-    MsgLog.Add(Terminal.Colorize(
-      Format(_('You have opened a new territory: %s.'), [Map.Name]),clAlarm));
+    MsgLog.Add(Terminal.Colorize
+      (Format(_('You have opened a new territory: %s.'), [Map.Name]), clAlarm));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
       Score := Score + (Ord(Map.Current) * 15);
@@ -1057,17 +1060,17 @@ procedure TPlayer.SkillSet;
 var
   I: TSkillEnum;
 begin
-{  // Talents
-  case Talent of
+  { // Talents
+    case Talent of
     tlStrong:
-      FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
+    FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
     tlDextrous:
-      FSkill[skDodge].Value := FSkill[skDodge].Value + StartSkill;
+    FSkill[skDodge].Value := FSkill[skDodge].Value + StartSkill;
     tlMage:
-      FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
+    FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
     tlTough:
-      FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
-  end;  }
+    FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
+    end; }
   // Wizard
   if not Game.Wizard then
     Exit;
@@ -1140,11 +1143,6 @@ begin
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), D));
-{  // Talents
-  case Self.Talent of
-    tlWealthy:
-      Items.AddItemToInv(iGold, StartGold);
-  end;}
   Self.Calc;
 end;
 
@@ -1191,8 +1189,10 @@ begin
   // Town Portal
   if (efTownPortal in Effects) then
   begin
-    Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap, Game.PortalTile);
-    if ((Player.X = Game.Spawn.X) and (Player.Y = Game.Spawn.Y)) then Exit;
+    Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap,
+      Game.PortalTile);
+    if ((Player.X = Game.Spawn.X) and (Player.Y = Game.Spawn.Y)) then
+      Exit;
     Game.PortalTile := Map.GetTileEnum(X, Y, Map.Current);
     Game.PortalMap := Map.Current;
     Game.Portal.X := X;
@@ -1209,12 +1209,12 @@ begin
   // Cure poison
   if (efCurePoison in Effects) then
   begin
-  
+
   end;
   // Gold
   if (efPrmGold in Effects) then
   begin
-
+    Items.AddItemToInv(iGold, StartGold);
   end;
   // Athletics
   if (efPrmAthletics in Effects) then
