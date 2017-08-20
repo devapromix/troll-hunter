@@ -593,6 +593,7 @@ end;
 procedure TMob.Process;
 var
   NX, NY, Dist: Integer;
+  The: string;
 begin
   if (Force = fcNPC) then
     Exit;
@@ -605,6 +606,8 @@ begin
     begin
       Sleep := False;
       Player.Skill(skStealth);
+      The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+      MsgLog.Add(Format('%s notices you!', [The]));
       Exit;
     end;
     Exit;
