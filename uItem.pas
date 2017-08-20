@@ -9,17 +9,17 @@ type
     itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield, itHeadgear,
     itBodyArmor);
 
-    // From Angband:
-    // !   A potion (or flask)    /   A pole-arm
-    // ?   A scroll (or book)     |   An edged weapon
-    // ,   Food                   \   A hafted weapon
-    // -   A wand or rod          }   A sling, bow, or x-bow
-    // _   A staff                {   A shot, arrow, or bolt
-    // =   A ring                 (   Soft armour (cloak, robes, leather armor)
-    // "   An amulet              [   Hard armour (metal armor)
-    // $   Money or gems          ]   Misc. armour (gloves, helm, boots)
-    // ~   Pelts and body parts   )   A shield
-    // &   Chests, Containers
+  // From Angband:
+  // !   A potion (or flask)    /   A pole-arm
+  // ?   A scroll (or book)     |   An edged weapon
+  // ,   Food                   \   A hafted weapon
+  // -   A wand or rod          }   A sling, bow, or x-bow
+  // _   A staff                {   A shot, arrow, or bolt
+  // =   A ring                 (   Soft armour (cloak, robes, leather armor)
+  // "   An amulet              [   Hard armour (metal armor)
+  // $   Money or gems          ]   Misc. armour (gloves, helm, boots)
+  // ~   Pelts and body parts   )   A shield
+  // &   Chests, Containers
 
 const
   PotionTypeItems = [itPotion];
@@ -69,12 +69,13 @@ type
     iLesserHealingPotion, iGreaterHealingPotion, iHeroicHealingPotion,
     iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
     iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
-    iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana,
-    iSoothingBalm, iHealingPoultice, iAntidote,
+    iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana, iSoothingBalm,
+    iHealingPoultice, iAntidote,
     // Scrolls
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
-    iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping, iScrollOfPhasing,
-    iScrollOfTeleportation, iScrollOfDisappearing, iScrollOfTownPortal,
+    iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
+    iScrollOfPhasing, iScrollOfTeleportation, iScrollOfDisappearing,
+    iScrollOfTownPortal,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
@@ -195,16 +196,17 @@ const
     // Soothing Balm
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 90; Color: clLightestYellow;
-    Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana, efFood]; Value: 40;),
+    Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana, efFood];
+    Value: 40;),
     // Healing Poultice
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 3; Price: 180; Color: clLightYellow;
-    Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana, efCurePoison]; Value: 80;),
+    Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana, efCurePoison];
+    Value: 80;),
     // Antidote
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 250; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efCurePoison]; Value: 100;),
-
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;

@@ -204,7 +204,8 @@ var
   Dam, Cr: Word;
   CrStr, The: string;
 begin
-  if (Index < 0) then Exit;
+  if (Index < 0) then
+    Exit;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
@@ -885,7 +886,9 @@ begin
       Game.Timer := High(Byte);
       Scenes.SetScene(scItems);
     end;
-  end else MsgLog.Add(_('There is nothing here.'));
+  end
+  else
+    MsgLog.Add(_('There is nothing here.'));
 end;
 
 procedure TPlayer.PickUpAmount(Index: Integer);
@@ -938,7 +941,7 @@ begin
   begin
     Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
       Terminal.Colorize(Format('P%d', [Ability[abPoisoned]]), 'Poison'),
-        TK_ALIGN_RIGHT);
+      TK_ALIGN_RIGHT);
   end;
   //
   Terminal.Print(Status.Left - 1, Status.Top + 3,
@@ -1229,11 +1232,13 @@ begin
     if IsAbility(abPoisoned) then
     begin
       V := Self.GetSkillValue(skHealing) + Value;
-      Ability[abPoisoned] := Math.EnsureRange(Ability[abPoisoned] - V, 0, High(Word));
+      Ability[abPoisoned] := Math.EnsureRange(Ability[abPoisoned] - V, 0,
+        High(Word));
       Self.Skill(skHealing);
       if IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))
-          else MsgLog.Add(_('You are better now.'));
+      else
+        MsgLog.Add(_('You are better now.'));
     end;
   end;
   // Gold

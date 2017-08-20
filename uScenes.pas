@@ -22,7 +22,8 @@ type
     procedure AddLine(AHotKey, AText: string);
     procedure Add(); overload;
     procedure Add(AText: string; AValue: Integer); overload;
-    procedure Add(AText: string; AValue: string; AColor: Cardinal = $FF00FF00); overload;
+    procedure Add(AText: string; AValue: string;
+      AColor: Cardinal = $FF00FF00); overload;
   public
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
@@ -272,7 +273,7 @@ begin
 end;
 
 procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
-      AColor: Cardinal);
+  AColor: Cardinal);
 begin
   Terminal.ForegroundColor(AColor);
   Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText +
@@ -349,30 +350,30 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
-  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y,
-    KeyStr(AHotKey, AText), TK_ALIGN_LEFT);
+  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, KeyStr(AHotKey, AText),
+    TK_ALIGN_LEFT);
   Self.Add();
 end;
 
-  procedure TScene.Add(AText: string; AValue: Integer);
-  begin
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(clGreen);
-    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
-      TK_ALIGN_RIGHT);
-    Self.Add();
-  end;
+procedure TScene.Add(AText: string; AValue: Integer);
+begin
+  Terminal.ForegroundColor(clWhite);
+  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+  Terminal.ForegroundColor(clGreen);
+  Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
+    TK_ALIGN_RIGHT);
+  Self.Add();
+end;
 
-  procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
-  begin
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(AColor);
-    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
-      TK_ALIGN_RIGHT);
-    Self.Add();
-  end;
+procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
+begin
+  Terminal.ForegroundColor(clWhite);
+  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+  Terminal.ForegroundColor(AColor);
+  Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
+    TK_ALIGN_RIGHT);
+  Self.Add();
+end;
 
 { TScenes }
 
@@ -558,7 +559,7 @@ begin
     [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'), KeyStr('QWEADZXC'),
     _('Wait'), KeyStr('5'), KeyStr('S')]), TK_ALIGN_CENTER);
 
-  X := 0;  
+  X := 0;
   Y := 15;
   AddLine('<', _('Go upstairs'));
   AddLine('>', _('Go downstairs'));

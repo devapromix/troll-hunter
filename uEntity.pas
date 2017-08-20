@@ -80,23 +80,24 @@ var
   Value: Byte;
 begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-  if (Ability[I] > 0) then
-  begin
-    if (I in [abSleeping]) then Continue;
-    Ability[I] := Ability[I] - 1;
-    if (I in [abPoisoned, abBurning]) and not IsDead then
+    if (Ability[I] > 0) then
     begin
-      case I of
-        abPoisoned:
-          Value := Ability[I] div 10;
-        abBurning:
-          Value := Math.RandomRange(3, 5);
+      if (I in [abSleeping]) then
+        Continue;
+      Ability[I] := Ability[I] - 1;
+      if (I in [abPoisoned, abBurning]) and not IsDead then
+      begin
+        case I of
+          abPoisoned:
+            Value := Ability[I] div 10;
+          abBurning:
+            Value := Math.RandomRange(3, 5);
         else
           Value := 0;
+        end;
+        Life := Math.EnsureRange(Life - Value, 0, MaxLife);
       end;
-      Life := Math.EnsureRange(Life - Value, 0, MaxLife);
     end;
-  end;
 end;
 
 destructor TEntity.Destroy;
@@ -177,7 +178,8 @@ procedure TEntity.ClearAbilities;
 var
   I: TAbilityEnum;
 begin
-  for I := Low(TAbilityEnum) to High(TAbilityEnum) do Ability[I] := 0;
+  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
+    Ability[I] := 0;
 end;
 
 function TEntity.IsAbility(Value: TAbilityEnum): Boolean;
