@@ -3,7 +3,7 @@ unit uEntity;
 interface
 
 type
-  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen);
+  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen, abSleeping);
 
 type
   TAbility = array [TAbilityEnum] of Word;
@@ -51,6 +51,7 @@ type
     property Damage: TDamage read FDamage write FDamage;
     property Alive: Boolean read FAlive write FAlive;
     property Ability[I: TAbilityEnum]: Word read GetAbility write SetAbility;
+    function IsAbility(Value: TAbilityEnum): Boolean;
     function GetDist(ToX, ToY: Single): Word;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
@@ -79,6 +80,7 @@ begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
   if (Ability[I] > 0) then
   begin
+    if (I in [abSleeping]) then Continue;
     Ability[I] := Ability[I] - 1;
     if (I in [abPoisoned, abBurning]) and not IsDead then
       Life := Math.EnsureRange(Life - (Ability[I] div 10), 0, MaxLife);
@@ -164,6 +166,11 @@ var
   I: TAbilityEnum;
 begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do Ability[I] := 0;
+end;
+
+function TEntity.IsAbility(Value: TAbilityEnum): Boolean;
+begin
+  Result := Ability[Value] > 0;
 end;
 
 end.

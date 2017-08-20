@@ -392,7 +392,6 @@ type
     FID: Byte;
     FForce: TForce;
     Maps: TMapEnum;
-    Sleep: Boolean;
     Boss: Boolean;
     function GetRadius: Byte;
   public
@@ -463,7 +462,6 @@ begin
   ID := ANPCID;
   Boss := False;
   Alive := True;
-  Sleep := False;
   Force := fcNPC;
   MaxLife := 100;
   Life := MaxLife;
@@ -508,7 +506,7 @@ begin
   Maps := AZ;
   Boss := False;
   Alive := True;
-  Sleep := True;
+  Ability[abSleeping] := 1;
   Force := AForce;
   MaxLife := MobBase[TMobEnum(ID)].MaxLife +
     (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level);
@@ -627,11 +625,11 @@ begin
   Dist := GetDist(Player.X, Player.Y);
   if (Dist > GetRadius) then
     Exit;
-  if Sleep then
+  if IsAbility(abSleeping) then
   begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
-      Sleep := False;
+      Ability[abSleeping] := 0;
       Player.Skill(skStealth);
       The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
       MsgLog.Add(Format(_('%s notices you!'), [The]));
