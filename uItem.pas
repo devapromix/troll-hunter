@@ -9,6 +9,18 @@ type
     itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield, itHeadgear,
     itBodyArmor);
 
+    // From Angband:
+    // !   A potion (or flask)    /   A pole-arm
+    // ?   A scroll (or book)     |   An edged weapon
+    // ,   Food                   \   A hafted weapon
+    // -   A wand or rod          }   A sling, bow, or x-bow
+    // _   A staff                {   A shot, arrow, or bolt
+    // =   A ring                 (   Soft armour (cloak, robes, leather armor)
+    // "   An amulet              [   Hard armour (metal armor)
+    // $   Money or gems          ]   Misc. armour (gloves, helm, boots)
+    // ~   Pelts and body parts   )   A shield
+    // &   Chests, Containers
+
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
@@ -58,11 +70,11 @@ type
     iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
     iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
     iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana,
-    iSoothingBalm,
+    iSoothingBalm, iHealingPoultice, iAntidote,
     // Scrolls
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
-    iScrollOfFullHealing, iScrollOfHunger, iScrollOfTeleportation,
-    iScrollOfTownPortal,
+    iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping, iScrollOfPhasing,
+    iScrollOfTeleportation, iScrollOfDisappearing, iScrollOfTownPortal,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
@@ -135,15 +147,15 @@ const
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife]; Value: 50;),
     // Life Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 2; Price: 100; Color: clLightRed;
+    MaxDurability: 0; Level: 3; Price: 100; Color: clLightRed;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife]; Value: 100;),
     // Life Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 200; Color: clRed;
+    MaxDurability: 0; Level: 5; Price: 200; Color: clRed;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife]; Value: 200;),
     // Potion of Full Healing
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 5; Price: 500; Color: clDarkRed;
+    MaxDurability: 0; Level: 7; Price: 500; Color: clDarkRed;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife]; Value: 250;),
 
     // Rejuvenation Potion 1
@@ -152,15 +164,15 @@ const
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana]; Value: 50;),
     // Rejuvenation Potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 2; Price: 150; Color: clLightYellow;
+    MaxDurability: 0; Level: 3; Price: 150; Color: clLightYellow;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana]; Value: 100;),
     // Rejuvenation Potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 300; Color: clYellow;
+    MaxDurability: 0; Level: 5; Price: 300; Color: clYellow;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife, efMana]; Value: 200;),
     // Rejuvenation Potion 4
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 5; Price: 750; Color: clDarkYellow;
+    MaxDurability: 0; Level: 7; Price: 750; Color: clDarkYellow;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife, efMana]; Value: 250;),
 
     // Lesser Mana Potion
@@ -169,21 +181,30 @@ const
     Deep: [deDarkWood .. deDeepCave]; Effects: [efMana]; Value: 50;),
     // Mana potion 2
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 2; Price: 100; Color: clLightBlue;
+    MaxDurability: 0; Level: 3; Price: 100; Color: clLightBlue;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efMana]; Value: 100;),
     // Mana potion 3
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 200; Color: clBlue;
+    MaxDurability: 0; Level: 5; Price: 200; Color: clBlue;
     Deep: [deDeepCave .. deDrom]; Effects: [efMana]; Value: 200;),
     // Potion of Full Mana
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 4; Price: 500; Color: clDarkBlue;
+    MaxDurability: 0; Level: 7; Price: 500; Color: clDarkBlue;
     Deep: [deBloodCave .. deDrom]; Effects: [efMana]; Value: 250;),
 
     // Soothing Balm
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 90; Color: clDarkYellow;
+    MaxDurability: 0; Level: 1; Price: 90; Color: clLightestYellow;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana, efFood]; Value: 40;),
+    // Healing Poultice
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 3; Price: 180; Color: clLightYellow;
+    Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana, efCurePoison]; Value: 80;),
+    // Antidote
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Price: 250; Color: clLightestGreen;
+    Deep: [deDarkWood .. deDrom]; Effects: [efCurePoison]; Value: 100;),
+
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -192,16 +213,16 @@ const
     ManaCost: 20;),
     // Scroll of healing 2
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 2; Price: 80; Color: clLightBlue;
+    MaxDurability: 0; Level: 3; Price: 80; Color: clLightBlue;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife]; Value: 100;
     ManaCost: 30;),
     // Scroll of healing 3
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 3; Price: 160; Color: clBlue;
+    MaxDurability: 0; Level: 5; Price: 160; Color: clBlue;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife]; Value: 200; ManaCost: 40;),
     // Scroll of Full Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 4; Price: 300; Color: clDarkBlue;
+    MaxDurability: 0; Level: 7; Price: 300; Color: clDarkBlue;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife]; Value: 250;
     ManaCost: 50;),
 
@@ -209,11 +230,28 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 500; Color: clDarkYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 250; ManaCost: 25;),
+
+    // Scroll of Sidestepping
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 2; Price: 750; Color: clLightRed;
+    Deep: [deDarkWood .. deDeepCave]; Effects: [efTeleportation]; Value: 3;
+    ManaCost: 50;),
+    // Scroll of Phasing
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 4; Price: 1000; Color: clRed;
+    Deep: [deGrayCave .. deBloodCave]; Effects: [efTeleportation]; Value: 6;
+    ManaCost: 100;),
     // Scroll of Teleportation
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 750; Color: clDarkRed;
-    Deep: [deDarkWood .. deDrom]; Effects: [efTeleportation]; Value: 5;
-    ManaCost: 100;),
+    MaxDurability: 0; Level: 6; Price: 1250; Color: clDarkRed;
+    Deep: [deDeepCave .. deDrom]; Effects: [efTeleportation]; Value: 10;
+    ManaCost: 150;),
+    // Scroll of Disappearing
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 8; Price: 1500; Color: clDarkRed;
+    Deep: [deBloodCave .. deDrom]; Effects: [efTeleportation]; Value: 15;
+    ManaCost: 200;),
+
     // Scroll of Town Portal
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 600; Color: clLightGreen;
@@ -236,13 +274,14 @@ const
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 8;
     Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
     Effects: [efLife]; Value: 250; ManaCost: 50;),
+
     // Rune of teleportation
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
-    Price: 4000; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efTeleportation]; Value: 7; ManaCost: 100;),
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 6;
+    Price: 10000; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Effects: [efTeleportation]; Value: 10; ManaCost: 150;),
     // Rune of town portal
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
-    Price: 3000; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
+    Price: 4800; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
     // Bread ration
@@ -1048,6 +1087,12 @@ begin
     // Soothing Balm
     iSoothingBalm:
       Result := _('Soothing balm');
+    // Healing Poultice
+    iHealingPoultice:
+      Result := _('Healing poultice');
+    // Antidote
+    iAntidote:
+      Result := _('Antidote');
 
     // Scroll of healing
     iScrollOfMinorHealing:
@@ -1065,9 +1110,18 @@ begin
     // Scroll of hunger
     iScrollOfHunger:
       Result := _('Scroll of hunger');
+    // Scroll of sidestepping
+    iScrollOfSidestepping:
+      Result := _('Scroll of sidestepping');
+    // Scroll of phasing
+    iScrollOfPhasing:
+      Result := _('Scroll of phasing');
     // Scroll of teleportation
     iScrollOfTeleportation:
       Result := _('Scroll of teleportation');
+    // Scroll of disappearing
+    iScrollOfDisappearing:
+      Result := _('Scroll of disappearing');
     // Scroll of Town Portal
     iScrollOfTownPortal:
       Result := _('Scroll of town portal');
