@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes, BeaRLibItems, uMob, Types;
+  Classes, BeaRLibItems, uMob, Types, uGame;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -16,7 +16,13 @@ type
   TScene = class(TObject)
   private
     KStr: string;
-    CX, CY: Byte;
+    X, Y, CX, CY: Byte;
+    procedure AddOption(AHotKey, AText: string; AOption: Boolean;
+      AColor: Cardinal = $FFAAAAAA); overload;
+    procedure AddLine(AHotKey, AText: string);
+    procedure Add(); overload;
+    procedure Add(AText: string; AValue: Integer); overload;
+    procedure Add(AText: string; AValue: string; AColor: Cardinal = $FF00FF00); overload;
   public
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
@@ -250,10 +256,32 @@ implementation
 
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, GNUGetText, uGame, uCorpse, uCalendar, uShop,
+  uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent;
 
 { TScene }
+
+procedure TScene.Add;
+begin
+  Inc(X);
+  if (X > 2) then
+  begin
+    X := 1;
+    Inc(Y);
+  end;
+end;
+
+procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
+      AColor: Cardinal);
+begin
+  Terminal.ForegroundColor(AColor);
+  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText +
+    ':', TK_ALIGN_LEFT);
+  Terminal.ForegroundColor(clLightestBlue);
+  Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y,
+    '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
+  Self.Add();
+end;
 
 procedure TScene.AddKey(AKey, AStr: string; IsClear: Boolean = False;
   IsRender: Boolean = False);
@@ -318,6 +346,33 @@ begin
       Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
     end;
 end;
+
+procedure TScene.AddLine(AHotKey, AText: string);
+begin
+  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y,
+    KeyStr(AHotKey, AText), TK_ALIGN_LEFT);
+  Self.Add();
+end;
+
+  procedure TScene.Add(AText: string; AValue: Integer);
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clGreen);
+    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
+      TK_ALIGN_RIGHT);
+    Self.Add();
+  end;
+
+  procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(AColor);
+    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
+      TK_ALIGN_RIGHT);
+    Self.Add();
+  end;
 
 { TScenes }
 
@@ -475,69 +530,54 @@ begin
 end;
 
 procedure TSceneHelp.Render;
-var
-  Y, KX, KY: Byte;
-
-  procedure AddKey(Key, Text: string);
-  begin
-    Terminal.Print(KX + 10, Y + KY, KeyStr(Key, Text), TK_ALIGN_LEFT);
-    Inc(KX, CX - 5);
-    if (KX > CX + 11) then
-    begin
-      KX := 0;
-      Inc(KY);
-    end;
-  end;
-
 begin
-  Y := 1;
-  KX := 0;
-  KY := 14;
   Self.Title(_('Help'));
 
-  Terminal.Print(CX, Y + 2,
+  Terminal.Print(CX, 3,
     _('The land Elvion is surrounded by mountains. In the center of this land'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, Y + 3,
+  Terminal.Print(CX, 4,
     _('there is village, Dork. The land is in danger, because The Troll King and'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, Y + 4,
+  Terminal.Print(CX, 5,
     _('his armies are coming. Only a legendary hero can kill the monster.'),
     TK_ALIGN_CENTER);
 
-  Terminal.Print(CX, Y + 6,
+  Terminal.Print(CX, 7,
     _('You play as a lonely hero who has to slay trolls to save your land Elvion.'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, Y + 7,
+  Terminal.Print(CX, 8,
     _('You can gather equipment, fight enemies and try to survive for your final'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, Y + 8, _('confrontation with boss. Good luck!'),
+  Terminal.Print(CX, 9, _('confrontation with boss. Good luck!'),
     TK_ALIGN_CENTER);
 
-  Self.Title(_('Keybindings'), Y + 10);
+  Self.Title(_('Keybindings'), 11);
 
-  Terminal.Print(CX, Y + 12, Format('%s: %s, %s, %s %s: %s, %s',
+  Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s',
     [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'), KeyStr('QWEADZXC'),
     _('Wait'), KeyStr('5'), KeyStr('S')]), TK_ALIGN_CENTER);
 
-  AddKey('<', _('Go upstairs'));
-  AddKey('>', _('Go downstairs'));
-  AddKey('G', _('Pickup an item'));
-  AddKey('F', _('Drop an item'));
-  AddKey('L', _('Look mode'));
-  AddKey('R', _('Rest'));
-  AddKey('M', _('Last messages'));
-  // AddKey('B', _('Spellbook'));
-  AddKey('T', _('Talents'));
-  AddKey('N', _('Statistics'));
-  AddKey('O', _('Options'));
-  AddKey('I', _('Inventory'));
-  AddKey('P', _('Skills and attributes'));
-  AddKey('K', _('Calendar'));
-  AddKey('?', _('Help (this page)'));
+  X := 0;  
+  Y := 15;
+  AddLine('<', _('Go upstairs'));
+  AddLine('>', _('Go downstairs'));
+  AddLine('G', _('Pickup an item'));
+  AddLine('F', _('Drop an item'));
+  AddLine('L', _('Look mode'));
+  AddLine('R', _('Rest'));
+  AddLine('M', _('Last messages'));
+  // AddLine('B', _('Spellbook'));
+  AddLine('T', _('Talents'));
+  AddLine('N', _('Statistics'));
+  AddLine('O', _('Options'));
+  AddLine('I', _('Inventory'));
+  AddLine('P', _('Skills and attributes'));
+  AddLine('K', _('Calendar'));
+  AddLine('?', _('Help (this page)'));
 
-  Self.Title(_('Character dump'), Terminal.Window.Height - Y - 5);
-  Terminal.Print(CX, Terminal.Window.Height - Y - 3,
+  Self.Title(_('Character dump'), Terminal.Window.Height - 6);
+  Terminal.Print(CX, Terminal.Window.Height - 4,
     Format(_('The game saves a character dump to %s file.'),
     [KeyStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
 
@@ -1205,40 +1245,6 @@ end;
 { TSceneStatistics }
 
 procedure TSceneStatistics.Render;
-var
-  X, Y: Byte;
-
-  procedure Add(); overload;
-  begin
-    Inc(X);
-    if (X > 2) then
-    begin
-      X := 1;
-      Inc(Y);
-    end;
-  end;
-
-  procedure Add(AText: string; AValue: Integer); overload;
-  begin
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(clGreen);
-    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
-      TK_ALIGN_RIGHT);
-    Add();
-  end;
-
-  procedure Add(AText: string; AValue: string;
-    AColor: Cardinal = clGreen); overload;
-  begin
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(AColor);
-    Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
-      TK_ALIGN_RIGHT);
-    Add();
-  end;
-
 begin
   Self.Title(_('Statistics'));
   X := 1;
@@ -1274,7 +1280,7 @@ begin
   Y := Y + 1;
   Add(_('Game version'), Game.GetVersion);
   Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
-  Add();
+  Self.Add();
   Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
 
   if Game.Wizard then
@@ -1286,7 +1292,7 @@ begin
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
     Add(_('NPC'), 7);
-    Add();
+    Self.Add();
     Add(_('Items'), Ord(Length(ItemBase)));
     Add(_('Shops'), Shops.Count);
   end;
@@ -1784,42 +1790,17 @@ end;
 { TSceneOptions }
 
 procedure TSceneOptions.Render;
-var
-  X, Y: Byte;
-
-  procedure Add(); overload;
-  begin
-    Inc(X);
-    if (X > 2) then
-    begin
-      X := 1;
-      Inc(Y);
-    end;
-  end;
-
-  procedure Add(AHotKey, AText: string; AOption: Boolean;
-    AColor: Cardinal = clWhite); overload;
-  begin
-    Terminal.ForegroundColor(AColor);
-    Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText +
-      ':', TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(clLightBlue);
-    Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y,
-      '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
-    Add();
-  end;
-
 begin
   Self.Title(_('Options'));
 
   X := 1;
   Y := 3;
-  Add('C', _('Auto pickup coins'), Game.APCoin);
-  Add('F', _('Auto pickup foods'), Game.APFood);
-  Add('P', _('Auto pickup potions'), Game.APPotion);
-  Add('S', _('Auto pickup scrolls'), Game.APScroll);
-  Add('R', _('Auto pickup runes'), Game.APRune);
-  Add('B', _('Auto pickup books'), Game.APBook);
+  AddOption('C', _('Auto pickup coins'), Game.APCoin);
+  AddOption('F', _('Auto pickup foods'), Game.APFood);
+  AddOption('P', _('Auto pickup potions'), Game.APPotion);
+  AddOption('S', _('Auto pickup scrolls'), Game.APScroll);
+  AddOption('R', _('Auto pickup runes'), Game.APRune);
+  AddOption('B', _('Auto pickup books'), Game.APBook);
 
   if Game.Wizard then
   begin
@@ -1827,10 +1808,10 @@ begin
     Y := Y + 3;
     Self.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    Add('W', _('Wizard Mode'), Game.Wizard, clRed);
-    Add('M', _('Show map'), Game.ShowMap);
-    Add('T', _('Reload all shops'), False);
-    Add('L', _('Leave corpses'), Game.LCorpses);
+    AddOption('W', _('Wizard Mode'), Game.Wizard, clRed);
+    AddOption('M', _('Show map'), Game.ShowMap);
+    AddOption('T', _('Reload all shops'), False);
+    AddOption('L', _('Leave corpses'), Game.LCorpses);
   end;
 
   AddKey('Esc', _('Back'), True, True);

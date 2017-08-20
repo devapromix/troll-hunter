@@ -145,11 +145,11 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 50; Color: clLightestRed;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife]; Value: 50;),
-    // Life Potion 2
+    // Greater Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 3; Price: 100; Color: clLightRed;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife]; Value: 100;),
-    // Life Potion 3
+    // Heroic Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5; Price: 200; Color: clRed;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife]; Value: 200;),
@@ -158,19 +158,19 @@ const
     MaxDurability: 0; Level: 7; Price: 500; Color: clDarkRed;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife]; Value: 250;),
 
-    // Rejuvenation Potion 1
+    // Lesser Rejuvenation Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 75; Color: clLightestYellow;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana]; Value: 50;),
-    // Rejuvenation Potion 2
+    // Greater Rejuvenation Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 3; Price: 150; Color: clLightYellow;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana]; Value: 100;),
-    // Rejuvenation Potion 3
+    // Heroic Rejuvenation Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5; Price: 300; Color: clYellow;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife, efMana]; Value: 200;),
-    // Rejuvenation Potion 4
+    // Potion Of Full Rejuvenation
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 7; Price: 750; Color: clDarkYellow;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife, efMana]; Value: 250;),
@@ -179,11 +179,11 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 50; Color: clLightestBlue;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efMana]; Value: 50;),
-    // Mana potion 2
+    // Greater Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 3; Price: 100; Color: clLightBlue;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efMana]; Value: 100;),
-    // Mana potion 3
+    // Heroic Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 5; Price: 200; Color: clBlue;
     Deep: [deDeepCave .. deDrom]; Effects: [efMana]; Value: 200;),
@@ -211,12 +211,12 @@ const
     MaxDurability: 0; Level: 1; Price: 40; Color: clLightestBlue;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife]; Value: 50;
     ManaCost: 20;),
-    // Scroll of healing 2
+    // Scroll Of Lesser Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 3; Price: 80; Color: clLightBlue;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife]; Value: 100;
     ManaCost: 30;),
-    // Scroll of healing 3
+    // Scroll Of Greater Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 5; Price: 160; Color: clBlue;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife]; Value: 200; ManaCost: 40;),
