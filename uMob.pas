@@ -441,7 +441,7 @@ var
 implementation
 
 uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext,
-  uItem, BearLibTerminal;
+  uItem, BearLibTerminal, uSkill;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -629,7 +629,7 @@ end;
 
 function TMob.GetRadius: Byte;
 begin
-  Result := EnsureRange(30 - (Player.GetSkillValue(skStealth) div 3), 5, 30);
+  Result := EnsureRange(30 - (Player.Skills.Skill[skStealth].Value div 3), 5, 30);
 end;
 
 procedure TMob.Process;
@@ -647,7 +647,7 @@ begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
       Abilities.Ability[abSleeping] := 0;
-      Player.Skill(skStealth);
+      Player.Skills.Skill[skStealth];
       The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
       MsgLog.Add(Format(_('%s notices you!'), [The]));
       Exit;

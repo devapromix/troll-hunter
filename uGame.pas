@@ -248,8 +248,8 @@ procedure TGame.Start;
 begin
   IsMode := True;
   Spellbook.Start;
-  Player.SkillSet;
-  Player.StarterSet;
+  Player.Skills.Start;
+  Player.Start;
   Shops.New;
   Player.Calc;
   Player.Fill;

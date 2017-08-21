@@ -128,7 +128,7 @@ type
     procedure Sell(Index: Integer);
     procedure Repair(Index: Integer);
     procedure AddExp(Value: Byte = 1);
-    procedure StarterSet;
+    procedure Start;
     procedure Rest(ATurns: Word);
     procedure Dialog(AMob: TMob);
     procedure AutoPickup();
@@ -975,7 +975,7 @@ begin
   IsRest := False;
 end;
 
-procedure TPlayer.StarterSet;
+procedure TPlayer.Start;
 var
   D: Byte;
 begin

@@ -30,7 +30,7 @@ type
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetName(I: TSkillEnum): string;
-    procedure SkillSet;
+    procedure Start;
   end;
 
 const
@@ -72,22 +72,22 @@ procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: Byte);
 begin
   if (Skill[ASkill].Value < SkillMax) then
   begin
-    Skill[ASkill].Exp := Skill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
+    FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
     if (Skill[ASkill].Exp >= SkillExpMax) then
     begin
-      Skill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
-      Inc(Skill[ASkill].Value);
-      Skill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
+      FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
+      Inc(FSkill[ASkill].Value);
+      FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
       // Add message {!!!}
       MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
-        [GetName(ASkill), Skill[ASkill].Value]), clAlarm));
+        [GetName(ASkill), FSkill[ASkill].Value]), clAlarm));
       // Add exp
-      AddExp();
+      Player.AddExp();
       // Add scores
-      if (Skill[ASkill].Value = SkillMax) then
+      if (FSkill[ASkill].Value = SkillMax) then
         Player.Score := Player.Score + 50;
-      Self.Calc;
+      Player.Calc;
     end;
   end;
 
@@ -134,7 +134,7 @@ begin
   FSkill[I] := Value
 end;
 
-procedure TSkills.SkillSet;
+procedure TSkills.Start;
 var
   I: TSkillEnum;
 begin
@@ -154,7 +154,7 @@ begin
     Exit;
   //
   for I := Low(TSkillEnum) to High(TSkillEnum) do
-    with Skills.Skill[I] do
+    with FSkill[I] do
     begin
       Value := Math.RandomRange(SkillMin, SkillMax);
       Exp := Math.RandomRange(0, SkillExpMax);
