@@ -67,7 +67,7 @@ type
     procedure SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
     function GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
     property Name: string read GetName;
-    function EnsureRange(Value: Byte): Byte;
+    function EnsureRange(Value: Word): Byte;
   end;
 
 var
@@ -293,7 +293,7 @@ var
 begin
   for Y := Player.Y - Player.Radius to Player.Y + Player.Radius do
     for X := Player.X - Player.Radius to Player.X + Player.Radius do
-      FFOV[Map.EnsureRange(X)][Map.EnsureRange(Y)] := False;
+      FFOV[Self.EnsureRange(X)][Self.EnsureRange(Y)] := False;
 end;
 
 procedure TMap.Clear(Z: TMapEnum; ATileEnum: TTileEnum);
@@ -319,7 +319,7 @@ begin
   inherited;
 end;
 
-function TMap.EnsureRange(Value: Byte): Byte;
+function TMap.EnsureRange(Value: Word): Byte;
 begin
   Result := Math.EnsureRange(Value, 0, High(Byte));
 end;
