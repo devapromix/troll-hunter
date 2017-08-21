@@ -744,10 +744,10 @@ begin
   begin
     if (Game.Difficulty = dfEasy) then
     begin
-      Player.Fill;
       Player.X := Game.Spawn.X;
       Player.Y := Game.Spawn.Y;
       Map.Current := deDarkWood;
+      Player.Clear;
       Exit;
     end;
     Scenes.SetScene(scDef);

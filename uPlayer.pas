@@ -110,6 +110,7 @@ type
     procedure Calc;
     procedure Fill;
     procedure Wait;
+    procedure Clear;
     procedure AddTurn;
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
@@ -161,7 +162,8 @@ begin
   begin
     V := EnsureRange(100 - Player.Skills.Skill[skHealing].Value, 25, 100);
     if (Turn mod V = 0) then
-      Life := EnsureRange(Life + Player.Skills.Skill[skHealing].Value, 0, MaxLife);
+      Life := EnsureRange(Life + Player.Skills.Skill[skHealing].Value,
+        0, MaxLife);
     V := EnsureRange(100 - Player.Skills.Skill[skConcentration].Value, 25, 100);
     if (Turn mod V = 0) then
       Mana := EnsureRange(Mana + Player.Skills.Skill[skConcentration].Value,
@@ -342,16 +344,32 @@ begin
   Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4), 1, AtrMax);
   Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4),
     1, AtrMax);
-  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4), 1, AtrMax);
+  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4),
+    1, AtrMax);
   //
   DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
-  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def, 0, PVMax);
+  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def,
+    0, PVMax);
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
   //
   Self.SetDamage(EnsureRange(Dam.Min + Strength div 3, 1, High(Byte) - 1),
     EnsureRange(Dam.Max + Strength div 2, 2, High(Byte)));
+end;
+
+procedure TPlayer.Clear;
+begin
+  Killer := '';
+  Alive := True;
+  Look := False;
+  IsRest := False;
+  SatPerTurn := 2;
+  Satiation := SatiatedMax;
+  Abilities.Clear;
+  // MsgLog.Clear;
+  Calc;
+  Fill;
 end;
 
 constructor TPlayer.Create;
@@ -369,16 +387,9 @@ begin
   ScrRead := 0;
   Level := 1;
   MaxMap := 0;
-  Killer := '';
-  Alive := True;
-  Look := False;
-  IsRest := False;
   Name := _('PLAYER');
-  SatPerTurn := 2;
-  Satiation := SatiatedMax;
   FSkills := TSkills.Create;
-  Self.Calc;
-  Self.Fill;
+  Self.Clear;
 end;
 
 procedure TPlayer.Defeat(AKiller: string);
@@ -436,7 +447,8 @@ end;
 
 function TPlayer.GetRadius: Byte;
 begin
-  Result := EnsureRange((FRadius - Abilities.Ability[abBlinded]) + 3, 0, RadiusMax);
+  Result := EnsureRange((FRadius - Abilities.Ability[abBlinded]) + 3, 0,
+    RadiusMax);
 end;
 
 function TPlayer.GetSatiationStr: string;
@@ -501,7 +513,8 @@ begin
     then
       Exit;
     // Stunned or burning
-    if (Self.Abilities.IsAbility(abStunned) or Self.Abilities.IsAbility(abBurning)) then
+    if (Self.Abilities.IsAbility(abStunned) or
+      Self.Abilities.IsAbility(abBurning)) then
     begin
       AddTurn;
       Exit;
@@ -864,8 +877,8 @@ begin
   if Game.Wizard and Abilities.IsAbility(abPoisoned) then
   begin
     Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
-      Terminal.Colorize(Format('P%d', [Abilities.Ability[abPoisoned]]), 'Poison'),
-      TK_ALIGN_RIGHT);
+      Terminal.Colorize(Format('P%d', [Abilities.Ability[abPoisoned]]),
+      'Poison'), TK_ALIGN_RIGHT);
   end;
   //
   Terminal.Print(Status.Left - 1, Status.Top + 3,
@@ -1072,8 +1085,10 @@ begin
   // Teleportation
   if (efTeleportation in Effects) then
   begin
-    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
-    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
+    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
+      .Value + Value);
+    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
+      .Value + Value);
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));
@@ -1105,8 +1120,8 @@ begin
     if Abilities.IsAbility(abPoisoned) then
     begin
       V := Self.Skills.Skill[skHealing].Value + Value;
-      Abilities.Ability[abPoisoned] := Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0,
-        High(Word));
+      Abilities.Ability[abPoisoned] :=
+        Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0, High(Word));
       Self.Skills.DoSkill(skHealing);
       if Abilities.IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))
