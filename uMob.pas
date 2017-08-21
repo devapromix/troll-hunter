@@ -538,7 +538,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(5, L + 15), 0, High(Byte));
-      Player.Abilities.Ability[abBlinded] := Player.Abilities.Ability[abBlinded] + Dam;
+      Player.Abilities.Append(abBlinded, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'), [The, Dam]));
     end;
     // Stunned (33%)
@@ -546,7 +546,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(1, L + 3), 0, High(Byte));
-      Player.Abilities.Ability[abStunned] := Player.Abilities.Ability[abStunned] + Dam;
+      Player.Abilities.Append(abStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'), 'Lightest Red'), [The, Dam]));
     end;
     // Poisoned (20%)
@@ -554,7 +554,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * 15, L * 25), 0, High(Byte));
-      Player.Abilities.Ability[abPoisoned] := Player.Abilities.Ability[abPoisoned] + Dam;
+      Player.Abilities.Append(abPoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'), 'Lighter Green'), [The, Dam]));
       Exit;
     end;
@@ -563,7 +563,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L + 1, L + 5), 0, High(Byte));
-      Player.Abilities.Ability[abBurning] := Player.Abilities.Ability[abBurning] + Dam;
+      Player.Abilities.Append(abBurning, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'), 'Dark Red'), [The, Dam]));
       Exit;
     end;
