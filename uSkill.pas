@@ -28,7 +28,9 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
+    procedure DoSkill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetName(I: TSkillEnum): string;
+    procedure SkillSet;
   end;
 
 const
@@ -39,7 +41,7 @@ const
 
 implementation
 
-uses SysUtils, GNUGetText;
+uses SysUtils, Math, GNUGetText, uTerminal, uPlayer, uGame;
 
 { TSkills }
 
@@ -64,6 +66,31 @@ destructor TSkills.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: Byte);
+begin
+  if (Skill[ASkill].Value < SkillMax) then
+  begin
+    Skill[ASkill].Exp := Skill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
+    if (Skill[ASkill].Exp >= SkillExpMax) then
+    begin
+      Skill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
+      Inc(Skill[ASkill].Value);
+      Skill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
+        SkillMax);
+      // Add message {!!!}
+      MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
+        [GetName(ASkill), Skill[ASkill].Value]), clAlarm));
+      // Add exp
+      AddExp();
+      // Add scores
+      if (Skill[ASkill].Value = SkillMax) then
+        Player.Score := Player.Score + 50;
+      Self.Calc;
+    end;
+  end;
+
 end;
 
 function TSkills.GetName(I: TSkillEnum): string;
@@ -105,6 +132,33 @@ end;
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);
 begin
   FSkill[I] := Value
+end;
+
+procedure TSkills.SkillSet;
+var
+  I: TSkillEnum;
+begin
+  { // Talents
+    case Talent of
+    tlStrong:
+    FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
+    tlDextrous:
+    FSkill[skDodge].Value := FSkill[skDodge].Value + StartSkill;
+    tlMage:
+    FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
+    tlTough:
+    FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
+    end; }
+  // Wizard
+  if not Game.Wizard then
+    Exit;
+  //
+  for I := Low(TSkillEnum) to High(TSkillEnum) do
+    with Skills.Skill[I] do
+    begin
+      Value := Math.RandomRange(SkillMin, SkillMax);
+      Exp := Math.RandomRange(0, SkillExpMax);
+    end;
 end;
 
 end.

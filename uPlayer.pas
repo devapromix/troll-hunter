@@ -946,30 +946,6 @@ begin
   end;
 end;
 
-procedure TPlayer.Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
-begin
-  if (Skills.Skill[ASkill].Value < SkillMax) then
-  begin
-    Skills.Skill[ASkill].Exp := Skills.Skill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
-    if (Skills.Skill[ASkill].Exp >= SkillExpMax) then
-    begin
-      Skills.Skill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
-      Inc(Skills.Skill[ASkill].Value);
-      Skills.Skill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
-        SkillMax);
-      // Add message {!!!}
-      MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
-        [Skills.GetName(ASkill), Self.GetSkillValue(ASkill)]), clAlarm));
-      // Add exp
-      AddExp();
-      // Add scores
-      if (Skills.Skill[ASkill].Value = SkillMax) then
-        Player.Score := Player.Score + 50;
-      Self.Calc;
-    end;
-  end;
-end;
-
 procedure TPlayer.Wait;
 begin
   if not Map.GetVis(Map.Current) then
@@ -999,33 +975,6 @@ begin
   end;
   MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
   IsRest := False;
-end;
-
-procedure TPlayer.SkillSet;
-var
-  I: TSkillEnum;
-begin
-  { // Talents
-    case Talent of
-    tlStrong:
-    FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
-    tlDextrous:
-    FSkill[skDodge].Value := FSkill[skDodge].Value + StartSkill;
-    tlMage:
-    FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
-    tlTough:
-    FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
-    end; }
-  // Wizard
-  if not Game.Wizard then
-    Exit;
-  //
-  for I := Low(TSkillEnum) to High(TSkillEnum) do
-    with FSkill[I] do
-    begin
-      Value := Math.RandomRange(SkillMin, SkillMax);
-      Exp := Math.RandomRange(0, SkillExpMax);
-    end;
 end;
 
 procedure TPlayer.StarterSet;
