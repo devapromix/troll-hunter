@@ -569,7 +569,7 @@ begin
   AddLine('R', _('Rest'));
   AddLine('M', _('Last messages'));
   // AddLine('B', _('Spellbook'));
-  // AddLine('T', _('Talents'));
+  AddLine('T', _('Talents'));
   AddLine('N', _('Statistics'));
   AddLine('O', _('Options'));
   AddLine('I', _('Inventory'));
@@ -879,8 +879,8 @@ begin
       Scenes.SetScene(scOptions);
     // TK_B:
     // Scenes.SetScene(scSpellbook);
-    // TK_T:
-    // Scenes.SetScene(scTalents);
+    TK_T:
+      Scenes.SetScene(scTalents);
     TK_SLASH:
       Scenes.SetScene(scHelp);
     TK_Y:
@@ -1705,8 +1705,7 @@ begin
             else
               Exit;
         end;
-        // Scenes.SetScene(scTalent);
-        Scenes.SetScene(scName);
+        Scenes.SetScene(scTalent);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1785,8 +1784,7 @@ begin
           Player.Name := Player.Name + Chr(Key - TK_A + 65);
       end;
     TK_ESCAPE:
-      //Scenes.SetScene(scTalent);
-      Scenes.SetScene(scDifficulty);
+      Scenes.SetScene(scTalent);
   end;
 end;
 

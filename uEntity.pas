@@ -2,12 +2,7 @@ unit uEntity;
 
 interface
 
-type
-  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
-    abSleeping);
-
-type
-  TAbility = array [TAbilityEnum] of Word;
+uses uAbility;
 
 type
   TMinMax = record
@@ -37,13 +32,10 @@ type
     FMaxLife: Word;
     FDamage: TDamage;
     FAlive: Boolean;
-    FAbility: TAbility;
-    function GetAbility(I: TAbilityEnum): Word;
-    procedure SetAbility(I: TAbilityEnum; const Value: Word);
+    FAbilities: TAbilities;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure ClearAbilities;
     property X: Byte read FX write FX;
     property Y: Byte read FY write FY;
     property Z: Byte read FZ write FZ;
@@ -51,8 +43,7 @@ type
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Damage: TDamage read FDamage write FDamage;
     property Alive: Boolean read FAlive write FAlive;
-    property Ability[I: TAbilityEnum]: Word read GetAbility write SetAbility;
-    function IsAbility(Value: TAbilityEnum): Boolean;
+    property Abilities: TAbilities read FAbilities write FAbilities;
     function GetDist(ToX, ToY: Single): Word;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
@@ -71,7 +62,7 @@ uses SysUtils, GNUGetText, Math;
 
 constructor TEntity.Create;
 begin
-  ClearAbilities;
+  FAbilities := TAbilities.Create
 end;
 
 procedure TEntity.OnTurn;
@@ -80,16 +71,16 @@ var
   Value: Byte;
 begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    if (Ability[I] > 0) then
+    if (Abilities.Ability[I] > 0) then
     begin
       if (I in [abSleeping]) then
         Continue;
-      Ability[I] := Ability[I] - 1;
+      Abilities.Ability[I] := Abilities.Ability[I] - 1;
       if (I in [abPoisoned, abBurning]) and not IsDead then
       begin
         case I of
           abPoisoned:
-            Value := Ability[I] div 10;
+            Value := Abilities.Ability[I] div 10;
           abBurning:
             Value := Math.RandomRange(3, 5);
         else
@@ -102,13 +93,8 @@ end;
 
 destructor TEntity.Destroy;
 begin
-
+  FreeAndNil(FAbilities);
   inherited;
-end;
-
-function TEntity.GetAbility(I: TAbilityEnum): Word;
-begin
-  Result := FAbility[I]
 end;
 
 function TEntity.GetCapit(S: string): string;
@@ -163,28 +149,10 @@ begin
   Result := Life = 0
 end;
 
-procedure TEntity.SetAbility(I: TAbilityEnum; const Value: Word);
-begin
-  FAbility[I] := Value;
-end;
-
 procedure TEntity.SetDamage(AMin, AMax: Word);
 begin
   FDamage.Min := AMin;
   FDamage.Max := AMax;
-end;
-
-procedure TEntity.ClearAbilities;
-var
-  I: TAbilityEnum;
-begin
-  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    Ability[I] := 0;
-end;
-
-function TEntity.IsAbility(Value: TAbilityEnum): Boolean;
-begin
-  Result := Ability[Value] > 0;
 end;
 
 end.

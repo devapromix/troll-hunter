@@ -5,27 +5,27 @@ interface
 uses uEntity, uMap;
 
 {
-var
+  var
   BattleJournals: array of string;
 
-procedure BattleLog(s: string);
-begin
+  procedure BattleLog(s: string);
+  begin
   SetLength(BattleJournals, Length(BattleJournals) + 1);
   BattleJournals[Length(BattleJournals) - 1] := s;
-end;
+  end;
 
-function BattleJournal: string;
-var
+  function BattleJournal: string;
+  var
   s: string;
   i: integer;
-begin
+  begin
   s := '';
   for i := max(0, Length(BattleJournals) - N_BTL_LOG_LINES)
-    to Length(BattleJournals) - 1 do
-    s := s + BattleJournals[i] + #10;
+  to Length(BattleJournals) - 1 do
+  s := s + BattleJournals[i] + #10;
   SetLength(s, Length(s) - 1);
   Result := s;
-end;
+  end;
 }
 
 const
@@ -131,9 +131,9 @@ type
     procedure Start;
     procedure Log(S: string);
     function GetCursor: string;
-    function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string;
+    function IfThen(AValue: Boolean; const ATrue: string;
+      const AFalse: string): string;
   end;
-
 
 var
   Game: TGame;
@@ -182,7 +182,8 @@ begin
   inherited;
 end;
 
-function TGame.IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string;
+function TGame.IfThen(AValue: Boolean; const ATrue: string;
+  const AFalse: string): string;
 begin
   if AValue then
     Result := ATrue
@@ -210,15 +211,15 @@ begin
       Result := _('Normal');
     dfHard:
       Result := _('Hard');
-    else
-      Result := Terminal.Colorize(_('Hell'), 'Red');
+  else
+    Result := Terminal.Colorize(_('Hell'), 'Red');
   end;
 
 end;
 
 function TGame.GetVersion: string;
 begin
-  Result := '0.10.1';
+  Result := '0.11.1';
 end;
 
 procedure TGame.Log(S: string);
@@ -255,7 +256,8 @@ begin
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'),
-    _('You need to find and kill The King Troll!'), _('Press ? for help.')]), clAlarm));
+    _('You need to find and kill The King Troll!'), _('Press ? for help.')]),
+    clAlarm));
   //
   Scenes.SetScene(scGame);
 end;

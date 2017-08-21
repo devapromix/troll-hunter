@@ -19,7 +19,8 @@ uses
   uCalendar in 'uCalendar.pas',
   uShop in 'uShop.pas',
   uSpellbook in 'uSpellbook.pas',
-  uTalent in 'uTalent.pas';
+  uTalent in 'uTalent.pas',
+  uAbility in 'uAbility.pas';
 
 var
   Key: Word = 0;

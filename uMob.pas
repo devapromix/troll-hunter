@@ -2,7 +2,7 @@ unit uMob;
 
 interface
 
-uses uGame, uMap, uEntity;
+uses uGame, uMap, uEntity, uAbility;
 
 type
   TNPCType = (ntSell_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
@@ -506,7 +506,7 @@ begin
   Maps := AZ;
   Boss := False;
   Alive := True;
-  Ability[abSleeping] := 1;
+  Abilities.Ability[abSleeping] := 1;
   Force := AForce;
   MaxLife := MobBase[TMobEnum(ID)].MaxLife +
     (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level);
@@ -538,7 +538,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(5, L + 15), 0, High(Byte));
-      Player.Ability[abBlinded] := Player.Ability[abBlinded] + Dam;
+      Player.Abilities.Ability[abBlinded] := Player.Abilities.Ability[abBlinded] + Dam;
       MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'), [The, Dam]));
     end;
     // Stunned (33%)
@@ -546,7 +546,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(1, L + 3), 0, High(Byte));
-      Player.Ability[abStunned] := Player.Ability[abStunned] + Dam;
+      Player.Abilities.Ability[abStunned] := Player.Abilities.Ability[abStunned] + Dam;
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'), 'Lightest Red'), [The, Dam]));
     end;
     // Poisoned (20%)
@@ -554,7 +554,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * 15, L * 25), 0, High(Byte));
-      Player.Ability[abPoisoned] := Player.Ability[abPoisoned] + Dam;
+      Player.Abilities.Ability[abPoisoned] := Player.Abilities.Ability[abPoisoned] + Dam;
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'), 'Lighter Green'), [The, Dam]));
       Exit;
     end;
@@ -563,7 +563,7 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L + 1, L + 5), 0, High(Byte));
-      Player.Ability[abBurning] := Player.Ability[abBurning] + Dam;
+      Player.Abilities.Ability[abBurning] := Player.Abilities.Ability[abBurning] + Dam;
       MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'), 'Dark Red'), [The, Dam]));
       Exit;
     end;
@@ -642,11 +642,11 @@ begin
   Dist := GetDist(Player.X, Player.Y);
   if (Dist > GetRadius) then
     Exit;
-  if IsAbility(abSleeping) then
+  if Abilities.IsAbility(abSleeping) then
   begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
-      Ability[abSleeping] := 0;
+      Abilities.Ability[abSleeping] := 0;
       Player.Skill(skStealth);
       The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
       MsgLog.Add(Format(_('%s notices you!'), [The]));

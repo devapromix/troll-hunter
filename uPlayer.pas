@@ -165,7 +165,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse, uCalendar,
-  uShop, BearLibTerminal;
+  uShop, BearLibTerminal, uAbility;
 
 { TPlayer }
 
@@ -467,7 +467,7 @@ end;
 
 function TPlayer.GetRadius: Byte;
 begin
-  Result := EnsureRange((FRadius - Ability[abBlinded]) + 3, 0, RadiusMax);
+  Result := EnsureRange((FRadius - Abilities.Ability[abBlinded]) + 3, 0, RadiusMax);
 end;
 
 function TPlayer.GetSatiationStr: string;
@@ -577,7 +577,7 @@ begin
     then
       Exit;
     // Stunned or burning
-    if (Self.IsAbility(abStunned) or Self.IsAbility(abBurning)) then
+    if (Self.Abilities.IsAbility(abStunned) or Self.Abilities.IsAbility(abBurning)) then
     begin
       AddTurn;
       Exit;
@@ -937,10 +937,10 @@ begin
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   // Effects
-  if Game.Wizard and IsAbility(abPoisoned) then
+  if Game.Wizard and Abilities.IsAbility(abPoisoned) then
   begin
     Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
-      Terminal.Colorize(Format('P%d', [Ability[abPoisoned]]), 'Poison'),
+      Terminal.Colorize(Format('P%d', [Abilities.Ability[abPoisoned]]), 'Poison'),
       TK_ALIGN_RIGHT);
   end;
   //
@@ -1229,13 +1229,13 @@ begin
   // Cure poison
   if (efCurePoison in Effects) then
   begin
-    if IsAbility(abPoisoned) then
+    if Abilities.IsAbility(abPoisoned) then
     begin
       V := Self.GetSkillValue(skHealing) + Value;
-      Ability[abPoisoned] := Math.EnsureRange(Ability[abPoisoned] - V, 0,
+      Abilities.Ability[abPoisoned] := Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0,
         High(Word));
       Self.Skill(skHealing);
-      if IsAbility(abPoisoned) then
+      if Abilities.IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))
       else
         MsgLog.Add(_('You are better now.'));
