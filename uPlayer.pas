@@ -2,22 +2,7 @@ unit uPlayer;
 
 interface
 
-uses uEntity, uMob;
-
-type
-  TSkillEnum = (skLearning,
-    // Attributes skills
-    skAthletics, skDodge, skConcentration, skToughness,
-    // Weapon skills
-    skBlade, skAxe, skSpear, skMace,
-    // Skills
-    skStealth, skHealing);
-
-type
-  TSkill = record
-    Value: Integer;
-    Exp: Integer;
-  end;
+uses uEntity, uMob, uSkill;
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
@@ -34,11 +19,6 @@ const
   DVMax = 80;
   PVMax = 250;
   LevelExpMax = 8;
-  // Skills
-  SkillMin = 5;
-  SkillMax = 75;
-  SkillExpMax = 50;
-  StartSkill = 5;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
@@ -75,7 +55,6 @@ type
     FPotDrunk: Word;
     FScrRead: Word;
     FKiller: string;
-    FSkill: array [TSkillEnum] of TSkill;
     FWeaponSkill: TSkillEnum;
     FItemIsDrop: Boolean;
     FItemIndex: Integer;
@@ -83,6 +62,7 @@ type
     FSatPerTurn: Byte;
     FIsRest: Boolean;
     FName: string;
+    FSkills: TSkills;
     procedure GenNPCText;
     function GetDV: Byte;
     function GetPV: Byte;
@@ -122,6 +102,7 @@ type
     property ItemAmount: Integer read FItemAmount write FItemAmount;
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
     property Name: string read FName write FName;
+    property Skills: TSkills read FSkills write FSkills;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
@@ -133,9 +114,6 @@ type
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
-    function GetSkill(ASkill: TSkillEnum): TSkill;
-    function GetSkillName(ASkill: TSkillEnum): string;
-    function GetSkillValue(ASkill: TSkillEnum): Byte;
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
@@ -183,12 +161,12 @@ begin
   end
   else
   begin
-    V := EnsureRange(100 - Player.GetSkillValue(skHealing), 25, 100);
+    V := EnsureRange(100 - Player.Skills.Skill[skHealing].Value, 25, 100);
     if (Turn mod V = 0) then
-      Life := EnsureRange(Life + Player.GetSkillValue(skHealing), 0, MaxLife);
-    V := EnsureRange(100 - Player.GetSkillValue(skConcentration), 25, 100);
+      Life := EnsureRange(Life + Player.Skills.Skill[skHealing].Value, 0, MaxLife);
+    V := EnsureRange(100 - Player.Skills.Skill[skConcentration].Value, 25, 100);
     if (Turn mod V = 0) then
-      Mana := EnsureRange(Mana + Player.GetSkillValue(skConcentration),
+      Mana := EnsureRange(Mana + Player.Skills.Skill[skConcentration].Value,
         0, MaxMana);
   end;
   OnTurn();
@@ -224,7 +202,7 @@ begin
       High(Word));
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
-    Cr := Self.GetSkillValue(FWeaponSkill);
+    Cr := Skills.Skill[FWeaponSkill].Value;
     if (Ch < Cr) then
     begin
       if (Ch > (Cr div 10)) then
@@ -361,15 +339,15 @@ begin
   Self.Gold := EnsureRange(Items_Inventory_GetItemAmount(Ord(iGold)), 0,
     High(Integer));
   //
-  Strength := EnsureRange(Round(FSkill[skAthletics].Value * 1.2) +
-    Round(FSkill[skToughness].Value * 0.2), 1, AtrMax);
-  Dexterity := EnsureRange(Round(FSkill[skDodge].Value * 1.4), 1, AtrMax);
-  Willpower := EnsureRange(Round(FSkill[skConcentration].Value * 1.4),
+  Strength := EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
+    Round(Skills.Skill[skToughness].Value * 0.2), 1, AtrMax);
+  Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4), 1, AtrMax);
+  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4),
     1, AtrMax);
-  Perception := EnsureRange(Round(FSkill[skToughness].Value * 1.4), 1, AtrMax);
+  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4), 1, AtrMax);
   //
   DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
-  PV := EnsureRange(Round(FSkill[skToughness].Value / 1.4) - 4 + Def, 0, PVMax);
+  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def, 0, PVMax);
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
   Radius := Round(Perception / 8.3);
@@ -379,10 +357,9 @@ begin
 end;
 
 constructor TPlayer.Create;
-var
-  I: TSkillEnum;
 begin
   inherited;
+  FWeaponSkill := skLearning;
   Exp := 0;
   Turn := 0;
   Gold := 0;
@@ -401,13 +378,7 @@ begin
   Name := _('PLAYER');
   SatPerTurn := 2;
   Satiation := SatiatedMax;
-  FWeaponSkill := skLearning;
-  for I := Low(TSkillEnum) to High(TSkillEnum) do
-    with FSkill[I] do
-    begin
-      Value := SkillMin;
-      Exp := 0;
-    end;
+  FSkills := TSkills.Create;
   Self.Calc;
   Self.Fill;
 end;
@@ -422,7 +393,7 @@ end;
 
 destructor TPlayer.Destroy;
 begin
-
+  FreeAndNil(FSkills);
   inherited;
 end;
 
@@ -508,51 +479,6 @@ end;
 function TPlayer.GetSatiation: Word;
 begin
   Result := EnsureRange(FSatiation, 0, EngorgedMax);
-end;
-
-function TPlayer.GetSkill(ASkill: TSkillEnum): TSkill;
-begin
-  Result := FSkill[ASkill];
-end;
-
-function TPlayer.GetSkillName(ASkill: TSkillEnum): string;
-begin
-  case ASkill of
-    skLearning:
-      Result := _('Learning');
-    // Attributes skills
-    skAthletics:
-      Result := _('Athletics');
-    skDodge:
-      Result := _('Dodge');
-    skConcentration:
-      Result := _('Concentration');
-    skToughness:
-      Result := _('Toughness');
-    // Weapon skills
-    skBlade:
-      Result := _('Blade');
-    skAxe:
-      Result := _('Axe');
-    skSpear:
-      Result := _('Spear');
-    skMace:
-      Result := _('Mace');
-    // Skills
-    skStealth:
-      Result := _('Stealth');
-    skHealing:
-      Result := _('Healing');
-  end;
-end;
-
-function TPlayer.GetSkillValue(ASkill: TSkillEnum): Byte;
-begin
-  try
-    Result := FSkill[ASkill].Value;
-  except
-    Result := 0;
-  end;
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
@@ -1022,22 +948,22 @@ end;
 
 procedure TPlayer.Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
 begin
-  if (FSkill[ASkill].Value < SkillMax) then
+  if (Skills.Skill[ASkill].Value < SkillMax) then
   begin
-    Inc(FSkill[ASkill].Exp, Math.RandomRange(0, AExpValue + 1) + 1);
-    if (FSkill[ASkill].Exp >= SkillExpMax) then
+    Skills.Skill[ASkill].Exp := Skills.Skill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
+    if (Skills.Skill[ASkill].Exp >= SkillExpMax) then
     begin
-      FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
-      Inc(FSkill[ASkill].Value);
-      FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
+      Skills.Skill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
+      Inc(Skills.Skill[ASkill].Value);
+      Skills.Skill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
       // Add message {!!!}
       MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
-        [Self.GetSkillName(ASkill), Self.GetSkillValue(ASkill)]), clAlarm));
+        [Skills.GetName(ASkill), Self.GetSkillValue(ASkill)]), clAlarm));
       // Add exp
       AddExp();
       // Add scores
-      if (FSkill[ASkill].Value = SkillMax) then
+      if (Skills.Skill[ASkill].Value = SkillMax) then
         Player.Score := Player.Score + 50;
       Self.Calc;
     end;

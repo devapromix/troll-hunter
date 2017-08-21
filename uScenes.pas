@@ -258,7 +258,7 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
-  uSpellbook, uTalent;
+  uSpellbook, uTalent, uSkill, uAbility;
 
 { TScene }
 
@@ -1105,10 +1105,10 @@ begin
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   begin
     D := (Ord(I) * 2) + Y + 2;
-    RenderBar(X, 0, D, X - 2, Player.GetSkill(I).Value, SkillMax, clDarkRed,
+    RenderBar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
       clDarkGray);
-    Terminal.Print(B, D, Format('%s %d/%d', [Player.GetSkillName(I),
-      Player.GetSkill(I).Value, SkillMax]), TK_ALIGN_CENTER);
+    Terminal.Print(B, D, Format('%s %d/%d', [Player.Skills.GetName(I),
+      Player.Skills.Skill[I].Value, SkillMax]), TK_ALIGN_CENTER);
   end;
 end;
 

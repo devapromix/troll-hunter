@@ -20,7 +20,8 @@ uses
   uShop in 'uShop.pas',
   uSpellbook in 'uSpellbook.pas',
   uTalent in 'uTalent.pas',
-  uAbility in 'uAbility.pas';
+  uAbility in 'uAbility.pas',
+  uSkill in 'uSkill.pas';
 
 var
   Key: Word = 0;

@@ -72,7 +72,7 @@ var
 
 implementation
 
-uses SysUtils, Math, GNUGetText;
+uses SysUtils, Math, GNUGetText, uSkill;
 
 { TTalents }
 
