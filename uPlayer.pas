@@ -113,7 +113,6 @@ type
     procedure AddTurn;
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
-    procedure Skill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     procedure Defeat(AKiller: string);
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
@@ -129,7 +128,6 @@ type
     procedure Sell(Index: Integer);
     procedure Repair(Index: Integer);
     procedure AddExp(Value: Byte = 1);
-    procedure SkillSet;
     procedure StarterSet;
     procedure Rest(ATurns: Word);
     procedure Dialog(AMob: TMob);
@@ -226,29 +224,29 @@ begin
     case FWeaponSkill of
       skBlade:
         begin
-          Skill(FWeaponSkill, 2);
-          Skill(skAthletics, 2);
-          Skill(skDodge, 2);
+          Skills.DoSkill(FWeaponSkill, 2);
+          Skills.DoSkill(skAthletics, 2);
+          Skills.DoSkill(skDodge, 2);
           SatPerTurn := 5;
         end;
       skAxe:
         begin
-          Skill(FWeaponSkill, 2);
-          Skill(skAthletics, 3);
-          Skill(skDodge);
+          Skills.DoSkill(FWeaponSkill, 2);
+          Skills.DoSkill(skAthletics, 3);
+          Skills.DoSkill(skDodge);
           SatPerTurn := 6;
         end;
       skSpear:
         begin
-          Skill(FWeaponSkill, 2);
-          Skill(skAthletics);
-          Skill(skDodge, 3);
+          Skills.DoSkill(FWeaponSkill, 2);
+          Skills.DoSkill(skAthletics);
+          Skills.DoSkill(skDodge, 3);
           SatPerTurn := 4;
         end;
       skMace:
         begin
-          Skill(FWeaponSkill, 2);
-          Skill(skAthletics, 4);
+          Skills.DoSkill(FWeaponSkill, 2);
+          Skills.DoSkill(skAthletics, 4);
           SatPerTurn := 7;
         end;
     end;
@@ -578,7 +576,7 @@ begin
       begin
         if (Self.Mana >= ItemBase[I].ManaCost) then
         begin
-          Player.Skill(skConcentration);
+          Player.Skills.DoSkill(skConcentration);
           Self.Mana := Self.Mana - ItemBase[I].ManaCost;
           SpCast := SpCast + 1;
         end
@@ -1050,20 +1048,20 @@ begin
   // Life
   if (efLife in Effects) then
   begin
-    V := Self.GetSkillValue(skHealing) + Value;
+    V := Self.Skills.Skill[skHealing].Value + Value;
     MsgLog.Add(_('You feel healthy.'));
     MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
     Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
-    Self.Skill(skHealing);
+    Skills.DoSkill(skHealing);
   end;
   // Mana
   if (efMana in Effects) then
   begin
-    V := Self.GetSkillValue(skConcentration) + Value;
+    V := Self.Skills.Skill[skConcentration].Value + Value;
     MsgLog.Add(_('You feel magical energies restoring.'));
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
     Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
-    Self.Skill(skConcentration, 5);
+    Self.Skills.DoSkill(skConcentration, 5);
   end;
   // Food
   if (efFood in Effects) then
@@ -1074,8 +1072,8 @@ begin
   // Teleportation
   if (efTeleportation in Effects) then
   begin
-    VX := Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value);
-    VY := Math.RandomRange(Value, Self.GetSkillValue(skConcentration) + Value);
+    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
+    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));
@@ -1106,10 +1104,10 @@ begin
   begin
     if Abilities.IsAbility(abPoisoned) then
     begin
-      V := Self.GetSkillValue(skHealing) + Value;
+      V := Self.Skills.Skill[skHealing].Value + Value;
       Abilities.Ability[abPoisoned] := Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0,
         High(Word));
-      Self.Skill(skHealing);
+      Self.Skills.DoSkill(skHealing);
       if Abilities.IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))
       else

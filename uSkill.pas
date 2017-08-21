@@ -41,7 +41,7 @@ const
 
 implementation
 
-uses SysUtils, Math, GNUGetText, uTerminal, uPlayer, uGame;
+uses SysUtils, Math, GNUGetText, uTerminal, uPlayer, uGame, uMsgLog;
 
 { TSkills }
 
