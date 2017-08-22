@@ -21,7 +21,8 @@ implementation
 uses SysUtils, BearLibTerminal, uTerminal, uGame;
 
 const
-  T: array [0 .. 17] of string = (
+  T: array [0 .. 17] of string =
+    (
     ' ______________                                                                                     ',
     '| ____  . ____ |              ___  ___  ___                               ___                       ',
     '|/    |. |    \|              \ .\ \ .\ \. \                              \ .\                      ',
@@ -39,17 +40,35 @@ const
     '     \XXX|                                                                                          ',
     '      \XX|                                                                                          ',
     '       \X|                                                                                          ',
-    '        \|                                                                                          ');
+    '        \|                                                                                          '
+    );
 
-{ TLogo }
+  { TLogo }
 
 constructor TLogo.Create;
 var
-  I: Byte;
+  X, Y, L: Integer;
 begin
-  for I := 0 to 17 do
+  L := Length(T[0]);
+  for Y := 0 to 17 do
   begin
-    FL[I] := T[I];
+    FL[Y] := '';
+    for X := 1 to L do
+    begin
+      case T[Y][X] of
+        '_': FL[Y] := FL[Y] + '[color=light gray]' + T[Y][X] + '[/color]';
+        '\': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
+        '/': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
+        '(': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
+        ')': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
+        '|': FL[Y] := FL[Y] + '[color=dark gray]' + T[Y][X] + '[/color]';
+        '.': FL[Y] := FL[Y] + '[color=dark red]' + T[Y][X] + '[/color]';
+        ':': FL[Y] := FL[Y] + '[color=red]' + T[Y][X] + '[/color]';
+        'x': FL[Y] := FL[Y] + '[color=orange]' + T[Y][X] + '[/color]';
+        'X': FL[Y] := FL[Y] + '[color=dark yellow]' + T[Y][X] + '[/color]';
+        else FL[Y] := FL[Y] + T[Y][X];
+      end;
+    end;
   end;
 end;
 
@@ -69,9 +88,11 @@ begin
 end;
 
 initialization
-  Logo := TLogo.Create;
+
+Logo := TLogo.Create;
 
 finalization
-  FreeAndNil(Logo);
+
+FreeAndNil(Logo);
 
 end.
