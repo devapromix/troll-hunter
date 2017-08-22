@@ -75,7 +75,7 @@ type
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
     iScrollOfPhasing, iScrollOfTeleportation, iScrollOfDisappearing,
-    iScrollOfTownPortal,
+    iScrollOfTownPortal, iScrollOfBloodlust,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
@@ -259,6 +259,11 @@ const
     MaxDurability: 0; Level: 1; Price: 600; Color: clLightGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efTownPortal]; Value: 0;
     ManaCost: 50;),
+    // Scroll of Bloodlust
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 1; Price: 300; Color: clLightRed;
+    Deep: [deDarkWood .. deDrom]; Effects: [efBloodlust]; Value: 10;
+    ManaCost: 20;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
@@ -1134,6 +1139,8 @@ begin
     // Scroll of Town Portal
     iScrollOfTownPortal:
       Result := _('Scroll of town portal');
+    iScrollOfBloodlust:
+      Result := _('Scroll of bloodlust');
 
     // Rune Of Minor Healing
     iRuneOfMinorHealing:

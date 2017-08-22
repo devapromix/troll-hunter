@@ -4,7 +4,7 @@ interface
 
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
-    abSleeping);
+    abSleeping, abBloodlust);
 
 type
   TAbilities = class(TObject)

@@ -112,109 +112,109 @@ const
     Abilities: [];),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDarkWood]; MaxLife: 23; Level: 3;
-    Armor: 2; DV: 10; MaxCount: 3; Damage: (Min: 3; Max: 4;);
-    Color: $FFCC9988; Abilities: [abBurning];),
+    Armor: 2; DV: 10; MaxCount: 3; Damage: (Min: 3; Max: 4;); Color: $FFCC9988;
+    Abilities: [abBurning];),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    Armor: 2; DV: 11; MaxCount: 7; Damage: (Min: 1; Max: 4;);
-    Color: $FF777700;Abilities: [];),
+    Armor: 2; DV: 11; MaxCount: 7; Damage: (Min: 1; Max: 4;); Color: $FF777700;
+    Abilities: [];),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    Armor: 3; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4;);
-    Color: $FF777700;Abilities: [];),
+    Armor: 3; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4;); Color: $FF777700;
+    Abilities: [];),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 30; Level: 3;
-    Armor: 4; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4;);
-    Color: $FF777700;Abilities: [abBurning];),
+    Armor: 4; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4;); Color: $FF777700;
+    Abilities: [abBurning];),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGrayCave]; MaxLife: 32; Level: 4;
-    Armor: 4; DV: 14; MaxCount: 3; Damage: (Min: 4; Max: 5;);
-    Color: $FF777700;Abilities: [];),
+    Armor: 4; DV: 14; MaxCount: 3; Damage: (Min: 4; Max: 5;); Color: $FF777700;
+    Abilities: [];),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGrayCave]; MaxLife: 35; Level: 4;
-    Armor: 5; DV: 15; MaxCount: 1; Damage: (Min: 4; Max: 5;);
-    Color: $FF777700;Abilities: [abPoisoned, abStunned, abBurning];),
+    Armor: 5; DV: 15; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF777700;
+    Abilities: [abPoisoned, abStunned, abBurning];),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 38; Level: 4;
-    Armor: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3;);
-    Color: $FF777700;Abilities: [abBlinded];),
+    Armor: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3;); Color: $FF777700;
+    Abilities: [abBlinded];),
     // Worm
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 40; Level: 5;
-    Armor: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5;);
-    Color: $FF777700;Abilities: [abBlinded];),
+    Armor: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5;); Color: $FF777700;
+    Abilities: [abBlinded];),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5;
-    Armor: 5; DV: 18; MaxCount: 1; Damage: (Min: 4; Max: 6;);
-    Color: $FF7777CC;Abilities: [abPoisoned];),
+    Armor: 5; DV: 18; MaxCount: 1; Damage: (Min: 4; Max: 6;); Color: $FF7777CC;
+    Abilities: [abPoisoned];),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGrayCave]; MaxLife: 43; Level: 5;
-    Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 5; Max: 6;);
-    Color: $FF299AFF;Abilities: [abBurning, abBlinded];),
+    Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 5; Max: 6;); Color: $FF299AFF;
+    Abilities: [abBurning, abBlinded];),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 45; Level: 5;
-    Armor: 5; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5;);
-    Color: $FF992233;Abilities: [abPoisoned];),
+    Armor: 5; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5;); Color: $FF992233;
+    Abilities: [abPoisoned];),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 48; Level: 5;
-    Armor: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5;);
-    Color: $FF992233;Abilities: [abPoisoned];),
+    Armor: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5;); Color: $FF992233;
+    Abilities: [abPoisoned];),
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 50; Level: 5;
-    Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6;);
-    Color: $FF992233;Abilities: [abPoisoned];),
+    Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6;); Color: $FF992233;
+    Abilities: [abPoisoned];),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 55; Level: 6;
-    Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7;);
-    Color: $FF992233;Abilities: [abPoisoned];),
+    Armor: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7;); Color: $FF992233;
+    Abilities: [abPoisoned];),
     // Scarab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 60; Level: 6;
-    Armor: 6; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6;);
-    Color: $FF992233; Abilities: [abPoisoned];),
+    Armor: 6; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6;); Color: $FF992233;
+    Abilities: [abPoisoned];),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 65; Level: 6;
-    Armor: 7; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 9;);
-    Color: $FF992233; Abilities: [abPoisoned];),
+    Armor: 7; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 9;); Color: $FF992233;
+    Abilities: [abPoisoned];),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
-    Armor: 7; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5;);
-    Color: $FF992233; Abilities: [abBurning, abBlinded];),
+    Armor: 7; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5;); Color: $FF992233;
+    Abilities: [abBurning, abBlinded];),
     // Dire Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
-    Armor: 7; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7;);
-    Color: $FF888888; Abilities: [abStunned];),
+    Armor: 7; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7;); Color: $FF888888;
+    Abilities: [abStunned];),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeepCave]; MaxLife: 72; Level: 7;
-    Armor: 7; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8;);
-    Color: $FF992233; Abilities: [abBurning];),
+    Armor: 7; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8;); Color: $FF992233;
+    Abilities: [abBurning];),
     // Faun
     (Symbol: 'f'; Boss: False; Maps: [deDeepCave]; MaxLife: 73; Level: 7;
-    Armor: 7; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9;);
-    Color: $FF992233; Abilities: [abBlinded];),
+    Armor: 7; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9;); Color: $FF992233;
+    Abilities: [abBlinded];),
 
     // == Blood Cave == //
 
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 5; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8;);
-    Color: $FF00AA00; Abilities: [];),
+    Armor: 5; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8;); Color: $FF00AA00;
+    Abilities: [];),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 5; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9;);
-    Color: $FF116610; Abilities: [];),
+    Armor: 5; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9;); Color: $FF116610;
+    Abilities: [];),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 78; Level: 7;
-    Armor: 5; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10;);
-    Color: $FF445544; Abilities: [];),
+    Armor: 5; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10;); Color: $FF445544;
+    Abilities: [];),
     // Hobgoblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
-    Armor: 5; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10;);
-    Color: $FF55AA55; Abilities: [];),
+    Armor: 5; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10;); Color: $FF55AA55;
+    Abilities: [];),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
     Armor: 20; DV: 34; MaxCount: 1; Damage: (Min: 15; Max: 23;);
@@ -248,13 +248,16 @@ const
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; Armor: 12;
-    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00; Abilities: [abPoisoned];),
+    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00;
+    Abilities: [abPoisoned];),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; Armor: 12;
-    DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977; Abilities: [abStunned];),
+    DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977;
+    Abilities: [abStunned];),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; Armor: 12;
-    DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333; Abilities: [abPoisoned];),
+    DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333;
+    Abilities: [abPoisoned];),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
     Armor: 15; DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 22;);
@@ -292,12 +295,12 @@ const
 
     // Black Hound
     (Symbol: 'h'; Boss: True; Maps: [deDarkWood]; MaxLife: 45; Level: 3;
-    Armor: 8; DV: 22; MaxCount: 1; Damage: (Min: 8; Max: 10;);
-    Color: $FFCC8899; Abilities: [abBurning, abBlinded];),
+    Armor: 8; DV: 22; MaxCount: 1; Damage: (Min: 8; Max: 10;); Color: $FFCC8899;
+    Abilities: [abBurning, abBlinded];),
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDarkWood]; MaxLife: 50; Level: 3;
-    Armor: 9; DV: 25; MaxCount: 1; Damage: (Min: 9; Max: 11;);
-    Color: $FF66DD99; Abilities: [abPoisoned, abStunned, abBlinded];),
+    Armor: 9; DV: 25; MaxCount: 1; Damage: (Min: 9; Max: 11;); Color: $FF66DD99;
+    Abilities: [abPoisoned, abStunned, abBlinded];),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDarkWood]; MaxLife: 55; Level: 3;
     Armor: 10; DV: 28; MaxCount: 1; Damage: (Min: 10; Max: 12;);
@@ -533,44 +536,68 @@ begin
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
+    // Bloodlust (10%)
+    if (abBloodlust in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 9) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(L, L + L), 0, High(Byte));
+      Abilities.Modify(abBloodlust, Dam);
+      MsgLog.Add
+        (Format(Terminal.Colorize(_('%s used the spell "Bloodlust" (%d).'),
+        'Orange'), [The, Dam]));
+    end;
+
     // Blinded (10%)
-    if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 9) = 0) then
+    if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 9) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L, L + L), 0, High(Byte));
       Player.Abilities.Modify(abBlinded, Dam);
-      MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'), [The, Dam]));
+      MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'),
+        [The, Dam]));
+      Exit;
     end;
     // Stunned (33%)
-    if (abStunned in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 3) = 0) then
+    if (abStunned in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 3) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, High(Byte));
       Player.Abilities.Modify(abStunned, Dam);
-      MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'), 'Lightest Red'), [The, Dam]));
+      MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'),
+        'Lightest Red'), [The, Dam]));
+      Exit;
     end;
     // Poisoned (20%)
-    if (abPoisoned in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 5) = 0) then
+    if (abPoisoned in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, High(Byte));
       Player.Abilities.Modify(abPoisoned, Dam);
-      MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'), 'Lighter Green'), [The, Dam]));
+      MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'),
+        'Lighter Green'), [The, Dam]));
       Exit;
     end;
     // Burning (10%)
-    if (abBurning in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 9) = 0) then
+    if (abBurning in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 9) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L + 2, L + 5), 0, High(Byte));
       Player.Abilities.Modify(abBurning, Dam);
-      MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'), 'Dark Red'), [The, Dam]));
+      MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'),
+        'Dark Red'), [The, Dam]));
       Exit;
     end;
     // Attack
     Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
       Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
       (Ord(Game.Difficulty) * 3)), 0, High(Word));
+    if Abilities.IsAbility(abBloodlust) then
+      Inc(Dam, (Dam div 3));
     Player.Life := EnsureRange(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if Player.Life = 0 then
@@ -629,7 +656,8 @@ end;
 
 function TMob.GetRadius: Byte;
 begin
-  Result := EnsureRange(30 - (Player.Skills.Skill[skStealth].Value div 3), 5, 30);
+  Result := EnsureRange(30 - (Player.Skills.Skill[skStealth]
+    .Value div 3), 5, 30);
 end;
 
 procedure TMob.Process;
@@ -657,8 +685,8 @@ begin
   if (Dist <= 2) and Player.IsRest then
     Player.IsRest := False;
   // A*
-  if not DoAStar(High(Byte) + 1, High(Byte) + 1, X, Y, Player.X, Player.Y, @MyCallback,
-    NX, NY) then
+  if not DoAStar(High(Byte) + 1, High(Byte) + 1, X, Y, Player.X, Player.Y,
+    @MyCallback, NX, NY) then
     Exit;
   if (NX = Player.X) and (NY = Player.Y) then
   begin
@@ -672,7 +700,8 @@ begin
   else
     Self.Walk(X, Y, Player.X, Player.Y);
   OnTurn();
-  if (Self.Life = 0) then Self.Defeat;
+  if (Self.Life = 0) then
+    Self.Defeat;
 end;
 
 procedure TMob.Render(AX, AY: Byte);
@@ -702,46 +731,46 @@ begin
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NY := -1;
-      end;
+        begin
+          NY := -1;
+        end;
       1:
-      begin
-        NY := +1;
-      end;
+        begin
+          NY := +1;
+        end;
       2:
-      begin
-        NX := +1;
-        NY := -1;
-      end;
+        begin
+          NX := +1;
+          NY := -1;
+        end;
       3:
-      begin
-        NX := +1;
-        NY := +1;
-      end;
+        begin
+          NX := +1;
+          NY := +1;
+        end;
     end;
   end;
   if (AX > PX) then
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NY := -1;
-      end;
+        begin
+          NY := -1;
+        end;
       1:
-      begin
-        NY := +1;
-      end;
+        begin
+          NY := +1;
+        end;
       2:
-      begin
-        NX := -1;
-        NY := +1;
-      end;
+        begin
+          NX := -1;
+          NY := +1;
+        end;
       3:
-      begin
-        NX := -1;
-        NY := -1;
-      end;
+        begin
+          NX := -1;
+          NY := -1;
+        end;
     end;
   end;
   //
@@ -749,46 +778,46 @@ begin
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NX := +1;
-      end;
+        begin
+          NX := +1;
+        end;
       1:
-      begin
-        NX := -1;
-      end;
+        begin
+          NX := -1;
+        end;
       2:
-      begin
-        NX := -1;
-        NY := +1;
-      end;
+        begin
+          NX := -1;
+          NY := +1;
+        end;
       3:
-      begin
-        NX := +1;
-        NY := +1;
-      end;
+        begin
+          NX := +1;
+          NY := +1;
+        end;
     end;
   end;
   if (AY > PY) then
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NX := +1;
-      end;
+        begin
+          NX := +1;
+        end;
       1:
-      begin
-        NX := -1;
-      end;
+        begin
+          NX := -1;
+        end;
       2:
-      begin
-        NX := -1;
-        NY := -1;
-      end;
+        begin
+          NX := -1;
+          NY := -1;
+        end;
       3:
-      begin
-        NX := +1;
-        NY := -1;
-      end;
+        begin
+          NX := +1;
+          NY := -1;
+        end;
     end;
   end;
   //
@@ -879,7 +908,8 @@ end;
 
 function TMobs.ChMob(I: Integer; AX, AY: Byte): Boolean;
 begin
-  with FMob[I] do Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y)
+  with FMob[I] do
+    Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y)
 end;
 
 function TMobs.GetFreeTile(AX, AY: Byte): Boolean;

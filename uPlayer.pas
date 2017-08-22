@@ -7,7 +7,8 @@ uses uEntity, uMob, uSkill;
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
     efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
-    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold);
+    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
+    efBloodlust);
 
 type
   TEffects = set of TEffect;
@@ -200,6 +201,7 @@ begin
     // Attack
     Dam := EnsureRange(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0,
       High(Word));
+    if Abilities.IsAbility(abBloodlust) then Dec(Dam, Dam div 3);
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
@@ -1113,6 +1115,12 @@ begin
   if (efMagicEye in Effects) then
   begin
 
+  end;
+  // Bloodlust
+  if (efBloodlust in Effects) then
+  begin
+    Abilities.Modify(abBloodlust, Value);
+    MsgLog.Add(_('You feel lust for blood.'));
   end;
   // Cure poison
   if (efCurePoison in Effects) then
