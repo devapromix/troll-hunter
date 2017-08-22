@@ -96,11 +96,11 @@ const
     Abilities: [];),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2;
-    Armor: 1; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF331155;
+    Armor: 1; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF444444;
     Abilities: [abStunned];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2;
-    Armor: 1; DV: 6; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FF331155;
+    Armor: 1; DV: 6; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA;
     Abilities: [abStunned];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2;
@@ -108,7 +108,7 @@ const
     Abilities: [abPoisoned];),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDarkWood]; MaxLife: 22; Level: 3;
-    Armor: 2; DV: 8; MaxCount: 3; Damage: (Min: 2; Max: 4;); Color: $FF666666;
+    Armor: 2; DV: 8; MaxCount: 4; Damage: (Min: 2; Max: 4;); Color: $FF666666;
     Abilities: [];),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDarkWood]; MaxLife: 23; Level: 3;
@@ -120,15 +120,15 @@ const
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
     Armor: 2; DV: 11; MaxCount: 7; Damage: (Min: 1; Max: 4;); Color: $FF777700;
-    Abilities: [];),
+    Abilities: [abBloodlust];),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
     Armor: 3; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4;); Color: $FF777700;
-    Abilities: [];),
+    Abilities: [abBloodlust];),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 30; Level: 3;
     Armor: 4; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4;); Color: $FF777700;
-    Abilities: [abBurning];),
+    Abilities: [abBurning, abBloodlust];),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGrayCave]; MaxLife: 32; Level: 4;
     Armor: 4; DV: 14; MaxCount: 3; Damage: (Min: 4; Max: 5;); Color: $FF777700;
@@ -202,19 +202,19 @@ const
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
     Armor: 5; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8;); Color: $FF00AA00;
-    Abilities: [];),
+    Abilities: [abBloodlust];),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
     Armor: 5; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9;); Color: $FF116610;
-    Abilities: [];),
+    Abilities: [abBloodlust];),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 78; Level: 7;
     Armor: 5; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10;); Color: $FF445544;
-    Abilities: [];),
+    Abilities: [abBloodlust];),
     // Hobgoblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
     Armor: 5; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10;); Color: $FF55AA55;
-    Abilities: [];),
+    Abilities: [abBloodlust];),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
     Armor: 20; DV: 34; MaxCount: 1; Damage: (Min: 15; Max: 23;);
@@ -226,23 +226,23 @@ const
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
     Armor: 10; DV: 35; MaxCount: 1; Damage: (Min: 16; Max: 24;);
-    Color: $FF445544; Abilities: [abStunned, abBurning];),
+    Color: $FF445544; Abilities: [abStunned, abBurning, abBloodlust];),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 88; Level: 8;
     Armor: 10; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15;);
-    Color: $FF445544; Abilities: [];),
+    Color: $FF445544; Abilities: [abBloodlust];),
     // Orc Brute
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 8;
     Armor: 10; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 16;);
-    Color: $FF445544; Abilities: [];),
+    Color: $FF445544; Abilities: [abBloodlust];),
     // Orc Warrior
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9;
     Armor: 11; DV: 39; MaxCount: 4; Damage: (Min: 12; Max: 17;);
-    Color: $FF445544; Abilities: [];),
+    Color: $FF445544; Abilities: [abBloodlust];),
     // Orc Warlord
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9;
     Armor: 12; DV: 40; MaxCount: 3; Damage: (Min: 15; Max: 18;);
-    Color: $FF445544; Abilities: [abBurning];),
+    Color: $FF445544; Abilities: [abBurning, abBloodlust];),
 
     // == Drom == //
 
@@ -253,7 +253,7 @@ const
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; Armor: 12;
     DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977;
-    Abilities: [abStunned];),
+    Abilities: [abStunned, abBloodlust];),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; Armor: 12;
     DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333;
@@ -261,11 +261,11 @@ const
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
     Armor: 15; DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 22;);
-    Color: $FF223333; Abilities: [abPoisoned, abBlinded];),
+    Color: $FF223333; Abilities: [abPoisoned, abBlinded, abBloodlust];),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
     Armor: 15; DV: 45; MaxCount: 3; Damage: (Min: 18; Max: 22;);
-    Color: $FF223333; Abilities: [abBurning];),
+    Color: $FF223333; Abilities: [abBurning, abBloodlust];),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 18; DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23;);
@@ -289,7 +289,7 @@ const
     // Troll Brute
     (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30;);
-    Color: $FF223333; Abilities: [abStunned];),
+    Color: $FF223333; Abilities: [abStunned, abBloodlust];),
 
     // == Bosses == //
 
@@ -308,7 +308,7 @@ const
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGrayCave]; MaxLife: 60; Level: 5;
     Armor: 12; DV: 32; MaxCount: 1; Damage: (Min: 10; Max: 15;);
-    Color: $FFAA77CC; Abilities: [abStunned, abBurning];),
+    Color: $FFAA77CC; Abilities: [abStunned, abBurning, abBloodlust];),
     // Swamp Worm
     (Symbol: 'w'; Boss: True; Maps: [deGrayCave]; MaxLife: 63; Level: 5;
     Armor: 14; DV: 35; MaxCount: 1; Damage: (Min: 12; Max: 18;);
@@ -340,11 +340,11 @@ const
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10;
     Armor: 20; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30;);
-    Color: $FF223333; Abilities: [abStunned];),
+    Color: $FF223333; Abilities: [abStunned, abBloodlust];),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15;
     Armor: 40; DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75;);
-    Color: $FFDD7711; Abilities: [abBurning];),
+    Color: $FFDD7711; Abilities: [abBurning, abBloodlust];),
 
     // == NPC == //
 
@@ -541,11 +541,12 @@ begin
       (Math.RandomRange(0, 9) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L, L + L), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L + 10, L + 25), 0, High(Byte));
       Abilities.Modify(abBloodlust, Dam);
       MsgLog.Add
         (Format(Terminal.Colorize(_('%s used the spell "Bloodlust" (%d).'),
         'Orange'), [The, Dam]));
+      Exit;
     end;
 
     // Blinded (10%)

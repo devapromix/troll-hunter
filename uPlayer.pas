@@ -201,7 +201,8 @@ begin
     // Attack
     Dam := EnsureRange(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0,
       High(Word));
-    if Abilities.IsAbility(abBloodlust) then Dec(Dam, Dam div 3);
+    if Abilities.IsAbility(abBloodlust) then
+      Dec(Dam, Dam div 3);
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
@@ -1119,8 +1120,10 @@ begin
   // Bloodlust
   if (efBloodlust in Effects) then
   begin
-    Abilities.Modify(abBloodlust, Value);
-    MsgLog.Add(_('You feel lust for blood.'));
+    V := Math.RandomRange(Value, Player.Skills.Skill[skConcentration]
+      .Value + Value);
+    Abilities.Modify(abBloodlust, V);
+    MsgLog.Add(Format(_('You feel lust for blood (%d).'), [V]));
   end;
   // Cure poison
   if (efCurePoison in Effects) then
