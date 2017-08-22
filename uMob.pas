@@ -81,11 +81,11 @@ const
     // Big Rat
     (Symbol: 'r'; Boss: False; Maps: [deDarkWood]; MaxLife: 5; Level: 1;
     Armor: 0; DV: 2; MaxCount: 9; Damage: (Min: 1; Max: 2;); Color: $FF249988;
-    Abilities: [abBlinded];),
+    Abilities: [];),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDarkWood]; MaxLife: 7; Level: 1;
     Armor: 0; DV: 3; MaxCount: 7; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;
-    Abilities: [abPoisoned, abBlinded];),
+    Abilities: [abPoisoned];),
     // Giant Gecko
     (Symbol: 'g'; Boss: False; Maps: [deDarkWood]; MaxLife: 8; Level: 1;
     Armor: 0; DV: 3; MaxCount: 5; Damage: (Min: 2; Max: 3;); Color: $FF993377;
@@ -96,11 +96,11 @@ const
     Abilities: [];),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2;
-    Armor: 1; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 6;); Color: $FF331155;
+    Armor: 1; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF331155;
     Abilities: [abStunned];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2;
-    Armor: 1; DV: 6; MaxCount: 1; Damage: (Min: 4; Max: 6;); Color: $FF331155;
+    Armor: 1; DV: 6; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FF331155;
     Abilities: [abStunned];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2;
@@ -108,11 +108,11 @@ const
     Abilities: [abPoisoned];),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDarkWood]; MaxLife: 22; Level: 3;
-    Armor: 2; DV: 8; MaxCount: 3; Damage: (Min: 2; Max: 5;); Color: $FF666666;
+    Armor: 2; DV: 8; MaxCount: 3; Damage: (Min: 2; Max: 4;); Color: $FF666666;
     Abilities: [];),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDarkWood]; MaxLife: 23; Level: 3;
-    Armor: 2; DV: 10; MaxCount: 3; Damage: (Min: 3; Max: 5;);
+    Armor: 2; DV: 10; MaxCount: 3; Damage: (Min: 3; Max: 4;);
     Color: $FFCC9988; Abilities: [abBurning];),
 
     // == Gray Cave == //
@@ -533,11 +533,11 @@ begin
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
-    // Blinded (33%)
-    if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 3) = 0) then
+    // Blinded (10%)
+    if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 9) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(5, L + 15), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L, L + L), 0, High(Byte));
       Player.Abilities.Modify(abBlinded, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'), [The, Dam]));
     end;
@@ -545,7 +545,7 @@ begin
     if (abStunned in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 3) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(1, L + 3), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, High(Byte));
       Player.Abilities.Modify(abStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'), 'Lightest Red'), [The, Dam]));
     end;
@@ -553,7 +553,7 @@ begin
     if (abPoisoned in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L * 15, L * 25), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, High(Byte));
       Player.Abilities.Modify(abPoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'), 'Lighter Green'), [The, Dam]));
       Exit;
@@ -562,7 +562,7 @@ begin
     if (abBurning in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 9) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L + 1, L + 5), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L + 2, L + 5), 0, High(Byte));
       Player.Abilities.Modify(abBurning, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'), 'Dark Red'), [The, Dam]));
       Exit;
@@ -570,7 +570,7 @@ begin
     // Attack
     Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
       Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
-      (Ord(Game.Difficulty) * 5) + 1), 0, High(Word));
+      (Ord(Game.Difficulty) * 3)), 0, High(Word));
     Player.Life := EnsureRange(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if Player.Life = 0 then
