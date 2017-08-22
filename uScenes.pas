@@ -258,7 +258,7 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
-  uSpellbook, uTalent, uSkill, uAbility;
+  uSpellbook, uTalent, uSkill, uAbility, uLogo;
 
 { TScene }
 
@@ -443,7 +443,7 @@ var
   I: TSceneEnum;
 begin
   for I := Low(TSceneEnum) to High(TSceneEnum) do
-    FScene[I].Free;
+    FreeAndNil(FScene[I]);
   inherited;
 end;
 
@@ -500,10 +500,9 @@ end;
 
 procedure TSceneTitle.Render;
 begin
-  Terminal.Print(CX, CY - 3, Format('%s v.%s', [Game.GetTitle, Game.GetVersion]
-    ), TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY - 1, 'by Apromix <bees@meta.ua>', TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 1, Format(_('Press %s to continue...'),
+  Logo.Render;
+  Terminal.Print(CX + (CX div 2), CY - 2, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
+  Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to continue...'),
     [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
@@ -588,7 +587,8 @@ end;
 procedure TSceneHelp.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
   end;
 end;
@@ -996,7 +996,8 @@ end;
 procedure TSceneInv.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
     TK_SPACE: // Player
       Scenes.SetScene(scPlayer);
@@ -1024,7 +1025,8 @@ end;
 procedure TSceneDrop.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
     TK_A .. TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
@@ -1115,7 +1117,8 @@ end;
 procedure TScenePlayer.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
     TK_SPACE: // Inventory
       begin
@@ -1219,7 +1222,8 @@ begin
         for I := 0 to FCount - 1 do
           Items.AddItemToInv;
       end;
-    TK_A .. TK_Z: // Pick up
+    TK_A .. TK_Z:
+      // Pick up
       Items.AddItemToInv(Key - TK_A);
   else
     Game.Timer := High(Byte);
@@ -1238,7 +1242,8 @@ end;
 procedure TSceneMessages.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
   end;
 end;
@@ -1304,7 +1309,8 @@ end;
 procedure TSceneStatistics.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
   end;
 end;
@@ -1436,7 +1442,8 @@ end;
 procedure TSceneDialog.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
     TK_A: //
       begin
@@ -1519,7 +1526,8 @@ begin
           Scenes.SetScene(scBuy);
         end;
       end;
-    TK_C: // Selling items
+    TK_C:
+      // Selling items
       begin
         if (ntSell_C in NPCType) then
         begin
@@ -1548,7 +1556,8 @@ end;
 procedure TSceneSell.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Selling an item
       Player.Sell(Key - TK_A);
@@ -1575,7 +1584,8 @@ end;
 procedure TSceneBuy.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Buy items
       Player.Buy(Key - TK_A);
@@ -1602,7 +1612,8 @@ end;
 procedure TSceneRepair.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Repairing an item
       Player.Repair(Key - TK_A);
@@ -1617,8 +1628,8 @@ procedure TSceneCalendar.Render;
 var
   Y: Byte;
 
-  procedure Add(const AText: string; AValue: string;
-    AAdvValue: string = ''); overload;
+  procedure Add(const AText: string; AValue: string; AAdvValue: string = '');
+    overload;
   var
     S: string;
     X: Word;
@@ -1639,8 +1650,8 @@ var
     Inc(Y);
   end;
 
-  procedure Add(const AText: string; AValue: Integer;
-    AAdvValue: string = ''); overload;
+  procedure Add(const AText: string; AValue: Integer; AAdvValue: string = '');
+    overload;
   begin
     Add(AText, IntToStr(AValue), AAdvValue);
   end;
@@ -1662,7 +1673,8 @@ end;
 procedure TSceneCalendar.Update(var Key: Word);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
+      // Close
       Scenes.SetScene(scGame);
   end;
 end;

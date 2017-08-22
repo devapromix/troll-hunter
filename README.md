@@ -1,10 +1,18 @@
-# Trollhunter
+ ________________                 
+| _____  . _____ |               ____ ____ ____                                  ___         
+|/     |::|     \|               \ . \\  .\\ . \                                 \ .\         
+       |xx|                       | .| |. | | .|                                 | .|         
+       |xx| ____  ____   _______  |. | | .| |. | _____  _____  ____ ____  _____  |. |____   _______  ____ ____ 
+      _|XX| \:::|/::::\ /:::::::\ |::| |::| |::|/:::::\ \:::|  \:::|\:::|/:::::\ |:::::::| /:::::::\\:::|/::::\
+      \XXX|  |xx|   \x||xx(   )xx||xx| |xx| |xx|    \xx\ |xx|   |xx| |xx|    \xx\|xx|     |xx|___)xx||xx|   \x|
+       \XX|  |xx|      |xx|   |xx||xx| |xx| |xx|     |xx||xx|   |xx| |xx|    |xx||xx|     |xx|\xxxxx||xx|      
+        \X|  |XX|      |XX(___)XX||XX| |XX| |XX|     |XX||XX\___|XX| |XX|    |XX||XX\_____|XX|______ |XX|      
+         \|  \XXX\      \XXXXXXX/ \XXX\\XXX\\XXX\    \XXX\\XXXX/|XXX\\XXX\   \XXX\\XXXXXXX\\XXXXXXX/ \XXX\    
 
 ## Introduction
 Trollhunter is a single-player roguelike game. The land Elvion is surrounded by mountains. In the center of this land there is village, Dork. The land is in danger, because The Troll King and his armies are coming. Only a legendary hero can kill the monster. You play as a lonely hero who has to slay trolls to save your land Elvion. You can gather equipment, fight enemies and try to survive for your final confrontation with boss.
 
 ## Current State
-Current version is 0.9.
 The game is currently in demo stage with very limited contents.
 
 ## Credits

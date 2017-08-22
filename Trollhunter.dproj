@@ -94,6 +94,7 @@
         <DCCReference Include="uTalent.pas"/>
         <DCCReference Include="uAbility.pas"/>
         <DCCReference Include="uSkill.pas"/>
+        <DCCReference Include="uLogo.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

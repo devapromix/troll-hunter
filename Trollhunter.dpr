@@ -21,7 +21,8 @@ uses
   uSpellbook in 'uSpellbook.pas',
   uTalent in 'uTalent.pas',
   uAbility in 'uAbility.pas',
-  uSkill in 'uSkill.pas';
+  uSkill in 'uSkill.pas',
+  uLogo in 'uLogo.pas';
 
 var
   Key: Word = 0;
