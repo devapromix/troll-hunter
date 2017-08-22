@@ -11,6 +11,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Render;
+    function Width: Byte;
   end;
 
 var
@@ -22,16 +23,15 @@ uses SysUtils, BearLibTerminal, uTerminal, uGame;
 
 const
   T: array [0 .. 17] of string =
-    (
-    ' ______________                                                                                     ',
+    (' ______________                                                                                     ',
     '| ____  . ____ |              ___  ___  ___                               ___                       ',
     '|/    |. |    \|              \ .\ \ .\ \. \                              \ .\                      ',
     '      | .|                    | .| |. | | .|                              | .|                      ',
     '      |. |____  ___   ______  |. | | .| |. | ____ ____   ____ ____  ____  |. |__   ______ ____  ___ ',
     '      |::|\:::|/:::\ /::::::\ |::| |::| |::|/::::\\:::\  \:::|\:::|/::::\ |:::::| /::::::\\:::|/:::\',
-    '      |xx| |xx|  \x||xx(  )xx||xx| |xx| |xx|   \xx\|xx|   |xx| |xx|   \xx\|xx|   |xx(__)xx||xx|  \x|',
+    '      |xx| |xx|  \x||xx/  \xx||xx| |xx| |xx|   \xx\|xx|   |xx| |xx|   \xx\|xx|   |xx/__\xx||xx|  \x|',
     '      |xx| |xx|     |xx|  |xx||xx| |xx| |xx|   |xx||xx|   |xx| |xx|   |xx||xx|   |xx|xxxxx||xx|     ',
-    '      |XX| |XX|     |XX(__)XX||XX| |XX| |XX|   |XX||XX\___|XX| |XX|   |XX||XX\___|XX|_____ |XX|     ',
+    '      |XX| |XX|     |XX\__/XX||XX| |XX| |XX|   |XX||XX\___|XX| |XX|   |XX||XX\___|XX|_____ |XX|     ',
     '      |XX| \XXX\     \XXXXXX/ \XXX\\XXX\\XXX\  \XXX\\XXXX/|XXX\\XXX\  \XXX\\XXXX/ \XXXXXX/ \XXX\    ',
     '      |XX|                                                                                          ',
     '      |XX|                                                                                          ',
@@ -40,33 +40,38 @@ const
     '     \XXX|                                                                                          ',
     '      \XX|                                                                                          ',
     '       \X|                                                                                          ',
-    '        \|                                                                                          '
-    );
+    '        \|                                                                                          ');
 
   { TLogo }
 
 constructor TLogo.Create;
 var
-  X, Y, L: Integer;
+  X, Y: Byte;
+  C: Char;
 begin
-  L := Length(T[0]);
   for Y := 0 to 17 do
   begin
     FL[Y] := '';
-    for X := 1 to L do
+    for X := 1 to Width do
     begin
-      case T[Y][X] of
-        '_': FL[Y] := FL[Y] + '[color=light gray]' + T[Y][X] + '[/color]';
-        '\': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
-        '/': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
-        '(': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
-        ')': FL[Y] := FL[Y] + '[color=gray]' + T[Y][X] + '[/color]';
-        '|': FL[Y] := FL[Y] + '[color=dark gray]' + T[Y][X] + '[/color]';
-        '.': FL[Y] := FL[Y] + '[color=dark red]' + T[Y][X] + '[/color]';
-        ':': FL[Y] := FL[Y] + '[color=red]' + T[Y][X] + '[/color]';
-        'x': FL[Y] := FL[Y] + '[color=orange]' + T[Y][X] + '[/color]';
-        'X': FL[Y] := FL[Y] + '[color=dark yellow]' + T[Y][X] + '[/color]';
-        else FL[Y] := FL[Y] + T[Y][X];
+      C := T[Y][X];
+      case C of
+        '_':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'gray');
+        '\', '/':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'dark gray');
+        '|':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'darker gray');
+        '.':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'red');
+        ':':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'light red');
+        'x':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'orange');
+        'X':
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'yellow');
+      else
+        FL[Y] := FL[Y] + T[Y][X];
       end;
     end;
   end;
@@ -85,6 +90,11 @@ begin
   FX := Screen.Width div 2;
   for I := 0 to 17 do
     Terminal.Print(FX, I + 3, FL[I], TK_ALIGN_CENTER);
+end;
+
+function TLogo.Width: Byte;
+begin
+  Result := Length(T[0]);
 end;
 
 initialization
