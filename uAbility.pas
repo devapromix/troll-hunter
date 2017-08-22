@@ -18,14 +18,14 @@ type
     procedure Clear;
     property Ability[I: TAbilityEnum]: Word read GetAbility write SetAbility;
     function IsAbility(Value: TAbilityEnum): Boolean;
-    procedure Append(I: TAbilityEnum; Value: Word);
+    procedure Modify(I: TAbilityEnum; Value: Integer);
   end;
 
 implementation
 
 { TAbility }
 
-procedure TAbilities.Append(I: TAbilityEnum; Value: Word);
+procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
   FAbility[I] := FAbility[I] + Value;
 end;
