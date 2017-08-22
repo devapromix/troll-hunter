@@ -23,24 +23,24 @@ uses SysUtils, BearLibTerminal, uTerminal, uGame;
 
 const
   T: array [0 .. 17] of string =
-    (' ______________                                                                                     ',
-    '| ____  . ____ |              ___  ___  ___                               ___                       ',
-    '|/    |. |    \|              \ .\ \ .\ \. \                              \ .\                      ',
-    '      | .|                    | .| |. | | .|                              | .|                      ',
-    '      |. |____  ___   ______  |. | | .| |. | ____ ____   ____ ____  ____  |. |__   ______ ____  ___ ',
-    '      |::|\:::|/:::\ /::::::\ |::| |::| |::|/::::\\:::\  \:::|\:::|/::::\ |:::::| /::::::\\:::|/:::\',
-    '      |xx| |xx|  \x||xx/  \xx||xx| |xx| |xx|   \xx\|xx|   |xx| |xx|   \xx\|xx|   |xx/__\xx||xx|  \x|',
-    '      |xx| |xx|     |xx|  |xx||xx| |xx| |xx|   |xx||xx|   |xx| |xx|   |xx||xx|   |xx|xxxxx||xx|     ',
-    '      |XX| |XX|     |XX\__/XX||XX| |XX| |XX|   |XX||XX\___|XX| |XX|   |XX||XX\___|XX|_____ |XX|     ',
-    '      |XX| \XXX\     \XXXXXX/ \XXX\\XXX\\XXX\  \XXX\\XXXX/|XXX\\XXX\  \XXX\\XXXX/ \XXXXXX/ \XXX\    ',
-    '      |XX|                                                                                          ',
-    '      |XX|                                                                                          ',
-    '      |XX|                                                                                          ',
-    '     _|XX|                                                                                          ',
-    '     \XXX|                                                                                          ',
-    '      \XX|                                                                                          ',
-    '       \X|                                                                                          ',
-    '        \|                                                                                          ');
+    (' ______________                                                                                   ',
+    '| ____  . ____ |              ___ ___ ___                               ___                       ',
+    '|/    |. |    \|              \ .\\ .\\. \                              \ .\                      ',
+    '      | .|                    | .||. || .|                              | .|                      ',
+    '      |. |____  ___   ______  |. || .||. | ____ ____   ____ ____  ____  |. |__   ______ ____  ___ ',
+    '      |::|\:::|/:::\ /::::::\ |::||::||::|/::::\\:::\  \:::|\:::|/::::\ |:::::| /::::::\\:::|/:::\',
+    '      |xx| |xx|  \x||xx/  \xx||xx||xx||xx|   \xx\|xx|   |xx| |xx|   \xx\|xx|   |xx/__\xx||xx|  \x|',
+    '      |xx| |xx|     |xx|  |xx||xx||xx||xx|   |xx||xx|   |xx| |xx|   |xx||xx|   |xx|xxxxx||xx|     ',
+    '      |XX| |XX|     |XX\__/XX||XX||XX||XX|   |XX||XX\___|XX| |XX|   |XX||XX\___|XX|_____ |XX|     ',
+    '      |XX| \XX\      \XXXXXX/ \XX\\XX\\XX\   \XX\ \XXXX/|XX\ \XX\   \XX\ \XXXX/ \XXXXXX/ \XX\     ',
+    '      |XX|                                                                                        ',
+    '      |XX|                                                                                        ',
+    '      |XX|                                                                                        ',
+    '     _|XX|                                                                                        ',
+    '     \XXX|                                                                                        ',
+    '      \XX|                                                                                        ',
+    '       \X|                                                                                        ',
+    '        \|                                                                                        ');
 
   { TLogo }
 
@@ -69,7 +69,7 @@ begin
         'x':
           FL[Y] := FL[Y] + Terminal.Colorize(C, 'orange');
         'X':
-          FL[Y] := FL[Y] + Terminal.Colorize(C, 'yellow');
+          FL[Y] := FL[Y] + Terminal.Colorize(C, 'light yellow');
       else
         FL[Y] := FL[Y] + T[Y][X];
       end;
