@@ -40,10 +40,6 @@ const
     itBodyArmor];
 
 type
-  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
-    stNeck, stFinger);
-
-type
   TItemBase = record
     Symbol: Char;
     ItemType: TItemType;

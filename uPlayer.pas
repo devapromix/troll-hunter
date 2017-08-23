@@ -5,6 +5,10 @@ interface
 uses uEntity, uMob, uSkill, uStatistic;
 
 type
+  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
+    stNeck, stFinger);
+
+type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
     efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
     efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
@@ -120,7 +124,9 @@ type
     procedure Equip(Index: Integer);
     procedure UnEquip(Index: Integer);
     procedure Sell(Index: Integer);
-    procedure Repair(Index: Integer);
+    procedure RepairItem(Index: Integer);
+    procedure BreakItem(Index: Integer); overload;
+    procedure BreakItem(ASlot: TSlotType); overload;
     procedure AddExp(Value: Byte = 1);
     procedure Start;
     procedure Rest(ATurns: Word);
@@ -133,8 +139,8 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, IniFiles, uGame, uMap, uScenes,
-  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uItem, uCorpse, uCalendar,
+uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
+  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility;
 
 { TPlayer }
@@ -216,6 +222,8 @@ begin
     // Attack
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
+    BreakItem(stMainHand);
+
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     case FWeaponSkill of
@@ -711,7 +719,7 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.Repair(Index: Integer);
+procedure TPlayer.RepairItem(Index: Integer);
 var
   RepairCost: Word;
   AItem: Item;
@@ -737,6 +745,51 @@ begin
     end;
   end;
   Self.Calc;
+end;
+
+procedure TPlayer.BreakItem(Index: Integer);
+var
+  AItem: Item;
+  The: string;
+begin
+  AItem := Items_Inventory_GetItem(Index);
+  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
+    Exit;
+  The := GetCapit(GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]));
+  AItem.Durability := Math.EnsureRange(AItem.Durability - 1, 0, High(Byte));
+  if ((AItem.Durability > 0) and (AItem.Durability < (AItem.MaxDurability div 4))) then
+    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'),
+      [The, AItem.Durability, AItem.MaxDurability]), clAlarm));
+  Items_Inventory_SetItem(Index, AItem);
+  if (AItem.Durability = 0) then
+  begin      
+    Items_Inventory_DeleteItem(Index, AItem);
+    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'), [The]), clAlarm));
+  end;
+  Self.Calc;
+end;
+
+procedure TPlayer.BreakItem(ASlot: TSlotType);
+var
+  FCount, I: Integer;
+  FItem: Item;
+  FI: TItemEnum;
+begin
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    if (FItem.Equipment > 0) then
+    begin
+      FI := TItemEnum(FItem.ItemID);
+      if (ItemBase[FI].SlotType = ASlot) then
+      begin
+        BreakItem(I);
+        Exit;
+      end;
+    end;
+  end;
+
 end;
 
 procedure TPlayer.Drop(Index: Integer);
@@ -913,7 +966,8 @@ begin
     SL.Append(Game.Screenshot);
     SL.Append(Format(FT, [_('Defeated foes')]));
     SL.Append('');
-    SL.Append(Format('Total: %d creatures defeated.', [Player.Statictics.Kills]));
+    SL.Append(Format('Total: %d creatures defeated.',
+      [Player.Statictics.Kills]));
     SL.Append('');
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');

@@ -1616,7 +1616,7 @@ begin
       // Close
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Repairing an item
-      Player.Repair(Key - TK_A);
+      Player.RepairItem(Key - TK_A);
   else
     Game.Timer := High(Byte);
   end;
