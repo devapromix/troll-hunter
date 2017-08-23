@@ -84,7 +84,7 @@ begin
       begin
         if (Player.Mana >= FSpell[I].Spell.ManaCost) then
         begin
-          Player.SpCast := Player.SpCast + 1;
+          Player.Statictics.SpCast := Player.Statictics.SpCast + 1;
           Player.Mana := Player.Mana - FSpell[I].Spell.ManaCost;
           Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
         end else begin

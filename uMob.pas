@@ -628,7 +628,7 @@ begin
   if Boss then
     S := Terminal.Colorize(S, clAlarm);
   MsgLog.Add(S);
-  Player.Kills := Player.Kills + 1;
+  Player.Statictics.Kills := Player.Statictics.Kills + 1;
 
   if Boss then
     V := 25

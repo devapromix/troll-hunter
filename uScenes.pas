@@ -1261,13 +1261,13 @@ begin
   Add(_('Scores'), Player.Score);
   // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Turn);
-  Add(_('Monsters Killed'), Player.Kills);
-  Add(_('Items Found'), Player.Found);
+  Add(_('Monsters Killed'), Player.Statictics.Kills);
+  Add(_('Items Found'), Player.Statictics.Found);
   // Add(_('Chests Found'), );
   // Add(_('Doors Opened'), );
-  Add(_('Potions Drunk'), Player.PotDrunk);
-  Add(_('Scrolls Read'), Player.ScrRead);
-  Add(_('Spells Cast'), Player.SpCast);
+  Add(_('Potions Drunk'), Player.Statictics.PotDrunk);
+  Add(_('Scrolls Read'), Player.Statictics.ScrRead);
+  Add(_('Spells Cast'), Player.Statictics.SpCast);
   // Add(_('Foods Eaten'), );
   // Add(_('Melee Attack Performed'), );
   // Add(_('Ranged Attack Performed'), );

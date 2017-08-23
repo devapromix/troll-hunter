@@ -22,7 +22,8 @@ uses
   uTalent in 'uTalent.pas',
   uAbility in 'uAbility.pas',
   uSkill in 'uSkill.pas',
-  uLogo in 'uLogo.pas';
+  uLogo in 'uLogo.pas',
+  uStatistic in 'uStatistic.pas';
 
 var
   Key: Word = 0;

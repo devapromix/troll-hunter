@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses uEntity, uMob, uSkill;
+uses uEntity, uMob, uSkill, uStatistic;
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
@@ -50,11 +50,6 @@ type
     FPerception: Byte;
     FGold: Integer;
     FScore: Word;
-    FKills: Word;
-    FSpCast: Word;
-    FFound: Word;
-    FPotDrunk: Word;
-    FScrRead: Word;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
     FItemIsDrop: Boolean;
@@ -63,6 +58,7 @@ type
     FSatPerTurn: Byte;
     FIsRest: Boolean;
     FName: string;
+    FStatistics: TStatistics;
     FSkills: TSkills;
     procedure GenNPCText;
     function GetDV: Byte;
@@ -91,17 +87,13 @@ type
     property Perception: Byte read FPerception write FPerception;
     property Gold: Integer read FGold write FGold;
     property Score: Word read FScore write FScore;
-    property Kills: Word read FKills write FKills;
-    property Found: Word read FFound write FFound;
-    property PotDrunk: Word read FPotDrunk write FPotDrunk;
-    property ScrRead: Word read FScrRead write FScrRead;
     property Killer: string read FKiller write FKiller;
-    property SpCast: Word read FSpCast write FSpCast;
     property IsRest: Boolean read FIsRest write FIsRest;
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
     property ItemIndex: Integer read FItemIndex write FItemIndex;
     property ItemAmount: Integer read FItemAmount write FItemAmount;
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
+    property Statictics: TStatistics read FStatistics write FStatistics;
     property Name: string read FName write FName;
     property Skills: TSkills read FSkills write FSkills;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
@@ -378,16 +370,12 @@ end;
 constructor TPlayer.Create;
 begin
   inherited;
+  FStatistics := TStatistics.Create;
   FWeaponSkill := skLearning;
   Exp := 0;
   Turn := 0;
   Gold := 0;
   Score := 0;
-  Kills := 0;
-  SpCast := 0;
-  Found := 0;
-  PotDrunk := 0;
-  ScrRead := 0;
   Level := 1;
   MaxMap := 0;
   Name := _('PLAYER');
@@ -406,6 +394,7 @@ end;
 destructor TPlayer.Destroy;
 begin
   FreeAndNil(FSkills);
+  FreeAndNil(FStatistics);
   inherited;
 end;
 
@@ -572,12 +561,12 @@ begin
         itPotion:
           begin
             MsgLog.Add(Format(_('You drink %s.'), [The]));
-            PotDrunk := PotDrunk + 1;
+            Statictics.PotDrunk := Statictics.PotDrunk + 1;
           end;
         itScroll:
           begin
             MsgLog.Add(Format(_('You read %s.'), [The]));
-            ScrRead := ScrRead + 1;
+            Statictics.ScrRead := Statictics.ScrRead + 1;
           end;
         itFood:
           MsgLog.Add(Format(_('You ate %s.'), [The]));
@@ -594,7 +583,7 @@ begin
         begin
           Player.Skills.DoSkill(skConcentration);
           Self.Mana := Self.Mana - ItemBase[I].ManaCost;
-          SpCast := SpCast + 1;
+          Statictics.SpCast := Statictics.SpCast + 1;
         end
         else
         begin
@@ -809,7 +798,7 @@ procedure TPlayer.PickUp;
 var
   FCount: Integer;
 begin
-  Inc(FFound);
+  Statictics.Found := Statictics.Found + 1;
   Corpses.DelCorpse(Player.X, Player.Y);
   /// / Your backpack is full!
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y);
@@ -924,7 +913,7 @@ begin
     SL.Append(Game.Screenshot);
     SL.Append(Format(FT, [_('Defeated foes')]));
     SL.Append('');
-    SL.Append(Format('Total: %d creatures defeated.', [Player.Kills]));
+    SL.Append(Format('Total: %d creatures defeated.', [Player.Statictics.Kills]));
     SL.Append('');
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
