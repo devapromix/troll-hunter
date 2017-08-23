@@ -547,7 +547,7 @@ begin
       Abilities.Modify(abBloodlust, Dam);
       MsgLog.Add
         (Format(Terminal.Colorize(_('%s used the spell "Bloodlust" (%d).'),
-        'Orange'), [The, Dam]));
+        Abilities.GetColor(abBloodlust)), [The, Dam]));
       Exit;
     end;
 
@@ -558,7 +558,7 @@ begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.RandomRange(1, L);
       Player.Abilities.Modify(abBlinded, Dam);
-      MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'),
+      MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), Abilities.GetColor(abBlinded)),
         [The, Dam]));
       Game.ShowEffects := True;
       Exit;
@@ -571,7 +571,7 @@ begin
       Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, High(Byte));
       Player.Abilities.Modify(abStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'),
-        'Lightest Red'), [The, Dam]));
+        Abilities.GetColor(abStunned)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
@@ -583,7 +583,7 @@ begin
       Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, High(Byte));
       Player.Abilities.Modify(abPoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'),
-        'Lighter Green'), [The, Dam]));
+        Abilities.GetColor(abPoisoned)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
@@ -595,7 +595,7 @@ begin
       Dam := Math.EnsureRange(Math.RandomRange(L + 2, L + 5), 0, High(Byte));
       Player.Abilities.Modify(abBurning, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'),
-        'Dark Red'), [The, Dam]));
+        Abilities.GetColor(abBurning)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;

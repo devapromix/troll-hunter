@@ -938,7 +938,8 @@ begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
     if Abilities.IsAbility(I) then
     begin
-      S := S + Format(' %s (%d)', [Abilities.GetName(I), Abilities.Ability[I]]);
+      S := S + Terminal.Colorize(Format(' %s (%d)', [Abilities.GetName(I),
+        Abilities.Ability[I]]), Abilities.GetColor(I));
       Terminal.Print(Status.Left - 1, Status.Top + 3, S);
     end;
   end;

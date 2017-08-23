@@ -23,13 +23,18 @@ type
     function IsAbility(Value: TAbilityEnum): Boolean;
     procedure Modify(I: TAbilityEnum; Value: Integer);
     function GetName(Value: TAbilityEnum): string;
+    function GetColor(Value: TAbilityEnum): string;
   end;
 
 implementation
 
 { TAbility }
 
-uses uTerminal, GNUGetText, uEntity;
+uses GNUGetText;
+
+const
+  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green',
+    'White', 'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red');
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
@@ -60,23 +65,28 @@ begin
   Result := FAbility[I]
 end;
 
+function TAbilities.GetColor(Value: TAbilityEnum): string;
+begin
+  Result := AbilityColor[Value];
+end;
+
 function TAbilities.GetName(Value: TAbilityEnum): string;
 begin
   case Value of
     abPoisoned:
-      Result := Terminal.Colorize(_('Poisoned'), 'Lighter Green');
+      Result := _('Poisoned');
     abBlinded:
-      Result := Terminal.Colorize(_('Blinded'), 'White');
+      Result := _('Blinded');
     abStunned:
-      Result := Terminal.Colorize(_('Stunned'), 'Dark Yellow');
+      Result := _('Stunned');
     abBurning:
-      Result := Terminal.Colorize(_('Burning'), 'Light Red');
+      Result := _('Burning');
     abRegen:
-      Result := Terminal.Colorize(_('Regen'), 'Lighter Red');
+      Result := _('Regen');
     abSleeping:
-      Result := Terminal.Colorize(_('Sleeping'), 'Yellow');
+      Result := _('Sleeping');
     abBloodlust:
-      Result := Terminal.Colorize(_('Bloodlust'), 'Dark Red');
+      Result := _('Bloodlust');
   end;
 end;
 
