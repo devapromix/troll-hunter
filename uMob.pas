@@ -529,7 +529,7 @@ procedure TMob.Attack;
 var
   The: string;
   Dam: Word;
-  L: Byte;
+  L, V: Byte;
 begin
   if (Self.Life = 0) or (Player.Life = 0) or (Force <> fcEnemy) then
     Exit;
@@ -607,6 +607,19 @@ begin
       Inc(Dam, (Dam div 3));
     Player.Life := EnsureRange(Player.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
+    if ((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and not Game.Wizard) then
+    case Math.RandomRange(0, 5) of
+      0:
+        Player.BreakItem(stHead);
+      1:
+        Player.BreakItem(stTorso);
+      2:
+        Player.BreakItem(stHands);
+      3:
+        Player.BreakItem(stFeet);
+      4:
+        Player.BreakItem(stOffHand);
+    end;
     if Player.Life = 0 then
       Player.Defeat(Mobs.GetName(TMobEnum(ID)));
   end
