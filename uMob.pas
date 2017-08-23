@@ -131,11 +131,11 @@ const
     Abilities: [abBurning, abBloodlust];),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGrayCave]; MaxLife: 32; Level: 4;
-    Armor: 4; DV: 14; MaxCount: 3; Damage: (Min: 4; Max: 5;); Color: $FF777700;
+    Armor: 4; DV: 14; MaxCount: 3; Damage: (Min: 2; Max: 4;); Color: $FF777700;
     Abilities: [];),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGrayCave]; MaxLife: 35; Level: 4;
-    Armor: 5; DV: 15; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF777700;
+    Armor: 5; DV: 15; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FF777700;
     Abilities: [abPoisoned, abStunned, abBurning];),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 38; Level: 4;
@@ -147,11 +147,11 @@ const
     Abilities: [abBlinded];),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5;
-    Armor: 5; DV: 18; MaxCount: 1; Damage: (Min: 4; Max: 6;); Color: $FF7777CC;
+    Armor: 5; DV: 18; MaxCount: 1; Damage: (Min: 3; Max: 5;); Color: $FF7777CC;
     Abilities: [abPoisoned];),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGrayCave]; MaxLife: 43; Level: 5;
-    Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 5; Max: 6;); Color: $FF299AFF;
+    Armor: 5; DV: 20; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF299AFF;
     Abilities: [abBurning, abBlinded];),
 
     // == Deep Cave == //
@@ -178,7 +178,7 @@ const
     Abilities: [abPoisoned];),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 65; Level: 6;
-    Armor: 7; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 9;); Color: $FF992233;
+    Armor: 7; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 7;); Color: $FF992233;
     Abilities: [abPoisoned];),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
@@ -217,15 +217,15 @@ const
     Abilities: [abBloodlust];),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
-    Armor: 20; DV: 34; MaxCount: 1; Damage: (Min: 15; Max: 23;);
+    Armor: 20; DV: 34; MaxCount: 1; Damage: (Min: 8; Max: 10;);
     Color: $FF445544; Abilities: [abPoisoned, abBurning, abBlinded];),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 82; Level: 8;
-    Armor: 10; DV: 35; MaxCount: 4; Damage: (Min: 10; Max: 13;);
+    Armor: 10; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11;);
     Color: $FF445544; Abilities: [];),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
-    Armor: 10; DV: 35; MaxCount: 1; Damage: (Min: 16; Max: 24;);
+    Armor: 10; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14;);
     Color: $FF445544; Abilities: [abStunned, abBurning, abBloodlust];),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 88; Level: 8;
@@ -233,38 +233,38 @@ const
     Color: $FF445544; Abilities: [abBloodlust];),
     // Orc Brute
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 8;
-    Armor: 10; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 16;);
+    Armor: 10; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 15;);
     Color: $FF445544; Abilities: [abBloodlust];),
     // Orc Warrior
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9;
-    Armor: 11; DV: 39; MaxCount: 4; Damage: (Min: 12; Max: 17;);
+    Armor: 11; DV: 39; MaxCount: 4; Damage: (Min: 11; Max: 15;);
     Color: $FF445544; Abilities: [abBloodlust];),
     // Orc Warlord
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9;
-    Armor: 12; DV: 40; MaxCount: 3; Damage: (Min: 15; Max: 18;);
+    Armor: 12; DV: 40; MaxCount: 3; Damage: (Min: 11; Max: 15;);
     Color: $FF445544; Abilities: [abBurning, abBloodlust];),
 
     // == Drom == //
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; Armor: 12;
-    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 18;); Color: $FF00BB00;
+    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 16;); Color: $FF00BB00;
     Abilities: [abPoisoned];),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; Armor: 12;
-    DV: 43; MaxCount: 3; Damage: (Min: 16; Max: 20;); Color: $FF559977;
+    DV: 43; MaxCount: 3; Damage: (Min: 15; Max: 17;); Color: $FF559977;
     Abilities: [abStunned, abBloodlust];),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; Armor: 12;
-    DV: 44; MaxCount: 5; Damage: (Min: 17; Max: 20;); Color: $FF223333;
+    DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 17;); Color: $FF223333;
     Abilities: [abPoisoned];),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
-    Armor: 15; DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 22;);
+    Armor: 15; DV: 44; MaxCount: 5; Damage: (Min: 12; Max: 16;);
     Color: $FF223333; Abilities: [abPoisoned, abBlinded, abBloodlust];),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
-    Armor: 15; DV: 45; MaxCount: 3; Damage: (Min: 18; Max: 22;);
+    Armor: 15; DV: 45; MaxCount: 3; Damage: (Min: 14; Max: 18;);
     Color: $FF223333; Abilities: [abBurning, abBloodlust];),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
@@ -272,15 +272,15 @@ const
     Color: $FF223333; Abilities: [abStunned];),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 18; DV: 46; MaxCount: 9; Damage: (Min: 15; Max: 20;);
+    Armor: 18; DV: 46; MaxCount: 9; Damage: (Min: 10; Max: 14;);
     Color: $FF223333; Abilities: [];),
     // Wraith
     (Symbol: 'w'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 19; DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 16;);
+    Armor: 19; DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 15;);
     Color: $FF22FFFF; Abilities: [abBurning, abBlinded];),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
-    Armor: 19; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 30;);
+    Armor: 19; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;);
     Color: $FF223333; Abilities: [abBlinded];),
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
