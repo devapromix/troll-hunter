@@ -536,6 +536,8 @@ begin
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
   if (Player.DV < Math.RandomRange(0, 100)) then
   begin
+    Game.ShowEffects := False;
+
     // Bloodlust (10%)
     if (abBloodlust in MobBase[TMobEnum(ID)].Abilities) and
       (Math.RandomRange(0, 9) = 0) then
@@ -554,10 +556,11 @@ begin
       (Math.RandomRange(0, 9) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L, L + L), 0, High(Byte));
+      Dam := Math.RandomRange(1, L);
       Player.Abilities.Modify(abBlinded, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s blinded you (%d).'), 'White'),
         [The, Dam]));
+      Game.ShowEffects := True;
       Exit;
     end;
     // Stunned (33%)
@@ -569,6 +572,7 @@ begin
       Player.Abilities.Modify(abStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'),
         'Lightest Red'), [The, Dam]));
+      Game.ShowEffects := True;
       Exit;
     end;
     // Poisoned (20%)
@@ -580,6 +584,7 @@ begin
       Player.Abilities.Modify(abPoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'),
         'Lighter Green'), [The, Dam]));
+      Game.ShowEffects := True;
       Exit;
     end;
     // Burning (10%)
@@ -591,6 +596,7 @@ begin
       Player.Abilities.Modify(abBurning, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'),
         'Dark Red'), [The, Dam]));
+      Game.ShowEffects := True;
       Exit;
     end;
     // Attack

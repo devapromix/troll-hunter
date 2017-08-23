@@ -101,6 +101,7 @@ type
     FPortal: TSpawn;
     FPortalMap: TMapEnum;
     FPortalTile: TTileEnum;
+    FShowEffects: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -126,6 +127,7 @@ type
     function GetVersion: string;
     property PortalMap: TMapEnum read FPortalMap write FPortalMap;
     property PortalTile: TTileEnum read FPortalTile write FPortalTile;
+    property ShowEffects: Boolean read FShowEffects write FShowEffects;
     function GetTitle: string;
     procedure LoadConfig;
     procedure Start;
@@ -161,6 +163,7 @@ begin
   APRune := True;
   APBook := True;
   CanClose := False;
+  ShowEffects := False;
   ShowMap := True;
   LCorpses := True;
   Difficulty := dfNormal;

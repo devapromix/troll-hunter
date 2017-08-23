@@ -906,8 +906,12 @@ end;
 procedure TPlayer.RenderInfo;
 const
   F = '%s %d/%d';
+var
+  I: TAbilityEnum;
+  S: string;
 begin
   Terminal.ForegroundColor(clDefault);
+  // Info
   Terminal.Print(Status.Left - 1, Status.Top + 1,
     ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]
     ), 'Life'));
@@ -919,20 +923,25 @@ begin
     Player.Life, Player.MaxLife, clLife, clDarkGray);
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
-  // Effects
-  if Game.Wizard and Abilities.IsAbility(abPoisoned) then
-  begin
-    Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1,
-      Terminal.Colorize(Format('P%d', [Abilities.Ability[abPoisoned]]),
-      'Poison'), TK_ALIGN_RIGHT);
-  end;
-  //
+  case Game.ShowEffects of
+  False: begin
   Terminal.Print(Status.Left - 1, Status.Top + 3,
     ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
     Player.GetSatiationStr]));
   Terminal.Print(Status.Left - 1, Status.Top + 4,
     ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
+  end;
+  else begin
+  S := ' Effects:';
+  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
+    if Abilities.IsAbility(I) then
+    begin
+      S := S + Format(' %s (%d)', [Abilities.GetName(I), Abilities.Ability[I]]);
+      Terminal.Print(Status.Left - 1, Status.Top + 3, S);
+    end;
+  end;
+  end;
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;

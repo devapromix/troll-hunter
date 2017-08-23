@@ -472,6 +472,8 @@ end;
 
 procedure TScenes.SetScene(SceneEnum: TSceneEnum);
 begin
+  Game.Timer := High(Byte);
+  Game.ShowEffects := False;
   Self.SceneEnum := SceneEnum;
   Render;
 end;
@@ -489,6 +491,7 @@ begin
   case Key of
     TK_CLOSE:
       begin
+        if (SceneEnum = scTitle) then Game.CanClose := True;
         if Game.IsMode and not(SceneEnum in [scWin, scDef, scQuit]) and
           (Player.Life > 0) then
           SetScene(scQuit, SceneEnum);
@@ -554,11 +557,11 @@ begin
 
   Self.Title(_('Keybindings'), 11);
 
-  Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s',
+  Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
     [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'), KeyStr('QWEADZXC'),
-    _('Wait'), KeyStr('5'), KeyStr('S')]), TK_ALIGN_CENTER);
+    _('Wait'), KeyStr('5'), KeyStr('S'), _('Effects'), KeyStr('TAB')]), TK_ALIGN_CENTER);
 
-  X := 0;
+  X := 1;
   Y := 15;
   AddLine('<', _('Go upstairs'));
   AddLine('>', _('Go downstairs'));
@@ -847,27 +850,20 @@ begin
         Game.Screenshot := Terminal.GetTextScreenshot();
         Scenes.SetScene(scQuit, Scenes.SceneEnum);
       end;
+    TK_TAB:
+      Game.ShowEffects := not Game.ShowEffects;
     TK_K:
       Scenes.SetScene(scCalendar);
     TK_R:
-      begin
-        Game.Timer := High(Byte);
         Scenes.SetScene(scRest);
-      end;
     TK_G:
       Player.Pickup;
     TK_I:
-      begin
-        Game.Timer := High(Byte);
         Scenes.SetScene(scInv);
-      end;
     TK_M:
       Scenes.SetScene(scMessages);
     TK_F:
-      begin
-        Game.Timer := High(Byte);
         Scenes.SetScene(scDrop);
-      end;
     TK_P:
       Scenes.SetScene(scPlayer);
     TK_N:
@@ -1449,37 +1445,29 @@ begin
           Player.ReceiveHealing;
         end;
         if (ntBlacksmith_A in NPCType) then
-        begin
-          Game.Timer := High(Byte);
           Scenes.SetScene(scRepair);
-        end;
         if (ntFoodTrader_A in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shFoods;
           Scenes.SetScene(scBuy);
         end;
         if (ntShTrader_A in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shShields;
           Scenes.SetScene(scBuy);
         end;
         if (ntHelmTrader_A in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shHelms;
           Scenes.SetScene(scBuy);
         end;
         if (ntScrTrader_A in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shScrolls;
           Scenes.SetScene(scBuy);
         end;
         if (ntArmTrader_A in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shArmors;
           Scenes.SetScene(scBuy);
         end;
@@ -1488,37 +1476,31 @@ begin
       begin
         if (ntSmithTrader_B in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shSmith;
           Scenes.SetScene(scBuy);
         end;
         if (ntTavTrader_B in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shTavern;
           Scenes.SetScene(scBuy);
         end;
         if (ntHealTrader_B in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shHealer;
           Scenes.SetScene(scBuy);
         end;
         if (ntPotManaTrader_B in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shMana;
           Scenes.SetScene(scBuy);
         end;
         if (ntPotTrader_B in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shPotions;
           Scenes.SetScene(scBuy);
         end;
         if (ntWpnTrader_B in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Shops.Current := shWeapons;
           Scenes.SetScene(scBuy);
         end;
@@ -1528,7 +1510,6 @@ begin
       begin
         if (ntSell_C in NPCType) then
         begin
-          Game.Timer := High(Byte);
           Scenes.SetScene(scSell);
         end;
       end;

@@ -19,11 +19,14 @@ type
     property Ability[I: TAbilityEnum]: Word read GetAbility write SetAbility;
     function IsAbility(Value: TAbilityEnum): Boolean;
     procedure Modify(I: TAbilityEnum; Value: Integer);
+    function GetName(Value: TAbilityEnum): string;
   end;
 
 implementation
 
 { TAbility }
+
+uses uTerminal, GNUGetText;
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
@@ -52,6 +55,26 @@ end;
 function TAbilities.GetAbility(I: TAbilityEnum): Word;
 begin
   Result := FAbility[I]
+end;
+
+function TAbilities.GetName(Value: TAbilityEnum): string;
+begin
+  case Value of
+    abPoisoned:
+      Result := Terminal.Colorize(_('Poisoned'), 'Lighter Green');
+    abBlinded:
+      Result := Terminal.Colorize(_('Blinded'), 'White');
+    abStunned:
+      Result := Terminal.Colorize(_('Stunned'), 'Dark Yellow');
+    abBurning:
+      Result := Terminal.Colorize(_('Burning'), 'Light Red');
+    abRegen:
+      Result := Terminal.Colorize(_('Regen'), 'Lighter Red');
+    abSleeping:
+      Result := Terminal.Colorize(_('Sleeping'), 'Yellow');
+    abBloodlust:
+      Result := Terminal.Colorize(_('Bloodlust'), 'Dark Red');
+  end;
 end;
 
 function TAbilities.IsAbility(Value: TAbilityEnum): Boolean;
