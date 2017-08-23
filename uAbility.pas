@@ -7,6 +7,9 @@ type
     abSleeping, abBloodlust);
 
 type
+  TSetOfAbility = set of TAbilityEnum;
+
+type
   TAbilities = class(TObject)
   private
     FAbility: array [TAbilityEnum] of Word;
@@ -26,7 +29,7 @@ implementation
 
 { TAbility }
 
-uses uTerminal, GNUGetText;
+uses uTerminal, GNUGetText, uEntity;
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin

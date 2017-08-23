@@ -23,7 +23,7 @@ type
     Damage: TDamage;
     Color: Cardinal;
     NPCType: set of TNPCType;
-    Abilities: set of TAbilityEnum;
+    Abilities: TSetOfAbility;
   end;
 
 type

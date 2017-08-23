@@ -223,7 +223,8 @@ begin
     // Attack
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
-    BreakItem(stMainHand);
+    if ((Math.RandomRange(0, 9) = 0) and not Game.Wizard) then
+      BreakItem(stMainHand);
 
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
