@@ -742,12 +742,9 @@ begin
   MsgLog.Msg := '';
   if Player.IsDead then
   begin
-    if (Game.Difficulty = dfEasy) then
+    if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
     begin
-      Player.X := Game.Spawn.X;
-      Player.Y := Game.Spawn.Y;
-      Map.Current := deDarkWood;
-      Player.Clear;
+      Player.Spawn;
       Exit;
     end;
     Scenes.SetScene(scDef);

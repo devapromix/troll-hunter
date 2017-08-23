@@ -109,6 +109,7 @@ type
     procedure Wait;
     procedure Clear;
     procedure AddTurn;
+    procedure Spawn;
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Defeat(AKiller: string);
@@ -988,6 +989,14 @@ begin
   ItemIndex := Index;
   ItemAmount := Amount;
   Scenes.SetScene(scAmount);
+end;
+
+procedure TPlayer.Spawn;
+begin
+  Self.Clear;
+  X := Game.Spawn.X;
+  Y := Game.Spawn.Y;
+  Map.Current := deDarkWood;
 end;
 
 procedure TPlayer.AddExp(Value: Byte = 1);
