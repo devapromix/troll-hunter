@@ -743,16 +743,6 @@ procedure TSceneGame.Update(var Key: Word);
 begin
   MsgLog.Turn;
   MsgLog.Msg := '';
-  if Player.IsDead then
-  begin
-    if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
-    begin
-      Player.Spawn;
-      Exit;
-    end;
-    Scenes.SetScene(scDef);
-    Exit;
-  end;
   if Game.Won then
   begin
     Scenes.SetScene(scWin);
@@ -836,8 +826,20 @@ begin
           end;
       end;
     TK_KP_MULTIPLY:
-      if Game.Wizard then
+      if Player.IsDead then
+      begin
         Player.Fill;
+      end;
+    TK_SPACE:
+      begin
+    if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
+    begin
+      Player.Spawn;
+      Exit;
+    end;
+    Scenes.SetScene(scDef);
+    Exit;
+      end;
     TK_ESCAPE:
       begin
         if Player.Look then
