@@ -940,7 +940,7 @@ begin
     [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
     TK_ALIGN_CENTER);
   if Game.Wizard then
-    Terminal.Print(CX, CY + 3, Format(_('Press %s to continue...'),
+    Terminal.Print(CX, CY + 5, Format(_('Press %s to continue...'),
       [KeyStr('SPACE')]), TK_ALIGN_CENTER);
 
 end;

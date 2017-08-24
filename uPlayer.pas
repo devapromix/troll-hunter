@@ -395,7 +395,8 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(Terminal.Colorize(Format(_('You die... Press %s'), [TScene.KeyStr('SPACE')]), clAlarm));
+  MsgLog.Add(Terminal.Colorize(_('You die...'), clAlarm));
+  MsgLog.Add(Format(_('Press %s to continue...'), [TScene.KeyStr('SPACE')]));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -548,6 +549,7 @@ var
   T: TItemType;
   ItemLevel: Byte;
 begin
+  if Player.IsDead then Exit;
   AItem := Items_Inventory_GetItem(Index);
   // Need level
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
@@ -1006,6 +1008,7 @@ begin
   X := Game.Spawn.X;
   Y := Game.Spawn.Y;
   Map.Current := deDarkWood;
+  MsgLog.Clear;
 end;
 
 procedure TPlayer.AddExp(Value: Byte = 1);
