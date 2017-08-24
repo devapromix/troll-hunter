@@ -933,14 +933,12 @@ begin
     Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
   end;
   else begin
-  S := ' Effects:';
+  S := '';
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
     if Abilities.IsAbility(I) then
-    begin
       S := S + Terminal.Colorize(Format(' %s (%d)', [Abilities.GetName(I),
         Abilities.Ability[I]]), Abilities.GetColor(I));
-      Terminal.Print(Status.Left - 1, Status.Top + 3, S);
-    end;
+  Terminal.Print(Status.Left, Status.Top + 3, Log.Width, 2, S, TK_ALIGN_TOP);
   end;
   end;
 end;

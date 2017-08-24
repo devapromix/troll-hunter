@@ -899,9 +899,8 @@ end;
 
 procedure TSceneQuit.Render;
 begin
-  Terminal.Print(Terminal.Window.Width div 2, CY - 1,
-    UpperCase(_('Are you sure?')), TK_ALIGN_CENTER);
-  Terminal.Print(Terminal.Window.Width div 2, CY + 1,
+  Logo.Render;
+  Terminal.Print(Terminal.Window.Width div 2, CY + 2,
     Format(_('Wish to leave? %s/%s'), [KeyStr('Y'), KeyStr('N')]),
     TK_ALIGN_CENTER);
 end;
@@ -923,8 +922,9 @@ end;
 
 procedure TSceneDef.Render;
 begin
-  Terminal.Print(CX, CY - 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 1, Format(_('You were slain by %s. Press %s'),
+  Logo.Render;
+  Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
     [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
     TK_ALIGN_CENTER);
   if Game.Wizard then
@@ -954,9 +954,10 @@ end;
 
 procedure TSceneWin.Render;
 begin
-  Terminal.Print(CX, CY - 1, UpperCase(_('Congratulations!!!')),
+  Logo.Render;
+  Terminal.Print(CX, CY + 1, UpperCase(_('Congratulations!!!')),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 1, Format(_('You have won. Press %s'),
+  Terminal.Print(CX, CY + 3, Format(_('You have won. Press %s'),
     [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
