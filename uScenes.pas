@@ -788,14 +788,18 @@ begin
           Player.Wait;
         end;
     TK_COMMA:
+    begin
+      if Player.IsDead then Exit;
       if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
         if (Map.Current > Low(TMapEnum)) then
         begin
           Map.Current := Pred(Map.Current);
           Player.Wait;
         end;
+    end;
     TK_PERIOD:
-      begin
+    begin
+      if Player.IsDead then Exit;
         // Portal in town
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = tePortal) then
         begin
@@ -847,7 +851,7 @@ begin
           Player.Look := False;
           Exit;
         end;
-        if (Player.Life = 0) then
+        if Player.IsDead then
           Exit;
         Game.Screenshot := Terminal.GetTextScreenshot();
         Scenes.SetScene(scQuit, Scenes.SceneEnum);
@@ -857,15 +861,24 @@ begin
     TK_K:
       Scenes.SetScene(scCalendar);
     TK_R:
-        Scenes.SetScene(scRest);
+    begin
+      if Player.IsDead then Exit;
+      Scenes.SetScene(scRest);
+    end;
     TK_G:
+    begin
+      if Player.IsDead then Exit;
       Player.Pickup;
+    end;
     TK_I:
         Scenes.SetScene(scInv);
     TK_M:
       Scenes.SetScene(scMessages);
     TK_F:
+    begin
+      if Player.IsDead then Exit;
         Scenes.SetScene(scDrop);
+    end;
     TK_P:
       Scenes.SetScene(scPlayer);
     TK_N:
@@ -878,9 +891,6 @@ begin
       Scenes.SetScene(scTalents);
     TK_SLASH:
       Scenes.SetScene(scHelp);
-    TK_Y:
-      if Game.Wizard then
-        Shops.New;
   end;
 end;
 

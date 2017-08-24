@@ -395,7 +395,7 @@ end;
 procedure TPlayer.Defeat(AKiller: string);
 begin
   Killer := AKiller;
-  MsgLog.Add(Terminal.Colorize(_('You die...'), clAlarm));
+  MsgLog.Add(Terminal.Colorize(Format(_('You die... Press %s'), [TScene.KeyStr('SPACE')]), clAlarm));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -508,6 +508,7 @@ begin
   end
   else
   begin
+      if Player.IsDead then Exit;
     FX := Map.EnsureRange(X + AX);
     FY := Map.EnsureRange(Y + AY);
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
