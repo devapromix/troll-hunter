@@ -1105,6 +1105,9 @@ begin
     Items.AddItemToInv(iPotionOfFullMana, 10);
     Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iAntidote, 10);
+    Items.AddItemToInv(iRuby, 1);
+    Items.AddItemToInv(iEmerald, 1);
+    Items.AddItemToInv(iSaphire, 1);
   end
   else
   begin

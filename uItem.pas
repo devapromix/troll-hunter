@@ -5,9 +5,9 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itPotion, itScroll, itRune,
+  TItemType = (itNone, itCorpse, itKey, itCoin, itGem, itPotion, itScroll, itRune,
     itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield, itHeadgear,
-    itBodyArmor);
+    itBodyArmor, itHands, itFeet, itRing, itAmulet);
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -30,14 +30,14 @@ const
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     RuneTypeItems + BookTypeItems;
   NotDropTypeItems = [itNone, itCorpse, itKey] + RuneTypeItems;
-  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin];
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin, itGem];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
-  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield];
+  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itShield, itHeadgear,
-    itBodyArmor];
+    itBodyArmor, itHands, itFeet];
 
 type
   TItemBase = record
@@ -79,6 +79,7 @@ type
     iBreadRation, iValleyRoot, iRatPod,
     //
     iKey,
+    iRuby, iEmerald, iSaphire, // Gems
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -303,6 +304,16 @@ const
     // Key
     (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16; Level: 1;
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+
+    // Ruby
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 16; Level: 1;
+    Price: 500; Color: clRed; Deep: [deDarkWood .. deDrom];),
+    // Emerald
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 16; Level: 1;
+    Price: 500; Color: clGreen; Deep: [deDarkWood .. deDrom];),
+    // Saphire
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 16; Level: 1;
+    Price: 500; Color: clBlue; Deep: [deDarkWood .. deDrom];),
 
     /// / == Dark Wood == ////
 
@@ -1170,6 +1181,16 @@ begin
     // Key
     iKey:
       Result := _('Key');
+
+    // Ruby
+    iRuby:
+      Result := _('Ruby');
+    // Emerald
+    iEmerald:
+      Result := _('Emerald');
+    // Saphire
+    iSaphire:
+      Result := _('Saphire');
 
     // == Dark Wood == //
 
