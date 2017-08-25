@@ -64,6 +64,7 @@ type
     FName: string;
     FStatistics: TStatistics;
     FSkills: TSkills;
+    FTalentPoint: Byte;
     procedure GenNPCText;
     function GetDV: Byte;
     function GetPV: Byte;
@@ -99,6 +100,7 @@ type
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
     property Statictics: TStatistics read FStatistics write FStatistics;
     property Name: string read FName write FName;
+    property TalentPoint: Byte read FTalentPoint write FTalentPoint;
     property Skills: TSkills read FSkills write FSkills;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
@@ -387,6 +389,7 @@ begin
   Score := 0;
   Level := 1;
   MaxMap := 0;
+  TalentPoint := 1;
   Name := _('PLAYER');
   FSkills := TSkills.Create;
   Self.Clear;
@@ -1017,10 +1020,16 @@ begin
   if (Exp >= LevelExpMax) then
   begin
     Exp := Exp - LevelExpMax;
-    FLevel := FLevel + 1;
+    Level := Level + 1;
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
-      [FLevel]), clAlarm));
-    Player.Score := Player.Score + (FLevel * FLevel);
+      [Level]), clAlarm));
+    if (Level mod 2 = 0) then
+    begin
+      TalentPoint := TalentPoint + 1;
+      MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
+      Score := Score + 1;
+    end;
+    Score := Score + (Level * Level);
   end;
 end;
 

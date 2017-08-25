@@ -9,7 +9,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalent, scTalents);
+    scSpellbook, scOptions, scTalents);
   // scClasses, scRaces, scIdentification
 
 type
@@ -124,14 +124,7 @@ type
   end;
 
 type
-  TSceneTalent = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: Word); override;
-  end;
-
-type
-  TSceneTalents = class(TSceneTalent)
+  TSceneTalents = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -431,8 +424,6 @@ begin
         FScene[I] := TSceneOptions.Create;
       scSpellbook:
         FScene[I] := TSceneSpellbook.Create;
-      scTalent:
-        FScene[I] := TSceneTalent.Create;
       scTalents:
         FScene[I] := TSceneTalents.Create;
     end;
@@ -1708,7 +1699,7 @@ begin
             else
               Exit;
         end;
-        Scenes.SetScene(scTalent);
+        Scenes.SetScene(scTalents);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1787,7 +1778,7 @@ begin
           Player.Name := Player.Name + Chr(Key - TK_A + 65);
       end;
     TK_ESCAPE:
-      Scenes.SetScene(scTalent);
+      Scenes.SetScene(scTalents);
   end;
 end;
 
@@ -1900,76 +1891,6 @@ begin
   end
 end;
 
-{ TSceneTalent }
-
-procedure TSceneTalent.Render;
-var
-  V, Y: Byte;
-
-  procedure Add(const S, H: string);
-  begin
-    Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(5, Y, S);
-    Terminal.ForegroundColor(clGray);
-    Terminal.Print(20, Y, H);
-    Inc(Y);
-    Inc(V);
-  end;
-
-begin
-  Self.Title(_('Talent'));
-
-  V := 0;
-  Y := 2;
-  Self.FromAToZ;
-
-  { Add(Player.GetTalentName(tlStrong), Player.GetTalentHint(tlStrong));
-    Add(Player.GetTalentName(tlDextrous), Player.GetTalentHint(tlDextrous));
-    Add(Player.GetTalentName(tlMage), Player.GetTalentHint(tlMage));
-    Add(Player.GetTalentName(tlTough), Player.GetTalentHint(tlTough));
-    Add(Player.GetTalentName(tlWealthy), Player.GetTalentHint(tlWealthy)); }
-
-  AddKey('Esc', _('Back'), True, True);
-end;
-
-procedure TSceneTalent.Update(var Key: Word);
-begin
-  case Key of
-    TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
-      begin
-        { case Key of
-          TK_ENTER, TK_KP_ENTER:
-          if Game.Wizard then
-          Player.Talent := tlNone;
-          TK_A:
-          begin
-          Player.Talent := tlStrong;
-          end;
-          TK_B:
-          begin
-          Player.Talent := tlDextrous;
-          end;
-          TK_C:
-          begin
-          Player.Talent := tlMage;
-          end;
-          TK_D:
-          begin
-          Player.Talent := tlTough;
-          end;
-          TK_E:
-          begin
-          Player.Talent := tlWealthy;
-          end;
-          end; }
-        Scenes.SetScene(scName);
-      end;
-    TK_ESCAPE:
-      Scenes.SetScene(scDifficulty);
-  end;
-end;
-
 { TSceneTalents }
 
 procedure TSceneTalents.Render;
@@ -2008,18 +1929,29 @@ begin
         Talents.GetHint(TTalentEnum(0)), False);
 
   MsgLog.Render(2, True);
-
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Select a talent'), False, True);
+  if (Player.TalentPoint > 0) then
+  begin
+    AddKey('Esc', _('Close'), True, False);
+    AddKey('A-Z', Format(_('Select a talent (%d)'), [Player.TalentPoint]), False, True);
+  end else AddKey('Esc', _('Close'), True, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE:
-      Scenes.SetScene(scGame);
-    TK_A .. TK_Z:
-      ;
+      if Game.IsMode then
+        Scenes.SetScene(scGame)
+          else Scenes.SetScene(scDifficulty);
+    TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
+      begin
+        if (Player.TalentPoint > 0) then
+        begin
+
+          if not Game.IsMode then
+            Scenes.SetScene(scName);
+        end;
+      end;
   end
 end;
 
