@@ -66,6 +66,7 @@ type
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): Boolean;
     function Count: Byte;
+    procedure Start;
   end;
 
 var
@@ -188,6 +189,15 @@ end;
 procedure TTalents.SetTalent(I: Byte; const Value: TTalent);
 begin
   FTalent[I] := Value;
+end;
+
+procedure TTalents.Start;
+var
+  I: Byte;
+begin
+  for I := 0 to TalentMax - 1 do
+    //if (FTalent[I].Level <= Player.Level) then
+      Self.Add(FTalent[I].Enum);
 end;
 
 initialization

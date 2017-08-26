@@ -1699,6 +1699,7 @@ begin
             else
               Exit;
         end;
+        Talents.Start;
         Scenes.SetScene(scTalents);
       end;
     TK_ESCAPE:
@@ -1940,6 +1941,8 @@ begin
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
+var
+  I, J: Byte;
 begin
   case Key of
     TK_ESCAPE:
@@ -1953,8 +1956,20 @@ begin
           case Key of
             TK_A .. TK_Z:
             begin
+              J := 0;
+              for I := 0 to TalentMax - 1 do
+                if (Talents.Talent[I].Enum <> tlNone) then
+                begin
+                  if (J = Key - TK_A) then
+                  begin
+                    ShowMessage('');
 
-            
+
+
+
+                  end;
+                  Inc(J)
+                end;            
             end;
           end;
           if not Game.IsMode then
