@@ -23,17 +23,17 @@ type
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
     // None
-    (Level: 0; Effects: [];),
+    (Level: 1; Effects: [];),
     // Strong
-    (Level: 0; Effects: [efPrmAthletics];),
+    (Level: 1; Effects: [efPrmAthletics];),
     // Dextrous
-    (Level: 0; Effects: [efPrmDodge];),
+    (Level: 1; Effects: [efPrmDodge];),
     // Mage
-    (Level: 0; Effects: [efPrmConcentration];),
+    (Level: 1; Effects: [efPrmConcentration];),
     // Tough
-    (Level: 0; Effects: [efPrmToughness];),
+    (Level: 1; Effects: [efPrmToughness];),
     // Wealthy
-    (Level: 0; Effects: [efPrmGold];),
+    (Level: 1; Effects: [efPrmGold];),
     // Affinity with Swords
     (Level: 3; Effects: [efPrmBlade];),
     // Affinity with Axes
