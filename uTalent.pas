@@ -65,6 +65,7 @@ type
     function GetHint(I: TTalentEnum): string;
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): Boolean;
+    function Count: Byte;
   end;
 
 var
@@ -87,6 +88,11 @@ begin
       Player.DoEffects(TalentBase[ATalent].Effects);
       Exit;
     end;
+end;
+
+function TTalents.Count: Byte;
+begin
+  Result := Length(FTalent);
 end;
 
 constructor TTalents.Create;

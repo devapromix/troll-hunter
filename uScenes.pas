@@ -1950,7 +1950,13 @@ begin
       begin
         if (Player.TalentPoint > 0) then
         begin
+          case Key of
+            TK_A .. TK_Z:
+            begin
 
+            
+            end;
+          end;
           if not Game.IsMode then
             Scenes.SetScene(scName);
         end;
