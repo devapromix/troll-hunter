@@ -300,6 +300,8 @@ begin
         Exit;
       if ((ItemType = itBook) and not Game.APBook) then
         Exit;
+      if ((ItemType = itGem) and not Game.APGem) then
+        Exit;
       Items.AddItemToInv(Index, True);
       Wait;
     end;
@@ -1264,7 +1266,7 @@ begin
   // 2x to gold
   if (ef2xGold in Effects) then
   begin
-
+     
   end;
 end;
 

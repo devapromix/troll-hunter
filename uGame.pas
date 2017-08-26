@@ -93,6 +93,7 @@ type
     FAPScroll: Boolean;
     FAPRune: Boolean;
     FAPBook: Boolean;
+    FAPGem: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
     FLCorpses: Boolean;
@@ -116,6 +117,7 @@ type
     property APScroll: Boolean read FAPScroll write FAPScroll;
     property APRune: Boolean read FAPRune write FAPRune;
     property APBook: Boolean read FAPBook write FAPBook;
+    property APGem: Boolean read FAPGem write FAPGem;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
     property LCorpses: Boolean read FLCorpses write FLCorpses;
@@ -162,6 +164,7 @@ begin
   APScroll := True;
   APRune := True;
   APBook := True;
+  APGem := True;
   CanClose := False;
   ShowEffects := False;
   ShowMap := True;

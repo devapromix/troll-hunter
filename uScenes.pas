@@ -1791,6 +1791,7 @@ begin
   X := 1;
   Y := 3;
   AddOption('C', _('Auto pickup coins'), Game.APCoin);
+  AddOption('G', _('Auto pickup gems'), Game.APGem);
   AddOption('F', _('Auto pickup foods'), Game.APFood);
   AddOption('P', _('Auto pickup potions'), Game.APPotion);
   AddOption('S', _('Auto pickup scrolls'), Game.APScroll);
@@ -1817,6 +1818,8 @@ begin
   case Key of
     TK_C:
       Game.APCoin := not Game.APCoin;
+    TK_G:
+      Game.APGem := not Game.APGem;
     TK_F:
       Game.APFood := not Game.APFood;
     TK_P:
