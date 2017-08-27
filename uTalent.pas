@@ -7,13 +7,15 @@ uses
 
 const
   TalentMax = 10;
-  PrmDV = 3;
+  TalentPrm = 3;
+  AttribPrm = 7;
 
 type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
     tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
     tlAffWithSwords, tlAffWithAxes, tlAffWithPolearms, tlAffWithMaces,
-    tlMiser { Скряга }, tlCareful { Осторожный } );
+    tlMiser { Скряга }, tlCareful { Осторожный }, tlIronSkin { Железная Кожа },
+    tlHardy { Выносливый }, tlCharged { Энергичный } );
 
 type
   TTalentBase = record
@@ -46,7 +48,13 @@ const
     // Miser
     (Level: 5; Effects: [ef2xGold];),
     // Careful
-    (Level: 5; Effects: [efPrmDV];));
+    (Level: 5; Effects: [efPrmDV];),
+    // Iron Skin
+    (Level: 5; Effects: [efPrmPV];),
+    // Hardy
+    (Level: 5; Effects: [efPrmLife];),
+    // Charged
+    (Level: 5; Effects: [efPrmMana];));
 
 type
   TTalent = record
@@ -161,7 +169,13 @@ begin
     tlMiser:
       Result := _('x2 to Gold');
     tlCareful:
-      Result := Format(F, [PrmDV, _('DV')]);
+      Result := Format(F, [TalentPrm, _('DV')]);
+    tlIronSkin:
+      Result := Format(F, [TalentPrm, _('PV')]);
+    tlHardy:
+      Result := Format(F, [AttribPrm, _('Life')]);
+    tlCharged:
+      Result := Format(F, [AttribPrm, _('Mana')]);
   else
     Result := '-';
   end;
@@ -192,6 +206,12 @@ begin
       Result := _('Miser');
     tlCareful:
       Result := _('Careful');
+    tlIronSkin:
+      Result := _('Iron Skin');
+    tlHardy:
+      Result := _('Hardy');
+    tlCharged:
+      Result := _('Charged');
   else
     Result := '-';
   end;

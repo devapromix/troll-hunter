@@ -12,7 +12,7 @@ type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
     efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
     efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
-    efBloodlust, efPrmLife, efPrmMana, efPrmDV);
+    efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV);
 
 type
   TEffects = set of TEffect;
@@ -1228,9 +1228,7 @@ begin
   end;
   // Gold
   if (efPrmGold in Effects) then
-  begin
     Items.AddItemToInv(iGold, StartGold);
-  end;
   // Athletics
   if (efPrmAthletics in Effects) then
     PrmSkill(skAthletics);
@@ -1272,6 +1270,11 @@ begin
   end;
   // DV
   if (efPrmDV in Effects) then
+  begin
+  
+  end;
+  // PV
+  if (efPrmPV in Effects) then
   begin
   
   end;

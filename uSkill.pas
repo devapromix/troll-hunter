@@ -144,16 +144,13 @@ procedure TSkills.Start;
 var
   I: TSkillEnum;
 begin
-  // Wizard
-  if not Game.Wizard then
-    Exit;
-  //
-  for I := Low(TSkillEnum) to High(TSkillEnum) do
-    with FSkill[I] do
-    begin
-      Value := Math.RandomRange(SkillMin, SkillMax);
-      Exp := Math.RandomRange(0, SkillExpMax);
-    end;
+  if Game.Wizard then
+    for I := Low(TSkillEnum) to High(TSkillEnum) do
+      with FSkill[I] do
+      begin
+        Value := Math.RandomRange(SkillMin, SkillMax);
+        Exp := Math.RandomRange(0, SkillExpMax);
+      end;
 end;
 
 end.
