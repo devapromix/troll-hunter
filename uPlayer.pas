@@ -1134,6 +1134,7 @@ begin
     Items.AddItemToInv(iRuby, 1);
     Items.AddItemToInv(iEmerald, 1);
     Items.AddItemToInv(iSaphire, 1);
+    Items.AddItemToInv(iPotionOfTrollBlood, 1);
   end
   else
   begin

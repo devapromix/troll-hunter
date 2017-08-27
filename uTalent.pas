@@ -24,7 +24,7 @@ type
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
     // None
-    (Level: 1; Effects: [];),
+    (Level: 0; Effects: [];),
     // Strong
     (Level: 1; Effects: [efPrmAthletics];),
     // Dextrous

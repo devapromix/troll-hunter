@@ -66,7 +66,7 @@ type
     iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
     iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
     iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana, iSoothingBalm,
-    iHealingPoultice, iAntidote,
+    iHealingPoultice, iAntidote, iPotionOfTrollBlood,
     // Scrolls
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
@@ -204,6 +204,10 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 250; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efCurePoison]; Value: 100;),
+    // Potion Of Troll Blood
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkYellow;
+    Deep: [deDarkWood .. deDrom]; Effects: [efPrmLife]; Value: 1;),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -1114,6 +1118,9 @@ begin
     // Antidote
     iAntidote:
       Result := _('Antidote');
+    // Potion Of Troll Blood
+    iPotionOfTrollBlood:
+      Result := _('Potion Of Troll Blood');
 
     // Scroll of healing
     iScrollOfMinorHealing:
