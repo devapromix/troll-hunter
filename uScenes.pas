@@ -878,6 +878,8 @@ begin
       Scenes.SetScene(scOptions);
     // TK_B:
     // Scenes.SetScene(scSpellbook);
+    TK_Y:
+      if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
       Scenes.SetScene(scTalents);
     TK_SLASH:
@@ -1699,7 +1701,6 @@ begin
             else
               Exit;
         end;
-        Talents.Start;
         Scenes.SetScene(scTalents);
       end;
     TK_ESCAPE:
@@ -1899,7 +1900,8 @@ end;
 
 procedure TSceneTalents.Render;
 var
-  I, V, Y: Byte;
+  V, Y: Byte;
+  T: TTalentEnum;
 
   procedure Add(const S, H: string; F: Boolean = True);
   begin
@@ -1913,7 +1915,7 @@ var
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, S);
     Terminal.ForegroundColor(clGray);
-    Terminal.Print(20, Y, H);
+    Terminal.Print(30, Y, H);
     Inc(Y);
     Inc(V);
   end;
@@ -1926,23 +1928,20 @@ begin
   Self.FromAToZ;
 
   Terminal.ForegroundColor(clGray);
+  for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
+    if (TalentBase[T].Level = Player.Level) then
+      Add(Talents.GetName(T), Talents.GetHint(T), Player.TalentPoint);
 
-  for I := 0 to TalentMax - 1 do
-    if (Talents.Talent[I].Enum <> tlNone) then
-      Add(Talents.GetName(TTalentEnum(0)),
-        Talents.GetHint(TTalentEnum(0)), False);
-
-  MsgLog.Render(2, True);
-  if (Player.TalentPoint > 0) then
+  if Game.IsMode then
+    MsgLog.Render(2, True);
+  if Player.TalentPoint then
   begin
     AddKey('Esc', _('Close'), True, False);
-    AddKey('A-Z', Format(_('Select a talent (%d)'), [Player.TalentPoint]), False, True);
+    AddKey('A-Z', _('Select a talent'), False, True);
   end else AddKey('Esc', _('Close'), True, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
-var
-  I, J: Byte;
 begin
   case Key of
     TK_ESCAPE:
@@ -1951,29 +1950,15 @@ begin
           else Scenes.SetScene(scDifficulty);
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
-        if (Player.TalentPoint > 0) then
+        if Player.TalentPoint then
         begin
           case Key of
             TK_A .. TK_Z:
-            begin
-              J := 0;
-              for I := 0 to TalentMax - 1 do
-                if (Talents.Talent[I].Enum <> tlNone) then
-                begin
-                  if (J = Key - TK_A) then
-                  begin
-                    ShowMessage('');
-
-
-
-
-                  end;
-                  Inc(J)
-                end;            
-            end;
+              Talents.DoTalent(Key - TK_A);
+            TK_ENTER, TK_KP_ENTER:
+              if Game.Wizard then
+                Talents.DoTalent(Math.RandomRange(0, 5));
           end;
-          if not Game.IsMode then
-            Scenes.SetScene(scName);
         end;
       end;
   end

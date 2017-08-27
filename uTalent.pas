@@ -66,7 +66,7 @@ type
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): Boolean;
     function Count: Byte;
-    procedure Start;
+    procedure DoTalent(Key: Byte);
   end;
 
 var
@@ -74,7 +74,7 @@ var
 
 implementation
 
-uses SysUtils, Math, GNUGetText, uSkill;
+uses SysUtils, Math, GNUGetText, uSkill, uGame, uScenes;
 
 { TTalents }
 
@@ -86,8 +86,7 @@ begin
     if (FTalent[I].Enum = tlNone) then
     begin
       FTalent[I].Enum := ATalent;
-      Player.DoEffects(TalentBase[ATalent].Effects);
-      Exit;
+      Break;
     end;
 end;
 
@@ -108,6 +107,28 @@ destructor TTalents.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TTalents.DoTalent(Key: Byte);
+var
+  T: TTalentEnum;
+  K: Byte;
+begin
+  K := 0;
+  for T := Low(TTalentEnum) to High(TTalentEnum) do
+    if ((TalentBase[T].Level = Player.Level)
+      and (T <> tlNone)) then
+    begin
+      if (Key = K) then
+      begin
+        Player.TalentPoint := False;
+        Player.DoEffects(TalentBase[T].Effects);
+        if not Game.IsMode then
+          Scenes.SetScene(scName);
+        Break;
+      end;
+      Inc(K);
+    end;
 end;
 
 function TTalents.GetHint(I: TTalentEnum): string;
@@ -189,15 +210,6 @@ end;
 procedure TTalents.SetTalent(I: Byte; const Value: TTalent);
 begin
   FTalent[I] := Value;
-end;
-
-procedure TTalents.Start;
-var
-  I: Byte;
-begin
-  for I := 0 to TalentMax - 1 do
-    //if (FTalent[I].Level <= Player.Level) then
-      Self.Add(FTalent[I].Enum);
 end;
 
 initialization

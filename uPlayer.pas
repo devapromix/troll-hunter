@@ -12,7 +12,7 @@ type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
     efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
     efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
-    efBloodlust);
+    efBloodlust, efPrmLife, efPrmMana);
 
 type
   TEffects = set of TEffect;
@@ -64,7 +64,7 @@ type
     FName: string;
     FStatistics: TStatistics;
     FSkills: TSkills;
-    FTalentPoint: Byte;
+    FTalentPoint: Boolean;
     procedure GenNPCText;
     function GetDV: Byte;
     function GetPV: Byte;
@@ -100,7 +100,7 @@ type
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
     property Statictics: TStatistics read FStatistics write FStatistics;
     property Name: string read FName write FName;
-    property TalentPoint: Byte read FTalentPoint write FTalentPoint;
+    property TalentPoint: Boolean read FTalentPoint write FTalentPoint;
     property Skills: TSkills read FSkills write FSkills;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
@@ -391,7 +391,7 @@ begin
   Score := 0;
   Level := 1;
   MaxMap := 0;
-  TalentPoint := 1;
+  TalentPoint := True;
   Name := _('PLAYER');
   FSkills := TSkills.Create;
   Self.Clear;
@@ -1025,12 +1025,12 @@ begin
     Level := Level + 1;
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
       [Level]), clAlarm));
-    if (Level mod 2 = 0) then
+    if (Level mod 2 = 1) then
     begin
-      TalentPoint := TalentPoint + 1;
+      TalentPoint := True;
       MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
       Score := Score + 1;
-    end;
+    end else TalentPoint := False;
     Score := Score + (Level * Level);
   end;
 end;
@@ -1226,47 +1226,57 @@ begin
   // Athletics
   if (efPrmAthletics in Effects) then
   begin
-
+    ShowMessage('Athletics');
   end;
   // Dodge
   if (efPrmDodge in Effects) then
   begin
-
+    ShowMessage('Dodge');
   end;
   // Concentration
   if (efPrmConcentration in Effects) then
   begin
-
+    ShowMessage('Concentration');
   end;
   // Toughness
   if (efPrmToughness in Effects) then
   begin
-
+    ShowMessage('Toughness');
   end;
   // Blade
   if (efPrmBlade in Effects) then
   begin
-
+    ShowMessage('Blade');
   end;
   // Axe
   if (efPrmAxe in Effects) then
   begin
-
+    ShowMessage('Axe');
   end;
   // Spear
   if (efPrmSpear in Effects) then
   begin
-
+    ShowMessage('Spear');
   end;
   // Mace
   if (efPrmMace in Effects) then
   begin
-
+    ShowMessage('Mace');
   end;
   // 2x to gold
   if (ef2xGold in Effects) then
   begin
-     
+
+  end;
+  // Life
+  if (efPrmLife in Effects) then
+  begin
+
+  end;
+  // Mana
+  if (efPrmMana in Effects) then
+  begin
+
   end;
 end;
 
