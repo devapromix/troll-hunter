@@ -31,6 +31,9 @@ const
   // Inventory
   ItemMax = 26;
   StartGold = 250;
+  // Talents
+  TalentPrm = 3;
+  AttribPrm = 7;
 
 type
   TPlayer = class(TEntity)
@@ -45,6 +48,10 @@ type
     FRadius: Byte;
     FDV: Byte;
     FPV: Byte;
+    FPrmDV: Byte;
+    FPrmPV: Byte;
+    FPrmLife: Byte;
+    FPrmMana: Byte;
     FExp: Byte;
     FMaxMap: Byte;
     FLook: Boolean;
@@ -83,8 +90,12 @@ type
     property Radius: Byte read GetRadius write FRadius;
     property DV: Byte read GetDV write FDV;
     property PV: Byte read GetPV write FPV;
+    property PrmDV: Byte read FPrmDV write FPrmDV;
+    property PrmPV: Byte read FPrmPV write FPrmPV;
     property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
+    property PrmLife: Byte read FPrmLife write FPrmLife;
+    property PrmMana: Byte read FPrmMana write FPrmMana;
     property Look: Boolean read FLook write FLook;
     property Strength: Byte read FStrength write FStrength;
     property Dexterity: Byte read FDexterity write FDexterity;
@@ -355,11 +366,11 @@ begin
   Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4),
     1, AtrMax);
   //
-  DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)), 0, DVMax);
-  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def,
-    0, PVMax);
-  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3);
-  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4);
+  DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)) + PrmDV, 0, DVMax);
+  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def +
+    PrmPV, 0, PVMax);
+  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + PrmLife;
+  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + PrmMana;
   Radius := Round(Perception / 8.3);
   //
   Self.SetDamage(EnsureRange(Dam.Min + Strength div 3, 1, High(Byte) - 1),
@@ -389,6 +400,10 @@ begin
   Turn := 0;
   Gold := 0;
   Score := 0;
+  PrmDV := 0;
+  PrmPV := 0;
+  PrmLife := 0;
+  PrmMana := 0;
   Level := 1;
   MaxMap := 0;
   TalentPoint := True;
@@ -1146,6 +1161,22 @@ const
     Player.Fill;
   end;
 
+  procedure PrmValue(AEffect: TEffect; Value: Byte);
+  begin
+    case AEffect of
+      efPrmLife:
+        PrmLife := PrmLife + Value;
+      efPrmMana:
+        PrmMana := PrmMana + Value;
+      efPrmPV:
+        PrmPV := PrmPV + Value;
+      efPrmDV:
+        PrmDV := PrmDV + Value;
+    end;
+    Player.Calc;
+    Player.Fill;
+  end;
+
 begin
   // Life
   if (efLife in Effects) then
@@ -1260,24 +1291,16 @@ begin
   end;
   // Life
   if (efPrmLife in Effects) then
-  begin
-
-  end;
+    PrmValue(efPrmLife, IfThen(Value = 0, AttribPrm, Value));
   // Mana
   if (efPrmMana in Effects) then
-  begin
-
-  end;
+    PrmValue(efPrmMana, IfThen(Value = 0, AttribPrm, Value));
   // DV
   if (efPrmDV in Effects) then
-  begin
-  
-  end;
+    PrmValue(efPrmDV, IfThen(Value = 0, TalentPrm, Value));
   // PV
   if (efPrmPV in Effects) then
-  begin
-  
-  end;
+    PrmValue(efPrmPV, IfThen(Value = 0, TalentPrm, Value));
 end;
 
 initialization

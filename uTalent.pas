@@ -7,8 +7,6 @@ uses
 
 const
   TalentMax = 10;
-  TalentPrm = 3;
-  AttribPrm = 7;
 
 type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
