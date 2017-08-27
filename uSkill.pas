@@ -29,9 +29,9 @@ type
     procedure Clear;
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: Byte = 1);
+    procedure Modify(I: TSkillEnum; Value: Integer);
     function GetName(I: TSkillEnum): string;
     procedure Start;
-    procedure Modify();
   end;
 
 const
@@ -128,6 +128,11 @@ end;
 function TSkills.GetSkill(I: TSkillEnum): TSkill;
 begin
   Result := FSkill[I]
+end;
+
+procedure TSkills.Modify(I: TSkillEnum; Value: Integer);
+begin
+  FSkill[I].Value := FSkill[I].Value + Value;
 end;
 
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);

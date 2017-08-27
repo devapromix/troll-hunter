@@ -1138,6 +1138,14 @@ var
   V, VX, VY: Word;
 const
   F = '%s +%d.';
+
+  procedure PrmSkill(ASkill: TSkillEnum);
+  begin
+    Skills.Modify(ASkill, StartSkill);
+    Player.Calc;
+    Player.Fill;
+  end;
+
 begin
   // Life
   if (efLife in Effects) then
@@ -1225,44 +1233,28 @@ begin
   end;
   // Athletics
   if (efPrmAthletics in Effects) then
-  begin
-    Self.Skills.Skill[skAthletics].Value := Self.Skills.Skill[skAthletics].Value + StartSkill;
-  end;
+    PrmSkill(skAthletics);
   // Dodge
   if (efPrmDodge in Effects) then
-  begin
-
-  end;
+    PrmSkill(skDodge);
   // Concentration
   if (efPrmConcentration in Effects) then
-  begin
-
-  end;
+    PrmSkill(skConcentration);
   // Toughness
   if (efPrmToughness in Effects) then
-  begin
-
-  end;
+    PrmSkill(skToughness);
   // Blade
   if (efPrmBlade in Effects) then
-  begin
-
-  end;
+    PrmSkill(skBlade);
   // Axe
   if (efPrmAxe in Effects) then
-  begin
-
-  end;
+    PrmSkill(skAxe);
   // Spear
   if (efPrmSpear in Effects) then
-  begin
-
-  end;
+    PrmSkill(skSpear);
   // Mace
   if (efPrmMace in Effects) then
-  begin
-    
-  end;
+    PrmSkill(skMace);
   // 2x to gold
   if (ef2xGold in Effects) then
   begin
