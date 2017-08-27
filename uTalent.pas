@@ -121,6 +121,7 @@ begin
     begin
       if (Key = K) then
       begin
+        Self.Add(T);
         Player.TalentPoint := False;
         Player.DoEffects(TalentBase[T].Effects);
         if not Game.IsMode then

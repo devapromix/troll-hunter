@@ -1900,22 +1900,36 @@ end;
 
 procedure TSceneTalents.Render;
 var
-  V, Y: Byte;
+  V, Y, I: Byte;
   T: TTalentEnum;
 
-  procedure Add(const S, H: string; F: Boolean = True);
+  procedure Add(const S, H: string; F: Boolean = True); overload;
+  var
+    C: Char;
   begin
+    C := Chr(V + Ord('A'));
     if F then
-      Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))))
+      Terminal.Print(1, Y, TScene.KeyStr(C))
     else
     begin
       Terminal.ForegroundColor(clWhite);
-      Terminal.Print(1, Y, '[[' + Chr(V + Ord('A')) + ']]');
+      Terminal.Print(1, Y, '[[' + C + ']]');
     end;
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, S);
     Terminal.ForegroundColor(clGray);
     Terminal.Print(30, Y, H);
+    Inc(Y);
+    Inc(V);
+  end;
+
+  procedure Add(); overload;
+  begin
+    if (Talents.Talent[V].Enum <> tlNone) then
+    begin
+      Terminal.ForegroundColor(clWhite);
+      Terminal.Print(CX + (CX div 2), Y, Talents.GetName(Talents.Talent[V].Enum) + '+++');
+    end;
     Inc(Y);
     Inc(V);
   end;
@@ -1931,6 +1945,11 @@ begin
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
     if (TalentBase[T].Level = Player.Level) then
       Add(Talents.GetName(T), Talents.GetHint(T), Player.TalentPoint);
+
+  V := 0;
+  Y := 2;
+  for I := 0 to TalentMax - 1 do
+    Add();
 
   if Game.IsMode then
     MsgLog.Render(2, True);
