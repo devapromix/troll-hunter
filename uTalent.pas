@@ -7,6 +7,7 @@ uses
 
 const
   TalentMax = 10;
+  PrmDV = 3;
 
 type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
@@ -159,6 +160,8 @@ begin
       Result := Format(F, [StartSkill, _('Mace')]);
     tlMiser:
       Result := _('x2 to Gold');
+    tlCareful:
+      Result := Format(F, [PrmDV, _('DV')]);
   else
     Result := '-';
   end;
@@ -187,6 +190,8 @@ begin
       Result := _('Affinity with Maces');
     tlMiser:
       Result := _('Miser');
+    tlCareful:
+      Result := _('Careful');
   else
     Result := '-';
   end;
