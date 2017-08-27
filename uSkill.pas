@@ -132,7 +132,7 @@ end;
 
 procedure TSkills.Modify(I: TSkillEnum; Value: Integer);
 begin
-  FSkill[I].Value := FSkill[I].Value + Value;
+  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin, SkillMax);
 end;
 
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);
