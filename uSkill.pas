@@ -31,6 +31,7 @@ type
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: Byte = 1);
     function GetName(I: TSkillEnum): string;
     procedure Start;
+    procedure Modify();
   end;
 
 const
@@ -138,17 +139,6 @@ procedure TSkills.Start;
 var
   I: TSkillEnum;
 begin
-  { // Talents
-    case Talent of
-    tlStrong:
-    FSkill[skAthletics].Value := FSkill[skAthletics].Value + StartSkill;
-    tlDextrous:
-    FSkill[skDodge].Value := FSkill[skDodge].Value + StartSkill;
-    tlMage:
-    FSkill[skConcentration].Value := FSkill[skConcentration].Value + StartSkill;
-    tlTough:
-    FSkill[skToughness].Value := FSkill[skToughness].Value + StartSkill;
-    end; }
   // Wizard
   if not Game.Wizard then
     Exit;

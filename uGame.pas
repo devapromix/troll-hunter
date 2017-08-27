@@ -252,19 +252,17 @@ end;
 
 procedure TGame.Start;
 begin
-  Spellbook.Start;
   Player.Skills.Start;
   Player.Start;
-  Shops.New;
   Player.Calc;
   Player.Fill;
+  Spellbook.Start;
+  Shops.New;
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'),
     _('You need to find and kill The King Troll!'), _('Press ? for help.')]),
     clAlarm));
-  //
-  Scenes.SetScene(scGame);
 end;
 
 function TGame.GetTitle: string;

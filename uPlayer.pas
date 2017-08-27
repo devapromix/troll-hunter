@@ -186,7 +186,7 @@ var
 begin
   if (Index < 0) then
     Exit;
-  Mob := Mobs.Mob[I.dex];
+  Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
   if (Mob.Force <> fcEnemy) then
@@ -1226,7 +1226,7 @@ begin
   // Athletics
   if (efPrmAthletics in Effects) then
   begin
-
+    Self.Skills.Skill[skAthletics].Value := Self.Skills.Skill[skAthletics].Value + StartSkill;
   end;
   // Dodge
   if (efPrmDodge in Effects) then

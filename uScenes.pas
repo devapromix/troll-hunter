@@ -1701,7 +1701,8 @@ begin
             else
               Exit;
         end;
-        Scenes.SetScene(scTalents);
+       Game.Start();
+       Scenes.SetScene(scTalents);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1771,9 +1772,9 @@ begin
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
         Terminal_Delay(1000);
-        Game.Start();
         Map.Gen;
         Game.IsMode := True;
+        Scenes.SetScene(scGame);
       end;
     TK_A .. TK_Z:
       begin
