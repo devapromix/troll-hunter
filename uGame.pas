@@ -252,7 +252,6 @@ end;
 
 procedure TGame.Start;
 begin
-  IsMode := True;
   Spellbook.Start;
   Player.Skills.Start;
   Player.Start;

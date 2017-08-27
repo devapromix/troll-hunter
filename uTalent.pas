@@ -12,7 +12,7 @@ type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
     tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
     tlAffWithSwords, tlAffWithAxes, tlAffWithPolearms, tlAffWithMaces,
-    tlMiser { Скряга } );
+    tlMiser { Скряга }, tlCareful { Осторожный } );
 
 type
   TTalentBase = record
@@ -43,7 +43,9 @@ const
     // Affinity with Maces
     (Level: 3; Effects: [efPrmMace];),
     // Miser
-    (Level: 5; Effects: [ef2xGold];));
+    (Level: 5; Effects: [ef2xGold];),
+    // Careful
+    (Level: 5; Effects: [efPrmDV];));
 
 type
   TTalent = record

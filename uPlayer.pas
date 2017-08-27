@@ -12,7 +12,7 @@ type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
     efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
     efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
-    efBloodlust, efPrmLife, efPrmMana);
+    efBloodlust, efPrmLife, efPrmMana, efPrmDV);
 
 type
   TEffects = set of TEffect;
@@ -186,7 +186,7 @@ var
 begin
   if (Index < 0) then
     Exit;
-  Mob := Mobs.Mob[Index];
+  Mob := Mobs.Mob[I.dex];
   if not Mob.Alive then
     Exit;
   if (Mob.Force <> fcEnemy) then
@@ -1226,42 +1226,42 @@ begin
   // Athletics
   if (efPrmAthletics in Effects) then
   begin
-    ShowMessage('Athletics');
+
   end;
   // Dodge
   if (efPrmDodge in Effects) then
   begin
-    ShowMessage('Dodge');
+
   end;
   // Concentration
   if (efPrmConcentration in Effects) then
   begin
-    ShowMessage('Concentration');
+
   end;
   // Toughness
   if (efPrmToughness in Effects) then
   begin
-    ShowMessage('Toughness');
+
   end;
   // Blade
   if (efPrmBlade in Effects) then
   begin
-    ShowMessage('Blade');
+
   end;
   // Axe
   if (efPrmAxe in Effects) then
   begin
-    ShowMessage('Axe');
+
   end;
   // Spear
   if (efPrmSpear in Effects) then
   begin
-    ShowMessage('Spear');
+
   end;
   // Mace
   if (efPrmMace in Effects) then
   begin
-    ShowMessage('Mace');
+    
   end;
   // 2x to gold
   if (ef2xGold in Effects) then
@@ -1277,6 +1277,11 @@ begin
   if (efPrmMana in Effects) then
   begin
 
+  end;
+  // DV
+  if (efPrmDV in Effects) then
+  begin
+  
   end;
 end;
 

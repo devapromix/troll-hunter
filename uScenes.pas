@@ -1771,8 +1771,9 @@ begin
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
         Terminal_Delay(1000);
-        Map.Gen;
         Game.Start();
+        Map.Gen;
+        Game.IsMode := True;
       end;
     TK_A .. TK_Z:
       begin
@@ -1928,7 +1929,7 @@ var
     if (Talents.Talent[V].Enum <> tlNone) then
     begin
       Terminal.ForegroundColor(clWhite);
-      Terminal.Print(CX + (CX div 2), Y, Talents.GetName(Talents.Talent[V].Enum) + '+++');
+      Terminal.Print(CX + (CX div 2), Y, Talents.GetName(Talents.Talent[V].Enum));
     end;
     Inc(Y);
     Inc(V);
