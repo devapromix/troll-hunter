@@ -423,8 +423,8 @@ end;
 procedure TPlayer.Defeat(AKiller: string = '');
 begin
   Killer := AKiller;
-  MsgLog.Add(Terminal.Colorize(_('You die...'), clAlarm));
-  MsgLog.Add(Format(_('Press %s to continue...'), [TScene.KeyStr('SPACE')]));
+  MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
+  MsgLog.Add(Format(_('Press %s to try again...'), [TScene.KeyStr('SPACE')]));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -901,7 +901,7 @@ begin
     end;
   end
   else
-    MsgLog.Add(_('There is nothing here.'));
+    MsgLog.Add(_('There is nothing here to pick up.'));
 end;
 
 procedure TPlayer.PickUpAmount(Index: Integer);

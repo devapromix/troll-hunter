@@ -496,7 +496,7 @@ procedure TSceneTitle.Render;
 begin
   Logo.Render;
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
-  Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to continue...'),
+  Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
     [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
@@ -556,19 +556,19 @@ begin
   Y := 15;
   AddLine('<', _('Go upstairs'));
   AddLine('>', _('Go downstairs'));
-  AddLine('G', _('Pickup an item'));
-  AddLine('F', _('Drop an item'));
+  AddLine('G', _('Pick up items'));
+  AddLine('F', _('Drop items'));
   AddLine('L', _('Look mode'));
   AddLine('R', _('Rest'));
   AddLine('M', _('Last messages'));
   // AddLine('B', _('Spellbook'));
   AddLine('T', _('Talents'));
-  AddLine('N', _('Statistics'));
+  AddLine('N', _('Show statistics'));
   AddLine('O', _('Options'));
   AddLine('I', _('Inventory'));
   AddLine('P', _('Skills and attributes'));
   AddLine('K', _('Calendar'));
-  AddLine('?', _('Help (this page)'));
+  AddLine('?', _('Show this help screen'));
 
   Self.Title(_('Character dump'), Terminal.Window.Height - 6);
   Terminal.Print(CX, Terminal.Window.Height - 4,
@@ -1017,7 +1017,7 @@ end;
 
 procedure TSceneDrop.Render;
 begin
-  Self.Title(_('Drop an item'));
+  Self.Title(_('Choose the item you wish to drop'));
 
   Self.FromAToZ;
   Items.RenderInventory;
