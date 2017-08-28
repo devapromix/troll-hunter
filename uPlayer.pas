@@ -22,7 +22,6 @@ const
   AtrMax = 100;
   RadiusMax = 15;
   DVMax = 80;
-  PVMax = 250;
   LevelExpMax = 8;
   // Satiation
   StarvingMax = 500;
@@ -125,7 +124,7 @@ type
     procedure Spawn;
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
-    procedure Defeat(AKiller: string);
+    procedure Defeat(AKiller: string = '');
     procedure Attack(Index: Integer);
     procedure ReceiveHealing;
     procedure Buy(Index: Integer);
@@ -139,8 +138,8 @@ type
     procedure UnEquip(Index: Integer);
     procedure Sell(Index: Integer);
     procedure RepairItem(Index: Integer);
-    procedure BreakItem(Index: Integer); overload;
-    procedure BreakItem(ASlot: TSlotType); overload;
+    procedure BreakItem(Index: Integer; Value: Byte = 1); overload;
+    procedure BreakItem(ASlot: TSlotType; Value: Byte = 1); overload;
     procedure AddExp(Value: Byte = 1);
     procedure Start;
     procedure Rest(ATurns: Word);
@@ -163,6 +162,7 @@ procedure TPlayer.AddTurn;
 var
   V: Byte;
 begin
+  if IsDead then Exit;
   Turn := Turn + 1;
   Calendar.Turn;
   if (Satiation > 0) then
@@ -183,8 +183,7 @@ begin
         0, MaxMana);
   end;
   OnTurn();
-  if (Life = 0) then
-    Defeat(Terminal.Colorize(_('Venom'), 'Poison'));
+  if (Life = 0) then Self.Defeat;
   Mobs.Process;
 end;
 
@@ -194,6 +193,14 @@ var
   Mob: TMob;
   Dam, Cr: Word;
   CrStr, The: string;
+
+  procedure Miss();
+  begin
+    MsgLog.Add(Format(_('You miss %s.'), [The]));
+    // MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
+    SatPerTurn := Ord(Game.Difficulty) + 3;
+  end;
+
 begin
   if (Index < 0) then
     Exit;
@@ -207,12 +214,13 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (MobBase[TMobEnum(Mob.ID)].DV < Math.RandomRange(0, 100)) then
+  if (Mob.DV < Math.RandomRange(0, 100)) then
   begin
     CrStr := '';
     // Attack
     Dam := EnsureRange(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0,
       High(Word));
+    // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Dec(Dam, Dam div 3);
     // Critical hits...     .
@@ -233,11 +241,20 @@ begin
       Dam := Dam * V;
       CrStr := CrStr + Format(' (%dx)', [V]);
     end;
+    // PV
+    Dam := Self.GetRealDamage(Dam, Mob.PV);
+    if (Dam = 0) then
+    begin
+      Miss();
+      AddTurn;
+      Exit;
+    end;
     // Attack
-    Mob.Life := EnsureRange(Mob.Life - Dam, 0, High(Word));
+    Mob.Life := EnsureRange(Mob.Life - Dam, 0, Mob.Life);
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
-    if ((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and not Game.Wizard) then
-      BreakItem(stMainHand);
+    // Break weapon
+    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0)
+      and not Game.Wizard) then BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     case FWeaponSkill of
@@ -246,42 +263,33 @@ begin
           Skills.DoSkill(FWeaponSkill, 2);
           Skills.DoSkill(skAthletics, 2);
           Skills.DoSkill(skDodge, 2);
-          SatPerTurn := 5;
+          SatPerTurn := Ord(Game.Difficulty) + 5;
         end;
       skAxe:
         begin
           Skills.DoSkill(FWeaponSkill, 2);
           Skills.DoSkill(skAthletics, 3);
           Skills.DoSkill(skDodge);
-          SatPerTurn := 6;
+          SatPerTurn := Ord(Game.Difficulty) + 6;
         end;
       skSpear:
         begin
           Skills.DoSkill(FWeaponSkill, 2);
           Skills.DoSkill(skAthletics);
           Skills.DoSkill(skDodge, 3);
-          SatPerTurn := 4;
+          SatPerTurn := Ord(Game.Difficulty) + 4;
         end;
       skMace:
         begin
           Skills.DoSkill(FWeaponSkill, 2);
           Skills.DoSkill(skAthletics, 4);
-          SatPerTurn := 7;
+          SatPerTurn := Ord(Game.Difficulty) + 7;
         end;
     end;
     // Victory
-    if (Mob.Life = 0) then
-    begin
-      Mob.Defeat;
-    end;
+    if (Mob.Life = 0) then Mob.Defeat;
   end
-  else
-  begin
-    // Miss
-    MsgLog.Add(Format(_('You miss %s.'), [The]));
-    // MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
-    SatPerTurn := 3;
-  end;
+  else Miss();
   AddTurn;
 end;
 
@@ -412,7 +420,7 @@ begin
   Self.Clear;
 end;
 
-procedure TPlayer.Defeat(AKiller: string);
+procedure TPlayer.Defeat(AKiller: string = '');
 begin
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize(_('You die...'), clAlarm));
@@ -693,8 +701,7 @@ var
   The: string;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Equipment > 0) or (AItem.Stack > 1) or (AItem.Amount > 1)) then
-    Exit;
+  if ((AItem.Equipment > 0) or Items.ChItem(AItem)) then Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
   begin
     Value := Items.GetPrice(AItem) div 4;
@@ -729,7 +736,7 @@ procedure TPlayer.ReceiveHealing;
 var
   Cost: Word;
 begin
-  Cost := MaxLife - Life;
+  Cost := Round((MaxLife - Life) * 1.6);
   if (Self.Gold >= Cost) then
   begin
     if (Items_Inventory_DeleteItemAmount(Ord(iGold), Cost) > 0) then
@@ -771,7 +778,7 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.BreakItem(Index: Integer);
+procedure TPlayer.BreakItem(Index: Integer; Value: Byte = 1);
 var
   AItem: Item;
   The: string;
@@ -780,7 +787,7 @@ begin
   if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
     Exit;
   The := GetCapit(GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]));
-  AItem.Durability := Math.EnsureRange(AItem.Durability - 1, 0, High(Byte));
+  AItem.Durability := Math.EnsureRange(AItem.Durability - Value, 0, High(Byte));
   if ((AItem.Durability > 0) and (AItem.Durability < (AItem.MaxDurability div 4))) then
     MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'),
       [The, AItem.Durability, AItem.MaxDurability]), clAlarm));
@@ -793,7 +800,7 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.BreakItem(ASlot: TSlotType);
+procedure TPlayer.BreakItem(ASlot: TSlotType; Value: Byte = 1);
 var
   FCount, I: Integer;
   FItem: Item;
@@ -808,7 +815,7 @@ begin
       FI := TItemEnum(FItem.ItemID);
       if (ItemBase[FI].SlotType = ASlot) then
       begin
-        BreakItem(I);
+        BreakItem(I, Value);
         Exit;
       end;
     end;

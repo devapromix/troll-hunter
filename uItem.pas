@@ -29,15 +29,19 @@ const
   BookTypeItems = [itBook];
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     RuneTypeItems + BookTypeItems;
-  NotDropTypeItems = [itNone, itCorpse, itKey] + RuneTypeItems;
+  CorpseTypeItems = [itCorpse];
+  NotDropTypeItems = [itNone, itKey] + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin, itGem];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
+  GlovesTypeItems = [itHeadgear, itHands, itFeet];
+  FootsTypeItems = [itHeadgear, itHands, itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
+  JewTypeItems = [itGem, itRing, itAmulet];
+  GemTypeItems = [itGem];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
-  SmithTypeItems = [itBlade, itAxe, itSpear, itMace, itShield, itHeadgear,
-    itBodyArmor, itHands, itFeet];
+  SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
 
 type
   TItemBase = record
@@ -267,28 +271,28 @@ const
     ManaCost: 20;),
 
     // Rune of minor healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 2;
-    Price: 1000; Color: clLightestRed; Deep: [deDarkWood .. deDrom];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 3;
+    Price: 1000; Color: clLightestRed; Deep: [deDarkWood .. deGrayCave];
     Effects: [efLife]; Value: 75; ManaCost: 20;),
     // Rune of lesser healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 4;
-    Price: 1500; Color: clLightRed; Deep: [deDarkWood .. deDrom];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
+    Price: 1500; Color: clLightRed; Deep: [deGrayCave .. deDeepCave];
     Effects: [efLife]; Value: 150; ManaCost: 30;),
     // Rune of greater healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 6;
-    Price: 2000; Color: clRed; Deep: [deDarkWood .. deDrom]; Effects: [efLife];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 7;
+    Price: 2000; Color: clRed; Deep: [deDeepCave .. deBloodCave]; Effects: [efLife];
     Value: 250; ManaCost: 40;),
     // Rune of full healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 8;
-    Price: 2500; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 9;
+    Price: 2500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
     Effects: [efLife]; Value: 250; ManaCost: 50;),
 
     // Rune of teleportation
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 6;
-    Price: 10000; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
+    Price: 7000; Color: clDarkRed; Deep: [deDeepCave .. deBloodCave];
     Effects: [efTeleportation]; Value: 10; ManaCost: 150;),
     // Rune of town portal
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 1;
     Price: 4800; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
@@ -310,13 +314,13 @@ const
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     // Ruby
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 16; Level: 1;
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
     Price: 500; Color: clRed; Deep: [deDarkWood .. deDrom];),
     // Emerald
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 16; Level: 1;
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
     Price: 500; Color: clGreen; Deep: [deDarkWood .. deDrom];),
     // Saphire
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 16; Level: 1;
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
     Price: 500; Color: clBlue; Deep: [deDarkWood .. deDrom];),
 
     /// / == Dark Wood == ////
@@ -781,7 +785,9 @@ type
     procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
+    function ChItem(AItem: Item): Boolean;
   end;
+
 
 var
   Items: TItems = nil;
@@ -792,6 +798,12 @@ uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
   uShop, uTalent;
 
 { TItems }
+
+function TItems.ChItem(AItem: Item): Boolean;
+begin
+  Result := (ItemBase[TItemEnum(AItem.ItemID)].ItemType in CorpseTypeItems)
+    or (AItem.Stack > 1) or (AItem.Amount > 1);
+end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0): string;
@@ -1536,8 +1548,7 @@ begin
       ptSell:
         begin
           S := '------';
-          if ((GetPrice(AItem) > 1) and (AItem.Stack = 1) and (AItem.Amount = 1))
-          then
+          if ((GetPrice(AItem) > 1) and not ChItem(AItem)) then
           begin
             S := GetPrice(GetPrice(AItem) div 4, True);
             if (AItem.Equipment > 0) then

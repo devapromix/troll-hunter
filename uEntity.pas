@@ -4,6 +4,9 @@ interface
 
 uses uAbility;
 
+const
+  PVMax = 250;
+
 type
   TMinMax = record
     Min: Word;
@@ -50,6 +53,7 @@ type
     function GetDescThe(S: string): string;
     function GetPureText(const S: string): string;
     procedure SetDamage(AMin, AMax: Word);
+    function GetRealDamage(ADamage, APV: Word): Word;
     function IsDead: Boolean;
     procedure OnTurn;
   end;
@@ -142,6 +146,11 @@ begin
     if (S[I] = ']') then
       B := True;
   end;
+end;
+
+function TEntity.GetRealDamage(ADamage, APV: Word): Word;
+begin
+  Result := EnsureRange(ADamage - Round((ADamage * ((APV * 100) / PVMax)) / 100), 0, ADamage);
 end;
 
 function TEntity.IsDead: Boolean;

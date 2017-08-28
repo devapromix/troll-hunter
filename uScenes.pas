@@ -251,7 +251,7 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
-  uSpellbook, uTalent, uSkill, uAbility, uLogo;
+  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity;
 
 { TScene }
 
@@ -879,7 +879,9 @@ begin
     // TK_B:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
-      if Game.Wizard then Player.AddExp(LevelExpMax);
+      if Game.Wizard then ;
+      //ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
+      //if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
       Scenes.SetScene(scTalents);
     TK_SLASH:
@@ -929,9 +931,13 @@ procedure TSceneDef.Render;
 begin
   Logo.Render;
   Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
-    [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
-    TK_ALIGN_CENTER);
+  if (Player.Killer = '') then
+    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'),
+    [KeyStr('ENTER')]),
+    TK_ALIGN_CENTER)
+      else Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
+        [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
+        TK_ALIGN_CENTER);
   if Game.Wizard then
     Terminal.Print(CX, CY + 5, Format(_('Press %s to continue...'),
       [KeyStr('SPACE')]), TK_ALIGN_CENTER);
@@ -1321,6 +1327,13 @@ var
   V: Integer;
   S: string;
   Y: Byte;
+
+  procedure Add(S: string);
+  begin
+    Inc(Y);
+    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + S, TK_ALIGN_LEFT);
+  end;
+
 begin
   Self.Title(Format('%s ' + _('(%d gold left)'), [NPCName, Player.Gold]));
 
@@ -1330,115 +1343,46 @@ begin
   // Heal
   if (ntHealer_A in NPCType) then
   begin
-    Inc(Y);
     V := Player.MaxLife - Player.Life;
     if (V > 0) then
-      S := ' (-' + Items.GetPrice(V) + ')'
+      S := ' (' + Items.GetInfo('+', V, 'Life') + ' '
+        + Items.GetPrice(Round(V * 1.6)) + ')'
     else
       S := '';
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Receive healing') + S,
-      TK_ALIGN_LEFT);
+    Add(_('Receive healing') + S);
   end;
-
-  if (ntScrTrader_A in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (scrolls)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntArmTrader_A in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (armors)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntShTrader_A in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (shields)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntHelmTrader_A in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (helms)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntFoodTrader_A in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (foods)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  // Repair
-  if (ntBlacksmith_A in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Repair items'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntSmithTrader_B in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
-      _('Buy items (blacksmith)'), TK_ALIGN_LEFT);
-  end;
-
-  if (ntHealTrader_B in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (healing)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntPotManaTrader_B in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' +
-      _('Buy items (potions of mana)'), TK_ALIGN_LEFT);
-  end;
-
-  if (ntPotTrader_B in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (potions)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntTavTrader_B in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (tavern)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  if (ntWpnTrader_B in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Buy items (weapons)'),
-      TK_ALIGN_LEFT);
-  end;
-
-  // Sell
-  if (ntSell_C in NPCType) then
-  begin
-    Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Sell items'),
-      TK_ALIGN_LEFT);
-  end;
-
+  // Shops
+  if (ntScrTrader_A in NPCType) then Add(_('Buy items (scrolls)'));
+  if (ntArmTrader_A in NPCType) then Add(_('Buy items (armors)'));
+  if (ntShTrader_A in NPCType) then Add(_('Buy items (shields)'));
+  if (ntHelmTrader_A in NPCType) then Add(_('Buy items (helms)'));
+  if (ntFoodTrader_A in NPCType) then Add(_('Buy items (foods)'));
+  if (ntBlacksmith_A in NPCType) then Add(_('Repair items'));
+  if (ntSmithTrader_B in NPCType) then Add(_('Buy items (blacksmith)'));
+  if (ntHealTrader_B in NPCType) then Add(_('Buy items (healing)'));
+  if (ntPotManaTrader_B in NPCType) then Add(_('Buy items (potions of mana)'));
+  if (ntPotTrader_B in NPCType) then Add(_('Buy items (potions)'));
+  if (ntGlovesTrader_B in NPCType) then Add(_('Buy items (gloves)'));
+  if (ntTavTrader_B in NPCType) then Add(_('Buy items (tavern)'));
+  if (ntWpnTrader_B in NPCType) then Add(_('Buy items (weapons)'));
+  if (ntGemTrader_C in NPCType) then Add(_('Buy items (gems)'));
+  if (ntJewTrader_C in NPCType) then Add(_('Buy items (amulets and rings)'));
+  if (ntFootsTrader_C in NPCType) then Add(_('Buy items (foots)'));
+  if (ntRuneTrader_D in NPCType) then Add(_('Buy items (runes)'));
+  if (ntSell_C in NPCType) then Add(_('Sell items'));
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, True);
 end;
 
 procedure TSceneDialog.Update(var Key: Word);
+
+  procedure AddShop(AShop: TShopEnum);
+  begin
+    Shops.Current := AShop;
+    Scenes.SetScene(scBuy);
+  end;
+
 begin
   case Key of
     TK_ESCAPE:
@@ -1447,77 +1391,52 @@ begin
     TK_A: //
       begin
         if (ntHealer_A in NPCType) then
-        begin
           Player.ReceiveHealing;
-        end;
         if (ntBlacksmith_A in NPCType) then
           Scenes.SetScene(scRepair);
         if (ntFoodTrader_A in NPCType) then
-        begin
-          Shops.Current := shFoods;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shFoods);
         if (ntShTrader_A in NPCType) then
-        begin
-          Shops.Current := shShields;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shShields);
         if (ntHelmTrader_A in NPCType) then
-        begin
-          Shops.Current := shHelms;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shHelms);
         if (ntScrTrader_A in NPCType) then
-        begin
-          Shops.Current := shScrolls;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shScrolls);
         if (ntArmTrader_A in NPCType) then
-        begin
-          Shops.Current := shArmors;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shArmors);
       end;
     TK_B:
       begin
         if (ntSmithTrader_B in NPCType) then
-        begin
-          Shops.Current := shSmith;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shSmith);
+        if (ntGlovesTrader_B in NPCType) then
+          AddShop(shGloves);
         if (ntTavTrader_B in NPCType) then
-        begin
-          Shops.Current := shTavern;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shTavern);
         if (ntHealTrader_B in NPCType) then
-        begin
-          Shops.Current := shHealer;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shHealer);
         if (ntPotManaTrader_B in NPCType) then
-        begin
-          Shops.Current := shMana;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shMana);
         if (ntPotTrader_B in NPCType) then
-        begin
-          Shops.Current := shPotions;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shPotions);
         if (ntWpnTrader_B in NPCType) then
-        begin
-          Shops.Current := shWeapons;
-          Scenes.SetScene(scBuy);
-        end;
+          AddShop(shWeapons);
       end;
     TK_C:
-      // Selling items
       begin
         if (ntSell_C in NPCType) then
-        begin
           Scenes.SetScene(scSell);
-        end;
+        if (ntJewTrader_C in NPCType) then
+          AddShop(shJew);
+        if (ntFootsTrader_C in NPCType) then
+          AddShop(shFoots);
+        if (ntGemTrader_C in NPCType) then
+          AddShop(shGem);
+      end;
+    TK_D:
+      begin
+        if (ntRuneTrader_D in NPCType) then
+          AddShop(shRunes);
       end;
   end;
 end;

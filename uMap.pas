@@ -67,7 +67,7 @@ type
     procedure SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
     function GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
     property Name: string read GetName;
-    function EnsureRange(Value: Word): Byte;
+    function EnsureRange(Value: Integer): Byte;
   end;
 
 var
@@ -319,7 +319,7 @@ begin
   inherited;
 end;
 
-function TMap.EnsureRange(Value: Word): Byte;
+function TMap.EnsureRange(Value: Integer): Byte;
 begin
   Result := Math.EnsureRange(Value, 0, High(Byte));
 end;
