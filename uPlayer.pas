@@ -1097,11 +1097,15 @@ begin
   begin
     Items.AddItemToInv(iWingedHelm, 1, True);
     Items.AddItemToInv(iPlateMail, 1, True);
+    Items.AddItemToInv(iPlatedGauntlets, 1, True);
+    Items.AddItemToInv(iPlateBoots, 1, True);
   end
   else
   begin
     Items.AddItemToInv(iCap, 1, True);
     Items.AddItemToInv(iQuiltedArmor, 1, True);
+    Items.AddItemToInv(iLeatherGloves, 1, True);
+    Items.AddItemToInv(iShoes, 1, True);
   end;
   // Add weapon
   if Game.Wizard then
