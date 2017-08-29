@@ -38,7 +38,7 @@ const
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
-  JewelryTypeItems = [itGem, itRing, itAmulet];
+  JewelryTypeItems = [itRing, itAmulet];
   GemTypeItems = [itGem];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
