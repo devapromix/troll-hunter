@@ -397,6 +397,7 @@ type
     FForce: TForce;
     Maps: TMapEnum;
     Boss: Boolean;
+    FColor: Cardinal;
     function GetRadius: Byte;
   public
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
@@ -412,6 +413,7 @@ type
     property PV: Byte read FPV write FPV;
     property DV: Byte read FDV write FDV;
     property Force: TForce read FForce write FForce;
+    property Color: Cardinal read FColor;
     property Radius: Byte read GetRadius;
   end;
 
@@ -514,6 +516,8 @@ begin
   Alive := True;
   Force := AForce;
   Abilities.Modify(abSleeping, 1);
+  // Color
+  FColor := MobBase[TMobEnum(ID)].Color;
   // Life
   V := Math.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss, (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25, 0), 0, High(Byte));
   MaxLife := Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V, MobBase[TMobEnum(ID)].MaxLife +
@@ -764,7 +768,7 @@ begin
   if (Self.Boss) then
     C := Chr(Ord(C) - 32);
   Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C,
-    MobBase[TMobEnum(ID)].Color, clBkMob);
+    Color, clBkMob);
 end;
 
 procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
