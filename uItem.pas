@@ -83,7 +83,9 @@ type
     iBreadRation, iValleyRoot, iRatPod,
     //
     iKey,
-    iRuby, iEmerald, iSaphire, // Gems
+    iRuby, iTopaz, iEmerald, iSapphire, // Gems
+    iRing, // Rings
+    iAmulet, // Amulets
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
@@ -325,14 +327,25 @@ const
 
     // Ruby
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 500; Color: clRed; Deep: [deDarkWood .. deDrom];),
+    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom];),
+    // Topaz
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
+    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Emerald
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 500; Color: clGreen; Deep: [deDarkWood .. deDrom];),
-    // Saphire
+    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom];),
+    // Sapphire
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 500; Color: clBlue; Deep: [deDarkWood .. deDrom];),
+    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom];),
 
+    // Ring
+    (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
+    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5); Price: 1000;
+    Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    // Amulet
+    (Symbol: '"'; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
+    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5); Price: 1000;
+    Color: clYellow; Deep: [deDarkWood .. deDrom];),
     /// / == Dark Wood == ////
 
     // Cap
@@ -1304,12 +1317,21 @@ begin
     // Ruby
     iRuby:
       Result := _('Ruby');
+    // Topaz
+    iTopaz:
+      Result := _('Topaz');
     // Emerald
     iEmerald:
       Result := _('Emerald');
-    // Saphire
-    iSaphire:
-      Result := _('Saphire');
+    // Sapphire
+    iSapphire:
+      Result := _('Sapphire');
+    // Ring
+    iRing:
+      Result := _('Ring');
+    // Amulet
+    iAmulet:
+      Result := _('Amulet');
 
     // == Dark Wood == //
 

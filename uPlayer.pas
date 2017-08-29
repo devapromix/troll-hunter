@@ -1142,15 +1142,12 @@ begin
     Items.AddItemToInv(iPotionOfFullMana, 10);
     Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iAntidote, 10);
-    Items.AddItemToInv(iRuby, 1);
-    Items.AddItemToInv(iEmerald, 1);
-    Items.AddItemToInv(iSaphire, 1);
-    Items.AddItemToInv(iPotionOfTrollBlood, 1);
   end
   else
   begin
     Items.AddItemToInv(iLesserHealingPotion, 5);
     Items.AddItemToInv(iLesserManaPotion, 5);
+    Items.AddItemToInv(iAntidote, 1);
   end;
   // Add foods
   Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));
