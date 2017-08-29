@@ -1367,7 +1367,7 @@ begin
   if (ntWpnTrader_B in NPCType) then Add(_('Buy items (weapons)'));
   if (ntGemTrader_C in NPCType) then Add(_('Buy items (gems)'));
   if (ntJewTrader_C in NPCType) then Add(_('Buy items (amulets and rings)'));
-  if (ntFootsTrader_C in NPCType) then Add(_('Buy items (foots)'));
+  if (ntBootsTrader_C in NPCType) then Add(_('Buy items (boots)'));
   if (ntRuneTrader_D in NPCType) then Add(_('Buy items (runes)'));
   if (ntSell_C in NPCType) then Add(_('Sell items'));
   MsgLog.Render(2, True);
@@ -1428,7 +1428,7 @@ begin
           Scenes.SetScene(scSell);
         if (ntJewTrader_C in NPCType) then
           AddShop(shJewelry);
-        if (ntFootsTrader_C in NPCType) then
+        if (ntBootsTrader_C in NPCType) then
           AddShop(shBoots);
         if (ntGemTrader_C in NPCType) then
           AddShop(shGem);

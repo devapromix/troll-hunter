@@ -21,6 +21,12 @@ type
   // ~   Pelts and body parts   )   A shield
   // &   Chests, Containers
 
+  // Leather Gloves, Hide Gloves, Kobold Gloves, Chain Gloves, Etched Gloves
+  // Heavy Bracers, Battle Gauntlets, War Gauntlets, Troll Gauntlets, Plated Gauntlets
+
+  // Shoes, Leather Boots, Mesh Boots, Heavy Boots, Greaves,
+  // Boneweave Boots, Chain Boots, War Boots, Battle Boots, Plate Boots
+
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];

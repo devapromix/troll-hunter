@@ -7,7 +7,7 @@ uses uGame, uMap, uEntity, uAbility;
 type
   TNPCType = (ntSell_C, ntJewTrader_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
     ntSmithTrader_B, ntArmTrader_A, ntGemTrader_C, ntShTrader_A, ntHelmTrader_A, ntPotTrader_B,
-    ntHealTrader_B, ntGlovesTrader_B, ntFootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
+    ntHealTrader_B, ntGlovesTrader_B, ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
     ntFoodTrader_A, ntRuneTrader_D);
 
 type
@@ -356,7 +356,7 @@ const
     // Armor Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clWhite;
-    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntFootsTrader_C];),
+    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C];),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
