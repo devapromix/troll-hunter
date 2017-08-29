@@ -1427,9 +1427,9 @@ begin
         if (ntSell_C in NPCType) then
           Scenes.SetScene(scSell);
         if (ntJewTrader_C in NPCType) then
-          AddShop(shJew);
+          AddShop(shJewelry);
         if (ntFootsTrader_C in NPCType) then
-          AddShop(shFoots);
+          AddShop(shBoots);
         if (ntGemTrader_C in NPCType) then
           AddShop(shGem);
       end;

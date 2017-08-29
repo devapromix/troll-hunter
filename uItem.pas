@@ -35,10 +35,10 @@ const
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   GlovesTypeItems = [itHeadgear, itHands, itFeet];
-  FootsTypeItems = [itHeadgear, itHands, itFeet];
+  BootsTypeItems = [itHeadgear, itHands, itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
-  JewTypeItems = [itGem, itRing, itAmulet];
+  JewelryTypeItems = [itGem, itRing, itAmulet];
   GemTypeItems = [itGem];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
