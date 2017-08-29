@@ -21,12 +21,6 @@ type
   // ~   Pelts and body parts   )   A shield
   // &   Chests, Containers
 
-  // Leather Gloves, Hide Gloves, Kobold Gloves, Chain Gloves, Etched Gloves
-  // Heavy Bracers, Battle Gauntlets, War Gauntlets, Troll Gauntlets, Plated Gauntlets
-
-  // Shoes, Leather Boots, Mesh Boots, Heavy Boots, Greaves,
-  // Boneweave Boots, Chain Boots, War Boots, Battle Boots, Plate Boots
-
 const
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
@@ -40,8 +34,8 @@ const
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin, itGem];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
-  GlovesTypeItems = [itHeadgear, itHands, itFeet];
-  BootsTypeItems = [itHeadgear, itHands, itFeet];
+  GlovesTypeItems = [itHands];
+  BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   JewelryTypeItems = [itGem, itRing, itAmulet];
@@ -93,6 +87,8 @@ type
     // Dark Wood
     iCap, iWarCap, iHood, iRedHat, // Headgear
     iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
+    iLeatherGloves, iHideGloves, // Gloves
+    iShoes, iLeatherBoots, // Boots
     iBuckler, iTargeShield, // Shield
     iRustySword, iShortSword, // Blade
     iHatchet, iBattleAxe, // Axe
@@ -101,6 +97,8 @@ type
     // Gray Cave
     iHelm, iGrandHelm, iLeatherCap, iMask, // Headgear
     iHardLeatherArmor, iBattleArmor, iFancyClothes, iRobe, // Body Armor
+    iKoboldGloves, iChainGloves, // Gloves
+    iMeshBoots, iHeavyBoots, // Boots
     iSmallShield, iKiteShield, // Shield
     iBroadSword, iLongSword, // Blade
     iMeatAxe, iFleshTearer, // Axe
@@ -109,6 +107,8 @@ type
     // Deep Cave
     iGreatHelm, iFullHelm, iBoneHelmet, iWizardHat, // Headgear
     iBrigantineArmor, iRingMail, iLightFurs, iCleanRobe, // Body Armor
+    iEtchedGloves, iHeavyGloves, // Gloves
+    iGreaves, iBoneweaveBoots, // Boots
     iBoneShield, iHeaterShield, // Shield
     iMoonBlade, iScimitar, // Blade
     iWarAxe, iDarkAxe, // Axe
@@ -117,6 +117,8 @@ type
     // Blood Cave
     iHornedHelmet, iSpiredHelm, iDiadem, iTiara, // Headgear
     iChainMail, iScaleMail, iThickFurs, iHardRobe, // Body Armor
+    iBattleGauntlets, iWarGauntlets, // Gloves
+    iChainBoots, iWarBoots, // Boots
     iHeavyShield, iLargeShield, // Shield
     iBastardSword, iGreatSword, // Blade
     iBerserkerAxe, iMarauderAxe, // Axe
@@ -125,6 +127,8 @@ type
     // Drom
     iCasque, iWingedHelm, iMagicHelmet, iCrown, // Headgear
     iSplintMail, iPlateMail, iMolochRobe, iBoneweaveHauberk, // Body Armor
+    iTrollGauntlets, iPlatedGauntlets, // Gloves
+    iBattleBoots, iPlateBoots, // Boots
     iTowerShield, iGothicShield, // Shield
     iRuneSword, iTrollSlayer, // Blade
     iChopper, iDemonAxe, // Axe
@@ -364,6 +368,24 @@ const
     MaxDurability: 40; Level: 2; Defense: (Min: 3; Max: 4); Price: 800;
     Color: clLightestBlue; Deep: [deDarkWood];),
 
+    // Leather Gloves
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 10; Level: 1; Defense: (Min: 1; Max: 2); Price: 100;
+    Color: clWhite; Deep: [deDarkWood];),
+    // Hide Gloves
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 15; Level: 2; Defense: (Min: 3; Max: 4); Price: 150;
+    Color: clWhite; Deep: [deDarkWood];),
+
+    // Shoes
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 15; Level: 1; Defense: (Min: 1; Max: 3); Price: 200;
+    Color: clWhite; Deep: [deDarkWood];),
+    // Leather Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 20; Level: 2; Defense: (Min: 4; Max: 6); Price: 250;
+    Color: clWhite; Deep: [deDarkWood];),
+
     // Buckler
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
     MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6); Price: 120;
@@ -448,6 +470,24 @@ const
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 75; Level: 4; Defense: (Min: 7; Max: 8); Price: 1300;
     Color: clLightestBlue; Deep: [deGrayCave];),
+
+    // Kobold Gloves
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 22; Level: 3; Defense: (Min: 5; Max: 6); Price: 200;
+    Color: clWhite; Deep: [deGrayCave];),
+    // Chain Gloves
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 29; Level: 4; Defense: (Min: 7; Max: 8); Price: 250;
+    Color: clWhite; Deep: [deGrayCave];),
+
+    // Mesh Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 30; Level: 3; Defense: (Min: 7; Max: 9); Price: 300;
+    Color: clWhite; Deep: [deGrayCave];),
+    // Heavy Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 40; Level: 4; Defense: (Min: 10; Max: 12); Price: 400;
+    Color: clWhite; Deep: [deGrayCave];),
 
     // Small Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
@@ -534,6 +574,24 @@ const
     MaxDurability: 100; Level: 6; Defense: (Min: 11; Max: 12); Price: 1700;
     Color: clLightestBlue; Deep: [deDeepCave];),
 
+    // Etched Gloves
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 35; Level: 5; Defense: (Min: 9; Max: 10); Price: 300;
+    Color: clWhite; Deep: [deDeepCave];),
+    // Heavy Gloves
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 40; Level: 6; Defense: (Min: 11; Max: 12); Price: 350;
+    Color: clWhite; Deep: [deDeepCave];),
+
+    // Greaves
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 50; Level: 5; Defense: (Min: 13; Max: 15); Price: 500;
+    Color: clWhite; Deep: [deDeepCave];),
+    // Boneweave Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 60; Level: 6; Defense: (Min: 16; Max: 18); Price: 650;
+    Color: clWhite; Deep: [deDeepCave];),
+
     // Bone Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
     MaxDurability: 45; Level: 5; Defense: (Min: 16; Max: 18); Price: 450;
@@ -619,6 +677,24 @@ const
     MaxDurability: 150; Level: 8; Defense: (Min: 15; Max: 16); Price: 2100;
     Color: clLightestBlue; Deep: [deBloodCave];),
 
+    // Battle Gauntlets
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 45; Level: 7; Defense: (Min: 13; Max: 14); Price: 400;
+    Color: clWhite; Deep: [deBloodCave];),
+    // War Gauntlets
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 50; Level: 8; Defense: (Min: 15; Max: 16); Price: 450;
+    Color: clWhite; Deep: [deBloodCave];),
+
+    // Chain Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 70; Level: 7; Defense: (Min: 19; Max: 21); Price: 700;
+    Color: clWhite; Deep: [deBloodCave];),
+    // War Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 80; Level: 8; Defense: (Min: 22; Max: 24); Price: 850;
+    Color: clWhite; Deep: [deBloodCave];),
+
     // Heavy Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
     MaxDurability: 60; Level: 7; Defense: (Min: 22; Max: 24); Price: 740;
@@ -703,6 +779,24 @@ const
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
     MaxDurability: 200; Level: 10; Defense: (Min: 19; Max: 20); Price: 3000;
     Color: clLightestBlue; Deep: [deDrom];),
+
+    // Troll Gauntlets
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 55; Level: 9; Defense: (Min: 17; Max: 18); Price: 500;
+    Color: clWhite; Deep: [deDrom];),
+    // Plated Gauntlets
+    (Symbol: '^'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
+    MaxDurability: 60; Level: 10; Defense: (Min: 19; Max: 20); Price: 600;
+    Color: clWhite; Deep: [deDrom];),
+
+    // Battle Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 90; Level: 9; Defense: (Min: 25; Max: 27); Price: 900;
+    Color: clWhite; Deep: [deDrom];),
+    // Plate Boots
+    (Symbol: '^'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
+    MaxDurability: 100; Level: 10; Defense: (Min: 28; Max: 30); Price: 1000;
+    Color: clWhite; Deep: [deDrom];),
 
     // Tower Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
@@ -1090,16 +1184,16 @@ begin
 
     // Potion of rejuvenation
     iLesserRejuvenationPotion:
-      Result := _('Lesser rejuvenation potion');
+      Result := _('Lesser Rejuvenation Potion');
     // Potion of rejuvenation
     iGreaterRejuvenationPotion:
-      Result := _('Greater rejuvenation potion');
+      Result := _('Greater Rejuvenation Potion');
     // Potion of rejuvenation
     iHeroicRejuvenationPotion:
-      Result := _('Heroic rejuvenation potion');
+      Result := _('Heroic Rejuvenation Potion');
     // Potion of rejuvenation
     iPotionOfFullRejuvenation:
-      Result := _('Potion of full rejuvenation');
+      Result := _('Potion Of Full Rejuvenation');
 
     // Potion of health
     iLesserHealingPotion:
@@ -1237,6 +1331,16 @@ begin
       Result := _('Light Clothes');
     iLeatherApron:
       Result := _('Leather Apron');
+    // Gloves
+    iLeatherGloves:
+      Result := _('Leather Gloves');
+    iHideGloves:
+      Result := _('Hide Gloves');
+    // Boots
+    iShoes:
+      Result := _('Shoes');
+    iLeatherBoots:
+      Result := _('Leather Boots');
     // Shield
     iBuckler:
       Result := _('Buckler');
@@ -1283,6 +1387,16 @@ begin
       Result := _('Fancy Clothes');
     iRobe:
       Result := _('Robe');
+    // Gloves
+    iKoboldGloves:
+      Result := _('Kobold Gloves');
+    iChainGloves:
+      Result := _('Chain Gloves');
+    // Boots
+    iMeshBoots:
+      Result := _('Mesh Boots');
+    iHeavyBoots:
+      Result := _('Heavy Boots');
     // Shield
     iSmallShield:
       Result := _('Small Shield');
@@ -1329,6 +1443,16 @@ begin
       Result := _('Light Furs');
     iCleanRobe:
       Result := _('Clean Robe');
+    // Gloves
+    iEtchedGloves:
+      Result := _('Etched Gloves');
+    iHeavyGloves:
+      Result := _('Heavy Gloves');
+    // Boots
+    iGreaves:
+      Result := _('Greaves');
+    iBoneweaveBoots:
+      Result := _('Boneweave Boots');
     // Shield
     iBoneShield:
       Result := _('Bone Shield');
@@ -1375,6 +1499,16 @@ begin
       Result := _('Thick Furs');
     iHardRobe:
       Result := _('Hard Robe');
+    // Gloves
+    iBattleGauntlets:
+      Result := _('Battle Gauntlets');
+    iWarGauntlets:
+      Result := _('War Gauntlets');
+    // Boots
+    iChainBoots:
+      Result := _('Chain Boots');
+    iWarBoots:
+      Result := _('War Boots');
     // Shield
     iHeavyShield:
       Result := _('Heavy Shield');
@@ -1421,6 +1555,16 @@ begin
       Result := _('Moloch Robe');
     iBoneweaveHauberk:
       Result := _('Boneweave Hauberk');
+    // Gloves
+    iTrollGauntlets:
+      Result := _('Troll Gauntlets');
+    iPlatedGauntlets:
+      Result := _('Plated Gauntlets');
+    // Boots
+    iBattleBoots:
+      Result := _('Battle Boots');
+    iPlateBoots:
+      Result := _('Plate Boots');
     // Shield
     iTowerShield:
       Result := _('Tower Shield');
