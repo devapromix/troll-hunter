@@ -71,8 +71,8 @@ type
     iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
     iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana, iSoothingBalm,
     iHealingPoultice, iAntidote, iFortifyingPotion,
-    // Elixirs
-    iElixirOfTrollBlood, iElixirOf,
+    // Elixirs and Extracts
+    iTrollBloodExtract, iUnicornBloodExtract,
     // Scrolls
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
@@ -227,11 +227,11 @@ const
     MaxDurability: 0; Level: 1; Price: 300; Color: clLightYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efCureWeak]; Value: 1;),
 
-    // Elixir Of Troll Blood
+    // Troll Blood Extract
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkRed;
     Deep: [deDarkWood .. deDrom]; Effects: [efPrmLife]; Value: 1;),
-    // Elixir Of
+    // Unicorn Blood Extract
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkBlue;
     Deep: [deDarkWood .. deDrom]; Effects: [efPrmMana]; Value: 1;),
@@ -1257,12 +1257,13 @@ begin
     // Fortifying Potion
     iFortifyingPotion:
       Result := _('Fortifying Potion');
-    // Elixir Of Troll Blood
-    iElixirOfTrollBlood:
-      Result := _('Elixir Of Troll Blood');
-    // Elixir Of
-    iElixirOf:
-      Result := _('Elixir Of ');
+
+    // Troll Blood Extract
+    iTrollBloodExtract:
+      Result := _('Troll Blood Extract');
+    // Unicorn Blood Extract
+    iUnicornBloodExtract:
+      Result := _('Unicorn Blood Extract');
 
     // Scroll of healing
     iScrollOfMinorHealing:
