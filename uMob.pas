@@ -81,11 +81,11 @@ const
     // Big Rat
     (Symbol: 'r'; Boss: False; Maps: [deDarkWood]; MaxLife: 5; Level: 1;
     PV: 0; DV: 2; MaxCount: 9; Damage: (Min: 1; Max: 2;); Color: $FF249988;
-    Abilities: [];),
+    Abilities: [abDiseased];),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDarkWood]; MaxLife: 7; Level: 1;
     PV: 0; DV: 3; MaxCount: 7; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased];),
     // Giant Gecko
     (Symbol: 'g'; Boss: False; Maps: [deDarkWood]; MaxLife: 8; Level: 1;
     PV: 2; DV: 3; MaxCount: 5; Damage: (Min: 2; Max: 3;); Color: $FF993377;
@@ -97,15 +97,15 @@ const
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2;
     PV: 5; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF444444;
-    Abilities: [abStunned];),
+    Abilities: [abStunned, abAfraid];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2;
     PV: 5; DV: 6; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA;
-    Abilities: [abStunned];),
+    Abilities: [abStunned, abAfraid];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2;
     PV: 3; DV: 7; MaxCount: 1; Damage: (Min: 1; Max: 3;); Color: $FF339955;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased, abDrunk];),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDarkWood]; MaxLife: 22; Level: 3;
     PV: 4; DV: 8; MaxCount: 4; Damage: (Min: 2; Max: 4;); Color: $FF666666;
@@ -120,31 +120,31 @@ const
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
     PV: 5; DV: 11; MaxCount: 7; Damage: (Min: 1; Max: 4;); Color: $FF777700;
-    Abilities: [abBloodlust];),
+    Abilities: [abBloodlust, abCursed];),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
     PV: 6; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4;); Color: $FF777700;
-    Abilities: [abBloodlust];),
+    Abilities: [abBloodlust, abCursed];),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 30; Level: 3;
     PV: 7; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4;); Color: $FF777700;
-    Abilities: [abBurning, abBloodlust];),
+    Abilities: [abBurning, abBloodlust, abCursed];),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGrayCave]; MaxLife: 32; Level: 4;
     PV: 4; DV: 14; MaxCount: 3; Damage: (Min: 2; Max: 4;); Color: $FF777700;
-    Abilities: [];),
+    Abilities: [abCursed];),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGrayCave]; MaxLife: 35; Level: 4;
     PV: 5; DV: 15; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FF777700;
-    Abilities: [abPoisoned, abStunned, abBurning];),
+    Abilities: [abPoisoned, abStunned, abBurning, abAfraid, abDrunk];),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 38; Level: 4;
     PV: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3;); Color: $FF777700;
-    Abilities: [abBlinded];),
+    Abilities: [abBlinded, abDiseased];),
     // Worm
     (Symbol: 'w'; Boss: False; Maps: [deGrayCave]; MaxLife: 40; Level: 5;
     PV: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5;); Color: $FF777700;
-    Abilities: [abBlinded];),
+    Abilities: [abBlinded, abDiseased, abAfraid];),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5;
     PV: 7; DV: 18; MaxCount: 1; Damage: (Min: 3; Max: 5;); Color: $FF7777CC;
@@ -159,27 +159,27 @@ const
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 45; Level: 5;
     PV: 10; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5;); Color: $FF992233;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased, abAfraid, abDrunk];),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 48; Level: 5;
     PV: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5;); Color: $FF992233;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased, abDrunk];),
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 50; Level: 5;
     PV: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6;); Color: $FF992233;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased];),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeepCave]; MaxLife: 55; Level: 6;
     PV: 9; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7;); Color: $FF992233;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased];),
     // Scarab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 60; Level: 6;
     PV: 15; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6;); Color: $FF992233;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased];),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 65; Level: 6;
     PV: 12; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 7;); Color: $FF992233;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased, abAfraid];),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     PV: 25; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5;); Color: $FF992233;
@@ -187,11 +187,11 @@ const
     // Dire Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     PV: 10; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7;); Color: $FF888888;
-    Abilities: [abStunned];),
+    Abilities: [abStunned, abAfraid];),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeepCave]; MaxLife: 72; Level: 7;
     PV: 10; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8;); Color: $FF992233;
-    Abilities: [abBurning];),
+    Abilities: [abBurning, abCursed];),
     // Faun
     (Symbol: 'f'; Boss: False; Maps: [deDeepCave]; MaxLife: 73; Level: 7;
     PV: 10; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9;); Color: $FF992233;
@@ -202,31 +202,31 @@ const
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
     PV: 25; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8;); Color: $FF00AA00;
-    Abilities: [abBloodlust];),
+    Abilities: [abBloodlust, abCursed];),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
     PV: 30; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9;); Color: $FF116610;
-    Abilities: [abBloodlust];),
+    Abilities: [abBloodlust, abCursed];),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 78; Level: 7;
     PV: 45; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10;); Color: $FF445544;
-    Abilities: [abBloodlust];),
+    Abilities: [abBloodlust, abCursed];),
     // Hobgoblin
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 75; Level: 7;
     PV: 50; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10;); Color: $FF55AA55;
-    Abilities: [abBloodlust];),
+    Abilities: [abBloodlust, abCursed];),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBloodCave]; MaxLife: 80; Level: 7;
     PV: 100; DV: 34; MaxCount: 1; Damage: (Min: 8; Max: 10;);
-    Color: $FF445544; Abilities: [abPoisoned, abBurning, abBlinded];),
+    Color: $FF445544; Abilities: [abPoisoned, abBurning, abBlinded, abAfraid];),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 82; Level: 8;
     PV: 30; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11;);
-    Color: $FF445544; Abilities: [];),
+    Color: $FF445544; Abilities: [abDiseased, abAfraid];),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
     PV: 50; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14;);
-    Color: $FF445544; Abilities: [abStunned, abBurning, abBloodlust];),
+    Color: $FF445544; Abilities: [abStunned, abBurning, abBloodlust, abAfraid];),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 88; Level: 8;
     PV: 60; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15;);
@@ -249,7 +249,7 @@ const
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; PV: 58;
     DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 16;); Color: $FF00BB00;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased];),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; PV: 55;
     DV: 43; MaxCount: 3; Damage: (Min: 15; Max: 17;); Color: $FF559977;
@@ -257,31 +257,31 @@ const
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; PV: 50;
     DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 17;); Color: $FF223333;
-    Abilities: [abPoisoned];),
+    Abilities: [abPoisoned, abDiseased];),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10;
     PV: 65; DV: 44; MaxCount: 5; Damage: (Min: 12; Max: 16;);
-    Color: $FF223333; Abilities: [abPoisoned, abBlinded, abBloodlust];),
+    Color: $FF223333; Abilities: [abPoisoned, abBlinded, abBloodlust, abDrunk];),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
     PV: 45; DV: 45; MaxCount: 3; Damage: (Min: 14; Max: 18;);
-    Color: $FF223333; Abilities: [abBurning, abBloodlust];),
+    Color: $FF223333; Abilities: [abBurning, abBloodlust, abCursed, abDiseased];),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     PV: 120; DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23;);
-    Color: $FF223333; Abilities: [abStunned];),
+    Color: $FF223333; Abilities: [abStunned, abAfraid];),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     PV: 25; DV: 46; MaxCount: 9; Damage: (Min: 10; Max: 14;);
-    Color: $FF223333; Abilities: [];),
+    Color: $FF223333; Abilities: [abDiseased];),
     // Wraith
     (Symbol: 'w'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     PV: 19; DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 15;);
-    Color: $FF22FFFF; Abilities: [abBurning, abBlinded];),
+    Color: $FF22FFFF; Abilities: [abBurning, abBlinded, abCursed, abDiseased, abAfraid];),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     PV: 20; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;);
-    Color: $FF223333; Abilities: [abBlinded];),
+    Color: $FF223333; Abilities: [abBlinded, abCursed, abAfraid, abDrunk];),
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     PV: 10; DV: 49; MaxCount: 1; Damage: (Min: 23; Max: 30;);
@@ -300,23 +300,23 @@ const
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDarkWood]; MaxLife: 50; Level: 3;
     PV: 45; DV: 25; MaxCount: 1; Damage: (Min: 9; Max: 11;); Color: $FF66DD99;
-    Abilities: [abPoisoned, abStunned, abBlinded];),
+    Abilities: [abPoisoned, abStunned, abBlinded, abDiseased, abAfraid, abDrunk];),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDarkWood]; MaxLife: 55; Level: 3;
     PV: 55; DV: 28; MaxCount: 1; Damage: (Min: 10; Max: 12;);
-    Color: $FF44FF77; Abilities: [abPoisoned, abBlinded];),
+    Color: $FF44FF77; Abilities: [abPoisoned, abBlinded, abDiseased, abDrunk];),
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGrayCave]; MaxLife: 60; Level: 5;
     PV: 60; DV: 32; MaxCount: 1; Damage: (Min: 10; Max: 15;);
-    Color: $FFAA77CC; Abilities: [abStunned, abBurning, abBloodlust];),
+    Color: $FFAA77CC; Abilities: [abStunned, abBurning, abBloodlust, abCursed];),
     // Swamp Worm
     (Symbol: 'w'; Boss: True; Maps: [deGrayCave]; MaxLife: 63; Level: 5;
     PV: 80; DV: 35; MaxCount: 1; Damage: (Min: 12; Max: 18;);
-    Color: $FF6699BB; Abilities: [abPoisoned, abBlinded];),
+    Color: $FF6699BB; Abilities: [abPoisoned, abBlinded, abDiseased, abAfraid, abDrunk];),
     // Giant Slug
     (Symbol: 's'; Boss: True; Maps: [deGrayCave]; MaxLife: 67; Level: 5;
     PV: 90; DV: 38; MaxCount: 1; Damage: (Min: 14; Max: 20;);
-    Color: $FFCCAADD; Abilities: [abPoisoned, abBlinded];),
+    Color: $FFCCAADD; Abilities: [abPoisoned, abBlinded, abDiseased, abAfraid, abDrunk];),
     // Centaur
     (Symbol: 'c'; Boss: True; Maps: [deDeepCave]; MaxLife: 70; Level: 7;
     PV: 55; DV: 40; MaxCount: 1; Damage: (Min: 18; Max: 23;);
@@ -328,23 +328,23 @@ const
     // Titan
     (Symbol: 't'; Boss: True; Maps: [deDeepCave]; MaxLife: 95; Level: 8;
     PV: 150; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;);
-    Color: $FFAABB77; Abilities: [abStunned, abBurning];),
+    Color: $FFAABB77; Abilities: [abStunned, abBurning, abAfraid];),
     // Hill Giant
     (Symbol: 'g'; Boss: True; Maps: [deBloodCave]; MaxLife: 96; Level: 9;
     PV: 160; DV: 50; MaxCount: 1; Damage: (Min: 23; Max: 25;);
-    Color: $FF2233FF; Abilities: [abStunned, abBurning];),
+    Color: $FF2233FF; Abilities: [abStunned, abBurning, abAfraid];),
     // Stone Giant
     (Symbol: 'g'; Boss: True; Maps: [deBloodCave]; MaxLife: 99; Level: 9;
     PV: 180; DV: 54; MaxCount: 1; Damage: (Min: 24; Max: 25;);
-    Color: $FF22FF33; Abilities: [abStunned];),
+    Color: $FF22FF33; Abilities: [abStunned, abAfraid];),
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10;
     PV: 190; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30;);
-    Color: $FF223333; Abilities: [abStunned, abBloodlust];),
+    Color: $FF223333; Abilities: [abStunned, abBloodlust, abAfraid];),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15;
     PV: 200; DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75;);
-    Color: $FFDD7711; Abilities: [abBurning, abBloodlust];),
+    Color: $FFDD7711; Abilities: [abBurning, abBloodlust, abAfraid];),
 
     // == NPC == //
 
@@ -575,6 +575,18 @@ begin
       Exit;
     end;
 
+    // Drunk (5%)
+    if (abDrunk in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 19) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.RandomRange(10, L + 10);
+      Player.Abilities.Modify(abBlinded, Dam);
+      MsgLog.Add(Format(Terminal.Colorize(_('You are drunk (%d).'),
+        Abilities.GetColor(abDrunk)), [Dam]));
+      Game.ShowEffects := True;
+      Exit;
+    end;
     // Blinded (5%)
     if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and
       (Math.RandomRange(0, 19) = 0) then
@@ -587,15 +599,41 @@ begin
       Game.ShowEffects := True;
       Exit;
     end;
-    // Stunned (25%)
+    // Stunned (20%)
     if (abStunned in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 4) = 0) then
+      (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, High(Byte));
       Player.Abilities.Modify(abStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'),
         Abilities.GetColor(abStunned)), [The, Dam]));
+      Game.ShowEffects := True;
+      Exit;
+    end;
+    // Weak (20%)
+    if (abWeak in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 5) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(10, L * 10), 0, High(Byte));
+      Player.Abilities.Modify(abWeak, Dam);
+      MsgLog.Add(Format(Terminal.Colorize(_('%s has weakened you (%d).'),
+        Abilities.GetColor(abWeak)), [The, Dam]));
+      Game.ShowEffects := True;
+      Exit;
+    end;
+    // Diseased (20%)
+    if (abDiseased in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 5) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 5),
+        L * (Ord(Game.Difficulty) + 9)), 0, High(Byte));
+      if MobBase[TMobEnum(ID)].Boss then Dam := Math.EnsureRange(Dam * 3, 0, High(Byte));
+      Player.Abilities.Modify(abDiseased, Dam);
+      MsgLog.Add(Format(Terminal.Colorize(_('%s has infected you (%d).'),
+        Abilities.GetColor(abDiseased)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
@@ -608,6 +646,32 @@ begin
       Player.Abilities.Modify(abPoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'),
         Abilities.GetColor(abPoisoned)), [The, Dam]));
+      Game.ShowEffects := True;
+      Exit;
+    end;
+    // Afraid (10%)
+    if (abAfraid in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 9) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(L * 10, L * 20), 0, High(Byte));
+      Player.Abilities.Modify(abAfraid, Dam);
+      MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'),
+        Abilities.GetColor(abAfraid)), [The, Dam]));
+      Game.ShowEffects := True;
+      Exit;
+    end;
+    // Cursed (10%)
+    if (abCursed in MobBase[TMobEnum(ID)].Abilities) and
+      (Math.RandomRange(0, 9) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Math.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 3),
+        L * (Ord(Game.Difficulty) + 5)), 0, High(Byte));
+      if MobBase[TMobEnum(ID)].Boss then Dam := Math.EnsureRange(Dam * 3, 0, High(Byte));
+      Player.Abilities.Modify(abCursed, Dam);
+      MsgLog.Add(Format(Terminal.Colorize(_('%s has cursed you (%d).'),
+        Abilities.GetColor(abCursed)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;

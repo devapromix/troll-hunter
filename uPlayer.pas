@@ -387,6 +387,10 @@ begin
     Strength := Strength div 2;
     Dexterity := Dexterity div 2;
   end;
+  if Abilities.IsAbility(abAfraid) then
+  begin
+    Willpower := Willpower div 3;
+  end;
   if Abilities.IsAbility(abDrunk) then
   begin
     Perception := Perception div 3;

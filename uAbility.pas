@@ -4,7 +4,7 @@ interface
 
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
-    abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak);
+    abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid);
 
 type
   TSetOfAbility = set of TAbilityEnum;
@@ -35,7 +35,7 @@ uses GNUGetText;
 const
   AbilityColor: array [TAbilityEnum] of string = ('Lighter Green',
     'White', 'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow',
-    'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White');
+    'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
@@ -106,6 +106,8 @@ begin
       Result := _('Diseased');
     abWeak:
       Result := _('Weak');
+    abAfraid:
+      Result := _('Afraid');
   end;
 end;
 
