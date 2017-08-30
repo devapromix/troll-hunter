@@ -223,7 +223,7 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.DV < Math.RandomRange(0, 100)) then
+  if (Mob.DV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
     // Attack
@@ -382,6 +382,15 @@ begin
     1, AtrMax);
   Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4),
     1, AtrMax);
+  if (Abilities.IsAbility(abWeak)) then
+  begin
+    Strength := Strength div 2;
+    Dexterity := Dexterity div 2;
+  end;
+  if Abilities.IsAbility(abDrunk) then
+  begin
+    Perception := Perception div 3;
+  end;
   //
   DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)) + PrmDV, 0, DVMax);
   PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def +
