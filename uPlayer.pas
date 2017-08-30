@@ -10,7 +10,7 @@ type
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
-    efCurePoison, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
+    efCurePoison, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
     efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
     efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV);
 
@@ -1289,6 +1289,15 @@ begin
         MsgLog.Add(_('You feel better.'))
       else
         MsgLog.Add(_('You are better now.'));
+    end;
+  end;
+  // Cure weak
+  if (efCureWeak in Effects) then
+  begin
+    if Abilities.IsAbility(abWeak) then
+    begin
+      Abilities.Ability[abWeak] := 0;
+      MsgLog.Add(_('You are better now.'));
     end;
   end;
   // Gold

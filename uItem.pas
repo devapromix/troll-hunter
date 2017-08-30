@@ -70,7 +70,9 @@ type
     iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
     iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
     iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana, iSoothingBalm,
-    iHealingPoultice, iAntidote, iPotionOfTrollBlood,
+    iHealingPoultice, iAntidote, iFortifyingPotion,
+    // Elixirs
+    iElixirOfTrollBlood, iElixirOf,
     // Scrolls
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
@@ -220,10 +222,19 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Price: 250; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efCurePoison]; Value: 100;),
-    // Potion Of Troll Blood
+    // Fortifying Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkYellow;
+    MaxDurability: 0; Level: 1; Price: 300; Color: clLightYellow;
+    Deep: [deDarkWood .. deDrom]; Effects: [efCureWeak]; Value: 1;),
+
+    // Elixir Of Troll Blood
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkRed;
     Deep: [deDarkWood .. deDrom]; Effects: [efPrmLife]; Value: 1;),
+    // Elixir Of
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkBlue;
+    Deep: [deDarkWood .. deDrom]; Effects: [efPrmMana]; Value: 1;),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -1243,9 +1254,15 @@ begin
     // Antidote
     iAntidote:
       Result := _('Antidote');
-    // Potion Of Troll Blood
-    iPotionOfTrollBlood:
-      Result := _('Potion Of Troll Blood');
+    // Fortifying Potion
+    iFortifyingPotion:
+      Result := _('Fortifying Potion');
+    // Elixir Of Troll Blood
+    iElixirOfTrollBlood:
+      Result := _('Elixir Of Troll Blood');
+    // Elixir Of
+    iElixirOf:
+      Result := _('Elixir Of ');
 
     // Scroll of healing
     iScrollOfMinorHealing:
