@@ -160,7 +160,7 @@ uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
 
 procedure TPlayer.AddTurn;
 var
-  V: Byte;
+  V, C: Byte;
 begin
   if IsDead then Exit;
   Turn := Turn + 1;
@@ -178,12 +178,18 @@ begin
   begin
     V := EnsureRange(100 - Player.Skills.Skill[skHealing].Value, 25, 100);
     if (Turn mod V = 0) then
-      Life := EnsureRange(Life + Player.Skills.Skill[skHealing].Value,
-        0, MaxLife);
+    begin
+      C := Player.Skills.Skill[skHealing].Value;
+      if Abilities.IsAbility(abRegen) then C := EnsureRange(C * 3, C, High(Byte));
+      Life := EnsureRange(Life + C, 0, MaxLife);
+    end;
     V := EnsureRange(100 - Player.Skills.Skill[skConcentration].Value, 25, 100);
     if (Turn mod V = 0) then
-      Mana := EnsureRange(Mana + Player.Skills.Skill[skConcentration].Value,
-        0, MaxMana);
+    begin
+      C := Player.Skills.Skill[skConcentration].Value;
+      if Abilities.IsAbility(abRegen) then C := EnsureRange(C * 3, C, High(Byte));
+      Mana := EnsureRange(Mana + C, 0, MaxMana);
+    end;
   end;
   OnTurn();
   if (Life = 0) then Self.Defeat;
