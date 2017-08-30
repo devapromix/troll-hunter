@@ -51,7 +51,7 @@ type
     MaxStack: Word;
     MaxDurability: Word;
     Level: Byte;
-    Defense: TDamage;
+    Defense: TMinMax;
     Damage: TBaseDamage;
     Price: Word;
     Color: Cardinal;
@@ -919,7 +919,7 @@ var
 implementation
 
 uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
-  uShop, uTalent;
+  uShop, uTalent, uAffixes;
 
 { TItems }
 

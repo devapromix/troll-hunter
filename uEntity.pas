@@ -13,13 +13,8 @@ type
     Max: Word;
   end;
 
-type
-  TDamage = record
-    Min: Word;
-    Max: Word;
-  end;
+  TDamage = TMinMax;
 
-type
   TBaseDamage = record
     MinDamage: TDamage;
     MaxDamage: TDamage;
