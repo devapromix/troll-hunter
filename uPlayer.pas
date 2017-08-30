@@ -1107,6 +1107,9 @@ begin
     Wait;
   end;
   MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
+  Abilities.Ability[abWeak] := 0;
+  if (Math.RandomRange(0, 9) = 0) then
+    Abilities.Ability[abDrunk] := 0;
   IsRest := False;
 end;
 
