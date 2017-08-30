@@ -167,11 +167,14 @@ begin
   Calendar.Turn;
   if (Satiation > 0) then
     Satiation := Satiation - SatPerTurn;
+  if Abilities.IsAbility(abWeak) then
+    Satiation := Satiation - 10;
   if (Satiation < StarvingMax) then
   begin
     Life := EnsureRange(Life - 1, 0, MaxLife);
   end
   else
+  if not Abilities.IsAbility(abDiseased) then
   begin
     V := EnsureRange(100 - Player.Skills.Skill[skHealing].Value, 25, 100);
     if (Turn mod V = 0) then
@@ -226,7 +229,7 @@ begin
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
-    if (Ch < Cr) then
+    if ((Ch < Cr) and not Abilities.IsAbility(abWeak)) then
     begin
       if (Ch > (Cr div 10)) then
       begin

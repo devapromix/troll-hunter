@@ -4,7 +4,7 @@ interface
 
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
-    abSleeping, abBloodlust);
+    abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak);
 
 type
   TSetOfAbility = set of TAbilityEnum;
@@ -34,7 +34,8 @@ uses GNUGetText;
 
 const
   AbilityColor: array [TAbilityEnum] of string = ('Lighter Green',
-    'White', 'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red');
+    'White', 'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow',
+    'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White');
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
@@ -70,6 +71,16 @@ begin
   Result := AbilityColor[Value];
 end;
 
+function TAbilities.IsAbility(Value: TAbilityEnum): Boolean;
+begin
+  Result := Ability[Value] > 0;
+end;
+
+procedure TAbilities.SetAbility(I: TAbilityEnum; const Value: Word);
+begin
+  FAbility[I] := Value;
+end;
+
 function TAbilities.GetName(Value: TAbilityEnum): string;
 begin
   case Value of
@@ -87,17 +98,15 @@ begin
       Result := _('Sleeping');
     abBloodlust:
       Result := _('Bloodlust');
+    abCursed:
+      Result := _('Cursed');
+    abDrunk:
+      Result := _('Drunk');
+    abDiseased:
+      Result := _('Diseased');
+    abWeak:
+      Result := _('Weak');
   end;
-end;
-
-function TAbilities.IsAbility(Value: TAbilityEnum): Boolean;
-begin
-  Result := Ability[Value] > 0;
-end;
-
-procedure TAbilities.SetAbility(I: TAbilityEnum; const Value: Word);
-begin
-  FAbility[I] := Value;
 end;
 
 end.
