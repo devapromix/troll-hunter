@@ -1124,6 +1124,8 @@ begin
     Items.AddItemToInv(iPlateMail, 1, True);
     Items.AddItemToInv(iPlatedGauntlets, 1, True);
     Items.AddItemToInv(iPlateBoots, 1, True);
+    Items.AddItemToInv(iRing, 1, True);
+    Items.AddItemToInv(iAmulet, 1, True);
   end
   else
   begin

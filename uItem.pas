@@ -1006,11 +1006,13 @@ begin
     S := ''
   else
   begin
-    if (IT in ArmorTypeItems) then
-      T := Format('<%d>', [AItem.Defense]);
-    if (IT in WeaponTypeItems) then
-      T := Format('<%d-%d>', [AItem.MinDamage, AItem.MaxDamage]);
-    S := S + Trim(Format('%s (%d/%d)', [T, AItem.Durability,
+    if (IT in ArmorTypeItems + JewelryTypeItems) then
+      if (AItem.Defense > 0) then
+        T := T + Format('<%d> ', [AItem.Defense]);
+    if (IT in WeaponTypeItems + JewelryTypeItems) then
+      if (AItem.MinDamage > 0) then
+        T := T + Format('<%d-%d> ', [AItem.MinDamage, AItem.MaxDamage]);
+    S := S + Trim(Format('%s (%d/%d)', [Trim(T), AItem.Durability,
       AItem.MaxDurability]));
   end;
   Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
