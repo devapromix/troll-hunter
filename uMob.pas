@@ -80,46 +80,46 @@ const
 
     // Big Rat
     (Symbol: 'r'; Boss: False; Maps: [deDarkWood]; MaxLife: 5; Level: 1;
-    PV: 0; DV: 2; MaxCount: 9; Damage: (Min: 1; Max: 2;); Color: $FF249988;
+    PV: 0; DV: 4; MaxCount: 9; Damage: (Min: 1; Max: 2;); Color: $FF249988;
     Abilities: [abDiseased];),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDarkWood]; MaxLife: 7; Level: 1;
-    PV: 0; DV: 3; MaxCount: 7; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;
+    PV: 0; DV: 5; MaxCount: 7; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;
     Abilities: [abPoisoned, abDiseased];),
     // Giant Gecko
     (Symbol: 'g'; Boss: False; Maps: [deDarkWood]; MaxLife: 8; Level: 1;
-    PV: 2; DV: 3; MaxCount: 5; Damage: (Min: 2; Max: 3;); Color: $FF993377;
+    PV: 2; DV: 6; MaxCount: 5; Damage: (Min: 2; Max: 3;); Color: $FF993377;
     Abilities: [abPoisoned, abStunned, abBlinded];),
     // Jackal
     (Symbol: 'j'; Boss: False; Maps: [deDarkWood]; MaxLife: 9; Level: 1;
-    PV: 4; DV: 4; MaxCount: 4; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;
+    PV: 4; DV: 7; MaxCount: 4; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;
     Abilities: [];),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2;
-    PV: 5; DV: 5; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF444444;
+    PV: 5; DV: 8; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF444444;
     Abilities: [abStunned, abAfraid];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2;
-    PV: 5; DV: 6; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA;
+    PV: 5; DV: 9; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA;
     Abilities: [abStunned, abAfraid];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2;
-    PV: 3; DV: 7; MaxCount: 1; Damage: (Min: 1; Max: 3;); Color: $FF339955;
+    PV: 3; DV: 9; MaxCount: 1; Damage: (Min: 1; Max: 3;); Color: $FF339955;
     Abilities: [abPoisoned, abDiseased, abDrunk];),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDarkWood]; MaxLife: 22; Level: 3;
-    PV: 4; DV: 8; MaxCount: 4; Damage: (Min: 2; Max: 4;); Color: $FF666666;
+    PV: 4; DV: 10; MaxCount: 4; Damage: (Min: 2; Max: 4;); Color: $FF666666;
     Abilities: [];),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDarkWood]; MaxLife: 23; Level: 3;
-    PV: 4; DV: 10; MaxCount: 3; Damage: (Min: 3; Max: 4;); Color: $FFCC9988;
+    PV: 5; DV: 12; MaxCount: 3; Damage: (Min: 3; Max: 4;); Color: $FFCC9988;
     Abilities: [abBurning];),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
-    PV: 5; DV: 11; MaxCount: 7; Damage: (Min: 1; Max: 4;); Color: $FF777700;
+    PV: 5; DV: 12; MaxCount: 7; Damage: (Min: 1; Max: 4;); Color: $FF777700;
     Abilities: [abBloodlust, abCursed];),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGrayCave]; MaxLife: 25; Level: 3;
@@ -295,15 +295,15 @@ const
 
     // Black Hound
     (Symbol: 'h'; Boss: True; Maps: [deDarkWood]; MaxLife: 45; Level: 3;
-    PV: 30; DV: 22; MaxCount: 1; Damage: (Min: 8; Max: 10;); Color: $FFCC8899;
+    PV: 30; DV: 25; MaxCount: 1; Damage: (Min: 8; Max: 10;); Color: $FFCC8899;
     Abilities: [abBurning, abBlinded];),
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDarkWood]; MaxLife: 50; Level: 3;
-    PV: 45; DV: 25; MaxCount: 1; Damage: (Min: 9; Max: 11;); Color: $FF66DD99;
+    PV: 45; DV: 30; MaxCount: 1; Damage: (Min: 9; Max: 11;); Color: $FF66DD99;
     Abilities: [abPoisoned, abStunned, abBlinded, abDiseased, abAfraid, abDrunk];),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDarkWood]; MaxLife: 55; Level: 3;
-    PV: 55; DV: 28; MaxCount: 1; Damage: (Min: 10; Max: 12;);
+    PV: 55; DV: 30; MaxCount: 1; Damage: (Min: 10; Max: 12;);
     Color: $FF44FF77; Abilities: [abPoisoned, abBlinded, abDiseased, abDrunk];),
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGrayCave]; MaxLife: 60; Level: 5;
