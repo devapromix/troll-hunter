@@ -77,7 +77,7 @@ type
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
     iScrollOfPhasing, iScrollOfTeleportation, iScrollOfDisappearing,
-    iScrollOfTownPortal, iScrollOfBloodlust,
+    iScrollOfTownPortal, iScrollOfBloodlust, iScrollOfIdentification,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
@@ -291,7 +291,12 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 300; Color: clLightRed;
     Deep: [deDarkWood .. deDrom]; Effects: [efBloodlust]; Value: 10;
-    ManaCost: 20;),
+    ManaCost: 25;),
+    // Scroll of Identification
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 1; Price: 350; Color: clLightYellow;
+    Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 0;
+    ManaCost: 15;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 3;
@@ -875,7 +880,7 @@ const
     );
 
 type
-  TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
+  TPriceType = (ptNone, ptSell, ptBuy, ptRepair, ptIdent);
 
 type
   TItems = class(TEntity)
@@ -1267,58 +1272,62 @@ begin
     iUnicornBloodExtract:
       Result := _('Unicorn Blood Extract');
 
-    // Scroll of healing
+    // Scroll of Healing
     iScrollOfMinorHealing:
-      Result := _('Scroll of minor healing');
-    // Scroll of healing
+      Result := _('Scroll of Minor Healing');
+    // Scroll of Healing
     iScrollOfLesserHealing:
-      Result := _('Scroll of lesser healing');
-    // Scroll of healing
+      Result := _('Scroll of Lesser Healing');
+    // Scroll of Healing
     iScrollOfGreaterHealing:
-      Result := _('Scroll of greater healing');
-    // Scroll of healing
+      Result := _('Scroll of Greater Healing');
+    // Scroll of Healing
     iScrollOfFullHealing:
-      Result := _('Scroll of full healing');
+      Result := _('Scroll of Full Healing');
 
-    // Scroll of hunger
+    // Scroll of Hunger
     iScrollOfHunger:
-      Result := _('Scroll of hunger');
-    // Scroll of sidestepping
+      Result := _('Scroll of Hunger');
+    // Scroll of Sidestepping
     iScrollOfSidestepping:
-      Result := _('Scroll of sidestepping');
-    // Scroll of phasing
+      Result := _('Scroll of Sidestepping');
+    // Scroll of Phasing
     iScrollOfPhasing:
-      Result := _('Scroll of phasing');
-    // Scroll of teleportation
+      Result := _('Scroll of Phasing');
+    // Scroll of Teleportation
     iScrollOfTeleportation:
-      Result := _('Scroll of teleportation');
-    // Scroll of disappearing
+      Result := _('Scroll of Teleportation');
+    // Scroll of Disappearing
     iScrollOfDisappearing:
-      Result := _('Scroll of disappearing');
+      Result := _('Scroll of Disappearing');
     // Scroll of Town Portal
     iScrollOfTownPortal:
-      Result := _('Scroll of town portal');
+      Result := _('Scroll of Town Portal');
+    // Scroll of Bloodlust
     iScrollOfBloodlust:
-      Result := _('Scroll of bloodlust');
+      Result := _('Scroll of Bloodlust');
+    // Scroll of Identification
+    iScrollOfIdentification:
+      Result := _('Scroll of Identification');
 
     // Rune Of Minor Healing
     iRuneOfMinorHealing:
-      Result := _('Rune of minor healing');
+      Result := _('Rune of Minor Healing');
     // Rune Of Lesser Healing
     iRuneOfLesserHealing:
-      Result := _('Rune of lesser healing');
+      Result := _('Rune of Lesser Healing');
     // Rune Of Greater Healing
     iRuneOfGreaterHealing:
-      Result := _('Rune of greater healing');
+      Result := _('Rune of Greater Healing');
     // Rune Of Full Healing
     iRuneOfFullHealing:
-      Result := _('Rune of full healing');
+      Result := _('Rune of Full Healing');
     // Rune Of Teleportation
     iRuneOfTeleportation:
-      Result := _('Rune of teleportation');
+      Result := _('Rune of Teleportation');
     // Rune Of Town Portal
     iRuneOfTownPortal:
-      Result := _('Rune of town portal');
+      Result := _('Rune of Town Portal');
 
     // Bread ration
     iBreadRation:
@@ -1761,6 +1770,10 @@ begin
               S := GetPrice(RepairCost);
           end;
         end;
+      ptIdent:
+      begin
+
+      end;  
     end;
     Terminal.Print(Screen.Width - 7, Y + I, S);
   end

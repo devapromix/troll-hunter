@@ -9,10 +9,11 @@ type
     stNeck, stFinger);
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efTownPortal, efMagicEye,
-    efCurePoison, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
-    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, ef2xGold,
-    efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV);
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
+    efTownPortal, efMagicEye, efCurePoison, efCureWeak, efPrmGold,
+    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
+    efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana,
+    efPrmDV, efPrmPV);
 
 type
   TEffects = set of TEffect;
@@ -138,6 +139,7 @@ type
     procedure UnEquip(Index: Integer);
     procedure Sell(Index: Integer);
     procedure RepairItem(Index: Integer);
+    procedure IdentItem(Index: Integer);
     procedure BreakItem(Index: Integer; Value: Byte = 1); overload;
     procedure BreakItem(ASlot: TSlotType; Value: Byte = 1); overload;
     procedure AddExp(Value: Byte = 1);
@@ -772,6 +774,11 @@ begin
   Self.Calc;
 end;
 
+procedure TPlayer.IdentItem(Index: Integer);
+begin
+
+end;
+
 procedure TPlayer.RepairItem(Index: Integer);
 var
   RepairCost: Word;
@@ -1169,6 +1176,7 @@ begin
     Items.AddItemToInv(iPotionOfFullMana, 10);
     Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iAntidote, 10);
+    Items.AddItemToInv(iScrollOfIdentification, 10);
   end
   else
   begin
@@ -1237,6 +1245,11 @@ begin
   begin
     FSatiation := FSatiation + Value;
     MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
+  end;
+  // Identification
+  if (efIdentification in Effects) then
+  begin
+    Scenes.SetScene(scIdentification);
   end;
   // Teleportation
   if (efTeleportation in Effects) then

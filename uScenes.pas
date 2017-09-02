@@ -9,8 +9,8 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents);
-  // scClasses, scRaces, scIdentification
+    scSpellbook, scOptions, scTalents, scIdentification);
+  // scClasses, scRaces
 
 type
   TScene = class(TObject)
@@ -242,6 +242,13 @@ type
     procedure Update(var Key: Word); override;
   end;
 
+type
+  TSceneIdentification = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
 var
   NPCName: string = '';
   NPCType: set of TNPCType = [];
@@ -426,6 +433,8 @@ begin
         FScene[I] := TSceneSpellbook.Create;
       scTalents:
         FScene[I] := TSceneTalents.Create;
+      scIdentification:
+        FScene[I] := TSceneIdentification.Create;
     end;
 end;
 
@@ -1901,6 +1910,32 @@ begin
           end;
         end;
       end;
+  end
+end;
+
+{ TSceneIdentification }
+
+procedure TSceneIdentification.Render;
+begin
+  Self.Title(_('Identification'));
+
+  Self.FromAToZ;
+  Items.RenderInventory(ptIdent);
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'), True, False);
+  AddKey('A-Z', _('Select an item'), False, True);
+end;
+
+procedure TSceneIdentification.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE:
+      Scenes.SetScene(scInv);
+    TK_A .. TK_Z:
+      Player.IdentItem(Key - TK_A);
+  else
+    Game.Timer := High(Byte);
   end
 end;
 
