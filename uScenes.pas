@@ -507,7 +507,7 @@ begin
   Logo.Render;
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
-  Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
+  Terminal.Print(CX, CY + 3, Format(_('Press %s to start...'),
     [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
@@ -924,8 +924,8 @@ end;
 procedure TSceneQuit.Render;
 begin
   Logo.Render;
-  Terminal.Print(Terminal.Window.Width div 2, CY + 2,
-    Format(_('Wish to leave? %s/%s'), [KeyStr('Y'), KeyStr('N')]),
+  Terminal.Print(CX, CY + 3,
+    Format(_('Do you wish to quit? %s/%s'), [KeyStr('Y'), KeyStr('N')]),
     TK_ALIGN_CENTER);
 end;
 
@@ -1949,8 +1949,8 @@ procedure TSceneIdentification.Render;
 begin
   Self.Title(_('Identification'));
 
-  Self.FromAToZ;
-  Items.RenderInventory(ptIdent);
+  Self.FromAToZ();
+  Items.RenderInventory();
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, False);
@@ -1971,7 +1971,7 @@ end;
 
 initialization
 
-Scenes := TScenes.Create;
+Scenes := TScenes.Create();
 
 finalization
 

@@ -5,7 +5,7 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itGem, itPotion, itScroll,
+  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itScroll,
     itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield,
     itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet);
 
@@ -880,7 +880,7 @@ const
     );
 
 type
-  TPriceType = (ptNone, ptSell, ptBuy, ptRepair, ptIdent);
+  TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
   TItems = class(TEntity)
@@ -1044,7 +1044,7 @@ class procedure TItems.Make(ID: Byte; var AItem: Item);
   begin
     Result := False;
     if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
-      Result := (Math.RandomRange(0, 2) = 0) or
+      Result := (Math.RandomRange(0, 3) = 0) or
         (ItemBase[TItemEnum(ID)].ItemType in JewelryTypeItems)
   end;
 
@@ -1680,7 +1680,7 @@ begin
     stFeet:
       Result := _('Feet');
   end;
-  Result := Format('{%s}', [Result]);
+  Result := Terminal.Colorize(Format('{%s}', [Result]), clAlarm);
 end;
 
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;
@@ -1743,7 +1743,7 @@ begin
       S := GetSlotName(D.SlotType);
   end;
   if (S <> '') then
-    S := Terminal.Colorize(Items.GetItemInfo(AItem) + ' ' + S, clAlarm)
+    S := Items.GetItemInfo(AItem) + ' ' + S
   else
     S := Trim(Items.GetItemInfo(AItem));
   if (D.Level > 0) then
@@ -1780,10 +1780,6 @@ begin
             if (RepairCost > 0) then
               S := GetPrice(RepairCost);
           end;
-        end;
-      ptIdent:
-        begin
-
         end;
     end;
     Terminal.Print(Screen.Width - 7, Y + I, S);
@@ -1903,9 +1899,9 @@ begin
   case AItem.Identify of
     0:
       Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') +
-        ']]', 'Red');
-    1 .. 99:
-      Result := Name + ' of ...'
+        ']]', 'Unidentified');
+    1..High(Word):
+      Result := Terminal.Colorize(Name + Affixes.GetSuffixName(aDefense), 'Lighter Blue');
   end;
 end;
 

@@ -21,8 +21,43 @@ type
     Damage: TBaseDamage;
   end;
 
+type
+  TSuffixEnum = (aDefense);
+
+const
+  SuffixBase: array [TSuffixEnum] of TSuffixBase = (
+    // of Defense
+    (Level: 1;));
+
+type
+  TAffixes = class
+  public
+    function GetSuffixName(SuffixEnum: TSuffixEnum): string;
+  end;
+
+var
+  Affixes: TAffixes = nil;
+
 implementation
 
-uses uTerminal, GNUGetText;
+uses SysUtils, uTerminal, GNUGetText;
+
+function TAffixes.GetSuffixName(SuffixEnum: TSuffixEnum): string;
+begin
+  case SuffixEnum of
+    aDefense:
+      Result := ' of Defense';
+  else
+    Result := '';
+  end;
+end;
+
+initialization
+
+Affixes := TAffixes.Create;
+
+finalization
+
+FreeAndNil(Affixes);
 
 end.

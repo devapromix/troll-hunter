@@ -793,7 +793,7 @@ begin
   if (Items.Identify(AItem) and (AItem.Identify > 0) and
     (Items_Inventory_SetItem(Index, AItem) > 0)) then
   begin
-    The := GetDescThe(Items.GetName(AItem));
+    The := GetDescThe(GetPureText(Items.GetName(AItem)));
     MsgLog.Add(Format(_('You identified %s.'), [The]));
     Scenes.SetScene(scInv);
   end;
