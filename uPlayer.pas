@@ -779,8 +779,8 @@ var
 begin
   AItem := Items_Inventory_GetItem(Index);
   if ((AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
-  if (AItem.Identify = 0) then Items.Identify(AItem);
-  if (AItem.Identify > 0) and (Items_Inventory_SetItem(Index, AItem) > 0) then
+  if (Items.Identify(AItem) and (AItem.Identify > 0)
+    and (Items_Inventory_SetItem(Index, AItem) > 0)) then
     begin
       The := GetDescThe(Items.GetName(AItem));
       MsgLog.Add(Format(_('You identified %s.'), [The]));
@@ -1137,45 +1137,45 @@ begin
   // Add armors
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iWingedHelm, 1, True);
-    Items.AddItemToInv(iPlateMail, 1, True);
-    Items.AddItemToInv(iPlatedGauntlets, 1, True);
-    Items.AddItemToInv(iPlateBoots, 1, True);
-    Items.AddItemToInv(iRing, 1, True);
-    Items.AddItemToInv(iAmulet, 1, True);
+    Items.AddItemToInv(iWingedHelm, 1, True, True);
+    Items.AddItemToInv(iPlateMail, 1, True, True);
+    Items.AddItemToInv(iPlatedGauntlets, 1, True, True);
+    Items.AddItemToInv(iPlateBoots, 1, True, True);
+    Items.AddItemToInv(iRing, 1, True, True);
+    Items.AddItemToInv(iAmulet, 1, True, True);
   end
   else
   begin
-    Items.AddItemToInv(iCap, 1, True);
-    Items.AddItemToInv(iQuiltedArmor, 1, True);
-    Items.AddItemToInv(iLeatherGloves, 1, True);
-    Items.AddItemToInv(iShoes, 1, True);
+    Items.AddItemToInv(iCap, 1, True, True);
+    Items.AddItemToInv(iQuiltedArmor, 1, True, True);
+    Items.AddItemToInv(iLeatherGloves, 1, True, True);
+    Items.AddItemToInv(iShoes, 1, True, True);
   end;
   // Add weapon
   if Game.Wizard then
   begin
     case Math.RandomRange(0, 4) of
       0:
-        Items.AddItemToInv(iTrollSlayer, 1, True);
+        Items.AddItemToInv(iTrollSlayer, 1, True, True);
       1:
-        Items.AddItemToInv(iDemonAxe, 1, True);
+        Items.AddItemToInv(iDemonAxe, 1, True, True);
       2:
-        Items.AddItemToInv(iHonedSpear, 1, True);
+        Items.AddItemToInv(iHonedSpear, 1, True, True);
       3:
-        Items.AddItemToInv(iDoomHammer, 1, True);
+        Items.AddItemToInv(iDoomHammer, 1, True, True);
     end;
   end
   else
   begin
     case Math.RandomRange(0, 4) of
       0:
-        Items.AddItemToInv(iRustySword, 1, True);
+        Items.AddItemToInv(iRustySword, 1, True, True);
       1:
-        Items.AddItemToInv(iHatchet, 1, True);
+        Items.AddItemToInv(iHatchet, 1, True, True);
       2:
-        Items.AddItemToInv(iShortSpear, 1, True);
+        Items.AddItemToInv(iShortSpear, 1, True, True);
       3:
-        Items.AddItemToInv(iSlagHammer, 1, True);
+        Items.AddItemToInv(iSlagHammer, 1, True, True);
     end;
   end;
   // Add runes, potions and scrolls
@@ -1198,7 +1198,7 @@ begin
   Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
-  Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(6666, 9999), D));
+  Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(3333, 9999), D));
   Self.Calc;
 end;
 

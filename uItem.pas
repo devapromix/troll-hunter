@@ -904,7 +904,7 @@ type
     procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
       overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-      EqFlag: Boolean = False); overload;
+      EqFlag: Boolean = False; IdFlag: Boolean = False); overload;
     function GetInventory: string;
     function GetPrice(Price: Word; F: Boolean = False): string;
     function GetLevel(L: Byte): string;
@@ -915,7 +915,7 @@ type
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
-    procedure Identify(var AItem: Item);
+    function Identify(var AItem: Item): Boolean;
     function GetName(AItem: Item): string; overload;
   end;
 
@@ -1785,7 +1785,7 @@ begin
 end;
 
 procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-  EqFlag: Boolean = False);
+  EqFlag: Boolean = False; IdFlag: Boolean = False);
 var
   FItem: Item;
 begin
@@ -1793,7 +1793,7 @@ begin
   Make(Ord(AItemEnum), FItem);
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
-  if (FItem.Identify = 0) then Items.Identify(FItem);
+  if IdFlag and (FItem.Identify = 0) then Items.Identify(FItem);
   Items_Inventory_AppendItem(FItem);
 end;
 
@@ -1874,9 +1874,14 @@ begin
       PriceType);
 end;
 
-procedure TItems.Identify(var AItem: Item);
+function TItems.Identify(var AItem: Item): Boolean;
 begin
-  if (AItem.Identify = 0) then AItem.Identify := 1;
+  Result := False;
+  if (AItem.Identify = 0) then
+  begin
+    AItem.Identify := 1;
+    Result := True;
+  end;
 end;
 
 function TItems.GetName(AItem: Item): string;
