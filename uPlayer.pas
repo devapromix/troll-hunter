@@ -156,7 +156,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility;
+  uShop, BearLibTerminal, uAbility, uAffixes;
 
 { TPlayer }
 
@@ -773,8 +773,20 @@ begin
 end;
 
 procedure TPlayer.IdentItem(Index: Integer);
+var
+  AItem: Item;
+  The: string;
 begin
-
+  AItem := Items_Inventory_GetItem(Index);
+  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
+  if (AItem.Identify = 0) then Items.Identify(AItem);
+  if (AItem.Identify > 0) and (Items_Inventory_SetItem(Index, AItem) > 0) then
+    begin
+      The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
+      MsgLog.Add(Format(_('You identified %s.'), [The + GetSuffixName(AItem)]));
+      Scenes.SetScene(scInv);
+    end;
+  Self.Calc;
 end;
 
 procedure TPlayer.RepairItem(Index: Integer);

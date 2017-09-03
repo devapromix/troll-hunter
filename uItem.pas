@@ -914,6 +914,7 @@ type
     procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
+    procedure Identify(var AItem: Item);
   end;
 
 
@@ -937,7 +938,7 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0): string;
 var
   ID: Integer;
-  S, T: string;
+  S, T, A: string;
   IT: TItemType;
   F: Boolean;
   V: Word;
@@ -1019,7 +1020,7 @@ begin
     S := S + Trim(Format('%s (%d/%d)', [Trim(T), AItem.Durability,
       AItem.MaxDurability]));
   end;
-  Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)), S]));
+  Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)) + GetSuffixName(AItem), S]));
   // Map's item
   if (IsManyItems or (ACount > 0)) then
   begin
@@ -1700,7 +1701,7 @@ function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
 var
-  S: string;
+  S, C: string;
   D: TItemBase;
   RepairCost: Word;
 
@@ -1713,6 +1714,7 @@ begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
   Terminal.Print(X - 4, Y + I, TScene.KeyStr(Chr(I + Ord('A'))));
+
   if IsRender then
   begin
     Terminal.ForegroundColor(D.Color);
@@ -1720,7 +1722,8 @@ begin
   end
   else
     Result := Result + D.Symbol + ' ';
-  Terminal.ForegroundColor(clGray);
+
+  Terminal.ForegroundColor(clLightGray);
   if IsAdvInfo then
   begin
     S := '';
@@ -1736,6 +1739,7 @@ begin
     if ((Player.Level < D.Level) or not(D.ItemType in NotEquipTypeItems)) then
       S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
   end;
+
   if IsRender then
   begin
     Terminal.Print(X + 2, Y + I, S);
@@ -1862,6 +1866,11 @@ begin
   for I := 0 to C - 1 do
     Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True,
       PriceType);
+end;
+
+procedure TItems.Identify(var AItem: Item);
+begin
+  AItem.Identify := 0;
 end;
 
 initialization
