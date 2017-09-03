@@ -338,7 +338,7 @@ const
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 300;),
 
     // Key
-    (Symbol: ','; ItemType: itKey; SlotType: stNone; MaxStack: 16; Level: 1;
+    (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; Level: 1;
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     // Ruby
@@ -359,7 +359,7 @@ const
     MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5); Price: 1000;
     Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet
-    (Symbol: '"'; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
+    (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
     MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5); Price: 1000;
     Color: clYellow; Deep: [deDarkWood .. deDrom];),
     /// / == Dark Wood == ////
