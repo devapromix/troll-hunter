@@ -30,17 +30,18 @@ const
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     RuneTypeItems + BookTypeItems;
   CorpseTypeItems = [itCorpse];
+  GemTypeItems = [itGem];
   NotDropTypeItems = [itNone, itKey] + CorpseTypeItems + RuneTypeItems;
-  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + [itCoin, itGem];
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems + [itCoin];
   AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
-  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   GlovesTypeItems = [itHands];
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   JewelryTypeItems = [itRing, itAmulet];
-  GemTypeItems = [itGem];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
+  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
+  IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
 
 type
@@ -77,7 +78,7 @@ type
     iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
     iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
     iScrollOfPhasing, iScrollOfTeleportation, iScrollOfDisappearing,
-    iScrollOfTownPortal, iScrollOfBloodlust, iScrollOfIdentification,
+    iScrollOfTownPortal, iScrollOfBloodlust, iScrollOfIdentify,
     // Runes
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
@@ -292,7 +293,7 @@ const
     MaxDurability: 0; Level: 1; Price: 300; Color: clLightRed;
     Deep: [deDarkWood .. deDrom]; Effects: [efBloodlust]; Value: 10;
     ManaCost: 25;),
-    // Scroll of Identification
+    // Scroll of Identify
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 350; Color: clLightYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 0;
@@ -885,7 +886,7 @@ type
 type
   TItems = class(TEntity)
   private
-    function GetName(I: TItemEnum): string;
+    function GetName(I: TItemEnum): string; overload;
   public
     class procedure Make(ID: Byte; var AItem: Item);
     constructor Create;
@@ -915,6 +916,7 @@ type
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
     procedure Identify(var AItem: Item);
+    function GetName(AItem: Item): string; overload;
   end;
 
 
@@ -1020,7 +1022,7 @@ begin
     S := S + Trim(Format('%s (%d/%d)', [Trim(T), AItem.Durability,
       AItem.MaxDurability]));
   end;
-  Result := Trim(Format('%s %s', [Items.GetName(TItemEnum(ID)) + GetSuffixName(AItem), S]));
+  Result := Trim(Format('%s %s', [Items.GetName(AItem), S]));
   // Map's item
   if (IsManyItems or (ACount > 0)) then
   begin
@@ -1078,6 +1080,8 @@ begin
   AItem.Price := ItemBase[TItemEnum(ID)].Price + Round(AItem.MaxDurability * 3.7)
     + Round(AItem.Defense * 4.8) + Round(AItem.MaxDamage * 5.6) +
     Round(ItemBase[TItemEnum(ID)].Level * (Ord(Game.Difficulty) * 10));
+  // Affix
+  AItem.Identify := Math.IfThen((ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems), 0, -1);
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
@@ -1310,9 +1314,9 @@ begin
     // Scroll of Bloodlust
     iScrollOfBloodlust:
       Result := _('Scroll of Bloodlust');
-    // Scroll of Identification
-    iScrollOfIdentification:
-      Result := _('Scroll of Identification');
+    // Scroll of Identify
+    iScrollOfIdentify:
+      Result := _('Scroll of Identify');
 
     // Rune Of Minor Healing
     iRuneOfMinorHealing:
@@ -1785,9 +1789,11 @@ procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
 var
   FItem: Item;
 begin
+  if (AAmount = 0) then Exit;
   Make(Ord(AItemEnum), FItem);
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
+  if (FItem.Identify = 0) then Items.Identify(FItem);
   Items_Inventory_AppendItem(FItem);
 end;
 
@@ -1870,7 +1876,20 @@ end;
 
 procedure TItems.Identify(var AItem: Item);
 begin
-  AItem.Identify := 0;
+  if (AItem.Identify = 0) then AItem.Identify := 1;
+end;
+
+function TItems.GetName(AItem: Item): string;
+var
+  Name: string;
+begin
+  Name := GetName(TItemEnum(AItem.ItemID));
+  Result := Name;
+  case AItem.Identify of
+    0: Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') + ']]', 'Red');
+    1..99:
+      Result := Name + ' of ...'
+  end;
 end;
 
 initialization

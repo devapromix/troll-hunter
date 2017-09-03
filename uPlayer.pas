@@ -782,8 +782,8 @@ begin
   if (AItem.Identify = 0) then Items.Identify(AItem);
   if (AItem.Identify > 0) and (Items_Inventory_SetItem(Index, AItem) > 0) then
     begin
-      The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
-      MsgLog.Add(Format(_('You identified %s.'), [The + GetSuffixName(AItem)]));
+      The := GetDescThe(Items.GetName(AItem));
+      MsgLog.Add(Format(_('You identified %s.'), [The]));
       Scenes.SetScene(scInv);
     end;
   Self.Calc;
@@ -1186,7 +1186,7 @@ begin
     Items.AddItemToInv(iPotionOfFullMana, 10);
     Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iAntidote, 10);
-    Items.AddItemToInv(iScrollOfIdentification, 10);
+    Items.AddItemToInv(iScrollOfIdentify, 10);
   end
   else
   begin
