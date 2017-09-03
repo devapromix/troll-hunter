@@ -491,7 +491,8 @@ begin
   case Key of
     TK_CLOSE:
       begin
-        if (SceneEnum = scTitle) then Game.CanClose := True;
+        if (SceneEnum = scTitle) then
+          Game.CanClose := True;
         if Game.IsMode and not(SceneEnum in [scWin, scDef, scQuit]) and
           (Player.Life > 0) then
           SetScene(scQuit, SceneEnum);
@@ -504,7 +505,8 @@ end;
 procedure TSceneTitle.Render;
 begin
   Logo.Render;
-  Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
+  Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
+    14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
   Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
     [KeyStr('ENTER')]), TK_ALIGN_CENTER);
 end;
@@ -559,7 +561,8 @@ begin
 
   Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
     [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'), KeyStr('QWEADZXC'),
-    _('Wait'), KeyStr('5'), KeyStr('S'), _('Effects'), KeyStr('TAB')]), TK_ALIGN_CENTER);
+    _('Wait'), KeyStr('5'), KeyStr('S'), _('Effects'), KeyStr('TAB')]),
+    TK_ALIGN_CENTER);
 
   X := 1;
   Y := 15;
@@ -788,18 +791,20 @@ begin
           Player.Wait;
         end;
     TK_COMMA:
-    begin
-      if Player.IsDead then Exit;
-      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
-        if (Map.Current > Low(TMapEnum)) then
-        begin
-          Map.Current := Pred(Map.Current);
-          Player.Wait;
-        end;
-    end;
+      begin
+        if Player.IsDead then
+          Exit;
+        if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
+          if (Map.Current > Low(TMapEnum)) then
+          begin
+            Map.Current := Pred(Map.Current);
+            Player.Wait;
+          end;
+      end;
     TK_PERIOD:
-    begin
-      if Player.IsDead then Exit;
+      begin
+        if Player.IsDead then
+          Exit;
         // Portal in town
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = tePortal) then
         begin
@@ -836,13 +841,13 @@ begin
       end;
     TK_SPACE:
       begin
-    if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
-    begin
-      Player.Spawn;
-      Exit;
-    end;
-    Scenes.SetScene(scDef);
-    Exit;
+        if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
+        begin
+          Player.Spawn;
+          Exit;
+        end;
+        Scenes.SetScene(scDef);
+        Exit;
       end;
     TK_ESCAPE:
       begin
@@ -861,24 +866,27 @@ begin
     TK_K:
       Scenes.SetScene(scCalendar);
     TK_R:
-    begin
-      if Player.IsDead then Exit;
-      Scenes.SetScene(scRest);
-    end;
+      begin
+        if Player.IsDead then
+          Exit;
+        Scenes.SetScene(scRest);
+      end;
     TK_G:
-    begin
-      if Player.IsDead then Exit;
-      Player.Pickup;
-    end;
+      begin
+        if Player.IsDead then
+          Exit;
+        Player.Pickup;
+      end;
     TK_I:
-        Scenes.SetScene(scInv);
+      Scenes.SetScene(scInv);
     TK_M:
       Scenes.SetScene(scMessages);
     TK_F:
-    begin
-      if Player.IsDead then Exit;
+      begin
+        if Player.IsDead then
+          Exit;
         Scenes.SetScene(scDrop);
-    end;
+      end;
     TK_P:
       Scenes.SetScene(scPlayer);
     TK_N:
@@ -888,9 +896,9 @@ begin
     // TK_B:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
-      if Game.Wizard then ;
-      //ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
-      //if Game.Wizard then Player.AddExp(LevelExpMax);
+      if Game.Wizard then;
+    // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
+    // if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
       Scenes.SetScene(scTalents);
     TK_SLASH:
@@ -941,12 +949,12 @@ begin
   Logo.Render;
   Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
   if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'),
-    [KeyStr('ENTER')]),
-    TK_ALIGN_CENTER)
-      else Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
-        [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
-        TK_ALIGN_CENTER);
+    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'), [KeyStr('ENTER')]
+      ), TK_ALIGN_CENTER)
+  else
+    Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
+      [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
+      TK_ALIGN_CENTER);
   if Game.Wizard then
     Terminal.Print(CX, CY + 5, Format(_('Press %s to continue...'),
       [KeyStr('SPACE')]), TK_ALIGN_CENTER);
@@ -1354,31 +1362,49 @@ begin
   begin
     V := Player.MaxLife - Player.Life;
     if (V > 0) then
-      S := ' (' + Items.GetInfo('+', V, 'Life') + ' '
-        + Items.GetPrice(Round(V * 1.6)) + ')'
+      S := ' (' + Items.GetInfo('+', V, 'Life') + ' ' +
+        Items.GetPrice(Round(V * 1.6)) + ')'
     else
       S := '';
     Add(_('Receive healing') + S);
   end;
   // Shops
-  if (ntScrTrader_A in NPCType) then Add(_('Buy items (scrolls)'));
-  if (ntArmTrader_A in NPCType) then Add(_('Buy items (armors)'));
-  if (ntShTrader_A in NPCType) then Add(_('Buy items (shields)'));
-  if (ntHelmTrader_A in NPCType) then Add(_('Buy items (helms)'));
-  if (ntFoodTrader_A in NPCType) then Add(_('Buy items (foods)'));
-  if (ntBlacksmith_A in NPCType) then Add(_('Repair items'));
-  if (ntSmithTrader_B in NPCType) then Add(_('Buy items (blacksmith)'));
-  if (ntHealTrader_B in NPCType) then Add(_('Buy items (healing)'));
-  if (ntPotManaTrader_B in NPCType) then Add(_('Buy items (potions of mana)'));
-  if (ntPotTrader_B in NPCType) then Add(_('Buy items (potions)'));
-  if (ntGlovesTrader_B in NPCType) then Add(_('Buy items (gloves)'));
-  if (ntTavTrader_B in NPCType) then Add(_('Buy items (tavern)'));
-  if (ntWpnTrader_B in NPCType) then Add(_('Buy items (weapons)'));
-  if (ntGemTrader_C in NPCType) then Add(_('Buy items (gems)'));
-  if (ntJewTrader_C in NPCType) then Add(_('Buy items (amulets and rings)'));
-  if (ntBootsTrader_C in NPCType) then Add(_('Buy items (boots)'));
-  if (ntRuneTrader_D in NPCType) then Add(_('Buy items (runes)'));
-  if (ntSell_C in NPCType) then Add(_('Sell items'));
+  if (ntScrTrader_A in NPCType) then
+    Add(_('Buy items (scrolls)'));
+  if (ntArmTrader_A in NPCType) then
+    Add(_('Buy items (armors)'));
+  if (ntShTrader_A in NPCType) then
+    Add(_('Buy items (shields)'));
+  if (ntHelmTrader_A in NPCType) then
+    Add(_('Buy items (helms)'));
+  if (ntFoodTrader_A in NPCType) then
+    Add(_('Buy items (foods)'));
+  if (ntBlacksmith_A in NPCType) then
+    Add(_('Repair items'));
+  if (ntSmithTrader_B in NPCType) then
+    Add(_('Buy items (blacksmith)'));
+  if (ntHealTrader_B in NPCType) then
+    Add(_('Buy items (healing)'));
+  if (ntPotManaTrader_B in NPCType) then
+    Add(_('Buy items (potions of mana)'));
+  if (ntPotTrader_B in NPCType) then
+    Add(_('Buy items (potions)'));
+  if (ntGlovesTrader_B in NPCType) then
+    Add(_('Buy items (gloves)'));
+  if (ntTavTrader_B in NPCType) then
+    Add(_('Buy items (tavern)'));
+  if (ntWpnTrader_B in NPCType) then
+    Add(_('Buy items (weapons)'));
+  if (ntGemTrader_C in NPCType) then
+    Add(_('Buy items (gems)'));
+  if (ntJewTrader_C in NPCType) then
+    Add(_('Buy items (amulets and rings)'));
+  if (ntBootsTrader_C in NPCType) then
+    Add(_('Buy items (boots)'));
+  if (ntRuneTrader_D in NPCType) then
+    Add(_('Buy items (runes)'));
+  if (ntSell_C in NPCType) then
+    Add(_('Sell items'));
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True, True);
@@ -1540,8 +1566,8 @@ procedure TSceneCalendar.Render;
 var
   Y: Byte;
 
-  procedure Add(const AText: string; AValue: string; AAdvValue: string = '');
-    overload;
+  procedure Add(const AText: string; AValue: string;
+    AAdvValue: string = ''); overload;
   var
     S: string;
     X: Word;
@@ -1562,8 +1588,8 @@ var
     Inc(Y);
   end;
 
-  procedure Add(const AText: string; AValue: Integer; AAdvValue: string = '');
-    overload;
+  procedure Add(const AText: string; AValue: Integer;
+    AAdvValue: string = ''); overload;
   begin
     Add(AText, IntToStr(AValue), AAdvValue);
   end;
@@ -1629,8 +1655,8 @@ begin
             else
               Exit;
         end;
-       Game.Start();
-       Scenes.SetScene(scTalents);
+        Game.Start();
+        Scenes.SetScene(scTalents);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1858,7 +1884,8 @@ var
     if (Talents.Talent[V].Enum <> tlNone) then
     begin
       Terminal.ForegroundColor(clWhite);
-      Terminal.Print(CX + (CX div 2), Y, Talents.GetName(Talents.Talent[V].Enum));
+      Terminal.Print(CX + (CX div 2), Y,
+        Talents.GetName(Talents.Talent[V].Enum));
     end;
     Inc(Y);
     Inc(V);
@@ -1887,7 +1914,9 @@ begin
   begin
     AddKey('Esc', _('Close'), True, False);
     AddKey('A-Z', _('Select a talent'), False, True);
-  end else AddKey('Esc', _('Close'), True, True);
+  end
+  else
+    AddKey('Esc', _('Close'), True, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
@@ -1896,7 +1925,8 @@ begin
     TK_ESCAPE:
       if Game.IsMode then
         Scenes.SetScene(scGame)
-          else Scenes.SetScene(scDifficulty);
+      else
+        Scenes.SetScene(scDifficulty);
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
         if Player.TalentPoint then

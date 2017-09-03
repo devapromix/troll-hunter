@@ -12,8 +12,8 @@ type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
     efTownPortal, efMagicEye, efCurePoison, efCureWeak, efPrmGold,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
-    efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana,
-    efPrmDV, efPrmPV);
+    efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife,
+    efPrmMana, efPrmDV, efPrmPV);
 
 type
   TEffects = set of TEffect;
@@ -164,7 +164,8 @@ procedure TPlayer.AddTurn;
 var
   V, C: Byte;
 begin
-  if IsDead then Exit;
+  if IsDead then
+    Exit;
   Turn := Turn + 1;
   Calendar.Turn;
   if (Satiation > 0) then
@@ -175,26 +176,28 @@ begin
   begin
     Life := EnsureRange(Life - 1, 0, MaxLife);
   end
-  else
-  if not Abilities.IsAbility(abDiseased) then
+  else if not Abilities.IsAbility(abDiseased) then
   begin
     V := EnsureRange(100 - Player.Skills.Skill[skHealing].Value, 25, 100);
     if (Turn mod V = 0) then
     begin
       C := Player.Skills.Skill[skHealing].Value;
-      if Abilities.IsAbility(abRegen) then C := EnsureRange(C * 3, C, High(Byte));
+      if Abilities.IsAbility(abRegen) then
+        C := EnsureRange(C * 3, C, High(Byte));
       Life := EnsureRange(Life + C, 0, MaxLife);
     end;
     V := EnsureRange(100 - Player.Skills.Skill[skConcentration].Value, 25, 100);
     if (Turn mod V = 0) then
     begin
       C := Player.Skills.Skill[skConcentration].Value;
-      if Abilities.IsAbility(abRegen) then C := EnsureRange(C * 3, C, High(Byte));
+      if Abilities.IsAbility(abRegen) then
+        C := EnsureRange(C * 3, C, High(Byte));
       Mana := EnsureRange(Mana + C, 0, MaxMana);
     end;
   end;
   OnTurn();
-  if (Life = 0) then Self.Defeat;
+  if (Life = 0) then
+    Self.Defeat;
   Mobs.Process;
 end;
 
@@ -225,7 +228,8 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.DV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
+  if (Mob.DV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
+  then
   begin
     CrStr := '';
     // Attack
@@ -264,8 +268,9 @@ begin
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, Mob.Life);
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     // Break weapon
-    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0)
-      and not Game.Wizard) then BreakItem(stMainHand);
+    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Game.Wizard)
+    then
+      BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     case FWeaponSkill of
@@ -298,9 +303,11 @@ begin
         end;
     end;
     // Victory
-    if (Mob.Life = 0) then Mob.Defeat;
+    if (Mob.Life = 0) then
+      Mob.Defeat;
   end
-  else Miss();
+  else
+    Miss();
   AddTurn;
 end;
 
@@ -561,7 +568,8 @@ begin
   end
   else
   begin
-      if Player.IsDead then Exit;
+    if Player.IsDead then
+      Exit;
     FX := Map.EnsureRange(X + AX);
     FY := Map.EnsureRange(Y + AY);
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
@@ -601,7 +609,8 @@ var
   T: TItemType;
   ItemLevel: Byte;
 begin
-  if Player.IsDead then Exit;
+  if Player.IsDead then
+    Exit;
   AItem := Items_Inventory_GetItem(Index);
   // Need level
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
@@ -725,7 +734,8 @@ var
   The: string;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Equipment > 0) or Items.ChItem(AItem)) then Exit;
+  if ((AItem.Equipment > 0) or Items.ChItem(AItem)) then
+    Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
   begin
     Value := AItem.Price div 4;
@@ -778,14 +788,15 @@ var
   The: string;
 begin
   AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then Exit;
-  if (Items.Identify(AItem) and (AItem.Identify > 0)
-    and (Items_Inventory_SetItem(Index, AItem) > 0)) then
-    begin
-      The := GetDescThe(Items.GetName(AItem));
-      MsgLog.Add(Format(_('You identified %s.'), [The]));
-      Scenes.SetScene(scInv);
-    end;
+  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
+    Exit;
+  if (Items.Identify(AItem) and (AItem.Identify > 0) and
+    (Items_Inventory_SetItem(Index, AItem) > 0)) then
+  begin
+    The := GetDescThe(Items.GetName(AItem));
+    MsgLog.Add(Format(_('You identified %s.'), [The]));
+    Scenes.SetScene(scInv);
+  end;
   Self.Calc;
 end;
 
@@ -827,14 +838,17 @@ begin
     Exit;
   The := GetCapit(GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]));
   AItem.Durability := Math.EnsureRange(AItem.Durability - Value, 0, High(Byte));
-  if ((AItem.Durability > 0) and (AItem.Durability < (AItem.MaxDurability div 4))) then
-    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'),
+  if ((AItem.Durability > 0) and
+    (AItem.Durability < (AItem.MaxDurability div 4))) then
+    MsgLog.Add(Terminal.Colorize
+      (Format(_('%s soon will be totally broken (%d/%d).'),
       [The, AItem.Durability, AItem.MaxDurability]), clAlarm));
   Items_Inventory_SetItem(Index, AItem);
   if (AItem.Durability = 0) then
-  begin      
+  begin
     Items_Inventory_DeleteItem(Index, AItem);
-    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'), [The]), clAlarm));
+    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'),
+      [The]), clAlarm));
   end;
   Self.Calc;
 end;
@@ -993,22 +1007,25 @@ begin
   Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   case Game.ShowEffects of
-  False: begin
-  Terminal.Print(Status.Left - 1, Status.Top + 3,
-    ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
-    Player.GetSatiationStr]));
-  Terminal.Print(Status.Left - 1, Status.Top + 4,
-    ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
-    Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
-  end;
-  else begin
-  S := '';
-  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    if Abilities.IsAbility(I) then
-      S := S + Terminal.Colorize(Format(' %s (%d)', [Abilities.GetName(I),
-        Abilities.Ability[I]]), Abilities.GetColor(I));
-  Terminal.Print(Status.Left, Status.Top + 3, Log.Width, 2, S, TK_ALIGN_TOP);
-  end;
+    False:
+      begin
+        Terminal.Print(Status.Left - 1, Status.Top + 3,
+          ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
+          Player.GetSatiationStr]));
+        Terminal.Print(Status.Left - 1, Status.Top + 4,
+          ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
+          Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
+      end;
+  else
+    begin
+      S := '';
+      for I := Low(TAbilityEnum) to High(TAbilityEnum) do
+        if Abilities.IsAbility(I) then
+          S := S + Terminal.Colorize(Format(' %s (%d)', [Abilities.GetName(I),
+            Abilities.Ability[I]]), Abilities.GetColor(I));
+      Terminal.Print(Status.Left, Status.Top + 3, Log.Width, 2, S,
+        TK_ALIGN_TOP);
+    end;
   end;
 end;
 
@@ -1084,14 +1101,16 @@ begin
   begin
     Exp := Exp - LevelExpMax;
     Level := Level + 1;
-    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
-      [Level]), clAlarm));
+    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Level]),
+      clAlarm));
     if (Level mod 2 = 1) then
     begin
       TalentPoint := True;
       MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
       Score := Score + 1;
-    end else TalentPoint := False;
+    end
+    else
+      TalentPoint := False;
     Score := Score + (Level * Level);
   end;
 end;

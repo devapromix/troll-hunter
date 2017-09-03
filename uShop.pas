@@ -54,10 +54,11 @@ uses
 const
   ManaPotionsItems = [iLesserManaPotion, iGreaterManaPotion, iHeroicManaPotion,
     iPotionOfFullMana];
-  HealItems = [iLesserHealingPotion, iGreaterHealingPotion, iHeroicHealingPotion,
-    iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
-    iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iScrollOfMinorHealing,
-    iScrollOfLesserHealing, iScrollOfGreaterHealing, iScrollOfFullHealing];
+  HealItems = [iLesserHealingPotion, iGreaterHealingPotion,
+    iHeroicHealingPotion, iPotionOfFullHealing, iLesserRejuvenationPotion,
+    iGreaterRejuvenationPotion, iHeroicRejuvenationPotion,
+    iPotionOfFullRejuvenation, iScrollOfMinorHealing, iScrollOfLesserHealing,
+    iScrollOfGreaterHealing, iScrollOfFullHealing];
   TavernItems = [iKey, iScrollOfHunger];
 
   { TShop }

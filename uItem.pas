@@ -5,9 +5,9 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itCorpse, itKey, itCoin, itGem, itPotion, itScroll, itRune,
-    itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield, itHeadgear,
-    itBodyArmor, itHands, itFeet, itRing, itAmulet);
+  TItemType = (itNone, itCorpse, itKey, itCoin, itGem, itPotion, itScroll,
+    itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield,
+    itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet);
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -85,8 +85,7 @@ type
     // Foods
     iBreadRation, iValleyRoot, iRatPod,
     //
-    iKey,
-    iRuby, iTopaz, iEmerald, iSapphire, // Gems
+    iKey, iRuby, iTopaz, iEmerald, iSapphire, // Gems
     iRing, // Rings
     iAmulet, // Amulets
     // Dark Wood
@@ -309,8 +308,8 @@ const
     Effects: [efLife]; Value: 150; ManaCost: 30;),
     // Rune of greater healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 7;
-    Price: 2000; Color: clRed; Deep: [deDeepCave .. deBloodCave]; Effects: [efLife];
-    Value: 250; ManaCost: 40;),
+    Price: 2000; Color: clRed; Deep: [deDeepCave .. deBloodCave];
+    Effects: [efLife]; Value: 250; ManaCost: 40;),
     // Rune of full healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 9;
     Price: 2500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
@@ -919,7 +918,6 @@ type
     function GetName(AItem: Item): string; overload;
   end;
 
-
 var
   Items: TItems = nil;
 
@@ -932,15 +930,15 @@ uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
 
 function TItems.ChItem(AItem: Item): Boolean;
 begin
-  Result := (ItemBase[TItemEnum(AItem.ItemID)].ItemType in CorpseTypeItems)
-    or (AItem.Stack > 1) or (AItem.Amount > 1);
+  Result := (ItemBase[TItemEnum(AItem.ItemID)].ItemType in CorpseTypeItems) or
+    (AItem.Stack > 1) or (AItem.Amount > 1);
 end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0): string;
 var
   ID: Integer;
-  S, T, A: string;
+  S, T: string;
   IT: TItemType;
   F: Boolean;
   V: Word;
@@ -1041,6 +1039,15 @@ begin
 end;
 
 class procedure TItems.Make(ID: Byte; var AItem: Item);
+
+  function ChIdentify: Boolean;
+  begin
+    Result := False;
+    if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
+      Result := (Math.RandomRange(0, 2) = 0) or
+        (ItemBase[TItemEnum(ID)].ItemType in JewelryTypeItems)
+  end;
+
 begin
   Items_Clear_Item(AItem);
   AItem.ItemID := ID;
@@ -1077,11 +1084,12 @@ begin
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
   // Price
-  AItem.Price := ItemBase[TItemEnum(ID)].Price + Round(AItem.MaxDurability * 3.7)
-    + Round(AItem.Defense * 4.8) + Round(AItem.MaxDamage * 5.6) +
-    Round(ItemBase[TItemEnum(ID)].Level * (Ord(Game.Difficulty) * 10));
+  AItem.Price := ItemBase[TItemEnum(ID)].Price +
+    Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
+    Round(AItem.MaxDamage * 5.6) + Round(ItemBase[TItemEnum(ID)].Level *
+    (Ord(Game.Difficulty) * 10));
   // Affix
-  AItem.Identify := Math.IfThen((ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems), 0, -1);
+  AItem.Identify := Math.IfThen(ChIdentify, 0, -1);
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
@@ -1130,7 +1138,7 @@ begin
           FItem.Amount := FItem.Amount * 2;
       end;
   end;
-  if ((FItem.Stack = 1) and (IT <> itCorpse)) then
+  if ((FItem.Stack = 1) and (IT in WeaponTypeItems + ArmorTypeItems)) then
     FItem.Durability := Math.RandomRange(FItem.MaxDurability div 4,
       FItem.MaxDurability) + 1;
   FItem.X := FX;
@@ -1705,7 +1713,7 @@ function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
 var
-  S, C: string;
+  S: string;
   D: TItemBase;
   RepairCost: Word;
 
@@ -1774,9 +1782,9 @@ begin
           end;
         end;
       ptIdent:
-      begin
+        begin
 
-      end;  
+        end;
     end;
     Terminal.Print(Screen.Width - 7, Y + I, S);
   end
@@ -1789,11 +1797,13 @@ procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
 var
   FItem: Item;
 begin
-  if (AAmount = 0) then Exit;
+  if (AAmount = 0) then
+    Exit;
   Make(Ord(AItemEnum), FItem);
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
-  if IdFlag and (FItem.Identify = 0) then Items.Identify(FItem);
+  if IdFlag and (FItem.Identify = 0) then
+    Items.Identify(FItem);
   Items_Inventory_AppendItem(FItem);
 end;
 
@@ -1866,10 +1876,10 @@ end;
 
 procedure TItems.RenderInventory(PriceType: TPriceType = ptNone);
 var
-  I, C: Integer;
+  I, FCount: Integer;
 begin
-  C := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
-  for I := 0 to C - 1 do
+  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  for I := 0 to FCount - 1 do
     Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True,
       PriceType);
 end;
@@ -1891,8 +1901,10 @@ begin
   Name := GetName(TItemEnum(AItem.ItemID));
   Result := Name;
   case AItem.Identify of
-    0: Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') + ']]', 'Red');
-    1..99:
+    0:
+      Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') +
+        ']]', 'Red');
+    1 .. 99:
       Result := Name + ' of ...'
   end;
 end;
