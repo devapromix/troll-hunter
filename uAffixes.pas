@@ -31,7 +31,7 @@ function GetSuffixName(AItem: Item): string;
 begin
   Result := '';
   case AItem.Identify of
-    0: Result := Terminal.Colorize(' [[' + _('Undefined') + ']]', 'Red');
+    0: Result := Terminal.Colorize(' [[' + _('Unidentified') + ']]', 'Red');
     1..99:
       Result := ' of ...'
   end;
