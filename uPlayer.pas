@@ -728,7 +728,7 @@ begin
   if ((AItem.Equipment > 0) or Items.ChItem(AItem)) then Exit;
   if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
   begin
-    Value := Items.GetPrice(AItem) div 4;
+    Value := AItem.Price div 4;
     Items.AddItemToInv(iGold, Value);
     The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
     MsgLog.Add(Format(_('You sold %s (+%d gold).'), [The, Value]));
@@ -738,16 +738,14 @@ end;
 
 procedure TPlayer.Buy(Index: Integer);
 var
-  Price: Word;
   AItem: Item;
   The: string;
 begin
   AItem := Shops.Shop[Shops.Current].GetItem(Index);
-  Price := Items.GetPrice(AItem);
-  if (Items_Inventory_DeleteItemAmount(Ord(iGold), Price) > 0) then
+  if (Items_Inventory_DeleteItemAmount(Ord(iGold), AItem.Price) > 0) then
   begin
     The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
-    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, Price]));
+    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, AItem.Price]));
     Items_Inventory_AppendItem(AItem);
     Self.Calc;
     // The %s just frowns. Maybe you'll return when you have enough gold?

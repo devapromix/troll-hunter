@@ -905,8 +905,7 @@ type
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
       EqFlag: Boolean = False); overload;
     function GetInventory: string;
-    function GetPrice(Price: Word; F: Boolean = False): string; overload;
-    function GetPrice(AItem: Item): Integer; overload;
+    function GetPrice(Price: Word; F: Boolean = False): string;
     function GetLevel(L: Byte): string;
     function GetInfo(Sign: string; Value: Word; Color: string): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
@@ -1074,6 +1073,10 @@ begin
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
+  // Price
+  AItem.Price := ItemBase[TItemEnum(ID)].Price + Round(AItem.MaxDurability * 3.7)
+    + Round(AItem.Defense * 4.8) + Round(AItem.MaxDamage * 5.6) +
+    Round(ItemBase[TItemEnum(ID)].Level * (Ord(Game.Difficulty) * 10));
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
@@ -1667,14 +1670,6 @@ begin
   Result := Format('{%s}', [Result]);
 end;
 
-function TItems.GetPrice(AItem: Item): Integer;
-begin
-  Result := ItemBase[TItemEnum(AItem.ItemID)].Price + (AItem.MaxDurability * 3)
-    + (AItem.Defense * 4) + (AItem.MaxDamage * 5) +
-    Round(ItemBase[TItemEnum(AItem.ItemID)].Level *
-    (Ord(Game.Difficulty) * 10));
-end;
-
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;
 var
   Color: string;
@@ -1749,16 +1744,16 @@ begin
       ptSell:
         begin
           S := '------';
-          if ((GetPrice(AItem) > 1) and not ChItem(AItem)) then
+          if ((AItem.Price > 1) and not ChItem(AItem)) then
           begin
-            S := GetPrice(GetPrice(AItem) div 4, True);
+            S := GetPrice(AItem.Price div 4, True);
             if (AItem.Equipment > 0) then
-              S := GetRedPrice(GetPrice(AItem) div 4);
+              S := GetRedPrice(AItem.Price div 4);
           end;
         end;
       ptBuy:
         begin
-          S := GetPrice(GetPrice(AItem));
+          S := GetPrice(AItem.Price);
         end;
       ptRepair:
         begin

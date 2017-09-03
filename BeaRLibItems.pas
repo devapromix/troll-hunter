@@ -20,6 +20,7 @@ type
     Size: Integer;
     SlotID: Integer;
     Equipment: Integer;
+    Price: Integer;
   end;
 
 // Library
