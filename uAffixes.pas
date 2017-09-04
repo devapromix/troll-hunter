@@ -22,10 +22,12 @@ type
   end;
 
 type
-  TSuffixEnum = (aDefense);
+  TSuffixEnum = (aNone, aDefense);
 
 const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
+    // None
+    (Level: 0;),
     // of Defense
     (Level: 1;));
 

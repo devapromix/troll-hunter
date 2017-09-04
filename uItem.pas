@@ -5,8 +5,8 @@ interface
 uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
-  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itScroll,
-    itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield,
+  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
+    itScroll, itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield,
     itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet);
 
   // From Angband:
@@ -1898,10 +1898,12 @@ begin
   Result := Name;
   case AItem.Identify of
     0:
-      Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') +
-        ']]', 'Unidentified');
-    1..High(Word):
-      Result := Terminal.Colorize(Name + Affixes.GetSuffixName(aDefense), 'Lighter Blue');
+      Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') + ']]',
+        'Unidentified');
+    1 .. High(Word):
+      Result := Terminal.Colorize
+        (Name + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
+        'Lighter Blue');
   end;
 end;
 
