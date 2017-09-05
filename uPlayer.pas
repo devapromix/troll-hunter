@@ -1156,12 +1156,12 @@ begin
   // Add armors
   if Game.Wizard then
   begin
-    Items.AddItemToInv(iWingedHelm, 1, True, True);
-    Items.AddItemToInv(iPlateMail, 1, True, True);
-    Items.AddItemToInv(iPlatedGauntlets, 1, True, True);
-    Items.AddItemToInv(iPlateBoots, 1, True, True);
-    Items.AddItemToInv(iRing, 1, True, True);
-    Items.AddItemToInv(iAmulet, 1, True, True);
+    Items.AddItemToInv(iWingedHelm, 1, True, False);
+    Items.AddItemToInv(iPlateMail, 1, True, False);
+    Items.AddItemToInv(iPlatedGauntlets, 1, True, False);
+    Items.AddItemToInv(iPlateBoots, 1, True, False);
+    Items.AddItemToInv(iRing, 1, True, False);
+    Items.AddItemToInv(iAmulet, 1, True, False);
   end
   else
   begin

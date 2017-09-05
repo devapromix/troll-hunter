@@ -1881,11 +1881,22 @@ begin
 end;
 
 function TItems.Identify(var AItem: Item): Boolean;
+var
+  I: Byte;
 begin
   Result := False;
   if (AItem.Identify = 0) then
   begin
-    AItem.Identify := 1;
+    repeat
+      // Random suffix
+      I := Math.RandomRange(1, Ord(High(TSuffixEnum)));
+      // Level
+      if (ItemBase[TItemEnum(AItem.ItemID)].Level <>
+        SuffixBase[TSuffixEnum(AItem.Identify)].Level) then Continue;
+      //
+      Affixes.DoSuffix(AItem);
+    until (I > 0);
+    AItem.Identify := I;
     Result := True;
   end;
 end;
@@ -1900,7 +1911,7 @@ begin
     0:
       Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') + ']]',
         'Unidentified');
-    1 .. High(Word):
+    1 .. High(Byte):
       Result := Terminal.Colorize
         (Name + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
         'Lighter Blue');
