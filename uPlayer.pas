@@ -1175,13 +1175,13 @@ begin
   begin
     case Math.RandomRange(0, 4) of
       0:
-        Items.AddItemToInv(iTrollSlayer, 1, True, True);
+        Items.AddItemToInv(iTrollSlayer, 1, True, False);
       1:
-        Items.AddItemToInv(iDemonAxe, 1, True, True);
+        Items.AddItemToInv(iDemonAxe, 1, True, False);
       2:
-        Items.AddItemToInv(iHonedSpear, 1, True, True);
+        Items.AddItemToInv(iHonedSpear, 1, True, False);
       3:
-        Items.AddItemToInv(iDoomHammer, 1, True, True);
+        Items.AddItemToInv(iDoomHammer, 1, True, False);
     end;
   end
   else
@@ -1203,8 +1203,8 @@ begin
     Items.AddItemToInv(iRuneOfFullHealing);
     Items.AddItemToInv(iPotionOfFullHealing, 10);
     Items.AddItemToInv(iPotionOfFullMana, 10);
-    Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iAntidote, 10);
+    Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iScrollOfIdentify, 10);
   end
   else

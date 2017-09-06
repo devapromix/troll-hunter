@@ -888,6 +888,7 @@ type
     function GetName(I: TItemEnum): string; overload;
   public
     class procedure Make(ID: Byte; var AItem: Item);
+    class procedure CalcItem(var AItem: Item; APrice: Word = 0);
     constructor Create;
     destructor Destroy; override;
     procedure Render(AX, AY: Byte);
@@ -927,6 +928,19 @@ uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
   uShop, uTalent, uAffixes;
 
 { TItems }
+
+class procedure TItems.CalcItem(var AItem: Item; APrice: Word = 0);
+begin
+  // Damage
+  if (AItem.MinDamage > 0) and (AItem.MinDamage >= AItem.MaxDamage) then
+    AItem.MinDamage := AItem.MaxDamage - 1;
+  // Price  
+  AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price +
+    APrice +
+    Round(AItem.MaxDurability * 3.7) +
+    Round(AItem.Defense * 4.8) +
+    Round(AItem.MaxDamage * 5.6);
+end;
 
 function TItems.ChItem(AItem: Item): Boolean;
 begin
@@ -1044,7 +1058,7 @@ class procedure TItems.Make(ID: Byte; var AItem: Item);
   begin
     Result := False;
     if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
-      Result := (Math.RandomRange(0, 3) = 0) or
+      Result := (Math.RandomRange(0, 2) = 0) or
         (ItemBase[TItemEnum(ID)].ItemType in JewelryTypeItems)
   end;
 
@@ -1084,10 +1098,7 @@ begin
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
   // Price
-  AItem.Price := ItemBase[TItemEnum(ID)].Price +
-    Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
-    Round(AItem.MaxDamage * 5.6) + Round(ItemBase[TItemEnum(ID)].Level *
-    (Ord(Game.Difficulty) * 10));
+  CalcItem(AItem);
   // Affix
   AItem.Identify := Math.IfThen(ChIdentify, 0, -1);
 end;
@@ -1889,14 +1900,16 @@ begin
   begin
     repeat
       // Random suffix
-      I := Math.RandomRange(1, Ord(High(TSuffixEnum)));
+      I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
       // Level
-      if (ItemBase[TItemEnum(AItem.ItemID)].Level <>
-        SuffixBase[TSuffixEnum(AItem.Identify)].Level) then Continue;
+      if ((ItemBase[TItemEnum(AItem.ItemID)].Level <
+        SuffixBase[TSuffixEnum(I)].Level.Min)
+        or (ItemBase[TItemEnum(AItem.ItemID)].Level >
+        SuffixBase[TSuffixEnum(I)].Level.Max)) then Continue;
       //
+      AItem.Identify := I;
       Affixes.DoSuffix(AItem);
-    until (I > 0);
-    AItem.Identify := I;
+    until (AItem.Identify > 0);
     Result := True;
   end;
 end;
