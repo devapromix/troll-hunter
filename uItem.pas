@@ -42,6 +42,8 @@ const
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
+  DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
+  DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
 
 type
@@ -284,9 +286,9 @@ const
 
     // Scroll of Town Portal
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 600; Color: clLightGreen;
+    MaxDurability: 0; Level: 1; Price: 400; Color: clLightGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efTownPortal]; Value: 0;
-    ManaCost: 50;),
+    ManaCost: 20;),
     // Scroll of Bloodlust
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 300; Color: clLightRed;
@@ -294,7 +296,7 @@ const
     ManaCost: 25;),
     // Scroll of Identify
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 350; Color: clLightYellow;
+    MaxDurability: 0; Level: 1; Price: 200; Color: clLightYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 0;
     ManaCost: 15;),
 

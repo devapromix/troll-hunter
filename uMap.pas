@@ -598,8 +598,6 @@ begin
     case Current of
       deDarkWood:
         Result := _('Village Dork');
-      deDeepCave:
-        Result := _('Village Elatrom');
     end;
     Exit;
   end;
