@@ -701,6 +701,12 @@ begin
     Self.Calc;
     Exit;
   end;
+  if (AItem.Identify = 0) and not Game.Wizard then
+  begin
+    MsgLog.Add(_('You can not use this yet (unidentified item)!'));
+    Self.Calc;
+    Exit;
+  end;
   // Replace
   I := Items_Inventory_EquipItem(Index);
   if (I > -1) then

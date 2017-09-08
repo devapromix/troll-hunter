@@ -1896,18 +1896,21 @@ end;
 function TItems.Identify(var AItem: Item): Boolean;
 var
   I: Byte;
+  IB: TItemBase;
+  SB: TSuffixBase;
 begin
   Result := False;
   if (AItem.Identify = 0) then
   begin
+    IB := ItemBase[TItemEnum(AItem.ItemID)];
     repeat
       // Random suffix
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
+      SB := SuffixBase[TSuffixEnum(I)];
       // Level
-      if ((ItemBase[TItemEnum(AItem.ItemID)].Level <
-        SuffixBase[TSuffixEnum(I)].Level.Min)
-        or (ItemBase[TItemEnum(AItem.ItemID)].Level >
-        SuffixBase[TSuffixEnum(I)].Level.Max)) then Continue;
+      if ((IB.Level < SB.Level.Min) or (IB.Level > SB.Level.Max)) then Continue;
+      //
+      if not (IB.ItemType in SB.Occurence) then Continue;
       //
       AItem.Identify := I;
       Affixes.DoSuffix(AItem);
