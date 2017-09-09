@@ -155,6 +155,9 @@ end;
 
 procedure TEntity.SetDamage(AMin, AMax: Word);
 begin
+  if (AMin < 1) then AMin := 1;
+  if (AMax < 2) then AMax := 2;
+  if (AMin >= AMax) then AMin := AMax - 1;
   FDamage.Min := AMin;
   FDamage.Max := AMax;
 end;
