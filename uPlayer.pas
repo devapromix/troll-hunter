@@ -351,7 +351,13 @@ var
   Dam: TDamage;
   FI: TItemEnum;
   FItem: Item;
+  FLife, FMana, FStr, FDex, FWil: Word;
 begin
+  FLife := 0;
+  FMana := 0;
+  FStr := 0;
+  FDex := 0;
+  FWil := 0;
   Dam.Min := 0;
   Dam.Max := 0;
   Def := 0;
@@ -365,6 +371,11 @@ begin
       Dam.Min := Dam.Min + FItem.MinDamage;
       Dam.Max := Dam.Max + FItem.MaxDamage;
       Def := Def + FItem.Defense;
+//      FLife := FLife + FItem.?;
+//      FMana := FMana + FItem.?;
+//      FStr := FStr + FItem.?;
+//      FDex := FDex + FItem.?;
+//      FWil := FWil + FItem.?;
       if (ItemBase[FI].SlotType = stMainHand) then
         case ItemBase[FI].ItemType of
           itBlade:
@@ -385,9 +396,9 @@ begin
     High(Integer));
   //
   Strength := EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
-    Round(Skills.Skill[skToughness].Value * 0.2), 1, AtrMax);
-  Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4), 1, AtrMax);
-  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4),
+    Round(Skills.Skill[skToughness].Value * 0.2) + FStr, 1, AtrMax);
+  Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FDex, 1, AtrMax);
+  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FWil,
     1, AtrMax);
   Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4),
     1, AtrMax);
@@ -408,8 +419,8 @@ begin
   DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)) + PrmDV, 0, DVMax);
   PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def +
     PrmPV, 0, PVMax);
-  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + PrmLife;
-  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + PrmMana;
+  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FLife + PrmLife;
+  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FMana + PrmMana;
   Radius := Round(Perception / 8.3);
   //
   Self.SetDamage(EnsureRange(Dam.Min + Strength div 3, 1, High(Byte) - 1),
