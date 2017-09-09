@@ -351,13 +351,14 @@ var
   Dam: TDamage;
   FI: TItemEnum;
   FItem: Item;
-  FLife, FMana, FStr, FDex, FWil: Word;
+  FLife, FMana, FStr, FDex, FWil, FPer: Word;
 begin
   FLife := 0;
   FMana := 0;
   FStr := 0;
   FDex := 0;
   FWil := 0;
+  FPer := 0;
   Dam.Min := 0;
   Dam.Max := 0;
   Def := 0;
@@ -376,6 +377,7 @@ begin
 //      FStr := FStr + FItem.?;
 //      FDex := FDex + FItem.?;
 //      FWil := FWil + FItem.?;
+//      FPer := FPer + FItem.?;
       if (ItemBase[FI].SlotType = stMainHand) then
         case ItemBase[FI].ItemType of
           itBlade:
@@ -398,10 +400,9 @@ begin
   Strength := EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
     Round(Skills.Skill[skToughness].Value * 0.2) + FStr, 1, AtrMax);
   Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FDex, 1, AtrMax);
-  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FWil,
-    1, AtrMax);
-  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4),
-    1, AtrMax);
+  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FWil, 1, AtrMax);
+  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FPer, 1, AtrMax);
+  //
   if (Abilities.IsAbility(abWeak)) then
   begin
     Strength := Strength div 2;
@@ -1118,6 +1119,7 @@ begin
   begin
     Exp := Exp - LevelExpMax;
     Level := Level + 1;
+    // You leveled up! You are now level %d!
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Level]),
       clAlarm));
     if (Level mod 2 = 1) then
@@ -1395,16 +1397,28 @@ begin
   end;
   // Life
   if (efPrmLife in Effects) then
+  begin
     PrmValue(efPrmLife, IfThen(Value = 0, AttribPrm, Value));
+    MsgLog.Add(_('You increased your amount of life.'));
+  end;
   // Mana
   if (efPrmMana in Effects) then
+  begin
     PrmValue(efPrmMana, IfThen(Value = 0, AttribPrm, Value));
+    MsgLog.Add(_('You increased your amount of mana.'));
+  end;
   // DV
   if (efPrmDV in Effects) then
+  begin
     PrmValue(efPrmDV, IfThen(Value = 0, TalentPrm, Value));
+    MsgLog.Add(_('You increased a defense level'));
+  end;
   // PV
   if (efPrmPV in Effects) then
+  begin
     PrmValue(efPrmPV, IfThen(Value = 0, TalentPrm, Value));
+    MsgLog.Add(_('You increased a protection level'));
+  end;
 end;
 
 initialization

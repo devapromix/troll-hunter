@@ -795,11 +795,14 @@ begin
         if Player.IsDead then
           Exit;
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
+        begin
           if (Map.Current > Low(TMapEnum)) then
           begin
+            MsgLog.Add(_('You climb up the ladder...'));
             Map.Current := Pred(Map.Current);
             Player.Wait;
           end;
+        end else MsgLog.Add(_('You cannot climb up here.'));
       end;
     TK_PERIOD:
       begin
@@ -828,11 +831,14 @@ begin
         end;
         // Down stairs
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teDnStairs) then
+        begin
           if (Map.Current < High(TMapEnum)) then
           begin
+            MsgLog.Add(_('You climb down the ladder...'));
             Map.Current := Succ(Map.Current);
             Player.Wait;
           end;
+        end else MsgLog.Add(_('You cannot climb down here.'));
       end;
     TK_KP_MULTIPLY:
       if Player.IsDead then
