@@ -13,11 +13,13 @@ type
     MaxDurability: TMinMax;
     Defense: TMinMax;
     Damage: TBaseDamage;
+    Life: TMinMax;
   end;
 
 type
-  TSuffixEnum = (aNone, aDefense1, aDefense2, aDefense3, aDefense4, aDefense5,
-    aDefense6, aDefense7,
+  TSuffixEnum = (aNone,
+    aLife1, aLife2, aLife3, aLife4, aLife5, aLife6, aLife7, 
+    aDefense1, aDefense2, aDefense3, aDefense4, aDefense5, aDefense6, aDefense7,
     aDamage1, aDamage2, aDamage3, aDamage4, aDamage5, aDamage6, aDamage7,
     aDurability1, aDurability2, aDurability3, aDurability4, aDurability5,
     aDurability6, aDurability7);
@@ -26,6 +28,14 @@ const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
     // None
     (),
+    // Life
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Life: (Min: 1; Max: 5);),
+    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Life: (Min: 6; Max: 10);),
+    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems; Life: (Min: 11; Max: 15);),
+    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems; Life: (Min: 16; Max: 20);),
+    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Life: (Min: 21; Max: 25);),
+    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Life: (Min: 26; Max: 30);),
+    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Life: (Min: 31; Max: 35);),
     // Defense
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Defense: (Min: 1; Max: 4);),
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Defense: (Min: 5; Max: 8);),
@@ -72,6 +82,11 @@ var
 begin
   SB := SuffixBase[TSuffixEnum(AItem.Identify)];
   case TSuffixEnum(AItem.Identify) of
+    // Life
+    aLife1..aLife7:
+      begin
+      
+      end;
     // Defense
     aDefense1..aDefense7:
       begin
@@ -108,6 +123,20 @@ end;
 function TAffixes.GetSuffixName(SuffixEnum: TSuffixEnum): string;
 begin
   case SuffixEnum of
+    aLife1:
+      Result := ' of Life I';
+    aLife2:
+      Result := ' of Life II';
+    aLife3:
+      Result := ' of Life III';
+    aLife4:
+      Result := ' of Life IV';
+    aLife5:
+      Result := ' of Life V';
+    aLife6:
+      Result := ' of Life VI';
+    aLife7:
+      Result := ' of Life VII';
     aDefense1:
       Result := ' of Defense I';
     aDefense2:
