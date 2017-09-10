@@ -143,75 +143,75 @@ function TAffixes.GetSuffixName(SuffixEnum: TSuffixEnum): string;
 begin
   case SuffixEnum of
     aLife1:
-      Result := ' of Life I';
+      Result := _(' of Life I');
     aLife2:
-      Result := ' of Life II';
+      Result := _(' of Life II');
     aLife3:
-      Result := ' of Life III';
+      Result := _(' of Life III');
     aLife4:
-      Result := ' of Life IV';
+      Result := _(' of Life IV');
     aLife5:
-      Result := ' of Life V';
+      Result := _(' of Life V');
     aLife6:
-      Result := ' of Life VI';
+      Result := _(' of Life VI');
     aLife7:
-      Result := ' of Life VII';
+      Result := _(' of Life VII');
     aMana1:
-      Result := ' of Mana I';
+      Result := _(' of Mana I');
     aMana2:
-      Result := ' of Mana II';
+      Result := _(' of Mana II');
     aMana3:
-      Result := ' of Mana III';
+      Result := _(' of Mana III');
     aMana4:
-      Result := ' of Mana IV';
+      Result := _(' of Mana IV');
     aMana5:
-      Result := ' of Mana V';
+      Result := _(' of Mana V');
     aMana6:
-      Result := ' of Mana VI';
+      Result := _(' of Mana VI');
     aMana7:
-      Result := ' of Mana VII';
+      Result := _(' of Mana VII');
     aDefense1:
-      Result := ' of Defense I';
+      Result := _(' of Defense I');
     aDefense2:
-      Result := ' of Defense II';
+      Result := _(' of Defense II');
     aDefense3:
-      Result := ' of Defense III';
+      Result := _(' of Defense III');
     aDefense4:
-      Result := ' of Defense IV';
+      Result := _(' of Defense IV');
     aDefense5:
-      Result := ' of Defense V';
+      Result := _(' of Defense V');
     aDefense6:
-      Result := ' of Defense VI';
+      Result := _(' of Defense VI');
     aDefense7:
-      Result := ' of Defense VII';
+      Result := _(' of Defense VII');
     aDamage1:
-      Result := ' of Damage I';
+      Result := _(' of Damage I');
     aDamage2:
-      Result := ' of Damage II';
+      Result := _(' of Damage II');
     aDamage3:
-      Result := ' of Damage III';
+      Result := _(' of Damage III');
     aDamage4:
-      Result := ' of Damage IV';
+      Result := _(' of Damage IV');
     aDamage5:
-      Result := ' of Damage V';
+      Result := _(' of Damage V');
     aDamage6:
-      Result := ' of Damage VI';
+      Result := _(' of Damage VI');
     aDamage7:
-      Result := ' of Damage VII';
+      Result := _(' of Damage VII');
     aDurability1:
-      Result := ' of Durability I';
+      Result := _(' of Durability I');
     aDurability2:
-      Result := ' of Durability II';
+      Result := _(' of Durability II');
     aDurability3:
-      Result := ' of Durability III';
+      Result := _(' of Durability III');
     aDurability4:
-      Result := ' of Durability IV';
+      Result := _(' of Durability IV');
     aDurability5:
-      Result := ' of Durability V';
+      Result := _(' of Durability V');
     aDurability6:
-      Result := ' of Durability VI';
+      Result := _(' of Durability VI');
     aDurability7:
-      Result := ' of Durability VII';
+      Result := _(' of Durability VII');
   else
     Result := '';
   end;
