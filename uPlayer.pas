@@ -347,51 +347,63 @@ begin
 end;
 
 procedure TPlayer.Calc;
+type
+  TAtr = (taDef, taDmMn, taDmMx, taLife, taMana, taStr, taDex, taWil, taPer);
 var
-  I, FCount, Def: Integer;
-  Dam: TDamage;
-  FI: TItemEnum;
+  FAtr: array [TAtr] of Word;
+  I, FCount: Integer;
+  ID: TItemEnum;
   FItem: Item;
-  FLife, FMana, FStr, FDex, FWil, FPer: Word;
+
+  procedure AddAtr(const AAtr: TAtr; const Value: Word);
+  begin
+    FAtr[AAtr] := FAtr[AAtr] + Value;
+  end;
+
+  procedure ClearAtr();
+  var
+    I: TAtr;
+  begin
+    for I := Low(TAtr) to High(TAtr) do FAtr[I] := 0;
+  end;
+
+  function GetSkill(const Value: TItemType): TSkillEnum;
+  begin
+    case Value of
+      itBlade:
+        Result := skBlade;
+      itAxe:
+        Result := skAxe;
+      itSpear:
+        Result := skSpear;
+      itMace:
+        Result := skMace;
+      else
+        Result := skNone;
+    end;
+  end;
+
 begin
-  FLife := 0;
-  FMana := 0;
-  FStr := 0;
-  FDex := 0;
-  FWil := 0;
-  FPer := 0;
-  Dam.Min := 0;
-  Dam.Max := 0;
-  Def := 0;
+  ClearAtr();
   FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
     if (FItem.Equipment > 0) then
     begin
-      FI := TItemEnum(FItem.ItemID);
-      Dam.Min := Dam.Min + FItem.MinDamage;
-      Dam.Max := Dam.Max + FItem.MaxDamage;
-      Def := Def + FItem.Defense;
+      ID := TItemEnum(FItem.ItemID);
+      AddAtr(taDef, FItem.Defense);
+      AddAtr(taDmMn, FItem.MinDamage);
+      AddAtr(taDmMx, FItem.MaxDamage);
+
 //      FLife := FLife + FItem.?;
 //      FMana := FMana + FItem.?;
 //      FStr := FStr + FItem.?;
 //      FDex := FDex + FItem.?;
 //      FWil := FWil + FItem.?;
 //      FPer := FPer + FItem.?;
-      if (ItemBase[FI].SlotType = stMainHand) then
-        case ItemBase[FI].ItemType of
-          itBlade:
-            FWeaponSkill := skBlade;
-          itAxe:
-            FWeaponSkill := skAxe;
-          itSpear:
-            FWeaponSkill := skSpear;
-          itMace:
-            FWeaponSkill := skMace;
-        else
-          FWeaponSkill := skNone;
-        end;
+      if (ItemBase[ID].SlotType = stMainHand) then
+        FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
     end;
   end;
   //
@@ -399,10 +411,10 @@ begin
     High(Integer));
   //
   Strength := EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
-    Round(Skills.Skill[skToughness].Value * 0.2) + FStr, 1, AtrMax);
-  Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FDex, 1, AtrMax);
-  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FWil, 1, AtrMax);
-  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FPer, 1, AtrMax);
+    Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[taStr], 1, AtrMax);
+  Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[taDex], 1, AtrMax);
+  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[taWil], 1, AtrMax);
+  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[taPer], 1, AtrMax);
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
@@ -419,14 +431,13 @@ begin
   end;
   //
   DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)) + PrmDV, 0, DVMax);
-  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + Def +
-    PrmPV, 0, PVMax);
-  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FLife + PrmLife;
-  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FMana + PrmMana;
+  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAtr[taDef] + PrmPV, 0, PVMax);
+  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FAtr[taLife] + PrmLife;
+  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FAtr[taMana] + PrmMana;
   Radius := Round(Perception / 8.3);
   //
-  Self.SetDamage(EnsureRange(Dam.Min + Strength div 3, 1, High(Byte) - 1),
-    EnsureRange(Dam.Max + Strength div 2, 2, High(Byte)));
+  Self.SetDamage(EnsureRange(FAtr[taDmMn] + Strength div 3, 1, High(Byte) - 1),
+    EnsureRange(FAtr[taDmMx] + Strength div 2, 2, High(Byte)));
 end;
 
 procedure TPlayer.Clear;
