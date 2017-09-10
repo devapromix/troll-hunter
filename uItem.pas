@@ -1808,10 +1808,11 @@ var
   FItem: Item;
   I, FCount: Integer;
 begin
-  // Add
+  // Add an item
   Items_Dungeon_AppendItem(AItem);
-  // Sort
+  // Sort all items on the tile
   FCount := Items_Dungeon_GetMapCountXY(AItem.MapID, AItem.X, AItem.Y);
+  if (FCount = 1) then Exit;
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(AItem.MapID, I, AItem.X, AItem.Y);
