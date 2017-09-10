@@ -5,6 +5,11 @@ interface
 uses uGame, uMap, uEntity, uAbility;
 
 type
+  TRaceEnum = (reNone = 0, reAnimal = 1, reHumanoid = 2, reConstruct = 3,
+  reDemon = 4, reDragon = 5, reElemental = 6, rePlant = 7, reUndead = 8,
+  reGiant = 9, reGoblinoid = 10);
+
+type
   TNPCType = (ntSell_C, ntJewTrader_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
     ntSmithTrader_B, ntArmTrader_A, ntGemTrader_C, ntShTrader_A, ntHelmTrader_A, ntPotTrader_B,
     ntHealTrader_B, ntGlovesTrader_B, ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
