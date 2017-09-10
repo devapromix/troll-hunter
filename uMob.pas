@@ -5,9 +5,11 @@ interface
 uses uGame, uMap, uEntity, uAbility;
 
 type
-  TRaceEnum = (reNone = 0, reAnimal = 1, reHumanoid = 2, reConstruct = 3,
-  reDemon = 4, reDragon = 5, reElemental = 6, rePlant = 7, reUndead = 8,
-  reGiant = 9, reGoblinoid = 10);
+  TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead, mrElemental,
+    mrGiant, mrPlant);
+
+type
+  TMobSize = (msTiny, msSmall, msMedium, msLarge, msHuge, msGargantuan, msColossal);
 
 type
   TNPCType = (ntSell_C, ntJewTrader_C, ntHealer_A, ntBlacksmith_A, ntWpnTrader_B,
