@@ -799,8 +799,11 @@ begin
     begin
       Abilities.Ability[abSleeping] := 0;
       Player.Skills.DoSkill(skStealth);
-      The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-      MsgLog.Add(Format(_('%s notices you!'), [The]));
+      //if Map.GetFOV(Self.X, Self.Y) then
+      begin
+        The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+        MsgLog.Add(Format(_('%s notices you!'), [The]));
+      end;
       Exit;
     end;
     Exit;

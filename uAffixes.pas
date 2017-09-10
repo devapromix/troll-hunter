@@ -15,6 +15,10 @@ type
     Damage: TBaseDamage;
     Life: TMinMax;
     Mana: TMinMax;
+    Strength: TMinMax;
+    Dexterity: TMinMax;
+    Willpower: TMinMax;
+    Perception: TMinMax;
   end;
 
 type
