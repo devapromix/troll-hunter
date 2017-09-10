@@ -566,10 +566,10 @@ begin
 
   X := 1;
   Y := 15;
-  AddLine('<', _('Go upstairs'));
-  AddLine('>', _('Go downstairs'));
-  AddLine('G', _('Pick up items'));
-  AddLine('F', _('Drop items'));
+  AddLine('<', _('Go up stairs'));
+  AddLine('>', _('Go down stairs'));
+  AddLine('G', _('Pick up an item from the floor'));
+  AddLine('F', _('Drop an item to the floor'));
   AddLine('L', _('Look mode'));
   AddLine('R', _('Rest'));
   AddLine('M', _('Last messages'));
