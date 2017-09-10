@@ -1053,26 +1053,26 @@ end;
 procedure TPlayer.RenderWeather(const AX, AY, AWidth: Byte);
 var
   SunOrMoonGlyphColor, SunOrMoonGlyph, SunOrMoon, SkyColor, SkyBef, SkyAft: string;
-  Time, Left: Byte;
+  Left: Byte;
+
+  procedure Add(const ASunOrMoonGlyph, ASunOrMoonGlyphColor, ASkyColor: string);
+  begin
+    SunOrMoonGlyph := ASunOrMoonGlyph;
+    SunOrMoonGlyphColor := ASunOrMoonGlyphColor;
+    SkyColor := ASkyColor;
+  end;
+
 begin
   case Calendar.Hour of
     6..21:
-    begin
-      SunOrMoonGlyph := '()';
-      SunOrMoonGlyphColor := 'Light Yellow';
-      SkyColor := 'Lightest Blue';
-    end;
+      Add('*', 'Light Yellow', 'Lightest Blue');
     else
-    begin
-      SunOrMoonGlyph := '(';
-      SunOrMoonGlyphColor := 'Light White';
-      SkyColor := 'Dark Gray';
-    end;
+      Add('(', 'Light White', 'Darker Gray');
   end;
   Left := Round(Calendar.Hour / 24 * AWidth);
   SunOrMoon := Terminal.Colorize(SunOrMoonGlyph, SunOrMoonGlyphColor);
-  SkyBef := Terminal.Colorize(StringOfChar('=', Left), SkyColor);
-  SkyAft := Terminal.Colorize(StringOfChar('=', AWidth - Left - 1), SkyColor);
+  SkyBef := Terminal.Colorize(StringOfChar('_', Left), SkyColor);
+  SkyAft := Terminal.Colorize(StringOfChar('_', AWidth - Left - 1), SkyColor);
   Terminal.Print(AX, AY, SkyBef + SunOrMoon + SkyAft, TK_ALIGN_CENTER);
 end;
 
