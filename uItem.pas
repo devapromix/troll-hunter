@@ -1805,19 +1805,18 @@ end;
 
 procedure TItems.AddItemToDungeon(AItem: Item);
 var
-  X, Y: Byte;
   FItem: Item;
 begin
   if (Items_Dungeon_GetMapCountXY(AItem.MapID, AItem.X, AItem.Y) > 1) then
   begin
     FItem := Items_Dungeon_GetMapItemXY(AItem.MapID, 0, AItem.X, AItem.Y);
-    if (FItem.ItemID = Ord(iCorpse)) then
+    if ((ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems)
+      and not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in CorpseTypeItems))then
     begin
       Items_Dungeon_SetMapItemXY(AItem.MapID, 0, AItem.X, AItem.Y, AItem);
       Items_Dungeon_AppendItem(FItem);
     end else Items_Dungeon_AppendItem(AItem);
-  end
-    else Items_Dungeon_AppendItem(AItem);
+  end else Items_Dungeon_AppendItem(AItem);
 end;
 
 procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
