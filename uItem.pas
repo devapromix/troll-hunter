@@ -6,8 +6,8 @@ uses BearLibItems, uGame, uMap, uPlayer, uEntity;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itScroll, itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itShield,
-    itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet);
+    itScroll, itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itStaff,
+    itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet);
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -22,29 +22,30 @@ type
   // &   Chests, Containers
 
 const
+  CoinTypeItems = [itCoin];
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
   FoodTypeItems = [itFood];
   RuneTypeItems = [itRune];
   BookTypeItems = [itBook];
-  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
-    RuneTypeItems + BookTypeItems;
   CorpseTypeItems = [itCorpse];
   GemTypeItems = [itGem];
-  NotDropTypeItems = [itNone, itKey] + CorpseTypeItems + RuneTypeItems;
-  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems + [itCoin];
-  AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
   GlovesTypeItems = [itHands];
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   JewelryTypeItems = [itRing, itAmulet];
-  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace];
+  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
+  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
+    RuneTypeItems + BookTypeItems;
+  NotDropTypeItems = [itNone, itKey] + CorpseTypeItems + RuneTypeItems;
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems + CoinTypeItems;
+  AutoPickupItems = NotEquipTypeItems - NotDropTypeItems;
 
 type
   TItemBase = record
@@ -919,6 +920,7 @@ type
     function ChItem(AItem: Item): Boolean;
     function Identify(var AItem: Item): Boolean;
     function GetName(AItem: Item): string; overload;
+    procedure AddItemToDungeon(AItem: Item);
   end;
 
 var
@@ -1157,7 +1159,7 @@ begin
   FItem.X := FX;
   FItem.Y := FY;
   FItem.Equipment := 0;
-  Items_Dungeon_AppendItem(FItem);
+  AddItemToDungeon(FItem);
 end;
 
 procedure TItems.Loot(AX, AY: Byte; AItemEnum: TItemEnum);
@@ -1799,6 +1801,23 @@ begin
   end
   else
     Result := Result + S;
+end;
+
+procedure TItems.AddItemToDungeon(AItem: Item);
+var
+  X, Y: Byte;
+  FItem: Item;
+begin
+  if (Items_Dungeon_GetMapCountXY(AItem.MapID, AItem.X, AItem.Y) > 1) then
+  begin
+    FItem := Items_Dungeon_GetMapItemXY(AItem.MapID, 0, AItem.X, AItem.Y);
+    if (FItem.ItemID = Ord(iCorpse)) then
+    begin
+      Items_Dungeon_SetMapItemXY(AItem.MapID, 0, AItem.X, AItem.Y, AItem);
+      Items_Dungeon_AppendItem(FItem);
+    end else Items_Dungeon_AppendItem(AItem);
+  end
+    else Items_Dungeon_AppendItem(AItem);
 end;
 
 procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;

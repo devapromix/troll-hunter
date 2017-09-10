@@ -920,7 +920,7 @@ var
       AItem.Y := Player.Y;
       AItem.Equipment := 0;
       AItem.MapID := Ord(Map.Current);
-      Items_Dungeon_AppendItem(AItem);
+      Items.AddItemToDungeon(AItem);
       The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
       MsgLog.Add(Format(_('You drop %s.'), [The]));
       Wait;
@@ -951,7 +951,7 @@ begin
   FItem.Equipment := 0;
   FItem.MapID := Ord(Map.Current);
   FItem.Amount := Player.ItemAmount;
-  Items_Dungeon_AppendItem(FItem);
+  Items.AddItemToDungeon(FItem);
   The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
     MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
