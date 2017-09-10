@@ -147,6 +147,7 @@ type
     procedure Rest(ATurns: Word);
     procedure Dialog(AMob: TMob);
     procedure AutoPickup();
+    procedure RenderWeather(const AX, AY, AWidth: Byte);
   end;
 
 var
@@ -1033,6 +1034,8 @@ begin
         Terminal.Print(Status.Left - 1, Status.Top + 4,
           ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
           Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
+        Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
+          Status.Width);
       end;
   else
     begin
@@ -1045,6 +1048,32 @@ begin
         TK_ALIGN_TOP);
     end;
   end;
+end;
+
+procedure TPlayer.RenderWeather(const AX, AY, AWidth: Byte);
+var
+  SunOrMoonGlyphColor, SunOrMoonGlyph, SunOrMoon, SkyColor, SkyBef, SkyAft: string;
+  Time, Left: Byte;
+begin
+  case Calendar.Hour of
+    6..21:
+    begin
+      SunOrMoonGlyph := '()';
+      SunOrMoonGlyphColor := 'Light Yellow';
+      SkyColor := 'Lightest Blue';
+    end;
+    else
+    begin
+      SunOrMoonGlyph := '(';
+      SunOrMoonGlyphColor := 'Light White';
+      SkyColor := 'Dark Gray';
+    end;
+  end;
+  Left := Round(Calendar.Hour / 24 * AWidth);
+  SunOrMoon := Terminal.Colorize(SunOrMoonGlyph, SunOrMoonGlyphColor);
+  SkyBef := Terminal.Colorize(StringOfChar('=', Left), SkyColor);
+  SkyAft := Terminal.Colorize(StringOfChar('=', AWidth - Left - 1), SkyColor);
+  Terminal.Print(AX, AY, SkyBef + SunOrMoon + SkyAft, TK_ALIGN_CENTER);
 end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;

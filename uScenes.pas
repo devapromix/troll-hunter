@@ -1604,6 +1604,7 @@ begin
   Self.Title(_('Calendar'));
 
   Y := 12;
+  Player.RenderWeather(CX, Y - 6, CX);
   Add(_('Turn'), Player.Turn);
   Add(_('Time'), Calendar.GetTime, Calendar.GetTimeStr);
   Add(_('Day'), Calendar.Day, Calendar.GetDayName);
