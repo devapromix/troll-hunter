@@ -390,7 +390,7 @@ begin
           itMace:
             FWeaponSkill := skMace;
         else
-          FWeaponSkill := skLearning;
+          FWeaponSkill := skNone;
         end;
     end;
   end;
@@ -447,7 +447,7 @@ constructor TPlayer.Create;
 begin
   inherited;
   FStatistics := TStatistics.Create;
-  FWeaponSkill := skLearning;
+  FWeaponSkill := skNone;
   Exp := 0;
   Turn := 0;
   Gold := 0;

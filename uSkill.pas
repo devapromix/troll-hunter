@@ -3,7 +3,7 @@ unit uSkill;
 interface
 
 type
-  TSkillEnum = (skLearning,
+  TSkillEnum = (skNone,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
     // Weapon skills
@@ -71,7 +71,7 @@ end;
 
 procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: Byte);
 begin
-  if (Skill[ASkill].Value < SkillMax) then
+  if (Skill[ASkill].Value < SkillMax) and (ASkill <> skNone) then
   begin
     FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
     if (Skill[ASkill].Exp >= SkillExpMax) then
@@ -97,8 +97,6 @@ end;
 function TSkills.GetName(I: TSkillEnum): string;
 begin
   case I of
-    skLearning:
-      Result := _('Learning');
     // Attributes skills
     skAthletics:
       Result := _('Athletics');
