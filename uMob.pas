@@ -798,7 +798,7 @@ begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
       Abilities.Ability[abSleeping] := 0;
-      Player.Skills.Skill[skStealth];
+      Player.Skills.DoSkill(skStealth);
       The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
       MsgLog.Add(Format(_('%s notices you!'), [The]));
       Exit;
