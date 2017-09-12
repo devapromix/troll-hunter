@@ -571,7 +571,7 @@ begin
 
     // Bloodlust (10%)
     if (abBloodlust in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 9) = 0) then
+      (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L + 10, L + 25), 0, High(Byte));
@@ -584,7 +584,7 @@ begin
 
     // Drunk (5%)
     if (abDrunk in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 19) = 0) then
+      (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.RandomRange(10, L + 10);
@@ -596,7 +596,7 @@ begin
     end;
     // Blinded (5%)
     if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 19) = 0) then
+      (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.RandomRange(1, L);
@@ -606,9 +606,9 @@ begin
       Game.ShowEffects := True;
       Exit;
     end;
-    // Stunned (20%)
+    // Stunned (5%)
     if (abStunned in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 5) = 0) then
+      (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, High(Byte));
@@ -644,9 +644,9 @@ begin
       Game.ShowEffects := True;
       Exit;
     end;
-    // Poisoned (20%)
+    // Poisoned (10%)
     if (abPoisoned in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 5) = 0) then
+      (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, High(Byte));
@@ -658,7 +658,7 @@ begin
     end;
     // Afraid (10%)
     if (abAfraid in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 9) = 0) then
+      (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * 10, L * 20), 0, High(Byte));
@@ -670,7 +670,7 @@ begin
     end;
     // Cursed (10%)
     if (abCursed in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 9) = 0) then
+      (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 3),
@@ -682,9 +682,9 @@ begin
       Game.ShowEffects := True;
       Exit;
     end;
-    // Burning (10%)
+    // Burning (5%)
     if (abBurning in MobBase[TMobEnum(ID)].Abilities) and
-      (Math.RandomRange(0, 9) = 0) then
+      (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L + 2, L + 5), 0, High(Byte));

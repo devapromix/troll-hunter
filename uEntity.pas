@@ -79,13 +79,14 @@ begin
       begin
         case I of
           abPoisoned:
-            Value := Abilities.Ability[I] div 10;
+            Value := 1;
           abBurning:
-            Value := Math.RandomRange(3, 5);
+            Value := Math.RandomRange(1, 3);
         else
           Value := 0;
         end;
-        Life := Math.EnsureRange(Life - Value, 0, MaxLife);
+        if (Value > 0) then
+          Life := Math.EnsureRange(Life - Value, 0, MaxLife);
       end;
     end;
 end;
