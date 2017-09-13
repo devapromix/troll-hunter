@@ -902,7 +902,7 @@ begin
     // TK_B:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
-      if Game.Wizard then;
+      if Game.Wizard then Items.DelCorpses;
     // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
     // if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:

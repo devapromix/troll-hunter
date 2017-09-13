@@ -921,6 +921,7 @@ type
     function Identify(var AItem: Item): Boolean;
     function GetName(AItem: Item): string; overload;
     procedure AddItemToDungeon(AItem: Item);
+    procedure DelCorpses;
   end;
 
 var
@@ -1817,7 +1818,7 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItemXY(AItem.MapID, I, AItem.X, AItem.Y);
     if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems) then
-      if (Items_Dungeon_DeleteItemXY(AItem.MapID, I, AItem.X, AItem.Y, FItem) > 0) then
+      if (Items_Dungeon_DeleteMapItemXY(AItem.MapID, I, AItem.X, AItem.Y, FItem) > 0) then
         Items_Dungeon_AppendItem(FItem);
   end;
 end;
@@ -1850,7 +1851,7 @@ begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
+  if (Items_Dungeon_DeleteMapItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
   then
   begin
     Items_Inventory_AppendItem(FItem);
@@ -1954,6 +1955,24 @@ begin
       Result := Terminal.Colorize
         (Name + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
         'Lighter Blue');
+  end;
+end;
+
+procedure TItems.DelCorpses;
+var
+  M, I, FCount: Integer;
+  Z: TMapEnum;
+  FItem: Item;
+begin
+  for Z := Low(TMapEnum) to High(TMapEnum) do
+  begin
+    if (Z = Map.Current) then Continue;
+    for I := Items_Dungeon_GetMapCount(Ord(Z)) - 1 downto 0 do
+    begin
+      FItem := Items_Dungeon_GetMapItem(Ord(Z), I);
+      if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems) then
+        if (Items_Dungeon_DeleteMapItem(Ord(Z), I, FItem) > 0) then Continue;
+    end;
   end;
 end;
 
