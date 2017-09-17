@@ -25,6 +25,7 @@ type
   TSuffixEnum = (aNone,
     aLife1, aLife2, aLife3, aLife4, aLife5, aLife6, aLife7,
     aMana1, aMana2, aMana3, aMana4, aMana5, aMana6, aMana7,
+    aAtr1, aAtr2, aAtr3, aAtr4, aAtr5, aAtr6, aAtr7,
     aDefense1, aDefense2, aDefense3, aDefense4, aDefense5, aDefense6, aDefense7,
     aDamage1, aDamage2, aDamage3, aDamage4, aDamage5, aDamage6, aDamage7,
     aDurability1, aDurability2, aDurability3, aDurability4, aDurability5,
@@ -50,6 +51,14 @@ const
     (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Mana: (Min: 21; Max: 25);),
     (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Mana: (Min: 26; Max: 30);),
     (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Mana: (Min: 31; Max: 35);),
+    // Atr
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Life: (Min: 1; Max: 3); Mana: (Min: 1; Max: 3);),
+    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Life: (Min: 4; Max: 6); Mana: (Min: 4; Max: 6);),
+    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems; Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9);),
+    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems; Life: (Min: 10; Max: 12); Mana: (Min: 10; Max: 12);),
+    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Life: (Min: 13; Max: 15); Mana: (Min: 13; Max: 15);),
+    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Life: (Min: 16; Max: 20); Mana: (Min: 16; Max: 20);),
+    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Life: (Min: 21; Max: 25); Mana: (Min: 21; Max: 25);),
     // Defense
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Defense: (Min: 1; Max: 4);),
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Defense: (Min: 5; Max: 8);),
@@ -103,6 +112,11 @@ begin
       end;
     // Mana
     aMana1..aMana7:
+      begin
+
+      end;
+    // Mana
+    aAtr1..aAtr7:
       begin
 
       end;
@@ -170,6 +184,20 @@ begin
       Result := _(' of Mana VI');
     aMana7:
       Result := _(' of Mana VII');
+    aAtr1:
+      Result := _(' of Atr I');
+    aAtr2:
+      Result := _(' of Atr II');
+    aAtr3:
+      Result := _(' of Atr III');
+    aAtr4:
+      Result := _(' of Atr IV');
+    aAtr5:
+      Result := _(' of Atr V');
+    aAtr6:
+      Result := _(' of Atr VI');
+    aAtr7:
+      Result := _(' of Atr VII');
     aDefense1:
       Result := _(' of Defense I');
     aDefense2:
