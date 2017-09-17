@@ -148,8 +148,8 @@ var
   Value: TEntSize;
   Wizard: string;
 begin
-  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 80),
-    80, High(Byte));
+  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 100),
+    100, High(Byte));
   Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'),
     30), 30, High(Byte) div 2);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);

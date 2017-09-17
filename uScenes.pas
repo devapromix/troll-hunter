@@ -1090,35 +1090,35 @@ begin
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 2, W, Player.Exp, LevelExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 2, Format('%s %d', [_('Level'), Player.Level]),
+  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Level]),
     TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 4, Format('%s %d/%d', [_('Strength'), Player.Strength,
+  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Strength,
     AtrMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 6, W, Player.Dexterity, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 6, Format('%s %d/%d', [_('Dexterity'), Player.Dexterity,
+  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Dexterity,
     AtrMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 8, W, Player.Willpower, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 8, Format('%s %d/%d', [_('Willpower'), Player.Willpower,
+  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Willpower,
     AtrMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 10, W, Player.Perception, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 10, Format('%s %d/%d', [_('Perception'),
+  Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
     Player.Perception, AtrMax]), TK_ALIGN_CENTER);
 
   RenderBar(1, 0, Y + 14, W, Player.DV, DVMax, clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 14, Format('%s %d/%d', [_('Defensive Value (DV)'),
+  Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
     Player.DV, DVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 16, W, Player.PV, PVMax, clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 16, Format('%s %d/%d', [_('Protection Value (PV)'),
+  Terminal.Print(X, Y + 16, Format('%s %d/%d', [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
     Player.PV, PVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
-  Terminal.Print(X, Y + 18, Format('%s %d/%d', [_('Life'), Player.Life,
+  Terminal.Print(X, Y + 18, Format('%s %d/%d', [Terminal.Icon('F8D7') + ' ' +  _('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
-  Terminal.Print(X, Y + 20, Format('%s %d/%d', [_('Mana'), Player.Mana,
+  Terminal.Print(X, Y + 20, Format('%s %d/%d', [Terminal.Icon('F8D9') + ' ' +  _('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 22, W, Player.Radius, RadiusMax, clGray, clDarkGray);
-  Terminal.Print(X, Y + 22, Format('%s %d/%d', [_('Radius'), Player.Radius,
+  Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision'), Player.Radius,
     RadiusMax]), TK_ALIGN_CENTER);
 end;
 
@@ -1358,7 +1358,7 @@ var
   end;
 
 begin
-  Self.Title(Format('%s ' + _('(%d gold left)'), [NPCName, Player.Gold]));
+  Self.Title(Format(_('%s (%s%d gold left)'), [NPCName, Terminal.Icon('F8D5'), Player.Gold]));
 
   Self.FromAToZ;
   Y := 1;
