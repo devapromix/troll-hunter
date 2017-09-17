@@ -173,7 +173,7 @@ begin
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
   terminal_set(Format('icon font: Fontello.ttf, size=%dx%d, codepage=437;',
-    [FChar.Width, FChar.Height]));
+    [FChar.Width + 5, FChar.Height + 5]));
 end;
 
 procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Byte);
