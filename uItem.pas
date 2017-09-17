@@ -1730,10 +1730,8 @@ begin
   if (Color = 'Mana') then S := Terminal.Icon('F8D9');
   if (Color = 'Food') then S := Terminal.Icon('F8DD');
   if (Color = 'Poison') then S := Terminal.Icon('F8E7');
-  if (Sign = '-') then Sign := Terminal.Icon('F8D3');
-  if (Sign = '+') then Sign := Terminal.Icon('F8D2');
   if (Value > 0) then
-    Result := Terminal.Colorize(Format('%s%s%d', [Sign, S, Value]), Color);
+    Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;
 
 function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
