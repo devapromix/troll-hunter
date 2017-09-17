@@ -36,6 +36,15 @@ const
   AttribPrm = 7;
 
 type
+  TAtrEnum = (atDef, atDmMn, atDmMx, atLife, atMana, atStr, atDex, atWil, atPer);
+
+type
+  TAtr = record
+    Value: Word;
+    Prm: Word;
+  end;
+
+type
   TPlayer = class(TEntity)
   private
     FLX: Byte;
@@ -72,6 +81,9 @@ type
     FStatistics: TStatistics;
     FSkills: TSkills;
     FTalentPoint: Boolean;
+    FAtr: array [TAtrEnum] of TAtr;
+    function GetAtr(I: TAtrEnum): TAtr;
+    procedure SetAtr(I: TAtrEnum; const Value: TAtr);
     procedure GenNPCText;
     function GetDV: Byte;
     function GetPV: Byte;
@@ -82,6 +94,7 @@ type
     destructor Destroy; override;
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
+    property Atr[I: TAtrEnum]: TAtr read GetAtr write SetAtr;
     property Turn: Word read FTurn write FTurn;
     property Satiation: Word read GetSatiation write FSatiation; // Nutrition
     property Level: Byte read FLevel write FLevel;
@@ -518,6 +531,11 @@ begin
     S := _('Good day!');
   end;
   MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
+end;
+
+function TPlayer.GetAtr(I: TAtrEnum): TAtr;
+begin
+  Result := FAtr[I];
 end;
 
 function TPlayer.GetDV: Byte;
@@ -1141,6 +1159,11 @@ begin
   ItemIndex := Index;
   ItemAmount := Amount;
   Scenes.SetScene(scAmount);
+end;
+
+procedure TPlayer.SetAtr(I: TAtrEnum; const Value: TAtr);
+begin
+  FAtr[I] := Value;
 end;
 
 procedure TPlayer.Spawn;
