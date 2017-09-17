@@ -1946,7 +1946,6 @@ var
   Name: string;
 begin
   Name := GetName(TItemEnum(AItem.ItemID));
-  Result := Name;
   case AItem.Identify of
     0:
       Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') + ']]',
@@ -1955,12 +1954,14 @@ begin
       Result := Terminal.Colorize
         (Name + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
         'Lighter Blue');
+    else
+      Result := Name;
   end;
 end;
 
 procedure TItems.DelCorpses;
 var
-  M, I, FCount: Integer;
+  I: Integer;
   Z: TMapEnum;
   FItem: Item;
 begin
