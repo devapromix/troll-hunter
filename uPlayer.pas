@@ -1044,15 +1044,15 @@ begin
   Terminal.ForegroundColor(clDefault);
   // Info
   Terminal.Print(Status.Left - 1, Status.Top + 1,
-    ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]
+    ' ' + Terminal.Icon('F8D7', 'Life') + ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]
     ), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2,
-    ' ' + Terminal.Colorize(Format(F, [_('Mana'), Player.Mana, Player.MaxMana]
+    ' ' + Terminal.Icon('F8D9', 'Mana') + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Player.Mana, Player.MaxMana]
     ), 'Mana'));
   // Bars
-  Scenes.RenderBar(Status.Left, 13, Status.Top + 1, Status.Width - 14,
+  Scenes.RenderBar(Status.Left, 15, Status.Top + 1, Status.Width - 16,
     Player.Life, Player.MaxLife, clLife, clDarkGray);
-  Scenes.RenderBar(Status.Left, 13, Status.Top + 2, Status.Width - 14,
+  Scenes.RenderBar(Status.Left, 15, Status.Top + 2, Status.Width - 16,
     Player.Mana, Player.MaxMana, clMana, clDarkGray);
   case Game.ShowEffects of
     False:
@@ -1094,7 +1094,7 @@ var
 begin
   case Calendar.Hour of
     6..21:
-      Add('*', 'Light Yellow', 'Lightest Blue');
+      Add(Terminal.Icon('F8D9'), 'Light Yellow', 'Lightest Blue');
     else
       Add('(', 'Light White', 'Darker Gray');
   end;

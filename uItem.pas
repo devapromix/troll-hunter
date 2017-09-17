@@ -21,6 +21,8 @@ type
   // ~   Pelts and body parts   )   A shield
   // &   Chests, Containers
 
+  //
+
 const
   CoinTypeItems = [itCoin];
   PotionTypeItems = [itPotion];

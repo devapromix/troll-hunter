@@ -45,6 +45,7 @@ type
       overload;
     function Colorize(const AStr, AColor: string): string; overload;
     function Colorize(const ANum: Integer; const AColor: string): string; overload;
+    function Icon(const ANum: string; const AColor: string = ''): string; overload;
     function GetTextScreenshot: string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
   end;
@@ -133,6 +134,15 @@ begin
   Result := LowerCase(terminal_get('ini.colors.' + LowerCase(AKey)));
 end;
 
+function TTerminal.Icon(const ANum: string; const AColor: string = ''): string;
+begin
+  if (AColor = '') then
+  Result := Format('[font=icon][U+%s][/font]',
+    [UpperCase(ANum)])
+      else Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
+    [LowerCase(AColor), UpperCase(ANum)]);
+end;
+
 procedure TTerminal.Init;
 var
   Value: TEntSize;
@@ -162,6 +172,8 @@ begin
     Wizard])]));
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
+  terminal_set(Format('icon font: Fontello.ttf, size=%dx%d, codepage=437;',
+    [FChar.Width, FChar.Height]));
 end;
 
 procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Byte);
