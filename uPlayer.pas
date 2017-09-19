@@ -222,7 +222,7 @@ begin
   begin
     CrStr := '';
     // Attack
-    Dam := EnsureRange(RandomRange(Self.Damage.Min, Self.Damage.Max + 1), 0,
+    Dam := EnsureRange(RandomRange(Self.GetDamage.Min, GetDamage.Max + 1), 0,
       High(Word));
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
@@ -418,13 +418,13 @@ begin
     Perception := Perception div 3;
   end;
   //
-  AtrModify(atDV, EnsureRange(Round(Dexterity * (DVMax / AtrMax))
+  AtrSetValue(atDV, EnsureRange(Round(Dexterity * (DVMax / AtrMax))
     + Atr[atDV].Prm, 0, DVMax));
-  AtrModify(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
+  AtrSetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
     + FAtr[taDef] + Atr[atPV].Prm, 0, PVMax));
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FAtr[taLife] + PrmLife;
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FAtr[taMana] + PrmMana;
-  AtrModify(atVis, Round(Perception / 8.3));
+  AtrSetValue(atVis, Round(Perception / 8.3));
   //
   Self.SetDamage(EnsureRange(FAtr[taDmMn] + Strength div 3, 1, High(Byte) - 1),
     EnsureRange(FAtr[taDmMx] + Strength div 2, 2, High(Byte)));
@@ -437,7 +437,7 @@ begin
   Look := False;
   IsRest := False;
   SatPerTurn := 2;
-  AtrModify(atSat, SatiatedMax);
+  AtrSetValue(atSat, SatiatedMax);
   // MsgLog.Clear;
   Calc;
   Fill;
@@ -1020,8 +1020,8 @@ begin
           ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
           Player.GetSatiationStr]));
         Terminal.Print(Status.Left - 1, Status.Top + 4,
-          ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
-          Player.Damage.Max, Player.Atr[atPV].Value, Player.Atr[atDV].Value,
+          ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.GetDamage.Min,
+          Player.GetDamage.Max, Player.Atr[atPV].Value, Player.Atr[atDV].Value,
             Player.Satiation]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);

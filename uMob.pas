@@ -534,10 +534,10 @@ begin
   Life := MaxLife;
   // DV
   V := MobBase[TMobEnum(ID)].DV + (Ord(Game.Difficulty) * 5);
-  Self.AtrModify(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10));
+  AtrSetValue(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10));
   // PV
   V := MobBase[TMobEnum(ID)].PV + (Ord(Game.Difficulty) * 10);
-  AtrModify(atPV, Math.EnsureRange(Math.RandomRange(V, V * 2), 0, PVMax - 10));
+  AtrSetValue(atPV, Math.EnsureRange(Math.RandomRange(V, V * 2), 0, PVMax - 10));
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
@@ -547,7 +547,9 @@ begin
     Boss := True;
     IsBoss := True;
     // PV
-    Self.AtrModify(atPV, Math.EnsureRange(Math.RandomRange(Atr[atPV].Value, Atr[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))), Atr[atPV].Value, PVMax - 10));
+    AtrSetValue(atPV, Math.EnsureRange(Math.RandomRange(Atr[atPV].Value,
+      Atr[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))),
+      Atr[atPV].Value, PVMax - 10));
   end;
 end;
 

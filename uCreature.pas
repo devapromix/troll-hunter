@@ -21,7 +21,7 @@ type
   end;
 
 type
-  TAtrEnum = (atDef, atDmMn, atDmMx, atLifeMn, atLifeMx, atManaMn, atManaMx,
+  TAtrEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana,
     atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat);
 
 type
@@ -35,7 +35,6 @@ type
   private
     FLife: Word;
     FMaxLife: Word;
-    FDamage: TDamage;
     FAbilities: TAbilities;
     FAtr: array [TAtrEnum] of TAtr;
     function GetAtr(I: TAtrEnum): TAtr;
@@ -45,15 +44,16 @@ type
     destructor Destroy; override;
     procedure Clear;
     procedure SetDamage(AMin, AMax: Word);
+    function GetDamage: TDamage;
     function GetRealDamage(ADamage, APV: Word): Word;
     function IsDead: Boolean;
     procedure OnTurn;
     property Life: Word read FLife write FLife;
     property MaxLife: Word read FMaxLife write FMaxLife;
-    property Damage: TDamage read FDamage write FDamage;
     property Abilities: TAbilities read FAbilities write FAbilities;
     property Atr[I: TAtrEnum]: TAtr read GetAtr write SetAtr;
     procedure AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
+    procedure AtrSetValue(I: TAtrEnum; AValue: Integer);
   end;
 
 implementation
@@ -66,6 +66,11 @@ procedure TCreature.AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
 begin
   FAtr[I].Value := FAtr[I].Value + AValue;
   FAtr[I].Prm := FAtr[I].Prm + APrm;
+end;
+
+procedure TCreature.AtrSetValue(I: TAtrEnum; AValue: Integer);
+begin
+  FAtr[I].Value := AValue;
 end;
 
 procedure TCreature.Clear;
@@ -97,6 +102,12 @@ begin
   Result := FAtr[I];
 end;
 
+function TCreature.GetDamage: TDamage;
+begin
+  Result.Min := Atr[atMinDamage].Value;
+  Result.Max := Atr[atMaxDamage].Value;
+end;
+
 function TCreature.GetRealDamage(ADamage, APV: Word): Word;
 begin
   Result := EnsureRange(ADamage - Round((ADamage * ((APV * 100) / PVMax)) / 100), 0, ADamage);
@@ -117,8 +128,8 @@ begin
   if (AMin < 1) then AMin := 1;
   if (AMax < 2) then AMax := 2;
   if (AMin >= AMax) then AMin := AMax - 1;
-  FDamage.Min := AMin;
-  FDamage.Max := AMax;
+  AtrSetValue(atMinDamage, AMin);
+  AtrSetValue(atMaxDamage, AMax);
 end;
 
 procedure TCreature.OnTurn;
