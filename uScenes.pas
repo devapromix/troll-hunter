@@ -1092,18 +1092,18 @@ begin
   RenderBar(1, 0, Y + 2, W, Player.Exp, LevelExpMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Level]),
     TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 4, W, Player.Strength, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Strength,
+  RenderBar(1, 0, Y + 4, W, Player.Atr[atStr].Value, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Atr[atStr].Value,
     AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 6, W, Player.Dexterity, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Dexterity,
+  RenderBar(1, 0, Y + 6, W, Player.Atr[atDex].Value, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Atr[atDex].Value,
     AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 8, W, Player.Willpower, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Willpower,
+  RenderBar(1, 0, Y + 8, W, Player.Atr[atWil].Value, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Atr[atWil].Value,
     AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 10, W, Player.Perception, AtrMax, clDarkRed, clDarkGray);
+  RenderBar(1, 0, Y + 10, W, Player.Atr[atPer].Value, AtrMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
-    Player.Perception, AtrMax]), TK_ALIGN_CENTER);
+    Player.Atr[atPer].Value, AtrMax]), TK_ALIGN_CENTER);
 
   RenderBar(1, 0, Y + 14, W, Player.Atr[atDV].Value, DVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),

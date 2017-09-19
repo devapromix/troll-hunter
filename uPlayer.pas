@@ -49,10 +49,6 @@ type
     FExp: Byte;
     FMaxMap: Byte;
     FLook: Boolean;
-    FStrength: Byte;
-    FDexterity: Byte;
-    FWillpower: Byte;
-    FPerception: Byte;
     FGold: Integer;
     FScore: Word;
     FKiller: string;
@@ -85,10 +81,6 @@ type
     property PrmLife: Byte read FPrmLife write FPrmLife;
     property PrmMana: Byte read FPrmMana write FPrmMana;
     property Look: Boolean read FLook write FLook;
-    property Strength: Byte read FStrength write FStrength;
-    property Dexterity: Byte read FDexterity write FDexterity;
-    property Willpower: Byte read FWillpower write FWillpower;
-    property Perception: Byte read FPerception write FPerception;
     property Gold: Integer read FGold write FGold;
     property Score: Word read FScore write FScore;
     property Killer: string read FKiller write FKiller;
@@ -398,36 +390,36 @@ begin
   Self.Gold := EnsureRange(Items_Inventory_GetItemAmount(Ord(iGold)), 0,
     High(Integer));
   //
-  Strength := EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
-    Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[taStr], 1, AtrMax);
-  Dexterity := EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[taDex], 1, AtrMax);
-  Willpower := EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[taWil], 1, AtrMax);
-  Perception := EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[taPer], 1, AtrMax);
+  AtrSetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
+    Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[taStr], 1, AtrMax));
+  AtrSetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[taDex], 1, AtrMax));
+  AtrSetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[taWil], 1, AtrMax));
+  AtrSetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[taPer], 1, AtrMax));
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
-    Strength := Strength div 2;
-    Dexterity := Dexterity div 2;
+    AtrSetValue(atStr, Atr[atStr].Value div 2);
+    AtrSetValue(atDex, Atr[atDex].Value div 2);
   end;
   if Abilities.IsAbility(abAfraid) then
   begin
-    Willpower := Willpower div 3;
+    AtrSetValue(atWil, Atr[atWil].Value div 3);
   end;
   if Abilities.IsAbility(abDrunk) then
   begin
-    Perception := Perception div 3;
+    AtrSetValue(atPer, Atr[atPer].Value div 3);
   end;
   //
-  AtrSetValue(atDV, EnsureRange(Round(Dexterity * (DVMax / AtrMax))
+  AtrSetValue(atDV, EnsureRange(Round(Atr[atDex].Value * (DVMax / AtrMax))
     + Atr[atDV].Prm, 0, DVMax));
   AtrSetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
     + FAtr[taDef] + Atr[atPV].Prm, 0, PVMax));
-  MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FAtr[taLife] + PrmLife;
-  MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FAtr[taMana] + PrmMana;
-  AtrSetValue(atVis, Round(Perception / 8.3));
+  MaxLife := Round(Atr[atStr].Value * 3.6) + Round(Atr[atDex].Value * 2.3) + FAtr[taLife] + PrmLife;
+  MaxMana := Round(Atr[atWil].Value * 4.2) + Round(Atr[atDex].Value * 0.4) + FAtr[taMana] + PrmMana;
+  AtrSetValue(atVis, Round(Atr[atPer].Value / 8.3));
   //
-  Self.SetDamage(EnsureRange(FAtr[taDmMn] + Strength div 3, 1, High(Byte) - 1),
-    EnsureRange(FAtr[taDmMx] + Strength div 2, 2, High(Byte)));
+  Self.SetDamage(EnsureRange(FAtr[taDmMn] + Atr[atStr].Value div 3, 1, High(Byte) - 1),
+    EnsureRange(FAtr[taDmMx] + Atr[atStr].Value div 2, 2, High(Byte)));
 end;
 
 procedure TPlayer.Clear;
