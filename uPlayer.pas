@@ -41,7 +41,6 @@ type
     FLX: Byte;
     FLY: Byte;
     FTurn: Word;
-    FSatiation: Word;
     FLevel: Byte;
     FMana: Word;
     FMaxMana: Word;
@@ -76,7 +75,7 @@ type
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
     property Turn: Word read FTurn write FTurn;
-    property Satiation: Word read GetSatiation write FSatiation; // Nutrition
+    property Satiation: Word read GetSatiation; // Nutrition
     property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
@@ -159,9 +158,9 @@ begin
   Turn := Turn + 1;
   Calendar.Turn;
   if (Satiation > 0) then
-    Satiation := Satiation - SatPerTurn;
+    AtrModify(atSat, -SatPerTurn);
   if Abilities.IsAbility(abWeak) then
-    Satiation := Satiation - 10;
+    AtrModify(atSat, -10);
   if (Satiation < StarvingMax) then
   begin
     Life := EnsureRange(Life - 1, 0, MaxLife);
@@ -438,7 +437,7 @@ begin
   Look := False;
   IsRest := False;
   SatPerTurn := 2;
-  Satiation := SatiatedMax;
+  AtrModify(atSat, SatiatedMax);
   // MsgLog.Clear;
   Calc;
   Fill;
@@ -551,7 +550,7 @@ end;
 
 function TPlayer.GetSatiation: Word;
 begin
-  Result := EnsureRange(FSatiation, 0, EngorgedMax);
+  Result := EnsureRange(Atr[atSat].Value, 0, EngorgedMax);
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
@@ -1310,7 +1309,7 @@ begin
   // Food
   if (efFood in Effects) then
   begin
-    FSatiation := FSatiation + Value;
+    AtrModify(atSat, Value);
     MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
   end;
   // Identification

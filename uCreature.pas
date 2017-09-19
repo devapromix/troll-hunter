@@ -22,7 +22,7 @@ type
 
 type
   TAtrEnum = (atDef, atDmMn, atDmMx, atLifeMn, atLifeMx, atManaMn, atManaMx,
-    atPV, atDV, atStr, atDex, atWil, atPer, atVis);
+    atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat);
 
 type
   TAtr = record
