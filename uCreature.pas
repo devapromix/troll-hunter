@@ -64,8 +64,8 @@ uses SysUtils, GNUGetText, Math;
 
 procedure TCreature.AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
 begin
-  FAtr[I].Value := AValue;
-  FAtr[I].Prm := APrm;
+  FAtr[I].Value := FAtr[I].Value + AValue;
+  FAtr[I].Prm := FAtr[I].Prm + APrm;
 end;
 
 procedure TCreature.Clear;

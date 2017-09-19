@@ -46,10 +46,6 @@ type
     FMana: Word;
     FMaxMana: Word;
     FRadius: Byte;
-    FDV: Byte;
-    FPV: Byte;
-    FPrmDV: Byte;
-    FPrmPV: Byte;
     FPrmLife: Byte;
     FPrmMana: Byte;
     FExp: Byte;
@@ -73,8 +69,6 @@ type
     FSkills: TSkills;
     FTalentPoint: Boolean;
     procedure GenNPCText;
-    function GetDV: Byte;
-    function GetPV: Byte;
     function GetRadius: Byte;
     function GetSatiation: Word;
   public
@@ -88,10 +82,6 @@ type
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
     property Radius: Byte read GetRadius write FRadius;
-    property DV: Byte read GetDV write FDV;
-    property PV: Byte read GetPV write FPV;
-    property PrmDV: Byte read FPrmDV write FPrmDV;
-    property PrmPV: Byte read FPrmPV write FPrmPV;
     property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
     property PrmLife: Byte read FPrmLife write FPrmLife;
@@ -430,8 +420,10 @@ begin
     Perception := Perception div 3;
   end;
   //
-  DV := EnsureRange(Round(Dexterity * (DVMax / AtrMax)) + PrmDV, 0, DVMax);
-  PV := EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAtr[taDef] + PrmPV, 0, PVMax);
+  AtrModify(atDV, EnsureRange(Round(Dexterity * (DVMax / AtrMax))
+    + Atr[atDV].Prm, 0, DVMax));
+  AtrModify(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
+    + FAtr[taDef] + Atr[atPV].Prm, 0, PVMax));
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FAtr[taLife] + PrmLife;
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FAtr[taMana] + PrmMana;
   Radius := Round(Perception / 8.3);
@@ -462,8 +454,6 @@ begin
   Turn := 0;
   Gold := 0;
   Score := 0;
-  PrmDV := 0;
-  PrmPV := 0;
   PrmLife := 0;
   PrmMana := 0;
   Level := 1;
@@ -517,16 +507,6 @@ begin
     S := _('Good day!');
   end;
   MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
-end;
-
-function TPlayer.GetDV: Byte;
-begin
-  Result := EnsureRange(FDV, 0, DVMax);
-end;
-
-function TPlayer.GetPV: Byte;
-begin
-  Result := EnsureRange(FPV, 0, PVMax);
 end;
 
 function TPlayer.GetRadius: Byte;
@@ -1043,7 +1023,8 @@ begin
           Player.GetSatiationStr]));
         Terminal.Print(Status.Left - 1, Status.Top + 4,
           ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.Damage.Min,
-          Player.Damage.Max, Player.PV, Player.DV, Player.Satiation]));
+          Player.Damage.Max, Player.Atr[atPV].Value, Player.Atr[atDV].Value,
+            Player.Satiation]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);
       end;
@@ -1300,9 +1281,9 @@ const
       efPrmMana:
         PrmMana := PrmMana + Value;
       efPrmPV:
-        PrmPV := PrmPV + Value;
+        AtrModify(atPV, 0, Value);
       efPrmDV:
-        PrmDV := PrmDV + Value;
+        AtrModify(atDV, 0, Value);
     end;
     Player.Calc;
     Player.Fill;

@@ -567,7 +567,7 @@ var
 begin
   if IsDead or Player.IsDead or (Force <> fcEnemy) then Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-  if (Player.DV < Math.RandomRange(0, 100)) then
+  if (Player.Atr[atDV].Value < Math.RandomRange(0, 100)) then
   begin
     Game.ShowEffects := False;
 
@@ -704,7 +704,7 @@ begin
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
     // PV
-    Dam := GetRealDamage(Dam, Player.PV);
+    Dam := GetRealDamage(Dam, Player.Atr[atPV].Value);
     if (Dam = 0) then
     begin
       Miss();

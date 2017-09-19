@@ -1105,12 +1105,12 @@ begin
   Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
     Player.Perception, AtrMax]), TK_ALIGN_CENTER);
 
-  RenderBar(1, 0, Y + 14, W, Player.DV, DVMax, clDarkGreen, clDarkGray);
+  RenderBar(1, 0, Y + 14, W, Player.Atr[atDV].Value, DVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
-    Player.DV, DVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 16, W, Player.PV, PVMax, clDarkGreen, clDarkGray);
+    Player.Atr[atDV].Value, DVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 16, W, Player.Atr[atPV].Value, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
-    Player.PV, PVMax]), TK_ALIGN_CENTER);
+    Player.Atr[atPV].Value, PVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [Terminal.Icon('F8D7') + ' ' +  _('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
