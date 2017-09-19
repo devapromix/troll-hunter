@@ -36,7 +36,7 @@ const
   AttribPrm = 7;
 
 type
-  TAtrEnum = (atDef, atDmMn, atDmMx, atLife, atMana, atStr, atDex, atWil, atPer);
+  TAtrEnum = (atDef, atDmMn, atDmMx, atLifeMx, atManaMx, atStr, atDex, atWil, atPer);
 
 type
   TAtr = record
@@ -454,7 +454,14 @@ begin
 end;
 
 procedure TPlayer.Clear;
+var
+  I: TAtrEnum;
 begin
+  for I := Low(FAtr) to High(FAtr) do
+  begin
+    FAtr[I].Value := 0;
+    FAtr[I].Prm := 0;
+  end;
   Killer := '';
   Alive := True;
   Look := False;
