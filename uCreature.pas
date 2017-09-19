@@ -21,7 +21,8 @@ type
   end;
 
 type
-  TAtrEnum = (atDef, atDmMn, atDmMx, atLifeMx, atManaMx, atStr, atDex, atWil, atPer);
+  TAtrEnum = (atDef, atDmMn, atDmMx, atLifeMn, atLifeMx, atManaMn, atManaMx,
+    atPV, atDV, atStr, atDex, atWil, atPer, atVis);
 
 type
   TAtr = record
@@ -52,6 +53,7 @@ type
     property Damage: TDamage read FDamage write FDamage;
     property Abilities: TAbilities read FAbilities write FAbilities;
     property Atr[I: TAtrEnum]: TAtr read GetAtr write SetAtr;
+    procedure AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
   end;
 
 implementation
@@ -59,6 +61,12 @@ implementation
 uses SysUtils, GNUGetText, Math;
 
 { TCreature }
+
+procedure TCreature.AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
+begin
+  FAtr[I].Value := AValue;
+  FAtr[I].Prm := APrm;
+end;
 
 procedure TCreature.Clear;
 var
@@ -69,6 +77,7 @@ begin
     FAtr[I].Value := 0;
     FAtr[I].Prm := 0;
   end;
+  Abilities.Clear;
 end;
 
 constructor TCreature.Create;

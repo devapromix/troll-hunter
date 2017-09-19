@@ -229,7 +229,7 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.DV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
+  if (Mob.Atr[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
   then
   begin
     CrStr := '';
@@ -258,7 +258,7 @@ begin
       CrStr := CrStr + Format(' (%dx)', [V]);
     end;
     // PV
-    Dam := Self.GetRealDamage(Dam, Mob.PV);
+    Dam := Self.GetRealDamage(Dam, Mob.Atr[atPV].Value);
     if (Dam = 0) then
     begin
       Miss();
@@ -448,7 +448,6 @@ begin
   IsRest := False;
   SatPerTurn := 2;
   Satiation := SatiatedMax;
-  Abilities.Clear;
   // MsgLog.Clear;
   Calc;
   Fill;

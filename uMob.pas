@@ -399,8 +399,6 @@ type
   TMob = class(TCreature)
   private
     FID: Byte;
-    FPV: Byte;
-    FDV: Byte;
     FForce: TForce;
     Maps: TMapEnum;
     Boss: Boolean;
@@ -420,8 +418,6 @@ type
     procedure Defeat;
     procedure DropItems;
     property ID: Byte read FID write FID;
-    property PV: Byte read FPV write FPV;
-    property DV: Byte read FDV write FDV;
     property Force: TForce read FForce write FForce;
     property Color: Cardinal read FColor;
     property Radius: Byte read GetRadius;
@@ -475,6 +471,7 @@ end;
 
 procedure TMob.AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
 begin
+  Self.Clear;
   X := AX;
   Y := AY;
   Maps := AZ;
@@ -522,6 +519,7 @@ begin
     Add(AZ);
   X := FX;
   Y := FY;
+  Self.Clear;
   Maps := AZ;
   Boss := False;
   Alive := True;
@@ -536,10 +534,10 @@ begin
   Life := MaxLife;
   // DV
   V := MobBase[TMobEnum(ID)].DV + (Ord(Game.Difficulty) * 5);
-  DV := Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10);
+  Self.AtrModify(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10));
   // PV
   V := MobBase[TMobEnum(ID)].PV + (Ord(Game.Difficulty) * 10);
-  PV := Math.EnsureRange(Math.RandomRange(V, V * 2), 0, PVMax - 10);
+  AtrModify(atPV, Math.EnsureRange(Math.RandomRange(V, V * 2), 0, PVMax - 10));
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
@@ -549,7 +547,7 @@ begin
     Boss := True;
     IsBoss := True;
     // PV
-    PV := Math.EnsureRange(Math.RandomRange(PV, PV + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))), PV, PVMax - 10);
+    Self.AtrModify(atPV, Math.EnsureRange(Math.RandomRange(Atr[atPV].Value, Atr[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))), Atr[atPV].Value, PVMax - 10));
   end;
 end;
 
