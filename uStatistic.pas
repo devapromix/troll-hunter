@@ -3,6 +3,9 @@ unit uStatistic;
 interface
 
 type
+  TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk, stScrRead);
+
+type
   TStatistics = class(TObject)
   private
     FKills: Word;
@@ -10,15 +13,13 @@ type
     FFound: Word;
     FPotDrunk: Word;
     FScrRead: Word;
+    FStat: array [TStatEnum] of Word;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Kills: Word read FKills write FKills;
-    property Found: Word read FFound write FFound;
-    property PotDrunk: Word read FPotDrunk write FPotDrunk;
-    property ScrRead: Word read FScrRead write FScrRead;
-    property SpCast: Word read FSpCast write FSpCast;
+    procedure Inc(const I: TStatEnum; const Value: Word = 1);
+    function Get(const I: TStatEnum): Word;
   end;
 
 implementation
@@ -26,12 +27,11 @@ implementation
 { TStatistics }
 
 procedure TStatistics.Clear;
+var
+  I: TStatEnum;
 begin
-  Kills := 0;
-  Found := 0;
-  PotDrunk := 0;
-  ScrRead := 0;
-  SpCast := 0;
+  for I := Low(TStatEnum) to High(TStatEnum) do
+    FStat[I] := 0;
 end;
 
 constructor TStatistics.Create;
@@ -43,6 +43,16 @@ destructor TStatistics.Destroy;
 begin
 
   inherited;
+end;
+
+function TStatistics.Get(const I: TStatEnum): Word;
+begin
+  Result := FStat[I];
+end;
+
+procedure TStatistics.Inc(const I: TStatEnum; const Value: Word = 1);
+begin
+  FStat[I] := FStat[I] + Value;
 end;
 
 end.

@@ -42,7 +42,7 @@ const
 
 implementation
 
-uses SysUtils, Math, GNUGetText, uTerminal, uPlayer, uGame, uMsgLog;
+uses SysUtils, Math, GNUGetText, uTerminal, uPlayer, uGame, uMsgLog, uStatistic;
 
 { TSkills }
 
@@ -87,7 +87,7 @@ begin
       Player.AddExp();
       // Add scores
       if (FSkill[ASkill].Value = SkillMax) then
-        Player.Score := Player.Score + 50;
+        Player.Statictics.Inc(stScore, 50);
       Player.Calc;
     end;
   end;

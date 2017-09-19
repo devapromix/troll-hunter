@@ -22,7 +22,7 @@ type
 
 type
   TAtrEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana,
-    atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat);
+    atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat, atLev, atExp);
 
 type
   TAtr = record

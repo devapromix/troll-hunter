@@ -40,17 +40,11 @@ type
   private
     FLX: Byte;
     FLY: Byte;
-    FTurn: Word;
-    FLevel: Byte;
     FMana: Word;
     FMaxMana: Word;
-    FPrmLife: Byte;
-    FPrmMana: Byte;
-    FExp: Byte;
     FMaxMap: Byte;
     FLook: Boolean;
     FGold: Integer;
-    FScore: Word;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
     FItemIsDrop: Boolean;
@@ -69,19 +63,13 @@ type
     destructor Destroy; override;
     property LX: Byte read FLX write FLX;
     property LY: Byte read FLY write FLY;
-    property Turn: Word read FTurn write FTurn;
     property Satiation: Word read GetSatiation; // Nutrition
-    property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
     property Vision: Byte read GetVision;
-    property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
-    property PrmLife: Byte read FPrmLife write FPrmLife;
-    property PrmMana: Byte read FPrmMana write FPrmMana;
     property Look: Boolean read FLook write FLook;
     property Gold: Integer read FGold write FGold;
-    property Score: Word read FScore write FScore;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
@@ -145,7 +133,7 @@ var
 begin
   if IsDead then
     Exit;
-  Turn := Turn + 1;
+  Statictics.Inc(stTurn);  
   Calendar.Turn;
   if (Satiation > 0) then
     AtrModify(atSat, -SatPerTurn);
@@ -157,18 +145,18 @@ begin
   end
   else if not Abilities.IsAbility(abDiseased) then
   begin
-    V := EnsureRange(100 - Player.Skills.Skill[skHealing].Value, 25, 100);
-    if (Turn mod V = 0) then
+    V := EnsureRange(100 - Skills.Skill[skHealing].Value, 25, 100);
+    if (Statictics.Get(stTurn) mod V = 0) then
     begin
-      C := Player.Skills.Skill[skHealing].Value;
+      C := Skills.Skill[skHealing].Value;
       if Abilities.IsAbility(abRegen) then
         C := EnsureRange(C * 3, C, High(Byte));
       Life := EnsureRange(Life + C, 0, MaxLife);
     end;
-    V := EnsureRange(100 - Player.Skills.Skill[skConcentration].Value, 25, 100);
-    if (Turn mod V = 0) then
+    V := EnsureRange(100 - Skills.Skill[skConcentration].Value, 25, 100);
+    if (Statictics.Get(stTurn) mod V = 0) then
     begin
-      C := Player.Skills.Skill[skConcentration].Value;
+      C := Skills.Skill[skConcentration].Value;
       if Abilities.IsAbility(abRegen) then
         C := EnsureRange(C * 3, C, High(Byte));
       Mana := EnsureRange(Mana + C, 0, MaxMana);
@@ -325,24 +313,22 @@ begin
 end;
 
 procedure TPlayer.Calc;
-type
-  TAtr = (taDef, taDmMn, taDmMx, taLife, taMana, taStr, taDex, taWil, taPer);
 var
-  FAtr: array [TAtr] of Word;
+  FAtr: array [TAtrEnum] of Word;
   I, FCount: Integer;
   ID: TItemEnum;
   FItem: Item;
 
-  procedure AddAtr(const AAtr: TAtr; const Value: Word);
+  procedure AddAtr(const AAtr: TAtrEnum; const Value: Word);
   begin
     FAtr[AAtr] := FAtr[AAtr] + Value;
   end;
 
   procedure ClearAtr();
   var
-    I: TAtr;
+    I: TAtrEnum;
   begin
-    for I := Low(TAtr) to High(TAtr) do FAtr[I] := 0;
+    for I := Low(TAtrEnum) to High(TAtrEnum) do FAtr[I] := 0;
   end;
 
   function GetSkill(const Value: TItemType): TSkillEnum;
@@ -370,9 +356,9 @@ begin
     if (FItem.Equipment > 0) then
     begin
       ID := TItemEnum(FItem.ItemID);
-      AddAtr(taDef, FItem.Defense);
-      AddAtr(taDmMn, FItem.MinDamage);
-      AddAtr(taDmMx, FItem.MaxDamage);
+      AddAtr(atDef, FItem.Defense);
+      AddAtr(atMinDamage, FItem.MinDamage);
+      AddAtr(atMaxDamage, FItem.MaxDamage);
 
 //      FLife := FLife + FItem.?;
 //      FMana := FMana + FItem.?;
@@ -389,10 +375,10 @@ begin
     High(Integer));
   //
   AtrSetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
-    Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[taStr], 1, AtrMax));
-  AtrSetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[taDex], 1, AtrMax));
-  AtrSetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[taWil], 1, AtrMax));
-  AtrSetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[taPer], 1, AtrMax));
+    Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[atStr], 1, AtrMax));
+  AtrSetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[atDex], 1, AtrMax));
+  AtrSetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[atWil], 1, AtrMax));
+  AtrSetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[atPer], 1, AtrMax));
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
@@ -411,18 +397,18 @@ begin
   AtrSetValue(atDV, EnsureRange(Round(Atr[atDex].Value * (DVMax / AtrMax))
     + Atr[atDV].Prm, 0, DVMax));
   AtrSetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
-    + FAtr[taDef] + Atr[atPV].Prm, 0, PVMax));
-  MaxLife := Round(Atr[atStr].Value * 3.6) + Round(Atr[atDex].Value * 2.3) + FAtr[taLife] + PrmLife;
-  MaxMana := Round(Atr[atWil].Value * 4.2) + Round(Atr[atDex].Value * 0.4) + FAtr[taMana] + PrmMana;
+    + FAtr[atDef] + Atr[atPV].Prm, 0, PVMax));
+  MaxLife := Round(Atr[atStr].Value * 3.6) + Round(Atr[atDex].Value * 2.3) + FAtr[atLife] + Atr[atMaxLife].Prm;
+  MaxMana := Round(Atr[atWil].Value * 4.2) + Round(Atr[atDex].Value * 0.4) + FAtr[atMana] + Atr[atMaxMana].Prm;
   AtrSetValue(atVis, Round(Atr[atPer].Value / 8.3));
   //
-  Self.SetDamage(EnsureRange(FAtr[taDmMn] + Atr[atStr].Value div 3, 1, High(Byte) - 1),
-    EnsureRange(FAtr[taDmMx] + Atr[atStr].Value div 2, 2, High(Byte)));
+  Self.SetDamage(EnsureRange(FAtr[atMinDamage] + Atr[atStr].Value div 3, 1, High(Byte) - 1),
+    EnsureRange(FAtr[atMaxDamage] + Atr[atStr].Value div 2, 2, High(Byte)));
 end;
 
 procedure TPlayer.Clear;
 begin
-  inherited;
+  inherited Clear;
   Killer := '';
   Look := False;
   IsRest := False;
@@ -438,17 +424,12 @@ begin
   inherited;
   FStatistics := TStatistics.Create;
   FWeaponSkill := skNone;
-  Exp := 0;
-  Turn := 0;
   Gold := 0;
-  Score := 0;
-  PrmLife := 0;
-  PrmMana := 0;
-  Level := 1;
   MaxMap := 0;
   Name := _('PLAYER');
   FSkills := TSkills.Create;
   Self.Clear;
+  AtrSetValue(atLev, 1);
 end;
 
 procedure TPlayer.Defeat(AKiller: string = '');
@@ -552,14 +533,15 @@ begin
       ((Map.InView(LX + AX, LY + AY) and not Map.GetFog(LX + AX, LY + AY)) or
       Game.Wizard) then
     begin
-      LX := Map.EnsureRange(LX + AX);
-      LY := Map.EnsureRange(LY + AY);
+      LX := Map.EnsureRange(Math.EnsureRange(LX + AX, X - (View.Width div 2),
+        X + (View.Width div 2 - 1)));
+      LY := Map.EnsureRange(Math.EnsureRange(LY + AY, Y - (View.Height div 2),
+        Y + (View.Height div 2 - 1)));
     end;
   end
   else
   begin
-    if Player.IsDead then
-      Exit;
+    if IsDead then Exit;
     FX := Map.EnsureRange(X + AX);
     FY := Map.EnsureRange(Y + AY);
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
@@ -599,12 +581,12 @@ var
   T: TItemType;
   ItemLevel: Byte;
 begin
-  if Player.IsDead then
+  if IsDead then
     Exit;
   AItem := Items_Inventory_GetItem(Index);
   // Need level
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Player.Level < ItemLevel) and not Game.Wizard then
+  if (Atr[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -624,12 +606,12 @@ begin
         itPotion:
           begin
             MsgLog.Add(Format(_('You drink %s.'), [The]));
-            Statictics.PotDrunk := Statictics.PotDrunk + 1;
+            Statictics.Inc(stPotDrunk);
           end;
         itScroll:
           begin
             MsgLog.Add(Format(_('You read %s.'), [The]));
-            Statictics.ScrRead := Statictics.ScrRead + 1;
+            Statictics.Inc(stScrRead);
           end;
         itFood:
           MsgLog.Add(Format(_('You ate %s.'), [The]));
@@ -644,9 +626,9 @@ begin
       begin
         if (Self.Mana >= ItemBase[I].ManaCost) then
         begin
-          Player.Skills.DoSkill(skConcentration);
+          Skills.DoSkill(skConcentration);
           Self.Mana := Self.Mana - ItemBase[I].ManaCost;
-          Statictics.SpCast := Statictics.SpCast + 1;
+          Statictics.Inc(stSpCast);
         end
         else
         begin
@@ -684,7 +666,7 @@ begin
   // Need level
   AItem := Items_Inventory_GetItem(Index);
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Player.Level < ItemLevel) and not Game.Wizard then
+  if (Atr[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -882,8 +864,8 @@ var
   begin
     if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
     begin
-      AItem.X := Player.X;
-      AItem.Y := Player.Y;
+      AItem.X := X;
+      AItem.Y := Y;
       AItem.Equipment := 0;
       AItem.MapID := Ord(Map.Current);
       Items.AddItemToDungeon(AItem);
@@ -900,7 +882,7 @@ begin
   if not((AItem.Stack > 1) and (AItem.Amount > 1)) then
     DeleteItem
   else
-    Player.SetAmountScene(True, Index, 1);
+    SetAmountScene(True, Index, 1);
   Self.Calc;
 end;
 
@@ -910,13 +892,13 @@ var
   The: string;
 begin
   FItem := Items_Inventory_GetItem(Index);
-  FItem.Amount := FItem.Amount - Player.ItemAmount;
+  FItem.Amount := FItem.Amount - ItemAmount;
   Items_Inventory_SetItem(Index, FItem);
-  FItem.X := Player.X;
-  FItem.Y := Player.Y;
+  FItem.X := X;
+  FItem.Y := Y;
   FItem.Equipment := 0;
   FItem.MapID := Ord(Map.Current);
-  FItem.Amount := Player.ItemAmount;
+  FItem.Amount := ItemAmount;
   Items.AddItemToDungeon(FItem);
   The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
@@ -931,10 +913,10 @@ procedure TPlayer.PickUp;
 var
   FCount: Integer;
 begin
-  Statictics.Found := Statictics.Found + 1;
-  Corpses.DelCorpse(Player.X, Player.Y);
+  Statictics.Inc(stFound);
+  Corpses.DelCorpse(X, Y);
   /// / Your backpack is full!
-  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y);
+  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
   if (FCount > 0) then
   begin
     if (FCount = 1) then
@@ -958,12 +940,10 @@ var
   FItem: Item;
   The: string;
 begin
-  FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, Player.X,
-    Player.Y);
-  FItem.Amount := FItem.Amount - Player.ItemAmount;
-  Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, Player.X,
-    Player.Y, FItem);
-  FItem.Amount := Player.ItemAmount;
+  FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
+  FItem.Amount := FItem.Amount - ItemAmount;
+  Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, X, Y, FItem);
+  FItem.Amount := ItemAmount;
   Items_Inventory_AppendItem(FItem);
   The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
@@ -979,7 +959,12 @@ begin
   if (Self.Life = 0) then
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
-    Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
+  begin
+    if Look then
+      Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer)
+    else
+      Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
+  end;
 end;
 
 procedure TPlayer.RenderInfo;
@@ -992,26 +977,26 @@ begin
   Terminal.ForegroundColor(clDefault);
   // Info
   Terminal.Print(Status.Left - 1, Status.Top + 1,
-    ' ' + Terminal.Icon('F8D7', 'Life') + ' ' + Terminal.Colorize(Format(F, [_('Life'), Player.Life, Player.MaxLife]
+    ' ' + Terminal.Icon('F8D7', 'Life') + ' ' + Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]
     ), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2,
-    ' ' + Terminal.Icon('F8D9', 'Mana') + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Player.Mana, Player.MaxMana]
+    ' ' + Terminal.Icon('F8D9', 'Mana') + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]
     ), 'Mana'));
   // Bars
   Scenes.RenderBar(Status.Left, 15, Status.Top + 1, Status.Width - 16,
-    Player.Life, Player.MaxLife, clLife, clDarkGray);
+    Life, MaxLife, clLife, clDarkGray);
   Scenes.RenderBar(Status.Left, 15, Status.Top + 2, Status.Width - 16,
-    Player.Mana, Player.MaxMana, clMana, clDarkGray);
+    Mana, MaxMana, clMana, clDarkGray);
   case Game.ShowEffects of
     False:
       begin
         Terminal.Print(Status.Left - 1, Status.Top + 3,
-          ' ' + Format(_('Turn: %d Gold: %d %s'), [Player.Turn, Player.Gold,
-          Player.GetSatiationStr]));
+          ' ' + Format(_('Turn: %d Gold: %d %s'), [Statictics.Get(stTurn), Gold,
+          GetSatiationStr]));
         Terminal.Print(Status.Left - 1, Status.Top + 4,
-          ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [Player.GetDamage.Min,
-          Player.GetDamage.Max, Player.Atr[atPV].Value, Player.Atr[atDV].Value,
-            Player.Satiation]));
+          ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [GetDamage.Min,
+          GetDamage.Max, Atr[atPV].Value, Atr[atDV].Value,
+            Satiation]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);
       end;
@@ -1077,17 +1062,17 @@ begin
       GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(AReason);
-    if Player.IsDead then
-      SL.Append(Format(_('He scored %d points.'), [Player.Score]))
+    if IsDead then
+      SL.Append(Format(_('He scored %d points.'), [Statictics.Get(stScore)]))
     else
-      SL.Append(Format(_('He has scored %d points so far.'), [Player.Score]));
+      SL.Append(Format(_('He has scored %d points so far.'), [Statictics.Get(stScore)]));
     SL.Append('');
     SL.Append(Format(FT, [_('Screenshot')]));
     SL.Append(Game.Screenshot);
     SL.Append(Format(FT, [_('Defeated foes')]));
     SL.Append('');
     SL.Append(Format('Total: %d creatures defeated.',
-      [Player.Statictics.Kills]));
+      [Statictics.Get(stKills)]));
     SL.Append('');
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
@@ -1095,7 +1080,7 @@ begin
     SL.Append(Format(FT, [_('Inventory')]));
     SL.Append('');
     SL.Append(GetPureText(Items.GetInventory));
-    SL.Append(Format('%s: %d', [_('Gold'), Player.Gold]));
+    SL.Append(Format('%s: %d', [_('Gold'), Gold]));
     SL.SaveToFile(GetDateTime('-', '-') + '-character-dump.txt');
   finally
     SL.Free;
@@ -1121,23 +1106,23 @@ end;
 
 procedure TPlayer.AddExp(Value: Byte = 1);
 begin
-  Exp := Exp + Value;
-  if (Exp >= LevelExpMax) then
+  AtrModify(atExp, Value);
+  if (Atr[atExp].Value >= LevelExpMax) then
   begin
-    Exp := Exp - LevelExpMax;
-    Level := Level + 1;
+    AtrModify(atExp, -LevelExpMax);
+    AtrModify(atLev, 1);
     // You leveled up! You are now level %d!
-    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Level]),
+    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Atr[atLev].Value]),
       clAlarm));
-    if (Level mod 2 = 1) then
+    if (Atr[atLev].Value mod 2 = 1) then
     begin
       Talents.IsPoint := True;
       MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
-      Score := Score + 1;
+      Statictics.Inc(stScore)
     end
     else
       Talents.IsPoint := False;
-    Score := Score + (Level * Level);
+    Statictics.Inc(stTurn, Atr[atLev].Value * Atr[atLev].Value);
   end;
 end;
 
@@ -1149,7 +1134,7 @@ begin
       (Format(_('You have opened a new territory: %s.'), [Map.Name]), clAlarm));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
-      Score := Score + (Ord(Map.Current) * 15);
+      Statictics.Inc(stScore, Ord(Map.Current) * 15);
     MaxMap := MaxMap + 1;
   end;
   SatPerTurn := 1;
@@ -1256,24 +1241,24 @@ const
   procedure PrmSkill(ASkill: TSkillEnum);
   begin
     Skills.Modify(ASkill, StartSkill);
-    Player.Calc;
-    Player.Fill;
+    Calc;
+    Fill;
   end;
 
   procedure PrmValue(AEffect: TEffect; Value: Byte);
   begin
     case AEffect of
       efPrmLife:
-        PrmLife := PrmLife + Value;
+        AtrModify(atMaxLife, 0, Value);
       efPrmMana:
-        PrmMana := PrmMana + Value;
+        AtrModify(atMaxMana, 0, Value);
       efPrmPV:
         AtrModify(atPV, 0, Value);
       efPrmDV:
         AtrModify(atDV, 0, Value);
     end;
-    Player.Calc;
-    Player.Fill;
+    Calc;
+    Fill;
   end;
 
 begin
@@ -1323,7 +1308,7 @@ begin
   begin
     Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap,
       Game.PortalTile);
-    if ((Player.X = Game.Spawn.X) and (Player.Y = Game.Spawn.Y)) then
+    if ((X = Game.Spawn.X) and (Y = Game.Spawn.Y)) then
       Exit;
     Game.PortalTile := Map.GetTileEnum(X, Y, Map.Current);
     Game.PortalMap := Map.Current;
@@ -1341,7 +1326,7 @@ begin
   // Bloodlust
   if (efBloodlust in Effects) then
   begin
-    V := Math.RandomRange(Value, Player.Skills.Skill[skConcentration]
+    V := Math.RandomRange(Value, Skills.Skill[skConcentration]
       .Value + Value);
     Abilities.Modify(abBloodlust, V);
     MsgLog.Add(Format(_('You feel lust for blood (%d).'), [V]));

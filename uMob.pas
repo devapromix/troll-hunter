@@ -456,7 +456,7 @@ var
 implementation
 
 uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext,
-  uItem, BearLibTerminal, uSkill;
+  uItem, BearLibTerminal, uSkill, uStatistic;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -759,13 +759,13 @@ begin
   if Boss then
     S := Terminal.Colorize(S, clAlarm);
   MsgLog.Add(S);
-  Player.Statictics.Kills := Player.Statictics.Kills + 1;
+  Player.Statictics.Inc(stKills);
 
   if Boss then
     V := 25
   else
     V := 1;
-  Player.Score := Player.Score + (MobBase[TMobEnum(ID)].Level * V);
+  Player.Statictics.Inc(stScore, MobBase[TMobEnum(ID)].Level * V);
   Self.DropItems;
   // Boss
   if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mTrollKing))
@@ -774,7 +774,7 @@ begin
     if not Game.Wizard then
       Game.Won := True;
     MsgLog.Add(Terminal.Colorize(_('You have won!!!'), clAlarm));
-    Player.Score := Player.Score + 2000;
+    Player.Statictics.Inc(stScore, 2000);
     Game.Screenshot := Terminal.GetTextScreenshot();
   end;
 end;
@@ -856,8 +856,11 @@ begin
   C := MobBase[TMobEnum(ID)].Symbol;
   if (Self.Boss) then
     C := Chr(Ord(C) - 32);
-  Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C,
-    Color, clBkMob);
+  if Player.Look then
+    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color)
+  else
+    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C,
+      Color, clBkMob);
 end;
 
 procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);

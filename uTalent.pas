@@ -85,7 +85,7 @@ var
 
 implementation
 
-uses SysUtils, Math, GNUGetText, uSkill, uGame, uScenes;
+uses SysUtils, Math, GNUGetText, uSkill, uGame, uScenes, uCreature;
 
 { TTalents }
 
@@ -128,7 +128,7 @@ var
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
-    if ((TalentBase[T].Level = Player.Level)
+    if ((TalentBase[T].Level = Player.Atr[atLev].Value)
       and (T <> tlNone)) then
     begin
       if (Key = K) then

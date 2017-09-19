@@ -49,7 +49,7 @@ var
 implementation
 
 uses
-  SysUtils, Math, uMap;
+  SysUtils, Math, uMap, uCreature;
 
 const
   ManaPotionsItems = [iLesserManaPotion, iGreaterManaPotion, iHeroicManaPotion,
@@ -183,7 +183,7 @@ begin
   for Shop := Low(TShopEnum) to High(TShopEnum) do
   begin
     Shops.Shop[Shop].Clear;
-    Max := EnsureRange(Player.Level * 4, 4, ItemMax);
+    Max := EnsureRange(Player.Atr[atLev].Value * 4, 4, ItemMax);
     for I := 0 to Max - 1 do
     begin
       repeat

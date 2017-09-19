@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses Math, SysUtils, GNUGetText, uGame, uMsgLog;
+uses Math, SysUtils, GNUGetText, uGame, uMsgLog, uStatistic;
 
 { TSpellbook }
 
@@ -84,7 +84,7 @@ begin
       begin
         if (Player.Mana >= FSpell[I].Spell.ManaCost) then
         begin
-          Player.Statictics.SpCast := Player.Statictics.SpCast + 1;
+          Player.Statictics.Inc(stSpCast);
           Player.Mana := Player.Mana - FSpell[I].Spell.ManaCost;
           Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
         end else begin

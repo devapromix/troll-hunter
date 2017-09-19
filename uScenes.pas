@@ -258,7 +258,7 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
-  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature;
+  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature, uStatistic;
 
 { TScene }
 
@@ -636,8 +636,7 @@ var
       end;
     end;
     //
-    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S,
-      TK_ALIGN_TOP);
+    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S, TK_ALIGN_TOP);
   end;
 
   procedure AddTo(X, Y: Integer);
@@ -684,6 +683,8 @@ begin
     for DY := 0 to View.Height - 1 do
       for DX := 0 to View.Width - 1 do
       begin
+        if Player.Look then
+          Terminal.BackgroundColor($FF333333);
         X := DX - PX + Player.X;
         Y := DY - PY + Player.Y;
         if not Map.InMap(X, Y) then
@@ -694,8 +695,8 @@ begin
         T := Map.GetTile(X, Y);
         if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
         begin
-          Terminal.BackgroundColor(clLook);
-          Terminal.Print(DX + View.Left, DY + View.Top, ' ');
+          Terminal.BackgroundColor(clRed);
+//          Terminal.Print(DX + View.Left, DY + View.Top, ' ');
           RenderLook(X, Y, T, True);
         end;
         if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
@@ -1089,8 +1090,8 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 2, W, Player.Exp, LevelExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Level]),
+  RenderBar(1, 0, Y + 2, W, Player.Atr[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Atr[atLev].Value]),
     TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 4, W, Player.Atr[atStr].Value, AtrMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Atr[atStr].Value,
@@ -1286,16 +1287,16 @@ begin
 
   Add(_('Name'), Player.Name);
   Add(_('Difficulty'), Game.GetStrDifficulty);
-  Add(_('Scores'), Player.Score);
+  Add(_('Scores'), Player.Statictics.Get(stScore));
   // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
-  Add(_('Tiles Moved'), Player.Turn);
-  Add(_('Monsters Killed'), Player.Statictics.Kills);
-  Add(_('Items Found'), Player.Statictics.Found);
+  Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
+  Add(_('Monsters Killed'), Player.Statictics.Get(stKills));
+  Add(_('Items Found'), Player.Statictics.Get(stFound));
   // Add(_('Chests Found'), );
   // Add(_('Doors Opened'), );
-  Add(_('Potions Drunk'), Player.Statictics.PotDrunk);
-  Add(_('Scrolls Read'), Player.Statictics.ScrRead);
-  Add(_('Spells Cast'), Player.Statictics.SpCast);
+  Add(_('Potions Drunk'), Player.Statictics.Get(stPotDrunk));
+  Add(_('Scrolls Read'), Player.Statictics.Get(stScrRead));
+  Add(_('Spells Cast'), Player.Statictics.Get(stSpCast));
   // Add(_('Foods Eaten'), );
   // Add(_('Melee Attack Performed'), );
   // Add(_('Ranged Attack Performed'), );
@@ -1605,7 +1606,7 @@ begin
 
   Y := 12;
   Player.RenderWeather(CX, Y - 6, CX);
-  Add(_('Turn'), Player.Turn);
+  Add(_('Turn'), Player.Statictics.Get(stTurn));
   Add(_('Time'), Calendar.GetTime, Calendar.GetTimeStr);
   Add(_('Day'), Calendar.Day, Calendar.GetDayName);
   Add(_('Month'), Calendar.Month, Calendar.GetMonthName);
@@ -1907,7 +1908,7 @@ begin
 
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
-    if (TalentBase[T].Level = Player.Level) then
+    if (TalentBase[T].Level = Player.Atr[atLev].Value) then
       Add(Talents.GetName(T), Talents.GetHint(T), Talents.IsPoint);
 
   V := 0;

@@ -923,6 +923,7 @@ type
     function Identify(var AItem: Item): Boolean;
     function GetName(AItem: Item): string; overload;
     procedure AddItemToDungeon(AItem: Item);
+    function AddItemInfo(V: array of string): string;
     procedure DelCorpses;
   end;
 
@@ -959,7 +960,7 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0): string;
 var
   ID: Integer;
-  S, T: string;
+  D, S, T, K: string;
   IT: TItemType;
   F: Boolean;
   V: Word;
@@ -1032,14 +1033,19 @@ begin
     S := ''
   else
   begin
+
     if (IT in ArmorTypeItems + JewelryTypeItems) then
       if (AItem.Defense > 0) then
-        T := T + Format('<%d> ', [AItem.Defense]);
+        T := Format('%s%d', [Terminal.Icon('F8DC'), AItem.Defense]);
     if (IT in WeaponTypeItems + JewelryTypeItems) then
       if (AItem.MinDamage > 0) then
-        T := T + Format('<%d-%d> ', [AItem.MinDamage, AItem.MaxDamage]);
-    S := S + Trim(Format('%s (%d/%d)', [Trim(T), AItem.Durability,
-      AItem.MaxDurability]));
+        T := Format('%s%d-%d', [Terminal.Icon('F8E5'), AItem.MinDamage, AItem.MaxDamage]);
+    if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
+      K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
+    S := S + AddItemInfo([K, T,
+      Format('%s%d/%d', [Terminal.Icon('F8DA'),
+      AItem.Durability, AItem.MaxDurability])]);
+    if (AItem.Identify = 0) then S := '';
   end;
   Result := Trim(Format('%s %s', [Items.GetName(AItem), S]));
   // Map's item
@@ -1713,11 +1719,14 @@ begin
 end;
 
 function TItems.GetLevel(L: Byte): string;
+var
+  Color: string;
 begin
-  if (L > Player.Level) then
-    Result := Terminal.Colorize(L, 'Light Red')
+  if (L > Player.Atr[atLev].Value) then
+    Color := 'Light Red'
   else
-    Result := IntToStr(L);
+    Color := 'Gray';
+  Result := Terminal.Colorize(Format('%s%d', [Terminal.Icon('F8DB'), L]), Color);
 end;
 
 function TItems.GetInfo(Sign: string; Value: Word; Color: string): string;
@@ -1771,11 +1780,6 @@ begin
     S := Items.GetItemInfo(AItem) + ' ' + S
   else
     S := Trim(Items.GetItemInfo(AItem));
-  if (D.Level > 0) then
-  begin
-    if ((Player.Level < D.Level) or not(D.ItemType in NotEquipTypeItems)) then
-      S := Format('(%s) %s', [Items.GetLevel(D.Level), S]);
-  end;
 
   if IsRender then
   begin
@@ -1811,6 +1815,18 @@ begin
   end
   else
     Result := Result + S;
+end;
+
+function TItems.AddItemInfo(V: array of string): string;
+var
+  I: Byte;
+begin
+  Result := '';
+  for I := 0 to Length(V) - 1 do
+    Result := Result + V[I] + ' ';
+  Result := Trim(Result);
+  if (Result <> '') then
+    Result := '[[' + Result + ']]';
 end;
 
 procedure TItems.AddItemToDungeon(AItem: Item);
