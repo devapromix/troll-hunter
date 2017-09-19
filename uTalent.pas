@@ -63,12 +63,14 @@ type
 type
   TTalents = class(TObject)
   private
+    FIsPoint: Boolean;
     FTalent: array [0 .. TalentMax - 1] of TTalent;
     function GetTalent(I: Byte): TTalent;
     procedure SetTalent(I: Byte; const Value: TTalent);
   public
     constructor Create;
     destructor Destroy; override;
+    property IsPoint: Boolean read FIsPoint write FIsPoint;
     property Talent[I: Byte]: TTalent read GetTalent write SetTalent;
     function GetName(I: TTalentEnum): string;
     function GetHint(I: TTalentEnum): string;
@@ -108,6 +110,7 @@ constructor TTalents.Create;
 var
   I: Byte;
 begin
+  IsPoint := True;
   for I := 0 to TalentMax - 1 do
     FTalent[I].Enum := tlNone;
 end;
@@ -131,7 +134,7 @@ begin
       if (Key = K) then
       begin
         Self.Add(T);
-        Player.TalentPoint := False;
+        IsPoint := False;
         Player.DoEffects(TalentBase[T].Effects);
         if not Game.IsMode then
           Scenes.SetScene(scName);

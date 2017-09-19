@@ -61,7 +61,6 @@ type
     FName: string;
     FStatistics: TStatistics;
     FSkills: TSkills;
-    FTalentPoint: Boolean;
     procedure GenNPCText;
     function GetVision: Byte;
     function GetSatiation: Word;
@@ -91,7 +90,6 @@ type
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
     property Statictics: TStatistics read FStatistics write FStatistics;
     property Name: string read FName write FName;
-    property TalentPoint: Boolean read FTalentPoint write FTalentPoint;
     property Skills: TSkills read FSkills write FSkills;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
@@ -137,7 +135,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes;
+  uShop, BearLibTerminal, uAbility, uAffixes, uTalent;
 
 { TPlayer }
 
@@ -448,7 +446,6 @@ begin
   PrmMana := 0;
   Level := 1;
   MaxMap := 0;
-  TalentPoint := True;
   Name := _('PLAYER');
   FSkills := TSkills.Create;
   Self.Clear;
@@ -1134,12 +1131,12 @@ begin
       clAlarm));
     if (Level mod 2 = 1) then
     begin
-      TalentPoint := True;
+      Talents.IsPoint := True;
       MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
       Score := Score + 1;
     end
     else
-      TalentPoint := False;
+      Talents.IsPoint := False;
     Score := Score + (Level * Level);
   end;
 end;

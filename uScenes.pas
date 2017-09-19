@@ -1908,7 +1908,7 @@ begin
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
     if (TalentBase[T].Level = Player.Level) then
-      Add(Talents.GetName(T), Talents.GetHint(T), Player.TalentPoint);
+      Add(Talents.GetName(T), Talents.GetHint(T), Talents.IsPoint);
 
   V := 0;
   Y := 2;
@@ -1917,7 +1917,7 @@ begin
 
   if Game.IsMode then
     MsgLog.Render(2, True);
-  if Player.TalentPoint then
+  if Talents.IsPoint then
   begin
     AddKey('Esc', _('Close'), True, False);
     AddKey('A-Z', _('Select a talent'), False, True);
@@ -1936,7 +1936,7 @@ begin
         Scenes.SetScene(scDifficulty);
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
-        if Player.TalentPoint then
+        if Talents.IsPoint then
         begin
           case Key of
             TK_A .. TK_Z:
