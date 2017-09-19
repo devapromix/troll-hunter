@@ -24,7 +24,8 @@ uses
   uSkill in 'uSkill.pas',
   uLogo in 'uLogo.pas',
   uStatistic in 'uStatistic.pas',
-  uAffixes in 'uAffixes.pas';
+  uAffixes in 'uAffixes.pas',
+  uCreature in 'uCreature.pas';
 
 var
   Key: Word = 0;

@@ -2,7 +2,7 @@ unit uMob;
 
 interface
 
-uses uGame, uMap, uEntity, uAbility;
+uses uGame, uMap, uEntity, uCreature, uAbility;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead, mrElemental,
@@ -396,7 +396,7 @@ type
   TForce = (fcAlly, fcEnemy, fcNPC);
 
 type
-  TMob = class(TEntity)
+  TMob = class(TCreature)
   private
     FID: Byte;
     FPV: Byte;
@@ -405,8 +405,11 @@ type
     Maps: TMapEnum;
     Boss: Boolean;
     FColor: Cardinal;
+    FAlive: Boolean;
     function GetRadius: Byte;
   public
+    constructor Create();
+    destructor Destroy; override;
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AID: Integer = -1; AForce: TForce = fcEnemy);
     procedure AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
@@ -422,10 +425,11 @@ type
     property Force: TForce read FForce write FForce;
     property Color: Cardinal read FColor;
     property Radius: Byte read GetRadius;
+    property Alive: Boolean read FAlive write FAlive;
   end;
 
 type
-  TMobs = class(TObject)
+  TMobs = class(TEntity)
   private
     FMob: array of TMob;
     function GetMob(I: Integer): TMob;
@@ -734,6 +738,11 @@ begin
   else Miss();
 end;
 
+constructor TMob.Create;
+begin
+  inherited;
+end;
+
 procedure TMob.Defeat;
 var
   S, The: string;
@@ -768,6 +777,12 @@ begin
     Player.Score := Player.Score + 2000;
     Game.Screenshot := Terminal.GetTextScreenshot();
   end;
+end;
+
+destructor TMob.Destroy;
+begin
+
+  inherited;
 end;
 
 procedure TMob.DropItems;

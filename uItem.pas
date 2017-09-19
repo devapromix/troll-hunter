@@ -2,7 +2,7 @@ unit uItem;
 
 interface
 
-uses BearLibItems, uGame, uMap, uPlayer, uEntity;
+uses BearLibItems, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,

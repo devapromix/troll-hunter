@@ -2,7 +2,7 @@ unit uAffixes;
 
 interface
 
-uses uEntity, uItem, BeaRLibItems;
+uses uCreature, uItem, BeaRLibItems;
 
 type
   TSuffixBase = record

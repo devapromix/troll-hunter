@@ -258,7 +258,7 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
-  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity;
+  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature;
 
 { TScene }
 
