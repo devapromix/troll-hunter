@@ -21,7 +21,7 @@ type
 const
   // Player
   AtrMax = 100;
-  RadiusMax = 15;
+  VisionMax = 15;
   DVMax = 80;
   LevelExpMax = 8;
   // Satiation
@@ -45,7 +45,6 @@ type
     FLevel: Byte;
     FMana: Word;
     FMaxMana: Word;
-    FRadius: Byte;
     FPrmLife: Byte;
     FPrmMana: Byte;
     FExp: Byte;
@@ -69,7 +68,7 @@ type
     FSkills: TSkills;
     FTalentPoint: Boolean;
     procedure GenNPCText;
-    function GetRadius: Byte;
+    function GetVision: Byte;
     function GetSatiation: Word;
   public
     constructor Create;
@@ -81,7 +80,7 @@ type
     property Level: Byte read FLevel write FLevel;
     property Mana: Word read FMana write FMana;
     property MaxMana: Word read FMaxMana write FMaxMana;
-    property Radius: Byte read GetRadius write FRadius;
+    property Vision: Byte read GetVision;
     property Exp: Byte read FExp write FExp;
     property MaxMap: Byte read FMaxMap write FMaxMap;
     property PrmLife: Byte read FPrmLife write FPrmLife;
@@ -426,7 +425,7 @@ begin
     + FAtr[taDef] + Atr[atPV].Prm, 0, PVMax));
   MaxLife := Round(Strength * 3.6) + Round(Dexterity * 2.3) + FAtr[taLife] + PrmLife;
   MaxMana := Round(Willpower * 4.2) + Round(Dexterity * 0.4) + FAtr[taMana] + PrmMana;
-  Radius := Round(Perception / 8.3);
+  AtrModify(atVis, Round(Perception / 8.3));
   //
   Self.SetDamage(EnsureRange(FAtr[taDmMn] + Strength div 3, 1, High(Byte) - 1),
     EnsureRange(FAtr[taDmMx] + Strength div 2, 2, High(Byte)));
@@ -509,10 +508,10 @@ begin
   MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
 end;
 
-function TPlayer.GetRadius: Byte;
+function TPlayer.GetVision: Byte;
 begin
-  Result := EnsureRange((FRadius - Abilities.Ability[abBlinded]) + 3, 0,
-    RadiusMax);
+  Result := EnsureRange((Atr[atVis].Value - Abilities.Ability[abBlinded]) + 3, 0,
+    VisionMax);
 end;
 
 function TPlayer.GetSatiationStr: string;

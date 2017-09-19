@@ -1213,7 +1213,7 @@ begin
       Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Radius)
+    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Vision)
     then
       Color := clFog
     else

@@ -660,7 +660,7 @@ var
 
 begin
   // Map
-  R := Player.Radius;
+  R := Player.Vision;
   if not Game.Wizard then
   begin
     Min.X := Player.X - R;
@@ -1117,9 +1117,9 @@ begin
   RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
   Terminal.Print(X, Y + 20, Format('%s %d/%d', [Terminal.Icon('F8D9') + ' ' +  _('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 22, W, Player.Radius, RadiusMax, clGray, clDarkGray);
-  Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision'), Player.Radius,
-    RadiusMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 22, W, Player.Vision, VisionMax, clGray, clDarkGray);
+  Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision'), Player.Vision,
+    VisionMax]), TK_ALIGN_CENTER);
 end;
 
 procedure TScenePlayer.RenderSkills;

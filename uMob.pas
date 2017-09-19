@@ -404,7 +404,7 @@ type
     Boss: Boolean;
     FColor: Cardinal;
     FAlive: Boolean;
-    function GetRadius: Byte;
+    function GetVision: Byte;
   public
     constructor Create();
     destructor Destroy; override;
@@ -420,7 +420,7 @@ type
     property ID: Byte read FID write FID;
     property Force: TForce read FForce write FForce;
     property Color: Cardinal read FColor;
-    property Radius: Byte read GetRadius;
+    property Vision: Byte read GetVision;
     property Alive: Boolean read FAlive write FAlive;
   end;
 
@@ -790,10 +790,10 @@ begin
     Items.Loot(Self.X, Self.Y, iCorpse);
 end;
 
-function TMob.GetRadius: Byte;
+function TMob.GetVision: Byte;
 begin
-  Result := EnsureRange(30 - (Player.Skills.Skill[skStealth]
-    .Value div 3), 5, 30);
+  Result := EnsureRange(VisionMax - (Player.Skills.Skill[skStealth]
+    .Value div 6), 3, VisionMax);
 end;
 
 procedure TMob.Process;
@@ -804,7 +804,7 @@ begin
   if (Force = fcNPC) then
     Exit;
   Dist := GetDist(Player.X, Player.Y);
-  if (Dist > GetRadius) then
+  if (Dist > GetVision) then
     Exit;
   if Abilities.IsAbility(abSleeping) then
   begin
@@ -849,7 +849,7 @@ var
 begin
   if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then
     Exit;
-  if not Game.Wizard and (Player.GetDist(X, Y) > Player.Radius) then
+  if not Game.Wizard and (Player.GetDist(X, Y) > Player.Vision) then
     Exit;
   C := MobBase[TMobEnum(ID)].Symbol;
   if (Self.Boss) then
