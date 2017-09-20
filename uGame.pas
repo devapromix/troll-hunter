@@ -80,6 +80,9 @@ type
   TSpawn = class(TEntity);
 
 type
+  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apScroll);
+
+type
   TGame = class(TObject)
   private
     FDifficulty: TDifficulty;
@@ -87,13 +90,6 @@ type
     FWon: Boolean;
     FMode: Boolean;
     FWizard: Boolean;
-    FAPCoin: Boolean;
-    FAPFood: Boolean;
-    FAPPotion: Boolean;
-    FAPScroll: Boolean;
-    FAPRune: Boolean;
-    FAPBook: Boolean;
-    FAPGem: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
     FLCorpses: Boolean;
@@ -103,6 +99,7 @@ type
     FPortalMap: TMapEnum;
     FPortalTile: TTileEnum;
     FShowEffects: Boolean;
+    FAPOption: array [TAPOptionEnum] of Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -111,13 +108,6 @@ type
     property Won: Boolean read FWon write FWon;
     property IsMode: Boolean read FMode write FMode;
     property Wizard: Boolean read FWizard write FWizard;
-    property APCoin: Boolean read FAPCoin write FAPCoin;
-    property APFood: Boolean read FAPFood write FAPFood;
-    property APPotion: Boolean read FAPPotion write FAPPotion;
-    property APScroll: Boolean read FAPScroll write FAPScroll;
-    property APRune: Boolean read FAPRune write FAPRune;
-    property APBook: Boolean read FAPBook write FAPBook;
-    property APGem: Boolean read FAPGem write FAPGem;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
     property LCorpses: Boolean read FLCorpses write FLCorpses;
@@ -137,6 +127,8 @@ type
     function GetCursor: string;
     function IfThen(AValue: Boolean; const ATrue: string;
       const AFalse: string): string;
+    function GetOption(I: TAPOptionEnum): Boolean;
+    procedure ChOption(I: TAPOptionEnum);
   end;
 
 var
@@ -152,19 +144,15 @@ uses SysUtils, Math, Dialogs, uPlayer, uMsgLog, uScenes, GNUGetText,
 constructor TGame.Create;
 var
   I: Byte;
+  J: TAPOptionEnum;
 begin
   Randomize;
   Timer := 0;
   Won := False;
   IsMode := False;
   Wizard := False;
-  APCoin := True;
-  APFood := True;
-  APPotion := True;
-  APScroll := True;
-  APRune := True;
-  APBook := True;
-  APGem := True;
+  for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
+    FAPOption[J] := True;
   CanClose := False;
   ShowEffects := False;
   ShowMap := True;
@@ -200,6 +188,11 @@ end;
 function TGame.GetCursor: string;
 begin
   Result := '_';
+end;
+
+function TGame.GetOption(I: TAPOptionEnum): Boolean;
+begin
+  Result := FAPOption[I]
 end;
 
 function TGame.GetPath(SubDir: string): string;
@@ -248,6 +241,11 @@ begin
   clAlarm := Terminal.GetColorFromIni('Alarm');
   clLife := Terminal.GetColorFromIni('LifeBar', 'Life');
   clMana := Terminal.GetColorFromIni('ManaBar', 'Mana');
+end;
+
+procedure TGame.ChOption(I: TAPOptionEnum);
+begin
+  FAPOption[I] := not FAPOption[I];
 end;
 
 procedure TGame.Start;

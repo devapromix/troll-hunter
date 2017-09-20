@@ -24,6 +24,7 @@ type
     procedure Add(AText: string; AValue: Integer); overload;
     procedure Add(AText: string; AValue: string;
       AColor: Cardinal = $FF00FF00); overload;
+    function GoldLeft(V: Word): string;  
   public
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
@@ -346,6 +347,11 @@ begin
       Terminal.ForegroundColor(clGray);
       Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
     end;
+end;
+
+function TScene.GoldLeft(V: Word): string;
+begin
+  Result := Format('[[' + Terminal.Icon('F8D5') + _('%d gold left') + ']]', [V]);
 end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
@@ -1359,7 +1365,7 @@ var
   end;
 
 begin
-  Self.Title(Format(_('%s (%s%d gold left)'), [NPCName, Terminal.Icon('F8D5'), Player.Gold]));
+  Self.Title(NPCName + ' ' + Self.GoldLeft(Player.Gold));
 
   Self.FromAToZ;
   Y := 1;
@@ -1487,8 +1493,7 @@ end;
 
 procedure TSceneSell.Render;
 begin
-  Self.Title(Format(_('Selling items') + ' ' + _('(%d gold left)'),
-    [Player.Gold]));
+  Self.Title(_('Selling items') + ' ' + Self.GoldLeft(Player.Gold));
 
   Self.FromAToZ;
   Items.RenderInventory(ptSell);
@@ -1515,8 +1520,7 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  Self.Title(Format(_('Buying at %s') + ' ' + _('(%d gold left)'),
-    [NPCName, Player.Gold]));
+  Self.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + Self.GoldLeft(Player.Gold));
 
   Self.FromAToZ;
   Shops.Render;
@@ -1543,8 +1547,7 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  Self.Title(Format(_('Repairing items') + ' ' + _('(%d gold left)'),
-    [Player.Gold]));
+  Self.Title(_('Repairing items') + ' ' + Self.GoldLeft(Player.Gold));
 
   Self.FromAToZ;
   Items.RenderInventory(ptRepair);
@@ -1756,13 +1759,13 @@ begin
 
   X := 1;
   Y := 3;
-  AddOption('C', _('Auto pickup coins'), Game.APCoin);
-  AddOption('G', _('Auto pickup gems'), Game.APGem);
-  AddOption('F', _('Auto pickup foods'), Game.APFood);
-  AddOption('P', _('Auto pickup potions'), Game.APPotion);
-  AddOption('S', _('Auto pickup scrolls'), Game.APScroll);
-  AddOption('R', _('Auto pickup runes'), Game.APRune);
-  AddOption('B', _('Auto pickup books'), Game.APBook);
+  AddOption('C', _('Auto pickup coins'), Game.GetOption(apCoin));
+  AddOption('G', _('Auto pickup gems'), Game.GetOption(apGem));
+  AddOption('F', _('Auto pickup foods'), Game.GetOption(apFood));
+  AddOption('P', _('Auto pickup potions'), Game.GetOption(apPotion));
+  AddOption('S', _('Auto pickup scrolls'), Game.GetOption(apScroll));
+  AddOption('R', _('Auto pickup runes'), Game.GetOption(apRune));
+  AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
 
   if Game.Wizard then
   begin
@@ -1783,19 +1786,19 @@ procedure TSceneOptions.Update(var Key: Word);
 begin
   case Key of
     TK_C:
-      Game.APCoin := not Game.APCoin;
+      Game.ChOption(apCoin);
     TK_G:
-      Game.APGem := not Game.APGem;
+      Game.ChOption(apGem);
     TK_F:
-      Game.APFood := not Game.APFood;
+      Game.ChOption(apFood);
     TK_P:
-      Game.APPotion := not Game.APPotion;
+      Game.ChOption(apPotion);
     TK_S:
-      Game.APScroll := not Game.APScroll;
+      Game.ChOption(apScroll);
     TK_R:
-      Game.APRune := not Game.APRune;
+      Game.ChOption(apRune);
     TK_B:
-      Game.APBook := not Game.APBook;
+      Game.ChOption(apBook);
     TK_W:
       Game.Wizard := False;
     TK_M:

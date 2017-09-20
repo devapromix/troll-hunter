@@ -1033,13 +1033,13 @@ begin
     S := ''
   else
   begin
-
     if (IT in ArmorTypeItems + JewelryTypeItems) then
       if (AItem.Defense > 0) then
         T := Format('%s%d', [Terminal.Icon('F8DC'), AItem.Defense]);
     if (IT in WeaponTypeItems + JewelryTypeItems) then
       if (AItem.MinDamage > 0) then
         T := Format('%s%d-%d', [Terminal.Icon('F8E5'), AItem.MinDamage, AItem.MaxDamage]);
+    K := '';
     if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
       K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
     S := S + AddItemInfo([K, T,
@@ -1715,7 +1715,7 @@ begin
     Color := 'lighter yellow'
   else
     Color := 'light red';
-  Result := Terminal.Colorize('$' + IntToStr(Price), Color);
+  Result := Terminal.Colorize(Terminal.Icon('F8D5') + IntToStr(Price), Color);
 end;
 
 function TItems.GetLevel(L: Byte): string;
@@ -1753,7 +1753,7 @@ var
 
   function GetRedPrice(Price: Word): string;
   begin
-    Result := Terminal.Colorize('$' + IntToStr(Price), 'Light Red');
+    Result := Terminal.Colorize(Terminal.Icon('F8D5') + IntToStr(Price), 'Light Red');
   end;
 
 begin
