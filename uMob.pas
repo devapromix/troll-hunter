@@ -859,8 +859,12 @@ begin
   if Player.Look then
     Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color)
   else
+    if Self.Force = fcEnemy then
     Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C,
-      Color, clBkMob);
+      Color, clBkMob)
+      else
+    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C,
+      Color, clBkPlayer);
 end;
 
 procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);

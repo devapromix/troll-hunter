@@ -960,7 +960,7 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0): string;
 var
   ID: Integer;
-  D, S, T, K: string;
+  S, T, K: string;
   IT: TItemType;
   F: Boolean;
   V: Word;

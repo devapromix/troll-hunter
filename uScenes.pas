@@ -9,7 +9,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification);
+    scSpellbook, scOptions, scTalents, scIdentification, scBackground);
   // scClasses, scRaces
 
 type
@@ -105,6 +105,13 @@ type
 
 type
   TSceneRest = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneBackground = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -441,6 +448,8 @@ begin
         FScene[I] := TSceneTalents.Create;
       scIdentification:
         FScene[I] := TSceneIdentification.Create;
+      scBackground:
+        FScene[I] := TSceneBackground.Create;
     end;
 end;
 
@@ -1125,7 +1134,7 @@ begin
   Terminal.Print(X, Y + 20, Format('%s %d/%d', [Terminal.Icon('F8D9') + ' ' +  _('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 22, W, Player.Vision, VisionMax, clGray, clDarkGray);
-  Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision'), Player.Vision,
+  Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision radius'), Player.Vision,
     VisionMax]), TK_ALIGN_CENTER);
 end;
 
@@ -1734,12 +1743,7 @@ begin
       begin
         if (Player.Name = '') then
           Player.Name := _('PLAYER');
-        Scenes.SetScene(scLoad);
-        Terminal.Refresh;
-        Terminal_Delay(1000);
-        Map.Gen;
-        Game.IsMode := True;
-        Scenes.SetScene(scGame);
+        Scenes.SetScene(scBackground);
       end;
     TK_A .. TK_Z:
       begin
@@ -1869,6 +1873,7 @@ procedure TSceneTalents.Render;
 var
   V, Y, I: Byte;
   T: TTalentEnum;
+  S: string;
 
   procedure Add(const S, H: string; F: Boolean = True); overload;
   var
@@ -1920,14 +1925,18 @@ begin
     Add();
 
   if Game.IsMode then
+  begin
     MsgLog.Render(2, True);
+    S := _('Close');
+  end else S := _('Back');;
+
   if Talents.IsPoint then
   begin
-    AddKey('Esc', _('Close'), True, False);
+    AddKey('Esc', S, True, False);
     AddKey('A-Z', _('Select a talent'), False, True);
   end
   else
-    AddKey('Esc', _('Close'), True, True);
+    AddKey('Esc', S, True, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
@@ -1978,6 +1987,36 @@ begin
   else
     Game.Timer := High(Byte);
   end
+end;
+
+{ TSceneBackground }
+
+procedure TSceneBackground.Render;
+begin
+  Self.Title(_('Your story...'));
+
+  Terminal.ForegroundColor(clGray);
+  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
+    Player.Background, TK_ALIGN_BOTTOM);
+
+  AddKey('Esc', _('Back'), True, True);
+end;
+
+procedure TSceneBackground.Update(var Key: Word);
+begin
+  case Key of
+    TK_ENTER, TK_KP_ENTER:
+      begin
+        Scenes.SetScene(scLoad);
+        Terminal.Refresh;
+        Terminal_Delay(1000);
+        Map.Gen;
+        Game.IsMode := True;
+        Scenes.SetScene(scGame);
+      end;
+    TK_ESCAPE:
+      Scenes.SetScene(scName);
+  end;
 end;
 
 initialization

@@ -51,6 +51,7 @@ type
     FItemIndex: Integer;
     FItemAmount: Integer;
     FSatPerTurn: Byte;
+    FBackground: string;
     FIsRest: Boolean;
     FName: string;
     FStatistics: TStatistics;
@@ -58,6 +59,7 @@ type
     procedure GenNPCText;
     function GetVision: Byte;
     function GetSatiation: Word;
+    function GenerateBackground: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -77,6 +79,7 @@ type
     property ItemAmount: Integer read FItemAmount write FItemAmount;
     property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
     property Statictics: TStatistics read FStatistics write FStatistics;
+    property Background: string read FBackground;
     property Name: string read FName write FName;
     property Skills: TSkills read FSkills write FSkills;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
@@ -126,6 +129,61 @@ uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uShop, BearLibTerminal, uAbility, uAffixes, uTalent;
 
 { TPlayer }
+
+// Generate a random background (from Kharne roguelike)
+function TPlayer.GenerateBackground: string;
+type
+  TConPartsEnum = (cpChild, cpClass, cpParent, cpCredit, cpBackground,
+    cpEyeType, cpEyeColour, cpHairStyle, cpHairColour, cpComplexion);
+var
+  I: TConPartsEnum;
+  SL: array[TConPartsEnum] of TStringList;
+begin
+  Randomize;
+  Result := '';
+  for I := Low(TConPartsEnum) to High(TConPartsEnum) do
+    SL[I] := TStringList.Create;
+  try
+    SL[cpChild].DelimitedText := _('"an only child","one of two children",' +
+				'"one of many children","the only surviving child"');
+		SL[cpClass].DelimitedText := _('"lower-class", "middle-class",' +
+				'"upper-class"');
+		SL[cpParent].DelimitedText := _('"mercenary","merchant","businessman",' +
+				'"craftsman","soldier","templar","priest"');
+		SL[cpBackground].DelimitedText := _('"contented","peaceful",' +
+				'"troubled","settled","disturbed"');
+		SL[cpCredit].DelimitedText := _('"a credit to","a disgrace to",' +
+				'"the black sheep of"');
+		SL[cpEyeType].DelimitedText := _('"dull","unusually piercing",' +
+				'"piercing","striking"');
+		SL[cpEyeColour].DelimitedText := _('"grey","violet","green","blue",' +
+				'"brown"');
+		SL[cpHairStyle].DelimitedText := _('"wavy","curly","straight","short",' +
+				'"long"');
+		SL[cpHairColour].DelimitedText := _('"auburn","blonde","black","dark",' +
+				'"ginger","grey"');
+		SL[cpComplexion].DelimitedText := _('"an average","a sallow","a fair",' +
+				'"a dark","a light"');
+
+			Result := Format(Terminal.Colorize(_('You are %s of a %s %s. You had a %s upbringing and you ' +
+				'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.'), 'Dark Orange'),
+				[SL[cpChild][Random(SL[cpChild].Count - 1)],
+				SL[cpClass][Random(SL[cpClass].Count - 1)],
+				SL[cpParent][Random(SL[cpParent].Count - 1)],
+				SL[cpBackground][Random(SL[cpBackground].Count - 1)],
+				SL[cpCredit][Random(SL[cpCredit].Count - 1)],
+				SL[cpEyeType][Random(SL[cpEyeType].Count - 1)],
+				SL[cpEyeColour][Random(SL[cpEyeColour].Count - 1)],
+				SL[cpHairStyle][Random(SL[cpHairStyle].Count - 1)],
+				SL[cpHairColour][Random(SL[cpHairColour].Count - 1)],
+				SL[cpComplexion][Random(SL[cpComplexion].Count - 1)]]);
+
+	finally
+    for I := Low(TConPartsEnum) to High(TConPartsEnum) do
+      FreeAndNil(SL[I]);
+	end;
+end;
+
 
 procedure TPlayer.AddTurn;
 var
@@ -430,6 +488,7 @@ begin
   FSkills := TSkills.Create;
   Self.Clear;
   AtrSetValue(atLev, 1);
+  FBackground := GenerateBackground;
 end;
 
 procedure TPlayer.Defeat(AKiller: string = '');
