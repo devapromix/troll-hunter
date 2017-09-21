@@ -10,7 +10,6 @@ type
 
 const
   // Player
-  AtrMax = 100;
   VisionMax = 15;
   DVMax = 80;
   LevelExpMax = 8;
@@ -118,7 +117,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes;
+  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute;
 
 { TPlayer }
 
@@ -186,9 +185,9 @@ begin
   Statictics.Inc(stTurn);  
   Calendar.Turn;
   if (Satiation > 0) then
-    AtrModify(atSat, -SatPerTurn);
+    Attributes.Modify(atSat, -SatPerTurn);
   if Abilities.IsAbility(abWeak) then
-    AtrModify(atSat, -10);
+    Attributes.Modify(atSat, -10);
   if (Satiation < StarvingMax) then
   begin
     Life := EnsureRange(Life - 1, 0, MaxLife);
@@ -245,7 +244,7 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.Atr[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
+  if (Mob.Attributes.Atr[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
   then
   begin
     CrStr := '';
@@ -274,7 +273,7 @@ begin
       CrStr := CrStr + Format(' (%dx)', [V]);
     end;
     // PV
-    Dam := Self.GetRealDamage(Dam, Mob.Atr[atPV].Value);
+    Dam := Self.GetRealDamage(Dam, Mob.Attributes.Atr[atPV].Value);
     if (Dam = 0) then
     begin
       Miss();
@@ -424,36 +423,36 @@ begin
   Self.Gold := EnsureRange(Items_Inventory_GetItemAmount(Ord(iGold)), 0,
     High(Integer));
   //
-  AtrSetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
+  Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
     Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[atStr], 1, AtrMax));
-  AtrSetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[atDex], 1, AtrMax));
-  AtrSetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[atWil], 1, AtrMax));
-  AtrSetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[atPer], 1, AtrMax));
+  Attributes.SetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[atDex], 1, AtrMax));
+  Attributes.SetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[atWil], 1, AtrMax));
+  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[atPer], 1, AtrMax));
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
-    AtrSetValue(atStr, Atr[atStr].Value div 2);
-    AtrSetValue(atDex, Atr[atDex].Value div 2);
+    Attributes.SetValue(atStr, Attributes.Atr[atStr].Value div 2);
+    Attributes.SetValue(atDex, Attributes.Atr[atDex].Value div 2);
   end;
   if Abilities.IsAbility(abAfraid) then
   begin
-    AtrSetValue(atWil, Atr[atWil].Value div 3);
+    Attributes.SetValue(atWil, Attributes.Atr[atWil].Value div 3);
   end;
   if Abilities.IsAbility(abDrunk) then
   begin
-    AtrSetValue(atPer, Atr[atPer].Value div 3);
+    Attributes.SetValue(atPer, Attributes.Atr[atPer].Value div 3);
   end;
   //
-  AtrSetValue(atDV, EnsureRange(Round(Atr[atDex].Value * (DVMax / AtrMax))
-    + Atr[atDV].Prm, 0, DVMax));
-  AtrSetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
-    + FAtr[atDef] + Atr[atPV].Prm, 0, PVMax));
-  MaxLife := Round(Atr[atStr].Value * 3.6) + Round(Atr[atDex].Value * 2.3) + FAtr[atLife] + Atr[atMaxLife].Prm;
-  MaxMana := Round(Atr[atWil].Value * 4.2) + Round(Atr[atDex].Value * 0.4) + FAtr[atMana] + Atr[atMaxMana].Prm;
-  AtrSetValue(atVis, Round(Atr[atPer].Value / 8.3));
+  Attributes.SetValue(atDV, EnsureRange(Round(Attributes.Atr[atDex].Value * (DVMax / AtrMax))
+    + Attributes.Atr[atDV].Prm, 0, DVMax));
+  Attributes.SetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
+    + FAtr[atDef] + Attributes.Atr[atPV].Prm, 0, PVMax));
+  MaxLife := Round(Attributes.Atr[atStr].Value * 3.6) + Round(Attributes.Atr[atDex].Value * 2.3) + FAtr[atLife] + Attributes.Atr[atMaxLife].Prm;
+  MaxMana := Round(Attributes.Atr[atWil].Value * 4.2) + Round(Attributes.Atr[atDex].Value * 0.4) + FAtr[atMana] + Attributes.Atr[atMaxMana].Prm;
+  Attributes.SetValue(atVis, Round(Attributes.Atr[atPer].Value / 8.3));
   //
-  Self.SetDamage(EnsureRange(FAtr[atMinDamage] + Atr[atStr].Value div 3, 1, High(Byte) - 1),
-    EnsureRange(FAtr[atMaxDamage] + Atr[atStr].Value div 2, 2, High(Byte)));
+  Self.SetDamage(EnsureRange(FAtr[atMinDamage] + Attributes.Atr[atStr].Value div 3, 1, High(Byte) - 1),
+    EnsureRange(FAtr[atMaxDamage] + Attributes.Atr[atStr].Value div 2, 2, High(Byte)));
 end;
 
 procedure TPlayer.Clear;
@@ -463,7 +462,7 @@ begin
   Look := False;
   IsRest := False;
   SatPerTurn := 2;
-  AtrSetValue(atSat, SatiatedMax);
+  Attributes.SetValue(atSat, SatiatedMax);
   // MsgLog.Clear;
   Calc;
   Fill;
@@ -480,7 +479,7 @@ begin
   Name := _('PLAYER');
   FSkills := TSkills.Create;
   Self.Clear;
-  AtrSetValue(atLev, 1);
+  Attributes.SetValue(atLev, 1);
   FBackground := GenerateBackground;
 end;
 
@@ -532,7 +531,7 @@ end;
 
 function TPlayer.GetVision: Byte;
 begin
-  Result := EnsureRange((Atr[atVis].Value - Abilities.Ability[abBlinded]) + 3, 0,
+  Result := EnsureRange((Attributes.Atr[atVis].Value - Abilities.Ability[abBlinded]) + 3, 0,
     VisionMax);
 end;
 
@@ -573,7 +572,7 @@ end;
 
 function TPlayer.GetSatiation: Word;
 begin
-  Result := EnsureRange(Atr[atSat].Value, 0, EngorgedMax);
+  Result := EnsureRange(Attributes.Atr[atSat].Value, 0, EngorgedMax);
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
@@ -639,7 +638,7 @@ begin
   AItem := Items_Inventory_GetItem(Index);
   // Need level
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Atr[atLev].Value < ItemLevel) and not Game.Wizard then
+  if (Attributes.Atr[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -719,7 +718,7 @@ begin
   // Need level
   AItem := Items_Inventory_GetItem(Index);
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Atr[atLev].Value < ItemLevel) and not Game.Wizard then
+  if (Attributes.Atr[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -1048,7 +1047,7 @@ begin
           GetSatiationStr]));
         Terminal.Print(Status.Left - 1, Status.Top + 4,
           ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [GetDamage.Min,
-          GetDamage.Max, Atr[atPV].Value, Atr[atDV].Value,
+          GetDamage.Max, Attributes.Atr[atPV].Value, Attributes.Atr[atDV].Value,
             Satiation]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);
@@ -1159,15 +1158,15 @@ end;
 
 procedure TPlayer.AddExp(Value: Byte = 1);
 begin
-  AtrModify(atExp, Value);
-  if (Atr[atExp].Value >= LevelExpMax) then
+  Attributes.Modify(atExp, Value);
+  if (Attributes.Atr[atExp].Value >= LevelExpMax) then
   begin
-    AtrModify(atExp, -LevelExpMax);
-    AtrModify(atLev, 1);
+    Attributes.Modify(atExp, -LevelExpMax);
+    Attributes.Modify(atLev, 1);
     // You leveled up! You are now level %d!
-    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Atr[atLev].Value]),
+    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Atr[atLev].Value]),
       clAlarm));
-    if (Atr[atLev].Value mod 2 = 1) then
+    if (Attributes.Atr[atLev].Value mod 2 = 1) then
     begin
       Talents.IsPoint := True;
       MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
@@ -1175,7 +1174,7 @@ begin
     end
     else
       Talents.IsPoint := False;
-    Statictics.Inc(stTurn, Atr[atLev].Value * Atr[atLev].Value);
+    Statictics.Inc(stTurn, Attributes.Atr[atLev].Value * Attributes.Atr[atLev].Value);
   end;
 end;
 
@@ -1302,13 +1301,13 @@ const
   begin
     case AEffect of
       efPrmLife:
-        AtrModify(atMaxLife, 0, Value);
+        Attributes.Modify(atMaxLife, 0, Value);
       efPrmMana:
-        AtrModify(atMaxMana, 0, Value);
+        Attributes.Modify(atMaxMana, 0, Value);
       efPrmPV:
-        AtrModify(atPV, 0, Value);
+        Attributes.Modify(atPV, 0, Value);
       efPrmDV:
-        AtrModify(atDV, 0, Value);
+        Attributes.Modify(atDV, 0, Value);
     end;
     Calc;
     Fill;
@@ -1336,7 +1335,7 @@ begin
   // Food
   if (efFood in Effects) then
   begin
-    AtrModify(atSat, Value);
+    Attributes.Modify(atSat, Value);
     MsgLog.Add(Format(_('You have sated %d hunger.'), [Value]));
   end;
   // Identification

@@ -933,7 +933,7 @@ var
 implementation
 
 uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
-  uShop, uTalent, uAffixes;
+  uShop, uTalent, uAffixes, uAttribute;
 
 { TItems }
 
@@ -1722,7 +1722,7 @@ function TItems.GetLevel(L: Byte): string;
 var
   Color: string;
 begin
-  if (L > Player.Atr[atLev].Value) then
+  if (L > Player.Attributes.Atr[atLev].Value) then
     Color := 'Light Red'
   else
     Color := 'Gray';

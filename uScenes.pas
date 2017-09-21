@@ -266,7 +266,8 @@ implementation
 uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
-  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature, uStatistic;
+  uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature, uStatistic,
+  uAttribute;
 
 { TScene }
 
@@ -1105,28 +1106,28 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 2, W, Player.Atr[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Atr[atLev].Value]),
+  RenderBar(1, 0, Y + 2, W, Player.Attributes.Atr[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Atr[atLev].Value]),
     TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 4, W, Player.Atr[atStr].Value, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Atr[atStr].Value,
+  RenderBar(1, 0, Y + 4, W, Player.Attributes.Atr[atStr].Value, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Attributes.Atr[atStr].Value,
     AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 6, W, Player.Atr[atDex].Value, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Atr[atDex].Value,
+  RenderBar(1, 0, Y + 6, W, Player.Attributes.Atr[atDex].Value, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Attributes.Atr[atDex].Value,
     AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 8, W, Player.Atr[atWil].Value, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Atr[atWil].Value,
+  RenderBar(1, 0, Y + 8, W, Player.Attributes.Atr[atWil].Value, AtrMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Attributes.Atr[atWil].Value,
     AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 10, W, Player.Atr[atPer].Value, AtrMax, clDarkRed, clDarkGray);
+  RenderBar(1, 0, Y + 10, W, Player.Attributes.Atr[atPer].Value, AtrMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
-    Player.Atr[atPer].Value, AtrMax]), TK_ALIGN_CENTER);
+    Player.Attributes.Atr[atPer].Value, AtrMax]), TK_ALIGN_CENTER);
 
-  RenderBar(1, 0, Y + 14, W, Player.Atr[atDV].Value, DVMax, clDarkGreen, clDarkGray);
+  RenderBar(1, 0, Y + 14, W, Player.Attributes.Atr[atDV].Value, DVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
-    Player.Atr[atDV].Value, DVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 16, W, Player.Atr[atPV].Value, PVMax, clDarkGreen, clDarkGray);
+    Player.Attributes.Atr[atDV].Value, DVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 16, W, Player.Attributes.Atr[atPV].Value, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
-    Player.Atr[atPV].Value, PVMax]), TK_ALIGN_CENTER);
+    Player.Attributes.Atr[atPV].Value, PVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [Terminal.Icon('F8D7') + ' ' +  _('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
@@ -1920,7 +1921,7 @@ begin
 
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
-    if (TalentBase[T].Level = Player.Atr[atLev].Value) then
+    if (TalentBase[T].Level = Player.Attributes.Atr[atLev].Value) then
       Add(Player.Talents.GetName(T), Player.Talents.GetHint(T), Player.Talents.IsPoint);
 
   V := 0;

@@ -456,7 +456,7 @@ var
 implementation
 
 uses Math, SysUtils, Dialogs, uTerminal, uPlayer, uMsgLog, gnugettext,
-  uItem, BearLibTerminal, uSkill, uStatistic;
+  uItem, BearLibTerminal, uSkill, uStatistic, uAttribute;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
@@ -534,10 +534,10 @@ begin
   Life := MaxLife;
   // DV
   V := MobBase[TMobEnum(ID)].DV + (Ord(Game.Difficulty) * 5);
-  AtrSetValue(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10));
+  Attributes.SetValue(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10));
   // PV
   V := MobBase[TMobEnum(ID)].PV + (Ord(Game.Difficulty) * 10);
-  AtrSetValue(atPV, Math.EnsureRange(Math.RandomRange(V, V * 2), 0, PVMax - 10));
+  Attributes.SetValue(atPV, Math.EnsureRange(Math.RandomRange(V, V * 2), 0, PVMax - 10));
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
@@ -547,9 +547,9 @@ begin
     Boss := True;
     IsBoss := True;
     // PV
-    AtrSetValue(atPV, Math.EnsureRange(Math.RandomRange(Atr[atPV].Value,
-      Atr[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))),
-      Atr[atPV].Value, PVMax - 10));
+    Attributes.SetValue(atPV, Math.EnsureRange(Math.RandomRange(Attributes.Atr[atPV].Value,
+      Attributes.Atr[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))),
+      Attributes.Atr[atPV].Value, PVMax - 10));
   end;
 end;
 
@@ -569,7 +569,7 @@ var
 begin
   if IsDead or Player.IsDead or (Force <> fcEnemy) then Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-  if (Player.Atr[atDV].Value < Math.RandomRange(0, 100)) then
+  if (Player.Attributes.Atr[atDV].Value < Math.RandomRange(0, 100)) then
   begin
     Game.ShowEffects := False;
 
@@ -706,7 +706,7 @@ begin
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
     // PV
-    Dam := GetRealDamage(Dam, Player.Atr[atPV].Value);
+    Dam := GetRealDamage(Dam, Player.Attributes.Atr[atPV].Value);
     if (Dam = 0) then
     begin
       Miss();

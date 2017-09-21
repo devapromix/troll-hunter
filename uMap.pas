@@ -80,7 +80,7 @@ var
 implementation
 
 uses SysUtils, Math, Types, uPlayer, uMob, uItem, GNUGetText, uTerminal, uGame,
-  uCreature;
+  uCreature, uAttribute;
 
 { TMap }
 
@@ -292,7 +292,7 @@ procedure TMap.ClearFOV;
 var
   X, Y, V: Integer;
 begin
-  V := Player.Atr[atVis].Value;
+  V := Player.Attributes.Atr[atVis].Value;
   for Y := Player.Y - V to Player.Y + V do
     for X := Player.X - V to Player.X + V do
       FFOV[Self.EnsureRange(X)][Self.EnsureRange(Y)] := False;

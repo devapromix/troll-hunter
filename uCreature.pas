@@ -2,7 +2,7 @@ unit uCreature;
 
 interface
 
-uses uEntity, uAbility;
+uses uEntity, uAbility, uAttribute;
 
 const
   PVMax = 250;
@@ -31,24 +31,12 @@ type
   end;
 
 type
-  TAtrEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana,
-    atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat, atLev, atExp);
-
-type
-  TAtr = record
-    Value: Word;
-    Prm: Word;
-  end;
-
-type
   TCreature = class(TEntity)
   private
     FLife: Word;
     FMaxLife: Word;
     FAbilities: TAbilities;
-    FAtr: array [TAtrEnum] of TAtr;
-    function GetAtr(I: TAtrEnum): TAtr;
-    procedure SetAtr(I: TAtrEnum; const Value: TAtr);
+    FAttributes: TAttributes;
   public
     constructor Create;
     destructor Destroy; override;
@@ -61,9 +49,7 @@ type
     property Life: Word read FLife write FLife;
     property MaxLife: Word read FMaxLife write FMaxLife;
     property Abilities: TAbilities read FAbilities write FAbilities;
-    property Atr[I: TAtrEnum]: TAtr read GetAtr write SetAtr;
-    procedure AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
-    procedure AtrSetValue(I: TAtrEnum; AValue: Integer);
+    property Attributes: TAttributes read FAttributes write FAttributes;
   end;
 
 implementation
@@ -72,50 +58,30 @@ uses SysUtils, GNUGetText, Math;
 
 { TCreature }
 
-procedure TCreature.AtrModify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
-begin
-  FAtr[I].Value := FAtr[I].Value + AValue;
-  FAtr[I].Prm := FAtr[I].Prm + APrm;
-end;
-
-procedure TCreature.AtrSetValue(I: TAtrEnum; AValue: Integer);
-begin
-  FAtr[I].Value := AValue;
-end;
-
 procedure TCreature.Clear;
-var
-  I: TAtrEnum;
 begin
-  for I := Low(FAtr) to High(FAtr) do
-  begin
-    FAtr[I].Value := 0;
-    FAtr[I].Prm := 0;
-  end;
   Abilities.Clear;
+  Attributes.Clear;
 end;
 
 constructor TCreature.Create;
 begin
   inherited;
-  FAbilities := TAbilities.Create
+  FAttributes := TAttributes.Create;
+  FAbilities := TAbilities.Create;
 end;
 
 destructor TCreature.Destroy;
 begin
   FreeAndNil(FAbilities);
+  FreeAndNil(FAttributes);
   inherited;
-end;
-
-function TCreature.GetAtr(I: TAtrEnum): TAtr;
-begin
-  Result := FAtr[I];
 end;
 
 function TCreature.GetDamage: TDamage;
 begin
-  Result.Min := Atr[atMinDamage].Value;
-  Result.Max := Atr[atMaxDamage].Value;
+  Result.Min := Attributes.Atr[atMinDamage].Value;
+  Result.Max := Attributes.Atr[atMaxDamage].Value;
 end;
 
 function TCreature.GetRealDamage(ADamage, APV: Word): Word;
@@ -128,18 +94,13 @@ begin
   Result := Life = 0
 end;
 
-procedure TCreature.SetAtr(I: TAtrEnum; const Value: TAtr);
-begin
-  FAtr[I] := Value;
-end;
-
 procedure TCreature.SetDamage(AMin, AMax: Word);
 begin
   if (AMin < 1) then AMin := 1;
   if (AMax < 2) then AMax := 2;
   if (AMin >= AMax) then AMin := AMax - 1;
-  AtrSetValue(atMinDamage, AMin);
-  AtrSetValue(atMaxDamage, AMax);
+  Attributes.SetValue(atMinDamage, AMin);
+  Attributes.SetValue(atMaxDamage, AMax);
 end;
 
 procedure TCreature.OnTurn;
