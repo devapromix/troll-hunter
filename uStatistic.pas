@@ -8,11 +8,6 @@ type
 type
   TStatistics = class(TObject)
   private
-    FKills: Word;
-    FSpCast: Word;
-    FFound: Word;
-    FPotDrunk: Word;
-    FScrRead: Word;
     FStat: array [TStatEnum] of Word;
   public
     constructor Create;

@@ -2,7 +2,7 @@ unit uSpellbook;
 
 interface
 
-uses uPlayer;
+uses uCreature;
 
 type
   TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation, spMagicEye);
@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses Math, SysUtils, GNUGetText, uGame, uMsgLog, uStatistic;
+uses Math, SysUtils, GNUGetText, uGame, uPlayer, uMsgLog, uStatistic;
 
 { TSpellbook }
 

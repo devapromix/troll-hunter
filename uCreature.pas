@@ -8,6 +8,16 @@ const
   PVMax = 250;
 
 type
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
+    efTownPortal, efMagicEye, efCurePoison, efCureWeak, efPrmGold,
+    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
+    efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife,
+    efPrmMana, efPrmDV, efPrmPV);
+
+type
+  TEffects = set of TEffect;
+
+type
   TMinMax = record
     Min: Word;
     Max: Word;

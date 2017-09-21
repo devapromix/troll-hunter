@@ -2,21 +2,11 @@ unit uPlayer;
 
 interface
 
-uses uCreature, uMob, uSkill, uStatistic;
+uses uCreature, uMob, uSkill, uStatistic, uTalent;
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
     stNeck, stFinger);
-
-type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-    efTownPortal, efMagicEye, efCurePoison, efCureWeak, efPrmGold,
-    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
-    efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife,
-    efPrmMana, efPrmDV, efPrmPV);
-
-type
-  TEffects = set of TEffect;
 
 const
   // Player
@@ -55,6 +45,7 @@ type
     FIsRest: Boolean;
     FName: string;
     FStatistics: TStatistics;
+    FTalents: TTalents;
     FSkills: TSkills;
     procedure GenNPCText;
     function GetVision: Byte;
@@ -82,6 +73,7 @@ type
     property Background: string read FBackground;
     property Name: string read FName write FName;
     property Skills: TSkills read FSkills write FSkills;
+    property Talents: TTalents read FTalents write FTalents;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
     procedure Move(AX, AY: ShortInt);
@@ -126,7 +118,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes, uTalent;
+  uShop, BearLibTerminal, uAbility, uAffixes;
 
 { TPlayer }
 
@@ -481,6 +473,7 @@ constructor TPlayer.Create;
 begin
   inherited;
   FStatistics := TStatistics.Create;
+  Talents := TTalents.Create;
   FWeaponSkill := skNone;
   Gold := 0;
   MaxMap := 0;
@@ -503,6 +496,7 @@ end;
 destructor TPlayer.Destroy;
 begin
   FreeAndNil(FSkills);
+  FreeAndNil(FTalents);
   FreeAndNil(FStatistics);
   inherited;
 end;

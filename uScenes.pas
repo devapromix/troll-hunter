@@ -1751,7 +1751,10 @@ begin
           Player.Name := Player.Name + Chr(Key - TK_A + 65);
       end;
     TK_ESCAPE:
-      Scenes.SetScene(scTalents);
+      begin
+        Player.Talents.Clear;
+        Scenes.SetScene(scTalents);
+      end;
   end;
 end;
 
@@ -1897,11 +1900,12 @@ var
 
   procedure Add(); overload;
   begin
-    if (Talents.Talent[V].Enum <> tlNone) then
+    if (Player.Talents.Talent[V].Enum <> tlNone) then
     begin
       Terminal.ForegroundColor(clWhite);
+      with Player.Talents do
       Terminal.Print(CX + (CX div 2), Y,
-        Talents.GetName(Talents.Talent[V].Enum));
+        GetName(Talent[V].Enum));
     end;
     Inc(Y);
     Inc(V);
@@ -1917,7 +1921,7 @@ begin
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
     if (TalentBase[T].Level = Player.Atr[atLev].Value) then
-      Add(Talents.GetName(T), Talents.GetHint(T), Talents.IsPoint);
+      Add(Player.Talents.GetName(T), Player.Talents.GetHint(T), Player.Talents.IsPoint);
 
   V := 0;
   Y := 2;
@@ -1930,7 +1934,7 @@ begin
     S := _('Close');
   end else S := _('Back');;
 
-  if Talents.IsPoint then
+  if Player.Talents.IsPoint then
   begin
     AddKey('Esc', S, True, False);
     AddKey('A-Z', _('Select a talent'), False, True);
@@ -1949,14 +1953,14 @@ begin
         Scenes.SetScene(scDifficulty);
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
-        if Talents.IsPoint then
+        if Player.Talents.IsPoint then
         begin
           case Key of
             TK_A .. TK_Z:
-              Talents.DoTalent(Key - TK_A);
+              Player.Talents.DoTalent(Key - TK_A);
             TK_ENTER, TK_KP_ENTER:
               if Game.Wizard then
-                Talents.DoTalent(Math.RandomRange(0, 5));
+                Player.Talents.DoTalent(Math.RandomRange(0, 5));
           end;
         end;
       end;

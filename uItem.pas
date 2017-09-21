@@ -1158,7 +1158,7 @@ begin
         Value := Ord(AZ) + 1;
         FItem.Amount := Math.RandomRange(Value * Value,
           Value * Value * (5 - Ord(Game.Difficulty))) + 1;
-        if Talents.IsTalent(tlMiser) then
+        if Player.Talents.IsTalent(tlMiser) then
           FItem.Amount := FItem.Amount * 2;
       end;
   end;

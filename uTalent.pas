@@ -2,8 +2,7 @@ unit uTalent;
 
 interface
 
-uses
-  uPlayer;
+uses uCreature;
 
 const
   TalentMax = 10;
@@ -70,6 +69,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    constructor Clear;
     property IsPoint: Boolean read FIsPoint write FIsPoint;
     property Talent[I: Byte]: TTalent read GetTalent write SetTalent;
     function GetName(I: TTalentEnum): string;
@@ -80,12 +80,9 @@ type
     procedure DoTalent(Key: Byte);
   end;
 
-var
-  Talents: TTalents = nil;
-
 implementation
 
-uses SysUtils, Math, GNUGetText, uSkill, uGame, uScenes, uCreature;
+uses SysUtils, Math, GNUGetText, uSkill, uGame, uScenes, uPlayer;
 
 { TTalents }
 
@@ -107,6 +104,11 @@ begin
 end;
 
 constructor TTalents.Create;
+begin
+  Self.Clear;
+end;
+
+constructor TTalents.Clear;
 var
   I: Byte;
 begin
@@ -240,13 +242,5 @@ procedure TTalents.SetTalent(I: Byte; const Value: TTalent);
 begin
   FTalent[I] := Value;
 end;
-
-initialization
-
-Talents := TTalents.Create;
-
-finalization
-
-FreeAndNil(Talents);
 
 end.
