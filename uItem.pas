@@ -1722,7 +1722,7 @@ function TItems.GetLevel(L: Byte): string;
 var
   Color: string;
 begin
-  if (L > Player.Attributes.Atr[atLev].Value) then
+  if (L > Player.Attributes.Attrib[atLev].Value) then
     Color := 'Light Red'
   else
     Color := 'Gray';

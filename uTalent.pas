@@ -130,7 +130,7 @@ var
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
-    if ((TalentBase[T].Level = Player.Attributes.Atr[atLev].Value)
+    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value)
       and (T <> tlNone)) then
     begin
       if (Key = K) then

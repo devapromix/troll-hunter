@@ -1034,6 +1034,7 @@ begin
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True);
+  AddKey('Tab', _('Drop'));
   AddKey('Space', _('Skills and attributes'));
   AddKey('A-Z', _('Use an item'), False, True);
 end;
@@ -1044,6 +1045,8 @@ begin
     TK_ESCAPE:
       // Close
       Scenes.SetScene(scGame);
+    TK_TAB: // Drop
+      Scenes.SetScene(scDrop);
     TK_SPACE: // Player
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z: // Use an item
@@ -1095,6 +1098,7 @@ begin
   Self.RenderSkills;
 
   AddKey('Esc', _('Close'), True);
+  AddKey('Tab', _('Background'));
   AddKey('Space', _('Inventory'), False, True);
 end;
 
@@ -1106,28 +1110,28 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 2, W, Player.Attributes.Atr[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Atr[atLev].Value]),
+  RenderBar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Attrib[atLev].Value]),
     TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 4, W, Player.Attributes.Atr[atStr].Value, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Attributes.Atr[atStr].Value,
-    AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 6, W, Player.Attributes.Atr[atDex].Value, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Attributes.Atr[atDex].Value,
-    AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 8, W, Player.Attributes.Atr[atWil].Value, AtrMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Attributes.Atr[atWil].Value,
-    AtrMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 10, W, Player.Attributes.Atr[atPer].Value, AtrMax, clDarkRed, clDarkGray);
+  RenderBar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Attributes.Attrib[atStr].Value,
+    AttribMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Attributes.Attrib[atDex].Value,
+    AttribMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Attributes.Attrib[atWil].Value,
+    AttribMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
-    Player.Attributes.Atr[atPer].Value, AtrMax]), TK_ALIGN_CENTER);
+    Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
 
-  RenderBar(1, 0, Y + 14, W, Player.Attributes.Atr[atDV].Value, DVMax, clDarkGreen, clDarkGray);
+  RenderBar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
-    Player.Attributes.Atr[atDV].Value, DVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 16, W, Player.Attributes.Atr[atPV].Value, PVMax, clDarkGreen, clDarkGray);
+    Player.Attributes.Attrib[atDV].Value, DVMax]), TK_ALIGN_CENTER);
+  RenderBar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
-    Player.Attributes.Atr[atPV].Value, PVMax]), TK_ALIGN_CENTER);
+    Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
   RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [Terminal.Icon('F8D7') + ' ' +  _('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
@@ -1165,6 +1169,9 @@ begin
     TK_ESCAPE:
       // Close
       Scenes.SetScene(scGame);
+    TK_TAB:
+      // Background
+      Scenes.SetScene(scBackground);
     TK_SPACE: // Inventory
       begin
         Game.Timer := High(Byte);
@@ -1921,7 +1928,7 @@ begin
 
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
-    if (TalentBase[T].Level = Player.Attributes.Atr[atLev].Value) then
+    if (TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) then
       Add(Player.Talents.GetName(T), Player.Talents.GetHint(T), Player.Talents.IsPoint);
 
   V := 0;
@@ -1997,14 +2004,19 @@ end;
 { TSceneBackground }
 
 procedure TSceneBackground.Render;
+var
+  S: string;
 begin
-  Self.Title(_('Your story...'));
+  Self.Title(_('Background'));
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
     Player.Background, TK_ALIGN_BOTTOM);
 
-  AddKey('Esc', _('Back'), True, True);
+  if Game.IsMode then
+    S := _('Close')
+  else S := _('Back');;
+  AddKey('Esc', S, True, True);
 end;
 
 procedure TSceneBackground.Update(var Key: Word);
@@ -2020,7 +2032,10 @@ begin
         Scenes.SetScene(scGame);
       end;
     TK_ESCAPE:
-      Scenes.SetScene(scName);
+      if Game.IsMode then
+        Scenes.SetScene(scPlayer)
+      else
+        Scenes.SetScene(scName);
   end;
 end;
 

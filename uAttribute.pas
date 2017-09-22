@@ -3,14 +3,14 @@ unit uAttribute;
 interface
 
 const
-  AtrMax = 100;
+  AttribMax = 100;
 
 type
-  TAtrEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana,
+  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana,
     atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat, atLev, atExp);
 
 type
-  TAtr = record
+  TAttrib = record
     Value: Word;
     Prm: Word;
   end;
@@ -18,16 +18,16 @@ type
 type
   TAttributes = class(TObject)
   private
-    FAtr: array [TAtrEnum] of TAtr;
-    function GetAtr(I: TAtrEnum): TAtr;
-    procedure SetAtr(I: TAtrEnum; const Value: TAtr);
+    FAttrib: array [TAttribEnum] of TAttrib;
+    function GetAttrib(I: TAttribEnum): TAttrib;
+    procedure SetAttrib(I: TAttribEnum; const Value: TAttrib);
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Atr[I: TAtrEnum]: TAtr read GetAtr write SetAtr;
-    procedure Modify(I: TAtrEnum; AValue: Integer; APrm: Integer = 0);
-    procedure SetValue(I: TAtrEnum; AValue: Integer);
+    property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
+    procedure Modify(I: TAttribEnum; AValue: Integer; APrm: Integer = 0);
+    procedure SetValue(I: TAttribEnum; AValue: Integer);
   end;
 
 implementation
@@ -36,12 +36,12 @@ implementation
 
 procedure TAttributes.Clear;
 var
-  I: TAtrEnum;
+  I: TAttribEnum;
 begin
-  for I := Low(FAtr) to High(FAtr) do
+  for I := Low(FAttrib) to High(FAttrib) do
   begin
-    FAtr[I].Value := 0;
-    FAtr[I].Prm := 0;
+    FAttrib[I].Value := 0;
+    FAttrib[I].Prm := 0;
   end;
 end;
 
@@ -56,25 +56,25 @@ begin
   inherited;
 end;
 
-function TAttributes.GetAtr(I: TAtrEnum): TAtr;
+function TAttributes.GetAttrib(I: TAttribEnum): TAttrib;
 begin
-  Result := FAtr[I];
+  Result := FAttrib[I];
 end;
 
-procedure TAttributes.Modify(I: TAtrEnum; AValue, APrm: Integer);
+procedure TAttributes.Modify(I: TAttribEnum; AValue, APrm: Integer);
 begin
-  FAtr[I].Value := FAtr[I].Value + AValue;
-  FAtr[I].Prm := FAtr[I].Prm + APrm;
+  FAttrib[I].Value := FAttrib[I].Value + AValue;
+  FAttrib[I].Prm := FAttrib[I].Prm + APrm;
 end;
 
-procedure TAttributes.SetAtr(I: TAtrEnum; const Value: TAtr);
+procedure TAttributes.SetAttrib(I: TAttribEnum; const Value: TAttrib);
 begin
-  FAtr[I] := Value;
+  FAttrib[I] := Value;
 end;
 
-procedure TAttributes.SetValue(I: TAtrEnum; AValue: Integer);
+procedure TAttributes.SetValue(I: TAttribEnum; AValue: Integer);
 begin
-  FAtr[I].Value := AValue;
+  FAttrib[I].Value := AValue;
 end;
 
 end.

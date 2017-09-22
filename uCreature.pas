@@ -80,8 +80,8 @@ end;
 
 function TCreature.GetDamage: TDamage;
 begin
-  Result.Min := Attributes.Atr[atMinDamage].Value;
-  Result.Max := Attributes.Atr[atMaxDamage].Value;
+  Result.Min := Attributes.Attrib[atMinDamage].Value;
+  Result.Max := Attributes.Attrib[atMaxDamage].Value;
 end;
 
 function TCreature.GetRealDamage(ADamage, APV: Word): Word;

@@ -244,7 +244,7 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.Attributes.Atr[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
+  if (Mob.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed)
   then
   begin
     CrStr := '';
@@ -273,7 +273,7 @@ begin
       CrStr := CrStr + Format(' (%dx)', [V]);
     end;
     // PV
-    Dam := Self.GetRealDamage(Dam, Mob.Attributes.Atr[atPV].Value);
+    Dam := Self.GetRealDamage(Dam, Mob.Attributes.Attrib[atPV].Value);
     if (Dam = 0) then
     begin
       Miss();
@@ -363,21 +363,21 @@ end;
 
 procedure TPlayer.Calc;
 var
-  FAtr: array [TAtrEnum] of Word;
+  FAttrib: array [TAttribEnum] of Word;
   I, FCount: Integer;
   ID: TItemEnum;
   FItem: Item;
 
-  procedure AddAtr(const AAtr: TAtrEnum; const Value: Word);
+  procedure AddAttrib(const AAttrib: TAttribEnum; const Value: Word);
   begin
-    FAtr[AAtr] := FAtr[AAtr] + Value;
+    FAttrib[AAttrib] := FAttrib[AAttrib] + Value;
   end;
 
-  procedure ClearAtr();
+  procedure ClearAttrib();
   var
-    I: TAtrEnum;
+    I: TAttribEnum;
   begin
-    for I := Low(TAtrEnum) to High(TAtrEnum) do FAtr[I] := 0;
+    for I := Low(TAttribEnum) to High(TAttribEnum) do FAttrib[I] := 0;
   end;
 
   function GetSkill(const Value: TItemType): TSkillEnum;
@@ -397,7 +397,7 @@ var
   end;
 
 begin
-  ClearAtr();
+  ClearAttrib();
   FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
   begin
@@ -405,9 +405,9 @@ begin
     if (FItem.Equipment > 0) then
     begin
       ID := TItemEnum(FItem.ItemID);
-      AddAtr(atDef, FItem.Defense);
-      AddAtr(atMinDamage, FItem.MinDamage);
-      AddAtr(atMaxDamage, FItem.MaxDamage);
+      AddAttrib(atDef, FItem.Defense);
+      AddAttrib(atMinDamage, FItem.MinDamage);
+      AddAttrib(atMaxDamage, FItem.MaxDamage);
 
 //      FLife := FLife + FItem.?;
 //      FMana := FMana + FItem.?;
@@ -424,35 +424,35 @@ begin
     High(Integer));
   //
   Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
-    Round(Skills.Skill[skToughness].Value * 0.2) + FAtr[atStr], 1, AtrMax));
-  Attributes.SetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAtr[atDex], 1, AtrMax));
-  Attributes.SetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAtr[atWil], 1, AtrMax));
-  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAtr[atPer], 1, AtrMax));
+    Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr], 1, AttribMax));
+  Attributes.SetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex], 1, AttribMax));
+  Attributes.SetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil], 1, AttribMax));
+  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer], 1, AttribMax));
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
-    Attributes.SetValue(atStr, Attributes.Atr[atStr].Value div 2);
-    Attributes.SetValue(atDex, Attributes.Atr[atDex].Value div 2);
+    Attributes.SetValue(atStr, Attributes.Attrib[atStr].Value div 2);
+    Attributes.SetValue(atDex, Attributes.Attrib[atDex].Value div 2);
   end;
   if Abilities.IsAbility(abAfraid) then
   begin
-    Attributes.SetValue(atWil, Attributes.Atr[atWil].Value div 3);
+    Attributes.SetValue(atWil, Attributes.Attrib[atWil].Value div 3);
   end;
   if Abilities.IsAbility(abDrunk) then
   begin
-    Attributes.SetValue(atPer, Attributes.Atr[atPer].Value div 3);
+    Attributes.SetValue(atPer, Attributes.Attrib[atPer].Value div 3);
   end;
   //
-  Attributes.SetValue(atDV, EnsureRange(Round(Attributes.Atr[atDex].Value * (DVMax / AtrMax))
-    + Attributes.Atr[atDV].Prm, 0, DVMax));
+  Attributes.SetValue(atDV, EnsureRange(Round(Attributes.Attrib[atDex].Value * (DVMax / AttribMax))
+    + Attributes.Attrib[atDV].Prm, 0, DVMax));
   Attributes.SetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
-    + FAtr[atDef] + Attributes.Atr[atPV].Prm, 0, PVMax));
-  MaxLife := Round(Attributes.Atr[atStr].Value * 3.6) + Round(Attributes.Atr[atDex].Value * 2.3) + FAtr[atLife] + Attributes.Atr[atMaxLife].Prm;
-  MaxMana := Round(Attributes.Atr[atWil].Value * 4.2) + Round(Attributes.Atr[atDex].Value * 0.4) + FAtr[atMana] + Attributes.Atr[atMaxMana].Prm;
-  Attributes.SetValue(atVis, Round(Attributes.Atr[atPer].Value / 8.3));
+    + FAttrib[atDef] + Attributes.Attrib[atPV].Prm, 0, PVMax));
+  MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atLife] + Attributes.Attrib[atMaxLife].Prm;
+  MaxMana := Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMana] + Attributes.Attrib[atMaxMana].Prm;
+  Attributes.SetValue(atVis, Round(Attributes.Attrib[atPer].Value / 8.3));
   //
-  Self.SetDamage(EnsureRange(FAtr[atMinDamage] + Attributes.Atr[atStr].Value div 3, 1, High(Byte) - 1),
-    EnsureRange(FAtr[atMaxDamage] + Attributes.Atr[atStr].Value div 2, 2, High(Byte)));
+  Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr].Value div 3, 1, High(Byte) - 1),
+    EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2, High(Byte)));
 end;
 
 procedure TPlayer.Clear;
@@ -531,7 +531,7 @@ end;
 
 function TPlayer.GetVision: Byte;
 begin
-  Result := EnsureRange((Attributes.Atr[atVis].Value - Abilities.Ability[abBlinded]) + 3, 0,
+  Result := EnsureRange((Attributes.Attrib[atVis].Value - Abilities.Ability[abBlinded]) + 3, 0,
     VisionMax);
 end;
 
@@ -572,7 +572,7 @@ end;
 
 function TPlayer.GetSatiation: Word;
 begin
-  Result := EnsureRange(Attributes.Atr[atSat].Value, 0, EngorgedMax);
+  Result := EnsureRange(Attributes.Attrib[atSat].Value, 0, EngorgedMax);
 end;
 
 procedure TPlayer.Move(AX, AY: ShortInt);
@@ -638,7 +638,7 @@ begin
   AItem := Items_Inventory_GetItem(Index);
   // Need level
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Attributes.Atr[atLev].Value < ItemLevel) and not Game.Wizard then
+  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -718,7 +718,7 @@ begin
   // Need level
   AItem := Items_Inventory_GetItem(Index);
   ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
-  if (Attributes.Atr[atLev].Value < ItemLevel) and not Game.Wizard then
+  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -1047,7 +1047,7 @@ begin
           GetSatiationStr]));
         Terminal.Print(Status.Left - 1, Status.Top + 4,
           ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [GetDamage.Min,
-          GetDamage.Max, Attributes.Atr[atPV].Value, Attributes.Atr[atDV].Value,
+          GetDamage.Max, Attributes.Attrib[atPV].Value, Attributes.Attrib[atDV].Value,
             Satiation]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);
@@ -1159,14 +1159,14 @@ end;
 procedure TPlayer.AddExp(Value: Byte = 1);
 begin
   Attributes.Modify(atExp, Value);
-  if (Attributes.Atr[atExp].Value >= LevelExpMax) then
+  if (Attributes.Attrib[atExp].Value >= LevelExpMax) then
   begin
     Attributes.Modify(atExp, -LevelExpMax);
     Attributes.Modify(atLev, 1);
     // You leveled up! You are now level %d!
-    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Atr[atLev].Value]),
+    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Attrib[atLev].Value]),
       clAlarm));
-    if (Attributes.Atr[atLev].Value mod 2 = 1) then
+    if (Attributes.Attrib[atLev].Value mod 2 = 1) then
     begin
       Talents.IsPoint := True;
       MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
@@ -1174,7 +1174,7 @@ begin
     end
     else
       Talents.IsPoint := False;
-    Statictics.Inc(stTurn, Attributes.Atr[atLev].Value * Attributes.Atr[atLev].Value);
+    Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib[atLev].Value);
   end;
 end;
 

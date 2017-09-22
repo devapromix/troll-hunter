@@ -183,7 +183,7 @@ begin
   for Shop := Low(TShopEnum) to High(TShopEnum) do
   begin
     Shops.Shop[Shop].Clear;
-    Max := EnsureRange(Player.Attributes.Atr[atLev].Value * 4, 4, ItemMax);
+    Max := EnsureRange(Player.Attributes.Attrib[atLev].Value * 4, 4, ItemMax);
     for I := 0 to Max - 1 do
     begin
       repeat

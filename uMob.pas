@@ -464,7 +464,7 @@ function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
-  Result := (Map.GetTileEnum(X, Y, Map.Current) in FreeTiles)
+  Result := (Map.GetTileEnum(X, Y, Map.Current) in FreeTiles);
 end;
 
 { TMob }
@@ -547,9 +547,9 @@ begin
     Boss := True;
     IsBoss := True;
     // PV
-    Attributes.SetValue(atPV, Math.EnsureRange(Math.RandomRange(Attributes.Atr[atPV].Value,
-      Attributes.Atr[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))),
-      Attributes.Atr[atPV].Value, PVMax - 10));
+    Attributes.SetValue(atPV, Math.EnsureRange(Math.RandomRange(Attributes.Attrib[atPV].Value,
+      Attributes.Attrib[atPV].Value + (MobBase[TMobEnum(ID)].Level * Ord(Game.Difficulty))),
+      Attributes.Attrib[atPV].Value, PVMax - 10));
   end;
 end;
 
@@ -569,7 +569,7 @@ var
 begin
   if IsDead or Player.IsDead or (Force <> fcEnemy) then Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-  if (Player.Attributes.Atr[atDV].Value < Math.RandomRange(0, 100)) then
+  if (Player.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) then
   begin
     Game.ShowEffects := False;
 
@@ -706,7 +706,7 @@ begin
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
     // PV
-    Dam := GetRealDamage(Dam, Player.Attributes.Atr[atPV].Value);
+    Dam := GetRealDamage(Dam, Player.Attributes.Attrib[atPV].Value);
     if (Dam = 0) then
     begin
       Miss();
