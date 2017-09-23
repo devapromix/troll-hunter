@@ -117,7 +117,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute;
+  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook;
 
 { TPlayer }
 
@@ -458,12 +458,19 @@ end;
 procedure TPlayer.Clear;
 begin
   inherited Clear;
+  Skills.Clear;
+  Spellbook.Clear;
   Killer := '';
   Look := False;
   IsRest := False;
   SatPerTurn := 2;
   Attributes.SetValue(atSat, SatiatedMax);
-  // MsgLog.Clear;
+  Gold := 0;
+  MaxMap := 0;
+  Name := _('PLAYER');
+  FWeaponSkill := skNone;
+  Attributes.SetValue(atLev, 1);
+  FBackground := GenerateBackground;
   Calc;
   Fill;
 end;
@@ -473,14 +480,8 @@ begin
   inherited;
   FStatistics := TStatistics.Create;
   Talents := TTalents.Create;
-  FWeaponSkill := skNone;
-  Gold := 0;
-  MaxMap := 0;
-  Name := _('PLAYER');
-  FSkills := TSkills.Create;
+  Skills := TSkills.Create;
   Self.Clear;
-  Attributes.SetValue(atLev, 1);
-  FBackground := GenerateBackground;
 end;
 
 procedure TPlayer.Defeat(AKiller: string = '');

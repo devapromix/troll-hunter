@@ -33,7 +33,9 @@ type
     class function KeyStr(AKey: string; AStr: string = ''): string;
     class procedure Title(ATitleStr: string; AY: Byte = 1);
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
-      IsRender: Boolean = False);
+      IsRender: Boolean = False); overload;
+    procedure AddKey(AKey, AStr, AAdvStr: string; IsClear: Boolean = False;
+      IsRender: Boolean = False); overload;
     procedure FromAToZ;
     procedure AddKeyLabel(AKey: string; S: string;
       AColor: Cardinal = $FFFFFFFF);
@@ -305,6 +307,17 @@ begin
     Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height - 2,
       Trim(Self.KStr), TK_ALIGN_CENTER);
   end;
+end;
+
+procedure TScene.AddKey(AKey, AStr, AAdvStr: string; IsClear: Boolean = False;
+  IsRender: Boolean = False);
+var
+  S: string;
+begin
+  if Game.IsMode then
+    S := AStr
+  else S := AAdvStr;
+  AddKey(AKey, S, IsClear, IsRender);
 end;
 
 class function TScene.KeyStr(AKey: string; AStr: string = ''): string;
@@ -918,12 +931,12 @@ begin
       Scenes.SetScene(scOptions);
     // TK_B:
     // Scenes.SetScene(scSpellbook);
-    TK_Y:
-      if Game.Wizard then Items.DelCorpses;
+    //TK_Y:
+    //  if Game.Wizard then Items.DelCorpses;
     // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
     // if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
-      Scenes.SetScene(scTalents);
+      Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
       Scenes.SetScene(scHelp);
   end;
@@ -1171,7 +1184,7 @@ begin
       Scenes.SetScene(scGame);
     TK_TAB:
       // Background
-      Scenes.SetScene(scBackground);
+      Scenes.SetScene(scBackground, scPlayer);
     TK_SPACE: // Inventory
       begin
         Game.Timer := High(Byte);
@@ -1684,7 +1697,7 @@ begin
               Exit;
         end;
         Game.Start();
-        Scenes.SetScene(scTalents);
+        Scenes.SetScene(scTalents, scDifficulty);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1751,7 +1764,7 @@ begin
       begin
         if (Player.Name = '') then
           Player.Name := _('PLAYER');
-        Scenes.SetScene(scBackground);
+        Scenes.SetScene(scBackground, scName);
       end;
     TK_A .. TK_Z:
       begin
@@ -1937,28 +1950,22 @@ begin
     Add();
 
   if Game.IsMode then
-  begin
     MsgLog.Render(2, True);
-    S := _('Close');
-  end else S := _('Back');;
 
   if Player.Talents.IsPoint then
   begin
-    AddKey('Esc', S, True, False);
+    AddKey('Esc', _('Close'), _('Back'), True, False);
     AddKey('A-Z', _('Select a talent'), False, True);
   end
   else
-    AddKey('Esc', S, True, True);
+    AddKey('Esc', _('Close'), _('Back'), True, True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
 begin
   case Key of
     TK_ESCAPE:
-      if Game.IsMode then
-        Scenes.SetScene(scGame)
-      else
-        Scenes.SetScene(scDifficulty);
+      Scenes.GoBack;
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
         if Player.Talents.IsPoint then
@@ -2013,10 +2020,7 @@ begin
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
     Player.Background, TK_ALIGN_BOTTOM);
 
-  if Game.IsMode then
-    S := _('Close')
-  else S := _('Back');;
-  AddKey('Esc', S, True, True);
+  AddKey('Esc', _('Close'), _('Back'), True, True);
 end;
 
 procedure TSceneBackground.Update(var Key: Word);
@@ -2032,10 +2036,7 @@ begin
         Scenes.SetScene(scGame);
       end;
     TK_ESCAPE:
-      if Game.IsMode then
-        Scenes.SetScene(scPlayer)
-      else
-        Scenes.SetScene(scName);
+      Scenes.GoBack();
   end;
 end;
 
