@@ -126,7 +126,7 @@ implementation
 
 uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook;
+  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI;
 
 { TPlayer }
 
@@ -497,7 +497,7 @@ procedure TPlayer.Defeat(AKiller: string = '');
 begin
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
-  MsgLog.Add(Format(_('Press %s to try again...'), [TScene.KeyStr('SPACE')]));
+  MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -1045,9 +1045,9 @@ begin
     ' ' + Terminal.Icon('F8D9', 'Mana') + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]
     ), 'Mana'));
   // Bars
-  Scenes.RenderBar(Status.Left, 15, Status.Top + 1, Status.Width - 16,
+  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16,
     Life, MaxLife, clLife, clDarkGray);
-  Scenes.RenderBar(Status.Left, 15, Status.Top + 2, Status.Width - 16,
+  UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16,
     Mana, MaxMana, clMana, clDarkGray);
   case Game.ShowEffects of
     False:

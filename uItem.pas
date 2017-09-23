@@ -933,7 +933,7 @@ var
 implementation
 
 uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
-  uShop, uTalent, uAffixes, uAttribute;
+  uShop, uTalent, uAffixes, uAttribute, uUI;
 
 { TItems }
 
@@ -1759,7 +1759,7 @@ var
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
-  Terminal.Print(X - 4, Y + I, TScene.KeyStr(Chr(I + Ord('A'))));
+  Terminal.Print(X - 4, Y + I, UI.KeyToStr(Chr(I + Ord('A'))));
 
   if IsRender then
   begin

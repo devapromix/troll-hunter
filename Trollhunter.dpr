@@ -26,7 +26,8 @@ uses
   uStatistic in 'uStatistic.pas',
   uAffixes in 'uAffixes.pas',
   uCreature in 'uCreature.pas',
-  uAttribute in 'uAttribute.pas';
+  uAttribute in 'uAttribute.pas',
+  uUI in 'uUI.pas';
 
 var
   Key: Word = 0;

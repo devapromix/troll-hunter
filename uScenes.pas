@@ -24,21 +24,14 @@ type
     procedure Add(AText: string; AValue: Integer); overload;
     procedure Add(AText: string; AValue: string;
       AColor: Cardinal = $FF00FF00); overload;
-    function GoldLeft(V: Word): string;  
   public
+    constructor Create;
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
-    procedure RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
-      AColor, DarkColor: Cardinal);
-    class function KeyStr(AKey: string; AStr: string = ''): string;
-    class procedure Title(ATitleStr: string; AY: Byte = 1);
     procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
       IsRender: Boolean = False); overload;
     procedure AddKey(AKey, AStr, AAdvStr: string; IsClear: Boolean = False;
       IsRender: Boolean = False); overload;
-    procedure FromAToZ;
-    procedure AddKeyLabel(AKey: string; S: string;
-      AColor: Cardinal = $FFFFFFFF);
   end;
 
 type
@@ -269,7 +262,7 @@ uses
   SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature, uStatistic,
-  uAttribute;
+  uAttribute, uUI;
 
 { TScene }
 
@@ -287,7 +280,7 @@ procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
   AColor: Cardinal);
 begin
   Terminal.ForegroundColor(AColor);
-  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, KeyStr(AHotKey) + ' ' + AText +
+  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, UI.KeyToStr(AHotKey) + ' ' + AText +
     ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clLightestBlue);
   Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y,
@@ -295,17 +288,21 @@ begin
   Self.Add();
 end;
 
+constructor TScene.Create;
+begin
+  KStr := '';
+end;
+
 procedure TScene.AddKey(AKey, AStr: string; IsClear: Boolean = False;
   IsRender: Boolean = False);
 begin
-  if IsClear then
-    KStr := '';
-  KStr := KStr + KeyStr(AKey, AStr) + ' ';
-  if IsRender and (KStr <> '') then
+  KStr := KStr + UI.KeyToStr(AKey, AStr) + ' ';
+  if (IsRender and (KStr <> '')) then
   begin
     Terminal.ForegroundColor(clDefault);
     Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height - 2,
       Trim(Self.KStr), TK_ALIGN_CENTER);
+    KStr := '';
   end;
 end;
 
@@ -320,56 +317,6 @@ begin
   AddKey(AKey, S, IsClear, IsRender);
 end;
 
-class function TScene.KeyStr(AKey: string; AStr: string = ''): string;
-begin
-  Result := Trim(Terminal.Colorize(Format('[[%s]]', [UpperCase(AKey)]),
-    Terminal.GetColorFromIni('Key')) + ' ' + AStr);
-end;
-
-procedure TScene.RenderBar(X, LM, Y, Wd: Byte; Cur, Max: Word;
-  AColor, DarkColor: Cardinal);
-var
-  I, L, W: Byte;
-begin
-  L := Wd;
-  W := Round(Cur / Max * L);
-  for I := 0 to L do
-  begin
-    Terminal.BackgroundColor(DarkColor);
-    if (I <= W) and (Cur > 0) then
-      Terminal.BackgroundColor(AColor);
-    Terminal.Print(X + I + LM, Y, ' ');
-    Terminal.BackgroundColor(0); // Clear background
-  end;
-end;
-
-class procedure TScene.Title(ATitleStr: string; AY: Byte);
-var
-  X: Byte;
-begin
-  X := Terminal.Window.Width div 2;
-  Terminal.ForegroundColor(Terminal.GetColorFromIni('Title', 'Yellow'));
-  Terminal.Print(X, AY, Format(FT, [ATitleStr]), TK_ALIGN_CENTER);
-  Terminal.ForegroundColor(clDefault);
-end;
-
-procedure TScene.AddKeyLabel(AKey, S: string; AColor: Cardinal);
-begin
-
-end;
-
-procedure TScene.FromAToZ;
-var
-  I: Byte;
-begin
-  if Game.Wizard then
-    for I := 0 to ItemMax - 1 do
-    begin
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(1, I + 2, '[[' + Chr(I + Ord('A')) + ']]', TK_ALIGN_LEFT);
-    end;
-end;
-
 function TScene.GoldLeft(V: Word): string;
 begin
   Result := Format('[[' + Terminal.Icon('F8D5') + _('%d gold left') + ']]', [V]);
@@ -377,7 +324,7 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
-  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, KeyStr(AHotKey, AText),
+  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, UI.KeyToStr(AHotKey, AText),
     TK_ALIGN_LEFT);
   Self.Add();
 end;
@@ -537,7 +484,7 @@ begin
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
   Terminal.Print(CX, CY + 3, Format(_('Press %s to start...'),
-    [KeyStr('ENTER')]), TK_ALIGN_CENTER);
+    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -565,7 +512,7 @@ end;
 
 procedure TSceneHelp.Render;
 begin
-  Self.Title(_('Help'));
+  UI.Title(_('Help'));
 
   Terminal.Print(CX, 3,
     _('The land Elvion is surrounded by mountains. In the center of this land'),
@@ -586,11 +533,11 @@ begin
   Terminal.Print(CX, 9, _('confrontation with boss. Good luck!'),
     TK_ALIGN_CENTER);
 
-  Self.Title(_('Keybindings'), 11);
+  UI.Title(_('Keybindings'), 11);
 
   Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
-    [_('Move'), KeyStr('arrow keys'), KeyStr('numpad'), KeyStr('QWEADZXC'),
-    _('Wait'), KeyStr('5'), KeyStr('S'), _('Effects'), KeyStr('TAB')]),
+    [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'), UI.KeyToStr('QWEADZXC'),
+    _('Wait'), UI.KeyToStr('5'), UI.KeyToStr('S'), _('Effects'), UI.KeyToStr('TAB')]),
     TK_ALIGN_CENTER);
 
   X := 1;
@@ -611,10 +558,10 @@ begin
   AddLine('K', _('Calendar'));
   AddLine('?', _('Show this help screen'));
 
-  Self.Title(_('Character dump'), Terminal.Window.Height - 6);
+  UI.Title(_('Character dump'), Terminal.Window.Height - 6);
   Terminal.Print(CX, Terminal.Window.Height - 4,
     Format(_('The game saves a character dump to %s file.'),
-    [KeyStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
+    [UI.KeyToStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
 
   Self.AddKey('Esc', _('Close'), True, True);
 end;
@@ -961,7 +908,7 @@ procedure TSceneQuit.Render;
 begin
   Logo.Render;
   Terminal.Print(CX, CY + 3,
-    Format(_('Do you wish to quit? %s/%s'), [KeyStr('Y'), KeyStr('N')]),
+    Format(_('Do you wish to quit? %s/%s'), [UI.KeyToStr('Y'), UI.KeyToStr('N')]),
     TK_ALIGN_CENTER);
 end;
 
@@ -985,15 +932,15 @@ begin
   Logo.Render;
   Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
   if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'), [KeyStr('ENTER')]
+    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'), [UI.KeyToStr('ENTER')]
       ), TK_ALIGN_CENTER)
   else
     Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
-      [Terminal.Colorize(Player.Killer, clAlarm), KeyStr('ENTER')]),
+      [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
       TK_ALIGN_CENTER);
   if Game.Wizard then
     Terminal.Print(CX, CY + 5, Format(_('Press %s to continue...'),
-      [KeyStr('SPACE')]), TK_ALIGN_CENTER);
+      [UI.KeyToStr('SPACE')]), TK_ALIGN_CENTER);
 
 end;
 
@@ -1022,7 +969,7 @@ begin
   Terminal.Print(CX, CY + 1, UpperCase(_('Congratulations!!!')),
     TK_ALIGN_CENTER);
   Terminal.Print(CX, CY + 3, Format(_('You have won. Press %s'),
-    [KeyStr('ENTER')]), TK_ALIGN_CENTER);
+    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneWin.Update(var Key: Word);
@@ -1040,9 +987,9 @@ end;
 
 procedure TSceneInv.Render;
 begin
-  Self.Title(_('Inventory'));
+  UI.Title(_('Inventory'));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
@@ -1073,9 +1020,9 @@ end;
 
 procedure TSceneDrop.Render;
 begin
-  Self.Title(_('Choose the item you wish to drop'));
+  UI.Title(_('Choose the item you wish to drop'));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
@@ -1105,7 +1052,7 @@ end;
 
 procedure TScenePlayer.Render;
 begin
-  Self.Title(Player.Name);
+  UI.Title(Player.Name);
 
   Self.RenderPlayer;
   Self.RenderSkills;
@@ -1123,35 +1070,35 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
+  UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Attrib[atLev].Value]),
     TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax, clDarkRed, clDarkGray);
+  UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Attributes.Attrib[atStr].Value,
     AttribMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax, clDarkRed, clDarkGray);
+  UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Attributes.Attrib[atDex].Value,
     AttribMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax, clDarkRed, clDarkGray);
+  UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Attributes.Attrib[atWil].Value,
     AttribMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax, clDarkRed, clDarkGray);
+  UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax, clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
     Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
 
-  RenderBar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax, clDarkGreen, clDarkGray);
+  UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
     Player.Attributes.Attrib[atDV].Value, DVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax, clDarkGreen, clDarkGray);
+  UI.Bar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax, clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d', [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
     Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
+  UI.Bar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d', [Terminal.Icon('F8D7') + ' ' +  _('Life'), Player.Life,
     Player.MaxLife]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
+  UI.Bar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
   Terminal.Print(X, Y + 20, Format('%s %d/%d', [Terminal.Icon('F8D9') + ' ' +  _('Mana'), Player.Mana,
     Player.MaxMana]), TK_ALIGN_CENTER);
-  RenderBar(1, 0, Y + 22, W, Player.Vision, VisionMax, clGray, clDarkGray);
+  UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, clGray, clDarkGray);
   Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision radius'), Player.Vision,
     VisionMax]), TK_ALIGN_CENTER);
 end;
@@ -1169,7 +1116,7 @@ begin
   for I := Low(TSkillEnum) to High(TSkillEnum) do
   begin
     D := (Ord(I) * 2) + Y + 2;
-    RenderBar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
+    UI.Bar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
       clDarkGray);
     Terminal.Print(B, D, Format('%s %d/%d', [Player.Skills.GetName(I),
       Player.Skills.Skill[I].Value, SkillMax]), TK_ALIGN_CENTER);
@@ -1199,7 +1146,7 @@ procedure TSceneAmount.Render;
 var
   FItem: Item;
 begin
-  Self.Title(_('Enter amount'));
+  UI.Title(_('Enter amount'));
 
   if Player.ItemIsDrop then
     FItem := Items_Inventory_GetItem(Player.ItemIndex)
@@ -1252,9 +1199,9 @@ var
   FItem: Item;
 begin
   MapID := Ord(Map.Current);
-  Self.Title(_('Pick up an item'));
+  UI.Title(_('Pick up an item'));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   FCount := EnsureRange(Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y),
     0, ItemMax);
   for I := 0 to FCount - 1 do
@@ -1299,7 +1246,7 @@ end;
 
 procedure TSceneMessages.Render;
 begin
-  Self.Title(_('Last messages'));
+  UI.Title(_('Last messages'));
   MsgLog.RenderAllMessages;
   AddKey('Esc', _('Close'), True, True);
 end;
@@ -1317,7 +1264,7 @@ end;
 
 procedure TSceneStatistics.Render;
 begin
-  Self.Title(_('Statistics'));
+  UI.Title(_('Statistics'));
   X := 1;
   Y := 3;
 
@@ -1347,7 +1294,7 @@ begin
   // Version
   X := 1;
   Y := Y + 3;
-  Self.Title(_('Version'), Y - 1);
+  UI.Title(_('Version'), Y - 1);
   Y := Y + 1;
   Add(_('Game version'), Game.GetVersion);
   Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
@@ -1358,7 +1305,7 @@ begin
   begin
     X := 1;
     Y := Y + 3;
-    Self.Title(_('Wizard Mode'), Y - 1);
+    UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
@@ -1391,13 +1338,13 @@ var
   procedure Add(S: string);
   begin
     Inc(Y);
-    Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + S, TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + S, TK_ALIGN_LEFT);
   end;
 
 begin
-  Self.Title(NPCName + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(NPCName + ' ' + Self.GoldLeft(Player.Gold));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Y := 1;
 
   // Heal
@@ -1523,9 +1470,9 @@ end;
 
 procedure TSceneSell.Render;
 begin
-  Self.Title(_('Selling items') + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(_('Selling items') + ' ' + Self.GoldLeft(Player.Gold));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Items.RenderInventory(ptSell);
   MsgLog.Render(2, True);
 
@@ -1550,9 +1497,9 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  Self.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + Self.GoldLeft(Player.Gold));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Shops.Render;
   MsgLog.Render(2, True);
 
@@ -1577,9 +1524,9 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  Self.Title(_('Repairing items') + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(_('Repairing items') + ' ' + Self.GoldLeft(Player.Gold));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Items.RenderInventory(ptRepair);
   MsgLog.Render(2, True);
 
@@ -1635,7 +1582,7 @@ var
   end;
 
 begin
-  Self.Title(_('Calendar'));
+  UI.Title(_('Calendar'));
 
   Y := 12;
   Player.RenderWeather(CX, Y - 6, CX);
@@ -1662,15 +1609,15 @@ end;
 
 procedure TSceneDifficulty.Render;
 begin
-  Self.Title(_('Difficulty'));
+  UI.Title(_('Difficulty'));
 
-  Terminal.Print(CX - 5, CY - 3, Format('%s %s', [KeyStr('A'), _('Easy')]),
+  Terminal.Print(CX - 5, CY - 3, Format('%s %s', [UI.KeyToStr('A'), _('Easy')]),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [KeyStr('B'), _('Normal')]),
+  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), _('Normal')]),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 1, Format('%s %s', [KeyStr('C'), _('Hard')]),
+  Terminal.Print(CX - 5, CY + 1, Format('%s %s', [UI.KeyToStr('C'), _('Hard')]),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 3, Format('%s %s', [KeyStr('D'), _('Hell')]),
+  Terminal.Print(CX - 5, CY + 3, Format('%s %s', [UI.KeyToStr('D'), _('Hell')]),
     TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Back'), True, True);
@@ -1710,19 +1657,19 @@ procedure TSceneRest.Render;
 var
   Y: Byte;
 begin
-  Self.Title(_('Rest'));
+  UI.Title(_('Rest'));
 
-  Self.FromAToZ;
+  UI.FromAToZ;
   Y := 1;
 
   Inc(Y);
-  Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, KeyStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'),
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'),
     TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
@@ -1744,7 +1691,7 @@ end;
 
 procedure TSceneName.Render;
 begin
-  Self.Title(_('Name'));
+  UI.Title(_('Name'));
 
   Terminal.Print(CX - 10, CY, _('Name') + ': ' + Player.Name + Game.GetCursor,
     TK_ALIGN_LEFT);
@@ -1783,7 +1730,7 @@ end;
 
 procedure TSceneOptions.Render;
 begin
-  Self.Title(_('Options'));
+  UI.Title(_('Options'));
 
   X := 1;
   Y := 3;
@@ -1799,7 +1746,7 @@ begin
   begin
     X := 1;
     Y := Y + 3;
-    Self.Title(_('Wizard Mode'), Y - 1);
+    UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
     AddOption('W', _('Wizard Mode'), Game.Wizard, clRed);
     AddOption('M', _('Show map'), Game.ShowMap);
@@ -1858,15 +1805,15 @@ var
   end;
 
 begin
-  Self.Title(_('Spellbook'));
+  UI.Title(_('Spellbook'));
 
   V := 0;
   Y := 2;
-  Self.FromAToZ;
+  UI.FromAToZ;
   for I := Low(TSpellEnum) to High(TSpellEnum) do
     if IsSpell(I) then
     begin
-      Terminal.Print(1, Y, TScene.KeyStr(Chr(V + Ord('A'))));
+      Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
       Terminal.ForegroundColor(clGray);
       Terminal.Print(5, Y, Format('(%s) %s %s',
         [Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
@@ -1897,7 +1844,6 @@ procedure TSceneTalents.Render;
 var
   V, Y, I: Byte;
   T: TTalentEnum;
-  S: string;
 
   procedure Add(const S, H: string; F: Boolean = True); overload;
   var
@@ -1905,7 +1851,7 @@ var
   begin
     C := Chr(V + Ord('A'));
     if F then
-      Terminal.Print(1, Y, TScene.KeyStr(C))
+      Terminal.Print(1, Y, UI.KeyToStr(C))
     else
     begin
       Terminal.ForegroundColor(clWhite);
@@ -1933,11 +1879,11 @@ var
   end;
 
 begin
-  Self.Title(_('Talents'));
+  UI.Title(_('Talents'));
 
   V := 0;
   Y := 2;
-  Self.FromAToZ;
+  UI.FromAToZ;
 
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
@@ -1986,9 +1932,9 @@ end;
 
 procedure TSceneIdentification.Render;
 begin
-  Self.Title(_('Identification'));
+  UI.Title(_('Identification'));
 
-  Self.FromAToZ();
+  UI.FromAToZ();
   Items.RenderInventory();
   MsgLog.Render(2, True);
 
@@ -2011,10 +1957,8 @@ end;
 { TSceneBackground }
 
 procedure TSceneBackground.Render;
-var
-  S: string;
 begin
-  Self.Title(_('Background'));
+  UI.Title(_('Background'));
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
