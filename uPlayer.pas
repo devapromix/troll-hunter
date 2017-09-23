@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses uCreature, uMob, uSkill, uStatistic, uTalent;
+uses Types, uCreature, uMob, uSkill, uStatistic, uTalent;
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
@@ -23,6 +23,15 @@ const
   // Talents
   TalentPrm = 3;
   AttribPrm = 7;
+
+type
+  TDirectionEnum = (drEast, drWest, drSouth, drNorth, drSouthEast, drSouthWest,
+    drNorthEast, drNorthWest, drOrigin);
+
+const
+  Direction: array [TDirectionEnum] of TPoint = ((X: 1; Y: 0), (X: -1; Y: 0),
+    (X: 0; Y: 1), (X: 0; Y: -1), (X: 1; Y: 1), (X: -1; Y: 1), (X: 1; Y: -1),
+    (X: -1; Y: -1), (X: 0; Y: 0));
 
 type
   TPlayer = class(TCreature)
@@ -75,7 +84,7 @@ type
     property Talents: TTalents read FTalents write FTalents;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
     procedure Render(AX, AY: Byte);
-    procedure Move(AX, AY: ShortInt);
+    procedure Move(Dir: TDirectionEnum);
     procedure RenderInfo;
     procedure Calc;
     procedure Fill;
@@ -576,27 +585,27 @@ begin
   Result := EnsureRange(Attributes.Attrib[atSat].Value, 0, EngorgedMax);
 end;
 
-procedure TPlayer.Move(AX, AY: ShortInt);
+procedure TPlayer.Move(Dir: TDirectionEnum);
 var
   FX, FY: Byte;
 begin
   if Look then
   begin
-    if Map.InMap(LX + AX, LY + AY) and
-      ((Map.InView(LX + AX, LY + AY) and not Map.GetFog(LX + AX, LY + AY)) or
+    if Map.InMap(LX + Direction[Dir].X, LY + Direction[Dir].Y) and
+      ((Map.InView(LX + Direction[Dir].X, LY + Direction[Dir].Y) and not Map.GetFog(LX + Direction[Dir].X, LY + Direction[Dir].Y)) or
       Game.Wizard) then
     begin
-      LX := Map.EnsureRange(Math.EnsureRange(LX + AX, X - (View.Width div 2),
+      LX := Map.EnsureRange(Math.EnsureRange(LX + Direction[Dir].X, X - (View.Width div 2),
         X + (View.Width div 2 - 1)));
-      LY := Map.EnsureRange(Math.EnsureRange(LY + AY, Y - (View.Height div 2),
+      LY := Map.EnsureRange(Math.EnsureRange(LY + Direction[Dir].Y, Y - (View.Height div 2),
         Y + (View.Height div 2 - 1)));
     end;
   end
   else
   begin
     if IsDead then Exit;
-    FX := Map.EnsureRange(X + AX);
-    FY := Map.EnsureRange(Y + AY);
+    FX := Map.EnsureRange(X + Direction[Dir].X);
+    FY := Map.EnsureRange(Y + Direction[Dir].Y);
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
     then
       Exit;
@@ -616,7 +625,7 @@ begin
     begin
       X := FX;
       Y := FY;
-      if ((AX <> 0) or (AY <> 0)) then
+      if ((Direction[Dir].X <> 0) or (Direction[Dir].Y <> 0)) then
       begin
         SatPerTurn := 2;
         AutoPickup;
@@ -1191,7 +1200,7 @@ begin
     MaxMap := MaxMap + 1;
   end;
   SatPerTurn := 1;
-  Move(0, 0);
+  Move(drOrigin);
 end;
 
 procedure TPlayer.Rest(ATurns: Word);

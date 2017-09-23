@@ -783,21 +783,21 @@ begin
   end;
   case Key of
     TK_LEFT, TK_KP_4, TK_A:
-      Player.Move(-1, 0);
+      Player.Move(drWest);
     TK_RIGHT, TK_KP_6, TK_D:
-      Player.Move(1, 0);
+      Player.Move(drEast);
     TK_UP, TK_KP_8, TK_W:
-      Player.Move(0, -1);
+      Player.Move(drNorth);
     TK_DOWN, TK_KP_2, TK_X:
-      Player.Move(0, 1);
+      Player.Move(drSouth);
     TK_KP_7, TK_Q:
-      Player.Move(-1, -1);
+      Player.Move(drNorthWest);
     TK_KP_9, TK_E:
-      Player.Move(1, -1);
+      Player.Move(drNorthEast);
     TK_KP_1, TK_Z:
-      Player.Move(-1, 1);
+      Player.Move(drSouthWest);
     TK_KP_3, TK_C:
-      Player.Move(1, 1);
+      Player.Move(drSouthEast);
     TK_KP_5, TK_S:
       Player.Wait;
     TK_L: // Look
