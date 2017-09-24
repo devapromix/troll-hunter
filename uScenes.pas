@@ -591,7 +591,7 @@ var
     if (C > 0) then
     begin
       FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), 0, X, Y);
-      S := S + Items.GetItemInfo(FItem, (C > 1), C) + ' ';
+      S := S + Items.GetItemInfo(FItem, (C > 1), C, True) + ' ';
     end;
     if IsMob then
     begin

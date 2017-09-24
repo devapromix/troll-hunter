@@ -901,7 +901,7 @@ type
       AID: Integer = -1; IsRare: Boolean = False);
     function GetItemEnum(AItemID: Integer): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
-      ACount: Byte = 0): string;
+      ACount: Byte = 0; IsShort: Boolean = False): string;
     function RenderInvItem(X, Y, I: Integer; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
@@ -957,7 +957,7 @@ begin
 end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
-  ACount: Byte = 0): string;
+  ACount: Byte = 0; IsShort: Boolean = False): string;
 var
   ID: Integer;
   S, T, K: string;
@@ -1019,6 +1019,7 @@ begin
         F := True;
       end;
     end;
+    if IsShort then F := False;
     if F then
       S := '[[' + Trim(S) + ']] ';
   end;
@@ -1045,12 +1046,13 @@ begin
     S := S + AddItemInfo([K, T,
       Format('%s%d/%d', [Terminal.Icon('F8DA'),
       AItem.Durability, AItem.MaxDurability])]);
-    if (AItem.Identify = 0) then S := '';
+    if (AItem.Identify = 0) or Player.Look then S := '';
   end;
   Result := Trim(Format('%s %s', [Items.GetName(AItem), S]));
   // Map's item
   if (IsManyItems or (ACount > 0)) then
   begin
+    if Player.Look or IsShort then S := '';
     S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
       ' ' + S)));
     if IsManyItems then
