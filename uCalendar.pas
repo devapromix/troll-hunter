@@ -129,7 +129,8 @@ end;
 procedure TCalendar.OnWeek;
 begin
   Shops.New;
-  Items.DelCorpses;
+  Items.DelCorpses();
+  Items.AddPlants();
 end;
 
 procedure TCalendar.OnYear;

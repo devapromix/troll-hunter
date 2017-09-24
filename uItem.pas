@@ -6,8 +6,9 @@ uses BearLibItems, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itScroll, itRune, itBook, itFood, itBlade, itAxe, itSpear, itMace, itStaff,
-    itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet);
+    itScroll, itRune, itBook, itFood, itPlant, itBlade, itAxe, itSpear, itMace,
+    itStaff, itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing,
+    itAmulet);
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -27,11 +28,11 @@ const
   CoinTypeItems = [itCoin];
   PotionTypeItems = [itPotion];
   ScrollTypeItems = [itScroll];
-  FoodTypeItems = [itFood];
   RuneTypeItems = [itRune];
   BookTypeItems = [itBook];
   CorpseTypeItems = [itCorpse];
   GemTypeItems = [itGem];
+  PlantTypeItems = [itPlant];
   KeyTypeItems = [itKey];
   GlovesTypeItems = [itHands];
   BootsTypeItems = [itFeet];
@@ -40,6 +41,7 @@ const
   JewelryTypeItems = [itRing, itAmulet];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
+  FoodTypeItems = [itFood] + PlantTypeItems;
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
@@ -337,15 +339,15 @@ const
     MaxDurability: 0; Level: 1; Price: 200; Color: clYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 400;),
     // Valley root
-    (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 125; Color: clLightestYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 250;),
     // Rat pod
-    (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 150; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 300;),
     // Kobold bulb
-    (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 100; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 150;),
 
@@ -931,7 +933,8 @@ type
     function GetName(AItem: Item): string; overload;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
-    procedure DelCorpses;
+    procedure DelCorpses();
+    procedure AddPlants;
   end;
 
 var
@@ -2015,6 +2018,30 @@ begin
       FItem := Items_Dungeon_GetMapItem(Ord(Z), I);
       if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems) then
         if (Items_Dungeon_DeleteMapItem(Ord(Z), I, FItem) > 0) then Continue;
+    end;
+  end;
+end;
+
+procedure TItems.AddPlants;
+var
+  I, FCount: Integer;
+  Z: TMapEnum;
+  FItem: Item;
+begin
+  for Z := Low(TMapEnum) to High(TMapEnum) do
+  begin
+    FCount := Items_Dungeon_GetMapCount(Ord(Z));
+    for I := 0 to FCount - 1 do
+    begin
+      FItem := Items_Dungeon_GetMapItem(Ord(Z), I);
+      if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in PlantTypeItems) then
+      begin
+        X := FItem.X + Math.RandomRange(0, 2);
+        Y := FItem.Y + Math.RandomRange(0, 2);
+        if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, Z) in SpawnTiles) and
+          (Z in ItemBase[TItemEnum(FItem.ItemID)].Deep)) then
+          Loot(X, Y, TItemEnum(FItem.ItemID));
+      end;
     end;
   end;
 end;
