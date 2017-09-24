@@ -350,19 +350,21 @@ begin
     ItemType := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
     if (ItemType in AutoPickupItems) then
     begin
-      if ((ItemType = itCoin) and not Game.GetOption(apCoin)) then
+      if ((ItemType in CoinTypeItems) and not Game.GetOption(apCoin)) then
         Exit;
-      if ((ItemType = itFood) and not Game.GetOption(apFood)) then
+      if ((ItemType in FoodTypeItems) and not Game.GetOption(apFood)) then
         Exit;
-      if ((ItemType = itPotion) and not Game.GetOption(apPotion)) then
+      if ((ItemType in PotionTypeItems) and not Game.GetOption(apPotion)) then
         Exit;
-      if ((ItemType = itScroll) and not Game.GetOption(apScroll)) then
+      if ((ItemType in ScrollTypeItems) and not Game.GetOption(apScroll)) then
         Exit;
-      if ((ItemType = itRune) and not Game.GetOption(apRune)) then
+      if ((ItemType in RuneTypeItems) and not Game.GetOption(apRune)) then
         Exit;
-      if ((ItemType = itBook) and not Game.GetOption(apBook)) then
+      if ((ItemType in BookTypeItems) and not Game.GetOption(apBook)) then
         Exit;
-      if ((ItemType = itGem) and not Game.GetOption(apGem)) then
+      if ((ItemType in GemTypeItems) and not Game.GetOption(apGem)) then
+        Exit;
+      if ((ItemType in KeyTypeItems) and not Game.GetOption(apKey)) then
         Exit;
       Items.AddItemToInv(Index, True);
       Wait;

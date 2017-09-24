@@ -1732,6 +1732,7 @@ begin
   AddOption('S', _('Auto pickup scrolls'), Game.GetOption(apScroll));
   AddOption('R', _('Auto pickup runes'), Game.GetOption(apRune));
   AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
+  AddOption('K', _('Auto pickup keys'), Game.GetOption(apKey));
 
   if Game.Wizard then
   begin
@@ -1763,6 +1764,8 @@ begin
       Game.ChOption(apScroll);
     TK_R:
       Game.ChOption(apRune);
+    TK_K:
+      Game.ChOption(apKey);
     TK_B:
       Game.ChOption(apBook);
     TK_W:

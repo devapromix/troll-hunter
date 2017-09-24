@@ -80,7 +80,8 @@ type
   TSpawn = class(TEntity);
 
 type
-  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apScroll);
+  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apScroll,
+    apKey);
 
 type
   TGame = class(TObject)

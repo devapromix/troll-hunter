@@ -32,6 +32,7 @@ const
   BookTypeItems = [itBook];
   CorpseTypeItems = [itCorpse];
   GemTypeItems = [itGem];
+  KeyTypeItems = [itKey];
   GlovesTypeItems = [itHands];
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
@@ -45,10 +46,10 @@ const
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     RuneTypeItems + BookTypeItems;
-  NotDropTypeItems = [itNone, itKey] + CorpseTypeItems + RuneTypeItems;
+  NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems
-    + FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems;
+    + FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems;
   //NotEquipTypeItems - NotDropTypeItems;
 
 type
