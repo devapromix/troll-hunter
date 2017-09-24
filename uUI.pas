@@ -2,25 +2,24 @@ unit uUI;
 
 interface
 
+uses uMsgLog;
+
 type
   UI = class(TObject)
-  private
-
-  public
-    constructor Create;
-    destructor Destroy; override;
-    class function KeyToStr(AKey: string; AStr: string = ''): string;
-    class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
-      AColor, DarkColor: Cardinal);
+    class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
     class procedure Title(S: string; AY: Byte = 1);
     class procedure FromAToZ;
-    class function GoldLeft(V: Word): string;  
+    class function KeyToStr(AKey: string; AStr: string = ''): string;
+    class function GoldLeft(V: Word): string;
 end;
 
 implementation
 
 uses
-  SysUtils, BearLibTerminal, uTerminal, uGame;
+  SysUtils, BearLibTerminal, uTerminal, uGame, GNUGetText;
+
+const
+  F = '[[%s]]';
 
 { TMyClass }
 
@@ -41,18 +40,6 @@ begin
   end;
 end;
 
-constructor UI.Create;
-begin
-  inherited;
-
-end;
-
-destructor UI.Destroy;
-begin
-
-  inherited;
-end;
-
 class procedure UI.FromAToZ;
 var
   I: Char;
@@ -61,18 +48,19 @@ begin
     for I := 'A' to 'Z' do
     begin
       Terminal.ForegroundColor(clGray);
-      Terminal.Print(1, Ord(I) + 2, '[[' + I + ']]', TK_ALIGN_LEFT);
+      Terminal.Print(1, Ord(I) + 2, Format(F, [I]), TK_ALIGN_LEFT);
     end;
 end;
 
 class function UI.GoldLeft(V: Word): string;
 begin
-
+  Result := Format(F, [Format(Terminal.Icon('F8D5') + ' '
+    + _('%d gold left'), [V])]);
 end;
 
 class function UI.KeyToStr(AKey, AStr: string): string;
 begin
-  Result := Trim(Terminal.Colorize(Format('[[%s]]', [UpperCase(AKey)]),
+  Result := Trim(Terminal.Colorize(Format(F, [UpperCase(AKey)]),
     Terminal.GetColorFromIni('Key')) + ' ' + AStr);
 end;
 

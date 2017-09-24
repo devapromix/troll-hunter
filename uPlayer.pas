@@ -880,8 +880,7 @@ begin
   AItem.Durability := Math.EnsureRange(AItem.Durability - Value, 0, High(Byte));
   if ((AItem.Durability > 0) and
     (AItem.Durability < (AItem.MaxDurability div 4))) then
-    MsgLog.Add(Terminal.Colorize
-      (Format(_('%s soon will be totally broken (%d/%d).'),
+    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'),
       [The, AItem.Durability, AItem.MaxDurability]), clAlarm));
   Items_Inventory_SetItem(Index, AItem);
   if (AItem.Durability = 0) then
@@ -933,7 +932,7 @@ var
       Items.AddItemToDungeon(AItem);
       The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
       MsgLog.Add(Format(_('You drop %s.'), [The]));
-      Wait;
+      Wait();
     end;
   end;
 
@@ -942,10 +941,10 @@ begin
   if (AItem.Equipment > 0) then
     Exit;
   if not((AItem.Stack > 1) and (AItem.Amount > 1)) then
-    DeleteItem
+    DeleteItem()
   else
     SetAmountScene(True, Index, 1);
-  Self.Calc;
+  Self.Calc();
 end;
 
 procedure TPlayer.DropAmount(Index: Integer);
@@ -968,10 +967,10 @@ begin
   else
     MsgLog.Add(Format(_('You drop %s.'), [The]));
   Scenes.SetScene(scDrop);
-  Wait;
+  Wait();
 end;
 
-procedure TPlayer.PickUp;
+procedure TPlayer.PickUp();
 var
   FCount: Integer;
 begin
@@ -1013,7 +1012,7 @@ begin
   else
     MsgLog.Add(Format(_('You picked up %s.'), [The]));
   Scenes.SetScene(scItems);
-  Wait;
+  Wait();
 end;
 
 procedure TPlayer.Render(AX, AY: Byte);
@@ -1213,7 +1212,7 @@ begin
   begin
     if not IsRest then
       Break;
-    Wait;
+    Wait();
   end;
   MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
   Abilities.Ability[abWeak] := 0;
@@ -1222,7 +1221,7 @@ begin
   IsRest := False;
 end;
 
-procedure TPlayer.Start;
+procedure TPlayer.Start();
 var
   D: Byte;
 begin
@@ -1291,7 +1290,7 @@ begin
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(iGold, IfThen(Game.Wizard, RandomRange(3333, 9999), D));
-  Self.Calc;
+  Self.Calc();
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word = 0);
@@ -1303,8 +1302,8 @@ const
   procedure PrmSkill(ASkill: TSkillEnum);
   begin
     Skills.Modify(ASkill, StartSkill);
-    Calc;
-    Fill;
+    Calc();
+    Fill();
   end;
 
   procedure PrmValue(AEffect: TEffect; Value: Byte);
@@ -1319,8 +1318,8 @@ const
       efPrmDV:
         Attributes.Modify(atDV, 0, Value);
     end;
-    Calc;
-    Fill;
+    Calc();
+    Fill();
   end;
 
 begin

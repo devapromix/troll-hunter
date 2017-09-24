@@ -28,10 +28,8 @@ type
     constructor Create;
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
-    procedure AddKey(AKey, AStr: string; IsClear: Boolean = False;
-      IsRender: Boolean = False); overload;
-    procedure AddKey(AKey, AStr, AAdvStr: string; IsClear: Boolean = False;
-      IsRender: Boolean = False); overload;
+    procedure AddKey(AKey, AStr: string; IsRender: Boolean = False); overload;
+    procedure AddKey(AKey, AStr, AAdvStr: string; IsRender: Boolean = False); overload;
   end;
 
 type
@@ -293,8 +291,7 @@ begin
   KStr := '';
 end;
 
-procedure TScene.AddKey(AKey, AStr: string; IsClear: Boolean = False;
-  IsRender: Boolean = False);
+procedure TScene.AddKey(AKey, AStr: string; IsRender: Boolean = False);
 begin
   KStr := KStr + UI.KeyToStr(AKey, AStr) + ' ';
   if (IsRender and (KStr <> '')) then
@@ -306,20 +303,14 @@ begin
   end;
 end;
 
-procedure TScene.AddKey(AKey, AStr, AAdvStr: string; IsClear: Boolean = False;
-  IsRender: Boolean = False);
+procedure TScene.AddKey(AKey, AStr, AAdvStr: string; IsRender: Boolean = False);
 var
   S: string;
 begin
   if Game.IsMode then
     S := AStr
-  else S := AAdvStr;
-  AddKey(AKey, S, IsClear, IsRender);
-end;
-
-function TScene.GoldLeft(V: Word): string;
-begin
-  Result := Format('[[' + Terminal.Icon('F8D5') + _('%d gold left') + ']]', [V]);
+      else S := AAdvStr;
+  AddKey(AKey, S, IsRender);
 end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
@@ -563,7 +554,7 @@ begin
     Format(_('The game saves a character dump to %s file.'),
     [UI.KeyToStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
 
-  Self.AddKey('Esc', _('Close'), True, True);
+  Self.AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneHelp.Update(var Key: Word);
@@ -868,7 +859,7 @@ begin
       begin
         if Player.IsDead then
           Exit;
-        Scenes.SetScene(scDrop);
+        Scenes.SetScene(scDrop, scGame);
       end;
     TK_P:
       Scenes.SetScene(scPlayer);
@@ -993,10 +984,10 @@ begin
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True);
+  AddKey('Esc', _('Close'));
   AddKey('Tab', _('Drop'));
   AddKey('Space', _('Skills and attributes'));
-  AddKey('A-Z', _('Use an item'), False, True);
+  AddKey('A-Z', _('Use an item'), True);
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -1006,7 +997,7 @@ begin
       // Close
       Scenes.SetScene(scGame);
     TK_TAB: // Drop
-      Scenes.SetScene(scDrop);
+      Scenes.SetScene(scDrop, scInv);
     TK_SPACE: // Player
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z: // Use an item
@@ -1026,8 +1017,8 @@ begin
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Drop an item'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Drop an item'), True);
 end;
 
 procedure TSceneDrop.Update(var Key: Word);
@@ -1035,7 +1026,7 @@ begin
   case Key of
     TK_ESCAPE:
       // Close
-      Scenes.SetScene(scGame);
+      Scenes.GoBack;
     TK_A .. TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
   else
@@ -1057,9 +1048,9 @@ begin
   Self.RenderPlayer;
   Self.RenderSkills;
 
-  AddKey('Esc', _('Close'), True);
+  AddKey('Esc', _('Close'));
   AddKey('Tab', _('Background'));
-  AddKey('Space', _('Inventory'), False, True);
+  AddKey('Space', _('Inventory'), True);
 end;
 
 procedure TScenePlayer.RenderPlayer;
@@ -1159,10 +1150,10 @@ begin
   Terminal.Print(CX, CY, Format('%d/%dx', [Player.ItemAmount, FItem.Amount]),
     TK_ALIGN_LEFT);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('W', _('More'), False, False);
-  AddKey('X', _('Less'), False, False);
-  AddKey('Enter', _('Apply'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('W', _('More'));
+  AddKey('X', _('Less'));
+  AddKey('Enter', _('Apply'), True);
 end;
 
 procedure TSceneAmount.Update(var Key: Word);
@@ -1212,9 +1203,9 @@ begin
 
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('Space', _('Pick up all items'), False, False);
-  AddKey('A-Z', _('Pick up an item'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('Space', _('Pick up all items'));
+  AddKey('A-Z', _('Pick up an item'), True);
 
   if (FCount <= 0) then
     Scenes.SetScene(scGame);
@@ -1248,7 +1239,7 @@ procedure TSceneMessages.Render;
 begin
   UI.Title(_('Last messages'));
   MsgLog.RenderAllMessages;
-  AddKey('Esc', _('Close'), True, True);
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneMessages.Update(var Key: Word);
@@ -1315,7 +1306,7 @@ begin
     Add(_('Shops'), Shops.Count);
   end;
 
-  AddKey('Esc', _('Close'), True, True);
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneStatistics.Update(var Key: Word);
@@ -1342,7 +1333,7 @@ var
   end;
 
 begin
-  UI.Title(NPCName + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(NPCName + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
   Y := 1;
@@ -1397,7 +1388,7 @@ begin
     Add(_('Sell items'));
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, True);
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneDialog.Update(var Key: Word);
@@ -1470,14 +1461,14 @@ end;
 
 procedure TSceneSell.Render;
 begin
-  UI.Title(_('Selling items') + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(_('Selling items') + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
   Items.RenderInventory(ptSell);
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Selling an item'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Selling an item'), True);
 end;
 
 procedure TSceneSell.Update(var Key: Word);
@@ -1497,14 +1488,14 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
   Shops.Render;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Buy an item'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Buy an item'), True);
 end;
 
 procedure TSceneBuy.Update(var Key: Word);
@@ -1524,14 +1515,14 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  UI.Title(_('Repairing items') + ' ' + Self.GoldLeft(Player.Gold));
+  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
   Items.RenderInventory(ptRepair);
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Repairing an item'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Repairing an item'), True);
 end;
 
 procedure TSceneRepair.Update(var Key: Word);
@@ -1593,7 +1584,7 @@ begin
   Add(_('Year'), Calendar.Year);
   Add(_('Map'), Map.Name);
 
-  AddKey('Esc', _('Close'), True, True);
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneCalendar.Update(var Key: Word);
@@ -1620,7 +1611,7 @@ begin
   Terminal.Print(CX - 5, CY + 3, Format('%s %s', [UI.KeyToStr('D'), _('Hell')]),
     TK_ALIGN_LEFT);
 
-  AddKey('Esc', _('Back'), True, True);
+  AddKey('Esc', _('Back'), True);
 end;
 
 procedure TSceneDifficulty.Update(var Key: Word);
@@ -1674,7 +1665,7 @@ begin
 
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Back'), True, True);
+  AddKey('Esc', _('Back'), True);
 end;
 
 procedure TSceneRest.Update(var Key: Word);
@@ -1696,7 +1687,7 @@ begin
   Terminal.Print(CX - 10, CY, _('Name') + ': ' + Player.Name + Game.GetCursor,
     TK_ALIGN_LEFT);
 
-  AddKey('Esc', _('Back'), True, True);
+  AddKey('Esc', _('Back'), True);
 end;
 
 procedure TSceneName.Update(var Key: Word);
@@ -1754,7 +1745,7 @@ begin
     AddOption('L', _('Leave corpses'), Game.LCorpses);
   end;
 
-  AddKey('Esc', _('Back'), True, True);
+  AddKey('Esc', _('Back'), True);
 end;
 
 procedure TSceneOptions.Update(var Key: Word);
@@ -1824,8 +1815,8 @@ begin
     end;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Cast spell'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Cast spell'), True);
 end;
 
 procedure TSceneSpellbook.Update(var Key: Word);
@@ -1900,11 +1891,11 @@ begin
 
   if Player.Talents.IsPoint then
   begin
-    AddKey('Esc', _('Close'), _('Back'), True, False);
-    AddKey('A-Z', _('Select a talent'), False, True);
+    AddKey('Esc', _('Close'), _('Back'));
+    AddKey('A-Z', _('Select a talent'), True);
   end
   else
-    AddKey('Esc', _('Close'), _('Back'), True, True);
+    AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
 procedure TSceneTalents.Update(var Key: Word);
@@ -1938,8 +1929,8 @@ begin
   Items.RenderInventory();
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'), True, False);
-  AddKey('A-Z', _('Select an item'), False, True);
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Select an item'), True);
 end;
 
 procedure TSceneIdentification.Update(var Key: Word);
@@ -1964,7 +1955,7 @@ begin
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
     Player.Background, TK_ALIGN_BOTTOM);
 
-  AddKey('Esc', _('Close'), _('Back'), True, True);
+  AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
 procedure TSceneBackground.Update(var Key: Word);

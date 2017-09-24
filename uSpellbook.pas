@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses Math, SysUtils, GNUGetText, uGame, uPlayer, uMsgLog, uStatistic;
+uses Math, SysUtils, GNUGetText, uGame, uPlayer, uMsgLog, uStatistic, uUI;
 
 { TSpellbook }
 
