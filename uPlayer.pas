@@ -668,26 +668,28 @@ begin
       if not(T in RuneTypeItems) then
         AItem.Amount := AItem.Amount - 1;
       The := GetDescThe(Items.Name[I]);
-      case T of
-        itPotion:
-          begin
-            MsgLog.Add(Format(_('You drink %s.'), [The]));
-            Statictics.Inc(stPotDrunk);
-          end;
-        itScroll:
-          begin
-            MsgLog.Add(Format(_('You read %s.'), [The]));
-            Statictics.Inc(stScrRead);
-          end;
-        itFood, itPlant:
-          MsgLog.Add(Format(_('You ate %s.'), [The]));
-        itRune:
-          MsgLog.Add(Format(_('You read %s.'), [The]));
-        itBook:
-          MsgLog.Add(Format(_('You read %s.'), [The]));
+      if (T in PotionTypeItems) then
+      begin
+        MsgLog.Add(Format(_('You drink %s.'), [The]));
+        Statictics.Inc(stPotDrunk);
+      end;
+      if (T in RuneTypeItems + BookTypeItems + ScrollTypeItems) then
+      begin
+        MsgLog.Add(Format(_('You read %s.'), [The]));
+      end;
+      if (T in FoodTypeItems + PlantTypeItems) then
+      begin
+        MsgLog.Add(Format(_('You ate %s.'), [The]));
+      end;
+      //
+      if (T in ScrollTypeItems) then
+      begin
+        Statictics.Inc(stScrRead);
       end;
       if not(T in RuneTypeItems) then
+      begin
         Items_Inventory_SetItem(Index, AItem);
+      end;
       if (T in ScrollTypeItems + RuneTypeItems) then
       begin
         if (Self.Mana >= ItemBase[I].ManaCost) then
