@@ -33,6 +33,7 @@ const
   CorpseTypeItems = [itCorpse];
   GemTypeItems = [itGem];
   PlantTypeItems = [itPlant];
+  FoodTypeItems = [itFood];
   KeyTypeItems = [itKey];
   GlovesTypeItems = [itHands];
   BootsTypeItems = [itFeet];
@@ -41,17 +42,17 @@ const
   JewelryTypeItems = [itRing, itAmulet];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
-  FoodTypeItems = [itFood] + PlantTypeItems;
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
-  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
+  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems + PlantTypeItems +
     RuneTypeItems + BookTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems
-    + FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems;
+    + FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems
+    + PlantTypeItems;
   //NotEquipTypeItems - NotDropTypeItems;
 
 type
@@ -2014,7 +2015,8 @@ begin
     for I := Items_Dungeon_GetMapCount(Ord(Z)) - 1 downto 0 do
     begin
       FItem := Items_Dungeon_GetMapItem(Ord(Z), I);
-      if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems) then
+      if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems
+        + FoodTypeItems) then
         if (Items_Dungeon_DeleteMapItem(Ord(Z), I, FItem) > 0) then Continue;
     end;
   end;

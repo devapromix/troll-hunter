@@ -166,7 +166,7 @@ begin
 				'"a dark","a light"');
 
 			Result := Format(Terminal.Colorize(_('You are %s of a %s %s. You had a %s upbringing and you ' +
-				'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.'), 'Dark Orange'),
+				'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.'), 'Yellow'),
 				[SL[cpChild][Random(SL[cpChild].Count - 1)],
 				SL[cpClass][Random(SL[cpClass].Count - 1)],
 				SL[cpParent][Random(SL[cpParent].Count - 1)],
@@ -353,6 +353,8 @@ begin
       if ((ItemType in CoinTypeItems) and not Game.GetOption(apCoin)) then
         Exit;
       if ((ItemType in FoodTypeItems) and not Game.GetOption(apFood)) then
+        Exit;
+      if ((ItemType in PlantTypeItems) and not Game.GetOption(apPlant)) then
         Exit;
       if ((ItemType in PotionTypeItems) and not Game.GetOption(apPotion)) then
         Exit;
@@ -677,7 +679,7 @@ begin
             MsgLog.Add(Format(_('You read %s.'), [The]));
             Statictics.Inc(stScrRead);
           end;
-        itFood:
+        itFood, itPlant:
           MsgLog.Add(Format(_('You ate %s.'), [The]));
         itRune:
           MsgLog.Add(Format(_('You read %s.'), [The]));

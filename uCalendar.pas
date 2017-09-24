@@ -20,17 +20,17 @@ type
     property Month: Byte read FMonth;
     property Year: Word read FYear;
     function DaysPerMonth(AMonth: Byte): Byte;
-    function DaysThisMonth: Byte;
+    function DaysThisMonth(): Byte;
     function GetMonthName(AMonth: Byte = 0): string;
-    function GetDayName: string;
-    function GetTime: string;
-    function GetTimeStr: string;
-    procedure OnHour;
-    procedure OnDay;
-    procedure OnWeek;
-    procedure OnMonth;
-    procedure OnYear;
-    procedure Turn;
+    function GetDayName(): string;
+    function GetTime(): string;
+    function GetTimeStr(): string;
+    procedure OnHour();
+    procedure OnDay();
+    procedure OnWeek();
+    procedure OnMonth();
+    procedure OnYear();
+    procedure Turn();
   end;
 
 var
@@ -59,12 +59,12 @@ begin
   Result := DaysInMonth[AMonth];
 end;
 
-function TCalendar.DaysThisMonth: Byte;
+function TCalendar.DaysThisMonth(): Byte;
 begin
   Result := DaysPerMonth(Month)
 end;
 
-function TCalendar.GetDayName: string;
+function TCalendar.GetDayName(): string;
 begin
   case DayOfWeek of
     1: Result := _('Monday');
@@ -96,12 +96,12 @@ begin
   end;
 end;
 
-function TCalendar.GetTime: string;
+function TCalendar.GetTime(): string;
 begin
   Result := Format('%d:%d', [Hour, Minute]);
 end;
 
-function TCalendar.GetTimeStr: string;
+function TCalendar.GetTimeStr(): string;
 begin
   case Hour of
     6..8: Result := _('Morning');
@@ -111,34 +111,34 @@ begin
   end;
 end;
 
-procedure TCalendar.OnDay;
+procedure TCalendar.OnDay();
 begin
 
 end;
 
-procedure TCalendar.OnHour;
+procedure TCalendar.OnHour();
 begin
   Game.Log('Hour');
 end;
 
-procedure TCalendar.OnMonth;
+procedure TCalendar.OnMonth();
 begin
 
 end;
 
-procedure TCalendar.OnWeek;
+procedure TCalendar.OnWeek();
 begin
-  Shops.New;
+  Shops.New();
   Items.DelCorpses();
   Items.AddPlants();
 end;
 
-procedure TCalendar.OnYear;
+procedure TCalendar.OnYear();
 begin
 
 end;
 
-procedure TCalendar.Turn;
+procedure TCalendar.Turn();
 begin
   Inc(FMinute, 10);
   if (Minute > SysUtils.MinsPerHour - 1) then

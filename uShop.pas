@@ -167,7 +167,7 @@ var
       shSmith:
         Result := ItemBase[ID].ItemType in SmithTypeItems;
       shFoods:
-        Result := ItemBase[ID].ItemType in FoodTypeItems;
+        Result := ItemBase[ID].ItemType in FoodTypeItems + PlantTypeItems;
       shGem:
         Result := ItemBase[ID].ItemType in GemTypeItems;
       shJewelry:

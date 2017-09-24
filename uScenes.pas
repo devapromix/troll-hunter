@@ -1728,6 +1728,7 @@ begin
   AddOption('C', _('Auto pickup coins'), Game.GetOption(apCoin));
   AddOption('G', _('Auto pickup gems'), Game.GetOption(apGem));
   AddOption('F', _('Auto pickup foods'), Game.GetOption(apFood));
+  AddOption('Y', _('Auto pickup plants'), Game.GetOption(apPlant));
   AddOption('P', _('Auto pickup potions'), Game.GetOption(apPotion));
   AddOption('S', _('Auto pickup scrolls'), Game.GetOption(apScroll));
   AddOption('R', _('Auto pickup runes'), Game.GetOption(apRune));
@@ -1758,6 +1759,8 @@ begin
       Game.ChOption(apGem);
     TK_F:
       Game.ChOption(apFood);
+    TK_Y:
+      Game.ChOption(apPlant);
     TK_P:
       Game.ChOption(apPotion);
     TK_S:
