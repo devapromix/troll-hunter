@@ -2,20 +2,20 @@ unit uEntity;
 
 interface
 
-uses uAbility;
+uses uAbility, uMap;
 
 type
   TEntity = class(TObject)
   private
     FX: Byte;
     FY: Byte;
-    FZ: Byte;
+    FZ: TMapEnum;
   public
     constructor Create;
     destructor Destroy; override;
     property X: Byte read FX write FX;
     property Y: Byte read FY write FY;
-    property Z: Byte read FZ write FZ;
+    property Z: TMapEnum read FZ write FZ;
     function GetDist(ToX, ToY: Single): Word;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;

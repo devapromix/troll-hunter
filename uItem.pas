@@ -1221,7 +1221,7 @@ end;
 
 procedure TItems.Render(AX, AY: Byte);
 var
-  MapID, X, Y: Byte;
+  MapID: Byte;
   I, Count: Integer;
   Color: Cardinal;
   FItem: Item;
@@ -1937,8 +1937,6 @@ begin
 end;
 
 procedure TItems.LootGold(const AX, AY: Byte);
-var
-  X, Y: Byte;
 begin
   Loot(AX, AY, iGold);
   if (Math.RandomRange(0, 4) = 0) then
