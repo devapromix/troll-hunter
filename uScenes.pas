@@ -598,8 +598,8 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
-          Mobs.Mob[C].Life, Mobs.Mob[C].MaxLife]);
+        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
+          Terminal.Icon('F8D7'), Mobs.Mob[C].Life, Mobs.Mob[C].MaxLife]);
       end;
     end;
     //

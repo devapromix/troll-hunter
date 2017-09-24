@@ -967,6 +967,12 @@ var
   IT: TItemType;
   F: Boolean;
   V: Word;
+
+  function GetAmount(): string;
+  begin
+    Result := Format('(%dx)', [AItem.Amount])
+  end;
+
 begin
   S := '';
   T := '';
@@ -1029,8 +1035,7 @@ begin
   // Amount
   if (AItem.Stack > 1) then
   begin
-    if (AItem.Amount > 1) then
-      S := S + Format('(%dx)', [AItem.Amount]);
+    if (AItem.Amount > 1) then S := S + GetAmount();
   end
   // Corpse
   else if (TItemEnum(ID) = iCorpse) then
@@ -1046,8 +1051,7 @@ begin
     K := '';
     if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
       K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
-    S := S + AddItemInfo([K, T,
-      Format('%s%d/%d', [Terminal.Icon('F8DA'),
+    S := S + AddItemInfo([K, T, Format('%s%d/%d', [Terminal.Icon('F8DA'),
       AItem.Durability, AItem.MaxDurability])]);
     if (AItem.Identify = 0) or Player.Look then S := '';
   end;
@@ -1056,6 +1060,7 @@ begin
   if (IsManyItems or (ACount > 0)) then
   begin
     if Player.Look or IsShort then S := '';
+    S := Game.IfThen(AItem.Amount > 1, GetAmount(), '');
     S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
       ' ' + S)));
     if IsManyItems then
