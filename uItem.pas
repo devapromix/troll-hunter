@@ -91,7 +91,7 @@ type
     iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
     iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
     // Foods
-    iBreadRation, iValleyRoot, iRatPod,
+    iBreadRation, iValleyRoot, iRatPod, iKoboldBulb,
     //
     iKey, iRuby, iTopaz, iEmerald, iSapphire, // Gems
     iRing, // Rings
@@ -344,6 +344,10 @@ const
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Price: 150; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 300;),
+    // Kobold bulb
+    (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 1; Price: 100; Color: clLightestGreen;
+    Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 150;),
 
     // Key
     (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; Level: 1;
@@ -1388,6 +1392,9 @@ begin
     // Rat pod
     iRatPod:
       Result := _('Rat pod');
+    // Kobold bulb
+    iKoboldBulb:
+      Result := _('Kobold bulb');
 
     // Key
     iKey:
