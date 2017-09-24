@@ -47,10 +47,10 @@ end;
 
 function TEntity.GetDescAn(S: string): string;
 begin
-  Result := LowerCase(S);
   if (GetCurrentLanguage <> 'en') then
     Exit;
-  if (AnsiString(S)[1] in ['a', 'e', 'i', 'o', 'u']) then
+  Result := LowerCase(S);
+  if (Result[1] in ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + Result
   else
     Result := 'a ' + Result;
