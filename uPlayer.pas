@@ -417,6 +417,7 @@ begin
     FItem := Items_Inventory_GetItem(I);
     if (FItem.Equipment > 0) then
     begin
+      if (FItem.Identify = 0) then Continue;
       ID := TItemEnum(FItem.ItemID);
       AddAttrib(atDef, FItem.Defense);
       AddAttrib(atMinDamage, FItem.MinDamage);
@@ -641,17 +642,16 @@ end;
 
 procedure TPlayer.Use(Index: Integer);
 var
-  The: string;
-  AItem: Item;
+  FItem: Item;
   I: TItemEnum;
   T: TItemType;
   ItemLevel: Byte;
 begin
   if IsDead then
     Exit;
-  AItem := Items_Inventory_GetItem(Index);
+  FItem := Items_Inventory_GetItem(Index);
   // Need level
-  ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
+  ItemLevel := ItemBase[TItemEnum(FItem.ItemID)].Level;
   if (Attributes.Attrib[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
@@ -659,27 +659,26 @@ begin
     Self.Calc;
     Exit;
   end;
-  I := TItemEnum(AItem.ItemID);
+  I := TItemEnum(FItem.ItemID);
   T := ItemBase[I].ItemType;
   if (T in NotEquipTypeItems) then
   begin
     if (T in UseTypeItems) then
     begin
       if not(T in RuneTypeItems) then
-        AItem.Amount := AItem.Amount - 1;
-      The := GetDescThe(Items.Name[I]);
+        FItem.Amount := FItem.Amount - 1;
       if (T in PotionTypeItems) then
       begin
-        MsgLog.Add(Format(_('You drink %s.'), [The]));
+        MsgLog.Add(Format(_('You drink %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stPotDrunk);
       end;
       if (T in RuneTypeItems + BookTypeItems + ScrollTypeItems) then
       begin
-        MsgLog.Add(Format(_('You read %s.'), [The]));
+        MsgLog.Add(Format(_('You read %s.'), [Items.GetNameThe(FItem)]));
       end;
       if (T in FoodTypeItems + PlantTypeItems) then
       begin
-        MsgLog.Add(Format(_('You ate %s.'), [The]));
+        MsgLog.Add(Format(_('You ate %s.'), [Items.GetNameThe(FItem)]));
       end;
       //
       if (T in ScrollTypeItems) then
@@ -688,7 +687,7 @@ begin
       end;
       if not(T in RuneTypeItems) then
       begin
-        Items_Inventory_SetItem(Index, AItem);
+        Items_Inventory_SetItem(Index, FItem);
       end;
       if (T in ScrollTypeItems + RuneTypeItems) then
       begin
@@ -714,7 +713,7 @@ begin
   else
   begin
     // Equip or unequip an item
-    case AItem.Equipment of
+    case FItem.Equipment of
       0:
         Self.Equip(Index);
       1:
@@ -726,14 +725,13 @@ end;
 
 procedure TPlayer.Equip(Index: Integer);
 var
-  The: string;
-  AItem: Item;
+  FItem: Item;
   I: Integer;
   ItemLevel: Byte;
 begin
   // Need level
-  AItem := Items_Inventory_GetItem(Index);
-  ItemLevel := ItemBase[TItemEnum(AItem.ItemID)].Level;
+  FItem := Items_Inventory_GetItem(Index);
+  ItemLevel := ItemBase[TItemEnum(FItem.ItemID)].Level;
   if (Attributes.Attrib[atLev].Value < ItemLevel) and not Game.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
@@ -741,7 +739,7 @@ begin
     Self.Calc;
     Exit;
   end;
-  if (AItem.Identify = 0) and not Game.Wizard then
+  if (FItem.Identify = 0) and not Game.Wizard then
   begin
     MsgLog.Add(_('You can not use this yet (unidentified item)!'));
     Self.Calc;
@@ -752,22 +750,19 @@ begin
   if (I > -1) then
     UnEquip(I);
   // Equip
-  The := GetDescThe(Items.Name[Items.GetItemEnum(AItem.ItemID)]);
-  MsgLog.Add(Format(_('You equip %s.'), [The]));
+  MsgLog.Add(Format(_('You equip %s.'), [Items.GetNameThe(FItem)]));
   Self.Calc;
   Wait;
 end;
 
 procedure TPlayer.UnEquip(Index: Integer);
 var
-  The: string;
-  AItem: Item;
+  FItem: Item;
 begin
   if (Items_Inventory_UnEquipItem(Index) > 0) then
   begin
-    AItem := Items_Inventory_GetItem(Index);
-    The := GetDescThe(Items.Name[Items.GetItemEnum(AItem.ItemID)]);
-    MsgLog.Add(Format(_('You unequip %s.'), [The]));
+    FItem := Items_Inventory_GetItem(Index);
+    MsgLog.Add(Format(_('You unequip %s.'), [Items.GetNameThe(FItem)]));
     Self.Calc;
     Wait;
   end;
@@ -776,33 +771,29 @@ end;
 procedure TPlayer.Sell(Index: Integer);
 var
   Value: Integer;
-  AItem: Item;
-  The: string;
+  FItem: Item;
 begin
-  AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Equipment > 0) or Items.ChItem(AItem)) then
+  FItem := Items_Inventory_GetItem(Index);
+  if ((FItem.Equipment > 0) or Items.ChItem(FItem)) then
     Exit;
-  if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
+  if (Items_Inventory_DeleteItem(Index, FItem) > 0) then
   begin
-    Value := AItem.Price div 4;
+    Value := FItem.Price div 4;
     Items.AddItemToInv(iGold, Value);
-    The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
-    MsgLog.Add(Format(_('You sold %s (+%d gold).'), [The, Value]));
+    MsgLog.Add(Format(_('You sold %s (+%d gold).'), [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
 end;
 
 procedure TPlayer.Buy(Index: Integer);
 var
-  AItem: Item;
-  The: string;
+  FItem: Item;
 begin
-  AItem := Shops.Shop[Shops.Current].GetItem(Index);
-  if (Items_Inventory_DeleteItemAmount(Ord(iGold), AItem.Price) > 0) then
+  FItem := Shops.Shop[Shops.Current].GetItem(Index);
+  if (Items_Inventory_DeleteItemAmount(Ord(iGold), FItem.Price) > 0) then
   begin
-    The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
-    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [The, AItem.Price]));
-    Items_Inventory_AppendItem(AItem);
+    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [Items.GetNameThe(FItem), FItem.Price]));
+    Items_Inventory_AppendItem(FItem);
     Self.Calc;
     // The %s just frowns. Maybe you'll return when you have enough gold?
   end
@@ -830,17 +821,15 @@ end;
 
 procedure TPlayer.IdentItem(Index: Integer);
 var
-  AItem: Item;
-  The: string;
+  FItem: Item;
 begin
-  AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
+  FItem := Items_Inventory_GetItem(Index);
+  if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  if (Items.Identify(AItem) and (AItem.Identify > 0) and
-    (Items_Inventory_SetItem(Index, AItem) > 0)) then
+  if (Items.Identify(FItem) and (FItem.Identify > 0) and
+    (Items_Inventory_SetItem(Index, FItem) > 0)) then
   begin
-    The := GetDescThe(GetPureText(Items.GetName(AItem)));
-    MsgLog.Add(Format(_('You identified %s.'), [The]));
+    MsgLog.Add(Format(_('You identified %s.'), [Items.GetNameThe(FItem)]));
     Scenes.SetScene(scInv);
   end;
   Self.Calc;
@@ -849,13 +838,12 @@ end;
 procedure TPlayer.RepairItem(Index: Integer);
 var
   RepairCost: Word;
-  AItem: Item;
-  The: string;
+  FItem: Item;
 begin
-  AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
+  FItem := Items_Inventory_GetItem(Index);
+  if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
+  RepairCost := (FItem.MaxDurability - FItem.Durability) * 10;
   if (RepairCost > 0) then
   begin
     if (Gold < RepairCost) then
@@ -863,37 +851,32 @@ begin
       MsgLog.Add(_('You need more gold.'));
       Exit;
     end;
-    AItem.Durability := AItem.MaxDurability;
+    FItem.Durability := FItem.MaxDurability;
     if ((Items_Inventory_DeleteItemAmount(Ord(iGold), RepairCost) > 0) and
-      (Items_Inventory_SetItem(Index, AItem) > 0)) then
-    begin
-      The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
-      MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [The, RepairCost]));
-    end;
+      (Items_Inventory_SetItem(Index, FItem) > 0)) then
+      MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [Items.GetNameThe(FItem), RepairCost]));
   end;
   Self.Calc;
 end;
 
 procedure TPlayer.BreakItem(Index: Integer; Value: Byte = 1);
 var
-  AItem: Item;
-  The: string;
+  FItem: Item;
 begin
-  AItem := Items_Inventory_GetItem(Index);
-  if ((AItem.Stack > 1) or (AItem.Amount > 1)) then
+  FItem := Items_Inventory_GetItem(Index);
+  if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  The := GetCapit(GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]));
-  AItem.Durability := Math.EnsureRange(AItem.Durability - Value, 0, High(Byte));
-  if ((AItem.Durability > 0) and
-    (AItem.Durability < (AItem.MaxDurability div 4))) then
+  FItem.Durability := Math.EnsureRange(FItem.Durability - Value, 0, High(Byte));
+  if ((FItem.Durability > 0) and
+    (FItem.Durability < (FItem.MaxDurability div 4))) then
     MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'),
-      [The, AItem.Durability, AItem.MaxDurability]), clAlarm));
-  Items_Inventory_SetItem(Index, AItem);
-  if (AItem.Durability = 0) then
+      [Items.GetNameThe(FItem), FItem.Durability, FItem.MaxDurability]), clAlarm));
+  Items_Inventory_SetItem(Index, FItem);
+  if (FItem.Durability = 0) then
   begin
-    Items_Inventory_DeleteItem(Index, AItem);
+    Items_Inventory_DeleteItem(Index, FItem);
     MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'),
-      [The]), clAlarm));
+      [Items.GetNameThe(FItem)]), clAlarm));
   end;
   Self.Calc;
 end;
@@ -926,8 +909,6 @@ var
   AItem: Item;
 
   procedure DeleteItem;
-  var
-    The: string;
   begin
     if (Items_Inventory_DeleteItem(Index, AItem) > 0) then
     begin
@@ -936,8 +917,7 @@ var
       AItem.Equipment := 0;
       AItem.MapID := Ord(Map.Current);
       Items.AddItemToDungeon(AItem);
-      The := GetDescThe(Items.Name[TItemEnum(AItem.ItemID)]);
-      MsgLog.Add(Format(_('You drop %s.'), [The]));
+      MsgLog.Add(Format(_('You drop %s.'), [Items.GetNameThe(AItem)]));
       Wait();
     end;
   end;
@@ -956,7 +936,6 @@ end;
 procedure TPlayer.DropAmount(Index: Integer);
 var
   FItem: Item;
-  The: string;
 begin
   FItem := Items_Inventory_GetItem(Index);
   FItem.Amount := FItem.Amount - ItemAmount;
@@ -967,11 +946,10 @@ begin
   FItem.MapID := Ord(Map.Current);
   FItem.Amount := ItemAmount;
   Items.AddItemToDungeon(FItem);
-  The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format(_('You drop %s (%dx).'), [The, FItem.Amount]))
+    MsgLog.Add(Format(_('You drop %s (%dx).'), [Items.GetNameThe(FItem), FItem.Amount]))
   else
-    MsgLog.Add(Format(_('You drop %s.'), [The]));
+    MsgLog.Add(Format(_('You drop %s.'), [Items.GetNameThe(FItem)]));
   Scenes.SetScene(scDrop);
   Wait();
 end;
@@ -1005,18 +983,16 @@ end;
 procedure TPlayer.PickUpAmount(Index: Integer);
 var
   FItem: Item;
-  The: string;
 begin
   FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, X, Y, FItem);
   FItem.Amount := ItemAmount;
   Items_Inventory_AppendItem(FItem);
-  The := GetDescThe(Items.Name[TItemEnum(FItem.ItemID)]);
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]))
+    MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem), FItem.Amount]))
   else
-    MsgLog.Add(Format(_('You picked up %s.'), [The]));
+    MsgLog.Add(Format(_('You picked up %s.'), [Items.GetNameThe(FItem)]));
   Scenes.SetScene(scItems);
   Wait();
 end;

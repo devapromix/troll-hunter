@@ -931,7 +931,8 @@ type
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
     function Identify(var AItem: Item): Boolean;
-    function GetName(AItem: Item): string; overload;
+    function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
+    function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
     procedure DelCorpses();
@@ -1069,8 +1070,7 @@ begin
   begin
     if Player.Look or IsShort then S := '';
     S := Game.IfThen(AItem.Amount > 1, GetAmount(), '');
-    S := GetCapit(GetDescAn(Trim(Items.GetName(TItemEnum(AItem.ItemID)) +
-      ' ' + S)));
+    S := GetCapit(GetDescAn(Trim(Items.GetName(AItem, IsShort) + ' ' + S)));
     if IsManyItems then
     begin
       Result := Format(_('Several items (%dx) are lying here (%s).'),
@@ -1888,7 +1888,6 @@ procedure TItems.AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
 var
   FItem: Item;
   MapID: Integer;
-  The: string;
 begin
   MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
@@ -1901,11 +1900,10 @@ begin
   then
   begin
     Items_Inventory_AppendItem(FItem);
-    The := GetDescThe(Items.GetName(TItemEnum(FItem.ItemID)));
     if (FItem.Amount = 1) then
-      MsgLog.Add(Format(_('You picked up %s.'), [The]))
+      MsgLog.Add(Format(_('You picked up %s.'), [Items.GetNameThe(FItem)]))
     else
-      MsgLog.Add(Format(_('You picked up %s (%dx).'), [The, FItem.Amount]));
+      MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem), FItem.Amount]));
     Player.Wait;
     Player.Calc;
   end;
@@ -1985,22 +1983,32 @@ begin
   end;
 end;
 
-function TItems.GetName(AItem: Item): string;
+function TItems.GetName(AItem: Item; IsShort: Boolean = False): string;
 var
-  Name: string;
+  Name, S: string;
 begin
   Name := GetName(TItemEnum(AItem.ItemID));
   case AItem.Identify of
     0:
-      Result := Terminal.Colorize(Name + ' [[' + _('Unidentified') + ']]',
+      begin
+        if IsShort then
+          S := '' else
+          S := ' [[' + _('Unidentified') + ']]';
+        Result := Terminal.Colorize(Name + S,
         'Unidentified');
+      end;
     1 .. High(Byte):
       Result := Terminal.Colorize
         (Name + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
-        'Lighter Blue');
+        'Rare');
     else
       Result := Name;
   end;
+end;
+
+function TItems.GetNameThe(AItem: Item): string;
+begin
+  Result := GetDescThe(GetPureText(Items.GetName(AItem, True)));
 end;
 
 procedure TItems.DelCorpses;
