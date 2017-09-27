@@ -1308,20 +1308,24 @@ begin
   // Life
   if (efLife in Effects) then
   begin
-    V := Self.Skills.Skill[skHealing].Value + Value;
-    MsgLog.Add(_('You feel healthy.'));
+    V := Skills.Skill[skHealing].Value + Value;
+    case RandomRange(0, 3) of
+      0: MsgLog.Add(_('You feel healthy.'));
+      1: MsgLog.Add(_('You feel a bit better.'));
+      2: MsgLog.Add(_('You feel a wee bit better.'));
+    end;
     MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
-    Self.Life := EnsureRange(Self.Life + V, 0, MaxLife);
+    Life := EnsureRange(Self.Life + V, 0, MaxLife);
     Skills.DoSkill(skHealing);
   end;
   // Mana
   if (efMana in Effects) then
   begin
-    V := Self.Skills.Skill[skConcentration].Value + Value;
+    V := Skills.Skill[skConcentration].Value + Value;
     MsgLog.Add(_('You feel magical energies restoring.'));
     MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
-    Self.Mana := EnsureRange(Self.Mana + V, 0, MaxMana);
-    Self.Skills.DoSkill(skConcentration, 5);
+    Mana := EnsureRange(Mana + V, 0, MaxMana);
+    Skills.DoSkill(skConcentration, 5);
   end;
   // Food
   if (efFood in Effects) then
