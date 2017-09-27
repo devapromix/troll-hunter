@@ -485,8 +485,8 @@ end;
 
 function ChMapTile(AMobID, AX, AY: Byte; AZ: TMapEnum): Boolean;
 begin
-  Result := (Map.GetTileEnum(AX, AY, AZ) in SpawnTiles) and (Player.X <> AX) and
-    (Player.Y <> AY) and Mobs.GetFreeTile(AX, AY) and
+  Result := (Map.GetTileEnum(AX, AY, AZ) in SpawnTiles)
+    and (Player.X <> AX) and (Player.Y <> AY) and Mobs.GetFreeTile(AX, AY) and
     (AZ in MobBase[TMobEnum(AMobID)].Maps);
 end;
 

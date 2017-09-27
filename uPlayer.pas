@@ -1140,7 +1140,6 @@ end;
 
 procedure TPlayer.Spawn;
 begin
-  Self.Clear;
   X := Game.Spawn.X;
   Y := Game.Spawn.Y;
   Map.Current := deDarkWood;
