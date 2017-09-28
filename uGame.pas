@@ -137,7 +137,7 @@ var
 
 implementation
 
-uses SysUtils, Math, Dialogs, uPlayer, uMsgLog, uScenes, GNUGetText,
+uses SysUtils, Math, Dialogs, Graphics, uPlayer, uMsgLog, uScenes, GNUGetText,
   BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook;
 
 { TGame }
@@ -146,6 +146,7 @@ constructor TGame.Create;
 var
   I: Byte;
   J: TAPOptionEnum;
+  B: TBitmap;
 begin
   Randomize;
   Timer := 0;

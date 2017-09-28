@@ -471,7 +471,7 @@ end;
 
 procedure TSceneTitle.Render;
 begin
-  Logo.Render;
+  Logo.Render(True);
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
   Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
@@ -897,7 +897,7 @@ end;
 
 procedure TSceneQuit.Render;
 begin
-  Logo.Render;
+  Logo.Render(False);
   Terminal.Print(CX, CY + 3,
     Format(_('Do you wish to quit? %s/%s'), [UI.KeyToStr('Y'), UI.KeyToStr('N')]),
     TK_ALIGN_CENTER);
@@ -920,7 +920,7 @@ end;
 
 procedure TSceneDef.Render;
 begin
-  Logo.Render;
+  Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
   if (Player.Killer = '') then
     Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'), [UI.KeyToStr('ENTER')]
@@ -956,7 +956,7 @@ end;
 
 procedure TSceneWin.Render;
 begin
-  Logo.Render;
+  Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase(_('Congratulations!!!')),
     TK_ALIGN_CENTER);
   Terminal.Print(CX, CY + 3, Format(_('You have won. Press %s'),
