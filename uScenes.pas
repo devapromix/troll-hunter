@@ -474,7 +474,7 @@ begin
   Logo.Render;
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
-  Terminal.Print(CX, CY + 3, Format(_('Press %s to start...'),
+  Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
     [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
