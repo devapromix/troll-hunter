@@ -21,6 +21,7 @@ type
     SlotID: Integer;
     Equipment: Integer;
     Price: Integer;
+    Color: Cardinal;
   end;
 
 // Library

@@ -1098,6 +1098,9 @@ begin
   AItem.ItemID := ID;
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
+  // Color
+  AItem.Color := ItemBase[TItemEnum(ID)].Color;
+  //AItem.Color := Math.RandomRange($FF888888, $FFFFFFFF);
   // Defense
   if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Defense.Min > 0) then
     AItem.Defense := Math.EnsureRange
@@ -1224,7 +1227,8 @@ procedure TItems.Render(AX, AY: Byte);
 var
   MapID: Byte;
   I, Count: Integer;
-  Color: Cardinal;
+  FColor: Cardinal;
+  FSymbol: Char;
   FItem: Item;
 begin
   MapID := Ord(Map.Current);
@@ -1239,10 +1243,16 @@ begin
     Y := FItem.Y - Player.Y + AY + View.Top;
     if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Vision)
     then
-      Color := clFog
+    begin
+      FColor := clFog;
+      FSymbol := '?';
+    end
     else
-      Color := ItemBase[TItemEnum(FItem.ItemID)].Color;
-    Terminal.Print(X, Y, ItemBase[TItemEnum(FItem.ItemID)].Symbol, Color);
+    begin
+      FColor := FItem.Color; // ItemBase[TItemEnum(FItem.ItemID)].Color;
+      FSymbol := ItemBase[TItemEnum(FItem.ItemID)].Symbol;
+    end;
+    Terminal.Print(X, Y, FSymbol, FColor);
   end;
 end;
 
@@ -1784,7 +1794,7 @@ begin
 
   if IsRender then
   begin
-    Terminal.ForegroundColor(D.Color);
+    Terminal.ForegroundColor(AItem.Color);
     Terminal.Print(X, Y + I, D.Symbol);
   end
   else
