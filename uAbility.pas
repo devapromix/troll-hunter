@@ -33,9 +33,9 @@ implementation
 uses GNUGetText;
 
 const
-  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green',
-    'White', 'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow',
-    'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
+  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',
+    'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
+    'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin

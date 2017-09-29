@@ -54,7 +54,8 @@ end;
 
 function TCalendar.DaysPerMonth(AMonth: Byte): Byte;
 const
-  DaysInMonth: array[1..12] of Integer = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+  DaysInMonth: array [1 .. 12] of Integer = (31, 28, 31, 30, 31, 30, 31, 31, 30,
+    31, 30, 31);
 begin
   Result := DaysInMonth[AMonth];
 end;
@@ -67,32 +68,52 @@ end;
 function TCalendar.GetDayName(): string;
 begin
   case DayOfWeek of
-    1: Result := _('Monday');
-    2: Result := _('Tuesday');
-    3: Result := _('Wednesday');
-    4: Result := _('Thursday');
-    5: Result := _('Friday');
-    6: Result := _('Saturday');
-    else Result := _('Sunday');
+    1:
+      Result := _('Monday');
+    2:
+      Result := _('Tuesday');
+    3:
+      Result := _('Wednesday');
+    4:
+      Result := _('Thursday');
+    5:
+      Result := _('Friday');
+    6:
+      Result := _('Saturday');
+  else
+    Result := _('Sunday');
   end;
 end;
 
 function TCalendar.GetMonthName(AMonth: Byte): string;
 begin
-  if (AMonth = 0) then AMonth := FMonth;
+  if (AMonth = 0) then
+    AMonth := FMonth;
   case AMonth of
-     1: Result := _('January');
-     2: Result := _('February');
-     3: Result := _('March');
-     4: Result := _('April');
-     5: Result := _('May');
-     6: Result := _('June');
-     7: Result := _('July');
-     8: Result := _('August');
-     9: Result := _('September');
-    10: Result := _('October');
-    11: Result := _('November');
-    else Result := _('December');
+    1:
+      Result := _('January');
+    2:
+      Result := _('February');
+    3:
+      Result := _('March');
+    4:
+      Result := _('April');
+    5:
+      Result := _('May');
+    6:
+      Result := _('June');
+    7:
+      Result := _('July');
+    8:
+      Result := _('August');
+    9:
+      Result := _('September');
+    10:
+      Result := _('October');
+    11:
+      Result := _('November');
+  else
+    Result := _('December');
   end;
 end;
 
@@ -104,10 +125,14 @@ end;
 function TCalendar.GetTimeStr(): string;
 begin
   case Hour of
-    6..8: Result := _('Morning');
-    9..18: Result := _('Day');
-    19..21: Result := _('Evening');
-    else Result := _('Night');
+    6 .. 8:
+      Result := _('Morning');
+    9 .. 18:
+      Result := _('Day');
+    19 .. 21:
+      Result := _('Evening');
+  else
+    Result := _('Night');
   end;
 end;
 
@@ -174,9 +199,11 @@ begin
 end;
 
 initialization
-  Calendar := TCalendar.Create(1, 1, 1297);
+
+Calendar := TCalendar.Create(1, 1, 1297);
 
 finalization
-  FreeAndNil(Calendar);
+
+FreeAndNil(Calendar);
 
 end.

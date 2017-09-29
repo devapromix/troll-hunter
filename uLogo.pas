@@ -133,12 +133,12 @@ begin
   for Y := 0 to FBitmap.Height - 1 do
     for X := 0 to FBitmap.Width - 1 do
     begin
-      //Terminal.BackgroundColor($AF * FBitmap.Canvas.Pixels[X, Y]);
+      // Terminal.BackgroundColor($AF * FBitmap.Canvas.Pixels[X, Y]);
       Terminal.ForegroundColor($AF * FBitmap.Canvas.Pixels[X, Y]);
       if (FBitmap.Canvas.Pixels[X, Y] > 0) then
-      Terminal.Print(Left + X, Top + Y, 'X');
+        Terminal.Print(Left + X, Top + Y, 'X');
     end;
-    Terminal.ForegroundColor(clDefault);
+  Terminal.ForegroundColor(clDefault);
 end;
 
 initialization

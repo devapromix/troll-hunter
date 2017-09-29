@@ -6,8 +6,9 @@ const
   AttribMax = 100;
 
 type
-  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana,
-    atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat, atLev, atExp);
+  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana,
+    atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atVis, atSat,
+    atLev, atExp);
 
 type
   TAttrib = record

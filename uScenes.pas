@@ -29,7 +29,8 @@ type
     procedure Render; virtual; abstract;
     procedure Update(var Key: Word); virtual; abstract;
     procedure AddKey(AKey, AStr: string; IsRender: Boolean = False); overload;
-    procedure AddKey(AKey, AStr, AAdvStr: string; IsRender: Boolean = False); overload;
+    procedure AddKey(AKey, AStr, AAdvStr: string;
+      IsRender: Boolean = False); overload;
   end;
 
 type
@@ -278,8 +279,8 @@ procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
   AColor: Cardinal);
 begin
   Terminal.ForegroundColor(AColor);
-  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, UI.KeyToStr(AHotKey) + ' ' + AText +
-    ':', TK_ALIGN_LEFT);
+  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, UI.KeyToStr(AHotKey) + ' ' + AText
+    + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clLightestBlue);
   Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y,
     '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
@@ -309,7 +310,8 @@ var
 begin
   if Game.IsMode then
     S := AStr
-      else S := AAdvStr;
+  else
+    S := AAdvStr;
   AddKey(AKey, S, IsRender);
 end;
 
@@ -527,9 +529,9 @@ begin
   UI.Title(_('Keybindings'), 11);
 
   Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
-    [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'), UI.KeyToStr('QWEADZXC'),
-    _('Wait'), UI.KeyToStr('5'), UI.KeyToStr('S'), _('Effects'), UI.KeyToStr('TAB')]),
-    TK_ALIGN_CENTER);
+    [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'),
+    UI.KeyToStr('QWEADZXC'), _('Wait'), UI.KeyToStr('5'), UI.KeyToStr('S'),
+    _('Effects'), UI.KeyToStr('TAB')]), TK_ALIGN_CENTER);
 
   X := 1;
   Y := 15;
@@ -603,7 +605,8 @@ var
       end;
     end;
     //
-    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S, TK_ALIGN_TOP);
+    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S,
+      TK_ALIGN_TOP);
   end;
 
   procedure AddTo(X, Y: Integer);
@@ -663,7 +666,7 @@ begin
         if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
         begin
           Terminal.BackgroundColor(clRed);
-//          Terminal.Print(DX + View.Left, DY + View.Top, ' ');
+          // Terminal.Print(DX + View.Left, DY + View.Top, ' ');
           RenderLook(X, Y, T, True);
         end;
         if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
@@ -770,7 +773,9 @@ begin
             Map.Current := Pred(Map.Current);
             Player.Wait;
           end;
-        end else MsgLog.Add(_('You cannot climb up here.'));
+        end
+        else
+          MsgLog.Add(_('You cannot climb up here.'));
       end;
     TK_PERIOD:
       begin
@@ -806,7 +811,9 @@ begin
             Map.Current := Succ(Map.Current);
             Player.Wait;
           end;
-        end else MsgLog.Add(_('You cannot climb down here.'));
+        end
+        else
+          MsgLog.Add(_('You cannot climb down here.'));
       end;
     TK_KP_MULTIPLY:
       if Player.IsDead then
@@ -869,8 +876,8 @@ begin
       Scenes.SetScene(scOptions);
     // TK_B:
     // Scenes.SetScene(scSpellbook);
-    //TK_Y:
-    //  if Game.Wizard then Items.DelCorpses;
+    // TK_Y:
+    // if Game.Wizard then Items.DelCorpses;
     // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
     // if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
@@ -898,9 +905,8 @@ end;
 procedure TSceneQuit.Render;
 begin
   Logo.Render(False);
-  Terminal.Print(CX, CY + 3,
-    Format(_('Do you wish to quit? %s/%s'), [UI.KeyToStr('Y'), UI.KeyToStr('N')]),
-    TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY + 3, Format(_('Do you wish to quit? %s/%s'),
+    [UI.KeyToStr('Y'), UI.KeyToStr('N')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneQuit.Update(var Key: Word);
@@ -923,8 +929,8 @@ begin
   Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
   if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'), [UI.KeyToStr('ENTER')]
-      ), TK_ALIGN_CENTER)
+    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'),
+      [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER)
   else
     Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
       [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
@@ -1061,37 +1067,54 @@ begin
   X := Terminal.Window.Width div 4;
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 2, Format('%s %d', [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Attrib[atLev].Value]),
-    TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 4, Format('%s %d/%d', [Terminal.Icon('F8E0') + ' ' + _('Strength'), Player.Attributes.Attrib[atStr].Value,
-    AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 6, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Dexterity'), Player.Attributes.Attrib[atDex].Value,
-    AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 8, Format('%s %d/%d', [Terminal.Icon('F8E2') + ' ' + _('Willpower'), Player.Attributes.Attrib[atWil].Value,
-    AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 10, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' + _('Perception'),
+  UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax,
+    clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 2, Format('%s %d',
+    [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Attrib[atLev]
+    .Value]), TK_ALIGN_CENTER);
+  UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax,
+    clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 4, Format('%s %d/%d',
+    [Terminal.Icon('F8E0') + ' ' + _('Strength'),
+    Player.Attributes.Attrib[atStr].Value, AttribMax]), TK_ALIGN_CENTER);
+  UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax,
+    clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 6, Format('%s %d/%d',
+    [Terminal.Icon('F8E1') + ' ' + _('Dexterity'),
+    Player.Attributes.Attrib[atDex].Value, AttribMax]), TK_ALIGN_CENTER);
+  UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax,
+    clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 8, Format('%s %d/%d',
+    [Terminal.Icon('F8E2') + ' ' + _('Willpower'),
+    Player.Attributes.Attrib[atWil].Value, AttribMax]), TK_ALIGN_CENTER);
+  UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax,
+    clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + 10, Format('%s %d/%d',
+    [Terminal.Icon('F8E3') + ' ' + _('Perception'),
     Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
 
-  UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax, clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 14, Format('%s %d/%d', [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
+  UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
+    clDarkGreen, clDarkGray);
+  Terminal.Print(X, Y + 14, Format('%s %d/%d',
+    [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
     Player.Attributes.Attrib[atDV].Value, DVMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax, clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 16, Format('%s %d/%d', [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
+  UI.Bar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax,
+    clDarkGreen, clDarkGray);
+  Terminal.Print(X, Y + 16, Format('%s %d/%d',
+    [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
     Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
-  Terminal.Print(X, Y + 18, Format('%s %d/%d', [Terminal.Icon('F8D7') + ' ' +  _('Life'), Player.Life,
-    Player.MaxLife]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 18, Format('%s %d/%d',
+    [Terminal.Icon('F8D7') + ' ' + _('Life'), Player.Life, Player.MaxLife]),
+    TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
-  Terminal.Print(X, Y + 20, Format('%s %d/%d', [Terminal.Icon('F8D9') + ' ' +  _('Mana'), Player.Mana,
-    Player.MaxMana]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 20, Format('%s %d/%d',
+    [Terminal.Icon('F8D9') + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
+    TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, clGray, clDarkGray);
-  Terminal.Print(X, Y + 22, Format('%s %d/%d', [Terminal.Icon('F8E3') + ' ' +  _('Vision radius'), Player.Vision,
-    VisionMax]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 22, Format('%s %d/%d',
+    [Terminal.Icon('F8E3') + ' ' + _('Vision radius'), Player.Vision, VisionMax]
+    ), TK_ALIGN_CENTER);
 end;
 
 procedure TScenePlayer.RenderSkills;
@@ -1488,7 +1511,8 @@ end;
 
 procedure TSceneBuy.Render;
 begin
-  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + UI.GoldLeft(Player.Gold));
+  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' +
+    UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
   Shops.Render;
@@ -1604,8 +1628,8 @@ begin
 
   Terminal.Print(CX - 5, CY - 3, Format('%s %s', [UI.KeyToStr('A'), _('Easy')]),
     TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), _('Normal')]),
-    TK_ALIGN_LEFT);
+  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), _('Normal')]
+    ), TK_ALIGN_LEFT);
   Terminal.Print(CX - 5, CY + 1, Format('%s %s', [UI.KeyToStr('C'), _('Hard')]),
     TK_ALIGN_LEFT);
   Terminal.Print(CX - 5, CY + 3, Format('%s %s', [UI.KeyToStr('D'), _('Hell')]),
@@ -1660,8 +1684,8 @@ begin
   Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'),
-    TK_ALIGN_LEFT);
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' +
+    _('Rest for 1000 turns'), TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
@@ -1868,8 +1892,7 @@ var
     begin
       Terminal.ForegroundColor(clWhite);
       with Player.Talents do
-      Terminal.Print(CX + (CX div 2), Y,
-        GetName(Talent[V].Enum));
+        Terminal.Print(CX + (CX div 2), Y, GetName(Talent[V].Enum));
     end;
     Inc(Y);
     Inc(V);
@@ -1885,7 +1908,8 @@ begin
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
     if (TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) then
-      Add(Player.Talents.GetName(T), Player.Talents.GetHint(T), Player.Talents.IsPoint);
+      Add(Player.Talents.GetName(T), Player.Talents.GetHint(T),
+        Player.Talents.IsPoint);
 
   V := 0;
   Y := 2;
@@ -1958,8 +1982,8 @@ begin
   UI.Title(_('Background'));
 
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
-    Player.Background, TK_ALIGN_BOTTOM);
+  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background,
+    TK_ALIGN_BOTTOM);
 
   AddKey('Esc', _('Close'), _('Back'), True);
 end;

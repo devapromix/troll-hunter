@@ -86,7 +86,8 @@ end;
 
 function TCreature.GetRealDamage(ADamage, APV: Word): Word;
 begin
-  Result := EnsureRange(ADamage - Round((ADamage * ((APV * 100) / PVMax)) / 100), 0, ADamage);
+  Result := EnsureRange(ADamage - Round((ADamage * ((APV * 100) / PVMax)) /
+    100), 0, ADamage);
 end;
 
 function TCreature.IsDead: Boolean;
@@ -96,9 +97,12 @@ end;
 
 procedure TCreature.SetDamage(AMin, AMax: Word);
 begin
-  if (AMin < 1) then AMin := 1;
-  if (AMax < 2) then AMax := 2;
-  if (AMin >= AMax) then AMin := AMax - 1;
+  if (AMin < 1) then
+    AMin := 1;
+  if (AMax < 2) then
+    AMax := 2;
+  if (AMin >= AMax) then
+    AMin := AMax - 1;
   Attributes.SetValue(atMinDamage, AMin);
   Attributes.SetValue(atMaxDamage, AMax);
 end;

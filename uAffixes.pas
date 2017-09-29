@@ -22,68 +22,94 @@ type
   end;
 
 type
-  TSuffixEnum = (aNone,
-    aLife1, aLife2, aLife3, aLife4, aLife5, aLife6, aLife7,
-    aMana1, aMana2, aMana3, aMana4, aMana5, aMana6, aMana7,
-    aAtr1, aAtr2, aAtr3, aAtr4, aAtr5, aAtr6, aAtr7,
-    aDefense1, aDefense2, aDefense3, aDefense4, aDefense5, aDefense6, aDefense7,
-    aDamage1, aDamage2, aDamage3, aDamage4, aDamage5, aDamage6, aDamage7,
-    aDurability1, aDurability2, aDurability3, aDurability4, aDurability5,
-    aDurability6, aDurability7);
+  TSuffixEnum = (aNone, aLife1, aLife2, aLife3, aLife4, aLife5, aLife6, aLife7,
+    aMana1, aMana2, aMana3, aMana4, aMana5, aMana6, aMana7, aAtr1, aAtr2, aAtr3,
+    aAtr4, aAtr5, aAtr6, aAtr7, aDefense1, aDefense2, aDefense3, aDefense4,
+    aDefense5, aDefense6, aDefense7, aDamage1, aDamage2, aDamage3, aDamage4,
+    aDamage5, aDamage6, aDamage7, aDurability1, aDurability2, aDurability3,
+    aDurability4, aDurability5, aDurability6, aDurability7);
 
 const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
     // None
     (),
     // Life
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Life: (Min: 1; Max: 5);),
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Life: (Min: 6; Max: 10);),
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems; Life: (Min: 11; Max: 15);),
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems; Life: (Min: 16; Max: 20);),
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Life: (Min: 21; Max: 25);),
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Life: (Min: 26; Max: 30);),
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Life: (Min: 31; Max: 35);),
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
+    Life: (Min: 1; Max: 5);), (Level: (Min: 2; Max: 5); Price: 200;
+    Occurence: DefenseTypeItems; Life: (Min: 6; Max: 10);
+    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems;
+    Life: (Min: 11; Max: 15);), (Level: (Min: 4; Max: 9); Price: 400;
+    Occurence: DefenseTypeItems; Life: (Min: 16; Max: 20);
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
+    Life: (Min: 21; Max: 25);), (Level: (Min: 6; Max: 13); Price: 750;
+    Occurence: DefenseTypeItems; Life: (Min: 26; Max: 30);
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
+    Life: (Min: 31; Max: 35);),
     // Mana
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Mana: (Min: 1; Max: 5);),
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Mana: (Min: 6; Max: 10);),
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems; Mana: (Min: 11; Max: 15);),
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems; Mana: (Min: 16; Max: 20);),
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Mana: (Min: 21; Max: 25);),
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Mana: (Min: 26; Max: 30);),
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Mana: (Min: 31; Max: 35);),
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
+    Mana: (Min: 1; Max: 5);), (Level: (Min: 2; Max: 5); Price: 200;
+    Occurence: DefenseTypeItems; Mana: (Min: 6; Max: 10);
+    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems;
+    Mana: (Min: 11; Max: 15);), (Level: (Min: 4; Max: 9); Price: 400;
+    Occurence: DefenseTypeItems; Mana: (Min: 16; Max: 20);
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
+    Mana: (Min: 21; Max: 25);), (Level: (Min: 6; Max: 13); Price: 750;
+    Occurence: DefenseTypeItems; Mana: (Min: 26; Max: 30);
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
+    Mana: (Min: 31; Max: 35);),
     // Atr
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Life: (Min: 1; Max: 3); Mana: (Min: 1; Max: 3);),
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Life: (Min: 4; Max: 6); Mana: (Min: 4; Max: 6);),
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems; Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9);),
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems; Life: (Min: 10; Max: 12); Mana: (Min: 10; Max: 12);),
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Life: (Min: 13; Max: 15); Mana: (Min: 13; Max: 15);),
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Life: (Min: 16; Max: 20); Mana: (Min: 16; Max: 20);),
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Life: (Min: 21; Max: 25); Mana: (Min: 21; Max: 25);),
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
+    Life: (Min: 1; Max: 3); Mana: (Min: 1; Max: 3);), (Level: (Min: 2; Max: 5);
+    Price: 200; Occurence: DefenseTypeItems; Life: (Min: 4; Max: 6);
+    Mana: (Min: 4; Max: 6);), (Level: (Min: 3; Max: 7); Price: 300;
+    Occurence: DefenseTypeItems; Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9);
+    ), (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems;
+    Life: (Min: 10; Max: 12); Mana: (Min: 10; Max: 12);
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
+    Life: (Min: 13; Max: 15); Mana: (Min: 13; Max: 15);
+    ), (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems;
+    Life: (Min: 16; Max: 20); Mana: (Min: 16; Max: 20);
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
+    Life: (Min: 21; Max: 25); Mana: (Min: 21; Max: 25);),
     // Defense
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems; Defense: (Min: 1; Max: 4);),
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems; Defense: (Min: 5; Max: 8);),
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems; Defense: (Min: 9; Max: 12);),
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems; Defense: (Min: 11; Max: 16);),
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems; Defense: (Min: 17; Max: 20);),
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems; Defense: (Min: 20; Max: 25);),
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems; Defense: (Min: 25; Max: 30);),
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
+    Defense: (Min: 1; Max: 4);), (Level: (Min: 2; Max: 5); Price: 200;
+    Occurence: DefenseTypeItems; Defense: (Min: 5; Max: 8);
+    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems;
+    Defense: (Min: 9; Max: 12);), (Level: (Min: 4; Max: 9); Price: 400;
+    Occurence: DefenseTypeItems; Defense: (Min: 11; Max: 16);
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
+    Defense: (Min: 17; Max: 20);), (Level: (Min: 6; Max: 13); Price: 750;
+    Occurence: DefenseTypeItems; Defense: (Min: 20; Max: 25);
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
+    Defense: (Min: 25; Max: 30);),
     // Damage
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 1; Max: 3); MaxDamage: (Min: 3; Max: 5));),
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 3; Max: 6); MaxDamage: (Min: 6; Max: 10));),
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 6; Max: 9); MaxDamage: (Min: 9; Max: 15));),
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 9; Max: 12); MaxDamage: (Min: 12; Max: 20));),
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 12; Max: 15); MaxDamage: (Min: 15; Max: 25));),
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 15; Max: 18); MaxDamage: (Min: 18; Max: 30));),
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DamageTypeItems; Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35));),
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 1; Max: 3); MaxDamage: (Min: 3; Max: 5));
+    ), (Level: (Min: 2; Max: 5); Price: 200; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 3; Max: 6); MaxDamage: (Min: 6; Max: 10));
+    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 6; Max: 9); MaxDamage: (Min: 9; Max: 15));
+    ), (Level: (Min: 4; Max: 9); Price: 400; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 9; Max: 12); MaxDamage: (Min: 12; Max: 20));
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 12; Max: 15); MaxDamage: (Min: 15; Max: 25));
+    ), (Level: (Min: 6; Max: 13); Price: 750; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 15; Max: 18); MaxDamage: (Min: 18; Max: 30));
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DamageTypeItems;
+    Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35));),
     // Durability
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: IdentTypeItems; MaxDurability: (Min: 10; Max: 20);),
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: IdentTypeItems; MaxDurability: (Min: 20; Max: 30);),
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: IdentTypeItems; MaxDurability: (Min: 30; Max: 40);),
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: IdentTypeItems; MaxDurability: (Min: 40; Max: 50);),
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: IdentTypeItems; MaxDurability: (Min: 50; Max: 60);),
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: IdentTypeItems; MaxDurability: (Min: 60; Max: 70);),
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: IdentTypeItems; MaxDurability: (Min: 70; Max: 80);)
-    );
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: IdentTypeItems;
+    MaxDurability: (Min: 10; Max: 20);), (Level: (Min: 2; Max: 5); Price: 200;
+    Occurence: IdentTypeItems; MaxDurability: (Min: 20; Max: 30);
+    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: IdentTypeItems;
+    MaxDurability: (Min: 30; Max: 40);), (Level: (Min: 4; Max: 9); Price: 400;
+    Occurence: IdentTypeItems; MaxDurability: (Min: 40; Max: 50);
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: IdentTypeItems;
+    MaxDurability: (Min: 50; Max: 60);), (Level: (Min: 6; Max: 13); Price: 750;
+    Occurence: IdentTypeItems; MaxDurability: (Min: 60; Max: 70);
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: IdentTypeItems;
+    MaxDurability: (Min: 70; Max: 80);));
 
 type
   TAffixes = class
@@ -106,30 +132,30 @@ begin
   SB := SuffixBase[TSuffixEnum(AItem.Identify)];
   case TSuffixEnum(AItem.Identify) of
     // Life
-    aLife1..aLife7:
+    aLife1 .. aLife7:
       begin
 
       end;
     // Mana
-    aMana1..aMana7:
+    aMana1 .. aMana7:
       begin
 
       end;
     // Mana
-    aAtr1..aAtr7:
+    aAtr1 .. aAtr7:
       begin
 
       end;
     // Defense
-    aDefense1..aDefense7:
+    aDefense1 .. aDefense7:
       begin
         if (SB.Defense.Min > 0) then
-          AItem.Defense := AItem.Defense +
-            Math.EnsureRange(Math.RandomRange(SB.Defense.Min,
-            SB.Defense.Max + 1), 1, High(Byte));
+          AItem.Defense := AItem.Defense + Math.EnsureRange
+            (Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1,
+            High(Byte));
       end;
     // Damage
-    aDamage1..aDamage7:
+    aDamage1 .. aDamage7:
       begin
         if (SB.Damage.MinDamage.Min > 0) then
           AItem.MinDamage := AItem.MinDamage +
@@ -141,7 +167,7 @@ begin
             SB.Damage.MaxDamage.Max + 1), 2, High(Byte));
       end;
     // Durability
-    aDurability1..aDurability7:
+    aDurability1 .. aDurability7:
       begin
         if (SB.MaxDurability.Min > 0) then
           AItem.MaxDurability := AItem.MaxDurability +
