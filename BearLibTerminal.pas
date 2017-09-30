@@ -188,6 +188,7 @@ const
 
 {$IFNDEF FPC}
 type
+  UInt8 = Byte;
   Int32 = Integer;
   PInt32 = ^Integer;
   UInt32 = Cardinal;
@@ -353,7 +354,7 @@ function color_from_name(const Name: AnsiString): UInt32; overload;
 function color_from_name(const Name: WideString): UInt32; overload;
 
 // ColorFromARGB
-function color_from_argb(a, r, g, b: Int32): UInt32;
+function color_from_argb(a, r, g, b: UInt8): UInt32;
 
 // ----------------------------------------------------------------------------
 // Module implementation
@@ -611,12 +612,8 @@ begin
     color_from_name := color_from_name_unicode(PWideChar(Name));
 end;
 
-function color_from_argb(a, r, g, b: Int32): UInt32;
+function color_from_argb(a, r, g, b: UInt8): UInt32;
 begin
-    if a > 255 then a := 255;
-    if r > 255 then r := 255;
-    if g > 255 then g := 255;
-    if b > 255 then b := 255;
     color_from_argb := (a shl 24) or (r shl 16) or (g shl 8) or b;
 end;
 

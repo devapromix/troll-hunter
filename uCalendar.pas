@@ -44,8 +44,9 @@ uses SysUtils, Math, GNUGetText, uItem, uShop, uGame;
 
 constructor TCalendar.Create(const ADay, AMonth: Byte; const AYear: Word);
 begin
-  FMinute := Math.RandomRange(10, 30);
-  FHour := Math.RandomRange(1, 6);
+  Randomize();
+  FMinute := Math.RandomRange(0, 60);
+  FHour := Math.RandomRange(9, 18);
   FDay := ADay;
   FDayOfWeek := ADay;
   FMonth := AMonth;
@@ -143,7 +144,7 @@ end;
 
 procedure TCalendar.OnHour();
 begin
-  Game.Log('Hour');
+  //Game.Log('Hour');
 end;
 
 procedure TCalendar.OnMonth();
@@ -165,7 +166,7 @@ end;
 
 procedure TCalendar.Turn();
 begin
-  Inc(FMinute, 10);
+  Inc(FMinute);
   if (Minute > SysUtils.MinsPerHour - 1) then
   begin
     FMinute := Minute - SysUtils.MinsPerHour;

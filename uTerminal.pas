@@ -29,8 +29,10 @@ type
     procedure Init;
     procedure Clear;
     procedure Refresh;
-    procedure BackgroundColor(Value: Cardinal);
-    procedure ForegroundColor(Value: Cardinal);
+    procedure BackgroundColor(Value: Cardinal); overload;
+    procedure BackgroundColor(Value: Integer); overload;
+    procedure ForegroundColor(Value: Cardinal); overload;
+    procedure ForegroundColor(Value: Integer); overload;
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
     procedure Print(AX, AY: Integer; AChar: Char;
       AForegroundColor: Cardinal;
@@ -48,6 +50,7 @@ type
     function Icon(const ANum: string; const AColor: string = ''): string; overload;
     function GetTextScreenshot: string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
+    function GetColor(Color: Integer): Cardinal;
   end;
 
 var
@@ -55,13 +58,18 @@ var
 
 implementation
 
-uses SysUtils, Classes, Math, Dialogs, uGame, GNUGetText;
+uses Windows, SysUtils, Classes, Math, Dialogs, uGame, GNUGetText;
 
 { TTerminal }
 
 procedure TTerminal.BackgroundColor(Value: Cardinal);
 begin
   terminal_bkcolor(Value);
+end;
+
+procedure TTerminal.BackgroundColor(Value: Integer);
+begin
+  terminal_bkcolor(GetColor(Value));
 end;
 
 procedure TTerminal.Clear;
@@ -92,9 +100,29 @@ begin
   inherited;
 end;
 
+procedure TTerminal.ForegroundColor(Value: Integer);
+begin
+  terminal_color(GetColor(Value));
+end;
+
 procedure TTerminal.ForegroundColor(Value: Cardinal);
 begin
   terminal_color(Value);
+end;
+
+function TTerminal.GetColor(Color: Integer): Cardinal;
+var
+  R, G, B: Byte;
+  C: Integer;
+begin
+  if Color < 0 then
+    C := GetSysColor(Color and $000000FF)
+  else
+    C := Color;
+  R := GetRValue(C);
+  G := GetGValue(C);
+  B := GetBValue(C);
+  Result := color_from_argb($FF, R, G, B);
 end;
 
 function TTerminal.GetColorFromIni(AKey: string; ADefault: string): Cardinal;

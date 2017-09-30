@@ -129,14 +129,17 @@ end;
 procedure TSword.Render(Left, Top: Byte);
 var
   X, Y: Byte;
+  Color: Integer;
 begin
   for Y := 0 to FBitmap.Height - 1 do
     for X := 0 to FBitmap.Width - 1 do
     begin
-      // Terminal.BackgroundColor($AF * FBitmap.Canvas.Pixels[X, Y]);
-      Terminal.ForegroundColor($AF * FBitmap.Canvas.Pixels[X, Y]);
-      if (FBitmap.Canvas.Pixels[X, Y] > 0) then
+      Color := FBitmap.Canvas.Pixels[X, Y];
+      Terminal.ForegroundColor(Color);
+      if (Color > 0) then
+      begin
         Terminal.Print(Left + X, Top + Y, 'X');
+      end;
     end;
   Terminal.ForegroundColor(clDefault);
 end;
