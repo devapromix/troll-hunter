@@ -1782,6 +1782,10 @@ var
   D: TItemBase;
   RepairCost: Word;
 
+const
+  T = '------';
+  L = Length(T) + 1;
+
   function GetRedPrice(Price: Word): string;
   begin
     Result := Terminal.Colorize(Terminal.Icon('F8D5') + IntToStr(Price), 'Light Red');
@@ -1819,7 +1823,7 @@ begin
     case PriceType of
       ptSell:
         begin
-          S := '------';
+          S := T;
           if ((AItem.Price > 1) and not ChItem(AItem)) then
           begin
             S := GetPrice(AItem.Price div 4, True);
@@ -1833,7 +1837,7 @@ begin
         end;
       ptRepair:
         begin
-          S := '------';
+          S := T;
           if ((AItem.Stack = 1) and (AItem.Amount = 1)) then
           begin
             RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
@@ -1842,7 +1846,10 @@ begin
           end;
         end;
     end;
-    Terminal.Print(Screen.Width - 7, Y + I, S);
+    if Game.Timer > 0 then
+      Terminal.Print(Status.Left - L, Y + I, S)
+    else
+      Terminal.Print(Screen.Width - L, Y + I, S);
   end
   else
     Result := Result + S;

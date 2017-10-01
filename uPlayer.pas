@@ -1218,10 +1218,16 @@ begin
   end
   else
   begin
-    Items.AddItemToInv(iCap, 1, True, True);
-    Items.AddItemToInv(iQuiltedArmor, 1, True, True);
-    Items.AddItemToInv(iLeatherGloves, 1, True, True);
-    Items.AddItemToInv(iShoes, 1, True, True);
+    if (Game.Difficulty < dfHard) then
+    begin
+      Items.AddItemToInv(iCap, 1, True, True);
+      Items.AddItemToInv(iQuiltedArmor, 1, True, True);
+    end;
+    if (Game.Difficulty < dfNormal) then
+    begin
+      Items.AddItemToInv(iLeatherGloves, 1, True, True);
+      Items.AddItemToInv(iShoes, 1, True, True);
+    end;
   end;
   // Add weapon
   if Game.Wizard then
@@ -1264,7 +1270,9 @@ begin
   begin
     Items.AddItemToInv(iLesserHealingPotion, 5);
     Items.AddItemToInv(iLesserManaPotion, 5);
-    Items.AddItemToInv(iAntidote, 1);
+    Items.AddItemToInv(iAntidote, 3);
+    Items.AddItemToInv(iScrollOfTownPortal);
+    Items.AddItemToInv(iScrollOfIdentify);
   end;
   // Add foods
   Items.AddItemToInv(iBreadRation, IfThen(Game.Wizard, 10, 3));

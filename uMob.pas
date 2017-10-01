@@ -814,7 +814,7 @@ begin
     begin
       Abilities.Ability[abSleeping] := 0;
       Player.Skills.DoSkill(skStealth);
-      //if Map.GetFOV(Self.X, Self.Y) then
+      if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
       begin
         The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
         MsgLog.Add(Format(_('%s notices you!'), [The]));
