@@ -816,7 +816,7 @@ begin
           MsgLog.Add(_('You cannot climb down here.'));
       end;
     TK_KP_MULTIPLY:
-      if Player.IsDead then
+      if Game.Wizard then
       begin
         Player.Fill;
       end;
@@ -825,6 +825,7 @@ begin
         if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
         begin
           Player.Spawn;
+          Player.Fill;
           Exit;
         end;
         Scenes.SetScene(scDef);
