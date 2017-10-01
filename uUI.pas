@@ -46,7 +46,7 @@ var
 begin
   if Game.Wizard then
     for I := 'A' to 'Z' do
-      Terminal.Print(1, Ord(I) + 2, Format(F, [I]), clGray);
+      Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray);
 end;
 
 class function UI.GoldLeft(V: Word): string;

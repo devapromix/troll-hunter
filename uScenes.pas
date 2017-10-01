@@ -1737,7 +1737,7 @@ begin
     TK_ESCAPE:
       begin
         Player.Talents.Clear;
-        Scenes.SetScene(scTalents);
+        Scenes.SetScene(scTalents, scDifficulty);
       end;
   end;
 end;

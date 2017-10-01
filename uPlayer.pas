@@ -58,7 +58,7 @@ type
     procedure GenNPCText;
     function GetVision: Byte;
     function GetSatiation: Word;
-    function GenerateBackground: string;
+    function GenerateBackground(): string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -131,7 +131,7 @@ uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
 { TPlayer }
 
 // Generate a random background (from Kharne roguelike)
-function TPlayer.GenerateBackground: string;
+function TPlayer.GenerateBackground(): string;
 type
   TConPartsEnum = (cpChild, cpClass, cpParent, cpCredit, cpBackground,
     cpEyeType, cpEyeColour, cpHairStyle, cpHairColour, cpComplexion);
@@ -474,6 +474,7 @@ begin
   inherited Clear;
   Skills.Clear;
   Spellbook.Clear;
+  Items_Inventory_Clear();
   Killer := '';
   Look := False;
   IsRest := False;
@@ -484,7 +485,7 @@ begin
   Name := _('PLAYER');
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
-  FBackground := GenerateBackground;
+  FBackground := GenerateBackground();
   Calc;
   Fill;
 end;
@@ -1206,6 +1207,7 @@ procedure TPlayer.Start();
 var
   D: Byte;
 begin
+  
   // Add armors
   if Game.Wizard then
   begin
