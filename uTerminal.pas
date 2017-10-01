@@ -5,6 +5,13 @@ interface
 uses Types, BearLibTerminal;
 
 type
+  TGlyph = record
+    Symbol: string;
+    ForegroundColor: Cardinal;
+    BackgroundColor: Cardinal;
+  end;
+
+type
   TSize = Types.TSize;
 
 type
@@ -30,11 +37,9 @@ type
     procedure Clear;
     procedure Refresh;
     procedure BackgroundColor(Value: Cardinal); overload;
-    procedure BackgroundColor(Value: Integer); overload;
     procedure ForegroundColor(Value: Cardinal); overload;
-    procedure ForegroundColor(Value: Integer); overload;
     procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
-    procedure Print(AX, AY: Integer; AChar: Char;
+    procedure Print(AX, AY: Integer; AText: string;
       AForegroundColor: Cardinal;
       ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
@@ -58,18 +63,13 @@ var
 
 implementation
 
-uses Windows, SysUtils, Classes, Math, Dialogs, uGame, GNUGetText;
+uses SysUtils, Classes, Math, Dialogs, uGame, GNUGetText;
 
 { TTerminal }
 
 procedure TTerminal.BackgroundColor(Value: Cardinal);
 begin
   terminal_bkcolor(Value);
-end;
-
-procedure TTerminal.BackgroundColor(Value: Integer);
-begin
-  terminal_bkcolor(GetColor(Value));
 end;
 
 procedure TTerminal.Clear;
@@ -100,29 +100,14 @@ begin
   inherited;
 end;
 
-procedure TTerminal.ForegroundColor(Value: Integer);
-begin
-  terminal_color(GetColor(Value));
-end;
-
 procedure TTerminal.ForegroundColor(Value: Cardinal);
 begin
   terminal_color(Value);
 end;
 
 function TTerminal.GetColor(Color: Integer): Cardinal;
-var
-  R, G, B: Byte;
-  C: Integer;
 begin
-  if Color < 0 then
-    C := GetSysColor(Color and $000000FF)
-  else
-    C := Color;
-  R := GetRValue(C);
-  G := GetGValue(C);
-  B := GetBValue(C);
-  Result := color_from_argb($FF, R, G, B);
+  Result := color_from_argb($FF, Byte(Color), Byte(Color shr 8), Byte(Color shr 16));
 end;
 
 function TTerminal.GetColorFromIni(AKey: string; ADefault: string): Cardinal;
@@ -220,13 +205,13 @@ begin
   terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
 end;
 
-procedure TTerminal.Print(AX, AY: Integer; AChar: Char;
+procedure TTerminal.Print(AX, AY: Integer; AText: string;
   AForegroundColor: Cardinal;
   ABackgroundColor: Cardinal = 0);
 begin
   terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);
-  terminal_print(AX, AY, TK_ALIGN_DEFAULT, AChar);
+  terminal_print(AX, AY, TK_ALIGN_DEFAULT, AText);
 end;
 
 procedure TTerminal.Refresh;

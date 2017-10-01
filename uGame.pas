@@ -146,7 +146,6 @@ constructor TGame.Create;
 var
   I: Byte;
   J: TAPOptionEnum;
-  B: TBitmap;
 begin
   Randomize;
   Timer := 0;

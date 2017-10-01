@@ -33,7 +33,7 @@ begin
   for I := 0 to L do
   begin
     Terminal.BackgroundColor(DarkColor);
-    if (I <= W) and (Cur > 0) then
+    if ((I <= W) and (Cur > 0)) then
       Terminal.BackgroundColor(AColor);
     Terminal.Print(X + I + LM, Y, ' ');
     Terminal.BackgroundColor(0); // Clear background
@@ -46,15 +46,12 @@ var
 begin
   if Game.Wizard then
     for I := 'A' to 'Z' do
-    begin
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(1, Ord(I) + 2, Format(F, [I]), TK_ALIGN_LEFT);
-    end;
+      Terminal.Print(1, Ord(I) + 2, Format(F, [I]), clGray);
 end;
 
 class function UI.GoldLeft(V: Word): string;
 begin
-  Result := Format(F, [Format(Terminal.Icon('F8D5') + ' '
+  Result := Format(F, [Format(Terminal.Icon('F8D5')
     + _('%d gold left'), [V])]);
 end;
 

@@ -135,10 +135,10 @@ begin
     for X := 0 to FBitmap.Width - 1 do
     begin
       Color := FBitmap.Canvas.Pixels[X, Y];
-      Terminal.ForegroundColor(Color);
+      Terminal.ForegroundColor(Terminal.GetColor(Color));
       if (Color > 0) then
       begin
-        Terminal.Print(Left + X, Top + Y, 'X');
+        Terminal.Print(Left + X, Top + Y, '#');
       end;
     end;
   Terminal.ForegroundColor(clDefault);
