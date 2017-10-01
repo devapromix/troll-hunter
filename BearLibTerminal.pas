@@ -298,18 +298,18 @@ function terminal_print(const X, Y, Alignment: Int32; const S: AnsiString): TSiz
 
 function terminal_print(const X, Y, Alignment: Int32; const S: WideString): TSize; overload;
 
-function terminal_print(const X, Y, W, H, Alignment: Int32; const S: AnsiString): TSize; overload;
+function terminal_print(const X, Y, Width, Height, Alignment: Int32; const S: AnsiString): TSize; overload;
 
-function terminal_print(const X, Y, W, H, Alignment: Int32; const S: WideString): TSize; overload;
+function terminal_print(const X, Y, Width, Height, Alignment: Int32; const S: WideString): TSize; overload;
 
 // Measure
 function terminal_measure(const S: AnsiString): TSize; overload;
 
 function terminal_measure(const S: WideString): TSize; overload;
 
-function terminal_measure(const W, H: Int32; const S: AnsiString): TSize; overload;
+function terminal_measure(const Width, Height: Int32; const S: AnsiString): TSize; overload;
 
-function terminal_measure(const W, H: Int32; const S: WideString): TSize; overload;
+function terminal_measure(const Width, Height: Int32; const S: WideString): TSize; overload;
 
 // HasInput
 function terminal_has_input(): LongBool;
@@ -457,10 +457,10 @@ begin;
     terminal_pick_color := terminal_pick_color(X, Y, 0);
 end;
 
-procedure terminal_print_ansi(const X, Y, W, H, Alignment: Int32; const S: PAnsiChar; const OutW, OutH: PInt32);
+procedure terminal_print_ansi(const X, Y, Width, Height, Alignment: Int32; const S: PAnsiChar; const OutW, OutH: PInt32);
   cdecl; external 'BearLibTerminal' name 'terminal_print_ext8';
 
-procedure terminal_print_unicode(const X, Y, W, H, Alignment: Int32; const S: PWideChar; const OutW, OutH: PInt32);
+procedure terminal_print_unicode(const X, Y, Width, Height, Alignment: Int32; const S: PWideChar; const OutW, OutH: PInt32);
   cdecl; external 'BearLibTerminal' name 'terminal_print_ext16';
 
 function terminal_print(const X, Y: Int32; const S: AnsiString): TSize;
@@ -483,28 +483,28 @@ begin
     terminal_print := terminal_print(X, Y, 0, 0, Alignment, S);
 end;
 
-function terminal_print(const X, Y, W, H, Alignment: Int32; const S: AnsiString): TSize;
+function terminal_print(const X, Y, Width, Height, Alignment: Int32; const S: AnsiString): TSize;
 var
     OutW, OutH: Int32;
 begin
-    terminal_print_ansi(X, Y, W, H, Alignment, PAnsiChar(S), @OutW, @OutH);
+    terminal_print_ansi(X, Y, Width, Height, Alignment, PAnsiChar(S), @OutW, @OutH);
     terminal_print.cx := OutW;
     terminal_print.cy := OutH;
 end;
 
-function terminal_print(const X, Y, W, H, Alignment: Int32; const S: WideString): TSize;
+function terminal_print(const X, Y, Width, Height, Alignment: Int32; const S: WideString): TSize;
 var
     OutW, OutH: Int32;
 begin
-    terminal_print_unicode(X, Y, W, H, Alignment, PWideChar(S), @OutW, @OutH);
+    terminal_print_unicode(X, Y, Width, Height, Alignment, PWideChar(S), @OutW, @OutH);
     terminal_print.cx := OutW;
     terminal_print.cy := OutH;
 end;
 
-procedure terminal_measure_ansi(const W, H: Int32; const S: PAnsiChar; OutW, OutH: PInt32);
+procedure terminal_measure_ansi(const Width, Height: Int32; const S: PAnsiChar; OutW, OutH: PInt32);
   cdecl; external 'BearLibTerminal' name 'terminal_measure_ext8';
 
-procedure terminal_measure_unicode(const W, H: Int32; const S: PWideChar; OutW, OutH: PInt32);
+procedure terminal_measure_unicode(const Width, Height: Int32; const S: PWideChar; OutW, OutH: PInt32);
   cdecl; external 'BearLibTerminal' name 'terminal_measure_ext16';
 
 function terminal_measure(const S: AnsiString): TSize;
@@ -517,20 +517,20 @@ begin
     terminal_measure := terminal_measure(0, 0, S);
 end;
 
-function terminal_measure(const W, H: Int32; const S: AnsiString): TSize;
+function terminal_measure(const Width, Height: Int32; const S: AnsiString): TSize;
 var
     OutW, OutH: Int32;
 begin
-    terminal_measure_ansi(W, H, PAnsiChar(S), @OutW, @OutH);
+    terminal_measure_ansi(Width, Height, PAnsiChar(S), @OutW, @OutH);
     terminal_measure.cx := OutW;
     terminal_measure.cy := OutH;
 end;
 
-function terminal_measure(const W, H: Int32; const S: WideString): TSize;
+function terminal_measure(const Width, Height: Int32; const S: WideString): TSize;
 var
     OutW, OutH: Int32;
 begin
-    terminal_measure_unicode(W, H, PWideChar(S), @OutW, @OutH);
+    terminal_measure_unicode(Width, Height, PWideChar(S), @OutW, @OutH);
     terminal_measure.cx := OutW;
     terminal_measure.cy := OutH;
 end;
