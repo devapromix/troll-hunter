@@ -99,16 +99,16 @@ const
     ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DamageTypeItems;
     Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35));),
     // Durability
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: IdentTypeItems;
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: SmithTypeItems;
     MaxDurability: (Min: 10; Max: 20);), (Level: (Min: 2; Max: 5); Price: 200;
     Occurence: IdentTypeItems; MaxDurability: (Min: 20; Max: 30);
-    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: IdentTypeItems;
+    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: SmithTypeItems;
     MaxDurability: (Min: 30; Max: 40);), (Level: (Min: 4; Max: 9); Price: 400;
     Occurence: IdentTypeItems; MaxDurability: (Min: 40; Max: 50);
-    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: IdentTypeItems;
+    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: SmithTypeItems;
     MaxDurability: (Min: 50; Max: 60);), (Level: (Min: 6; Max: 13); Price: 750;
     Occurence: IdentTypeItems; MaxDurability: (Min: 60; Max: 70);
-    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: IdentTypeItems;
+    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: SmithTypeItems;
     MaxDurability: (Min: 70; Max: 80);));
 
 type
@@ -123,7 +123,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uTerminal, GNUGetText;
+uses SysUtils, Math, uTerminal, GNUGetText, uGame;
 
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
@@ -170,9 +170,15 @@ begin
     aDurability1 .. aDurability7:
       begin
         if (SB.MaxDurability.Min > 0) then
+        begin
           AItem.MaxDurability := AItem.MaxDurability +
             Math.EnsureRange(Math.RandomRange(SB.MaxDurability.Min,
             SB.MaxDurability.Max + 1), 1, High(Byte));
+          case Game.Difficulty of
+            dfEasy: AItem.Durability := AItem.MaxDurability;
+            dfHell: AItem.Durability := Math.RandomRange(0, 5) + 1;
+          end;
+        end;
       end;
   end;
   // Price
