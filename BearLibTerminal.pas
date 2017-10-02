@@ -414,7 +414,7 @@ begin
 	terminal_font_unicode(PWideChar(Name));
 end;
 
-procedure terminal_put_integer(X, Y: Int32; Code: Int32);
+procedure terminal_put_integer(const X, Y, Code: Int32);
   cdecl; external 'BearLibTerminal' name 'terminal_put';
 
 procedure terminal_put(const X, Y, Code: Int32);
@@ -545,14 +545,14 @@ function terminal_read_str_ansi(const X, Y: Int32; const S: PAnsiChar; const Max
 
 function terminal_read_str(const X, Y: Int32; var S: AnsiString; const MaxLength: Int32): Int32;
 var
-    i: Integer;
+    I: Integer;
 begin
-    SetLength(S, MaxLength*3+1); // Bigger size to accomodate possible UTF-8 string.
+    SetLength(S, MaxLength * 3 + 1); // Bigger size to accomodate possible UTF-8 string.
     terminal_read_str := terminal_read_str_ansi(X, Y, PAnsiChar(S), MaxLength);
-    for i := 1 to MaxLength*3+1 do
-        if S[i] = AnsiChar(0) then
+    for I := 1 to MaxLength * 3 + 1 do
+        if S[I] = AnsiChar(0) then
             break;
-    SetLength(S, i);
+    SetLength(S, I);
 end;
 
 function terminal_read_str_unicode(const X, Y: Int32; S: PWideChar; const MaxLength: Int32): Int32;
@@ -560,14 +560,14 @@ function terminal_read_str_unicode(const X, Y: Int32; S: PWideChar; const MaxLen
 
 function terminal_read_str(const X, Y: Int32; var S: WideString; const MaxLength: Int32): Int32;
 var
-    i: Integer;
+    I: Integer;
 begin
     SetLength(S, MaxLength);
     terminal_read_str := terminal_read_str_unicode(X, Y, PWideChar(S), MaxLength);
-    for i := 1 to MaxLength do
-        if S[i] = WideChar(0) then
+    for I := 1 to MaxLength do
+        if S[I] = WideChar(0) then
             break;
-    SetLength(S, i);
+    SetLength(S, I);
 end;
 
 function terminal_get_ansi(const S, Default: PAnsiChar): PAnsiChar;
