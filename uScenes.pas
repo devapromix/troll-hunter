@@ -714,6 +714,8 @@ begin
 end;
 
 procedure TSceneGame.Update(var Key: Word);
+var
+  I: Item;
 begin
   MsgLog.Turn;
   MsgLog.Msg := '';
@@ -877,7 +879,11 @@ begin
       Scenes.SetScene(scOptions);
     // TK_B:
     // Scenes.SetScene(scSpellbook);
-    // TK_Y:
+    TK_Y:
+    if Game.Wizard then 
+    begin
+    end;
+
     // if Game.Wizard then Items.DelCorpses;
     // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
     // if Game.Wizard then Player.AddExp(LevelExpMax);
@@ -1112,7 +1118,7 @@ begin
   Terminal.Print(X, Y + 20, Format('%s %d/%d',
     [Terminal.Icon('F8D9') + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
     TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, clGray, clDarkGray);
+  UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, color_from_name('vision'), clDarkGray);
   Terminal.Print(X, Y + 22, Format('%s %d/%d',
     [Terminal.Icon('F8E3') + ' ' + _('Vision radius'), Player.Vision, VisionMax]
     ), TK_ALIGN_CENTER);

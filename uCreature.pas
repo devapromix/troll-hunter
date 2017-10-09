@@ -9,7 +9,7 @@ const
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-    efTownPortal, efMagicEye, efCurePoison, efCureWeak, efPrmGold,
+    efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
     efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife,
     efPrmMana, efPrmDV, efPrmPV);

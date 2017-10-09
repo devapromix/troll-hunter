@@ -898,6 +898,9 @@ type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
+  TBonusType = (btLife, btMana, btVision, btNN);
+
+type
   TItems = class(TEntity)
   private
     function GetName(I: TItemEnum): string; overload;
@@ -935,6 +938,8 @@ type
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
+    procedure SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: Byte);
+    function GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
     procedure DelCorpses();
     procedure AddPlants;
   end;
@@ -1060,8 +1065,18 @@ begin
     K := '';
     if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
       K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
+    if (AItem.Bonus > 0) then
+    begin
+      if (Items.GetBonus(AItem, btVision) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVision), 'Vision');
+      if (Items.GetBonus(AItem, btLife) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife), 'Life');
+      if (Items.GetBonus(AItem, btMana) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana), 'Mana');
+    end;
     S := S + AddItemInfo([K, T, Format('%s%d/%d', [Terminal.Icon('F8DA'),
       AItem.Durability, AItem.MaxDurability])]);
+
     if (AItem.Identify = 0) or Player.Look then S := '';
   end;
   Result := Trim(Format('%s %s', [Items.GetName(AItem), S]));
@@ -1085,7 +1100,7 @@ end;
 
 class procedure TItems.Make(ID: Byte; var AItem: Item);
 
-  function ChIdentify: Boolean;
+  function IsIdentify(): Boolean;
   begin
     Result := False;
     if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
@@ -1131,10 +1146,12 @@ begin
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
+  // Bonus
+  AItem.Bonus := 0;
   // Price
   CalcItem(AItem);
   // Affix
-  AItem.Identify := Math.IfThen(ChIdentify, 0, -1);
+  AItem.Identify := Math.IfThen(IsIdentify(), 0, -1);
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
@@ -1766,10 +1783,12 @@ var
 begin
   S := '@';
   Result := '';
+  if (Sign = '*') then Sign := '';
   if (Color = 'Life') then S := Terminal.Icon('F8D7');
   if (Color = 'Mana') then S := Terminal.Icon('F8D9');
   if (Color = 'Food') then S := Terminal.Icon('F8DD');
   if (Color = 'Poison') then S := Terminal.Icon('F8E7');
+  if (Color = 'Vision') then S := Terminal.Icon('F8E3');
   if (Value > 0) then
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;
@@ -1853,6 +1872,45 @@ begin
   end
   else
     Result := Result + S;
+end;
+
+function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
+begin
+  case BonusType of
+    btLife:
+      Result := Byte(AItem.Bonus shr 24);
+    btMana:
+      Result := Byte(AItem.Bonus shr 16);
+    btVision:
+      Result := Byte(AItem.Bonus shr 8);
+    btNN:
+      Result := Byte(AItem.Bonus);
+    else
+      Result := 0;
+  end;
+end;
+
+procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType;
+  const Value: Byte);
+var
+  V: array[0..3] of Byte;
+begin
+  V[0] := GetBonus(AItem, btLife);
+  V[1] := GetBonus(AItem, btMana);
+  V[2] := GetBonus(AItem, btVision);
+  V[3] := GetBonus(AItem, btNN);
+
+  case BonusType of
+    btLife:
+      V[0] := Value;
+    btMana:
+      V[1] := Value;
+    btVision:
+      V[2] := Value;
+    btNN:
+      V[3] := Value;
+  end;
+  AItem.Bonus := (V[0] shl 24) or (V[1] shl 16) or (V[2] shl 8) or V[3];
 end;
 
 function TItems.AddItemInfo(V: array of string): string;

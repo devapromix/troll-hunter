@@ -292,7 +292,7 @@ procedure TMap.ClearFOV;
 var
   X, Y, V: Integer;
 begin
-  V := Player.Attributes.Attrib[atVis].Value;
+  V := Player.Attributes.Attrib[atVision].Value;
   for Y := Player.Y - V to Player.Y + V do
     for X := Player.X - V to Player.X + V do
       FFOV[Self.EnsureRange(X)][Self.EnsureRange(Y)] := False;

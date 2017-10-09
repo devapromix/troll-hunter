@@ -422,9 +422,12 @@ begin
       AddAttrib(atDef, FItem.Defense);
       AddAttrib(atMinDamage, FItem.MinDamage);
       AddAttrib(atMaxDamage, FItem.MaxDamage);
-
-//      FLife := FLife + FItem.?;
-//      FMana := FMana + FItem.?;
+      if (FItem.Bonus > 0) then
+      begin
+        AddAttrib(atMaxLife, Items.GetBonus(FItem, btLife));
+        AddAttrib(atMaxMana, Items.GetBonus(FItem, btMana));
+        AddAttrib(atVision, Items.GetBonus(FItem, btVision));
+      end;
 //      FStr := FStr + FItem.?;
 //      FDex := FDex + FItem.?;
 //      FWil := FWil + FItem.?;
@@ -461,9 +464,9 @@ begin
     + Attributes.Attrib[atDV].Prm, 0, DVMax));
   Attributes.SetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4
     + FAttrib[atDef] + Attributes.Attrib[atPV].Prm, 0, PVMax));
-  MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atLife] + Attributes.Attrib[atMaxLife].Prm;
-  MaxMana := Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMana] + Attributes.Attrib[atMaxMana].Prm;
-  Attributes.SetValue(atVis, Round(Attributes.Attrib[atPer].Value / 8.3));
+  MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm;
+  MaxMana := Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm;
+  Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
   //
   Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr].Value div 3, 1, High(Byte) - 1),
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2, High(Byte)));
@@ -547,7 +550,7 @@ end;
 
 function TPlayer.GetVision: Byte;
 begin
-  Result := EnsureRange((Attributes.Attrib[atVis].Value - Abilities.Ability[abBlinded]) + 3, 0,
+  Result := EnsureRange((Attributes.Attrib[atVision].Value - Abilities.Ability[abBlinded]) + 3, 0,
     VisionMax);
 end;
 
