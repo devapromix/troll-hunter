@@ -929,8 +929,8 @@ type
     function GetInfo(Sign: string; Value: Word; Color: string): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
-    procedure Loot(AX, AY: Byte; AItemEnum: TItemEnum); overload;
-    procedure Loot(AX, AY: Byte; AIsBoss: Boolean); overload;
+    procedure Loot(const AX, AY: Byte; AItemEnum: TItemEnum); overload;
+    procedure Loot(const AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
     function Identify(var AItem: Item): Boolean;
@@ -1209,12 +1209,12 @@ begin
   AddItemToDungeon(FItem);
 end;
 
-procedure TItems.Loot(AX, AY: Byte; AItemEnum: TItemEnum);
+procedure TItems.Loot(const AX, AY: Byte; AItemEnum: TItemEnum);
 begin
   Add(Map.Current, AX, AY, Ord(AItemEnum));
 end;
 
-procedure TItems.Loot(AX, AY: Byte; AIsBoss: Boolean);
+procedure TItems.Loot(const AX, AY: Byte; AIsBoss: Boolean);
 var
   V, I: Byte;
 const
@@ -1275,12 +1275,12 @@ end;
 
 constructor TItems.Create;
 begin
-  Items_Open;
+  Items_Open();
 end;
 
 destructor TItems.Destroy;
 begin
-  Items_Close;
+  Items_Close();
   inherited;
 end;
 
@@ -1752,7 +1752,7 @@ begin
     stFeet:
       Result := _('Feet');
   end;
-  Result := Terminal.Colorize(Format('{%s}', [Result]), clAlarm);
+  Result := Terminal.Colorize(Format('{%s}', [Result]), Terminal.GetColorFromIni('Equip'));
 end;
 
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;
@@ -1813,7 +1813,8 @@ const
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
-  Terminal.Print(X - 4, Y + I, UI.KeyToStr(Chr(I + Ord('A'))));
+  Terminal.Print(X - 4, Y + I, UI.KeyToStr(Chr(I + Ord('A')), '',
+    Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
   if IsRender then
   begin
@@ -1824,7 +1825,7 @@ begin
     Result := Result + D.Symbol + ' ';
 
   Terminal.ForegroundColor(clLightGray);
-  if IsAdvInfo then
+  if (IsAdvInfo and (Game.Timer = 0)) then
   begin
     S := '';
     if (D.SlotType <> stNone) and (AItem.Equipment > 0) then

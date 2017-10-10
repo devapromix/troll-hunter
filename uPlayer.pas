@@ -342,6 +342,7 @@ var
   ItemType: TItemType;
   FItem: Item;
 begin
+  if Self.IsDead then Exit;
   FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y),
     0, ItemMax);
   for Index := FCount - 1 downto 0 do
@@ -506,7 +507,10 @@ procedure TPlayer.Defeat(AKiller: string = '');
 begin
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
-  MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]));
+  if (Game.Difficulty < dfHard) then
+    MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]))
+  else
+    MsgLog.Add(Format(_('Press %s to exit...'), [UI.KeyToStr('SPACE')]));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -927,6 +931,7 @@ var
   end;
 
 begin
+  if IsDead then Exit;
   AItem := Items_Inventory_GetItem(Index);
   if (AItem.Equipment > 0) then
     Exit;

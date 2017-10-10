@@ -58,6 +58,8 @@ const
   clDarkBlue = $FF000088;
   clDarkYellow = $FF888800;
 
+  clDarkestRed = $FF330000;
+
 const
   clFog = $FF222222;
 

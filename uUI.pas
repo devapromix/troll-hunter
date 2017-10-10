@@ -7,9 +7,9 @@ uses uMsgLog;
 type
   UI = class(TObject)
     class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
-    class procedure Title(S: string; AY: Byte = 1);
-    class procedure FromAToZ;
-    class function KeyToStr(AKey: string; AStr: string = ''): string;
+    class procedure Title(S: string; AY: Byte = 1; BGColor: Cardinal = 0);
+    class procedure FromAToZ(const Max: Byte = 0);
+    class function KeyToStr(AKey: string; AStr: string = ''; AColor: string = 'Key'): string;
     class function GoldLeft(V: Word): string;
 end;
 
@@ -40,13 +40,19 @@ begin
   end;
 end;
 
-class procedure UI.FromAToZ;
+class procedure UI.FromAToZ(const Max: Byte = 0);
 var
   I: Char;
+  J: Byte;
 begin
   if Game.Wizard then
     for I := 'A' to 'Z' do
-      Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray);
+      Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray)
+  else
+    if (Max > 0) then
+      for J := 1 to Max do
+      Terminal.Print(1, J + 1, Format(F, [Chr(J + Ord('A') - 1)]), clDarkGray);
+
 end;
 
 class function UI.GoldLeft(V: Word): string;
@@ -55,16 +61,21 @@ begin
     + _('%d gold left'), [V])]);
 end;
 
-class function UI.KeyToStr(AKey, AStr: string): string;
+class function UI.KeyToStr(AKey, AStr, AColor: string): string;
 begin
   Result := Trim(Terminal.Colorize(Format(F, [UpperCase(AKey)]),
-    Terminal.GetColorFromIni('Key')) + ' ' + AStr);
+    Terminal.GetColorFromIni(AColor)) + ' ' + AStr);
 end;
 
-class procedure UI.Title(S: string; AY: Byte);
+class procedure UI.Title(S: string; AY: Byte = 1; BGColor: Cardinal = 0);
 var
   X: Byte;
 begin
+  if (BGColor > 0) then
+  begin
+    Terminal.BackgroundColor(BGColor);
+    Terminal.Clear;
+  end;
   X := Terminal.Window.Width div 2;
   Terminal.ForegroundColor(Terminal.GetColorFromIni('Title', 'Yellow'));
   Terminal.Print(X, AY, Format(FT, [S]), TK_ALIGN_CENTER);

@@ -714,8 +714,6 @@ begin
 end;
 
 procedure TSceneGame.Update(var Key: Word);
-var
-  I: Item;
 begin
   MsgLog.Turn;
   MsgLog.Msg := '';
@@ -823,6 +821,7 @@ begin
         Player.Fill;
       end;
     TK_SPACE:
+      if Player.IsDead then
       begin
         if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
         begin
@@ -991,9 +990,11 @@ end;
 
 procedure TSceneInv.Render;
 begin
-  UI.Title(_('Inventory'));
+  UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'),
+    Terminal.Icon('F8D5'), Player.Gold, Terminal.Icon('F8D6'),
+    Items_Inventory_GetCount(), ItemMax]));
 
-  UI.FromAToZ;
+  UI.FromAToZ(ItemMax);
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
@@ -1024,7 +1025,7 @@ end;
 
 procedure TSceneDrop.Render;
 begin
-  UI.Title(_('Choose the item you wish to drop'));
+  UI.Title(_('Choose the item you wish to drop'), 1, clDarkestRed);
 
   UI.FromAToZ;
   Items.RenderInventory;
@@ -1056,7 +1057,7 @@ end;
 
 procedure TScenePlayer.Render;
 begin
-  UI.Title(Player.Name);
+  UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']));
 
   Self.RenderPlayer;
   Self.RenderSkills;
@@ -1290,7 +1291,10 @@ begin
   Y := 3;
 
   Add(_('Name'), Player.Name);
-  Add(_('Difficulty'), Game.GetStrDifficulty);
+  Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
+  Add(_('Race'), '');
+  Add(_('Class'), '');
+  Add(_('Game difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Statictics.Get(stScore));
   // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
@@ -1546,7 +1550,7 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold));
+  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
 
   UI.FromAToZ;
   Items.RenderInventory(ptRepair);
@@ -1960,7 +1964,7 @@ end;
 
 procedure TSceneIdentification.Render;
 begin
-  UI.Title(_('Identification'));
+  UI.Title(_('Identification'), 1, clDarkestRed);
 
   UI.FromAToZ();
   Items.RenderInventory();
