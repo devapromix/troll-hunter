@@ -5,17 +5,22 @@ interface
 uses uMsgLog;
 
 type
-  TIconEnum = (ic);
+  TIconEnum = (icMale, icFemale, icPlus, icMinus, icQuestion, icGold, icFlag,
+    icLife, icMana, icSun, icHammer, icChemistry, icShield, icFood, icLev,
+    icFeather, icStr, icDex, icBook, icVision, icFire, icIce,
+    icLightning, icDrop);
 
 type
   UI = class(TObject)
-    class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
+    class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
+      AColor, DarkColor: Cardinal);
     class procedure Title(S: string; AY: Byte = 1; BGColor: Cardinal = 0);
     class procedure FromAToZ(const Max: Byte = 0);
-    class function KeyToStr(AKey: string; AStr: string = ''; AColor: string = 'Key'): string;
+    class function KeyToStr(AKey: string; AStr: string = '';
+      AColor: string = 'Key'): string;
     class function GoldLeft(Value: Word): string;
     class function Icon(AIcon: TIconEnum; AColor: string = ''): string;
-end;
+  end;
 
 implementation
 
@@ -23,13 +28,13 @@ uses
   SysUtils, BearLibTerminal, uTerminal, uGame, GNUGetText;
 
 const
+  IconStr: array [TIconEnum] of string = ('F8D0', ..'F8D5'.. 'F8F7');
   F = '[[%s]]';
-  IconStr: array[TIconEnum]of string = ('');
 
-{ TMyClass }
+  { TMyClass }
 
-class procedure UI.Bar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor,
-  DarkColor: Cardinal);
+class procedure UI.Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
+  AColor, DarkColor: Cardinal);
 var
   I, L, W: Byte;
 begin
@@ -53,28 +58,24 @@ begin
   if Game.Wizard then
     for I := 'A' to 'Z' do
       Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray)
-  else
-    if (Max > 0) then
-      for J := 1 to Max do
+  else if (Max > 0) then
+    for J := 1 to Max do
       Terminal.Print(1, J + 1, Format(F, [Chr(J + Ord('A') - 1)]), clDarkGray);
 
 end;
 
 class function UI.GoldLeft(Value: Word): string;
 begin
-  Result := Format(F, [Format(Terminal.Icon('F8D5')
-    + _('%d gold left'), [Value])]);
+  Result := Format(F, [Format(UI.Icon(icGold) + _('%d gold left'), [Value])]);
 end;
 
 class function UI.Icon(AIcon: TIconEnum; AColor: string): string;
-var
-  ANum: string;
 begin
   if (AColor = '') then
-  Result := Format('[font=icon][U+%s][/font]',
-    [UpperCase(ANum)])
-      else Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
-    [LowerCase(AColor), UpperCase(ANum)]);
+    Result := Format('[font=icon][U+%s][/font]', [UpperCase(IconStr[AIcon])])
+  else
+    Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
+      [LowerCase(AColor), UpperCase(IconStr[AIcon])]);
 end;
 
 class function UI.KeyToStr(AKey, AStr, AColor: string): string;
