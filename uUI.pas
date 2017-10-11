@@ -5,12 +5,16 @@ interface
 uses uMsgLog;
 
 type
+  TIconEnum = (ic);
+
+type
   UI = class(TObject)
     class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word; AColor, DarkColor: Cardinal);
     class procedure Title(S: string; AY: Byte = 1; BGColor: Cardinal = 0);
     class procedure FromAToZ(const Max: Byte = 0);
     class function KeyToStr(AKey: string; AStr: string = ''; AColor: string = 'Key'): string;
-    class function GoldLeft(V: Word): string;
+    class function GoldLeft(Value: Word): string;
+    class function Icon(AIcon: TIconEnum; AColor: string = ''): string;
 end;
 
 implementation
@@ -20,6 +24,7 @@ uses
 
 const
   F = '[[%s]]';
+  IconStr: array[TIconEnum]of string = ('');
 
 { TMyClass }
 
@@ -55,10 +60,21 @@ begin
 
 end;
 
-class function UI.GoldLeft(V: Word): string;
+class function UI.GoldLeft(Value: Word): string;
 begin
   Result := Format(F, [Format(Terminal.Icon('F8D5')
-    + _('%d gold left'), [V])]);
+    + _('%d gold left'), [Value])]);
+end;
+
+class function UI.Icon(AIcon: TIconEnum; AColor: string): string;
+var
+  ANum: string;
+begin
+  if (AColor = '') then
+  Result := Format('[font=icon][U+%s][/font]',
+    [UpperCase(ANum)])
+      else Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
+    [LowerCase(AColor), UpperCase(ANum)]);
 end;
 
 class function UI.KeyToStr(AKey, AStr, AColor: string): string;

@@ -52,7 +52,6 @@ type
       overload;
     function Colorize(const AStr, AColor: string): string; overload;
     function Colorize(const ANum: Integer; const AColor: string): string; overload;
-    function Icon(const ANum: string; const AColor: string = ''): string; overload;
     function GetTextScreenshot: string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
     function GetColor(Color: Integer): Cardinal;
@@ -145,15 +144,6 @@ end;
 function TTerminal.GetColorFromIni(AKey: string): string;
 begin
   Result := LowerCase(terminal_get('ini.colors.' + LowerCase(AKey)));
-end;
-
-function TTerminal.Icon(const ANum: string; const AColor: string = ''): string;
-begin
-  if (AColor = '') then
-  Result := Format('[font=icon][U+%s][/font]',
-    [UpperCase(ANum)])
-      else Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
-    [LowerCase(AColor), UpperCase(ANum)]);
 end;
 
 procedure TTerminal.Init;
