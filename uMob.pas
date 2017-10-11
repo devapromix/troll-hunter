@@ -45,10 +45,10 @@ type
     mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab,
     mDireWolf, mPan, mFaun,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mHobgoblin, mGargoyle, mWarg,
+    mGoblin, mDarkGoblin, mBlackGoblin, mHobgoblin, mGargoyle, mWarg, mWerewolf,
     mDraconian, mOrc, mOrcBrute, mOrcWarrior, mOrcWarlord,
     // Drom
-    mZombie, mOgre, mMummy, mGhoul, mVampire, mCyclops, mSkeleton, mWraith,
+    mZombie, mOgre, mMummy, mGhoul, mVampire, mVulture, mCyclops, mSkeleton, mWraith,
     mLich, mPhantom, mTrollBrute,
     // Bosses
     mBlackHound, mGiantNewt, mIguana, // Dark Wood
@@ -230,6 +230,10 @@ const
     (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 82; Level: 8;
     PV: 30; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11;);
     Color: $FF445544; Abilities: [abDiseased, abAfraid];),
+    // Werewolf
+    (Symbol: 'w'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 8;
+    PV: 35; DV: 35; MaxCount: 2; Damage: (Min: 10; Max: 12;);
+    Color: $FF777733; Abilities: [abDiseased, abPoisoned, abAfraid];),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBloodCave]; MaxLife: 85; Level: 8;
     PV: 50; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14;);
@@ -272,7 +276,11 @@ const
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10;
     PV: 45; DV: 45; MaxCount: 3; Damage: (Min: 14; Max: 18;);
-    Color: $FF223333; Abilities: [abBurning, abBloodlust, abCursed, abDiseased];),
+    Color: $FF773333; Abilities: [abBurning, abBloodlust, abCursed, abDiseased];),
+    // Vulture
+    (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
+    PV: 50; DV: 45; MaxCount: 2; Damage: (Min: 15; Max: 19;);
+    Color: $FFAA3333; Abilities: [abBurning, abBloodlust, abCursed, abDiseased];),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10;
     PV: 120; DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23;);
@@ -1199,6 +1207,8 @@ begin
       Result := _('Gargoyle');
     mWarg:
       Result := _('Warg');
+    mWerewolf:
+      Result := _('Werewolf');
     mDraconian:
       Result := _('Draconian');
     mOrc:
@@ -1222,6 +1232,8 @@ begin
       Result := _('Ghoul');
     mVampire:
       Result := _('Vampire');
+    mVulture:
+      Result := _('Vulture');
     mCyclops:
       Result := _('Cyclops');
     mSkeleton:
