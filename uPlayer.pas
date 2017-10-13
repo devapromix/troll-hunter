@@ -1029,10 +1029,10 @@ begin
   Terminal.ForegroundColor(clDefault);
   // Info
   Terminal.Print(Status.Left - 1, Status.Top + 1,
-    ' ' + Terminal.Icon('F8D7', 'Life') + ' ' + Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]
+    ' ' + UI.Icon(icLife, 'Life') + ' ' + Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]
     ), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2,
-    ' ' + Terminal.Icon('F8D9', 'Mana') + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]
+    ' ' + UI.Icon(icMana, 'Mana') + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]
     ), 'Mana'));
   // Bars
   UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16,
@@ -1080,7 +1080,7 @@ var
 begin
   case Calendar.Hour of
     6..21:
-      Add(Terminal.Icon('F8D9'), 'Light Yellow', 'Lightest Blue');
+      Add(UI.Icon(icSun), 'Light Yellow', 'Lightest Blue');
     else
       Add('(', 'Light White', 'Darker Gray');
   end;

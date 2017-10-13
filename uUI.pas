@@ -6,7 +6,7 @@ uses uMsgLog;
 
 type
   TIconEnum = (icMale, icFemale, icPlus, icMinus, icQuestion, icGold, icFlag,
-    icLife, icMana, icSun, icHammer, icChemistry, icShield, icFood, icLev,
+    icLife, icMana, icSun, icHammer, icElixir, icShield, icFood, icLev,
     icFeather, icStr, icDex, icBook, icVision, icFire, icIce,
     icLightning, icDrop);
 
@@ -28,7 +28,9 @@ uses
   SysUtils, BearLibTerminal, uTerminal, uGame, GNUGetText;
 
 const
-  IconStr: array [TIconEnum] of string = ('F8D0', ..'F8D5'.. 'F8F7');
+  IconStr: array [TIconEnum] of string = ('F8D0','F8D1','F8D2','F8D3','F8D4','F8D5',
+  'F8D6','F8D7','F8D8','F8D9','F8DA','F8DB','F8DC','F8DD','F8DE','F8DF',
+  'F8E0','F8E1','F8E2','F8E3','F8E4','F8E5','F8E6','F8F7');
   F = '[[%s]]';
 
   { TMyClass }

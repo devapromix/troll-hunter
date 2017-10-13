@@ -1058,10 +1058,10 @@ begin
   begin
     if (IT in ArmorTypeItems + JewelryTypeItems) then
       if (AItem.Defense > 0) then
-        T := Format('%s%d', [Terminal.Icon('F8DC'), AItem.Defense]);
+        T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
     if (IT in WeaponTypeItems + JewelryTypeItems) then
       if (AItem.MinDamage > 0) then
-        T := Format('%s%d-%d', [Terminal.Icon('F8E5'), AItem.MinDamage, AItem.MaxDamage]);
+        T := Format('%s%d-%d', [UI.Icon(icIce), AItem.MinDamage, AItem.MaxDamage]);
     K := '';
     if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
       K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
@@ -1074,7 +1074,7 @@ begin
       if (Items.GetBonus(AItem, btMana) > 0) then
         K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana), 'Mana');
     end;
-    S := S + AddItemInfo([K, T, Format('%s%d/%d', [Terminal.Icon('F8DA'),
+    S := S + AddItemInfo([K, T, Format('%s%d/%d', [UI.Icon(icHammer),
       AItem.Durability, AItem.MaxDurability])]);
 
     if (AItem.Identify = 0) or Player.Look then S := '';
@@ -1763,7 +1763,7 @@ begin
     Color := 'lighter yellow'
   else
     Color := 'light red';
-  Result := Terminal.Colorize(Terminal.Icon('F8D5') + IntToStr(Price), Color);
+  Result := Terminal.Colorize(UI.Icon(icGold) + IntToStr(Price), Color);
 end;
 
 function TItems.GetLevel(L: Byte): string;
@@ -1774,7 +1774,7 @@ begin
     Color := 'Light Red'
   else
     Color := 'Gray';
-  Result := Terminal.Colorize(Format('%s%d', [Terminal.Icon('F8DB'), L]), Color);
+  Result := Terminal.Colorize(Format('%s%d', [UI.Icon(icElixir), L]), Color);
 end;
 
 function TItems.GetInfo(Sign: string; Value: Word; Color: string): string;
@@ -1784,11 +1784,11 @@ begin
   S := '@';
   Result := '';
   if (Sign = '*') then Sign := '';
-  if (Color = 'Life') then S := Terminal.Icon('F8D7');
-  if (Color = 'Mana') then S := Terminal.Icon('F8D9');
-  if (Color = 'Food') then S := Terminal.Icon('F8DD');
-  if (Color = 'Poison') then S := Terminal.Icon('F8E7');
-  if (Color = 'Vision') then S := Terminal.Icon('F8E3');
+  if (Color = 'Life') then S := UI.Icon(icLife);
+  if (Color = 'Mana') then S := UI.Icon(icMana);
+  if (Color = 'Food') then S := UI.Icon(icFood);
+  if (Color = 'Poison') then S := UI.Icon(icDrop);
+  if (Color = 'Vision') then S := UI.Icon(icElixir);
   if (Value > 0) then
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;
@@ -1807,7 +1807,7 @@ const
 
   function GetRedPrice(Price: Word): string;
   begin
-    Result := Terminal.Colorize(Terminal.Icon('F8D5') + IntToStr(Price), 'Light Red');
+    Result := Terminal.Colorize(UI.Icon(icGold) + IntToStr(Price), 'Light Red');
   end;
 
 begin

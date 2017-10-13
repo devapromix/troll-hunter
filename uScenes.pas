@@ -601,7 +601,7 @@ var
       if (C > -1) then
       begin
         S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
-          Terminal.Icon('F8D7'), Mobs.Mob[C].Life, Mobs.Mob[C].MaxLife]);
+          UI.Icon(icLife), Mobs.Mob[C].Life, Mobs.Mob[C].MaxLife]);
       end;
     end;
     //
@@ -991,7 +991,7 @@ end;
 procedure TSceneInv.Render;
 begin
   UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'),
-    Terminal.Icon('F8D5'), Player.Gold, Terminal.Icon('F8D6'),
+    UI.Icon(icGold), Player.Gold, UI.Icon(icFlag),
     Items_Inventory_GetCount(), ItemMax]));
 
   UI.FromAToZ(ItemMax);
@@ -1078,17 +1078,17 @@ begin
   UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax,
     clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 2, Format('%s %d',
-    [Terminal.Icon('F8DB') + ' ' + _('Level'), Player.Attributes.Attrib[atLev]
+    [UI.Icon(icElixir) + ' ' + _('Level'), Player.Attributes.Attrib[atLev]
     .Value]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax,
     clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 4, Format('%s %d/%d',
-    [Terminal.Icon('F8E0') + ' ' + _('Strength'),
+    [UI.Icon(icStr) + ' ' + _('Strength'),
     Player.Attributes.Attrib[atStr].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax,
     clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 6, Format('%s %d/%d',
-    [Terminal.Icon('F8E1') + ' ' + _('Dexterity'),
+    [UI.Icon(icDex) + ' ' + _('Dexterity'),
     Player.Attributes.Attrib[atDex].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax,
     clDarkRed, clDarkGray);
