@@ -1093,35 +1093,35 @@ begin
   UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax,
     clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 8, Format('%s %d/%d',
-    [Terminal.Icon('F8E2') + ' ' + _('Willpower'),
+    [UI.Icon(icBook) + ' ' + _('Willpower'),
     Player.Attributes.Attrib[atWil].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax,
     clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d',
-    [Terminal.Icon('F8E3') + ' ' + _('Perception'),
+    [UI.Icon(icVision) + ' ' + _('Perception'),
     Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
 
   UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
     clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d',
-    [Terminal.Icon('F8E1') + ' ' + _('Defensive Value (DV)'),
+    [UI.Icon(icDex) + ' ' + _('Defensive Value (DV)'),
     Player.Attributes.Attrib[atDV].Value, DVMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax,
     clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d',
-    [Terminal.Icon('F8DC') + ' ' + _('Protection Value (PV)'),
+    [UI.Icon(icShield) + ' ' + _('Protection Value (PV)'),
     Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 18, Format('%s %d/%d',
-    [Terminal.Icon('F8D7') + ' ' + _('Life'), Player.Life, Player.MaxLife]),
+    [UI.Icon(icLife) + ' ' + _('Life'), Player.Life, Player.MaxLife]),
     TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
   Terminal.Print(X, Y + 20, Format('%s %d/%d',
-    [Terminal.Icon('F8D9') + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
+    [UI.Icon(icMana) + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
     TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, color_from_name('vision'), clDarkGray);
   Terminal.Print(X, Y + 22, Format('%s %d/%d',
-    [Terminal.Icon('F8E3') + ' ' + _('Vision radius'), Player.Vision, VisionMax]
+    [UI.Icon(icVision) + ' ' + _('Vision radius'), Player.Vision, VisionMax]
     ), TK_ALIGN_CENTER);
 end;
 
