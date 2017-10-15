@@ -2,7 +2,7 @@ program Trollhunter;
 
 uses
   SysUtils,
-  GNUGetText in 'GNUGetText.pas',
+  GNUGetText in 'lazarus\GNUGetText.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
   uTerminal in 'uTerminal.pas',

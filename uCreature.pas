@@ -54,7 +54,7 @@ type
 
 implementation
 
-uses SysUtils, GNUGetText, Math;
+uses SysUtils, Math;
 
 { TCreature }
 

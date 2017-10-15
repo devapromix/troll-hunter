@@ -62,7 +62,7 @@ var
 
 implementation
 
-uses SysUtils, Classes, Math, Dialogs, uGame, GNUGetText;
+uses SysUtils, Classes, Math, uGame, GNUGetText;
 
 { TTerminal }
 
