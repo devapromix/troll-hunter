@@ -926,14 +926,14 @@ type
     function GetInventory: string;
     function GetPrice(Price: Word; F: Boolean = False): string;
     function GetLevel(L: Byte): string;
-    function GetInfo(Sign: string; Value: Word; Color: string): string;
+    function GetInfo(Sign: string; Value: Word; Color: string; RareColor: string = ''): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: Byte);
     procedure Loot(const AX, AY: Byte; AItemEnum: TItemEnum); overload;
     procedure Loot(const AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
-    function Identify(var AItem: Item): Boolean;
+    function Identify(var AItem: Item; IsNew: Boolean = False): Boolean;
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
@@ -977,7 +977,7 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0; IsShort: Boolean = False): string;
 var
   ID: Integer;
-  S, T, K: string;
+  S, T, K, D: string;
   IT: TItemType;
   F: Boolean;
   V: Word;
@@ -1056,26 +1056,39 @@ begin
     S := ''
   else
   begin
+    // Defense
     if (IT in ArmorTypeItems + JewelryTypeItems) then
+    begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
+      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DefenseSuffixes) then
+        T := Terminal.Colorize(T, 'Rare');
+    end;
+    // Damage
     if (IT in WeaponTypeItems + JewelryTypeItems) then
+    begin
       if (AItem.MinDamage > 0) then
-        T := Format('%s%d-%d', [UI.Icon(icIce), AItem.MinDamage, AItem.MaxDamage]);
+        T := Format('%s%d-%d', [UI.Icon(icHammer), AItem.MinDamage, AItem.MaxDamage]);
+      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes) then
+        T := Terminal.Colorize(T, 'Rare');
+    end;
     K := '';
     if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
       K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
     if (AItem.Bonus > 0) then
     begin
       if (Items.GetBonus(AItem, btVision) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVision), 'Vision');
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVision), 'Vision', 'Rare');
       if (Items.GetBonus(AItem, btLife) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife), 'Life');
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btMana) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana), 'Mana');
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana), 'Mana', 'Rare');
     end;
-    S := S + AddItemInfo([K, T, Format('%s%d/%d', [UI.Icon(icHammer),
-      AItem.Durability, AItem.MaxDurability])]);
+    D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability, AItem.MaxDurability]);
+    if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
+      D := Terminal.Colorize(D, 'Rare');
+      
+    S := S + AddItemInfo([K, T, D]);
 
     if (AItem.Identify = 0) or Player.Look then S := '';
   end;
@@ -1777,7 +1790,7 @@ begin
   Result := Terminal.Colorize(Format('%s%d', [UI.Icon(icElixir), L]), Color);
 end;
 
-function TItems.GetInfo(Sign: string; Value: Word; Color: string): string;
+function TItems.GetInfo(Sign: string; Value: Word; Color: string; RareColor: string = ''): string;
 var
   S: string;
 begin
@@ -1788,7 +1801,8 @@ begin
   if (Color = 'Mana') then S := UI.Icon(icMana);
   if (Color = 'Food') then S := UI.Icon(icFood);
   if (Color = 'Poison') then S := UI.Icon(icDrop);
-  if (Color = 'Vision') then S := UI.Icon(icElixir);
+  if (Color = 'Vision') then S := UI.Icon(icVision);
+  if (RareColor <> '') then Color := 'Rare';
   if (Value > 0) then
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;
@@ -1956,7 +1970,7 @@ begin
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
   if IdFlag and (FItem.Identify = 0) then
-    Items.Identify(FItem);
+    Items.Identify(FItem, True);
   Items_Inventory_AppendItem(FItem);
 end;
 
@@ -2033,7 +2047,7 @@ begin
       PriceType);
 end;
 
-function TItems.Identify(var AItem: Item): Boolean;
+function TItems.Identify(var AItem: Item; IsNew: Boolean = False): Boolean;
 var
   I: Byte;
   IB: TItemBase;
@@ -2054,6 +2068,10 @@ begin
       //
       AItem.Identify := I;
       Affixes.DoSuffix(AItem);
+      if IsNew then
+      begin
+        AItem.Durability := AItem.MaxDurability;
+      end;
     until (AItem.Identify > 0);
     Result := True;
   end;

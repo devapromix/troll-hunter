@@ -30,6 +30,11 @@ type
     aDurability4, aDurability5, aDurability6, aDurability7);
 
 const
+  DefenseSuffixes = [aDefense1..aDefense7];
+  DamageSuffixes = [aDamage1..aDamage7];
+  DurabilitySuffixes = [aDurability1..aDurability7];
+
+const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
     // None
     (),
@@ -115,9 +120,9 @@ const
     MaxDurability: (Min: 70; Max: 80);));
 
 type
-  TAffixes = class
+  TAffixes = class(TObject)
   public
-    function GetSuffixName(SuffixEnum: TSuffixEnum): string;
+    function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     procedure DoSuffix(var AItem: Item);
   end;
 
@@ -215,7 +220,7 @@ begin
   TItems.CalcItem(AItem, SB.Price);
 end;
 
-function TAffixes.GetSuffixName(SuffixEnum: TSuffixEnum): string;
+function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
   case SuffixEnum of
     aVision:

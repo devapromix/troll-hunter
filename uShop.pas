@@ -191,7 +191,7 @@ begin
         until Check;
       until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
       Items.Make(Ord(ID), FItem);
-      Items.Identify(FItem);
+      Items.Identify(FItem, True);
       Shops.Shop[Shop].Add(FItem);
     end;
   end;
