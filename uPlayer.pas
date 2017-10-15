@@ -849,7 +849,7 @@ var
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
-  if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
+  if ((FItem.Stack > 1) or (FItem.Identify = 0) or (FItem.Amount > 1)) then
     Exit;
   RepairCost := (FItem.MaxDurability - FItem.Durability) * 10;
   if (RepairCost > 0) then
@@ -1043,9 +1043,11 @@ begin
     False:
       begin
         Terminal.Print(Status.Left - 1, Status.Top + 3,
-          ' ' + Format(_('%s %d %s %d %s %d-%d %s %d %s'), [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold), Gold,
-          UI.Icon(icHammer), GetDamage.Min, GetDamage.Max, UI.Icon(icShield), Attributes.Attrib[atPV].Value,
-          GetSatiationStr]));
+          ' ' + Format(_('%s%d %s%d %s%d-%d %s%d %s'),
+          [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold), Gold,
+          UI.Icon(icHammer), GetDamage.Min, GetDamage.Max,
+          UI.Icon(icShield), Attributes.Attrib[atPV].Value,
+          GetSatiationStr()]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);
       end;
