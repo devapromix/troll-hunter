@@ -38,13 +38,14 @@ type
     procedure Refresh;
     procedure BackgroundColor(Value: Cardinal); overload;
     procedure ForegroundColor(Value: Cardinal); overload;
-    procedure Print(AX, AY: Integer; AText: string; Align: Byte = 0); overload;
+    procedure Print(AX, AY: Integer; AText: string); overload;
+    procedure Print(AX, AY: Integer; AText: string; Align: Byte); overload;
     procedure Print(AX, AY: Integer; AText: string;
       AForegroundColor: Cardinal;
       ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
       Align: Byte); overload;
-    function Pick(X, Y: Byte): Byte;
+    function Pick(AX, AY: Byte): Byte;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
     function GetColorFromIni(AKey: string): string; overload;
@@ -177,6 +178,11 @@ begin
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
   terminal_set(Format('icon font: Fontello.ttf, size=%dx%d, codepage=437;',
     [Round(FChar.Width * 1.4), Round(FChar.Height * 1.4)]));
+end;
+
+procedure TTerminal.Print(AX, AY: Integer; AText: string);
+begin
+  terminal_print(AX, AY, TK_ALIGN_DEFAULT, AText);
 end;
 
 procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Byte);

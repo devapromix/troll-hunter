@@ -89,16 +89,16 @@ end;
 
 class procedure UI.Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
 var
-  X: Byte;
+  GX: Byte;
 begin
   if (BGColor > 0) then
   begin
     Terminal.BackgroundColor(BGColor);
     Terminal.Clear;
   end;
-  X := Terminal.Window.Width div 2;
+  GX := Terminal.Window.Width div 2;
   Terminal.ForegroundColor(Terminal.GetColorFromIni('Title', 'Yellow'));
-  Terminal.Print(X, AY, Format(FT, [S]), TK_ALIGN_CENTER);
+  Terminal.Print(GX, AY, Format(FT, [S]), TK_ALIGN_CENTER);
   Terminal.ForegroundColor(clDefault);
 end;
 

@@ -1827,13 +1827,13 @@ const
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
-  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
+  Terminal.PrintC(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
     Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
   if IsRender then
   begin
     Terminal.ForegroundColor(AItem.Color);
-    Terminal.Print(AX, AY + I, D.Symbol);
+    Terminal.PrintC(AX, AY + I, D.Symbol);
   end
   else
     Result := Result + D.Symbol + ' ';
@@ -1852,7 +1852,7 @@ begin
 
   if IsRender then
   begin
-    Terminal.Print(AX + 2, AY + I, S);
+    Terminal.PrintC(AX + 2, AY + I, S);
     S := '';
     case PriceType of
       ptSell:
