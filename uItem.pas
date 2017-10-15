@@ -170,313 +170,313 @@ const
 
     // Lesser Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 50; Color: clLightestRed;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50; Color: clLightestRed;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife]; Value: 50;),
     // Greater Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 100; Color: clLightRed;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 100; Color: clLightRed;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife]; Value: 100;),
     // Heroic Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 5; Price: 200; Color: clRed;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 200; Color: clRed;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife]; Value: 200;),
     // Potion of Full Healing
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 7; Price: 500; Color: clDarkRed;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500; Color: clDarkRed;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife]; Value: 250;),
 
     // Lesser Rejuvenation Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 75; Color: clLightestYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 75; Color: clLightestYellow;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana]; Value: 50;),
     // Greater Rejuvenation Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 150; Color: clLightYellow;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 150; Color: clLightYellow;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana]; Value: 100;),
     // Heroic Rejuvenation Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 5; Price: 300; Color: clYellow;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clYellow;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife, efMana]; Value: 200;),
     // Potion Of Full Rejuvenation
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 7; Price: 750; Color: clDarkYellow;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clDarkYellow;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife, efMana]; Value: 250;),
 
     // Lesser Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 50; Color: clLightestBlue;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50; Color: clLightestBlue;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efMana]; Value: 50;),
     // Greater Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 100; Color: clLightBlue;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100; Color: clLightBlue;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efMana]; Value: 100;),
     // Heroic Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 5; Price: 200; Color: clBlue;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 200; Color: clBlue;
     Deep: [deDeepCave .. deDrom]; Effects: [efMana]; Value: 200;),
     // Potion of Full Mana
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 7; Price: 500; Color: clDarkBlue;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500; Color: clDarkBlue;
     Deep: [deBloodCave .. deDrom]; Effects: [efMana]; Value: 250;),
 
     // Soothing Balm
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 90; Color: clLightestYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 90; Color: clLightestYellow;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife, efMana, efFood];
     Value: 40;),
     // Healing Poultice
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Price: 180; Color: clLightYellow;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 180; Color: clLightYellow;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife, efMana, efCurePoison];
     Value: 80;),
     // Antidote
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 250; Color: clLightestGreen;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 250; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efCurePoison]; Value: 100;),
     // Fortifying Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 300; Color: clLightYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clLightYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efCureWeak]; Value: 1;),
 
     // Troll Blood Extract
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkRed;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 5000; Color: clDarkRed;
     Deep: [deDarkWood .. deDrom]; Effects: [efPrmLife]; Value: 1;),
     // Unicorn Blood Extract
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Price: 5000; Color: clDarkBlue;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 5000; Color: clDarkBlue;
     Deep: [deDarkWood .. deDrom]; Effects: [efPrmMana]; Value: 1;),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 40; Color: clLightestBlue;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 40; Color: clLightestBlue;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efLife]; Value: 50;
     ManaCost: 20;),
     // Scroll Of Lesser Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 3; Price: 80; Color: clLightBlue;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 80; Color: clLightBlue;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efLife]; Value: 100;
     ManaCost: 30;),
     // Scroll Of Greater Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 5; Price: 160; Color: clBlue;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 160; Color: clBlue;
     Deep: [deDeepCave .. deDrom]; Effects: [efLife]; Value: 200; ManaCost: 40;),
     // Scroll of Full Healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 7; Price: 300; Color: clDarkBlue;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clDarkBlue;
     Deep: [deBloodCave .. deDrom]; Effects: [efLife]; Value: 250;
     ManaCost: 50;),
 
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 500; Color: clDarkYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500; Color: clDarkYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 250; ManaCost: 25;),
 
     // Scroll of Sidestepping
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 2; Price: 750; Color: clLightRed;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clLightRed;
     Deep: [deDarkWood .. deDeepCave]; Effects: [efTeleportation]; Value: 3;
     ManaCost: 50;),
     // Scroll of Phasing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 4; Price: 1000; Color: clRed;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clRed;
     Deep: [deGrayCave .. deBloodCave]; Effects: [efTeleportation]; Value: 6;
     ManaCost: 100;),
     // Scroll of Teleportation
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 6; Price: 1250; Color: clDarkRed;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1250; Color: clDarkRed;
     Deep: [deDeepCave .. deDrom]; Effects: [efTeleportation]; Value: 10;
     ManaCost: 150;),
     // Scroll of Disappearing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 8; Price: 1500; Color: clDarkRed;
+    MaxDurability: 0; Level: 8; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1500; Color: clDarkRed;
     Deep: [deBloodCave .. deDrom]; Effects: [efTeleportation]; Value: 15;
     ManaCost: 200;),
 
     // Scroll of Town Portal
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 400; Color: clLightGreen;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 400; Color: clLightGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efTownPortal]; Value: 0;
     ManaCost: 20;),
     // Scroll of Bloodlust
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 300; Color: clLightRed;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clLightRed;
     Deep: [deDarkWood .. deDrom]; Effects: [efBloodlust]; Value: 10;
     ManaCost: 25;),
     // Scroll of Identify
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 200; Color: clLightYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 200; Color: clLightYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 0;
     ManaCost: 15;),
 
     // Rune of minor healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 3;
-    Price: 1000; Color: clLightestRed; Deep: [deDarkWood .. deGrayCave];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 3;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clLightestRed; Deep: [deDarkWood .. deGrayCave];
     Effects: [efLife]; Value: 75; ManaCost: 20;),
     // Rune of lesser healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 5;
-    Price: 1500; Color: clLightRed; Deep: [deGrayCave .. deDeepCave];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 5;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1500; Color: clLightRed; Deep: [deGrayCave .. deDeepCave];
     Effects: [efLife]; Value: 150; ManaCost: 30;),
     // Rune of greater healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 7;
-    Price: 2000; Color: clRed; Deep: [deDeepCave .. deBloodCave];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 7;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2000; Color: clRed; Deep: [deDeepCave .. deBloodCave];
     Effects: [efLife]; Value: 250; ManaCost: 40;),
     // Rune of full healing
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 9;
-    Price: 2500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 9;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
     Effects: [efLife]; Value: 250; ManaCost: 50;),
 
     // Rune of teleportation
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 6;
-    Price: 7000; Color: clDarkRed; Deep: [deDeepCave .. deBloodCave];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 6;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 7000; Color: clDarkRed; Deep: [deDeepCave .. deBloodCave];
     Effects: [efTeleportation]; Value: 10; ManaCost: 150;),
     // Rune of town portal
-    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 4800; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 4800; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 50;),
 
     // Bread ration
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 200; Color: clYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 200; Color: clYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 400;),
     // Valley root
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 125; Color: clLightestYellow;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 125; Color: clLightestYellow;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 250;),
     // Rat pod
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 150; Color: clLightestGreen;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 150; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 300;),
     // Kobold bulb
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
-    MaxDurability: 0; Level: 1; Price: 100; Color: clLightestGreen;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100; Color: clLightestGreen;
     Deep: [deDarkWood .. deDrom]; Effects: [efFood]; Value: 150;),
 
     // Key
-    (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; Level: 1;
-    Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     // Ruby
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom];),
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom];),
     // Topaz
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Emerald
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom];),
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom];),
     // Sapphire
-    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; Level: 1;
-    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom];),
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom];),
 
     // Ring
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5); Price: 1000;
+    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000;
     Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5); Price: 1000;
+    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000;
     Color: clYellow; Deep: [deDarkWood .. deDrom];),
     /// / == Dark Wood == ////
 
     // Cap
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 15; Level: 1; Defense: (Min: 1; Max: 2); Price: 100;
+    MaxDurability: 15; Level: 1; Defense: (Min: 1; Max: 2); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 100;
     Color: clWhite; Deep: [deDarkWood];),
     // War Cap
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 20; Level: 2; Defense: (Min: 3; Max: 4); Price: 150;
+    MaxDurability: 20; Level: 2; Defense: (Min: 3; Max: 4); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 150;
     Color: clWhite; Deep: [deDarkWood];),
     // Hood
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 10; Level: 1; Defense: (Min: 1; Max: 2); Price: 200;
+    MaxDurability: 10; Level: 1; Defense: (Min: 1; Max: 2); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 200;
     Color: clLightestBlue; Deep: [deDarkWood];),
     // Red Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 12; Level: 2; Defense: (Min: 2; Max: 3); Price: 300;
+    MaxDurability: 12; Level: 2; Defense: (Min: 2; Max: 3); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 300;
     Color: clLightRed; Deep: [deDarkWood];),
     // Quilted Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6); Price: 300;
+    MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 300;
     Color: clWhite; Deep: [deDarkWood];),
     // Leather Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 50; Level: 2; Defense: (Min: 8; Max: 11); Price: 500;
+    MaxDurability: 50; Level: 2; Defense: (Min: 8; Max: 11); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 500;
     Color: clWhite; Deep: [deDarkWood];),
     // Light Clothes
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 20; Level: 1; Defense: (Min: 1; Max: 2); Price: 600;
+    MaxDurability: 20; Level: 1; Defense: (Min: 1; Max: 2); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 600;
     Color: clLightestBlue; Deep: [deDarkWood];),
     // Leather Apron
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 40; Level: 2; Defense: (Min: 3; Max: 4); Price: 800;
+    MaxDurability: 40; Level: 2; Defense: (Min: 3; Max: 4); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 800;
     Color: clLightestBlue; Deep: [deDarkWood];),
 
     // Leather Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 10; Level: 1; Defense: (Min: 1; Max: 2); Price: 100;
+    MaxDurability: 10; Level: 1; Defense: (Min: 1; Max: 2); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 100;
     Color: clWhite; Deep: [deDarkWood];),
     // Hide Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 15; Level: 2; Defense: (Min: 3; Max: 4); Price: 150;
+    MaxDurability: 15; Level: 2; Defense: (Min: 3; Max: 4); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 150;
     Color: clWhite; Deep: [deDarkWood];),
 
     // Shoes
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 15; Level: 1; Defense: (Min: 1; Max: 3); Price: 200;
+    MaxDurability: 15; Level: 1; Defense: (Min: 1; Max: 3); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 200;
     Color: clWhite; Deep: [deDarkWood];),
     // Leather Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 20; Level: 2; Defense: (Min: 4; Max: 6); Price: 250;
+    MaxDurability: 20; Level: 2; Defense: (Min: 4; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 250;
     Color: clWhite; Deep: [deDarkWood];),
 
     // Buckler
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6); Price: 120;
+    MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 120;
     Color: clLightBlue; Deep: [deDarkWood];),
     // Targe Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 30; Level: 2; Defense: (Min: 7; Max: 10); Price: 200;
+    MaxDurability: 30; Level: 2; Defense: (Min: 7; Max: 10); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 200;
     Color: clLightBlue; Deep: [deDarkWood];),
 
     // Rusty Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Damage: (MinDamage: (Min: 3; Max: 5;);
+    MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 3; Max: 5;);
     MaxDamage: (Min: 6; Max: 9;)); Price: 185; Color: clDarkRed;
     Deep: [deDarkWood];),
     // Short Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Damage: (MinDamage: (Min: 5; Max: 7;);
+    MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 5; Max: 7;);
     MaxDamage: (Min: 10; Max: 12;)); Price: 210; Color: clWhite;
     Deep: [deDarkWood];),
     // Hatchet
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Damage: (MinDamage: (Min: 3; Max: 5;);
+    MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 3; Max: 5;);
     MaxDamage: (Min: 6; Max: 8;)); Price: 165; Color: clDarkRed;
     Deep: [deDarkWood];),
     // Battle Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Damage: (MinDamage: (Min: 7; Max: 9;);
+    MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 7; Max: 9;);
     MaxDamage: (Min: 11; Max: 12;)); Price: 195; Color: clDarkRed;
     Deep: [deDarkWood];),
     // Short Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Damage: (MinDamage: (Min: 1; Max: 3;);
+    MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 1; Max: 3;);
     MaxDamage: (Min: 4; Max: 5;)); Price: 150; Color: clDarkRed;
     Deep: [deDarkWood];),
     // Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Damage: (MinDamage: (Min: 2; Max: 4;);
+    MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 2; Max: 4;);
     MaxDamage: (Min: 5; Max: 7;)); Price: 180; Color: clDarkRed;
     Deep: [deDarkWood];),
     // Slag Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Damage: (MinDamage: (Min: 2; Max: 4;);
+    MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 2; Max: 4;);
     MaxDamage: (Min: 5; Max: 6;)); Price: 175; Color: clDarkRed;
     Deep: [deDarkWood];),
     // Spiked Cudgel
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Damage: (MinDamage: (Min: 3; Max: 5;);
+    MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 3; Max: 5;);
     MaxDamage: (Min: 7; Max: 9;)); Price: 220; Color: clDarkRed;
     Deep: [deDarkWood];),
 
@@ -484,102 +484,102 @@ const
 
     // Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 25; Level: 3; Defense: (Min: 4; Max: 6); Price: 300;
+    MaxDurability: 25; Level: 3; Defense: (Min: 4; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 300;
     Color: clWhite; Deep: [deGrayCave];),
     // Grand Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 30; Level: 4; Defense: (Min: 6; Max: 8); Price: 400;
+    MaxDurability: 30; Level: 4; Defense: (Min: 6; Max: 8); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 400;
     Color: clWhite; Deep: [deGrayCave];),
     // Leather Cap
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 15; Level: 3; Defense: (Min: 2; Max: 3); Price: 600;
+    MaxDurability: 15; Level: 3; Defense: (Min: 2; Max: 3); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 600;
     Color: clLightestBlue; Deep: [deGrayCave];),
     // Mask
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 18; Level: 4; Defense: (Min: 3; Max: 4); Price: 700;
+    MaxDurability: 18; Level: 4; Defense: (Min: 3; Max: 4); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 700;
     Color: clLightestBlue; Deep: [deGrayCave];),
     // HardLeather Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 75; Level: 3; Defense: (Min: 12; Max: 15); Price: 700;
+    MaxDurability: 75; Level: 3; Defense: (Min: 12; Max: 15); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 700;
     Color: clWhite; Deep: [deGrayCave];),
     // Battle Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 100; Level: 4; Defense: (Min: 17; Max: 20); Price: 900;
+    MaxDurability: 100; Level: 4; Defense: (Min: 17; Max: 20); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 900;
     Color: clWhite; Deep: [deGrayCave];),
     // Fancy Clothes
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 60; Level: 3; Defense: (Min: 5; Max: 6); Price: 1000;
+    MaxDurability: 60; Level: 3; Defense: (Min: 5; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1000;
     Color: clLightestBlue; Deep: [deGrayCave];),
     // Robe
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 75; Level: 4; Defense: (Min: 7; Max: 8); Price: 1300;
+    MaxDurability: 75; Level: 4; Defense: (Min: 7; Max: 8); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1300;
     Color: clLightestBlue; Deep: [deGrayCave];),
 
     // Kobold Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 22; Level: 3; Defense: (Min: 5; Max: 6); Price: 200;
+    MaxDurability: 22; Level: 3; Defense: (Min: 5; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 200;
     Color: clWhite; Deep: [deGrayCave];),
     // Chain Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 29; Level: 4; Defense: (Min: 7; Max: 8); Price: 250;
+    MaxDurability: 29; Level: 4; Defense: (Min: 7; Max: 8); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 250;
     Color: clWhite; Deep: [deGrayCave];),
 
     // Mesh Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 30; Level: 3; Defense: (Min: 7; Max: 9); Price: 300;
+    MaxDurability: 30; Level: 3; Defense: (Min: 7; Max: 9); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 300;
     Color: clWhite; Deep: [deGrayCave];),
     // Heavy Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 40; Level: 4; Defense: (Min: 10; Max: 12); Price: 400;
+    MaxDurability: 40; Level: 4; Defense: (Min: 10; Max: 12); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 400;
     Color: clWhite; Deep: [deGrayCave];),
 
     // Small Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 35; Level: 3; Defense: (Min: 10; Max: 12); Price: 275;
+    MaxDurability: 35; Level: 3; Defense: (Min: 10; Max: 12); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 275;
     Color: clLightBlue; Deep: [deGrayCave];),
     // Kite Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 40; Level: 4; Defense: (Min: 13; Max: 15); Price: 380;
+    MaxDurability: 40; Level: 4; Defense: (Min: 13; Max: 15); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 380;
     Color: clLightBlue; Deep: [deGrayCave];),
 
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 40; Level: 3; Damage: (MinDamage: (Min: 11; Max: 14;);
+    MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 11; Max: 14;);
     MaxDamage: (Min: 19; Max: 21;)); Price: 345; Color: clDarkRed;
     Deep: [deGrayCave];),
     // Long Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 45; Level: 4; Damage: (MinDamage: (Min: 14; Max: 18;);
+    MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 14; Max: 18;);
     MaxDamage: (Min: 23; Max: 26;)); Price: 385; Color: clDarkRed;
     Deep: [deGrayCave];),
     // Meat Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 40; Level: 3; Damage: (MinDamage: (Min: 12; Max: 14;);
+    MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 12; Max: 14;);
     MaxDamage: (Min: 16; Max: 19;)); Price: 330; Color: clDarkRed;
     Deep: [deGrayCave];),
     // Flesh Tearer
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 45; Level: 4; Damage: (MinDamage: (Min: 16; Max: 18;);
+    MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 16; Max: 18;);
     MaxDamage: (Min: 21; Max: 24;)); Price: 355; Color: clDarkRed;
     Deep: [deGrayCave];),
     // Javelin
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 40; Level: 3; Damage: (MinDamage: (Min: 4; Max: 6;);
+    MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 4; Max: 6;);
     MaxDamage: (Min: 10; Max: 12;)); Price: 320; Color: clDarkRed;
     Deep: [deGrayCave];),
     // Fuscina
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 45; Level: 4; Damage: (MinDamage: (Min: 5; Max: 7;);
+    MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 5; Max: 7;);
     MaxDamage: (Min: 16; Max: 19;)); Price: 360; Color: clDarkRed;
     Deep: [deGrayCave];),
     // Warhammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 40; Level: 3; Damage: (MinDamage: (Min: 6; Max: 9;);
+    MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 6; Max: 9;);
     MaxDamage: (Min: 11; Max: 13;)); Price: 345; Color: clDarkRed;
     Deep: [deGrayCave];),
     // War Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 45; Level: 4; Damage: (MinDamage: (Min: 8; Max: 10;);
+    MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 8; Max: 10;);
     MaxDamage: (Min: 17; Max: 19;)); Price: 410; Color: clDarkRed;
     Deep: [deGrayCave];),
 
@@ -587,102 +587,102 @@ const
 
     // Great Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 35; Level: 5; Defense: (Min: 8; Max: 10); Price: 500;
+    MaxDurability: 35; Level: 5; Defense: (Min: 8; Max: 10); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 500;
     Color: clWhite; Deep: [deDeepCave];),
     // Full Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 40; Level: 6; Defense: (Min: 10; Max: 12); Price: 750;
+    MaxDurability: 40; Level: 6; Defense: (Min: 10; Max: 12); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 750;
     Color: clWhite; Deep: [deDeepCave];),
     // Bone Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 20; Level: 5; Defense: (Min: 4; Max: 5); Price: 1000;
+    MaxDurability: 20; Level: 5; Defense: (Min: 4; Max: 5); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1000;
     Color: clLightestBlue; Deep: [deDeepCave];),
     // Wizard Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 25; Level: 6; Defense: (Min: 5; Max: 6); Price: 1200;
+    MaxDurability: 25; Level: 6; Defense: (Min: 5; Max: 6); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1200;
     Color: clLightestBlue; Deep: [deDeepCave];),
     // Brigantine Armor
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 125; Level: 5; Defense: (Min: 21; Max: 25); Price: 1000;
+    MaxDurability: 125; Level: 5; Defense: (Min: 21; Max: 25); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1000;
     Color: clWhite; Deep: [deDeepCave];),
     // Ring Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 150; Level: 6; Defense: (Min: 26; Max: 30); Price: 1200;
+    MaxDurability: 150; Level: 6; Defense: (Min: 26; Max: 30); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1200;
     Color: clWhite; Deep: [deDeepCave];),
     // Light Furs
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 85; Level: 5; Defense: (Min: 9; Max: 10); Price: 1500;
+    MaxDurability: 85; Level: 5; Defense: (Min: 9; Max: 10); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1500;
     Color: clLightestBlue; Deep: [deDeepCave];),
     // Clean Robe
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 100; Level: 6; Defense: (Min: 11; Max: 12); Price: 1700;
+    MaxDurability: 100; Level: 6; Defense: (Min: 11; Max: 12); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1700;
     Color: clLightestBlue; Deep: [deDeepCave];),
 
     // Etched Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 35; Level: 5; Defense: (Min: 9; Max: 10); Price: 300;
+    MaxDurability: 35; Level: 5; Defense: (Min: 9; Max: 10); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 300;
     Color: clWhite; Deep: [deDeepCave];),
     // Heavy Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 40; Level: 6; Defense: (Min: 11; Max: 12); Price: 350;
+    MaxDurability: 40; Level: 6; Defense: (Min: 11; Max: 12); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 350;
     Color: clWhite; Deep: [deDeepCave];),
 
     // Greaves
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 50; Level: 5; Defense: (Min: 13; Max: 15); Price: 500;
+    MaxDurability: 50; Level: 5; Defense: (Min: 13; Max: 15); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 500;
     Color: clWhite; Deep: [deDeepCave];),
     // Boneweave Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 60; Level: 6; Defense: (Min: 16; Max: 18); Price: 650;
+    MaxDurability: 60; Level: 6; Defense: (Min: 16; Max: 18); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 650;
     Color: clWhite; Deep: [deDeepCave];),
 
     // Bone Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 45; Level: 5; Defense: (Min: 16; Max: 18); Price: 450;
+    MaxDurability: 45; Level: 5; Defense: (Min: 16; Max: 18); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 450;
     Color: clLightBlue; Deep: [deDeepCave];),
     // Heater Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 50; Level: 6; Defense: (Min: 19; Max: 21); Price: 590;
+    MaxDurability: 50; Level: 6; Defense: (Min: 19; Max: 21); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 590;
     Color: clLightBlue; Deep: [deDeepCave];),
 
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 50; Level: 5; Damage: (MinDamage: (Min: 17; Max: 20;);
+    MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 17; Max: 20;);
     MaxDamage: (Min: 27; Max: 31;)); Price: 570; Color: clDarkRed;
     Deep: [deDeepCave];),
     // Scimitar
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 55; Level: 6; Damage: (MinDamage: (Min: 21; Max: 25;);
+    MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 21; Max: 25;);
     MaxDamage: (Min: 35; Max: 38;)); Price: 600; Color: clDarkRed;
     Deep: [deDeepCave];),
     // War Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 50; Level: 5; Damage: (MinDamage: (Min: 21; Max: 24;);
+    MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 21; Max: 24;);
     MaxDamage: (Min: 26; Max: 30;)); Price: 560; Color: clDarkRed;
     Deep: [deDeepCave];),
     // Dark Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 55; Level: 6; Damage: (MinDamage: (Min: 24; Max: 27;);
+    MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 24; Max: 27;);
     MaxDamage: (Min: 30; Max: 33;)); Price: 585; Color: clDarkRed;
     Deep: [deDeepCave];),
     // War Spear
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 50; Level: 5; Damage: (MinDamage: (Min: 6; Max: 10;);
+    MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 6; Max: 10;);
     MaxDamage: (Min: 25; Max: 28;)); Price: 540; Color: clDarkRed;
     Deep: [deDeepCave];),
     // Harpoon
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 55; Level: 6; Damage: (MinDamage: (Min: 7; Max: 11;);
+    MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 7; Max: 11;);
     MaxDamage: (Min: 35; Max: 39;)); Price: 575; Color: clDarkRed;
     Deep: [deDeepCave];),
     // Flanged Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 50; Level: 5; Damage: (MinDamage: (Min: 11; Max: 14;);
+    MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 11; Max: 14;);
     MaxDamage: (Min: 22; Max: 25;)); Price: 590; Color: clDarkRed;
     Deep: [deDeepCave];),
     // War Gavel
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 55; Level: 6; Damage: (MinDamage: (Min: 15; Max: 18;);
+    MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 15; Max: 18;);
     MaxDamage: (Min: 30; Max: 33;)); Price: 650; Color: clDarkRed;
     Deep: [deDeepCave];),
 
@@ -690,102 +690,102 @@ const
 
     // Horned Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 45; Level: 7; Defense: (Min: 12; Max: 14); Price: 850;
+    MaxDurability: 45; Level: 7; Defense: (Min: 12; Max: 14); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 850;
     Color: clWhite; Deep: [deBloodCave];),
     // Spired Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 50; Level: 8; Defense: (Min: 14; Max: 16); Price: 1000;
+    MaxDurability: 50; Level: 8; Defense: (Min: 14; Max: 16); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1000;
     Color: clWhite; Deep: [deBloodCave];),
     // Diadem
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 30; Level: 7; Defense: (Min: 6; Max: 7); Price: 1300;
+    MaxDurability: 30; Level: 7; Defense: (Min: 6; Max: 7); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1300;
     Color: clLightestBlue; Deep: [deBloodCave];),
     // Tiara
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 35; Level: 8; Defense: (Min: 7; Max: 8); Price: 1700;
+    MaxDurability: 35; Level: 8; Defense: (Min: 7; Max: 8); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1700;
     Color: clLightestBlue; Deep: [deBloodCave];),
     // Chain Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 175; Level: 7; Defense: (Min: 31; Max: 35); Price: 1300;
+    MaxDurability: 175; Level: 7; Defense: (Min: 31; Max: 35); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1300;
     Color: clWhite; Deep: [deBloodCave];),
     // Scale Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 200; Level: 8; Defense: (Min: 36; Max: 40); Price: 1600;
+    MaxDurability: 200; Level: 8; Defense: (Min: 36; Max: 40); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1600;
     Color: clWhite; Deep: [deBloodCave];),
     // Thick Furs
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 120; Level: 7; Defense: (Min: 13; Max: 14); Price: 1900;
+    MaxDurability: 120; Level: 7; Defense: (Min: 13; Max: 14); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1900;
     Color: clLightestBlue; Deep: [deBloodCave];),
     // Hard Robe
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 150; Level: 8; Defense: (Min: 15; Max: 16); Price: 2100;
+    MaxDurability: 150; Level: 8; Defense: (Min: 15; Max: 16); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 2100;
     Color: clLightestBlue; Deep: [deBloodCave];),
 
     // Battle Gauntlets
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 45; Level: 7; Defense: (Min: 13; Max: 14); Price: 400;
+    MaxDurability: 45; Level: 7; Defense: (Min: 13; Max: 14); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 400;
     Color: clWhite; Deep: [deBloodCave];),
     // War Gauntlets
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 50; Level: 8; Defense: (Min: 15; Max: 16); Price: 450;
+    MaxDurability: 50; Level: 8; Defense: (Min: 15; Max: 16); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 450;
     Color: clWhite; Deep: [deBloodCave];),
 
     // Chain Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 70; Level: 7; Defense: (Min: 19; Max: 21); Price: 700;
+    MaxDurability: 70; Level: 7; Defense: (Min: 19; Max: 21); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 700;
     Color: clWhite; Deep: [deBloodCave];),
     // War Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 80; Level: 8; Defense: (Min: 22; Max: 24); Price: 850;
+    MaxDurability: 80; Level: 8; Defense: (Min: 22; Max: 24); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 850;
     Color: clWhite; Deep: [deBloodCave];),
 
     // Heavy Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 60; Level: 7; Defense: (Min: 22; Max: 24); Price: 740;
+    MaxDurability: 60; Level: 7; Defense: (Min: 22; Max: 24); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 740;
     Color: clLightBlue; Deep: [deBloodCave];),
     // Large Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 75; Level: 8; Defense: (Min: 25; Max: 27); Price: 860;
+    MaxDurability: 75; Level: 8; Defense: (Min: 25; Max: 27); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 860;
     Color: clLightBlue; Deep: [deBloodCave];),
 
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 60; Level: 7; Damage: (MinDamage: (Min: 24; Max: 27;);
+    MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 24; Max: 27;);
     MaxDamage: (Min: 39; Max: 43;)); Price: 770; Color: clDarkRed;
     Deep: [deBloodCave];),
     // Great Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 65; Level: 8; Damage: (MinDamage: (Min: 27; Max: 30;);
+    MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 27; Max: 30;);
     MaxDamage: (Min: 44; Max: 48;)); Price: 820; Color: clDarkRed;
     Deep: [deBloodCave];),
     // Berserker Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 60; Level: 7; Damage: (MinDamage: (Min: 28; Max: 32;);
+    MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 28; Max: 32;);
     MaxDamage: (Min: 36; Max: 38;)); Price: 750; Color: clDarkRed;
     Deep: [deDeepCave];),
     // Marauder Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 65; Level: 8; Damage: (MinDamage: (Min: 32; Max: 35;);
+    MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 32; Max: 35;);
     MaxDamage: (Min: 41; Max: 45;)); Price: 885; Color: clDarkRed;
     Deep: [deBloodCave];),
     // Silvan Whisper
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 60; Level: 7; Damage: (MinDamage: (Min: 8; Max: 11;);
+    MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 8; Max: 11;);
     MaxDamage: (Min: 50; Max: 52;)); Price: 720; Color: clDarkRed;
     Deep: [deBloodCave];),
     // Impaler
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 65; Level: 8; Damage: (MinDamage: (Min: 9; Max: 11;);
+    MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 9; Max: 11;);
     MaxDamage: (Min: 65; Max: 67;)); Price: 790; Color: clDarkRed;
     Deep: [deBloodCave];),
     // Barbarous Mace
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 60; Level: 7; Damage: (MinDamage: (Min: 19; Max: 22;);
+    MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 19; Max: 22;);
     MaxDamage: (Min: 38; Max: 41;)); Price: 780; Color: clDarkRed;
     Deep: [deBloodCave];),
     // Adept Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 65; Level: 8; Damage: (MinDamage: (Min: 24; Max: 27;);
+    MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 24; Max: 27;);
     MaxDamage: (Min: 48; Max: 51;)); Price: 850; Color: clDarkRed;
     Deep: [deBloodCave];),
 
@@ -793,102 +793,102 @@ const
 
     // Casque
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 60; Level: 9; Defense: (Min: 16; Max: 18); Price: 1300;
+    MaxDurability: 60; Level: 9; Defense: (Min: 16; Max: 18); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1300;
     Color: clWhite; Deep: [deDrom];),
     // Winged Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 75; Level: 10; Defense: (Min: 18; Max: 20); Price: 1500;
+    MaxDurability: 75; Level: 10; Defense: (Min: 18; Max: 20); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1500;
     Color: clWhite; Deep: [deDrom];),
     // Magic Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 40; Level: 9; Defense: (Min: 8; Max: 10); Price: 2300;
+    MaxDurability: 40; Level: 9; Defense: (Min: 8; Max: 10); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 2300;
     Color: clLightestBlue; Deep: [deDrom];),
     // Crown
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
-    MaxDurability: 50; Level: 10; Defense: (Min: 10; Max: 12); Price: 2800;
+    MaxDurability: 50; Level: 10; Defense: (Min: 10; Max: 12); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 2800;
     Color: clLightestBlue; Deep: [deDrom];),
     // Splint Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 225; Level: 9; Defense: (Min: 41; Max: 45); Price: 1900;
+    MaxDurability: 225; Level: 9; Defense: (Min: 41; Max: 45); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1900;
     Color: clWhite; Deep: [deDrom];),
     // Plate Mail
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 250; Level: 10; Defense: (Min: 46; Max: 50); Price: 2500;
+    MaxDurability: 250; Level: 10; Defense: (Min: 46; Max: 50); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 2500;
     Color: clWhite; Deep: [deDrom];),
     // Moloch Robe
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 180; Level: 9; Defense: (Min: 17; Max: 18); Price: 2600;
+    MaxDurability: 180; Level: 9; Defense: (Min: 17; Max: 18); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 2600;
     Color: clLightestBlue; Deep: [deDrom];),
     // Boneweave Hauberk
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1;
-    MaxDurability: 200; Level: 10; Defense: (Min: 19; Max: 20); Price: 3000;
+    MaxDurability: 200; Level: 10; Defense: (Min: 19; Max: 20); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 3000;
     Color: clLightestBlue; Deep: [deDrom];),
 
     // Troll Gauntlets
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 55; Level: 9; Defense: (Min: 17; Max: 18); Price: 500;
+    MaxDurability: 55; Level: 9; Defense: (Min: 17; Max: 18); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 500;
     Color: clWhite; Deep: [deDrom];),
     // Plated Gauntlets
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1;
-    MaxDurability: 60; Level: 10; Defense: (Min: 19; Max: 20); Price: 600;
+    MaxDurability: 60; Level: 10; Defense: (Min: 19; Max: 20); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 600;
     Color: clWhite; Deep: [deDrom];),
 
     // Battle Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 90; Level: 9; Defense: (Min: 25; Max: 27); Price: 900;
+    MaxDurability: 90; Level: 9; Defense: (Min: 25; Max: 27); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 900;
     Color: clWhite; Deep: [deDrom];),
     // Plate Boots
     (Symbol: ';'; ItemType: itFeet; SlotType: stFeet; MaxStack: 1;
-    MaxDurability: 100; Level: 10; Defense: (Min: 28; Max: 30); Price: 1000;
+    MaxDurability: 100; Level: 10; Defense: (Min: 28; Max: 30); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1000;
     Color: clWhite; Deep: [deDrom];),
 
     // Tower Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 100; Level: 9; Defense: (Min: 28; Max: 30); Price: 920;
+    MaxDurability: 100; Level: 9; Defense: (Min: 28; Max: 30); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 920;
     Color: clLightBlue; Deep: [deDrom];),
     // Gothic Shield
     (Symbol: '+'; ItemType: itShield; SlotType: stOffHand; MaxStack: 1;
-    MaxDurability: 150; Level: 10; Defense: (Min: 31; Max: 35); Price: 1000;
+    MaxDurability: 150; Level: 10; Defense: (Min: 31; Max: 35); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));Price: 1000;
     Color: clLightBlue; Deep: [deDrom];),
 
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 30; Max: 33;);
+    MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 30; Max: 33;);
     MaxDamage: (Min: 50; Max: 54;)); Price: 930; Color: clDarkRed;
     Deep: [deDrom];),
     // Troll Slayer,
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 33; Max: 37;);
+    MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 33; Max: 37;);
     MaxDamage: (Min: 55; Max: 60;)); Price: 990; Color: clDarkRed;
     Deep: [deDrom];),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 36; Max: 39;);
+    MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 36; Max: 39;);
     MaxDamage: (Min: 45; Max: 49;)); Price: 940; Color: clDarkRed;
     Deep: [deDrom];),
     // Demon Axe,
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 40; Max: 45;);
+    MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 40; Max: 45;);
     MaxDamage: (Min: 50; Max: 55;)); Price: 980; Color: clDarkRed;
     Deep: [deDrom];),
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 10; Max: 12;);
+    MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 10; Max: 12;);
     MaxDamage: (Min: 80; Max: 89;)); Price: 940; Color: clDarkRed;
     Deep: [deDrom];),
     // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 10; Max: 15;);
+    MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 10; Max: 15;);
     MaxDamage: (Min: 90; Max: 100;)); Price: 970; Color: clDarkRed;
     Deep: [deDrom];),
     // War Maul
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 70; Level: 9; Damage: (MinDamage: (Min: 30; Max: 35;);
+    MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 30; Max: 35;);
     MaxDamage: (Min: 65; Max: 69;)); Price: 950; Color: clDarkRed;
     Deep: [deDrom];),
     // Doom Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 75; Level: 10; Damage: (MinDamage: (Min: 36; Max: 40;);
+    MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);Damage: (MinDamage: (Min: 36; Max: 40;);
     MaxDamage: (Min: 70; Max: 80;)); Price: 1000; Color: clDarkRed;
     Deep: [deDrom];)
 
