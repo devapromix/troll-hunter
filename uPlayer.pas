@@ -1043,12 +1043,9 @@ begin
     False:
       begin
         Terminal.Print(Status.Left - 1, Status.Top + 3,
-          ' ' + Format(_('Turn: %d Gold: %d %s'), [Statictics.Get(stTurn), Gold,
+          ' ' + Format(_('%s %d %s %d %s %d-%d %s %d %s'), [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold), Gold,
+          UI.Icon(icHammer), GetDamage.Min, GetDamage.Max, UI.Icon(icShield), Attributes.Attrib[atPV].Value,
           GetSatiationStr]));
-        Terminal.Print(Status.Left - 1, Status.Top + 4,
-          ' ' + Format(_('Damage: %d-%d PV: %d DV: %d'), [GetDamage.Min,
-          GetDamage.Max, Attributes.Attrib[atPV].Value, Attributes.Attrib[atDV].Value,
-            Satiation]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
           Status.Width);
       end;
