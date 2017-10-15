@@ -29,16 +29,16 @@ var
 
 implementation
 
-uses SysUtils, IniFiles, uPlayer, uMap, uGame, uTerminal;
+uses SysUtils, uPlayer, uMap, uGame, uTerminal;
 
 { TCorpses }
 
 procedure TCorpses.Save(Index, AX, AY, AZ: Byte);
 var
-  F: TIniFile;
+//  F: TIniFile;
   S: string;
 begin
-  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     S := IntToStr(Index);
     F.EraseSection(S);
@@ -50,15 +50,15 @@ begin
     end;
   finally
     F.Free;
-  end;
+  end;}
 end;
 
 procedure TCorpses.Load(Index: Byte);
 var
-  F: TIniFile;
+//  F: TIniFile;
   S: string;
 begin
-  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     S := IntToStr(Index);
     FCorpse[Index].X := F.ReadInteger(S, 'X', 0);
@@ -66,19 +66,19 @@ begin
     FCorpse[Index].Z := F.ReadInteger(S, 'Z', 0);
   finally
     F.Free;
-  end;
+  end; }
 end;
 
 procedure TCorpses.Append;
 var
-  F: TIniFile;
+//  F: TIniFile;
   I: Byte;
   S: string;
 begin
   if (Player.X = 0) or (Player.Y = 0) or (Player.X = High(Byte)) or
     (Player.Y = High(Byte)) then
     Exit;
-  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     for I := 0 to CorpseMax - 1 do
     begin
@@ -93,21 +93,21 @@ begin
     end;
   finally
     F.Free;
-  end;
+  end;}
 end;
 
 constructor TCorpses.Create;
 var
-  F: TIniFile;
+//  F: TIniFile;
   I: Byte;
 begin
-  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     for I := 0 to CorpseMax - 1 do
       Load(I);
   finally
     F.Free;
-  end;
+  end;   }
 end;
 
 procedure TCorpses.DelCorpse(AX, AY: Byte);

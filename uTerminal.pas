@@ -39,13 +39,13 @@ type
     procedure BackgroundColor(Value: Cardinal); overload;
     procedure ForegroundColor(Value: Cardinal); overload;
     procedure Print(AX, AY: Integer; AText: string); overload;
-    procedure Print(AX, AY: Integer; AText: string; Align: Byte); overload;
+    procedure Print(AX, AY: Integer; AText: string; Align: Integer); overload;
     procedure Print(AX, AY: Integer; AText: string;
       AForegroundColor: Cardinal;
       ABackgroundColor: Cardinal = 0); overload;
     procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
       Align: Byte); overload;
-    function Pick(AX, AY: Byte): Byte;
+    function Pick(const AX, AY: Byte): Byte;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
     function GetColorFromIni(AKey: string): string; overload;
@@ -185,14 +185,14 @@ begin
   terminal_print(AX, AY, TK_ALIGN_DEFAULT, AText);
 end;
 
-procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Byte);
+procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Integer);
 begin
   terminal_print(AX, AY, Align, AText);
 end;
 
-function TTerminal.Pick(X, Y: Byte): Byte;
+function TTerminal.Pick(const AX, AY: Byte): Byte;
 begin
-  Result := terminal_pick(X, Y, 0);
+  Result := terminal_pick(AX, AY, 0);
 end;
 
 procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;

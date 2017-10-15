@@ -232,7 +232,7 @@ end;
 procedure TGame.LoadConfig;
 begin
   // Localization
-  UseLanguage(terminal_get('ini.localization.locale'));
+  //UseLanguage(terminal_get('ini.localization.locale'));
   // Load colors
   clDefault := Terminal.GetColorFromIni('Default', 'Yellow');
   clBackground := Terminal.GetColorFromIni('Background', 'Black');

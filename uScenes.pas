@@ -572,7 +572,7 @@ end;
 
 procedure TSceneGame.Render;
 var
-  I, X, Y, PX, PY, DX, DY, R: Integer;
+  I, PX, PY, DX, DY, R: Integer;
   T: TTile;
   Min, Max: TPoint;
   S: string;
@@ -1069,7 +1069,7 @@ end;
 
 procedure TScenePlayer.RenderPlayer;
 var
-  X, Y, W: Byte;
+  GX, GY, W: Byte;
 begin
   Y := 3;
   X := Terminal.Window.Width div 4;
@@ -1128,7 +1128,7 @@ end;
 procedure TScenePlayer.RenderSkills;
 var
   I: TSkillEnum;
-  A, B, X, Y, D: Byte;
+  A, B, D: Byte;
 begin
   Y := 3;
   X := Terminal.Window.Width div 2;
@@ -1358,7 +1358,6 @@ procedure TSceneDialog.Render;
 var
   V: Integer;
   S: string;
-  Y: Byte;
 
   procedure Add(S: string);
   begin
@@ -1576,8 +1575,6 @@ end;
 { TSceneCalendar }
 
 procedure TSceneCalendar.Render;
-var
-  Y: Byte;
 
   procedure Add(const AText: string; AValue: string;
     AAdvValue: string = ''); overload;
@@ -1680,8 +1677,6 @@ end;
 { TSceneRest }
 
 procedure TSceneRest.Render;
-var
-  Y: Byte;
 begin
   UI.Title(_('Rest'));
 
@@ -1827,7 +1822,7 @@ end;
 procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
-  V, Y: Byte;
+  V: Byte;
 
   function IsSpell(I: TSpellEnum): Boolean;
   begin
@@ -1874,7 +1869,7 @@ end;
 
 procedure TSceneTalents.Render;
 var
-  V, Y, I: Byte;
+  V, I: Byte;
   T: TTalentEnum;
 
   procedure Add(const S, H: string; F: Boolean = True); overload;

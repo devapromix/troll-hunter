@@ -366,37 +366,37 @@ const
     // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clBlue;
-    NPCType: [ntScrTrader_A, ntPotManaTrader_B, ntJewTrader_C, ntRuneTrader_D];),
+    NPCType: [ntScrTrader_A, ntPotManaTrader_B, ntJewTrader_C, ntRuneTrader_D]),
 
     // Armor Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clWhite;
-    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C];),
+    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C]),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clRed;
-    NPCType: [ntBlacksmith_A, ntSmithTrader_B, ntGemTrader_C];),
+    NPCType: [ntBlacksmith_A, ntSmithTrader_B, ntGemTrader_C]),
 
     // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;);
-    Color: clLightYellow; NPCType: [ntFoodTrader_A, ntTavTrader_B];),
+    Color: clLightYellow; NPCType: [ntFoodTrader_A, ntTavTrader_B]),
 
     // Weapons and Armors Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;);
-    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C];),
+    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C]),
 
     // Shield Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;);
-    Color: clLightBlue; NPCType: [ntShTrader_A];),
+    Color: clLightBlue; NPCType: [ntShTrader_A]),
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clGreen;
-    NPCType: [ntHealer_A, ntHealTrader_B];)
+    NPCType: [ntHealer_A, ntHealTrader_B])
 
     );
 

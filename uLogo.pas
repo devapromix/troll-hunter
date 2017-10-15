@@ -19,12 +19,13 @@ var
 
 implementation
 
-uses SysUtils, Graphics, BearLibTerminal, uTerminal, uGame;
+uses SysUtils, //Graphics,
+  BearLibTerminal, uTerminal, uGame;
 
 type
   TSword = class(TObject)
   private
-    FBitmap: TBitmap;
+    //FBitmap: TBitmap;
   public
     constructor Create;
     destructor Destroy; override;
@@ -116,13 +117,13 @@ end;
 
 constructor TSword.Create;
 begin
-  FBitmap := TBitmap.Create;
-  FBitmap.LoadFromFile(Game.GetPath('') + 'Sword.bmp');
+  //FBitmap := TBitmap.Create;
+  //FBitmap.LoadFromFile(Game.GetPath('') + 'Sword.bmp');
 end;
 
 destructor TSword.Destroy;
 begin
-  FreeAndNil(FBitmap);
+  //FreeAndNil(FBitmap);
   inherited;
 end;
 
@@ -131,7 +132,7 @@ var
   X, Y: Byte;
   Color: Integer;
 begin
-  for Y := 0 to FBitmap.Height - 1 do
+{  for Y := 0 to FBitmap.Height - 1 do
     for X := 0 to FBitmap.Width - 1 do
     begin
       Color := FBitmap.Canvas.Pixels[X, Y];
@@ -141,7 +142,7 @@ begin
         Terminal.Print(Left + X, Top + Y, '#');
       end;
     end;
-  Terminal.ForegroundColor(clDefault);
+  Terminal.ForegroundColor(clDefault);}
 end;
 
 initialization

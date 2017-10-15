@@ -1827,13 +1827,13 @@ const
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
-  Terminal.PrintC(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
+  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
     Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
   if IsRender then
   begin
     Terminal.ForegroundColor(AItem.Color);
-    Terminal.PrintC(AX, AY + I, D.Symbol);
+    Terminal.Print(AX, AY + I, D.Symbol);
   end
   else
     Result := Result + D.Symbol + ' ';
@@ -1852,7 +1852,7 @@ begin
 
   if IsRender then
   begin
-    Terminal.PrintC(AX + 2, AY + I, S);
+    Terminal.Print(AX + 2, AY + I, S);
     S := '';
     case PriceType of
       ptSell:
@@ -2079,24 +2079,24 @@ end;
 
 function TItems.GetName(AItem: Item; IsShort: Boolean = False): string;
 var
-  Name, S: string;
+  N, S: string;
 begin
-  Name := GetName(TItemEnum(AItem.ItemID));
+  N := GetName(TItemEnum(AItem.ItemID));
   case AItem.Identify of
     0:
       begin
         if IsShort then
           S := '' else
           S := ' [[' + _('Unidentified') + ']]';
-        Result := Terminal.Colorize(Name + S,
+        Result := Terminal.Colorize(N + S,
         'Unidentified');
       end;
     1 .. High(Byte):
       Result := Terminal.Colorize
-        (Name + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
+        (N + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
         'Rare');
     else
-      Result := Name;
+      Result := N;
   end;
 end;
 
@@ -2108,18 +2108,18 @@ end;
 procedure TItems.DelCorpses;
 var
   I: Integer;
-  Z: TMapEnum;
+  M: TMapEnum;
   FItem: Item;
 begin
-  for Z := Low(TMapEnum) to High(TMapEnum) do
+  for M := Low(TMapEnum) to High(TMapEnum) do
   begin
-    if (Z = Map.Current) then Continue;
-    for I := Items_Dungeon_GetMapCount(Ord(Z)) - 1 downto 0 do
+    if (M = Map.Current) then Continue;
+    for I := Items_Dungeon_GetMapCount(Ord(M)) - 1 downto 0 do
     begin
-      FItem := Items_Dungeon_GetMapItem(Ord(Z), I);
+      FItem := Items_Dungeon_GetMapItem(Ord(M), I);
       if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems
         + FoodTypeItems) then
-        if (Items_Dungeon_DeleteMapItem(Ord(Z), I, FItem) > 0) then Continue;
+        if (Items_Dungeon_DeleteMapItem(Ord(M), I, FItem) > 0) then Continue;
     end;
   end;
 end;
@@ -2127,21 +2127,21 @@ end;
 procedure TItems.AddPlants;
 var
   I, FCount: Integer;
-  Z: TMapEnum;
+  M: TMapEnum;
   FItem: Item;
 begin
-  for Z := Low(TMapEnum) to High(TMapEnum) do
+  for M := Low(TMapEnum) to High(TMapEnum) do
   begin
-    FCount := Items_Dungeon_GetMapCount(Ord(Z));
+    FCount := Items_Dungeon_GetMapCount(Ord(M));
     for I := 0 to FCount - 1 do
     begin
-      FItem := Items_Dungeon_GetMapItem(Ord(Z), I);
+      FItem := Items_Dungeon_GetMapItem(Ord(M), I);
       if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in PlantTypeItems) then
       begin
         X := FItem.X + Math.RandomRange(0, 2);
         Y := FItem.Y + Math.RandomRange(0, 2);
-        if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, Z) in SpawnTiles) and
-          (Z in ItemBase[TItemEnum(FItem.ItemID)].Deep)) then
+        if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, M) in SpawnTiles) and
+          (M in ItemBase[TItemEnum(FItem.ItemID)].Deep)) then
           Loot(X, Y, TItemEnum(FItem.ItemID));
       end;
     end;
