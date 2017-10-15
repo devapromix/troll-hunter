@@ -278,7 +278,7 @@ uses
 {$IFDEF dx_has_WideStrings}
   WideStrings,
 {$ENDIF dx_has_WideStrings}
-  Types, Classes, SysUtils, TypInfo;
+  Types, Classes, StrUtils, SysUtils, TypInfo;
 
 (* *************************************************************************** *)
 (* *)

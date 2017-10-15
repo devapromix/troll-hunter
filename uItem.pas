@@ -157,16 +157,16 @@ const
 
     // None
     (Symbol: ' '; ItemType: itNone; SlotType: stNone; MaxStack: 1;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 0;
-    Color: clGray; Deep: [];),
+    MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 0;
+    Color: clGray; Deep: []),
     // Corpse
     (Symbol: '%'; ItemType: itCorpse; SlotType: stNone; MaxStack: 1;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 0;
-    Color: clGray; Deep: [deDarkWood .. deDrom];),
+    MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 0;
+    Color: clGray; Deep: [deDarkWood .. deDrom]),
     // Gold
     (Symbol: '$'; ItemType: itCoin; SlotType: stNone; MaxStack: 10000;
-    // MaxDurability: 0; Level: 0; Defense: 0; Damage: (Min: 0; Max: 0;); Price: 1;
-    Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 0;
+    Color: clYellow; Deep: [deDarkWood .. deDrom]),
 
     // Lesser Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;

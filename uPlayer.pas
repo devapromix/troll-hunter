@@ -124,7 +124,7 @@ var
 
 implementation
 
-uses Classes, SysUtils, Dialogs, Math, IniFiles, uItem, uGame, uMap, uScenes,
+uses Classes, SysUtils, Math, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI;
 

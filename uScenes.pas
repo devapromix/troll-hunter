@@ -46,8 +46,8 @@ type
     procedure Update(var Key: Word); override;
     property SceneEnum: TSceneEnum read FSceneEnum write FSceneEnum;
     function GetScene(I: TSceneEnum): TScene;
-    procedure SetScene(SceneEnum: TSceneEnum); overload;
-    procedure SetScene(SceneEnum, CurrSceneEnum: TSceneEnum); overload;
+    procedure SetScene(ASceneEnum: TSceneEnum); overload;
+    procedure SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum); overload;
     property PrevScene: TSceneEnum read FPrevSceneEnum write FPrevSceneEnum;
     procedure GoBack;
   end;
@@ -258,7 +258,7 @@ var
 implementation
 
 uses
-  SysUtils, Dialogs, Math, uTerminal, uPlayer, BearLibTerminal,
+  SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature, uStatistic,
   uAttribute, uUI;
@@ -439,18 +439,18 @@ begin
   end;
 end;
 
-procedure TScenes.SetScene(SceneEnum: TSceneEnum);
+procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
 begin
   Game.Timer := High(Byte);
   Game.ShowEffects := False;
-  Self.SceneEnum := SceneEnum;
+  Self.SceneEnum := ASceneEnum;
   Render;
 end;
 
-procedure TScenes.SetScene(SceneEnum, CurrSceneEnum: TSceneEnum);
+procedure TScenes.SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum);
 begin
   FPrevSceneEnum := CurrSceneEnum;
-  SetScene(SceneEnum);
+  SetScene(ASceneEnum);
 end;
 
 procedure TScenes.Update(var Key: Word);
