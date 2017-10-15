@@ -92,10 +92,10 @@ end;
 
 procedure TShops.Clear;
 var
-  Shop: TShopEnum;
+  S: TShopEnum;
 begin
-  for Shop := Low(TShopEnum) to High(TShopEnum) do
-    FShop[Shop].Clear;
+  for S := Low(TShopEnum) to High(TShopEnum) do
+    FShop[S].Clear;
 end;
 
 function TShops.Count: Byte;
@@ -105,18 +105,18 @@ end;
 
 constructor TShops.Create;
 var
-  Shop: TShopEnum;
+  S: TShopEnum;
 begin
-  for Shop := Low(TShopEnum) to High(TShopEnum) do
-    FShop[Shop] := TShop.Create;
+  for S := Low(TShopEnum) to High(TShopEnum) do
+    FShop[S] := TShop.Create;
 end;
 
 destructor TShops.Destroy;
 var
-  Shop: TShopEnum;
+  S: TShopEnum;
 begin
-  for Shop := Low(TShopEnum) to High(TShopEnum) do
-    FreeAndNil(FShop[Shop]);
+  for S := Low(TShopEnum) to High(TShopEnum) do
+    FreeAndNil(FShop[S]);
   inherited;
 end;
 
@@ -130,7 +130,7 @@ var
   FItem: Item;
   I, Max: Byte;
   ID: TItemEnum;
-  Shop: TShopEnum;
+  S: TShopEnum;
 
   function GetItemID(): TItemEnum;
   begin
@@ -141,7 +141,7 @@ var
   function Check: Boolean;
   begin
     ID := GetItemID();
-    case Shop of
+    case S of
       shTavern:
         Result := ID in TavernItems;
       shHealer:
@@ -180,9 +180,9 @@ var
   end;
 
 begin
-  for Shop := Low(TShopEnum) to High(TShopEnum) do
+  for S := Low(TShopEnum) to High(TShopEnum) do
   begin
-    Shops.Shop[Shop].Clear;
+    Shops.Shop[S].Clear;
     Max := EnsureRange(Player.Attributes.Attrib[atLev].Value * 4, 4, ItemMax);
     for I := 0 to Max - 1 do
     begin
@@ -192,7 +192,7 @@ begin
       until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
       Items.Make(Ord(ID), FItem);
       Items.Identify(FItem, True);
-      Shops.Shop[Shop].Add(FItem);
+      Shops.Shop[S].Add(FItem);
     end;
   end;
 end;

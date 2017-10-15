@@ -128,8 +128,8 @@ uses Classes, SysUtils, Math, uItem, uGame, uMap, uScenes,
   uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI;
 
-Defense: (Min: 0; Max: 0);
-Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+// Defense: (Min: 0; Max: 0);
+// Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
 
 { TPlayer }
 

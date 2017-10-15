@@ -915,7 +915,7 @@ type
     function GetItemEnum(AItemID: Integer): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
       ACount: Byte = 0; IsShort: Boolean = False): string;
-    function RenderInvItem(X, Y, I: Integer; AItem: Item;
+    function RenderInvItem(const AX, AY, I: Integer; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
     function GetSlotName(const SlotType: TSlotType): string;
@@ -949,7 +949,7 @@ var
 
 implementation
 
-uses Math, Classes, Dialogs, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
+uses Math, Classes, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
   uShop, uTalent, uAffixes, uAttribute, uUI;
 
 { TItems }
@@ -1807,7 +1807,7 @@ begin
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;
 
-function TItems.RenderInvItem(X, Y, I: Integer; AItem: Item;
+function TItems.RenderInvItem(const AX, AY, I: Integer; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
 var
@@ -1827,13 +1827,13 @@ const
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
-  Terminal.Print(X - 4, Y + I, UI.KeyToStr(Chr(I + Ord('A')), '',
+  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
     Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
   if IsRender then
   begin
     Terminal.ForegroundColor(AItem.Color);
-    Terminal.Print(X, Y + I, D.Symbol);
+    Terminal.Print(AX, AY + I, D.Symbol);
   end
   else
     Result := Result + D.Symbol + ' ';
@@ -1852,7 +1852,7 @@ begin
 
   if IsRender then
   begin
-    Terminal.Print(X + 2, Y + I, S);
+    Terminal.Print(AX + 2, AY + I, S);
     S := '';
     case PriceType of
       ptSell:
@@ -1881,9 +1881,9 @@ begin
         end;
     end;
     if Game.Timer > 0 then
-      Terminal.Print(Status.Left - L, Y + I, S)
+      Terminal.Print(Status.Left - L, AY + I, S)
     else
-      Terminal.Print(Screen.Width - L, Y + I, S);
+      Terminal.Print(Screen.Width - L, AY + I, S);
   end
   else
     Result := Result + S;
