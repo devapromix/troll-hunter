@@ -14,12 +14,12 @@ type
   UI = class(TObject)
     class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
       AColor, DarkColor: Cardinal);
-    class procedure Title(S: string; AY: Byte = 1; BGColor: Cardinal = 0);
+    class procedure Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
     class procedure FromAToZ(const Max: Byte = 0);
     class function KeyToStr(AKey: string; AStr: string = '';
       AColor: string = 'Key'): string;
-    class function GoldLeft(Value: Word): string;
-    class function Icon(AIcon: TIconEnum; AColor: string = ''): string;
+    class function GoldLeft(const Value: Cardinal): string;
+    class function Icon(const AIcon: TIconEnum; const AColor: string = ''): string;
   end;
 
 implementation
@@ -49,7 +49,7 @@ begin
     if ((I <= W) and (Cur > 0)) then
       Terminal.BackgroundColor(AColor);
     Terminal.Print(X + I + LM, Y, ' ');
-    Terminal.BackgroundColor(0); // Clear background
+    Terminal.BackgroundColor(0);
   end;
 end;
 
@@ -67,12 +67,12 @@ begin
 
 end;
 
-class function UI.GoldLeft(Value: Word): string;
+class function UI.GoldLeft(const Value: Cardinal): string;
 begin
   Result := Format(F, [Format(UI.Icon(icGold) + _('%d gold left'), [Value])]);
 end;
 
-class function UI.Icon(AIcon: TIconEnum; AColor: string): string;
+class function UI.Icon(const AIcon: TIconEnum; const AColor: string): string;
 begin
   if (AColor = '') then
     Result := Format('[font=icon][U+%s][/font]', [UpperCase(IconStr[AIcon])])
@@ -87,7 +87,7 @@ begin
     Terminal.GetColorFromIni(AColor)) + ' ' + AStr);
 end;
 
-class procedure UI.Title(S: string; AY: Byte = 1; BGColor: Cardinal = 0);
+class procedure UI.Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
 var
   X: Byte;
 begin
