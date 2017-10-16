@@ -1057,10 +1057,12 @@ end;
 
 procedure TScenePlayer.Render;
 begin
-  UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']));
+  if Game.Wizard then
+    UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']))
+      else UI.Title(Player.Name);
 
-  Self.RenderPlayer;
-  Self.RenderSkills;
+  Self.RenderPlayer();
+  Self.RenderSkills();
 
   AddKey('Esc', _('Close'));
   AddKey('Tab', _('Background'));
@@ -1069,10 +1071,10 @@ end;
 
 procedure TScenePlayer.RenderPlayer;
 var
-  GX, GY, W: Byte;
+  W: Byte;
 begin
   Y := 3;
-  X := Terminal.Window.Width div 4;
+  X := Math.EnsureRange(Terminal.Window.Width div 4, 10, High(Byte));
   W := X * 2 - 3;
   Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax,
@@ -1100,7 +1102,6 @@ begin
   Terminal.Print(X, Y + 10, Format('%s %d/%d',
     [UI.Icon(icVision) + ' ' + _('Perception'),
     Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
-
   UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
     clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d',
