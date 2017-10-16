@@ -898,7 +898,7 @@ type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
-  TBonusType = (btLife, btMana, btVision, btNN);
+  TBonusType = (btLife, btMana, btVis, btNN, btStr, btDex, btWil, btPer);
 
 type
   TItems = class(TEntity)
@@ -938,7 +938,7 @@ type
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
-    procedure SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: Byte);
+    procedure SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: Byte; IsAtr: Boolean);
     function GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
     procedure DelCorpses();
     procedure AddPlants;
@@ -1077,8 +1077,8 @@ begin
       K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
     if (AItem.Bonus > 0) then
     begin
-      if (Items.GetBonus(AItem, btVision) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVision), 'Vision', 'Rare');
+      if (Items.GetBonus(AItem, btVis) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVis), 'Vision', 'Rare');
       if (Items.GetBonus(AItem, btLife) > 0) then
         K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btMana) > 0) then
@@ -1159,7 +1159,8 @@ begin
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
-  // Bonus
+  // Bonuses
+  AItem.Attributes := 0;
   AItem.Bonus := 0;
   // Price
   CalcItem(AItem);
@@ -1892,13 +1893,13 @@ end;
 function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
 begin
   case BonusType of
-    btLife:
+    btLife, btStr:
       Result := Byte(AItem.Bonus shr 24);
-    btMana:
+    btMana, btDex:
       Result := Byte(AItem.Bonus shr 16);
-    btVision:
+    btVis, btWil:
       Result := Byte(AItem.Bonus shr 8);
-    btNN:
+    btNN, btPer:
       Result := Byte(AItem.Bonus);
     else
       Result := 0;
@@ -1906,26 +1907,41 @@ begin
 end;
 
 procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType;
-  const Value: Byte);
+  const Value: Byte; IsAtr: Boolean);
 var
   V: array[0..3] of Byte;
+  I: Cardinal;
 begin
-  V[0] := GetBonus(AItem, btLife);
-  V[1] := GetBonus(AItem, btMana);
-  V[2] := GetBonus(AItem, btVision);
-  V[3] := GetBonus(AItem, btNN);
+  case IsAtr of
+    True:
+    begin
+      V[0] := GetBonus(AItem, btStr);
+      V[1] := GetBonus(AItem, btDex);
+      V[2] := GetBonus(AItem, btWil);
+      V[3] := GetBonus(AItem, btPer);
+    end;
+    False:
+    begin
+      V[0] := GetBonus(AItem, btLife);
+      V[1] := GetBonus(AItem, btMana);
+      V[2] := GetBonus(AItem, btVis);
+      V[3] := GetBonus(AItem, btNN);
+    end;
+  end;
 
   case BonusType of
-    btLife:
+    btLife, btStr:
       V[0] := Value;
-    btMana:
+    btMana, btDex:
       V[1] := Value;
-    btVision:
+    btVis, btWil:
       V[2] := Value;
-    btNN:
+    btNN, btPer:
       V[3] := Value;
   end;
-  AItem.Bonus := (V[0] shl 24) or (V[1] shl 16) or (V[2] shl 8) or V[3];
+
+  I := (V[0] shl 24) or (V[1] shl 16) or (V[2] shl 8) or V[3];
+  if IsAtr then AItem.Attributes := I else AItem.Bonus := I;
 end;
 
 function TItems.AddItemInfo(V: array of string): string;

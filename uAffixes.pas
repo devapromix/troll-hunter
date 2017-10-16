@@ -178,7 +178,7 @@ var
       Value := Items.GetBonus(AItem, btLife) + Math.EnsureRange
         (Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1,
         High(Byte));
-      Items.SetBonus(AItem, btLife, Value);
+      Items.SetBonus(AItem, btLife, Value, False);
     end;
   end;
 
@@ -189,7 +189,7 @@ var
       Value := Items.GetBonus(AItem, btMana) + Math.EnsureRange
         (Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1,
         High(Byte));
-      Items.SetBonus(AItem, btMana, Value);
+      Items.SetBonus(AItem, btMana, Value, False);
     end;
   end;
 
@@ -199,8 +199,8 @@ begin
     // Vision
     aVision:
       begin
-        Value := Items.GetBonus(AItem, btVision) + 1;
-        Items.SetBonus(AItem, btVision, Value);
+        Value := Items.GetBonus(AItem, btVis) + 1;
+        Items.SetBonus(AItem, btVis, Value, False);
       end;
     // Life
     aLife1 .. aLife7:

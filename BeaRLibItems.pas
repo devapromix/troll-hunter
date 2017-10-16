@@ -21,6 +21,7 @@ type
     SlotID: Integer;
     Equipment: Integer;
     Price: Integer;
+    Attributes: Cardinal;
     Bonus: Cardinal;
     Color: Cardinal;
   end;

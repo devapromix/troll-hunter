@@ -427,12 +427,16 @@ begin
       begin
         AddAttrib(atMaxLife, Items.GetBonus(FItem, btLife));
         AddAttrib(atMaxMana, Items.GetBonus(FItem, btMana));
-        AddAttrib(atVision, Items.GetBonus(FItem, btVision));
+        AddAttrib(atVision, Items.GetBonus(FItem, btVis));
+        //AddAttrib(atVision, Items.GetBonus(FItem, btVis));
       end;
-//      FStr := FStr + FItem.?;
-//      FDex := FDex + FItem.?;
-//      FWil := FWil + FItem.?;
-//      FPer := FPer + FItem.?;
+      if (FItem.Attributes > 0) then
+      begin
+        AddAttrib(atStr, Items.GetBonus(FItem, btStr));
+        AddAttrib(atDex, Items.GetBonus(FItem, btDex));
+        AddAttrib(atWil, Items.GetBonus(FItem, btWil));
+        AddAttrib(atPer, Items.GetBonus(FItem, btPer));
+      end;
       if (ItemBase[ID].SlotType = stMainHand) then
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
     end;
