@@ -655,8 +655,8 @@ begin
       begin
         if Player.Look then
           Terminal.BackgroundColor($FF333333);
-        X := DX - PX + Player.X;
-        Y := DY - PY + Player.Y;
+        X := Math.EnsureRange(DX - PX + Player.X, 0, High(Byte));
+        Y := Math.EnsureRange(DY - PY + Player.Y, 0, High(Byte));
         if not Map.InMap(X, Y) then
           Continue;
         if not Game.Wizard then
@@ -1083,24 +1083,24 @@ begin
     [UI.Icon(icElixir) + ' ' + _('Level'), Player.Attributes.Attrib[atLev]
     .Value]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax,
-    clDarkRed, clDarkGray);
+    color_from_name('strength'), clDarkGray);
   Terminal.Print(X, Y + 4, Format('%s %d/%d',
     [UI.Icon(icStr) + ' ' + _('Strength'),
     Player.Attributes.Attrib[atStr].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax,
-    clDarkRed, clDarkGray);
+    color_from_name('dexterity'), clDarkGray);
   Terminal.Print(X, Y + 6, Format('%s %d/%d',
     [UI.Icon(icDex) + ' ' + _('Dexterity'),
     Player.Attributes.Attrib[atDex].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax,
-    clDarkRed, clDarkGray);
+    color_from_name('willpower'), clDarkGray);
   Terminal.Print(X, Y + 8, Format('%s %d/%d',
     [UI.Icon(icBook) + ' ' + _('Willpower'),
     Player.Attributes.Attrib[atWil].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax,
-    clDarkRed, clDarkGray);
+    color_from_name('perception'), clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d',
-    [UI.Icon(icVision) + ' ' + _('Perception'),
+    [UI.Icon(icLeav) + ' ' + _('Perception'),
     Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
     clDarkGreen, clDarkGray);

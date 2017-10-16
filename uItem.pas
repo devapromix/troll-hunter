@@ -306,7 +306,7 @@ const
     // Scroll of Identify
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 200; Color: clLightYellow;
-    Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 0;
+    Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 1;
     ManaCost: 15;),
 
     // Rune of minor healing
@@ -987,6 +987,20 @@ var
     Result := Format('(%dx)', [AItem.Amount])
   end;
 
+  procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
+    const RareColor: string = '');
+  begin
+    if (AEffect in ItemBase[TItemEnum(ID)].Effects) then
+    begin
+      V := ItemBase[TItemEnum(ID)].Value;
+      if (V > 0) then
+      begin
+        S := S + Items.GetInfo(Sign, V, Color, RareColor) + ' ';
+        F := True;
+      end;
+    end;
+  end;
+
 begin
   S := '';
   T := '';
@@ -1006,42 +1020,13 @@ begin
         F := True;
       end;
     end;
-    if (efMana in ItemBase[TItemEnum(ID)].Effects) then
-    begin
-      V := ItemBase[TItemEnum(ID)].Value;
-      if (V > 0) then
-      begin
-        S := S + Items.GetInfo('+', V, 'Mana') + ' ';
-        F := True;
-      end;
-    end;
-    if (efLife in ItemBase[TItemEnum(ID)].Effects) then
-    begin
-      V := ItemBase[TItemEnum(ID)].Value;
-      if (V > 0) then
-      begin
-        S := S + Items.GetInfo('+', V, 'Life') + ' ';
-        F := True;
-      end;
-    end;
-    if (efFood in ItemBase[TItemEnum(ID)].Effects) then
-    begin
-      V := ItemBase[TItemEnum(ID)].Value;
-      if (V > 0) then
-      begin
-        S := S + Items.GetInfo('+', V, 'Food') + ' ';
-        F := True;
-      end;
-    end;
-    if (efCurePoison in ItemBase[TItemEnum(ID)].Effects) then
-    begin
-      V := ItemBase[TItemEnum(ID)].Value;
-      if (V > 0) then
-      begin
-        S := S + Items.GetInfo('-', V, 'Poison') + ' ';
-        F := True;
-      end;
-    end;
+
+    AddEffect(efMana, '+', 'Mana');
+    AddEffect(efLife, '+', 'Life');
+    AddEffect(efFood, '+', 'Food');
+    AddEffect(efCurePoison, '+', 'Poison');
+    AddEffect(efBloodlust, '+', 'Poison', 'Blood');
+
     if IsShort then F := False;
     if F then
       S := '[[' + Trim(S) + ']] ';
@@ -1083,6 +1068,17 @@ begin
         K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btMana) > 0) then
         K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana), 'Mana', 'Rare');
+    end;
+    if (AItem.Attributes > 0) then
+    begin
+      if (Items.GetBonus(AItem, btStr) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btStr), 'Strength', 'Rare');
+      if (Items.GetBonus(AItem, btDex) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btDex), 'Dexterity', 'Rare');
+      if (Items.GetBonus(AItem, btWil) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btWil), 'Willpower', 'Rare');
+      if (Items.GetBonus(AItem, btPer) > 0) then
+        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer), 'Perception', 'Rare');
     end;
     D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability, AItem.MaxDurability]);
     if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
@@ -1803,7 +1799,11 @@ begin
   if (Color = 'Food') then S := UI.Icon(icFood);
   if (Color = 'Poison') then S := UI.Icon(icDrop);
   if (Color = 'Vision') then S := UI.Icon(icVision);
-  if (RareColor <> '') then Color := 'Rare';
+  if (Color = 'Strength') then S := UI.Icon(icStr);
+  if (Color = 'Dexterity') then S := UI.Icon(icDex);
+  if (Color = 'Willpower') then S := UI.Icon(icBook);
+  if (Color = 'Perception') then S := UI.Icon(icLeav);
+  if (RareColor <> '') then Color := RareColor;
   if (Value > 0) then
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;

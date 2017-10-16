@@ -12,7 +12,7 @@ type
     efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
     efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife,
-    efPrmMana, efPrmDV, efPrmPV);
+    efPrmMana, efPrmDV, efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer);
 
 type
   TEffects = set of TEffect;

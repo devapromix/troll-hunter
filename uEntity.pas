@@ -42,14 +42,18 @@ end;
 
 function TEntity.GetCapit(S: string): string;
 begin
-  Result := UpCase(S[1]) + Copy(S, 2, Length(S));
+  if (Trim(S) <> '') then
+    Result := UpCase(S[1]) + Copy(S, 2, Length(S))
+      else Result := '(???)' + S;
 end;
 
 function TEntity.GetDescAn(S: string): string;
 begin
+  if (Trim(S) <> '') then
+    Result := LowerCase(S)
+      else Result := '(???)' + S;
   if (GetCurrentLanguage <> 'en') then
     Exit;
-  Result := LowerCase(S);
   if (Result[1] in ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + Result
   else
@@ -58,7 +62,9 @@ end;
 
 function TEntity.GetDescThe(S: string): string;
 begin
-  Result := LowerCase(S);
+  if (Trim(S) <> '') then
+    Result := LowerCase(S)
+      else Result := '(???)' + S;
   if (GetCurrentLanguage <> 'en') then
     Exit;
   Result := 'the ' + Result;

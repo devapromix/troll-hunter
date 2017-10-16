@@ -21,6 +21,7 @@ const
   ItemMax = 26;
   StartGold = 250;
   // Talents
+  MinPrm = 1;
   TalentPrm = 3;
   AttribPrm = 7;
 
@@ -446,10 +447,10 @@ begin
     High(Integer));
   //
   Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
-    Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr], 1, AttribMax));
-  Attributes.SetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex], 1, AttribMax));
-  Attributes.SetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil], 1, AttribMax));
-  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer], 1, AttribMax));
+    Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] + Attributes.Attrib[atStr].Prm, 1, AttribMax));
+  Attributes.SetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] + Attributes.Attrib[atDex].Prm, 1, AttribMax));
+  Attributes.SetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil] + Attributes.Attrib[atWil].Prm, 1, AttribMax));
+  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm, 1, AttribMax));
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
@@ -1278,6 +1279,7 @@ begin
     Items.AddItemToInv(iAntidote, 10);
     Items.AddItemToInv(iScrollOfTownPortal, 10);
     Items.AddItemToInv(iScrollOfIdentify, 10);
+    Items.AddItemToInv(iScrollOfBloodLust, 10);
   end
   else
   begin
@@ -1319,6 +1321,14 @@ const
         Attributes.Modify(atPV, 0, Value);
       efPrmDV:
         Attributes.Modify(atDV, 0, Value);
+      efPrmStr:
+        Attributes.Modify(atStr, 0, Value);
+      efPrmDex:
+        Attributes.Modify(atDex, 0, Value);
+      efPrmWil:
+        Attributes.Modify(atWil, 0, Value);
+      efPrmPer:
+        Attributes.Modify(atPer, 0, Value);
     end;
     Calc();
     Fill();
@@ -1477,6 +1487,30 @@ begin
   begin
     PrmValue(efPrmPV, IfThen(Value = 0, TalentPrm, Value));
     MsgLog.Add(_('You increased a protection level'));
+  end;
+  // Strength
+  if (efPrmStr in Effects) then
+  begin
+    PrmValue(efPrmStr, IfThen(Value = 0, MinPrm, Value));
+    MsgLog.Add(_('Strength +1'));
+  end;
+  // Dexterity
+  if (efPrmDex in Effects) then
+  begin
+    PrmValue(efPrmDex, IfThen(Value = 0, MinPrm, Value));
+    MsgLog.Add(_('Dexterity +1'));
+  end;
+  // Willpower
+  if (efPrmWil in Effects) then
+  begin
+    PrmValue(efPrmWil, IfThen(Value = 0, MinPrm, Value));
+    MsgLog.Add(_('Willpower +1'));
+  end;
+  // Perception
+  if (efPrmPer in Effects) then
+  begin
+    PrmValue(efPrmPer, IfThen(Value = 0, MinPrm, Value));
+    MsgLog.Add(_('Perception +1'));
   end;
 end;
 
