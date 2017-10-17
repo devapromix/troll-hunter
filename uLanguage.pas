@@ -36,7 +36,7 @@ begin
   if Assigned(Game) then
   begin
     if Game.MkLang then
-      Game.Language.FSL.Append(AValue);
+      Game.Language.FSL.Append(AValue + '=');
     Result := Game.Language.Get(AValue);
   end else Result := AValue;
 end;
@@ -53,18 +53,9 @@ var
   S: string;
 begin
   FSL := TStringList.Create;
-  if (Assigned(Game) and Game.MkLang) then
-  begin
-    FSL.Sorted := True;
-    FSL.Duplicates := dupIgnore;
-    FSL.LoadFromFile(Game.GetPath('languages') + 'default.lng');
-    for I := 0 to FSL.Count - 1 do
-    begin
-      S := FSL[I];
-      Delete(S, Pos('=', S), 1);
-      FSL[I] := S;
-    end;
-  end;
+  FSL.Sorted := True;
+  FSL.Duplicates := dupIgnore;
+  FSL.LoadFromFile(Game.GetPath('languages') + 'default.lng');
   FID := TStringList.Create;
   FValue := TStringList.Create;
   FCurrent := 'en';
@@ -108,11 +99,7 @@ begin
 end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
-var
-  I: Integer;
 begin
-  for I := 0 to FSL.Count - 1 do
-    FSL[I] := FSL[I] + '=';
   FSL.SaveToFile(AFileName);
 end;
 
