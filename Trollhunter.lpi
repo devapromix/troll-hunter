@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -32,7 +32,7 @@
     </RunParams>
     <Units Count="1">
       <Unit0>
-        <Filename Value="Trollhunter.lpr"/>
+        <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
     </Units>

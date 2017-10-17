@@ -35,9 +35,11 @@ var
 
 begin
   Randomize();
+{$IFNDEF FPC}
 {$IF COMPILERVERSION >= 18}
   ReportMemoryLeaksOnShutdown := True;
 {$IFEND}
+{$ENDIF}
   Game.LoadConfig();
   repeat
     if (Game.Timer > 0) then
