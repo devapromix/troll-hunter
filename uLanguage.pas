@@ -48,11 +48,24 @@ begin
 end;
 
 constructor TLanguage.Create;
+var
+  I: Integer;
+  S: string;
 begin
   FSL := TStringList.Create;
-  FSL.Sorted := True;
-  FSL.Duplicates := dupIgnore;
-  FSL.LoadFromFile(Game.GetPath('languages') + 'default.lng');
+  if (Assigned(Game) and Game.MkLang) then
+  begin
+    FSL.Sorted := True;
+    FSL.Duplicates := dupIgnore;
+    FSL.LoadFromFile(Game.GetPath('languages') + 'default.lng');
+    for I := 0 to FSL.Count - 1 do
+    begin
+      S := FSL[I];
+      Delete(S, Pos('=', S), 1);
+      FSL[I] := S;
+    end;
+      
+  end;
   FID := TStringList.Create;
   FValue := TStringList.Create;
   FCurrent := 'en';
