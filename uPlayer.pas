@@ -1048,7 +1048,7 @@ begin
     False:
       begin
         Terminal.Print(Status.Left - 1, Status.Top + 3,
-          ' ' + Format(_('%s%d %s%d %s%d-%d %s%d %s'),
+          ' ' + Format('%s%d %s%d %s%d-%d %s%d %s',
           [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold), Gold,
           UI.Icon(icHammer), GetDamage.Min, GetDamage.Max,
           UI.Icon(icShield), Attributes.Attrib[atPV].Value,
