@@ -164,7 +164,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uTerminal, GNUGetText, uGame, uPlayer;
+uses SysUtils, Math, uTerminal, uLanguage, uGame, uPlayer;
 
 procedure TAffixes.DoSuffix(var AItem: Item);
 var

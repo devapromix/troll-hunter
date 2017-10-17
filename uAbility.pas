@@ -30,7 +30,7 @@ implementation
 
 { TAbility }
 
-uses GNUGetText;
+uses uLanguage;
 
 const
   AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',

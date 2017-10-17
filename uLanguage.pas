@@ -33,9 +33,12 @@ uses SysUtils, uGame;
 
 function _(const AValue: string): string;
 begin
-  if Game.MkLang then
-    Game.Language.FSL.Append(AValue);
-  Result := Game.Language.Get(AValue);
+  if Assigned(Game) then
+  begin
+    if Game.MkLang then
+      Game.Language.FSL.Append(AValue);
+    Result := Game.Language.Get(AValue);
+  end else Result := AValue;
 end;
 
 procedure TLanguage.Clear;

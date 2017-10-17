@@ -3,16 +3,16 @@ program Trollhunter;
 uses
   SysUtils,
   Dialogs,
-  GNUGetText in 'GNUGetText.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   BeaRLibItems in 'BeaRLibItems.pas',
+  uGame in 'uGame.pas',
+  uLanguage in 'uLanguage.pas',
   uTerminal in 'uTerminal.pas',
   uScenes in 'uScenes.pas',
   uPlayer in 'uPlayer.pas',
   uMap in 'uMap.pas',
   uItem in 'uItem.pas',
   uMob in 'uMob.pas',
-  uGame in 'uGame.pas',
   uMsgLog in 'uMsgLog.pas',
   uCorpse in 'uCorpse.pas',
   uEntity in 'uEntity.pas',
@@ -27,19 +27,18 @@ uses
   uAffixes in 'uAffixes.pas',
   uCreature in 'uCreature.pas',
   uAttribute in 'uAttribute.pas',
-  uUI in 'uUI.pas',
-  uLanguage in 'uLanguage.pas';
+  uUI in 'uUI.pas';
 
 var
   Key: Word = 0;
   IsRender: Boolean = True;
 
 begin
-  Randomize;
+  Randomize();
 {$IF COMPILERVERSION >= 18}
   ReportMemoryLeaksOnShutdown := True;
 {$IFEND}
-  Game.LoadConfig;
+  Game.LoadConfig();
   repeat
     if (Game.Timer > 0) then
     begin
@@ -49,8 +48,8 @@ begin
     end;
     if IsRender then
     begin
-      Scenes.Render;
-      Terminal.Refresh;
+      Scenes.Render();
+      Terminal.Refresh();
     end;
     Key := 0;
     if terminal_has_input() then

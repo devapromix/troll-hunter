@@ -143,7 +143,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uPlayer, uMsgLog, uScenes, GNUGetText,
+uses SysUtils, Math, uPlayer, uMsgLog, uScenes, 
   BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook;
 
 { TGame }

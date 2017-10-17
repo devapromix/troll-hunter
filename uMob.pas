@@ -463,7 +463,7 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, gnugettext,
+uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
   uItem, BearLibTerminal, uSkill, uStatistic, uAttribute;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;

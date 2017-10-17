@@ -90,7 +90,7 @@ type
     procedure Calc;
     procedure Fill;
     procedure Wait;
-    procedure Clear;
+    procedure Clear();
     procedure AddTurn;
     procedure Spawn;
     function GetSatiationStr: string;
@@ -126,7 +126,7 @@ var
 implementation
 
 uses Classes, SysUtils, Math, uItem, uGame, uMap, uScenes,
-  uTerminal, uMsgLog, GNUGetText, BeaRLibItems, uCorpse, uCalendar,
+  uTerminal, uMsgLog, uLanguage, BeaRLibItems, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI;
 
 { TPlayer }
@@ -478,11 +478,11 @@ begin
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2, High(Byte)));
 end;
 
-procedure TPlayer.Clear;
+procedure TPlayer.Clear();
 begin
-  inherited Clear;
-  Skills.Clear;
-  Spellbook.Clear;
+  inherited Clear();
+  Skills.Clear();
+  Spellbook.Clear();
   Items_Inventory_Clear();
   Killer := '';
   Look := False;
@@ -495,8 +495,8 @@ begin
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
   FBackground := GenerateBackground();
-  Calc;
-  Fill;
+  Calc();
+  Fill();
 end;
 
 constructor TPlayer.Create;

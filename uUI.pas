@@ -25,7 +25,7 @@ type
 implementation
 
 uses
-  SysUtils, BearLibTerminal, uTerminal, uGame, GNUGetText;
+  SysUtils, BearLibTerminal, uTerminal, uGame, uLanguage;
 
 const
   IconStr: array [TIconEnum] of string = ('F8D0','F8D1','F8D2','F8D3','F8D4',

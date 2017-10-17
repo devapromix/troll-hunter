@@ -949,7 +949,7 @@ var
 
 implementation
 
-uses Math, Classes, SysUtils, uTerminal, gnugettext, uMsgLog, uScenes,
+uses Math, Classes, SysUtils, uTerminal, uLanguage, uMsgLog, uScenes,
   uShop, uTalent, uAffixes, uAttribute, uUI;
 
 { TItems }
@@ -985,7 +985,7 @@ var
   function GetAmount(): string;
   begin
     Result := Format('(%dx)', [AItem.Amount])
-  end;
+  end;  
 
   procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
     const RareColor: string = '');

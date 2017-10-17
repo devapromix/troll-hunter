@@ -79,7 +79,7 @@ var
 
 implementation
 
-uses SysUtils, Math, Types, uPlayer, uMob, uItem, GNUGetText, uTerminal, uGame,
+uses SysUtils, Math, Types, uPlayer, uMob, uItem, uLanguage, uTerminal, uGame,
   uCreature, uAttribute;
 
 { TMap }

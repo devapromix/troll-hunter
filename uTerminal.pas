@@ -63,7 +63,7 @@ var
 
 implementation
 
-uses SysUtils, Classes, Math, uGame, GNUGetText;
+uses SysUtils, Classes, Math, uGame;
 
 { TTerminal }
 
@@ -74,7 +74,7 @@ end;
 
 procedure TTerminal.Clear;
 begin
-  terminal_clear;
+  terminal_clear();
 end;
 
 function TTerminal.Colorize(const ANum: Integer; const AColor: string): string;
@@ -89,14 +89,14 @@ end;
 
 constructor TTerminal.Create;
 begin
-  terminal_open;
-  terminal_refresh;
-  Self.Init;
+  terminal_open();
+  terminal_refresh();
+  Self.Init();
 end;
 
 destructor TTerminal.Destroy;
 begin
-  terminal_close;
+  terminal_close();
   inherited;
 end;
 
@@ -169,7 +169,7 @@ begin
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
   Wizard := '';
-  if Game.Wizard then
+  if Assigned(Game) and Game.Wizard then
     Wizard := '[WIZARD]';
   terminal_set(Format('window: size=%dx%d, title=%s',
     [Screen.Width, Screen.Height, Format(Trim('%s %s'), [Game.GetTitle,
