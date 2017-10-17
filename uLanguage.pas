@@ -64,7 +64,6 @@ begin
       Delete(S, Pos('=', S), 1);
       FSL[I] := S;
     end;
-      
   end;
   FID := TStringList.Create;
   FValue := TStringList.Create;
@@ -109,7 +108,11 @@ begin
 end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
+var
+  I: Integer;
 begin
+  for I := 0 to FSL.Count - 1 do
+    FSL[I] := FSL[I] + '=';
   FSL.SaveToFile(AFileName);
 end;
 
