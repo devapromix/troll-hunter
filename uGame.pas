@@ -182,6 +182,8 @@ end;
 
 destructor TGame.Destroy;
 begin
+  if MkLang then
+    Language.SaveLanguage();
   FreeAndNil(FLanguage);
   FreeAndNil(FPortal);
   FreeAndNil(FSpawn);

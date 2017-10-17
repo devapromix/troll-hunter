@@ -259,7 +259,7 @@ implementation
 
 uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, GNUGetText, uCorpse, uCalendar, uShop,
+  uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uAbility, uLogo, uEntity, uCreature, uStatistic,
   uAttribute, uUI;
 

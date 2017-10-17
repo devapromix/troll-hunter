@@ -7,12 +7,12 @@ uses Classes;
 type
   TLanguage = class(TObject)
   private
-    FSL: TStringList;
     FID: TStringList;
     FValue: TStringList;
     FCurrent: string;
   public
-    function _(AValue: string): string;
+    FSL: TStringList;
+    function Get(const AValue: string): string;
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
@@ -23,11 +23,20 @@ type
     property Current: string read FCurrent write FCurrent;
   end;
 
+function _(const AValue: string): string;
+
 implementation
 
 uses SysUtils, uGame;
 
 { TLanguage }
+
+function _(const AValue: string): string;
+begin
+  if Game.MkLang then
+    Game.Language.FSL.Append(AValue);
+  Result := Game.Language.Get(AValue);
+end;
 
 procedure TLanguage.Clear;
 begin
@@ -38,6 +47,8 @@ end;
 constructor TLanguage.Create;
 begin
   FSL := TStringList.Create;
+  FSL.Sorted := True;
+  FSL.Duplicates := dupIgnore;
   FSL.LoadFromFile(Game.GetPath('languages') + 'default.lng');
   FID := TStringList.Create;
   FValue := TStringList.Create;
@@ -78,22 +89,22 @@ end;
 
 procedure TLanguage.SaveLanguage;
 begin
-
+  SaveToFile(Game.GetPath('languages') + 'default.lng');
 end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
 begin
-
+  FSL.SaveToFile(AFileName);
 end;
 
 procedure TLanguage.UseLanguage(ACurrentLanguage: string);
 begin
-  Current := ACurrentLanguage;
   Clear;
+  Current := ACurrentLanguage;
   LoadFromFile(Game.GetPath('languages') + Current + '.lng');
 end;
 
-function TLanguage._(AValue: string): string;
+function TLanguage.Get(const AValue: string): string;
 var
   I: Integer;
 begin
