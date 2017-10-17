@@ -27,7 +27,8 @@ uses
   uAffixes in 'uAffixes.pas',
   uCreature in 'uCreature.pas',
   uAttribute in 'uAttribute.pas',
-  uUI in 'uUI.pas';
+  uUI in 'uUI.pas',
+  uLanguage in 'uLanguage.pas';
 
 var
   Key: Word = 0;

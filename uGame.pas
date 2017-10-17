@@ -2,7 +2,7 @@ unit uGame;
 
 interface
 
-uses uEntity, uMap;
+uses uEntity, uMap, uLanguage;
 
 {
   var
@@ -95,6 +95,7 @@ type
     FWizard: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
+    FMkLang: Boolean;
     FLCorpses: Boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
@@ -103,6 +104,7 @@ type
     FPortalTile: TTileEnum;
     FShowEffects: Boolean;
     FAPOption: array [TAPOptionEnum] of Boolean;
+    FLanguage: TLanguage;
   public
     constructor Create;
     destructor Destroy; override;
@@ -111,6 +113,7 @@ type
     property Won: Boolean read FWon write FWon;
     property IsMode: Boolean read FMode write FMode;
     property Wizard: Boolean read FWizard write FWizard;
+    property MkLang: Boolean read FMkLang write FMkLang;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
     property LCorpses: Boolean read FLCorpses write FLCorpses;
@@ -132,6 +135,7 @@ type
       const AFalse: string): string;
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
+    property Language: TLanguage read FLanguage;
   end;
 
 var
@@ -154,6 +158,7 @@ begin
   Won := False;
   IsMode := False;
   Wizard := False;
+  MkLang := False;
   for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
     FAPOption[J] := True;
   CanClose := False;
@@ -161,21 +166,25 @@ begin
   ShowMap := True;
   LCorpses := True;
   Difficulty := dfNormal;
-  Spawn := TSpawn.Create;
-  Portal := TSpawn.Create;
+  FSpawn := TSpawn.Create;
+  FPortal := TSpawn.Create;
   PortalMap := deDarkWood;
   PortalTile := teStoneFloor;
+  FLanguage := TLanguage.Create;
   for I := 1 to ParamCount do
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
       Wizard := True;
+    if (LowerCase(ParamStr(I)) = '-l') then
+      MkLang := True;
   end;
 end;
 
 destructor TGame.Destroy;
 begin
-  Portal.Free;
-  Spawn.Free;
+  FreeAndNil(FLanguage);
+  FreeAndNil(FPortal);
+  FreeAndNil(FSpawn);
   inherited;
 end;
 
@@ -232,7 +241,7 @@ end;
 procedure TGame.LoadConfig;
 begin
   // Localization
-  //UseLanguage(terminal_get('ini.localization.locale'));
+  Language.UseLanguage(terminal_get('ini.localization.language'));
   // Load colors
   clDefault := Terminal.GetColorFromIni('Default', 'Yellow');
   clBackground := Terminal.GetColorFromIni('Background', 'Black');
