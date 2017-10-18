@@ -1,3 +1,9 @@
+{$IFDEF FPC}
+  {$IFDEF Windows}
+  {$APPTYPE GUI}
+  {$ENDIF}
+{$ENDIF}
+
 program Trollhunter;
 
 uses
