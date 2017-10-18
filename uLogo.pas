@@ -19,7 +19,7 @@ var
 
 implementation
 
-uses SysUtils, BearLibTerminal, uTerminal, uGame;
+uses SysUtils, BearLibTerminal, uTerminal;
 
 const
   T: array [0 .. 17] of string =

@@ -111,8 +111,12 @@ begin
 end;
 
 function TTerminal.GetColorFromIni(AKey: string; ADefault: string): Cardinal;
+var
+  S: string;
 begin
-  Result := color_from_name(GetColorFromIni(AKey));
+  S := GetColorFromIni(AKey);
+  if (S = '') then S := ADefault;
+  Result := color_from_name(S);
 end;
 
 function TTerminal.GetTextScreenshot: string;

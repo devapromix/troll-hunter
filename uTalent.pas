@@ -82,7 +82,7 @@ type
 
 implementation
 
-uses SysUtils, Math, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
+uses SysUtils, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
 
 { TTalents }
 

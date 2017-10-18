@@ -464,7 +464,7 @@ var
 implementation
 
 uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
-  uItem, BearLibTerminal, uSkill, uStatistic, uAttribute;
+  uItem, uSkill, uStatistic, uAttribute;
 
 function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;

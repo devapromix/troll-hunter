@@ -48,9 +48,6 @@ begin
 end;
 
 constructor TLanguage.Create;
-var
-  I: Integer;
-  S: string;
 begin
   FSL := TStringList.Create;
   FSL.Sorted := True;
