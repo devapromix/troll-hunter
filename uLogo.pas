@@ -19,21 +19,7 @@ var
 
 implementation
 
-uses SysUtils, //Graphics,
-  BearLibTerminal, uTerminal, uGame;
-
-type
-  TSword = class(TObject)
-  private
-    //FBitmap: TBitmap;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure Render(Left, Top: Byte);
-  end;
-
-var
-  Sword: TSword;
+uses SysUtils, BearLibTerminal, uTerminal, uGame;
 
 const
   T: array [0 .. 17] of string =
@@ -105,7 +91,6 @@ begin
   for I := 0 to 17 do
     Terminal.Print(FX, I + 3, FL[I], TK_ALIGN_CENTER);
   if IsSword then
-    Sword.Render(15, 16);
 end;
 
 function TLogo.Width: Byte;
@@ -113,46 +98,12 @@ begin
   Result := Length(T[0]);
 end;
 
-{ TSword }
-
-constructor TSword.Create;
-begin
-  //FBitmap := TBitmap.Create;
-  //FBitmap.LoadFromFile(Game.GetPath('') + 'Sword.bmp');
-end;
-
-destructor TSword.Destroy;
-begin
-  //FreeAndNil(FBitmap);
-  inherited;
-end;
-
-procedure TSword.Render(Left, Top: Byte);
-var
-  X, Y: Byte;
-  Color: Integer;
-begin
-{  for Y := 0 to FBitmap.Height - 1 do
-    for X := 0 to FBitmap.Width - 1 do
-    begin
-      Color := FBitmap.Canvas.Pixels[X, Y];
-      Terminal.ForegroundColor(Terminal.GetColor(Color));
-      if (Color > 0) then
-      begin
-        Terminal.Print(Left + X, Top + Y, '#');
-      end;
-    end;
-  Terminal.ForegroundColor(clDefault);}
-end;
-
 initialization
 
 Logo := TLogo.Create;
-Sword := TSword.Create;
 
 finalization
 
-FreeAndNil(Sword);
 FreeAndNil(Logo);
 
 end.
