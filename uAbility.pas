@@ -37,6 +37,10 @@ const
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
 
+  AbilityName: array [TAbilityEnum] of string = ('Poisoned', 'Blinded',
+    'Stunned', 'Burning', 'Regen', 'Sleeping', 'Bloodlust', 'Cursed', 'Drunk',
+    'Diseased', 'Weak', 'Afraid');
+
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
   FAbility[I] := FAbility[I] + Value;
@@ -83,32 +87,7 @@ end;
 
 function TAbilities.GetName(Value: TAbilityEnum): string;
 begin
-  case Value of
-    abPoisoned:
-      Result := _('Poisoned');
-    abBlinded:
-      Result := _('Blinded');
-    abStunned:
-      Result := _('Stunned');
-    abBurning:
-      Result := _('Burning');
-    abRegen:
-      Result := _('Regen');
-    abSleeping:
-      Result := _('Sleeping');
-    abBloodlust:
-      Result := _('Bloodlust');
-    abCursed:
-      Result := _('Cursed');
-    abDrunk:
-      Result := _('Drunk');
-    abDiseased:
-      Result := _('Diseased');
-    abWeak:
-      Result := _('Weak');
-    abAfraid:
-      Result := _('Afraid');
-  end;
+  Result := AbilityName[Value];
 end;
 
 end.

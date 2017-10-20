@@ -189,15 +189,17 @@ implementation
 uses SysUtils, Math, uTerminal, uLanguage, uGame, uPlayer;
 
 const
-  SuffixStr: array [TSuffixEnum] of string =
-  ('', 'of Vision',
-  'of Life I', 'of Life II', 'of Life III', 'of Life IV', 'of Life V', 'of Life VI', 'of Life VII',
-  'of Mana I', 'of Mana II', 'of Mana III', 'of Mana IV', 'of Mana V', 'of Mana VI', 'of Mana VII',
-  'of Atr I', 'of Atr II', 'of Atr III', 'of Atr IV', 'of Atr V', 'of Atr VI', 'of Atr VII',
-  'of Defense I', 'of Defense II', 'of Defense III', 'of Defense IV', 'of Defense V', 'of Defense VI', 'of Defense VII',
-  'of Damage I', 'of Damage II', 'of Damage III', 'of Damage IV', 'of Damage V', 'of Damage VI', 'of Damage VII',
-  'of Durability I', 'of Durability II', 'of Durability III', 'of Durability IV', 'of Durability V', 'of Durability VI', 'of Durability VII'
-  );
+  SuffixName: array [TSuffixEnum] of string = ('', 'of Vision', 'of Life I',
+    'of Life II', 'of Life III', 'of Life IV', 'of Life V', 'of Life VI',
+    'of Life VII', 'of Mana I', 'of Mana II', 'of Mana III', 'of Mana IV',
+    'of Mana V', 'of Mana VI', 'of Mana VII', 'of Atr I', 'of Atr II',
+    'of Atr III', 'of Atr IV', 'of Atr V', 'of Atr VI', 'of Atr VII',
+    'of Defense I', 'of Defense II', 'of Defense III', 'of Defense IV',
+    'of Defense V', 'of Defense VI', 'of Defense VII', 'of Damage I',
+    'of Damage II', 'of Damage III', 'of Damage IV', 'of Damage V',
+    'of Damage VI', 'of Damage VII', 'of Durability I', 'of Durability II',
+    'of Durability III', 'of Durability IV', 'of Durability V',
+    'of Durability VI', 'of Durability VII');
 
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
@@ -290,7 +292,7 @@ end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
-  Result := SuffixStr[SuffixEnum];
+  Result := SuffixName[SuffixEnum];
 end;
 
 initialization
