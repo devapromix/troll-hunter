@@ -2109,7 +2109,7 @@ begin
       end;
     1 .. High(Byte):
       Result := Terminal.Colorize
-        (N + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
+        (N + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)),
         'Rare');
     else
       Result := N;

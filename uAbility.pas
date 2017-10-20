@@ -37,6 +37,7 @@ const
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
 
+const
   AbilityName: array [TAbilityEnum] of string = ('Poisoned', 'Blinded',
     'Stunned', 'Burning', 'Regen', 'Sleeping', 'Bloodlust', 'Cursed', 'Drunk',
     'Diseased', 'Weak', 'Afraid');
