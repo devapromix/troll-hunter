@@ -1053,7 +1053,7 @@ begin
     if (IT in WeaponTypeItems + JewelryTypeItems) then
     begin
       if (AItem.MinDamage > 0) then
-        T := Format('%s%d-%d', [UI.Icon(icHammer), AItem.MinDamage, AItem.MaxDamage]);
+        T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage, AItem.MaxDamage]);
       if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
@@ -1802,7 +1802,7 @@ begin
   if (Color = 'Strength') then S := UI.Icon(icStr);
   if (Color = 'Dexterity') then S := UI.Icon(icDex);
   if (Color = 'Willpower') then S := UI.Icon(icBook);
-  if (Color = 'Perception') then S := UI.Icon(icLeav);
+  if (Color = 'Perception') then S := UI.Icon(icLeaf);
   if (RareColor <> '') then Color := RareColor;
   if (Value > 0) then
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);

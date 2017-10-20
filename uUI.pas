@@ -6,9 +6,10 @@ uses uMsgLog;
 
 type
   TIconEnum = (icMale, icFemale, icPlus, icMinus, icQuestion, icGold, icFlag,
-    icLife, icMana, icSun, icHammer, icElixir, icShield, icFood, icLeav,
+    icLife, icMana, icStar, icHammer, icElixir, icShield, icFood, icLeaf,
     icFeather, icStr, icDex, icBook, icVision, icFire, icIce,
-    icLightning, icDrop, icSword, ic2, ic3, ic4, ic5, ic6, ic7, ic8);
+    icLightning, icDrop, icSword, icSun, icMoon, icTroph, icAst, icKey, icRepair,
+    icBook2);
 
 type
   UI = class(TObject)

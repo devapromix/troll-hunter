@@ -1100,7 +1100,7 @@ begin
   UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax,
     color_from_name('perception'), clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d',
-    [UI.Icon(icLeav) + ' ' + _('Perception'),
+    [UI.Icon(icLeaf) + ' ' + _('Perception'),
     Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
     clDarkGreen, clDarkGray);
