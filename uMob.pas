@@ -466,10 +466,6 @@ implementation
 uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
   uItem, uSkill, uStatistic, uAttribute, uPathFind;
 
-//function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
-//  Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
-//  external 'BeaRLibPF.dll';
-
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
   Result := (Map.GetTileEnum(X, Y, Map.Current) in FreeTiles);
