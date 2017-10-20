@@ -188,6 +188,17 @@ implementation
 
 uses SysUtils, Math, uTerminal, uLanguage, uGame, uPlayer;
 
+const
+  SuffixStr: array [TSuffixEnum] of string =
+  ('', 'of Vision',
+  'of Life I', 'of Life II', 'of Life III', 'of Life IV', 'of Life V', 'of Life VI', 'of Life VII',
+  'of Mana I', 'of Mana II', 'of Mana III', 'of Mana IV', 'of Mana V', 'of Mana VI', 'of Mana VII',
+  'of Atr I', 'of Atr II', 'of Atr III', 'of Atr IV', 'of Atr V', 'of Atr VI', 'of Atr VII',
+  'of Defense I', 'of Defense II', 'of Defense III', 'of Defense IV', 'of Defense V', 'of Defense VI', 'of Defense VII',
+  'of Damage I', 'of Damage II', 'of Damage III', 'of Damage IV', 'of Damage V', 'of Damage VI', 'of Damage VII',
+  'of Durability I', 'of Durability II', 'of Durability III', 'of Durability IV', 'of Durability V', 'of Durability VI', 'of Durability VII'
+  );
+
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
   SB: TSuffixBase;
@@ -279,96 +290,7 @@ end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
-  case SuffixEnum of
-    aVision:
-      Result := _(' of Vision');
-    aLife1:
-      Result := _(' of Life I');
-    aLife2:
-      Result := _(' of Life II');
-    aLife3:
-      Result := _(' of Life III');
-    aLife4:
-      Result := _(' of Life IV');
-    aLife5:
-      Result := _(' of Life V');
-    aLife6:
-      Result := _(' of Life VI');
-    aLife7:
-      Result := _(' of Life VII');
-    aMana1:
-      Result := _(' of Mana I');
-    aMana2:
-      Result := _(' of Mana II');
-    aMana3:
-      Result := _(' of Mana III');
-    aMana4:
-      Result := _(' of Mana IV');
-    aMana5:
-      Result := _(' of Mana V');
-    aMana6:
-      Result := _(' of Mana VI');
-    aMana7:
-      Result := _(' of Mana VII');
-    aAtr1:
-      Result := _(' of Atr I');
-    aAtr2:
-      Result := _(' of Atr II');
-    aAtr3:
-      Result := _(' of Atr III');
-    aAtr4:
-      Result := _(' of Atr IV');
-    aAtr5:
-      Result := _(' of Atr V');
-    aAtr6:
-      Result := _(' of Atr VI');
-    aAtr7:
-      Result := _(' of Atr VII');
-    aDefense1:
-      Result := _(' of Defense I');
-    aDefense2:
-      Result := _(' of Defense II');
-    aDefense3:
-      Result := _(' of Defense III');
-    aDefense4:
-      Result := _(' of Defense IV');
-    aDefense5:
-      Result := _(' of Defense V');
-    aDefense6:
-      Result := _(' of Defense VI');
-    aDefense7:
-      Result := _(' of Defense VII');
-    aDamage1:
-      Result := _(' of Damage I');
-    aDamage2:
-      Result := _(' of Damage II');
-    aDamage3:
-      Result := _(' of Damage III');
-    aDamage4:
-      Result := _(' of Damage IV');
-    aDamage5:
-      Result := _(' of Damage V');
-    aDamage6:
-      Result := _(' of Damage VI');
-    aDamage7:
-      Result := _(' of Damage VII');
-    aDurability1:
-      Result := _(' of Durability I');
-    aDurability2:
-      Result := _(' of Durability II');
-    aDurability3:
-      Result := _(' of Durability III');
-    aDurability4:
-      Result := _(' of Durability IV');
-    aDurability5:
-      Result := _(' of Durability V');
-    aDurability6:
-      Result := _(' of Durability VI');
-    aDurability7:
-      Result := _(' of Durability VII');
-  else
-    Result := '';
-  end;
+  Result := SuffixStr[SuffixEnum];
 end;
 
 initialization
