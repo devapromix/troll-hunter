@@ -8,7 +8,7 @@ type
   TIconEnum = (icMale, icFemale, icPlus, icMinus, icQuestion, icGold, icFlag,
     icLife, icMana, icSun, icHammer, icElixir, icShield, icFood, icLeav,
     icFeather, icStr, icDex, icBook, icVision, icFire, icIce,
-    icLightning, icDrop, ic1, ic2, ic3, ic4, ic5, ic6, ic7, ic8);
+    icLightning, icDrop, icSword, ic2, ic3, ic4, ic5, ic6, ic7, ic8);
 
 type
   UI = class(TObject)

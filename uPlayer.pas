@@ -1050,7 +1050,7 @@ begin
         Terminal.Print(Status.Left - 1, Status.Top + 3,
           ' ' + Format('%s%d %s%d %s%d-%d %s%d %s',
           [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold), Gold,
-          UI.Icon(icHammer), GetDamage.Min, GetDamage.Max,
+          UI.Icon(icSword), GetDamage.Min, GetDamage.Max,
           UI.Icon(icShield), Attributes.Attrib[atPV].Value,
           GetSatiationStr()]));
         Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
