@@ -464,11 +464,11 @@ var
 implementation
 
 uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
-  uItem, uSkill, uStatistic, uAttribute;
+  uItem, uSkill, uStatistic, uAttribute, uPathFind;
 
-function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
-  Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
-  external 'BeaRLibPF.dll';
+//function DoAStar(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
+//  Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
+//  external 'BeaRLibPF.dll';
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
@@ -834,7 +834,7 @@ begin
   if (Dist <= 2) and Player.IsRest then
     Player.IsRest := False;
   // A*
-  if not DoAStar(High(Byte) + 1, High(Byte) + 1, X, Y, Player.X, Player.Y,
+  if not PathFind(High(Byte) + 1, High(Byte) + 1, X, Y, Player.X, Player.Y,
     @MyCallback, NX, NY) then
     Exit;
   if (NX = Player.X) and (NY = Player.Y) then
