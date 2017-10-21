@@ -952,6 +952,44 @@ implementation
 uses Math, Classes, SysUtils, uTerminal, uLanguage, uMsgLog, uScenes,
   uShop, uTalent, uAffixes, uAttribute, uUI;
 
+const
+  ItemName: array [TItemEnum] of string =
+  ('None', 'Corpse', 'Gold', 'Lesser healing potion', 'Greater healing potion',
+  'Heroic healing potion', 'Potion of full healing', 'Lesser Rejuvenation Potion',
+  'Greater Rejuvenation Potion', 'Heroic Rejuvenation Potion',
+  'Potion Of Full Rejuvenation', 'Lesser mana potion', 'Greater mana potion',
+  'Heroic mana potion', 'Potion of full mana', 'Soothing balm', 'Healing poultice',
+  'Antidote', 'Fortifying Potion', 'Troll Blood Extract', 'Unicorn Blood Extract',
+  'Scroll of Minor Healing', 'Scroll of Lesser Healing', 'Scroll of Greater Healing',
+  'Scroll of Full Healing', 'Scroll of Hunger', 'Scroll of Sidestepping',
+  'Scroll of Phasing', 'Scroll of Teleportation', 'Scroll of Disappearing',
+  'Scroll of Town Portal', 'Scroll of Bloodlust', 'Scroll of Identify',
+  'Rune of Minor Healing', 'Rune of Lesser Healing', 'Rune of Greater Healing',
+  'Rune of Full Healing', 'Rune of Teleportation', 'Rune of Town Portal',
+  'Bread ration', 'Valley root', 'Rat pod', 'Kobold bulb', 'Key', 'Ruby',
+  'Topaz', 'Emerald', 'Sapphire', 'Ring', 'Amulet', 'Cap', 'War Cap', 'Hood',
+  'Red Hat', 'Quilted Armor', 'Leather Armor', 'Light Clothes', 'Leather Apron',
+  'Leather Gloves', 'Hide Gloves', 'Shoes', 'Leather Boots', 'Buckler',
+  'Targe Shield', 'Rusty Sword', 'Short Sword', 'Hatchet', 'Battle Axe',
+  'Short Spear', 'Spear', 'Slag Hammer', 'Spiked Cudgel', 'Helm', 'Grand Helm',
+  'Leather Cap', 'Mask', 'HardLeather Armor', 'Battle Armor', 'Fancy Clothes',
+  'Robe', 'Kobold Gloves', 'Chain Gloves', 'Mesh Boots', 'Heavy Boots',
+  'Small Shield', 'Kite Shield', 'Broad Sword', 'Long Sword', 'Meat Axe',
+  'Flesh Tearer', 'Javelin', 'Fuscina', 'Warhammer', 'War Mace', 'Great Helm',
+  'Full Helm', 'Bone Helmet', 'Wizard Hat', 'Brigantine Armor', 'Ring Mail',
+  'Light Furs', 'Clean Robe', 'Etched Gloves', 'Heavy Gloves', 'Greaves',
+  'Boneweave Boots', 'Bone Shield', 'Heater Shield', 'Moon Blade', 'Scimitar',
+  'War Axe', 'Dark Axe', 'War Spear', 'Harpoon', 'Flanged Mace', 'War Gavel',
+  'Horned Helmet', 'Spired Helm', 'Diadem', 'Tiara', 'Chain Mail', 'Scale Mail',
+  'Thick Furs', 'Hard Robe', 'Battle Gauntlets', 'War Gauntlets', 'Chain Boots',
+  'War Boots', 'Heavy Shield', 'Large Shield', 'Bastard Sword', 'Great Sword',
+  'Berserker Axe', 'Marauder Axe', 'Silvan Whisper', 'Impaler', 'Barbarous Mace',
+  'Adept Hammer', 'Casque', 'Winged Helm', 'Magic Helmet', 'Crown', 'Splint Mail',
+  'Plate Mail', 'Moloch Robe', 'Boneweave Hauberk', 'Troll Gauntlets',
+  'Plated Gauntlets', 'Battle Boots', 'Plate Boots', 'Tower Shield',
+  'Gothic Shield', 'Rune Sword', 'Troll Slayer', 'Chopper', 'Demon Axe',
+  'Soul Reaver', 'Honed Spear', 'War Maul', 'Doom Hammer');
+
 { TItems }
 
 class procedure TItems.CalcItem(var AItem: Item; APrice: Word = 0);
@@ -1296,450 +1334,7 @@ end;
 
 function TItems.GetName(I: TItemEnum): string;
 begin
-  case I of
-    // == All maps == //
-    // None
-    iNone:
-      Result := _('None');
-    // Corpse
-    iCorpse:
-      Result := _('Corpse');
-    // Gold
-    iGold:
-      Result := _('Gold');
-
-    // Potion of rejuvenation
-    iLesserRejuvenationPotion:
-      Result := _('Lesser Rejuvenation Potion');
-    // Potion of rejuvenation
-    iGreaterRejuvenationPotion:
-      Result := _('Greater Rejuvenation Potion');
-    // Potion of rejuvenation
-    iHeroicRejuvenationPotion:
-      Result := _('Heroic Rejuvenation Potion');
-    // Potion of rejuvenation
-    iPotionOfFullRejuvenation:
-      Result := _('Potion Of Full Rejuvenation');
-
-    // Potion of health
-    iLesserHealingPotion:
-      Result := _('Lesser healing potion');
-    // Potion of health
-    iGreaterHealingPotion:
-      Result := _('Greater healing potion');
-    // Potion of health
-    iHeroicHealingPotion:
-      Result := _('Heroic healing potion');
-    // Potion of health
-    iPotionOfFullHealing:
-      Result := _('Potion of full healing');
-
-    // Potion of mana
-    iLesserManaPotion:
-      Result := _('Lesser mana potion');
-    // Potion of mana
-    iGreaterManaPotion:
-      Result := _('Greater mana potion');
-    // Potion of mana
-    iHeroicManaPotion:
-      Result := _('Heroic mana potion');
-    // Potion of mana
-    iPotionOfFullMana:
-      Result := _('Potion of full mana');
-
-    // Soothing Balm
-    iSoothingBalm:
-      Result := _('Soothing balm');
-    // Healing Poultice
-    iHealingPoultice:
-      Result := _('Healing poultice');
-    // Antidote
-    iAntidote:
-      Result := _('Antidote');
-    // Fortifying Potion
-    iFortifyingPotion:
-      Result := _('Fortifying Potion');
-
-    // Troll Blood Extract
-    iTrollBloodExtract:
-      Result := _('Troll Blood Extract');
-    // Unicorn Blood Extract
-    iUnicornBloodExtract:
-      Result := _('Unicorn Blood Extract');
-
-    // Scroll of Healing
-    iScrollOfMinorHealing:
-      Result := _('Scroll of Minor Healing');
-    // Scroll of Healing
-    iScrollOfLesserHealing:
-      Result := _('Scroll of Lesser Healing');
-    // Scroll of Healing
-    iScrollOfGreaterHealing:
-      Result := _('Scroll of Greater Healing');
-    // Scroll of Healing
-    iScrollOfFullHealing:
-      Result := _('Scroll of Full Healing');
-
-    // Scroll of Hunger
-    iScrollOfHunger:
-      Result := _('Scroll of Hunger');
-    // Scroll of Sidestepping
-    iScrollOfSidestepping:
-      Result := _('Scroll of Sidestepping');
-    // Scroll of Phasing
-    iScrollOfPhasing:
-      Result := _('Scroll of Phasing');
-    // Scroll of Teleportation
-    iScrollOfTeleportation:
-      Result := _('Scroll of Teleportation');
-    // Scroll of Disappearing
-    iScrollOfDisappearing:
-      Result := _('Scroll of Disappearing');
-    // Scroll of Town Portal
-    iScrollOfTownPortal:
-      Result := _('Scroll of Town Portal');
-    // Scroll of Bloodlust
-    iScrollOfBloodlust:
-      Result := _('Scroll of Bloodlust');
-    // Scroll of Identify
-    iScrollOfIdentify:
-      Result := _('Scroll of Identify');
-
-    // Rune Of Minor Healing
-    iRuneOfMinorHealing:
-      Result := _('Rune of Minor Healing');
-    // Rune Of Lesser Healing
-    iRuneOfLesserHealing:
-      Result := _('Rune of Lesser Healing');
-    // Rune Of Greater Healing
-    iRuneOfGreaterHealing:
-      Result := _('Rune of Greater Healing');
-    // Rune Of Full Healing
-    iRuneOfFullHealing:
-      Result := _('Rune of Full Healing');
-    // Rune Of Teleportation
-    iRuneOfTeleportation:
-      Result := _('Rune of Teleportation');
-    // Rune Of Town Portal
-    iRuneOfTownPortal:
-      Result := _('Rune of Town Portal');
-
-    // Bread ration
-    iBreadRation:
-      Result := _('Bread ration');
-    // Valley root
-    iValleyRoot:
-      Result := _('Valley root');
-    // Rat pod
-    iRatPod:
-      Result := _('Rat pod');
-    // Kobold bulb
-    iKoboldBulb:
-      Result := _('Kobold bulb');
-
-    // Key
-    iKey:
-      Result := _('Key');
-
-    // Ruby
-    iRuby:
-      Result := _('Ruby');
-    // Topaz
-    iTopaz:
-      Result := _('Topaz');
-    // Emerald
-    iEmerald:
-      Result := _('Emerald');
-    // Sapphire
-    iSapphire:
-      Result := _('Sapphire');
-    // Ring
-    iRing:
-      Result := _('Ring');
-    // Amulet
-    iAmulet:
-      Result := _('Amulet');
-
-    // == Dark Wood == //
-
-    // Helm
-    iCap:
-      Result := _('Cap');
-    iWarCap:
-      Result := _('War Cap');
-    iHood:
-      Result := _('Hood');
-    iRedHat:
-      Result := _('Red Hat');
-    // Armor
-    iQuiltedArmor:
-      Result := _('Quilted Armor');
-    iLeatherArmor:
-      Result := _('Leather Armor');
-    iLightClothes:
-      Result := _('Light Clothes');
-    iLeatherApron:
-      Result := _('Leather Apron');
-    // Gloves
-    iLeatherGloves:
-      Result := _('Leather Gloves');
-    iHideGloves:
-      Result := _('Hide Gloves');
-    // Boots
-    iShoes:
-      Result := _('Shoes');
-    iLeatherBoots:
-      Result := _('Leather Boots');
-    // Shield
-    iBuckler:
-      Result := _('Buckler');
-    iTargeShield:
-      Result := _('Targe Shield');
-    // Blade
-    iRustySword:
-      Result := _('Rusty Sword');
-    iShortSword:
-      Result := _('Short Sword');
-    // Axe
-    iHatchet:
-      Result := _('Hatchet');
-    iBattleAxe:
-      Result := _('Battle Axe');
-    // Spear
-    iShortSpear:
-      Result := _('Short Spear');
-    iSpear:
-      Result := _('Spear');
-    // Mace
-    iSlagHammer:
-      Result := _('Slag Hammer');
-    iSpikedCudgel:
-      Result := _('Spiked Cudgel');
-
-    // == Gray Cave == //
-
-    // Helm
-    iHelm:
-      Result := _('Helm');
-    iGrandHelm:
-      Result := _('Grand Helm');
-    iLeatherCap:
-      Result := _('Leather Cap');
-    iMask:
-      Result := _('Mask');
-    // Armor
-    iHardLeatherArmor:
-      Result := _('HardLeather Armor');
-    iBattleArmor:
-      Result := _('Battle Armor');
-    iFancyClothes:
-      Result := _('Fancy Clothes');
-    iRobe:
-      Result := _('Robe');
-    // Gloves
-    iKoboldGloves:
-      Result := _('Kobold Gloves');
-    iChainGloves:
-      Result := _('Chain Gloves');
-    // Boots
-    iMeshBoots:
-      Result := _('Mesh Boots');
-    iHeavyBoots:
-      Result := _('Heavy Boots');
-    // Shield
-    iSmallShield:
-      Result := _('Small Shield');
-    iKiteShield:
-      Result := _('Kite Shield');
-    // Blade
-    iBroadSword:
-      Result := _('Broad Sword');
-    iLongSword:
-      Result := _('Long Sword');
-    // Axe
-    iMeatAxe:
-      Result := _('Meat Axe');
-    iFleshTearer:
-      Result := _('Flesh Tearer');
-    // Spear
-    iJavelin:
-      Result := _('Javelin');
-    iFuscina:
-      Result := _('Fuscina');
-    // Mace
-    iWarhammer:
-      Result := _('Warhammer');
-    iWarMace:
-      Result := _('War Mace');
-
-    // == Deep Cave == //
-
-    // Helm
-    iGreatHelm:
-      Result := _('Great Helm');
-    iFullHelm:
-      Result := _('Full Helm');
-    iBoneHelmet:
-      Result := _('Bone Helmet');
-    iWizardHat:
-      Result := _('Wizard Hat');
-    // Armor
-    iBrigantineArmor:
-      Result := _('Brigantine Armor');
-    iRingMail:
-      Result := _('Ring Mail');
-    iLightFurs:
-      Result := _('Light Furs');
-    iCleanRobe:
-      Result := _('Clean Robe');
-    // Gloves
-    iEtchedGloves:
-      Result := _('Etched Gloves');
-    iHeavyGloves:
-      Result := _('Heavy Gloves');
-    // Boots
-    iGreaves:
-      Result := _('Greaves');
-    iBoneweaveBoots:
-      Result := _('Boneweave Boots');
-    // Shield
-    iBoneShield:
-      Result := _('Bone Shield');
-    iHeaterShield:
-      Result := _('Heater Shield');
-    // Blade
-    iMoonBlade:
-      Result := _('Moon Blade');
-    iScimitar:
-      Result := _('Scimitar');
-    // Axe
-    iWarAxe:
-      Result := _('War Axe');
-    iDarkAxe:
-      Result := _('Dark Axe');
-    // Spear
-    iWarSpear:
-      Result := _('War Spear');
-    iHarpoon:
-      Result := _('Harpoon');
-    // Mace
-    iFlangedMace:
-      Result := _('Flanged Mace');
-    iWarGavel:
-      Result := _('War Gavel');
-
-    // == Blood Cave == //
-
-    // Helm
-    iHornedHelmet:
-      Result := _('Horned Helmet');
-    iSpiredHelm:
-      Result := _('Spired Helm');
-    iDiadem:
-      Result := _('Diadem');
-    iTiara:
-      Result := _('Tiara');
-    // Armor
-    iChainMail:
-      Result := _('Chain Mail');
-    iScaleMail:
-      Result := _('Scale Mail');
-    iThickFurs:
-      Result := _('Thick Furs');
-    iHardRobe:
-      Result := _('Hard Robe');
-    // Gloves
-    iBattleGauntlets:
-      Result := _('Battle Gauntlets');
-    iWarGauntlets:
-      Result := _('War Gauntlets');
-    // Boots
-    iChainBoots:
-      Result := _('Chain Boots');
-    iWarBoots:
-      Result := _('War Boots');
-    // Shield
-    iHeavyShield:
-      Result := _('Heavy Shield');
-    iLargeShield:
-      Result := _('Large Shield');
-    // Blade
-    iBastardSword:
-      Result := _('Bastard Sword');
-    iGreatSword:
-      Result := _('Great Sword');
-    // Axe
-    iBerserkerAxe:
-      Result := _('Berserker Axe');
-    iMarauderAxe:
-      Result := _('Marauder Axe');
-    // Spear
-    iSilvanWhisper:
-      Result := _('Silvan Whisper');
-    iImpaler:
-      Result := _('Impaler');
-    // Mace
-    iBarbarousMace:
-      Result := _('Barbarous Mace');
-    iAdeptHammer:
-      Result := _('Adept Hammer');
-
-    // == Drom == //
-
-    // Helm
-    iCasque:
-      Result := _('Casque');
-    iWingedHelm:
-      Result := _('Winged Helm');
-    iMagicHelmet:
-      Result := _('Magic Helmet');
-    iCrown:
-      Result := _('Crown');
-    // Armor
-    iSplintMail:
-      Result := _('Splint Mail');
-    iPlateMail:
-      Result := _('Plate Mail');
-    iMolochRobe:
-      Result := _('Moloch Robe');
-    iBoneweaveHauberk:
-      Result := _('Boneweave Hauberk');
-    // Gloves
-    iTrollGauntlets:
-      Result := _('Troll Gauntlets');
-    iPlatedGauntlets:
-      Result := _('Plated Gauntlets');
-    // Boots
-    iBattleBoots:
-      Result := _('Battle Boots');
-    iPlateBoots:
-      Result := _('Plate Boots');
-    // Shield
-    iTowerShield:
-      Result := _('Tower Shield');
-    iGothicShield:
-      Result := _('Gothic Shield');
-    // Blade
-    iRuneSword:
-      Result := _('Rune Sword');
-    iTrollSlayer:
-      Result := _('Troll Slayer');
-    // Axe
-    iChopper:
-      Result := _('Chopper');
-    iDemonAxe:
-      Result := _('Demon Axe');
-    // Spear
-    iSoulReaver:
-      Result := _('Soul Reaver');
-    iHonedSpear:
-      Result := _('Honed Spear');
-    // Mace
-    iWarMaul:
-      Result := _('War Maul');
-    iDoomHammer:
-      Result := _('Doom Hammer');
-  end;
+  Result := ItemName[I];
 end;
 
 function TItems.GetSlotName(const SlotType: TSlotType): string;

@@ -464,7 +464,7 @@ var
 implementation
 
 uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
-  uItem, uSkill, uStatistic, uAttribute, uPathFind, Classes;
+  uItem, uSkill, uStatistic, uAttribute, uPathFind;
 
 const
   MobName: array [TMobEnum] of string =
