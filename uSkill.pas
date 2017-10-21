@@ -44,6 +44,11 @@ implementation
 
 uses SysUtils, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog, uStatistic;
 
+const
+  SkillName: array [TSkillEnum] of string = ('', 'Athletics', 'Dodge', 'Concentration', 'Toughness',
+  'Blade', 'Axe', 'Spear', 'Mace',
+  'Stealth', 'Healing');
+
 { TSkills }
 
 procedure TSkills.Clear;
@@ -96,31 +101,7 @@ end;
 
 function TSkills.GetName(I: TSkillEnum): string;
 begin
-  case I of
-    // Attributes skills
-    skAthletics:
-      Result := _('Athletics');
-    skDodge:
-      Result := _('Dodge');
-    skConcentration:
-      Result := _('Concentration');
-    skToughness:
-      Result := _('Toughness');
-    // Weapon skills
-    skBlade:
-      Result := _('Blade');
-    skAxe:
-      Result := _('Axe');
-    skSpear:
-      Result := _('Spear');
-    skMace:
-      Result := _('Mace');
-    // Skills
-    skStealth:
-      Result := _('Stealth');
-    skHealing:
-      Result := _('Healing');
-  end;
+  Result := SkillName[I];
 end;
 
 function TSkills.GetSkill(I: TSkillEnum): TSkill;
