@@ -67,23 +67,11 @@ begin
 end;
 
 function TCalendar.GetDayName(): string;
+const
+  DayName: array [1..7] of string = (
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 begin
-  case DayOfWeek of
-    1:
-      Result := _('Monday');
-    2:
-      Result := _('Tuesday');
-    3:
-      Result := _('Wednesday');
-    4:
-      Result := _('Thursday');
-    5:
-      Result := _('Friday');
-    6:
-      Result := _('Saturday');
-  else
-    Result := _('Sunday');
-  end;
+  Result := DayName[DayOfWeek];
 end;
 
 function TCalendar.GetMonthName(AMonth: Byte): string;
