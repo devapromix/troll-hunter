@@ -719,23 +719,8 @@ begin
     // Damage
     Player.Life := EnsureRange(Player.Life - Dam, 0, Player.Life);
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
-    if ((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and not Game.Wizard) then
-    case Math.RandomRange(0, 7) of
-      0:
-        Player.BreakItem(stHead);
-      1:
-        Player.BreakItem(stTorso);
-      2:
-        Player.BreakItem(stHands);
-      3:
-        Player.BreakItem(stFeet);
-      4:
-        Player.BreakItem(stOffHand);
-      5:
-        Player.BreakItem(stNeck);
-      6:
-        Player.BreakItem(stFinger);
-    end;
+    if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0)
+      and not Game.Wizard)) then Player.BreakItem();
     if (Player.Life = 0) then
       Player.Defeat(Mobs.GetName(TMobEnum(ID)));
   end

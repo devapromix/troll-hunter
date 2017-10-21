@@ -112,6 +112,7 @@ type
     procedure IdentItem(Index: Integer);
     procedure BreakItem(Index: Integer; Value: Byte = 1); overload;
     procedure BreakItem(ASlot: TSlotType; Value: Byte = 1); overload;
+    procedure BreakItem(); overload;
     procedure AddExp(Value: Byte = 1);
     procedure Start;
     procedure Rest(ATurns: Word);
@@ -816,6 +817,26 @@ begin
       [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
+end;
+
+procedure TPlayer.BreakItem();
+begin
+  case Math.RandomRange(0, 7) of
+    0:
+      Player.BreakItem(stHead);
+    1:
+      Player.BreakItem(stTorso);
+    2:
+      Player.BreakItem(stHands);
+    3:
+      Player.BreakItem(stFeet);
+    4:
+      Player.BreakItem(stOffHand);
+    5:
+      Player.BreakItem(stNeck);
+    6:
+      Player.BreakItem(stFinger);
+  end;
 end;
 
 procedure TPlayer.Buy(Index: Integer);
