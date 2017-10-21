@@ -541,13 +541,13 @@ begin
   AddLine('F', _('Drop an item to the floor'));
   AddLine('L', _('Look mode'));
   AddLine('R', _('Rest'));
-  AddLine('M', _('Last messages'));
+  AddLine('M', _('View messages'));
   // AddLine('B', _('Spellbook'));
   AddLine('T', _('Talents'));
   AddLine('N', _('Show statistics'));
   AddLine('O', _('Options'));
   AddLine('I', _('Inventory'));
-  AddLine('P', _('Skills and attributes'));
+  AddLine('P', _('Character screen'));
   AddLine('K', _('Calendar'));
   AddLine('?', _('Show this help screen'));
 
@@ -582,6 +582,7 @@ var
     S: string;
     C: Integer;
     FItem: Item;
+
   begin
     S := '';
     Terminal.BackgroundColor(0);
