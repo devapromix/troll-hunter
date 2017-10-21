@@ -1338,26 +1338,12 @@ begin
 end;
 
 function TItems.GetSlotName(const SlotType: TSlotType): string;
+const
+  SlotName: array [TSlotType] of string = ('', 'Head', 'Neck', 'Finger',
+    'Main Hand', 'Off-Hand', 'Torso', 'Hands', 'Feet');
 begin
-  case SlotType of
-    stHead:
-      Result := _('Head');
-    stNeck:
-      Result := _('Neck');
-    stFinger:
-      Result := _('Finger');
-    stMainHand:
-      Result := _('Main Hand');
-    stOffHand:
-      Result := _('Off-Hand');
-    stTorso:
-      Result := _('Torso');
-    stHands:
-      Result := _('Hands');
-    stFeet:
-      Result := _('Feet');
-  end;
-  Result := Terminal.Colorize(Format('{%s}', [Result]), Terminal.GetColorFromIni('Equip'));
+  Result := Terminal.Colorize(Format('{%s}', [SlotName[SlotType]]),
+    Terminal.GetColorFromIni('Equip'));
 end;
 
 function TItems.GetPrice(Price: Word; F: Boolean = False): string;
