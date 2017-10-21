@@ -464,7 +464,24 @@ var
 implementation
 
 uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
-  uItem, uSkill, uStatistic, uAttribute, uPathFind;
+  uItem, uSkill, uStatistic, uAttribute, uPathFind, Classes;
+
+const
+  MobName: array [TMobEnum] of string =
+    ('Big Rat', 'Spiny Frog', 'Giant Gecko', 'Jackal', 'Black Bear',
+    'Grizzly Bear', 'Anaconda', 'Wolf', 'Hound', 'Kobold', 'Big Kobold',
+    'Red Kobold', 'Gnoll', 'Basilisk', 'Wisp', 'Worm', 'Naga', 'Fire Vortex',
+    'Scorpion', 'Wasp', 'Ant', 'Soldier Ant', 'Scarab', 'Big Spider',
+    'Fire Crab', 'Dire Wolf', 'Pan', 'Faun', 'Goblin', 'Dark Goblin',
+    'Black Goblin', 'Hobgoblin', 'Gargoyle', 'Warg', 'Werewolf',
+    'Draconian', 'Orc', 'Orc Brute', 'Orc Warrior', 'Orc Warlord',
+    'Zombie', 'Ogre', 'Mummy', 'Ghoul', 'Vampire', 'Vulture',
+    'Cyclops', 'Skeleton', 'Wraith', 'Lich', 'Phantom', 'Troll Brute',
+    'Black Hound', 'Giant Newt', 'Iguana', 'Kobold King', 'Swamp Worm',
+    'Giant Slug', 'Centaur', 'Satyr', 'Titan', 'Hill Giant', 'Stone Giant',
+    'Two-Headed Ogre', 'Troll King', 'Eldan (the magic trader)',
+    'Petra (the trader)', 'Bran (the blacksmith)', 'Tarn (the tavern owner)',
+    'Sirius (the trader)', 'Thor (the trader)', 'Virna (the healer)');
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
@@ -1036,10 +1053,7 @@ var
   I: Integer;
 begin
   for I := 0 to Count - 1 do
-  begin
-    FMob[I].Free;
-    FMob[I] := nil;
-  end;
+    FreeAndNil(FMob[I]);
   inherited;
 end;
 
@@ -1107,184 +1121,7 @@ end;
 
 function TMobs.GetName(I: TMobEnum): string;
 begin
-  case I of
-
-    // == Dark Wood == //
-
-    mBigRat:
-      Result := _('Big Rat');
-    mSpinyFrog:
-      Result := _('Spiny Frog');
-    mGiantGecko:
-      Result := _('Giant Gecko');
-    mJackal:
-      Result := _('Jackal');
-    mBlackBear:
-      Result := _('Black Bear');
-    mGrizzlyBear:
-      Result := _('Grizzly Bear');
-    mAnaconda:
-      Result := _('Anaconda');
-    mWolf:
-      Result := _('Wolf');
-    mHound:
-      Result := _('Hound');
-
-    // == Gray Cave == //
-
-    mKobold:
-      Result := _('Kobold');
-    mBigKobold:
-      Result := _('Big Kobold');
-    mRedKobold:
-      Result := _('Red Kobold');
-    mGnoll:
-      Result := _('Gnoll');
-    mBasilisk:
-      Result := _('Basilisk');
-    mWisp:
-      Result := _('Wisp');
-    mWorm:
-      Result := _('Worm');
-    mNaga:
-      Result := _('Naga');
-    mFireVortex:
-      Result := _('Fire Vortex');
-
-    // == Deep Cave == //
-
-    mScorpion:
-      Result := _('Scorpion');
-    mWasp:
-      Result := _('Wasp');
-    mAnt:
-      Result := _('Ant');
-    mSoldierAnt:
-      Result := _('Soldier Ant');
-    mScarab:
-      Result := _('Scarab');
-    mBigSpider:
-      Result := _('Big Spider');
-    mFireCrab:
-      Result := _('Fire Crab');
-    mDireWolf:
-      Result := _('Dire Wolf');
-    mPan:
-      Result := _('Pan');
-    mFaun:
-      Result := _('Faun');
-
-    // == Blood Cave == //
-
-    mGoblin:
-      Result := _('Goblin');
-    mDarkGoblin:
-      Result := _('Dark Goblin');
-    mBlackGoblin:
-      Result := _('Black Goblin');
-    mHobgoblin:
-      Result := _('Hobgoblin');
-    mGargoyle:
-      Result := _('Gargoyle');
-    mWarg:
-      Result := _('Warg');
-    mWerewolf:
-      Result := _('Werewolf');
-    mDraconian:
-      Result := _('Draconian');
-    mOrc:
-      Result := _('Orc');
-    mOrcBrute:
-      Result := _('Orc Brute');
-    mOrcWarrior:
-      Result := _('Orc Warrior');
-    mOrcWarlord:
-      Result := _('Orc Warlord');
-
-    // == Drom == //
-
-    mZombie:
-      Result := _('Zombie');
-    mOgre:
-      Result := _('Ogre');
-    mMummy:
-      Result := _('Mummy');
-    mGhoul:
-      Result := _('Ghoul');
-    mVampire:
-      Result := _('Vampire');
-    mVulture:
-      Result := _('Vulture');
-    mCyclops:
-      Result := _('Cyclops');
-    mSkeleton:
-      Result := _('Skeleton');
-    mWraith:
-      Result := _('Wraith');
-    mLich:
-      Result := _('Lich');
-    mPhantom:
-      Result := _('Phantom');
-    mTrollBrute:
-      Result := _('Troll Brute');
-
-    // == Bosses == //
-
-    // Dark Wood
-    mBlackHound:
-      Result := _('Black Hound');
-    mGiantNewt:
-      Result := _('Giant Newt');
-    mIguana:
-      Result := _('Iguana');
-    // Gray Cave
-    mKoboldKing:
-      Result := _('Kobold King');
-    mSwampWorm:
-      Result := _('Swamp Worm');
-    mGiantSlug:
-      Result := _('Giant Slug');
-    // Deep Cave
-    mCentaur:
-      Result := _('Centaur');
-    mSatyr:
-      Result := _('Satyr');
-    mTitan:
-      Result := _('Titan');
-    // Blood Cave
-    mHillGiant:
-      Result := _('Hill Giant');
-    mStoneGiant:
-      Result := _('Stone Giant');
-    mTwoHeadedOgre:
-      Result := _('Two-Headed Ogre');
-    // Drom
-    mTrollKing:
-      Result := _('Troll King');
-
-    // == NPC == //
-
-    npcNPC1:
-      Result := _('Eldan (the magic trader)');
-
-    npcNPC2:
-      Result := _('Petra (the trader)');
-
-    npcNPC3:
-      Result := _('Bran (the blacksmith)');
-
-    npcNPC4:
-      Result := _('Tarn (the tavern owner)');
-
-    npcNPC5:
-      Result := _('Sirius (the trader)');
-
-    npcNPC6:
-      Result := _('Thor (the trader)');
-
-    npcNPC7:
-      Result := _('Virna (the healer)');
-  end;
+  Result := MobName[I];
 end;
 
 initialization
@@ -1294,5 +1131,6 @@ Mobs := TMobs.Create;
 finalization
 
 FreeAndNil(Mobs);
+
 
 end.
