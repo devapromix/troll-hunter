@@ -87,35 +87,14 @@ begin
 end;
 
 function TCalendar.GetMonthName(AMonth: Byte): string;
+const
+  MonthName: array [1..12] of string = ('January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August', 'September', 'October', 'November',
+    'December');
 begin
   if (AMonth = 0) then
     AMonth := FMonth;
-  case AMonth of
-    1:
-      Result := _('January');
-    2:
-      Result := _('February');
-    3:
-      Result := _('March');
-    4:
-      Result := _('April');
-    5:
-      Result := _('May');
-    6:
-      Result := _('June');
-    7:
-      Result := _('July');
-    8:
-      Result := _('August');
-    9:
-      Result := _('September');
-    10:
-      Result := _('October');
-    11:
-      Result := _('November');
-  else
-    Result := _('December');
-  end;
+  Result := MonthName[AMonth];
 end;
 
 function TCalendar.GetTime(): string;
