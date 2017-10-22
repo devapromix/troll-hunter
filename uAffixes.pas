@@ -2,7 +2,7 @@ unit uAffixes;
 
 interface
 
-uses uCreature, uItem, BeaRLibItems;
+uses uCreature, uItem, uBeaRLibItemsCommon;
 
 type
   TSuffixBase = record
@@ -287,7 +287,7 @@ begin
       end;
   end;
   // Price
-  TItems.CalcItem(AItem, SB.Price);
+  uItem.TItems.CalcItem(AItem, SB.Price);
 end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;

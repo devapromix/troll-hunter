@@ -2,7 +2,7 @@ unit uItem;
 
 interface
 
-uses BearLibItems, uGame, uMap, uPlayer, uEntity, uCreature;
+uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
@@ -1106,7 +1106,8 @@ var
 implementation
 
 uses Math, Classes, SysUtils, uTerminal, uLanguage, uMsgLog, uScenes,
-  uShop, uTalent, uAffixes, uAttribute, uUI;
+  uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
+  uBearLibItemsInventory;
 
 const
   ItemName: array [TItemEnum] of string = ('None', 'Corpse', 'Gold',

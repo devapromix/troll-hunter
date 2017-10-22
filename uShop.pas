@@ -3,7 +3,7 @@ unit uShop;
 interface
 
 uses
-  BeaRLibItems, uPlayer, uItem;
+  uBeaRLibItemsCommon, uPlayer, uItem;
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,

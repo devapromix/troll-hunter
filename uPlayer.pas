@@ -127,8 +127,9 @@ var
 implementation
 
 uses Classes, SysUtils, Math, uItem, uGame, uMap, uScenes,
-  uTerminal, uMsgLog, uLanguage, BeaRLibItems, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI;
+  uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
+  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
+  uBearLibItemsCommon, uBearLibItemsDungeon, uBearLibItemsInventory;
 
 { TPlayer }
 

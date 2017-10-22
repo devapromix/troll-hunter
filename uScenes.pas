@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes, BeaRLibItems, uMob, Types, uGame;
+  Classes, Types, uBearLibItemsCommon, uMob, uGame;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -261,7 +261,7 @@ uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
-  uAttribute, uUI;
+  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory;
 
 { TScene }
 
@@ -1326,7 +1326,7 @@ begin
   Add(_('Game version'), Game.GetVersion);
   Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
   Self.Add();
-  Add(_('BeaRLibItems'), BeaRLibItems.Items_GetVersion);
+  Add(_('BeaRLibItems'), Items_GetVersion);
 
   if Game.Wizard then
   begin

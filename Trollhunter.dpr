@@ -9,7 +9,6 @@ uses
   SysUtils,
   Dialogs,
   BearLibTerminal in 'BearLibTerminal.pas',
-  BeaRLibItems in 'BeaRLibItems.pas',
   uGame in 'uGame.pas',
   uLanguage in 'uLanguage.pas',
   uTerminal in 'uTerminal.pas',
@@ -33,7 +32,10 @@ uses
   uCreature in 'uCreature.pas',
   uAttribute in 'uAttribute.pas',
   uUI in 'uUI.pas',
-  uPathFind in 'uPathFind.pas';
+  uPathFind in 'uPathFind.pas',
+  uBearLibItemsCommon in 'BearLibItems\uBearLibItemsCommon.pas',
+  uBearLibItemsDungeon in 'BearLibItems\uBearLibItemsDungeon.pas',
+  uBearLibItemsInventory in 'BearLibItems\uBearLibItemsInventory.pas';
 
 var
   Key: Word = 0;
