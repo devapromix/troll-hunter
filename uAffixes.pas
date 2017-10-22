@@ -6,6 +6,7 @@ uses uCreature, uItem, uBeaRLibItemsCommon;
 
 type
   TSuffixBase = record
+    Name: string;
     Level: TMinMax;
     // Color: Cardinal;
     Price: Word;
@@ -161,17 +162,30 @@ const
     ), (Level: (Min: 7; Max: 15); Price: 2500; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35));),
-    // Durability
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: SmithTypeItems;
-    MaxDurability: (Min: 10; Max: 20);), (Level: (Min: 2; Max: 5); Price: 200;
+
+    // of Craftmanship (Durability)
+    (Name: 'of Craftmanship'; Level: (Min: 1; Max: 3); Price: 100; Occurence: SmithTypeItems;
+    MaxDurability: (Min: 10; Max: 20);),
+    // of Durability (Durability)
+    (Name: 'of Durability'; Level: (Min: 2; Max: 5); Price: 200;
     Occurence: IdentTypeItems; MaxDurability: (Min: 20; Max: 30);
-    ), (Level: (Min: 3; Max: 7); Price: 300; Occurence: SmithTypeItems;
-    MaxDurability: (Min: 30; Max: 40);), (Level: (Min: 4; Max: 9); Price: 400;
+    ),
+    // of Sturdiness (Durability)
+    (Name: 'of Sturdiness'; Level: (Min: 3; Max: 7); Price: 300; Occurence: SmithTypeItems;
+    MaxDurability: (Min: 30; Max: 40);),
+    // of Structure (Durability)
+    (Name: 'of Structure'; Level: (Min: 4; Max: 9); Price: 400;
     Occurence: IdentTypeItems; MaxDurability: (Min: 40; Max: 50);
-    ), (Level: (Min: 5; Max: 11); Price: 500; Occurence: SmithTypeItems;
-    MaxDurability: (Min: 50; Max: 60);), (Level: (Min: 6; Max: 13); Price: 750;
+    ),
+    // of Endurance (Durability)
+    (Name: 'of Endurance'; Level: (Min: 5; Max: 11); Price: 500; Occurence: SmithTypeItems;
+    MaxDurability: (Min: 50; Max: 60);),
+    // of the Ages (Durability)
+    (Name: 'of the Ages'; Level: (Min: 6; Max: 13); Price: 750;
     Occurence: IdentTypeItems; MaxDurability: (Min: 60; Max: 70);
-    ), (Level: (Min: 7; Max: 15); Price: 1000; Occurence: SmithTypeItems;
+    ),
+    // of Permanance (Durability)
+    (Name: 'of Permanance'; Level: (Min: 7; Max: 15); Price: 1000; Occurence: SmithTypeItems;
     MaxDurability: (Min: 70; Max: 80);));
 
 type
@@ -189,17 +203,25 @@ implementation
 uses SysUtils, Math, uTerminal, uLanguage, uGame, uPlayer;
 
 const
-  SuffixName: array [TSuffixEnum] of string = ('', 'of Vision', 'of Life I',
-    'of Life II', 'of Life III', 'of Life IV', 'of Life V', 'of Life VI',
-    'of Life VII', 'of Mana I', 'of Mana II', 'of Mana III', 'of Mana IV',
-    'of Mana V', 'of Mana VI', 'of Mana VII', 'of Atr I', 'of Atr II',
+  SuffixName: array [TSuffixEnum] of string = ('', 'of Radiance',
+    // Life
+    'of Life I', 'of Life II', 'of Life III', 'of Life IV',
+    'of Life V', 'of Life VI', 'of Life VII',
+    // Mana
+    'of Mana I', 'of Mana II', 'of Mana III', 'of Mana IV',
+    'of Mana V', 'of Mana VI', 'of Mana VII',
+    // Mana and Life
+    'of Atr I', 'of Atr II',
     'of Atr III', 'of Atr IV', 'of Atr V', 'of Atr VI', 'of Atr VII',
+    // Defense
     'of Defense I', 'of Defense II', 'of Defense III', 'of Defense IV',
-    'of Defense V', 'of Defense VI', 'of Defense VII', 'of Damage I',
-    'of Damage II', 'of Damage III', 'of Damage IV', 'of Damage V',
-    'of Damage VI', 'of Damage VII', 'of Durability I', 'of Durability II',
-    'of Durability III', 'of Durability IV', 'of Durability V',
-    'of Durability VI', 'of Durability VII');
+    'of Defense V', 'of Defense VI', 'of Defense VII',
+    // Damage
+    'of Damage I', 'of Damage II', 'of Damage III', 'of Damage IV',
+    'of Damage V', 'of Damage VI', 'of Damage VII',
+    // Durability
+    'of Craftmanship', 'of Sturdiness', 'of Durability', 'of Structure',
+    'of the Ages', 'of Endurance', 'of Permanance');
 
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
