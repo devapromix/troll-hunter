@@ -38,7 +38,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uLanguage, uItem, uShop, uGame;
+uses SysUtils, Math, uLanguage, uItem, uShop;
 
 { TCalendar }
 

@@ -52,7 +52,7 @@ begin
     Open[I] := @OpenRaw[I];
 end;
 
-function Heuristic(dx, dy: Integer): Integer; inline;
+function Heuristic(dx, dy: Integer): Integer;
 begin
   Result := KNORM * Max(dx, dy) + (KDIAG - KNORM) * Min(dx, dy);
 end;
