@@ -261,27 +261,6 @@ implementation
 
 uses SysUtils, Math, uTerminal, uLanguage, uGame, uPlayer;
 
-const
-  SuffixName: array [TSuffixEnum] of string = ('', 'of Radiance',
-    // Life
-    'of Life I', 'of Life II', 'of Life III', 'of Life IV', 'of Life V',
-    'of Life VI', 'of Life VII',
-    // Mana
-    'of Mana I', 'of Mana II', 'of Mana III', 'of Mana IV', 'of Mana V',
-    'of Mana VI', 'of Mana VII',
-    // Mana and Life
-    'of Atr I', 'of Atr II', 'of Atr III', 'of Atr IV', 'of Atr V', 'of Atr VI',
-    'of Atr VII',
-    // Defense
-    'of Defense I', 'of Defense II', 'of Defense III', 'of Defense IV',
-    'of Defense V', 'of Defense VI', 'of Defense VII',
-    // Damage
-    'of Damage I', 'of Damage II', 'of Damage III', 'of Damage IV',
-    'of Damage V', 'of Damage VI', 'of Damage VII',
-    // Durability
-    'of Craftmanship', 'of Sturdiness', 'of Durability', 'of Structure',
-    'of the Ages', 'of Endurance', 'of Permanance');
-
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
   SB: TSuffixBase;
@@ -373,7 +352,7 @@ end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
-  Result := SuffixName[SuffixEnum];
+  Result := SuffixBase[SuffixEnum].Name;
 end;
 
 initialization
