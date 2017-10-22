@@ -45,11 +45,11 @@ implementation
 uses SysUtils, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog, uStatistic;
 
 const
-  SkillName: array [TSkillEnum] of string = ('', 'Athletics', 'Dodge', 'Concentration', 'Toughness',
-  'Blade', 'Axe', 'Spear', 'Mace',
-  'Stealth', 'Healing');
+  SkillName: array [TSkillEnum] of string = ('', 'Athletics', 'Dodge',
+    'Concentration', 'Toughness', 'Blade', 'Axe', 'Spear', 'Mace', 'Stealth',
+    'Healing');
 
-{ TSkills }
+  { TSkills }
 
 procedure TSkills.Clear;
 var
@@ -78,7 +78,8 @@ procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: Byte);
 begin
   if (Skill[ASkill].Value < SkillMax) and (ASkill <> skNone) then
   begin
-    FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
+    FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0,
+      AExpValue + 1) + 1;
     if (Skill[ASkill].Exp >= SkillExpMax) then
     begin
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
@@ -111,7 +112,8 @@ end;
 
 procedure TSkills.Modify(I: TSkillEnum; Value: Integer);
 begin
-  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin, SkillMax);
+  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin,
+    SkillMax);
 end;
 
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);
