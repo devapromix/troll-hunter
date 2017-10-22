@@ -1513,8 +1513,8 @@ end;
 
 function TItems.GetSlotName(const SlotType: TSlotType): string;
 const
-  SlotName: array [TSlotType] of string = ('', 'Head', 'Neck', 'Finger',
-    'Main Hand', 'Off-Hand', 'Torso', 'Hands', 'Feet');
+  SlotName: array [TSlotType] of string = ('', 'Head', 'Torso', 'Hands',
+     'Feet', 'Main Hand', 'Off-Hand', 'Neck', 'Finger');
 begin
   Result := Terminal.Colorize(Format('{%s}', [SlotName[SlotType]]),
     Terminal.GetColorFromIni('Equip'));
