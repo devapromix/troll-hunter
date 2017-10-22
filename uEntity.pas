@@ -20,7 +20,7 @@ type
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
     function GetDescThe(S: string): string;
-    function GetPureText(const S: string): string;
+    function GetPureText(S: string): string;
   end;
 
 implementation
@@ -75,13 +75,15 @@ begin
   Result := Round(Sqrt(Sqr(ToX - X) + Sqr(ToY - Y)));
 end;
 
-function TEntity.GetPureText(const S: string): string;
+function TEntity.GetPureText(S: string): string;
 var
   I: Integer;
   B: Boolean;
 begin
   B := True;
   Result := '';
+  S := StringReplace(S, '[[', '[', [rfReplaceAll]);
+  S := StringReplace(S, ']]', ']', [rfReplaceAll]);
   for I := 1 to Length(S) do
   begin
     if (S[I] = '[') then
