@@ -52,14 +52,14 @@ uses
   SysUtils, Math, uMap, uCreature, uAttribute;
 
 const
-  ManaPotionsItems = [iLesserManaPotion, iGreaterManaPotion, iHeroicManaPotion,
-    iPotionOfFullMana];
-  HealItems = [iLesserHealingPotion, iGreaterHealingPotion,
-    iHeroicHealingPotion, iPotionOfFullHealing, iLesserRejuvenationPotion,
-    iGreaterRejuvenationPotion, iHeroicRejuvenationPotion,
-    iPotionOfFullRejuvenation, iScrollOfMinorHealing, iScrollOfLesserHealing,
-    iScrollOfGreaterHealing, iScrollOfFullHealing];
-  TavernItems = [iKey, iScrollOfHunger];
+  ManaPotionsItems = [ivLesserManaPotion, ivGreaterManaPotion, ivHeroicManaPotion,
+    ivPotionOfFullMana];
+  HealItems = [ivLesserHealingPotion, ivGreaterHealingPotion,
+    ivHeroicHealingPotion, ivPotionOfFullHealing, ivLesserRejuvenationPotion,
+    ivGreaterRejuvenationPotion, ivHeroicRejuvenationPotion,
+    ivPotionOfFullRejuvenation, ivScrollOfMinorHealing, ivScrollOfLesserHealing,
+    ivScrollOfGreaterHealing, ivScrollOfFullHealing];
+  TavernItems = [ivKey, ivScrollOfHunger];
 
   { TShop }
 

@@ -805,7 +805,7 @@ procedure TMob.DropItems;
 begin
   Items.Loot(Self.X, Self.Y, Boss);
   if Game.LCorpses then
-    Items.Loot(Self.X, Self.Y, iCorpse);
+    Items.Loot(Self.X, Self.Y, ivCorpse);
 end;
 
 function TMob.GetVision: Byte;

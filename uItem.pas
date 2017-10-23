@@ -77,79 +77,81 @@ type
 type
   TItemEnum = (
     // All maps
-    None, iCorpse, iGold,
+    None, ivCorpse, ivGold,
     // Potions
-    iLesserHealingPotion, iGreaterHealingPotion, iHeroicHealingPotion,
-    iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,
-    iHeroicRejuvenationPotion, iPotionOfFullRejuvenation, iLesserManaPotion,
-    iGreaterManaPotion, iHeroicManaPotion, iPotionOfFullMana, iSoothingBalm,
-    iHealingPoultice, iAntidote, iFortifyingPotion,
+    ivLesserHealingPotion, ivGreaterHealingPotion, ivHeroicHealingPotion,
+    ivPotionOfFullHealing, ivLesserRejuvenationPotion, ivGreaterRejuvenationPotion,
+    ivHeroicRejuvenationPotion, ivPotionOfFullRejuvenation, ivLesserManaPotion,
+    ivGreaterManaPotion, ivHeroicManaPotion, ivPotionOfFullMana, ivSoothingBalm,
+    ivHealingPoultice, ivAntidote, ivFortifyingPotion,
     // Elixirs and Extracts
-    iTrollBloodExtract, iUnicornBloodExtract,
+    ivTrollBloodExtract, ivUnicornBloodExtract,
     // Scrolls
-    iScrollOfMinorHealing, iScrollOfLesserHealing, iScrollOfGreaterHealing,
-    iScrollOfFullHealing, iScrollOfHunger, iScrollOfSidestepping,
-    iScrollOfPhasing, iScrollOfTeleportation, iScrollOfDisappearing,
-    iScrollOfTownPortal, iScrollOfBloodlust, iScrollOfIdentify,
+    ivScrollOfMinorHealing, ivScrollOfLesserHealing, ivScrollOfGreaterHealing,
+    ivScrollOfFullHealing, ivScrollOfHunger, ivScrollOfSidestepping,
+    ivScrollOfPhasing, ivScrollOfTeleportation, ivScrollOfDisappearing,
+    ivScrollOfTownPortal, ivScrollOfBloodlust, ivScrollOfIdentify,
     // Runes
-    iRuneOfMinorHealing, iRuneOfLesserHealing, iRuneOfGreaterHealing,
-    iRuneOfFullHealing, iRuneOfTeleportation, iRuneOfTownPortal,
+    ivRuneOfMinorHealing, ivRuneOfLesserHealing, ivRuneOfGreaterHealing,
+    ivRuneOfFullHealing, ivRuneOfTeleportation, ivRuneOfTownPortal,
     // Foods
-    iBreadRation, iValleyRoot, iRatPod, iKoboldBulb,
-    //
-    iKey, iRuby, iTopaz, iEmerald, iSapphire, // Gems
-    iRing, // Rings
-    iAmulet, // Amulets
+    ivBreadRation, ivValleyRoot, ivRatPod, ivKoboldBulb,
+    // Gems
+    ivKey, ivRuby, ivTopaz, ivEmerald, ivSapphire,
+    // Rings
+    ivRing,
+    // Amulets
+    ivAmulet,
     // Dark Wood
-    iCap, iWarCap, iHood, iRedHat, // Headgear
-    iQuiltedArmor, iLeatherArmor, iLightClothes, iLeatherApron, // Body Armor
-    iLeatherGloves, iHideGloves, // Gloves
-    iShoes, iLeatherBoots, // Boots
-    iBuckler, iTargeShield, // Shield
-    iRustySword, iShortSword, // Blade
-    iHatchet, iBattleAxe, // Axe
-    iShortSpear, iSpear, // Spear
-    iSlagHammer, iSpikedCudgel, // Mace
+    ivCap, ivWarCap, ivHood, ivRedHat, // Headgear
+    ivQuiltedArmor, ivLeatherArmor, ivLightClothes, ivLeatherApron, // Body Armor
+    ivLeatherGloves, ivHideGloves, // Gloves
+    ivShoes, ivLeatherBoots, // Boots
+    ivBuckler, ivTargeShield, // Shield
+    ivRustySword, ivShortSword, // Blade
+    ivHatchet, ivBattleAxe, // Axe
+    ivShortSpear, ivSpear, // Spear
+    ivSlagHammer, ivSpikedCudgel, // Mace
     // Gray Cave
-    iHelm, iGrandHelm, iLeatherCap, iMask, // Headgear
-    iHardLeatherArmor, iBattleArmor, iFancyClothes, iRobe, // Body Armor
-    iKoboldGloves, iChainGloves, // Gloves
-    iMeshBoots, iHeavyBoots, // Boots
-    iSmallShield, iKiteShield, // Shield
-    iBroadSword, iLongSword, // Blade
-    iMeatAxe, iFleshTearer, // Axe
-    iJavelin, iFuscina, // Spear
-    iWarhammer, iWarMace, // Mace
+    ivHelm, ivGrandHelm, ivLeatherCap, ivMask, // Headgear
+    ivHardLeatherArmor, ivBattleArmor, ivFancyClothes, ivRobe, // Body Armor
+    ivKoboldGloves, ivChainGloves, // Gloves
+    ivMeshBoots, ivHeavyBoots, // Boots
+    ivSmallShield, ivKiteShield, // Shield
+    ivBroadSword, ivLongSword, // Blade
+    ivMeatAxe, ivFleshTearer, // Axe
+    ivJavelin, ivFuscina, // Spear
+    ivWarhammer, ivWarMace, // Mace
     // Deep Cave
-    iGreatHelm, iFullHelm, iBoneHelmet, iWizardHat, // Headgear
-    iBrigantineArmor, iRingMail, iLightFurs, iCleanRobe, // Body Armor
-    iEtchedGloves, iHeavyGloves, // Gloves
-    iGreaves, iBoneweaveBoots, // Boots
-    iBoneShield, iHeaterShield, // Shield
-    iMoonBlade, iScimitar, // Blade
-    iWarAxe, iDarkAxe, // Axe
-    iWarSpear, iHarpoon, // Spear
-    iFlangedMace, iWarGavel, // Mace
+    ivGreatHelm, ivFullHelm, ivBoneHelmet, ivWizardHat, // Headgear
+    ivBrigantineArmor, ivRingMail, ivLightFurs, ivCleanRobe, // Body Armor
+    ivEtchedGloves, ivHeavyGloves, // Gloves
+    ivGreaves, ivBoneweaveBoots, // Boots
+    ivBoneShield, ivHeaterShield, // Shield
+    ivMoonBlade, ivScimitar, // Blade
+    ivWarAxe, ivDarkAxe, // Axe
+    ivWarSpear, ivHarpoon, // Spear
+    ivFlangedMace, ivWarGavel, // Mace
     // Blood Cave
-    iHornedHelmet, iSpiredHelm, iDiadem, iTiara, // Headgear
-    iChainMail, iScaleMail, iThickFurs, iHardRobe, // Body Armor
-    iBattleGauntlets, iWarGauntlets, // Gloves
-    iChainBoots, iWarBoots, // Boots
-    iHeavyShield, iLargeShield, // Shield
-    iBastardSword, iGreatSword, // Blade
-    iBerserkerAxe, iMarauderAxe, // Axe
-    iSilvanWhisper, iImpaler, // Spear
-    iBarbarousMace, iAdeptHammer, // Mace
+    ivHornedHelmet, ivSpiredHelm, ivDiadem, ivTiara, // Headgear
+    ivChainMail, ivScaleMail, ivThickFurs, ivHardRobe, // Body Armor
+    ivBattleGauntlets, ivWarGauntlets, // Gloves
+    ivChainBoots, ivWarBoots, // Boots
+    ivHeavyShield, ivLargeShield, // Shield
+    ivBastardSword, ivGreatSword, // Blade
+    ivBerserkerAxe, ivMarauderAxe, // Axe
+    ivSilvanWhisper, ivImpaler, // Spear
+    ivBarbarousMace, ivAdeptHammer, // Mace
     // Drom
-    iCasque, iWingedHelm, iMagicHelmet, iCrown, // Headgear
-    iSplintMail, iPlateMail, iMolochRobe, iBoneweaveHauberk, // Body Armor
-    iTrollGauntlets, iPlatedGauntlets, // Gloves
-    iBattleBoots, iPlateBoots, // Boots
-    iTowerShield, iGothicShield, // Shield
-    iRuneSword, iTrollSlayer, // Blade
-    iChopper, iDemonAxe, // Axe
-    iSoulReaver, iHonedSpear, // Spear
-    iWarMaul, iDoomHammer // Mace
+    ivCasque, ivWingedHelm, ivMagicHelmet, ivCrown, // Headgear
+    ivSplintMail, ivPlateMail, ivMolochRobe, ivBoneweaveHauberk, // Body Armor
+    ivTrollGauntlets, ivPlatedGauntlets, // Gloves
+    ivBattleBoots, ivPlateBoots, // Boots
+    ivTowerShield, ivGothicShield, // Shield
+    ivRuneSword, ivTrollSlayer, // Blade
+    ivChopper, ivDemonAxe, // Axe
+    ivSoulReaver, ivHonedSpear, // Spear
+    ivWarMaul, ivDoomHammer // Mace
     );
 
 const
@@ -1057,6 +1059,7 @@ type
 type
   TItems = class(TEntity)
   private
+    FItemName: array [TItemEnum] of string;
     function GetName(I: TItemEnum): string; overload;
   public
     class procedure Make(ID: Byte; var AItem: Item);
@@ -1105,50 +1108,9 @@ var
 
 implementation
 
-uses Math, Classes, SysUtils, uTerminal, uLanguage, uMsgLog, uScenes,
+uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog, uScenes,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
   uBearLibItemsInventory;
-
-const
-  ItemName: array [TItemEnum] of string = ('None', 'Corpse', 'Gold',
-    'Lesser healing potion', 'Greater healing potion', 'Heroic healing potion',
-    'Potion of full healing', 'Lesser Rejuvenation Potion',
-    'Greater Rejuvenation Potion', 'Heroic Rejuvenation Potion',
-    'Potion Of Full Rejuvenation', 'Lesser mana potion', 'Greater mana potion',
-    'Heroic mana potion', 'Potion of full mana', 'Soothing balm',
-    'Healing poultice', 'Antidote', 'Fortifying Potion', 'Troll Blood Extract',
-    'Unicorn Blood Extract', 'Scroll of Minor Healing',
-    'Scroll of Lesser Healing', 'Scroll of Greater Healing',
-    'Scroll of Full Healing', 'Scroll of Hunger', 'Scroll of Sidestepping',
-    'Scroll of Phasing', 'Scroll of Teleportation', 'Scroll of Disappearing',
-    'Scroll of Town Portal', 'Scroll of Bloodlust', 'Scroll of Identify',
-    'Rune of Minor Healing', 'Rune of Lesser Healing',
-    'Rune of Greater Healing', 'Rune of Full Healing', 'Rune of Teleportation',
-    'Rune of Town Portal', 'Bread ration', 'Valley root', 'Rat pod',
-    'Kobold bulb', 'Key', 'Ruby', 'Topaz', 'Emerald', 'Sapphire', 'Ring',
-    'Amulet', 'Cap', 'War Cap', 'Hood', 'Red Hat', 'Quilted Armor',
-    'Leather Armor', 'Light Clothes', 'Leather Apron', 'Leather Gloves',
-    'Hide Gloves', 'Shoes', 'Leather Boots', 'Buckler', 'Targe Shield',
-    'Rusty Sword', 'Short Sword', 'Hatchet', 'Battle Axe', 'Short Spear',
-    'Spear', 'Slag Hammer', 'Spiked Cudgel', 'Helm', 'Grand Helm',
-    'Leather Cap', 'Mask', 'HardLeather Armor', 'Battle Armor', 'Fancy Clothes',
-    'Robe', 'Kobold Gloves', 'Chain Gloves', 'Mesh Boots', 'Heavy Boots',
-    'Small Shield', 'Kite Shield', 'Broad Sword', 'Long Sword', 'Meat Axe',
-    'Flesh Tearer', 'Javelin', 'Fuscina', 'Warhammer', 'War Mace', 'Great Helm',
-    'Full Helm', 'Bone Helmet', 'Wizard Hat', 'Brigantine Armor', 'Ring Mail',
-    'Light Furs', 'Clean Robe', 'Etched Gloves', 'Heavy Gloves', 'Greaves',
-    'Boneweave Boots', 'Bone Shield', 'Heater Shield', 'Moon Blade', 'Scimitar',
-    'War Axe', 'Dark Axe', 'War Spear', 'Harpoon', 'Flanged Mace', 'War Gavel',
-    'Horned Helmet', 'Spired Helm', 'Diadem', 'Tiara', 'Chain Mail',
-    'Scale Mail', 'Thick Furs', 'Hard Robe', 'Battle Gauntlets',
-    'War Gauntlets', 'Chain Boots', 'War Boots', 'Heavy Shield', 'Large Shield',
-    'Bastard Sword', 'Great Sword', 'Berserker Axe', 'Marauder Axe',
-    'Silvan Whisper', 'Impaler', 'Barbarous Mace', 'Adept Hammer', 'Casque',
-    'Winged Helm', 'Magic Helmet', 'Crown', 'Splint Mail', 'Plate Mail',
-    'Moloch Robe', 'Boneweave Hauberk', 'Troll Gauntlets', 'Plated Gauntlets',
-    'Battle Boots', 'Plate Boots', 'Tower Shield', 'Gothic Shield',
-    'Rune Sword', 'Troll Slayer', 'Chopper', 'Demon Axe', 'Soul Reaver',
-    'Honed Spear', 'War Maul', 'Doom Hammer');
 
   { TItems }
 
@@ -1235,7 +1197,7 @@ begin
       S := S + GetAmount();
   end
   // Corpse
-  else if (TItemEnum(ID) = iCorpse) then
+  else if (TItemEnum(ID) = ivCorpse) then
     S := ''
   else
   begin
@@ -1400,7 +1362,7 @@ begin
       FY := Math.RandomRange(1, High(Byte) - 1);
     if (I >= High(Byte)) then
     begin
-      ID := Ord(iGold);
+      ID := Ord(ivGold);
       Break;
     end;
     Inc(I);
@@ -1450,12 +1412,12 @@ begin
       LootGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iLesserHealingPotion),
-        Ord(iPotionOfFullMana) + 1)));
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivLesserHealingPotion),
+        Ord(ivPotionOfFullMana) + 1)));
     // Scroll
     if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(iScrollOfMinorHealing),
-        Ord(iScrollOfTownPortal) + 1)));
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivScrollOfMinorHealing),
+        Ord(ivScrollOfTownPortal) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then
       Add(Map.Current, AX, AY, -1, AIsBoss);
@@ -1496,8 +1458,19 @@ begin
 end;
 
 constructor TItems.Create;
+var
+  I: TItemEnum;
+  P: Pointer;
+  S: string;
 begin
   Items_Open();
+  P := TypeInfo(TItemEnum);
+  for I := Low(TItemEnum) to High(TItemEnum) do
+  begin
+    S := StringReplace(GetEnumName(P, Ord(I)), 'iv', '', [rfReplaceAll]);
+    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
+    FItemName[I] := S;
+  end;
 end;
 
 destructor TItems.Destroy;
@@ -1508,7 +1481,7 @@ end;
 
 function TItems.GetName(I: TItemEnum): string;
 begin
-  Result := ItemName[I];
+  Result := FItemName[I];
 end;
 
 function TItems.GetSlotName(const SlotType: TSlotType): string;
@@ -1819,13 +1792,13 @@ end;
 
 procedure TItems.LootGold(const AX, AY: Byte);
 begin
-  Loot(AX, AY, iGold);
+  Loot(AX, AY, ivGold);
   if (Math.RandomRange(0, 4) = 0) then
   begin
     X := Map.EnsureRange(AX + (Math.RandomRange(0, 3) - 1));
     Y := Map.EnsureRange(AY + (Math.RandomRange(0, 3) - 1));
     if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then
-      Loot(X, Y, iGold);
+      Loot(X, Y, ivGold);
   end;
 end;
 
