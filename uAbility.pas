@@ -12,6 +12,7 @@ type
 type
   TAbilities = class(TObject)
   private
+    FAbilityName: array [TAbilityEnum] of string;
     FAbility: array [TAbilityEnum] of Word;
     function GetAbility(I: TAbilityEnum): Word;
     procedure SetAbility(I: TAbilityEnum; const Value: Word);
@@ -28,19 +29,14 @@ type
 
 implementation
 
-{ TAbility }
+uses SysUtils, TypInfo;
 
-uses uLanguage;
+{ TAbility }
 
 const
   AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
-
-const
-  AbilityName: array [TAbilityEnum] of string = ('Poisoned', 'Blinded',
-    'Stunned', 'Burning', 'Regen', 'Sleeping', 'Bloodlust', 'Cursed', 'Drunk',
-    'Diseased', 'Weak', 'Afraid');
 
 procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
 begin
@@ -56,8 +52,14 @@ begin
 end;
 
 constructor TAbilities.Create;
+var
+  I: TAbilityEnum;
+  P: Pointer;
 begin
   Self.Clear;
+  P := TypeInfo(TAbilityEnum);
+  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
+    FAbilityName[I] := StringReplace(GetEnumName(P, Ord(I)), 'ab', '', [rfReplaceAll]);
 end;
 
 destructor TAbilities.Destroy;
@@ -88,7 +90,7 @@ end;
 
 function TAbilities.GetName(Value: TAbilityEnum): string;
 begin
-  Result := AbilityName[Value];
+  Result := FAbilityName[Value];
 end;
 
 end.

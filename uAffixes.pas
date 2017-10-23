@@ -261,8 +261,9 @@ const
 
 type
   TAffixes = class(TObject)
+  private
+    FSuffixName: array [TSuffixEnum] of string;
   public
-    SuffixName: array [TSuffixEnum] of string;
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     procedure DoSuffix(var AItem: Item);
@@ -282,7 +283,7 @@ var
 begin
   P := TypeInfo(TSuffixEnum);
   for I := Low(TSuffixEnum) to High(TSuffixEnum) do
-    SuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ', [rfReplaceAll]);
+    FSuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ', [rfReplaceAll]);
 end;
 
 procedure TAffixes.DoSuffix(var AItem: Item);
@@ -374,7 +375,7 @@ end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
-  Result := SuffixName[SuffixEnum];
+  Result := FSuffixName[SuffixEnum];
 end;
 
 initialization
