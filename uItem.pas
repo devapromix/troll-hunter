@@ -77,7 +77,7 @@ type
 type
   TItemEnum = (
     // All maps
-    iNone, iCorpse, iGold,
+    None, iCorpse, iGold,
     // Potions
     iLesserHealingPotion, iGreaterHealingPotion, iHeroicHealingPotion,
     iPotionOfFullHealing, iLesserRejuvenationPotion, iGreaterRejuvenationPotion,

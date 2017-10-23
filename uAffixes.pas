@@ -6,9 +6,7 @@ uses uCreature, uItem, uBeaRLibItemsCommon;
 
 type
   TSuffixBase = record
-    Name: string;
     Level: TMinMax;
-    // Color: Cardinal;
     Price: Word;
     Occurence: set of TItemType;
     MaxDurability: TMinMax;
@@ -25,237 +23,240 @@ type
 type
   TSuffixEnum = (
     // None
-    aNone,
+    None,
     // Vision
-    aVision,
+    of_Radiance,
     // Life I - VII
-    aLife1, aLife2, aLife3, aLife4, aLife5, aLife6, aLife7,
+    of_Life1, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
-    aMana1, aMana2, aMana3, aMana4, aMana5, aMana6, aMana7,
+    of_Mana1, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
     // Life and Mana I - VII
-    aAtr1, aAtr2, aAtr3, aAtr4, aAtr5, aAtr6, aAtr7,
+    of_Atr1, of_Atr2, of_Atr3, of_Atr4, of_Atr5, of_Atr6, of_Atr7,
     // Defense I - VII
-    aDefense1, aDefense2, aDefense3, aDefense4, aDefense5, aDefense6, aDefense7,
+    of_Defense1, of_Defense2, of_Defense3, of_Defense4, of_Defense5,
+    of_Defense6, of_Defense7,
     // Damage I - VII
-    aDamage1, aDamage2, aDamage3, aDamage4, aDamage5, aDamage6, aDamage7,
+    of_Damage1, of_Damage2, of_Damage3, of_Damage4, of_Damage5, of_Damage6,
+    of_Damage7,
     // Durability I - VII
-    aDurability1, aDurability2, aDurability3, aDurability4, aDurability5, aDurability6, aDurability7);
+    of_Craftmanship, of_Durability, of_Sturdiness, of_Structure,
+    of_Endurance, of_the_Ages, of_Permanance);
 
 const
-  DefenseSuffixes = [aDefense1 .. aDefense7];
-  DamageSuffixes = [aDamage1 .. aDamage7];
-  DurabilitySuffixes = [aDurability1 .. aDurability7];
+  DefenseSuffixes = [of_Defense1 .. of_Defense7];
+  DamageSuffixes = [of_Damage1 .. of_Damage7];
+  DurabilitySuffixes = [of_Craftmanship .. of_Permanance];
 
 const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
     // None
     (),
     // of Radiance (Vision I)
-    (Name: 'of Radiance'; Level: (Min: 1; Max: 15); Price: 1000;
+    (Level: (Min: 1; Max: 15); Price: 1000;
     Occurence: JewelryTypeItems),
     // (Life I)
-    (Name: 'of Life I'; Level: (Min: 1; Max: 3); Price: 100;
+    (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 1; Max: 4);),
     // (Life II)
-    (Name: 'of Life II'; Level: (Min: 2; Max: 5); Price: 200;
+    (Level: (Min: 2; Max: 5); Price: 200;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 5; Max: 8);),
     // (Life III)
-    (Name: 'of Life III'; Level: (Min: 3; Max: 7); Price: 300;
+    (Level: (Min: 3; Max: 7); Price: 300;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 9; Max: 12);),
     // (Life IV)
-    (Name: 'of Life IV'; Level: (Min: 4; Max: 9); Price: 400;
+    (Level: (Min: 4; Max: 9); Price: 400;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 13; Max: 16);),
     // (Life V)
-    (Name: 'of Life V'; Level: (Min: 5; Max: 11); Price: 500;
+    (Level: (Min: 5; Max: 11); Price: 500;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 17; Max: 20);),
     // (Life VI)
-    (Name: 'of Life VI'; Level: (Min: 6; Max: 13); Price: 750;
+    (Level: (Min: 6; Max: 13); Price: 750;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 21; Max: 25);),
     // (Life VII)
-    (Name: 'of Life VII'; Level: (Min: 7; Max: 15); Price: 1000;
+    (Level: (Min: 7; Max: 15); Price: 1000;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 26; Max: 30);),
     // (Mana I)
-    (Name: 'of Mana I'; Level: (Min: 1; Max: 3); Price: 100;
+    (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 1; Max: 4);),
     // (Mana II)
-    (Name: 'of Mana II'; Level: (Min: 2; Max: 5); Price: 200;
+    (Level: (Min: 2; Max: 5); Price: 200;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 5; Max: 8);),
     // (Mana III)
-    (Name: 'of Mana III'; Level: (Min: 3; Max: 7); Price: 300;
+    (Level: (Min: 3; Max: 7); Price: 300;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 9; Max: 12);),
     // (Mana IV)
-    (Name: 'of Mana IV'; Level: (Min: 4; Max: 9); Price: 400;
+    (Level: (Min: 4; Max: 9); Price: 400;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 13; Max: 16);),
     // (Mana V)
-    (Name: 'of Mana V'; Level: (Min: 5; Max: 11); Price: 500;
+    (Level: (Min: 5; Max: 11); Price: 500;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 17; Max: 20);),
     // (Mana VI)
-    (Name: 'of Mana VI'; Level: (Min: 6; Max: 13); Price: 750;
+    (Level: (Min: 6; Max: 13); Price: 750;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 21; Max: 25);),
     // (Mana VII)
-    (Name: 'of Mana VII'; Level: (Min: 7; Max: 15); Price: 1000;
+    (Level: (Min: 7; Max: 15); Price: 1000;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 26; Max: 30);),
     // (Life and Mana I)
-    (Name: 'of Atr I'; Level: (Min: 1; Max: 3); Price: 150;
+    (Level: (Min: 1; Max: 3); Price: 150;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 1; Max: 3);
     Mana: (Min: 1; Max: 3);),
     // (Life and Mana II)
-    (Name: 'of Atr II'; Level: (Min: 2; Max: 5); Price: 300;
+    (Level: (Min: 2; Max: 5); Price: 300;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 4; Max: 6);
     Mana: (Min: 4; Max: 6);),
     // (Life and Mana III)
-    (Name: 'of Atr III'; Level: (Min: 3; Max: 7); Price: 500;
+    (Level: (Min: 3; Max: 7); Price: 500;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 7; Max: 9);
     Mana: (Min: 7; Max: 9);),
     // (Life and Mana IV)
-    (Name: 'of Atr IV'; Level: (Min: 4; Max: 9); Price: 700;
+    (Level: (Min: 4; Max: 9); Price: 700;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 10; Max: 12);
     Mana: (Min: 10; Max: 12);),
     // (Life and Mana V)
-    (Name: 'of Atr V'; Level: (Min: 5; Max: 11); Price: 1000;
+    (Level: (Min: 5; Max: 11); Price: 1000;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 13; Max: 17);
     Mana: (Min: 13; Max: 17);),
     // (Life and Mana VI)
-    (Name: 'of Atr VI'; Level: (Min: 6; Max: 13); Price: 1500;
+    (Level: (Min: 6; Max: 13); Price: 1500;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 18; Max: 23);
     Mana: (Min: 18; Max: 23);),
     // (Life and Mana VII)
-    (Name: 'of Atr VII'; Level: (Min: 7; Max: 15); Price: 2000;
+    (Level: (Min: 7; Max: 15); Price: 2000;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 24; Max: 30);
     Mana: (Min: 23; Max: 30);),
     // (Defense I)
-    (Name: 'of Defense I'; Level: (Min: 1; Max: 3); Price: 100;
+    (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 1; Max: 4);),
     // (Defense II)
-    (Name: 'of Defense II'; Level: (Min: 2; Max: 5); Price: 200;
+    (Level: (Min: 2; Max: 5); Price: 200;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 5; Max: 8);),
     // (Defense III)
-    (Name: 'of Defense III'; Level: (Min: 3; Max: 7); Price: 300;
+    (Level: (Min: 3; Max: 7); Price: 300;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 9; Max: 12);),
     // (Defense IV)
-    (Name: 'of Defense IV'; Level: (Min: 4; Max: 9); Price: 400;
+    (Level: (Min: 4; Max: 9); Price: 400;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 11; Max: 16);),
     // (Defense V)
-    (Name: 'of Defense V'; Level: (Min: 5; Max: 11); Price: 500;
+    (Level: (Min: 5; Max: 11); Price: 500;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 17; Max: 20);),
     // (Defense VI)
-    (Name: 'of Defense VI'; Level: (Min: 6; Max: 13); Price: 750;
+    (Level: (Min: 6; Max: 13); Price: 750;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 20; Max: 25);),
     // (Defense VII)
-    (Name: 'of Defense VII'; Level: (Min: 7; Max: 15); Price: 1000;
+    (Level: (Min: 7; Max: 15); Price: 1000;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 25; Max: 30);),
     // (Damage I)
-    (Name: 'of Damage I'; Level: (Min: 1; Max: 3); Price: 250;
+    (Level: (Min: 1; Max: 3); Price: 250;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 1; Max: 3);
     MaxDamage: (Min: 3; Max: 5));),
     // (Damage II)
-    (Name: 'of Damage II'; Level: (Min: 2; Max: 5); Price: 500;
+    (Level: (Min: 2; Max: 5); Price: 500;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 3; Max: 6);
     MaxDamage: (Min: 6; Max: 10));),
     // (Damage III)
-    (Name: 'of Damage III'; Level: (Min: 3; Max: 7); Price: 800;
+    (Level: (Min: 3; Max: 7); Price: 800;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 6; Max: 9);
     MaxDamage: (Min: 9; Max: 15));),
     // (Damage IV)
-    (Name: 'of Damage IV'; Level: (Min: 4; Max: 9); Price: 1000;
+    (Level: (Min: 4; Max: 9); Price: 1000;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 9; Max: 12);
     MaxDamage: (Min: 12; Max: 20));),
     // (Damage V)
-    (Name: 'of Damage V'; Level: (Min: 5; Max: 11); Price: 1500;
+    (Level: (Min: 5; Max: 11); Price: 1500;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 12; Max: 15);
     MaxDamage: (Min: 15; Max: 25));),
     // (Damage VI)
-    (Name: 'of Damage VI'; Level: (Min: 6; Max: 13); Price: 2000;
+    (Level: (Min: 6; Max: 13); Price: 2000;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 15; Max: 18);
     MaxDamage: (Min: 18; Max: 30));),
     // (Damage VII)
-    (Name: 'of Damage VII'; Level: (Min: 7; Max: 15); Price: 2500;
+    (Level: (Min: 7; Max: 15); Price: 2500;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 18; Max: 20);
     MaxDamage: (Min: 21; Max: 35));),
 
     // of Craftmanship (Durability I)
-    (Name: 'of Craftmanship'; Level: (Min: 1; Max: 3); Price: 100;
+    (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: SmithTypeItems; MaxDurability: (Min: 10; Max: 20);),
     // of Durability (Durability II)
-    (Name: 'of Durability'; Level: (Min: 2; Max: 5); Price: 200;
+    (Level: (Min: 2; Max: 5); Price: 200;
     Occurence: SmithTypeItems; MaxDurability: (Min: 20; Max: 30);),
     // of Sturdiness (Durability III)
-    (Name: 'of Sturdiness'; Level: (Min: 3; Max: 7); Price: 300;
+    (Level: (Min: 3; Max: 7); Price: 300;
     Occurence: SmithTypeItems; MaxDurability: (Min: 30; Max: 40);),
     // of Structure (Durability IV)
-    (Name: 'of Structure'; Level: (Min: 4; Max: 9); Price: 400;
+    (Level: (Min: 4; Max: 9); Price: 400;
     Occurence: SmithTypeItems; MaxDurability: (Min: 40; Max: 50);),
     // of Endurance (Durability V)
-    (Name: 'of Endurance'; Level: (Min: 5; Max: 11); Price: 500;
+    (Level: (Min: 5; Max: 11); Price: 500;
     Occurence: SmithTypeItems; MaxDurability: (Min: 50; Max: 60);),
     // of The Ages (Durability VI)
-    (Name: 'of The Ages'; Level: (Min: 6; Max: 13); Price: 750;
+    (Level: (Min: 6; Max: 13); Price: 750;
     Occurence: SmithTypeItems; MaxDurability: (Min: 60; Max: 70);),
     // of Permanance (Durability VII)
-    (Name: 'of Permanance'; Level: (Min: 7; Max: 15); Price: 1000;
+    (Level: (Min: 7; Max: 15); Price: 1000;
     Occurence: SmithTypeItems; MaxDurability: (Min: 70; Max: 80);));
 
 type
@@ -278,14 +279,10 @@ constructor TAffixes.Create();
 var
   I: TSuffixEnum;
   P: Pointer;
-  S: string;
 begin
   P := TypeInfo(TSuffixEnum);
   for I := Low(TSuffixEnum) to High(TSuffixEnum) do
-  begin
-    S := GetEnumName(P, Ord(I));
-    SuffixName[I] := S;
-  end;
+    SuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ', [rfReplaceAll]);
 end;
 
 procedure TAffixes.DoSuffix(var AItem: Item);
@@ -319,25 +316,25 @@ begin
   SB := SuffixBase[TSuffixEnum(AItem.Identify)];
   case TSuffixEnum(AItem.Identify) of
     // Vision
-    aVision:
+    of_Radiance:
       begin
         Value := Items.GetBonus(AItem, btVis) + 1;
         Items.SetBonus(AItem, btVis, Value, False);
       end;
     // Life
-    aLife1 .. aLife7:
+    of_Life1 .. of_Life7:
       SetLife();
     // Mana
-    aMana1 .. aMana7:
+    of_Mana1 .. of_Mana7:
       SetMana();
     // Life and Mana
-    aAtr1 .. aAtr7:
+    of_Atr1 .. of_Atr7:
       begin
         SetLife();
         SetMana();
       end;
     // Defense
-    aDefense1 .. aDefense7:
+    of_Defense1 .. of_Defense7:
       begin
         if (SB.Defense.Min > 0) then
           AItem.Defense := AItem.Defense + Math.EnsureRange
@@ -345,7 +342,7 @@ begin
             High(Byte));
       end;
     // Damage
-    aDamage1 .. aDamage7:
+    of_Damage1 .. of_Damage7:
       begin
         if (SB.Damage.MinDamage.Min > 0) then
           AItem.MinDamage := AItem.MinDamage +
@@ -357,7 +354,7 @@ begin
             SB.Damage.MaxDamage.Max + 1), 2, High(Byte));
       end;
     // Durability
-    aDurability1 .. aDurability7:
+    of_Craftmanship .. of_Permanance:
       begin
         if (SB.MaxDurability.Min > 0) then
         begin
@@ -380,7 +377,6 @@ end;
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
   Result := SuffixName[SuffixEnum];
-//  Result := SuffixBase[SuffixEnum].Name;
 end;
 
 initialization
