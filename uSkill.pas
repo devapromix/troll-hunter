@@ -20,6 +20,7 @@ type
 type
   TSkills = class(TObject)
   private
+    FSkillName: array [TSkillEnum] of string;
     FSkill: array [TSkillEnum] of TSkill;
     function GetSkill(I: TSkillEnum): TSkill;
     procedure SetSkill(I: TSkillEnum; const Value: TSkill);
@@ -42,12 +43,7 @@ const
 
 implementation
 
-uses SysUtils, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog, uStatistic;
-
-const
-  SkillName: array [TSkillEnum] of string = ('', 'Athletics', 'Dodge',
-    'Concentration', 'Toughness', 'Blade', 'Axe', 'Spear', 'Mace', 'Stealth',
-    'Healing');
+uses SysUtils, TypInfo, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog, uStatistic;
 
   { TSkills }
 
@@ -64,8 +60,14 @@ begin
 end;
 
 constructor TSkills.Create;
+var
+  I: TSkillEnum;
+  P: Pointer;
 begin
-  Self.Clear
+  Self.Clear;
+  P := TypeInfo(TSkillEnum);
+  for I := Low(TSkillEnum) to High(TSkillEnum) do
+    FSkillName[I] := StringReplace(GetEnumName(P, Ord(I)), 'sk', '', [rfReplaceAll]);
 end;
 
 destructor TSkills.Destroy;
@@ -102,7 +104,7 @@ end;
 
 function TSkills.GetName(I: TSkillEnum): string;
 begin
-  Result := SkillName[I];
+  Result := FSkillName[I];
 end;
 
 function TSkills.GetSkill(I: TSkillEnum): TSkill;
