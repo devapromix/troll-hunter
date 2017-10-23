@@ -10,48 +10,53 @@ const
 type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
     tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
-    tlAffWithSwords, tlAffWithAxes, tlAffWithPolearms, tlAffWithMaces,
-    tlMiser { Скряга }, tlCareful { Осторожный }, tlIronSkin { Железная Кожа },
+    tlAffinity_with_Swords, tlAffinity_with_Axes,
+    tlAffinity_with_Polearms, tlAffinity_with_Maces,
+    tlMiser { Скряга }, tlCareful { Осторожный }, tlIron_Skin { Железная Кожа },
     tlHardy { Выносливый }, tlCharged { Энергичный } );
+
+type
+  TTalentBonus = (tbNone, tbAttrib, tbSkill, tbTalent, tbGold);
 
 type
   TTalentBase = record
     Level: Byte;
+    TalentBonus: TTalentBonus;
     Effects: TEffects;
   end;
 
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
     // None
-    (Level: 0; Effects: [];),
+    (Level: 0; TalentBonus: tbNone; Effects: [];),
     // Strong
-    (Level: 1; Effects: [efPrmAthletics];),
+    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmAthletics];),
     // Dextrous
-    (Level: 1; Effects: [efPrmDodge];),
+    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmDodge];),
     // Mage
-    (Level: 1; Effects: [efPrmConcentration];),
+    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmConcentration];),
     // Tough
-    (Level: 1; Effects: [efPrmToughness];),
+    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmToughness];),
     // Wealthy
-    (Level: 1; Effects: [efPrmGold];),
+    (Level: 1; TalentBonus: tbGold; Effects: [efPrmGold];),
     // Affinity with Swords
-    (Level: 3; Effects: [efPrmBlade];),
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBlade];),
     // Affinity with Axes
-    (Level: 3; Effects: [efPrmAxe];),
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmAxe];),
     // Affinity with Polearms
-    (Level: 3; Effects: [efPrmSpear];),
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmSpear];),
     // Affinity with Maces
-    (Level: 3; Effects: [efPrmMace];),
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMace];),
     // Miser
-    (Level: 5; Effects: [ef2xGold];),
+    (Level: 5; TalentBonus: tbNone; Effects: [ef2xGold];),
     // Careful
-    (Level: 5; Effects: [efPrmDV];),
+    (Level: 5; TalentBonus: tbTalent; Effects: [efPrmDV];),
     // Iron Skin
-    (Level: 5; Effects: [efPrmPV];),
+    (Level: 5; TalentBonus: tbTalent; Effects: [efPrmPV];),
     // Hardy
-    (Level: 5; Effects: [efPrmLife];),
+    (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmLife];),
     // Charged
-    (Level: 5; Effects: [efPrmMana];));
+    (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmMana];));
 
 type
   TTalent = record
@@ -64,6 +69,7 @@ type
   private
     FIsPoint: Boolean;
     FTalent: array [0 .. TalentMax - 1] of TTalent;
+    FTalentName: array [TTalentEnum] of string;
     function GetTalent(I: Byte): TTalent;
     procedure SetTalent(I: Byte; const Value: TTalent);
   public
@@ -82,7 +88,14 @@ type
 
 implementation
 
-uses SysUtils, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
+uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
+
+const
+  TalentHint: array [TTalentEnum] of string = (
+  '', 'Athletics', 'Dodge', 'Concentration', 'Toughness',
+  'Gold', 'Blade', 'Axe', 'Spear', 'Mace',
+  'x2 to Gold', 'DV', 'PV', 'Life', 'Mana'
+  );
 
 { TTalents }
 
@@ -104,8 +117,19 @@ begin
 end;
 
 constructor TTalents.Create;
+var
+  I: TTalentEnum;
+  P: Pointer;
+  S: string;
 begin
   Self.Clear;
+  P := TypeInfo(TTalentEnum);
+  for I := Low(TTalentEnum) to High(TTalentEnum) do
+  begin
+    S := StringReplace(GetEnumName(P, Ord(I)), 'tl', '', [rfReplaceAll]);
+    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
+    FTalentName[I] := S;
+  end;
 end;
 
 constructor TTalents.Clear;
@@ -150,35 +174,17 @@ function TTalents.GetHint(I: TTalentEnum): string;
 const
   F = '+%d to %s';
 begin
-  case I of
-    tlStrong:
-      Result := Format(F, [StartSkill, _('Athletics')]);
-    tlDextrous:
-      Result := Format(F, [StartSkill, _('Dodge')]);
-    tlMage:
-      Result := Format(F, [StartSkill, _('Concentration')]);
-    tlTough:
-      Result := Format(F, [StartSkill, _('Toughness')]);
-    tlWealthy:
-      Result := Format(F, [StartGold, _('Gold')]);
-    tlAffWithSwords:
-      Result := Format(F, [StartSkill, _('Blade')]);
-    tlAffWithAxes:
-      Result := Format(F, [StartSkill, _('Axe')]);
-    tlAffWithPolearms:
-      Result := Format(F, [StartSkill, _('Spear')]);
-    tlAffWithMaces:
-      Result := Format(F, [StartSkill, _('Mace')]);
-    tlMiser:
-      Result := _('x2 to Gold');
-    tlCareful:
-      Result := Format(F, [TalentPrm, _('DV')]);
-    tlIronSkin:
-      Result := Format(F, [TalentPrm, _('PV')]);
-    tlHardy:
-      Result := Format(F, [AttribPrm, _('Life')]);
-    tlCharged:
-      Result := Format(F, [AttribPrm, _('Mana')]);
+  case TalentBase[I].TalentBonus of
+    tbNone:
+      Result := _(TalentHint[I]);
+    tbGold:
+      Result := Format(F, [StartGold, _(TalentHint[I])]);
+    tbSkill:
+      Result := Format(F, [StartSkill, _(TalentHint[I])]);
+    tbTalent:
+      Result := Format(F, [TalentPrm, _(TalentHint[I])]);
+    tbAttrib:
+      Result := Format(F, [AttribPrm, _(TalentHint[I])]);
   else
     Result := '-';
   end;
@@ -186,38 +192,7 @@ end;
 
 function TTalents.GetName(I: TTalentEnum): string;
 begin
-  case I of
-    tlStrong:
-      Result := _('Strong');
-    tlDextrous:
-      Result := _('Dextrous');
-    tlMage:
-      Result := _('Mage');
-    tlTough:
-      Result := _('Tough');
-    tlWealthy:
-      Result := _('Wealthy');
-    tlAffWithSwords:
-      Result := _('Affinity with Swords');
-    tlAffWithAxes:
-      Result := _('Affinity with Axes');
-    tlAffWithPolearms:
-      Result := _('Affinity with Spears');
-    tlAffWithMaces:
-      Result := _('Affinity with Maces');
-    tlMiser:
-      Result := _('Miser');
-    tlCareful:
-      Result := _('Careful');
-    tlIronSkin:
-      Result := _('Iron Skin');
-    tlHardy:
-      Result := _('Hardy');
-    tlCharged:
-      Result := _('Charged');
-  else
-    Result := '-';
-  end;
+  Result := FTalentName[I]
 end;
 
 function TTalents.GetTalent(I: Byte): TTalent;
