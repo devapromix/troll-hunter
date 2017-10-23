@@ -38,28 +38,37 @@ type
 type
   TMobEnum = (
     // Dark Wood
-    mBigRat, mSpinyFrog, mGiantGecko, mJackal, mBlackBear, mGrizzlyBear,
-    mAnaconda, mWolf, mHound,
+    mbBig_Rat, mbSpiny_Frog, mbGiant_Gecko, mbJackal, mbBlack_Bear, mbGrizzly_Bear,
+    mbAnaconda, mbWolf, mHound,
     // Gray Cave
-    mKobold, mBigKobold, mRedKobold, mGnoll, mBasilisk, mWisp, mWorm, mNaga,
-    mFireVortex,
+    mbKobold, mbBig_Kobold, mbRed_Kobold, mbGnoll, mbBasilisk, mbWisp, mbWorm, mbNaga,
+    mbFire_Vortex,
     // Deep Cave
-    mScorpion, mWasp, mAnt, mSoldierAnt, mScarab, mBigSpider, mFireCrab,
-    mDireWolf, mPan, mFaun,
+    mbScorpion, mbWasp, mbAnt, mbSoldier_Ant, mbScarab, mbBig_Spider, mbFire_Crab,
+    mbDire_Wolf, mbPan, mbFaun,
     // Blood Cave
-    mGoblin, mDarkGoblin, mBlackGoblin, mHobgoblin, mGargoyle, mWarg, mWerewolf,
-    mDraconian, mOrc, mOrcBrute, mOrcWarrior, mOrcWarlord,
+    mbGoblin, mbDark_Goblin, mbBlack_Goblin, mbHobgoblin, mbGargoyle, mbWarg, mbWerewolf,
+    mbDraconian, mbOrc, mbOrc_Brute, mbOrc_Warrior, mbOrc_Warlord,
     // Drom
-    mZombie, mOgre, mMummy, mGhoul, mVampire, mVulture, mCyclops, mSkeleton,
-    mWraith, mLich, mPhantom, mTrollBrute,
-    // Bosses
-    mBlackHound, mGiantNewt, mIguana, // Dark Wood
-    mKoboldKing, mSwampWorm, mGiantSlug, // Gray Cave
-    mCentaur, mSatyr, mTitan, // Deep Cave
-    mHillGiant, mStoneGiant, mTwoHeadedOgre, // Blood Cave
-    mTrollKing, // Drom
+    mbZombie, mbOgre, mbMummy, mbGhoul, mbVampire, mbVulture, mbCyclops, mbSkeleton,
+    mbWraith, mbLich, mbPhantom, mbTroll_Brute,
+    // Dark Wood (Bosses)
+    mbBlack_Hound, mbGiant_Newt, mbIguana,
+    // Gray Cave (Bosses)
+    mbKobold_King, mbSwamp_Worm, mbGiant_Slug,
+    // Deep Cave (Bosses)
+    mbCentaur, mbSatyr, mbTitan,
+    // Blood Cave (Bosses)
+    mbHill_Giant, mbStone_Giant, mbTwo1Headed_Ogre,
+    // Drom (Bosses)
+    mbTroll_King,
 
-    npcNPC1, npcNPC2, npcNPC3, npcNPC4, npcNPC5, npcNPC6, npcNPC7);
+    // NPC
+    mbEldan_2the_magic_trader3, mbPetra_2the_trader3, mbBran_2the_blacksmith3,
+    mbTarn_2the_tavern_owner3, mbSirius_2the_trader3, mbThor_2the_trader3,
+    mbVirna_2the_healer3);
+
+
 
   // {Black Bear (B)}, {Grizzly Bear (B)}, {Big Rat (R)}
   // Black Viper (S), Ball Python (S), {Anaconda (S)},
@@ -442,6 +451,7 @@ type
 type
   TMobs = class(TEntity)
   private
+    FMobName: array [TMobEnum] of string;
     FMob: array of TMob;
     function GetMob(I: Integer): TMob;
     procedure SetMob(I: Integer; const Value: TMob);
@@ -470,24 +480,8 @@ var
 
 implementation
 
-uses Math, SysUtils, uTerminal, uPlayer, uMsgLog, uLanguage,
+uses Math, SysUtils, TypInfo, uTerminal, uPlayer, uMsgLog, uLanguage,
   uItem, uSkill, uStatistic, uAttribute, uPathFind;
-
-const
-  MobName: array [TMobEnum] of string = ('Big Rat', 'Spiny Frog', 'Giant Gecko',
-    'Jackal', 'Black Bear', 'Grizzly Bear', 'Anaconda', 'Wolf', 'Hound',
-    'Kobold', 'Big Kobold', 'Red Kobold', 'Gnoll', 'Basilisk', 'Wisp', 'Worm',
-    'Naga', 'Fire Vortex', 'Scorpion', 'Wasp', 'Ant', 'Soldier Ant', 'Scarab',
-    'Big Spider', 'Fire Crab', 'Dire Wolf', 'Pan', 'Faun', 'Goblin',
-    'Dark Goblin', 'Black Goblin', 'Hobgoblin', 'Gargoyle', 'Warg', 'Werewolf',
-    'Draconian', 'Orc', 'Orc Brute', 'Orc Warrior', 'Orc Warlord', 'Zombie',
-    'Ogre', 'Mummy', 'Ghoul', 'Vampire', 'Vulture', 'Cyclops', 'Skeleton',
-    'Wraith', 'Lich', 'Phantom', 'Troll Brute', 'Black Hound', 'Giant Newt',
-    'Iguana', 'Kobold King', 'Swamp Worm', 'Giant Slug', 'Centaur', 'Satyr',
-    'Titan', 'Hill Giant', 'Stone Giant', 'Two-Headed Ogre', 'Troll King',
-    'Eldan (the magic trader)', 'Petra (the trader)', 'Bran (the blacksmith)',
-    'Tarn (the tavern owner)', 'Sirius (the trader)', 'Thor (the trader)',
-    'Virna (the healer)');
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
@@ -527,7 +521,7 @@ begin
     if (AID >= 0) then
       ID := AID
     else
-      ID := Math.RandomRange(0, Ord(mTrollKing) + 1);
+      ID := Math.RandomRange(0, Ord(mbTroll_King) + 1);
     if (AX >= 0) then
       FX := AX
     else
@@ -790,7 +784,7 @@ begin
   Player.Statictics.Inc(stScore, MobBase[TMobEnum(ID)].Level * V);
   Self.DropItems;
   // Boss
-  if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mTrollKing))
+  if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mbTroll_King))
   then
   begin
     if not Game.Wizard then
@@ -1032,7 +1026,7 @@ var
   I: Integer;
 begin
   repeat
-    ID := Math.RandomRange(0, Ord(mTrollKing) + 1);
+    ID := Math.RandomRange(0, Ord(mbTroll_King) + 1);
     repeat
       FX := Math.RandomRange(1, High(Byte) - 1);
       FY := Math.RandomRange(1, High(Byte) - 1);
@@ -1060,8 +1054,22 @@ begin
 end;
 
 constructor TMobs.Create;
+var
+  I: TMobEnum;
+  P: Pointer;
+  S: string;
 begin
-  SetLength(FMob, 0)
+  SetLength(FMob, 0);
+  P := TypeInfo(TMobEnum);
+  for I := Low(TMobEnum) to High(TMobEnum) do
+  begin
+    S := StringReplace(GetEnumName(P, Ord(I)), 'mb', '', [rfReplaceAll]);
+    S := StringReplace(S, '1', '-', [rfReplaceAll]);
+    S := StringReplace(S, '2', '(', [rfReplaceAll]);
+    S := StringReplace(S, '3', ')', [rfReplaceAll]);
+    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
+    FMobName[I] := S;
+  end;
 end;
 
 destructor TMobs.Destroy;
@@ -1137,7 +1145,7 @@ end;
 
 function TMobs.GetName(I: TMobEnum): string;
 begin
-  Result := MobName[I];
+  Result := FMobName[I];
 end;
 
 initialization

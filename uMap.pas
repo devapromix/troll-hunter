@@ -405,7 +405,7 @@ var
     repeat
       I := Math.RandomRange(0, 7);
     until not BNPC[I];
-    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(npcNPC1) + I);
+    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + I);
     BNPC[I] := True;
   end;
 
