@@ -1323,24 +1323,24 @@ begin
   // Add runes, potions and scrolls
   if Game.Wizard then
   begin
-    Items.AddItemToInv(ivRuneOfFullHealing);
-    Items.AddItemToInv(ivPotionOfFullHealing, 10);
-    Items.AddItemToInv(ivPotionOfFullMana, 10);
+    Items.AddItemToInv(ivRune_of_Full_Healing);
+    Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
+    Items.AddItemToInv(ivPotion_of_Full_Mana, 10);
     Items.AddItemToInv(ivAntidote, 10);
-    Items.AddItemToInv(ivScrollOfTownPortal, 10);
-    Items.AddItemToInv(ivScrollOfIdentify, 10);
-    Items.AddItemToInv(ivScrollOfBloodLust, 10);
+    Items.AddItemToInv(ivScroll_of_Town_Portal, 10);
+    Items.AddItemToInv(ivScroll_of_Identify, 10);
+    Items.AddItemToInv(ivScroll_of_Bloodlust, 10);
   end
   else
   begin
-    Items.AddItemToInv(ivLesserHealingPotion, 5);
-    Items.AddItemToInv(ivLesserManaPotion, 5);
+    Items.AddItemToInv(ivLesser_Healing_Potion, 5);
+    Items.AddItemToInv(ivLesser_Mana_Potion, 5);
     Items.AddItemToInv(ivAntidote, 3);
-    Items.AddItemToInv(ivScrollOfTownPortal);
-    Items.AddItemToInv(ivScrollOfIdentify);
+    Items.AddItemToInv(ivScroll_of_Town_Portal);
+    Items.AddItemToInv(ivScroll_of_Identify);
   end;
   // Add foods
-  Items.AddItemToInv(ivBreadRation, IfThen(Game.Wizard, 10, 3));
+  Items.AddItemToInv(ivBread_Ration, IfThen(Game.Wizard, 10, 3));
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(ivGold, IfThen(Game.Wizard, RandomRange(3333, 9999), D));

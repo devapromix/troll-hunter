@@ -79,23 +79,23 @@ type
     // All maps
     None, ivCorpse, ivGold,
     // Potions
-    ivLesserHealingPotion, ivGreaterHealingPotion, ivHeroicHealingPotion,
-    ivPotionOfFullHealing, ivLesserRejuvenationPotion, ivGreaterRejuvenationPotion,
-    ivHeroicRejuvenationPotion, ivPotionOfFullRejuvenation, ivLesserManaPotion,
-    ivGreaterManaPotion, ivHeroicManaPotion, ivPotionOfFullMana, ivSoothingBalm,
-    ivHealingPoultice, ivAntidote, ivFortifyingPotion,
+    ivLesser_Healing_Potion, ivGreater_Healing_Potion, ivHeroic_Healing_Potion,
+    ivPotion_of_Full_Healing, ivLesser_Rejuvenation_Potion, ivGreater_Rejuvenation_Potion,
+    ivHeroic_Rejuvenation_Potion, ivPotion_of_Full_Rejuvenation, ivLesser_Mana_Potion,
+    ivGreater_Mana_Potion, ivHeroic_Mana_Potion, ivPotion_of_Full_Mana, ivSoothing_Balm,
+    ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
     // Elixirs and Extracts
-    ivTrollBloodExtract, ivUnicornBloodExtract,
+    ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
     // Scrolls
-    ivScrollOfMinorHealing, ivScrollOfLesserHealing, ivScrollOfGreaterHealing,
-    ivScrollOfFullHealing, ivScrollOfHunger, ivScrollOfSidestepping,
-    ivScrollOfPhasing, ivScrollOfTeleportation, ivScrollOfDisappearing,
-    ivScrollOfTownPortal, ivScrollOfBloodlust, ivScrollOfIdentify,
+    ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing, ivScroll_of_Greater_Healing,
+    ivScroll_of_Full_Healing, ivScroll_of_Hunger, ivScroll_of_Sidestepping,
+    ivScroll_of_Phasing, ivScroll_of_Teleportation, ivScroll_of_Disappearing,
+    ivScroll_of_Town_Portal, ivScroll_of_Bloodlust, ivScroll_of_Identify,
     // Runes
-    ivRuneOfMinorHealing, ivRuneOfLesserHealing, ivRuneOfGreaterHealing,
-    ivRuneOfFullHealing, ivRuneOfTeleportation, ivRuneOfTownPortal,
+    ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing,
+    ivRune_of_Full_Healing, ivRune_of_Teleportation, ivRune_of_Town_Portal,
     // Foods
-    ivBreadRation, ivValleyRoot, ivRatPod, ivKoboldBulb,
+    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb,
     // Gems
     ivKey, ivRuby, ivTopaz, ivEmerald, ivSapphire,
     // Rings
@@ -1412,12 +1412,12 @@ begin
       LootGold(AX, AY);
     // Potion
     if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivLesserHealingPotion),
-        Ord(ivPotionOfFullMana) + 1)));
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivLesser_Healing_Potion),
+        Ord(ivPotion_of_Full_Mana) + 1)));
     // Scroll
     if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivScrollOfMinorHealing),
-        Ord(ivScrollOfTownPortal) + 1)));
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivScroll_of_Minor_Healing),
+        Ord(ivScroll_of_Town_Portal) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then
       Add(Map.Current, AX, AY, -1, AIsBoss);
