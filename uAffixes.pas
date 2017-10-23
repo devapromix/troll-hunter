@@ -23,12 +23,23 @@ type
   end;
 
 type
-  TSuffixEnum = (aNone, aVision, aLife1, aLife2, aLife3, aLife4, aLife5, aLife6,
-    aLife7, aMana1, aMana2, aMana3, aMana4, aMana5, aMana6, aMana7, aAtr1,
-    aAtr2, aAtr3, aAtr4, aAtr5, aAtr6, aAtr7, aDefense1, aDefense2, aDefense3,
-    aDefense4, aDefense5, aDefense6, aDefense7, aDamage1, aDamage2, aDamage3,
-    aDamage4, aDamage5, aDamage6, aDamage7, aDurability1, aDurability2,
-    aDurability3, aDurability4, aDurability5, aDurability6, aDurability7);
+  TSuffixEnum = (
+    // None
+    aNone,
+    // Vision
+    aVision,
+    // Life I - VII
+    aLife1, aLife2, aLife3, aLife4, aLife5, aLife6, aLife7,
+    // Mana I - VII
+    aMana1, aMana2, aMana3, aMana4, aMana5, aMana6, aMana7,
+    // Life and Mana I - VII
+    aAtr1, aAtr2, aAtr3, aAtr4, aAtr5, aAtr6, aAtr7,
+    // Defense I - VII
+    aDefense1, aDefense2, aDefense3, aDefense4, aDefense5, aDefense6, aDefense7,
+    // Damage I - VII
+    aDamage1, aDamage2, aDamage3, aDamage4, aDamage5, aDamage6, aDamage7,
+    // Durability I - VII
+    aDurability1, aDurability2, aDurability3, aDurability4, aDurability5, aDurability6, aDurability7);
 
 const
   DefenseSuffixes = [aDefense1 .. aDefense7];
@@ -240,8 +251,8 @@ const
     // of Endurance (Durability V)
     (Name: 'of Endurance'; Level: (Min: 5; Max: 11); Price: 500;
     Occurence: SmithTypeItems; MaxDurability: (Min: 50; Max: 60);),
-    // of the Ages (Durability VI)
-    (Name: 'of the Ages'; Level: (Min: 6; Max: 13); Price: 750;
+    // of The Ages (Durability VI)
+    (Name: 'of The Ages'; Level: (Min: 6; Max: 13); Price: 750;
     Occurence: SmithTypeItems; MaxDurability: (Min: 60; Max: 70);),
     // of Permanance (Durability VII)
     (Name: 'of Permanance'; Level: (Min: 7; Max: 15); Price: 1000;
@@ -250,6 +261,8 @@ const
 type
   TAffixes = class(TObject)
   public
+    SuffixName: array [TSuffixEnum] of string;
+    constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     procedure DoSuffix(var AItem: Item);
   end;
@@ -259,7 +272,21 @@ var
 
 implementation
 
-uses SysUtils, Math, uTerminal, uLanguage, uGame, uPlayer;
+uses SysUtils, TypInfo, Math, uTerminal, uLanguage, uGame, uPlayer;
+
+constructor TAffixes.Create();
+var
+  I: TSuffixEnum;
+  P: Pointer;
+  S: string;
+begin
+  P := TypeInfo(TSuffixEnum);
+  for I := Low(TSuffixEnum) to High(TSuffixEnum) do
+  begin
+    S := GetEnumName(P, Ord(I));
+    SuffixName[I] := S;
+  end;
+end;
 
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
@@ -352,7 +379,8 @@ end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
-  Result := SuffixBase[SuffixEnum].Name;
+  Result := SuffixName[SuffixEnum];
+//  Result := SuffixBase[SuffixEnum].Name;
 end;
 
 initialization
