@@ -24,7 +24,7 @@ type
   TSuffixEnum = (
     // None
     None,
-    // Vision
+    // Vision I
     of_Radiance,
     // Life I - VII
     of_Life1, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
@@ -252,7 +252,7 @@ const
     // of Endurance (Durability V)
     (Level: (Min: 5; Max: 11); Price: 500;
     Occurence: SmithTypeItems; MaxDurability: (Min: 50; Max: 60);),
-    // of The Ages (Durability VI)
+    // of the Ages (Durability VI)
     (Level: (Min: 6; Max: 13); Price: 750;
     Occurence: SmithTypeItems; MaxDurability: (Min: 60; Max: 70);),
     // of Permanance (Durability VII)
@@ -273,7 +273,7 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, uTerminal, uLanguage, uGame, uPlayer;
+uses SysUtils, TypInfo, Math, uTerminal, uGame;
 
 constructor TAffixes.Create();
 var

@@ -1154,6 +1154,7 @@ var
   end;
 
 begin
+  Result := '';
   if Game.Wizard then
     Exit;
   SL := TStringList.Create;
