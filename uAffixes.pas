@@ -294,9 +294,8 @@ var
   begin
     if (SB.Life.Min > 0) then
     begin
-      Value := Items.GetBonus(AItem, btLife) +
-        Math.EnsureRange(Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1,
-        High(Byte));
+      Value := Math.EnsureRange(Items.GetBonus(AItem, btLife)
+        + Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1, High(Byte));
       Items.SetBonus(AItem, btLife, Value, False);
     end;
   end;
@@ -305,9 +304,8 @@ var
   begin
     if (SB.Mana.Min > 0) then
     begin
-      Value := Items.GetBonus(AItem, btMana) +
-        Math.EnsureRange(Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1,
-        High(Byte));
+      Value := Math.EnsureRange(Items.GetBonus(AItem, btMana)
+        + Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1, High(Byte));
       Items.SetBonus(AItem, btMana, Value, False);
     end;
   end;
