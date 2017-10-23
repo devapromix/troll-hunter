@@ -1273,10 +1273,10 @@ begin
   // Add armors
   if Game.Wizard then
   begin
-    Items.AddItemToInv(ivWingedHelm, 1, True, False);
-    Items.AddItemToInv(ivPlateMail, 1, True, False);
-    Items.AddItemToInv(ivPlatedGauntlets, 1, True, False);
-    Items.AddItemToInv(ivPlateBoots, 1, True, False);
+    Items.AddItemToInv(ivWinged_Helm, 1, True, False);
+    Items.AddItemToInv(ivPlate_Mail, 1, True, False);
+    Items.AddItemToInv(ivPlated_Gauntlets, 1, True, False);
+    Items.AddItemToInv(ivPlate_Boots, 1, True, False);
     Items.AddItemToInv(ivRing, 1, True, False);
     Items.AddItemToInv(ivAmulet, 1, True, False);
   end
@@ -1285,11 +1285,11 @@ begin
     if (Game.Difficulty < dfHard) then
     begin
       Items.AddItemToInv(ivCap, 1, True, True);
-      Items.AddItemToInv(ivQuiltedArmor, 1, True, True);
+      Items.AddItemToInv(ivQuilted_Armor, 1, True, True);
     end;
     if (Game.Difficulty < dfNormal) then
     begin
-      Items.AddItemToInv(ivLeatherGloves, 1, True, True);
+      Items.AddItemToInv(ivLeather_Gloves, 1, True, True);
       Items.AddItemToInv(ivShoes, 1, True, True);
     end;
   end;
@@ -1298,26 +1298,26 @@ begin
   begin
     case Math.RandomRange(0, 4) of
       0:
-        Items.AddItemToInv(ivTrollSlayer, 1, True, False);
+        Items.AddItemToInv(ivTroll_Slayer, 1, True, False);
       1:
-        Items.AddItemToInv(ivDemonAxe, 1, True, False);
+        Items.AddItemToInv(ivDemon_Axe, 1, True, False);
       2:
-        Items.AddItemToInv(ivHonedSpear, 1, True, False);
+        Items.AddItemToInv(ivHoned_Spear, 1, True, False);
       3:
-        Items.AddItemToInv(ivDoomHammer, 1, True, False);
+        Items.AddItemToInv(ivDoom_Hammer, 1, True, False);
     end;
   end
   else
   begin
     case Math.RandomRange(0, 4) of
       0:
-        Items.AddItemToInv(ivRustySword, 1, True, True);
+        Items.AddItemToInv(ivRusty_Sword, 1, True, True);
       1:
         Items.AddItemToInv(ivHatchet, 1, True, True);
       2:
-        Items.AddItemToInv(ivShortSpear, 1, True, True);
+        Items.AddItemToInv(ivShort_Spear, 1, True, True);
       3:
-        Items.AddItemToInv(ivSlagHammer, 1, True, True);
+        Items.AddItemToInv(ivSlag_Hammer, 1, True, True);
     end;
   end;
   // Add runes, potions and scrolls

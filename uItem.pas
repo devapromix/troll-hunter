@@ -103,55 +103,55 @@ type
     // Amulets
     ivAmulet,
     // Dark Wood
-    ivCap, ivWarCap, ivHood, ivRedHat, // Headgear
-    ivQuiltedArmor, ivLeatherArmor, ivLightClothes, ivLeatherApron, // Body Armor
-    ivLeatherGloves, ivHideGloves, // Gloves
-    ivShoes, ivLeatherBoots, // Boots
-    ivBuckler, ivTargeShield, // Shield
-    ivRustySword, ivShortSword, // Blade
-    ivHatchet, ivBattleAxe, // Axe
-    ivShortSpear, ivSpear, // Spear
-    ivSlagHammer, ivSpikedCudgel, // Mace
+    ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
+    ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron, // Body Armor
+    ivLeather_Gloves, ivHide_Gloves, // Gloves
+    ivShoes, ivLeather_Boots, // Boots
+    ivBuckler, ivTarge_Shield, // Shield
+    ivRusty_Sword, ivShort_Sword, // Blade
+    ivHatchet, ivBattle_Axe, // Axe
+    ivShort_Spear, ivSpear, // Spear
+    ivSlag_Hammer, ivSpiked_Cudgel, // Mace
     // Gray Cave
-    ivHelm, ivGrandHelm, ivLeatherCap, ivMask, // Headgear
-    ivHardLeatherArmor, ivBattleArmor, ivFancyClothes, ivRobe, // Body Armor
-    ivKoboldGloves, ivChainGloves, // Gloves
-    ivMeshBoots, ivHeavyBoots, // Boots
-    ivSmallShield, ivKiteShield, // Shield
-    ivBroadSword, ivLongSword, // Blade
-    ivMeatAxe, ivFleshTearer, // Axe
+    ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
+    ivHard_Leather_Armor, ivBattle_Armor, ivFancy_Clothes, ivRobe, // Body Armor
+    ivKobold_Gloves, ivChain_Gloves, // Gloves
+    ivMesh_Boots, ivHeavy_Boots, // Boots
+    ivSmall_Shield, ivKite_Shield, // Shield
+    ivBroad_Sword, ivLong_Sword, // Blade
+    ivMeat_Axe, ivFlesh_Tearer, // Axe
     ivJavelin, ivFuscina, // Spear
-    ivWarhammer, ivWarMace, // Mace
+    ivWarhammer, ivWar_Mace, // Mace
     // Deep Cave
-    ivGreatHelm, ivFullHelm, ivBoneHelmet, ivWizardHat, // Headgear
-    ivBrigantineArmor, ivRingMail, ivLightFurs, ivCleanRobe, // Body Armor
-    ivEtchedGloves, ivHeavyGloves, // Gloves
-    ivGreaves, ivBoneweaveBoots, // Boots
-    ivBoneShield, ivHeaterShield, // Shield
-    ivMoonBlade, ivScimitar, // Blade
-    ivWarAxe, ivDarkAxe, // Axe
-    ivWarSpear, ivHarpoon, // Spear
-    ivFlangedMace, ivWarGavel, // Mace
+    ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
+    ivBrigantine_Armor, ivRing_Mail, ivLight_Furs, ivClean_Robe, // Body Armor
+    ivEtched_Gloves, ivHeavy_Gloves, // Gloves
+    ivGreaves, ivBoneweave_Boots, // Boots
+    ivBone_Shield, ivHeater_Shield, // Shield
+    ivMoon_Blade, ivScimitar, // Blade
+    ivWar_Axe, ivDark_Axe, // Axe
+    ivWar_Spear, ivHarpoon, // Spear
+    ivFlanged_Mace, ivWar_Gavel, // Mace
     // Blood Cave
-    ivHornedHelmet, ivSpiredHelm, ivDiadem, ivTiara, // Headgear
-    ivChainMail, ivScaleMail, ivThickFurs, ivHardRobe, // Body Armor
-    ivBattleGauntlets, ivWarGauntlets, // Gloves
-    ivChainBoots, ivWarBoots, // Boots
-    ivHeavyShield, ivLargeShield, // Shield
-    ivBastardSword, ivGreatSword, // Blade
-    ivBerserkerAxe, ivMarauderAxe, // Axe
-    ivSilvanWhisper, ivImpaler, // Spear
-    ivBarbarousMace, ivAdeptHammer, // Mace
+    ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
+    ivChain_Mail, ivScale_Mail, ivThick_Furs, ivHard_Robe, // Body Armor
+    ivBattle_Gauntlets, ivWar_Gauntlets, // Gloves
+    ivChain_Boots, ivWar_Boots, // Boots
+    ivHeavy_Shield, ivLarge_Shield, // Shield
+    ivBastard_Sword, ivGreat_Sword, // Blade
+    ivBerserker_Axe, ivMarauder_Axe, // Axe
+    ivSilvan_Whisper, ivImpaler, // Spear
+    ivBarbarous_Mace, ivAdept_Hammer, // Mace
     // Drom
-    ivCasque, ivWingedHelm, ivMagicHelmet, ivCrown, // Headgear
-    ivSplintMail, ivPlateMail, ivMolochRobe, ivBoneweaveHauberk, // Body Armor
-    ivTrollGauntlets, ivPlatedGauntlets, // Gloves
-    ivBattleBoots, ivPlateBoots, // Boots
-    ivTowerShield, ivGothicShield, // Shield
-    ivRuneSword, ivTrollSlayer, // Blade
-    ivChopper, ivDemonAxe, // Axe
-    ivSoulReaver, ivHonedSpear, // Spear
-    ivWarMaul, ivDoomHammer // Mace
+    ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
+    ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk, // Body Armor
+    ivTroll_Gauntlets, ivPlated_Gauntlets, // Gloves
+    ivBattle_Boots, ivPlate_Boots, // Boots
+    ivTower_Shield, ivGothic_Shield, // Shield
+    ivRune_Sword, ivTroll_Slayer, // Blade
+    ivChopper, ivDemon_Axe, // Axe
+    ivSoul_Reaver, ivHoned_Spear, // Spear
+    ivWar_Maul, ivDoom_Hammer // Mace
     );
 
 const
