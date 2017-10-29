@@ -40,7 +40,11 @@ type
     of_Damage7,
     // Durability I - VII
     of_Craftmanship, of_Durability, of_Sturdiness, of_Structure,
-    of_Endurance, of_the_Ages, of_Permanance);
+    of_Endurance, of_the_Ages, of_Permanance,
+    // Strength I - VII
+    of_Strength1,of_Strength2,of_Strength3,of_Strength4,of_Strength5,
+    of_Strength6,of_Strength7
+    );
 
 const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
@@ -201,6 +205,7 @@ const
     (Level: (Min: 7; Max: 15); Price: 1000;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 25; Max: 30);),
+
     // (Damage I)
     (Level: (Min: 1; Max: 3); Price: 250;
     Occurence: DamageTypeItems; MaxDurability: (Min: 0; Max: 0);
@@ -257,7 +262,30 @@ const
     Occurence: SmithTypeItems; MaxDurability: (Min: 60; Max: 70);),
     // of Permanance (Durability VII)
     (Level: (Min: 7; Max: 15); Price: 1000;
-    Occurence: SmithTypeItems; MaxDurability: (Min: 70; Max: 80);));
+    Occurence: SmithTypeItems; MaxDurability: (Min: 70; Max: 80);),
+
+    // (Strength I)
+    (Level: (Min: 1; Max: 3); Price: 200;
+    Occurence: SmithTypeItems; Strength: (Min: 1; Max: 2);),
+    // (Strength II)
+    (Level: (Min: 2; Max: 5); Price: 400;
+    Occurence: SmithTypeItems; Strength: (Min: 3; Max: 5);),
+    // (Strength III)
+    (Level: (Min: 3; Max: 7); Price: 600;
+    Occurence: SmithTypeItems; Strength: (Min: 6; Max: 9);),
+    // (Strength VI)
+    (Level: (Min: 4; Max: 9); Price: 800;
+    Occurence: SmithTypeItems; Strength: (Min: 10; Max: 14);),
+    // (Strength V)
+    (Level: (Min: 5; Max: 11); Price: 1000;
+    Occurence: SmithTypeItems; Strength: (Min: 15; Max: 20);),
+    // (Strength VI)
+    (Level: (Min: 6; Max: 13); Price: 1500;
+    Occurence: SmithTypeItems; Strength: (Min: 21; Max: 25);),
+    // (Strength VII)
+    (Level: (Min: 7; Max: 15); Price: 2000;
+    Occurence: SmithTypeItems; Strength: (Min: 26; Max: 30);)
+    );
 
 type
   TAffixes = class(TObject)
@@ -331,6 +359,14 @@ begin
       begin
         SetLife();
         SetMana();
+      end;
+    // Strength
+    of_Strength1 .. of_Strength7:
+      begin
+        Value := Math.EnsureRange(Items.GetBonus(AItem, btStr) +
+          Math.RandomRange(SB.Strength.Min, SB.Strength.Max + 1),
+          1, High(Byte));
+        Items.SetBonus(AItem, btStr, Value, True);
       end;
     // Defense
     of_Defense1 .. of_Defense7:
