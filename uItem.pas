@@ -1097,7 +1097,7 @@ type
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
     procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
-      const Value: Byte; IsAtr: Boolean);
+      const Value: Byte);
     function GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
     procedure DelCorpses();
     procedure AddPlants;
@@ -1633,25 +1633,36 @@ end;
 function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
 begin
   case BonusType of
-    btLife, btStr:
+    btLife:
       Result := Byte(AItem.Bonus shr 24);
-    btMana, btDex:
+    btMana:
       Result := Byte(AItem.Bonus shr 16);
-    btVis, btWil:
+    btVis:
       Result := Byte(AItem.Bonus shr 8);
-    btNN, btPer:
+    btNN:
       Result := Byte(AItem.Bonus);
+    btStr:
+      Result := Byte(AItem.Attributes shr 24);
+    btDex:
+      Result := Byte(AItem.Attributes shr 16);
+    btWil:
+      Result := Byte(AItem.Attributes shr 8);
+    btPer:
+      Result := Byte(AItem.Attributes);
   else
     Result := 0;
   end;
 end;
 
 procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType;
-  const Value: Byte; IsAtr: Boolean);
+  const Value: Byte);
 var
   V: array [0 .. 3] of Byte;
+  IsAtr: Boolean;
   I: Cardinal;
 begin
+  IsAtr := (BonusType in [btStr .. btPer]);
+
   case IsAtr of
     True:
       begin

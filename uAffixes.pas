@@ -325,7 +325,7 @@ var
     begin
       Value := Math.EnsureRange(Items.GetBonus(AItem, btLife)
         + Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1, High(Byte));
-      Items.SetBonus(AItem, btLife, Value, False);
+      Items.SetBonus(AItem, btLife, Value);
     end;
   end;
 
@@ -335,7 +335,7 @@ var
     begin
       Value := Math.EnsureRange(Items.GetBonus(AItem, btMana)
         + Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1, High(Byte));
-      Items.SetBonus(AItem, btMana, Value, False);
+      Items.SetBonus(AItem, btMana, Value);
     end;
   end;
 
@@ -346,7 +346,7 @@ begin
     of_Radiance:
       begin
         Value := Items.GetBonus(AItem, btVis) + 1;
-        Items.SetBonus(AItem, btVis, Value, False);
+        Items.SetBonus(AItem, btVis, Value);
       end;
     // Life
     of_Life1 .. of_Life7:
@@ -366,7 +366,7 @@ begin
         Value := Math.EnsureRange(Items.GetBonus(AItem, btStr) +
           Math.RandomRange(SB.Strength.Min, SB.Strength.Max + 1),
           1, High(Byte));
-        Items.SetBonus(AItem, btStr, Value, True);
+        Items.SetBonus(AItem, btStr, Value);
       end;
     // Defense
     of_Defense1 .. of_Defense7:
