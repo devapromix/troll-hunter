@@ -880,7 +880,7 @@ begin
     // TK_B:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
-    if Game.Wizard then 
+    if Game.Wizard then
     begin
     end;
 

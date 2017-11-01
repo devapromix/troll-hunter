@@ -1108,7 +1108,7 @@ var
 
 implementation
 
-uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog, uScenes,
+uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
   uBearLibItemsInventory;
 

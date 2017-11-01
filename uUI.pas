@@ -35,7 +35,7 @@ const
   'F8EB','F8EC','F8ED','F8EE','F8EF');
   F = '[[%s]]';
 
-  { TMyClass }
+  { UI }
 
 class procedure UI.Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
   AColor, DarkColor: Cardinal);
@@ -65,7 +65,6 @@ begin
   else if (Max > 0) then
     for J := 1 to Max do
       Terminal.Print(1, J + 1, Format(F, [Chr(J + Ord('A') - 1)]), clDarkGray);
-
 end;
 
 class function UI.GoldLeft(const Value: Cardinal): string;
