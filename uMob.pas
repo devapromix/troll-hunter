@@ -819,6 +819,8 @@ var
   NX, NY, Dist: Integer;
   The: string;
 begin
+  NX := 0;
+  NY := 0;
   if (Force = fcNPC) then
     Exit;
   Dist := GetDist(Player.X, Player.Y);

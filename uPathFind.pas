@@ -10,7 +10,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
 
 implementation
 
-uses Types, Math;
+uses Math;
 
 const
   MAXLEN = 1000;
@@ -18,14 +18,14 @@ const
   KDIAG = 12;
 
 type
-  TSmallPoint = record
-    X, Y: Word;
+  TBytePoint = record
+    X, Y: Byte;
   end;
 
 type
   TPathFindBlock = record
     CostWay: Integer;
-    Parent: TSmallPoint;
+    Parent: TBytePoint;
   end;
 
 type
