@@ -131,6 +131,16 @@ uses Classes, SysUtils, Math, uItem, uGame, uMap, uScenes,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
   uBearLibItemsCommon, uBearLibItemsDungeon, uBearLibItemsInventory;
 
+procedure RnItem(FItem: Item; const Index: Integer);
+begin
+  if (FItem.Durability = 0) then
+  begin
+    Items_Inventory_DeleteItem(Index, FItem);
+    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'),
+      [Items.GetNameThe(FItem)]), clAlarm));
+  end;
+end;
+
 { TPlayer }
 
 // Generate a random background (from Kharne roguelike)
@@ -907,11 +917,20 @@ begin
       MsgLog.Add(_('You need more gold.'));
       Exit;
     end;
-    FItem.Durability := FItem.MaxDurability;
-    if ((Items_Inventory_DeleteItemAmount(Ord(ivGold), RepairCost) > 0) and
-      (Items_Inventory_SetItem(Index, FItem) > 0)) then
-      MsgLog.Add(Format(_('You repaired %s (-%d gold).'),
-        [Items.GetNameThe(FItem), RepairCost]));
+    if (FItem.MaxDurability > 0) then
+    begin
+      Dec(FItem.MaxDurability);
+      if (FItem.MaxDurability = 0) then
+      begin
+        RnItem(FItem, Index);
+        Exit;
+      end;
+      FItem.Durability := FItem.MaxDurability;
+      if ((Items_Inventory_DeleteItemAmount(Ord(ivGold), RepairCost) > 0) and
+        (Items_Inventory_SetItem(Index, FItem) > 0)) then
+        MsgLog.Add(Format(_('You repaired %s (-%d gold).'),
+          [Items.GetNameThe(FItem), RepairCost]));
+    end;
   end;
   Self.Calc;
 end;
@@ -931,12 +950,7 @@ begin
       [Items.GetNameThe(FItem), FItem.Durability, FItem.MaxDurability]),
       clAlarm));
   Items_Inventory_SetItem(Index, FItem);
-  if (FItem.Durability = 0) then
-  begin
-    Items_Inventory_DeleteItem(Index, FItem);
-    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'),
-      [Items.GetNameThe(FItem)]), clAlarm));
-  end;
+  RnItem(FItem, Index);
   Self.Calc;
 end;
 
