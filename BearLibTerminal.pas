@@ -172,7 +172,7 @@ const
   // Input result codes for terminal_read function.
   TK_INPUT_NONE       =   0;
   TK_INPUT_CANCELLED  =  -1;
-  
+
   // Text alignment.
   TK_ALIGN_DEFAULT    =   0;
   TK_ALIGN_LEFT       =   1;
@@ -406,12 +406,12 @@ procedure terminal_font_unicode(const Name: PWideChar);
 
 procedure terminal_font(const Name: AnsiString); overload;
 begin
-	terminal_font_ansi(PAnsiChar(Name));
+        terminal_font_ansi(PAnsiChar(Name));
 end;
 
 procedure terminal_font(const Name: WideString); overload;
 begin
-	terminal_font_unicode(PWideChar(Name));
+        terminal_font_unicode(PWideChar(Name));
 end;
 
 procedure terminal_put_integer(const X, Y, Code: Int32);
