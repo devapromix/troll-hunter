@@ -919,11 +919,14 @@ begin
     end;
     if (FItem.MaxDurability > 0) then
     begin
-      Dec(FItem.MaxDurability);
-      if (FItem.MaxDurability = 0) then
+      if (Game.Difficulty > dfEasy) then
       begin
-        RnItem(FItem, Index);
-        Exit;
+        Dec(FItem.MaxDurability);
+        if (FItem.MaxDurability = 0) then
+        begin
+          RnItem(FItem, Index);
+          Exit;
+        end;
       end;
       FItem.Durability := FItem.MaxDurability;
       if ((Items_Inventory_DeleteItemAmount(Ord(ivGold), RepairCost) > 0) and
