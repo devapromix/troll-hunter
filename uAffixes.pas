@@ -43,7 +43,10 @@ type
     of_Endurance, of_the_Ages, of_Permanance,
     // Strength I - VII
     of_Strength1,of_Strength2,of_Strength3,of_Strength4,of_Strength5,
-    of_Strength6,of_Strength7
+    of_Strength6,of_Strength7,
+    // Dexterity I - VII
+    of_Dexterity1,of_Dexterity2,of_Dexterity3,of_Dexterity4,of_Dexterity5,
+    of_Dexterity6,of_Dexterity7
     );
 
 const
@@ -93,6 +96,7 @@ const
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 26; Max: 30);),
+
     // (Mana I)
     (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
@@ -135,6 +139,7 @@ const
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 0; Max: 0);
     Mana: (Min: 26; Max: 30);),
+
     // (Life and Mana I)
     (Level: (Min: 1; Max: 3); Price: 150;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
@@ -177,6 +182,7 @@ const
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;);
     MaxDamage: (Min: 0; Max: 0;)); Life: (Min: 24; Max: 30);
     Mana: (Min: 23; Max: 30);),
+
     // (Defense I)
     (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: DefenseTypeItems; MaxDurability: (Min: 0; Max: 0);
@@ -284,7 +290,29 @@ const
     Occurence: SmithTypeItems; Strength: (Min: 21; Max: 25);),
     // (Strength VII)
     (Level: (Min: 7; Max: 15); Price: 2000;
-    Occurence: SmithTypeItems; Strength: (Min: 26; Max: 30);)
+    Occurence: SmithTypeItems; Strength: (Min: 26; Max: 30);),
+
+    // (Dexterity I)
+    (Level: (Min: 1; Max: 3); Price: 200;
+    Occurence: SmithTypeItems; Dexterity: (Min: 1; Max: 2);),
+    // (Dexterity II)
+    (Level: (Min: 2; Max: 5); Price: 400;
+    Occurence: SmithTypeItems; Dexterity: (Min: 3; Max: 5);),
+    // (Dexterity III)
+    (Level: (Min: 3; Max: 7); Price: 600;
+    Occurence: SmithTypeItems; Dexterity: (Min: 6; Max: 9);),
+    // (Dexterity VI)
+    (Level: (Min: 4; Max: 9); Price: 800;
+    Occurence: SmithTypeItems; Dexterity: (Min: 10; Max: 14);),
+    // (Dexterity V)
+    (Level: (Min: 5; Max: 11); Price: 1000;
+    Occurence: SmithTypeItems; Dexterity: (Min: 15; Max: 20);),
+    // (Dexterity VI)
+    (Level: (Min: 6; Max: 13); Price: 1500;
+    Occurence: SmithTypeItems; Dexterity: (Min: 21; Max: 25);),
+    // (Dexterity VII)
+    (Level: (Min: 7; Max: 15); Price: 2000;
+    Occurence: SmithTypeItems; Dexterity: (Min: 26; Max: 30);)
     );
 
 type
@@ -311,7 +339,8 @@ var
 begin
   P := TypeInfo(TSuffixEnum);
   for I := Low(TSuffixEnum) to High(TSuffixEnum) do
-    FSuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ', [rfReplaceAll]);
+    FSuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ',
+      [rfReplaceAll]);
 end;
 
 procedure TAffixes.DoSuffix(var AItem: Item);
@@ -367,6 +396,14 @@ begin
           Math.RandomRange(SB.Strength.Min, SB.Strength.Max + 1),
           1, High(Byte));
         Items.SetBonus(AItem, btStr, Value);
+      end;
+    // Dexterity
+    of_Dexterity1 .. of_Dexterity7:
+      begin
+        Value := Math.EnsureRange(Items.GetBonus(AItem, btDex) +
+          Math.RandomRange(SB.Dexterity.Min, SB.Dexterity.Max + 1),
+          1, High(Byte));
+        Items.SetBonus(AItem, btDex, Value);
       end;
     // Defense
     of_Defense1 .. of_Defense7:
