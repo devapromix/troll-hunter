@@ -6,9 +6,11 @@ Trollhunter is a single-player roguelike game. The land Elvion is surrounded by 
 ## Current State
 The game is currently in demo stage with very limited contents and lots of issues to solve and improve.
 
+## Contributing
+Contributions are welcome! Please fork this repository and then once you have made and tested your changes, submit a pull request.
+
 ## Credits
 Copyright (C) 2017 by Sergiy Tkach (Apromix).
 
 Trollhunter is open source, written in pascal, the full source is available at:
 https://github.com/devapromix-roguelikes/troll-hunter
-Code contributions are welcome!
