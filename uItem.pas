@@ -1098,6 +1098,7 @@ type
     function AddItemInfo(V: array of string): string;
     procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
       const Value: Byte);
+    function StrToItemEnum(const S: string): TItemEnum;
     function GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
     procedure DelCorpses();
     procedure AddPlants;
@@ -1110,7 +1111,7 @@ implementation
 
 uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
-  uBearLibItemsInventory;
+  uBearLibItemsInventory, Dialogs;
 
   { TItems }
 
@@ -1453,7 +1454,7 @@ begin
       FColor := FItem.Color; // ItemBase[TItemEnum(FItem.ItemID)].Color;
       FSymbol := ItemBase[TItemEnum(FItem.ItemID)].Symbol;
     end;
-    Terminal.Print(X, Y, FSymbol, FColor);
+    Terminal.Print(X, Y, FSymbol, FColor, 0);
   end;
 end;
 
@@ -1471,12 +1472,21 @@ begin
     S := StringReplace(S, '_', ' ', [rfReplaceAll]);
     FItemName[I] := S;
   end;
+  //if (StrToItemEnum('Gold') = ivGold) then ShowMessage('Gold');
 end;
 
 destructor TItems.Destroy;
 begin
   Items_Close();
   inherited;
+end;
+
+function TItems.StrToItemEnum(const S: string): TItemEnum;
+var
+  P: Pointer;
+begin
+  P := TypeInfo(TItemEnum);
+  Result := TItemEnum(GetEnumValue(P, 'iv' + S));
 end;
 
 function TItems.GetName(I: TItemEnum): string;
