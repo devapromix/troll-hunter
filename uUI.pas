@@ -61,10 +61,10 @@ var
 begin
   if Game.Wizard then
     for I := 'A' to 'Z' do
-      Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray)
+      Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray, clBlack)
   else if (Max > 0) then
     for J := 1 to Max do
-      Terminal.Print(1, J + 1, Format(F, [Chr(J + Ord('A') - 1)]), clDarkGray);
+      Terminal.Print(1, J + 1, Format(F, [Chr(J + Ord('A') - 1)]), clDarkGray, clBlack);
 end;
 
 class function UI.GoldLeft(const Value: Cardinal): string;

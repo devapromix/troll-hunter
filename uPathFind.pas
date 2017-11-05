@@ -1,4 +1,4 @@
-﻿unit uPathFind; // By KIPAR
+unit uPathFind; // By KIPAR
 
 interface
 
@@ -63,7 +63,7 @@ var
 function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
 
-  procedure HeapSwap(I, j: Integer); inline;
+  procedure HeapSwap(I, j: Integer);
   var
     tmp: POpenBlock;
   begin
@@ -72,7 +72,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
     Open[j] := tmp;
   end;
 
-  procedure HeapAdd; inline;
+  procedure HeapAdd;
   var
     I, Parent: Integer;
   begin
@@ -86,7 +86,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
     end;
   end;
 
-  procedure Heapify(I: Integer); inline;
+  procedure Heapify(I: Integer);
   var
     leftChild, rightChild, largestChild: Integer;
   begin
