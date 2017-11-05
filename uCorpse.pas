@@ -160,13 +160,13 @@ begin
     if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
       Continue;
     if not Map.InView(FCorpse[I].X, FCorpse[I].Y) or
-      (not Game.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then
+      (not Mode.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then
       Continue;
     if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then
       Continue;
     X := FCorpse[I].X - Player.X + AX + View.Left;
     Y := FCorpse[I].Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) >
+    if not Mode.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) >
       Player.Vision) then
       Color := clFog
     else

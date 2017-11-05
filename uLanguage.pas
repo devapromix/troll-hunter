@@ -35,7 +35,7 @@ function _(const AValue: string): string;
 begin
   if Assigned(Game) then
   begin
-    if Game.MkLang then
+    if Mode.Language then
       Game.Language.FSL.Append(AValue + '=');
     Result := Game.Language.Get(AValue);
   end else Result := AValue;

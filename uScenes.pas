@@ -308,7 +308,7 @@ procedure TScene.AddKey(AKey, AStr, AAdvStr: string; IsRender: Boolean = False);
 var
   S: string;
 begin
-  if Game.IsMode then
+  if Mode.Game then
     S := AStr
   else
     S := AAdvStr;
@@ -462,7 +462,7 @@ begin
       begin
         if (SceneEnum = scTitle) then
           Game.CanClose := True;
-        if Game.IsMode and not(SceneEnum in [scWin, scDef, scQuit]) and
+        if Mode.Game and not(SceneEnum in [scWin, scDef, scQuit]) and
           (Player.Life > 0) then
           SetScene(scQuit, SceneEnum);
       end;
@@ -631,7 +631,7 @@ var
 begin
   // Map
   R := Player.Vision;
-  if not Game.Wizard then
+  if not Mode.Wizard then
   begin
     Min.X := Player.X - R;
     Max.X := Player.X + R;
@@ -660,7 +660,7 @@ begin
         Y := Math.EnsureRange(DY - PY + Player.Y, 0, High(Byte));
         if not Map.InMap(X, Y) then
           Continue;
-        if not Game.Wizard then
+        if not Mode.Wizard then
           if (Player.GetDist(X, Y) > R) and Map.GetFog(X, Y) then
             Continue;
         T := Map.GetTile(X, Y);
@@ -672,7 +672,7 @@ begin
         end;
         if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
           RenderLook(X, Y, T, False);
-        if not Game.Wizard then
+        if not Mode.Wizard then
         begin
           if (Player.GetDist(X, Y) <= R) then
           begin
@@ -692,7 +692,7 @@ begin
         end
         else
           Terminal.ForegroundColor(T.Color);
-        if Game.Wizard or not Map.GetFog(X, Y) then
+        if Mode.Wizard or not Map.GetFog(X, Y) then
           Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
       end;
   // Items, player's corpses, player, mobs
@@ -704,7 +704,7 @@ begin
   Terminal.BackgroundColor(clBackground);
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(Status.Left, Status.Top, Player.Name);
-  if Game.Wizard then
+  if Mode.Wizard then
     S := Format('%s (%d:%d)', [Map.Name, Player.X, Player.Y])
   else
     S := Map.Name;
@@ -749,14 +749,14 @@ begin
         Player.Look := not Player.Look;
       end;
     TK_KP_PLUS:
-      if Game.Wizard then
+      if Mode.Wizard then
         if (Map.Current < High(TMapEnum)) then
         begin
           Map.Current := Succ(Map.Current);
           Player.Wait;
         end;
     TK_KP_MINUS:
-      if Game.Wizard then
+      if Mode.Wizard then
         if (Map.Current > Low(TMapEnum)) then
         begin
           Map.Current := Pred(Map.Current);
@@ -817,7 +817,7 @@ begin
           MsgLog.Add(_('You cannot climb down here.'));
       end;
     TK_KP_MULTIPLY:
-      if Game.Wizard then
+      if Mode.Wizard then
       begin
         Player.Fill;
       end;
@@ -880,7 +880,7 @@ begin
     // TK_B:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
-    if Game.Wizard then
+    if Mode.Wizard then
     begin
     end;
 
@@ -942,7 +942,7 @@ begin
     Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
       [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
       TK_ALIGN_CENTER);
-  if Game.Wizard then
+  if Mode.Wizard then
     Terminal.Print(CX, CY + 5, Format(_('Press %s to continue...'),
       [UI.KeyToStr('SPACE')]), TK_ALIGN_CENTER);
 
@@ -957,7 +957,7 @@ begin
         Game.CanClose := True;
       end;
     TK_SPACE:
-      if Game.Wizard then
+      if Mode.Wizard then
       begin
         Player.Fill;
         Scenes.SetScene(scGame);
@@ -1058,7 +1058,7 @@ end;
 
 procedure TScenePlayer.Render;
 begin
-  if Game.Wizard then
+  if Mode.Wizard then
     UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']))
       else UI.Title(Player.Name);
 
@@ -1328,7 +1328,7 @@ begin
   Self.Add();
   Add(_('BeaRLibItems'), Items_GetVersion);
 
-  if Game.Wizard then
+  if Mode.Wizard then
   begin
     X := 1;
     Y := Y + 3;
@@ -1663,7 +1663,7 @@ begin
           TK_D:
             Game.Difficulty := dfHell;
           TK_ENTER, TK_KP_ENTER:
-            if Game.Wizard then
+            if Mode.Wizard then
               Game.Difficulty := dfNormal
             else
               Exit;
@@ -1767,13 +1767,13 @@ begin
   AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
   AddOption('K', _('Auto pickup keys'), Game.GetOption(apKey));
 
-  if Game.Wizard then
+  if Mode.Wizard then
   begin
     X := 1;
     Y := Y + 3;
     UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    AddOption('W', _('Wizard Mode'), Game.Wizard, clRed);
+    AddOption('W', _('Wizard Mode'), Mode.Wizard, clRed);
     AddOption('M', _('Show map'), Game.ShowMap);
     AddOption('T', _('Reload all shops'), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
@@ -1804,15 +1804,15 @@ begin
     TK_B:
       Game.ChOption(apBook);
     TK_W:
-      Game.Wizard := False;
+      Mode.Wizard := False;
     TK_M:
-      if Game.Wizard then
+      if Mode.Wizard then
         Game.ShowMap := not Game.ShowMap;
     TK_L:
-      if Game.Wizard then
+      if Mode.Wizard then
         Game.LCorpses := not Game.LCorpses;
     TK_T:
-      if Game.Wizard then
+      if Mode.Wizard then
         Shops.New;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
@@ -1829,7 +1829,7 @@ var
   function IsSpell(I: TSpellEnum): Boolean;
   begin
     Result := Spellbook.GetSpell(I).Enable;
-    if Game.Wizard then
+    if Mode.Wizard then
       Result := True;
   end;
 
@@ -1924,7 +1924,7 @@ begin
   for I := 0 to TalentMax - 1 do
     Add();
 
-  if Game.IsMode then
+  if Mode.Game then
     MsgLog.Render(2, True);
 
   if Player.Talents.IsPoint then
@@ -1949,7 +1949,7 @@ begin
             TK_A .. TK_Z:
               Player.Talents.DoTalent(Key - TK_A);
             TK_ENTER, TK_KP_ENTER:
-              if Game.Wizard then
+              if Mode.Wizard then
                 Player.Talents.DoTalent(Math.RandomRange(0, 5));
           end;
         end;
@@ -2005,7 +2005,7 @@ begin
         Terminal.Refresh;
         Terminal_Delay(1000);
         Map.Gen;
-        Game.IsMode := True;
+        Mode.Game := True;
         Scenes.SetScene(scGame);
       end;
     TK_ESCAPE:

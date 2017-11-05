@@ -1278,7 +1278,7 @@ begin
     else
       Result := Format(_('%s is lying here.'), [S]);
   end;
-  if Game.Wizard then
+  if Mode.Wizard then
     Result := Result + Format(' ID: %d', [ID]);
 end;
 
@@ -1439,11 +1439,11 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
     if not Map.InView(FItem.X, FItem.Y) or
-      (not Game.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
+      (not Mode.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
       Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Game.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Vision)
+    if not Mode.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Vision)
     then
     begin
       FColor := clFog;

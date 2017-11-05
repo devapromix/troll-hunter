@@ -307,7 +307,7 @@ begin
     Mob.Life := EnsureRange(Mob.Life - Dam, 0, Mob.Life);
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     // Break weapon
-    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Game.Wizard)
+    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
     then
       BreakItem(stMainHand);
     if (CrStr <> '') then
@@ -611,7 +611,7 @@ begin
     11001 .. EngorgedMax:
       Result := _('Engorged');
   end;
-  if Game.Wizard then
+  if Mode.Wizard then
   begin
     if (Result = '') then
       Result := _('Satiated');
@@ -641,7 +641,7 @@ begin
     if Map.InMap(LX + Direction[Dir].X, LY + Direction[Dir].Y) and
       ((Map.InView(LX + Direction[Dir].X, LY + Direction[Dir].Y) and
       not Map.GetFog(LX + Direction[Dir].X, LY + Direction[Dir].Y)) or
-      Game.Wizard) then
+      Mode.Wizard) then
     begin
       LX := Map.EnsureRange(Math.EnsureRange(LX + Direction[Dir].X,
         X - (View.Width div 2), X + (View.Width div 2 - 1)));
@@ -655,7 +655,7 @@ begin
       Exit;
     FX := Map.EnsureRange(X + Direction[Dir].X);
     FY := Map.EnsureRange(Y + Direction[Dir].Y);
-    if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Game.Wizard
+    if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Mode.Wizard
     then
       Exit;
     // Stunned or burning
@@ -696,7 +696,7 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   // Need level
   ItemLevel := ItemBase[TItemEnum(FItem.ItemID)].Level;
-  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Game.Wizard then
+  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Mode.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
@@ -776,14 +776,14 @@ begin
   // Need level
   FItem := Items_Inventory_GetItem(Index);
   ItemLevel := ItemBase[TItemEnum(FItem.ItemID)].Level;
-  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Game.Wizard then
+  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Mode.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
       [ItemLevel]));
     Self.Calc;
     Exit;
   end;
-  if (FItem.Identify = 0) and not Game.Wizard then
+  if (FItem.Identify = 0) and not Mode.Wizard then
   begin
     MsgLog.Add(_('You can not use this yet (unidentified item)!'));
     Self.Calc;
@@ -1172,7 +1172,7 @@ var
 
 begin
   Result := '';
-  if Game.Wizard then
+  if Mode.Wizard then
     Exit;
   SL := TStringList.Create;
   try
@@ -1288,7 +1288,7 @@ var
 begin
 
   // Add armors
-  if Game.Wizard then
+  if Mode.Wizard then
   begin
     Items.AddItemToInv(ivWinged_Helm, 1, True, False);
     Items.AddItemToInv(ivPlate_Mail, 1, True, False);
@@ -1311,7 +1311,7 @@ begin
     end;
   end;
   // Add weapon
-  if Game.Wizard then
+  if Mode.Wizard then
   begin
     case Math.RandomRange(0, 4) of
       0:
@@ -1338,7 +1338,7 @@ begin
     end;
   end;
   // Add runes, potions and scrolls
-  if Game.Wizard then
+  if Mode.Wizard then
   begin
     Items.AddItemToInv(ivRune_of_Full_Healing);
     Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
@@ -1357,10 +1357,10 @@ begin
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
   // Add foods
-  Items.AddItemToInv(ivBread_Ration, IfThen(Game.Wizard, 10, 3));
+  Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
-  Items.AddItemToInv(ivGold, IfThen(Game.Wizard, RandomRange(3333, 9999), D));
+  Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));
   Self.Calc();
 end;
 

@@ -79,6 +79,16 @@ var
   clAlarm: string = 'Lightest Green';
 
 type
+  TMode = record
+    Game: Boolean;
+    Wizard: Boolean;
+    Language: Boolean;
+  end;
+
+var
+  Mode: TMode;
+
+type
   TDifficulty = (dfEasy, dfNormal, dfHard, dfHell);
   TSpawn = class(TEntity);
 
@@ -92,11 +102,8 @@ type
     FDifficulty: TDifficulty;
     FTimer: Byte;
     FWon: Boolean;
-    FMode: Boolean;
-    FWizard: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
-    FMkLang: Boolean;
     FLCorpses: Boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
@@ -112,9 +119,6 @@ type
     property Difficulty: TDifficulty read FDifficulty write FDifficulty;
     property Timer: Byte read FTimer write FTimer;
     property Won: Boolean read FWon write FWon;
-    property IsMode: Boolean read FMode write FMode;
-    property Wizard: Boolean read FWizard write FWizard;
-    property MkLang: Boolean read FMkLang write FMkLang;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
     property LCorpses: Boolean read FLCorpses write FLCorpses;
@@ -157,9 +161,9 @@ begin
   Randomize;
   Timer := 0;
   Won := False;
-  IsMode := False;
-  Wizard := False;
-  MkLang := False;
+  Mode.Game := False;
+  Mode.Wizard := False;
+  Mode.Language := False;
   for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
     FAPOption[J] := True;
   CanClose := False;
@@ -175,15 +179,15 @@ begin
   for I := 1 to ParamCount do
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
-      Wizard := True;
+      Mode.Wizard := True;
     if (LowerCase(ParamStr(I)) = '-l') then
-      MkLang := True;
+      Mode.Language := True;
   end;
 end;
 
 destructor TGame.Destroy;
 begin
-  if MkLang then
+  if Mode.Language then
     Language.SaveLanguage();
   FreeAndNil(FLanguage);
   FreeAndNil(FPortal);

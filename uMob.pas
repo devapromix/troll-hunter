@@ -567,7 +567,7 @@ begin
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
-    if Game.Wizard then
+    if Mode.Wizard then
       Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)), X, Y,
         Ord(AZ)]));
     Boss := True;
@@ -745,7 +745,7 @@ begin
     Player.Life := EnsureRange(Player.Life - Dam, 0, Player.Life);
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and
-      not Game.Wizard)) then
+      not Mode.Wizard)) then
       Player.BreakItem();
     if (Player.Life = 0) then
       Player.Defeat(Mobs.GetName(TMobEnum(ID)));
@@ -787,7 +787,7 @@ begin
   if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mbTroll_King))
   then
   begin
-    if not Game.Wizard then
+    if not Mode.Wizard then
       Game.Won := True;
     MsgLog.Add(Terminal.Colorize(_('You have won!!!'), clAlarm));
     Player.Statictics.Inc(stScore, 2000);
@@ -867,9 +867,9 @@ procedure TMob.Render(AX, AY: Byte);
 var
   C: Char;
 begin
-  if not Map.InView(X, Y) or (not Game.Wizard and not Map.GetFOV(X, Y)) then
+  if not Map.InView(X, Y) or (not Mode.Wizard and not Map.GetFOV(X, Y)) then
     Exit;
-  if not Game.Wizard and (Player.GetDist(X, Y) > Player.Vision) then
+  if not Mode.Wizard and (Player.GetDist(X, Y) > Player.Vision) then
     Exit;
   C := MobBase[TMobEnum(ID)].Symbol;
   if (Self.Boss) then
