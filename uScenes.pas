@@ -473,6 +473,7 @@ end;
 
 procedure TSceneTitle.Render;
 begin
+  UI.RenderTile(''); {???}
   Logo.Render(True);
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);

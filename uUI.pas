@@ -17,6 +17,7 @@ type
       AColor, DarkColor: Cardinal);
     class procedure Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
     class procedure FromAToZ(const Max: Byte = 0);
+    class procedure RenderTile(const S: string);
     class function KeyToStr(AKey: string; AStr: string = '';
       AColor: string = 'Key'): string;
     class function GoldLeft(const Value: Cardinal): string;
@@ -85,6 +86,11 @@ class function UI.KeyToStr(AKey, AStr, AColor: string): string;
 begin
   Result := Trim(Terminal.Colorize(Format(F, [UpperCase(AKey)]),
     Terminal.GetColorFromIni(AColor)) + ' ' + AStr);
+end;
+
+class procedure UI.RenderTile(const S: string);
+begin
+  Terminal.Print(0, 0, '[U+E000]');
 end;
 
 class procedure UI.Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
