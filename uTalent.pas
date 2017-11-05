@@ -162,7 +162,7 @@ begin
         Self.Add(T);
         IsPoint := False;
         Player.DoEffects(TalentBase[T].Effects);
-        if not Game.IsMode then
+        if not Mode.Game then
           Scenes.SetScene(scName);
         Break;
       end;

@@ -127,7 +127,7 @@ procedure TSkills.Start;
 var
   I: TSkillEnum;
 begin
-  if Game.Wizard then
+  if Mode.Wizard then
     for I := Low(TSkillEnum) to High(TSkillEnum) do
       with FSkill[I] do
       begin

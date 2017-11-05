@@ -59,7 +59,7 @@ var
   I: Char;
   J: Byte;
 begin
-  if Game.Wizard then
+  if Mode.Wizard then
     for I := 'A' to 'Z' do
       Terminal.Print(1, (Ord(I) - Ord('A')) + 2, Format(F, [I]), clGray, clBlack)
   else if (Max > 0) then

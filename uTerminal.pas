@@ -173,7 +173,7 @@ begin
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
   Wizard := '';
-  if Assigned(Game) and Game.Wizard then
+  if Mode.Wizard then
     Wizard := '[WIZARD]';
   terminal_set(Format('window: size=%dx%d, title=%s',
     [Screen.Width, Screen.Height, Format(Trim('%s %s'), [Game.GetTitle,
