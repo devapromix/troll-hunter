@@ -32,6 +32,7 @@ const
   FT = '== %s ==';
 
 const
+  clBlack = $00000000;
   clWhite = $FFDDDDDD;
 
   clGray = $FF777777;
