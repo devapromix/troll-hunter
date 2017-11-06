@@ -6,9 +6,14 @@ uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itScroll, itRune, itBook, itFood, itPlant, itBlade, itAxe, itSpear, itMace,
+    itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe, itSpear, itMace,
     itStaff, itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing,
     itAmulet);
+
+const
+  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
+    '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^', '&', '%',
+    '%', '=', '"');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -80,20 +85,23 @@ type
     None, ivCorpse, ivGold,
     // Potions
     ivLesser_Healing_Potion, ivGreater_Healing_Potion, ivHeroic_Healing_Potion,
-    ivPotion_of_Full_Healing, ivLesser_Rejuvenation_Potion, ivGreater_Rejuvenation_Potion,
-    ivHeroic_Rejuvenation_Potion, ivPotion_of_Full_Rejuvenation, ivLesser_Mana_Potion,
-    ivGreater_Mana_Potion, ivHeroic_Mana_Potion, ivPotion_of_Full_Mana, ivSoothing_Balm,
+    ivPotion_of_Full_Healing, ivLesser_Rejuvenation_Potion,
+    ivGreater_Rejuvenation_Potion, ivHeroic_Rejuvenation_Potion,
+    ivPotion_of_Full_Rejuvenation, ivLesser_Mana_Potion, ivGreater_Mana_Potion,
+    ivHeroic_Mana_Potion, ivPotion_of_Full_Mana, ivSoothing_Balm,
     ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
     // Elixirs and Extracts
     ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
     // Scrolls
-    ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing, ivScroll_of_Greater_Healing,
-    ivScroll_of_Full_Healing, ivScroll_of_Hunger, ivScroll_of_Sidestepping,
-    ivScroll_of_Phasing, ivScroll_of_Teleportation, ivScroll_of_Disappearing,
-    ivScroll_of_Town_Portal, ivScroll_of_Bloodlust, ivScroll_of_Identify,
+    ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
+    ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
+    ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
+    ivScroll_of_Disappearing, ivScroll_of_Town_Portal, ivScroll_of_Bloodlust,
+    ivScroll_of_Identify,
     // Runes
-    ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing,
-    ivRune_of_Full_Healing, ivRune_of_Teleportation, ivRune_of_Town_Portal,
+    ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing,
+    ivRune_of_Greater_Healing, ivRune_of_Full_Healing, ivRune_of_Teleportation,
+    ivRune_of_Town_Portal,
     // Foods
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb,
     // Gems
@@ -104,7 +112,8 @@ type
     ivAmulet,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
-    ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron, // Body Armor
+    ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
+    // Body Armor
     ivLeather_Gloves, ivHide_Gloves, // Gloves
     ivShoes, ivLeather_Boots, // Boots
     ivBuckler, ivTarge_Shield, // Shield
@@ -144,7 +153,8 @@ type
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
-    ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk, // Body Armor
+    ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
+    // Body Armor
     ivTroll_Gauntlets, ivPlated_Gauntlets, // Gloves
     ivBattle_Boots, ivPlate_Boots, // Boots
     ivTower_Shield, ivGothic_Shield, // Shield
@@ -1113,7 +1123,7 @@ uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
   uBearLibItemsInventory, Dialogs;
 
-  { TItems }
+{ TItems }
 
 class procedure TItems.CalcItem(var AItem: Item; APrice: Word = 0);
 begin
@@ -1472,7 +1482,7 @@ begin
     S := StringReplace(S, '_', ' ', [rfReplaceAll]);
     FItemName[I] := S;
   end;
-  //if (StrToItemEnum('Gold') = ivGold) then ShowMessage('Gold');
+  // if (StrToItemEnum('Gold') = ivGold) then ShowMessage('Gold');
 end;
 
 destructor TItems.Destroy;
@@ -1496,8 +1506,8 @@ end;
 
 function TItems.GetSlotName(const SlotType: TSlotType): string;
 const
-  SlotName: array [TSlotType] of string = ('', 'Head', 'Torso', 'Hands',
-     'Feet', 'Main Hand', 'Off-Hand', 'Neck', 'Finger');
+  SlotName: array [TSlotType] of string = ('', 'Head', 'Torso', 'Hands', 'Feet',
+    'Main Hand', 'Off-Hand', 'Neck', 'Finger');
 begin
   Result := Terminal.Colorize(Format('{%s}', [SlotName[SlotType]]),
     Terminal.GetColorFromIni('Equip'));
