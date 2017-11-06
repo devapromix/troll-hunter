@@ -59,7 +59,8 @@ begin
   Self.Clear;
   P := TypeInfo(TAbilityEnum);
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    FAbilityName[I] := StringReplace(GetEnumName(P, Ord(I)), 'ab', '', [rfReplaceAll]);
+    FAbilityName[I] := StringReplace(GetEnumName(P, Ord(I)), 'ab', '',
+      [rfReplaceAll]);
 end;
 
 destructor TAbilities.Destroy;

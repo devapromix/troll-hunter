@@ -3,7 +3,9 @@ unit uSkill;
 interface
 
 type
-  TSkillEnum = (skNone,
+  TSkillEnum = (
+    //
+    skNone,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
     // Weapon skills
@@ -43,9 +45,10 @@ const
 
 implementation
 
-uses SysUtils, TypInfo, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog, uStatistic;
+uses SysUtils, TypInfo, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog,
+  uStatistic;
 
-  { TSkills }
+{ TSkills }
 
 procedure TSkills.Clear;
 var
@@ -67,7 +70,8 @@ begin
   Self.Clear;
   P := TypeInfo(TSkillEnum);
   for I := Low(TSkillEnum) to High(TSkillEnum) do
-    FSkillName[I] := StringReplace(GetEnumName(P, Ord(I)), 'sk', '', [rfReplaceAll]);
+    FSkillName[I] := StringReplace(GetEnumName(P, Ord(I)), 'sk', '',
+      [rfReplaceAll]);
 end;
 
 destructor TSkills.Destroy;
