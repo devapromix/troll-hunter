@@ -4,11 +4,7 @@
 *.o
 *.or
 *.ppu
-*.blend
-*.blend1
-*.blend2
 *~
-*.apk
 *.a
 *.log
 *.lps
