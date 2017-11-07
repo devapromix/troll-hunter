@@ -9,6 +9,7 @@
 "mercenary","merchant","businessman","craftsman","soldier","templar","priest"=
 "wavy","curly","straight","short","long"=
 %d gold left=
+%s blinded you (%d).=
 %s dies.=
 %s feel lust for blood (%d).=
 %s has burnt you (%d).=
@@ -86,6 +87,7 @@ Identification=
 Iguana=
 Inventory=
 It was a good hit!=
+It was an excellent hit!=
 January=
 Kobold King=
 Leather Boots=

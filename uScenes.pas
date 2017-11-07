@@ -16,7 +16,7 @@ type
   TScene = class(TObject)
   private
     KStr: string;
-    X, Y, CX, CY: Byte;
+    X, Y, CX, CY: Integer;
     procedure AddOption(AHotKey, AText: string; AOption: Boolean;
       AColor: Cardinal = $FFAAAAAA); overload;
     procedure AddLine(AHotKey, AText: string);
@@ -473,7 +473,7 @@ end;
 
 procedure TSceneTitle.Render;
 begin
-  UI.RenderTile(''); {???}
+  UI.RenderTile(''); { ??? }
   Logo.Render(True);
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
@@ -657,8 +657,8 @@ begin
       begin
         if Player.Look then
           Terminal.BackgroundColor($FF333333);
-        X := Math.EnsureRange(DX - PX + Player.X, 0, High(Byte));
-        Y := Math.EnsureRange(DY - PY + Player.Y, 0, High(Byte));
+        X := DX - PX + Player.X;
+        Y := DY - PY + Player.Y;
         if not Map.InMap(X, Y) then
           Continue;
         if not Mode.Wizard then
@@ -881,9 +881,9 @@ begin
     // TK_B:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
-    if Mode.Wizard then
-    begin
-    end;
+      if Mode.Wizard then
+      begin
+      end;
 
     // if Game.Wizard then Items.DelCorpses;
     // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
@@ -992,9 +992,8 @@ end;
 
 procedure TSceneInv.Render;
 begin
-  UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'),
-    UI.Icon(icGold), Player.Gold, UI.Icon(icFlag),
-    Items_Inventory_GetCount(), ItemMax]));
+  UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'), UI.Icon(icGold),
+    Player.Gold, UI.Icon(icFlag), Items_Inventory_GetCount(), ItemMax]));
 
   UI.FromAToZ(ItemMax);
   Items.RenderInventory;
@@ -1061,7 +1060,8 @@ procedure TScenePlayer.Render;
 begin
   if Mode.Wizard then
     UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']))
-      else UI.Title(Player.Name);
+  else
+    UI.Title(Player.Name);
 
   Self.RenderPlayer();
   Self.RenderSkills();
@@ -1087,23 +1087,23 @@ begin
   UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax,
     color_from_name('strength'), clDarkGray);
   Terminal.Print(X, Y + 4, Format('%s %d/%d',
-    [UI.Icon(icStr) + ' ' + _('Strength'),
-    Player.Attributes.Attrib[atStr].Value, AttribMax]), TK_ALIGN_CENTER);
+    [UI.Icon(icStr) + ' ' + _('Strength'), Player.Attributes.Attrib[atStr]
+    .Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax,
     color_from_name('dexterity'), clDarkGray);
   Terminal.Print(X, Y + 6, Format('%s %d/%d',
-    [UI.Icon(icDex) + ' ' + _('Dexterity'),
-    Player.Attributes.Attrib[atDex].Value, AttribMax]), TK_ALIGN_CENTER);
+    [UI.Icon(icDex) + ' ' + _('Dexterity'), Player.Attributes.Attrib[atDex]
+    .Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax,
     color_from_name('willpower'), clDarkGray);
   Terminal.Print(X, Y + 8, Format('%s %d/%d',
-    [UI.Icon(icBook) + ' ' + _('Willpower'),
-    Player.Attributes.Attrib[atWil].Value, AttribMax]), TK_ALIGN_CENTER);
+    [UI.Icon(icBook) + ' ' + _('Willpower'), Player.Attributes.Attrib[atWil]
+    .Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax,
     color_from_name('perception'), clDarkGray);
   Terminal.Print(X, Y + 10, Format('%s %d/%d',
-    [UI.Icon(icLeaf) + ' ' + _('Perception'),
-    Player.Attributes.Attrib[atPer].Value, AttribMax]), TK_ALIGN_CENTER);
+    [UI.Icon(icLeaf) + ' ' + _('Perception'), Player.Attributes.Attrib[atPer]
+    .Value, AttribMax]), TK_ALIGN_CENTER);
   UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
     clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d',
@@ -1122,10 +1122,11 @@ begin
   Terminal.Print(X, Y + 20, Format('%s %d/%d',
     [UI.Icon(icMana) + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
     TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, color_from_name('vision'), clDarkGray);
+  UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, color_from_name('vision'),
+    clDarkGray);
   Terminal.Print(X, Y + 22, Format('%s %d/%d',
-    [UI.Icon(icVision) + ' ' + _('Vision radius'), Player.Vision, VisionMax]
-    ), TK_ALIGN_CENTER);
+    [UI.Icon(icVision) + ' ' + _('Vision radius'), Player.Vision, VisionMax]),
+    TK_ALIGN_CENTER);
 end;
 
 procedure TScenePlayer.RenderSkills;
@@ -1552,7 +1553,8 @@ end;
 
 procedure TSceneRepair.Render;
 begin
-  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
+  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1,
+    clDarkestRed);
 
   UI.FromAToZ;
   Items.RenderInventory(ptRepair);
