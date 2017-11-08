@@ -1,0 +1,14 @@
+*.compiled
+*.rsj
+*.rst
+*.o
+*.or
+*.ppu
+*~
+*.a
+*.log
+*.lps
+*.bak
+*.dbg
+*.exe
+*.fuse_hidden*
