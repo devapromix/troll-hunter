@@ -35,7 +35,8 @@ uses
   uPathFind in 'uPathFind.pas',
   uBearLibItemsCommon in 'BearLibItems\uBearLibItemsCommon.pas',
   uBearLibItemsDungeon in 'BearLibItems\uBearLibItemsDungeon.pas',
-  uBearLibItemsInventory in 'BearLibItems\uBearLibItemsInventory.pas';
+  uBearLibItemsInventory in 'BearLibItems\uBearLibItemsInventory.pas',
+  uQuest in 'uQuest.pas';
 
 var
   Key: Word = 0;
