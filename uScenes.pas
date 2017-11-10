@@ -583,7 +583,6 @@ var
     S: string;
     C: Integer;
     FItem: Item;
-
   begin
     S := '';
     Terminal.BackgroundColor(0);

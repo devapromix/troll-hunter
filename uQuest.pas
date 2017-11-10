@@ -1,8 +1,8 @@
-﻿unit uQuest;
+unit uQuest;
 
 interface
 
-uses uEntity, uMob;
+uses uCreature, uMob;
 
 { TODO -cУбить существо : Убить уникального босса на локации (от первой до предпоследней). }
 { TODO -cУбить существо : Убить N существ на локации (от первой до последней). }
@@ -15,28 +15,33 @@ uses uEntity, uMob;
 
 type
   TQuestType = (qtKillMobs);
+  
+type
+  TSetOfMobEnum = set of TMobEnum;
 
 type
   TQuestBase = record
     Level: Byte;
     QuestType: TQuestType;
-	Mobs: TMobEnum;
-	Amount: Byte;
+	Mobs: TSetOfMobEnum;
+	Amount: TMinMax;
   end;
 
 type
-  TQuestEnum = (qsKill);
+  TQuestEnum = (qsKillNBears);
 
 const
   QuestBase: array [TQuestEnum] of TQuestBase = (
-  // Kill N mobs
-  (Level: 1; QuestType: qtKillMobs; Mobs: mbBlack_Bear; Amount: 3;)
+  // Kill N bears
+  (Level: 1; QuestType: qtKillMobs; Mobs: [mbBlack_Bear, mbGrizzly_Bear]; Amount: (Min: 3; Max: 5;);)
   );
 
 type
   TQuests = class(TObject)
     constructor Create;
     procedure Clear;
+	function Count: Byte;
+	procedure Add(const QuestEnum: TQuestEnum);
   end;
 
 var
@@ -48,9 +53,19 @@ uses SysUtils;
 
 { TQuests }
 
+procedure TQuests.Add(const QuestEnum: TQuestEnum);
+begin
+
+end;
+
 procedure TQuests.Clear;
 begin
 
+end;
+
+function TQuests.Count: Byte;
+begin
+  Result := 0;
 end;
 
 constructor TQuests.Create;

@@ -1,4 +1,4 @@
-﻿unit uAffixes;
+unit uAffixes;
 
 interface
 
