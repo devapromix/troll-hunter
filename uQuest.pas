@@ -23,8 +23,8 @@ type
   TQuestBase = record
     Level: Byte;
     QuestType: TQuestType;
-	Mobs: TSetOfMobEnum;
-	Amount: TMinMax;
+	  Mobs: TSetOfMobEnum;
+	  Amount: TMinMax;
   end;
 
 type
@@ -37,11 +37,22 @@ const
   );
 
 type
+  TQuest = record
+    Level: Byte;
+    QuestType: TQuestType;
+	  Mob: TMobEnum;
+	  Amount: Byte;
+  end;
+
+type
   TQuests = class(TObject)
+  private
+    FQuest: array of TQuest;
+  public
     constructor Create;
     procedure Clear;
-	function Count: Byte;
-	procedure Add(const QuestEnum: TQuestEnum);
+	  function Count: Byte;
+	  procedure Add(const QuestEnum: TQuestEnum);
   end;
 
 var
@@ -55,22 +66,33 @@ uses SysUtils;
 
 procedure TQuests.Add(const QuestEnum: TQuestEnum);
 begin
+  SetLength(FQuest, Count() + 1);
+  with FQuest[Count() - 1] do
+  begin
+    Level := 1;
+    QuestType := qtKillMobs;
+	  Mob := mbBlack_Bear;
+	  Amount := 3;
+  end;
+  
+  //case QuestEnum of
 
+  //end;
 end;
 
 procedure TQuests.Clear;
 begin
-
+  SetLength(FQuest, 0);
 end;
 
 function TQuests.Count: Byte;
 begin
-  Result := 0;
+  Result := Length(FQuest);
 end;
 
 constructor TQuests.Create;
 begin
-
+  Clear;
 end;
 
 initialization
