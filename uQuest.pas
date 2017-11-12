@@ -60,7 +60,7 @@ var
 
 implementation
 
-uses SysUtils;
+uses SysUtils, Dialogs, uMap;
 
 { TQuests }
 
@@ -74,10 +74,12 @@ begin
 	  Mob := mbBlack_Bear;
 	  Amount := 3;
   end;
+  Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
   
   //case QuestEnum of
 
   //end;
+  ShowMessage('Quests.Add');
 end;
 
 procedure TQuests.Clear;

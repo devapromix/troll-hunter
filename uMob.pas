@@ -462,7 +462,8 @@ type
     destructor Destroy; override;
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AForce: TForce = fcEnemy; AID: Integer = -1);
-    procedure AddGroup(AZ: TMapEnum);
+    procedure AddGroup(const AZ: TMapEnum); overload;
+    procedure AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum; const ACount: Byte); overload;
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -1022,7 +1023,7 @@ begin
   AddMob();
 end;
 
-procedure TMobs.AddGroup(AZ: TMapEnum);
+procedure TMobs.AddGroup(const AZ: TMapEnum);
 var
   ID, FX, FY, FCount: Byte;
   I: Integer;
@@ -1047,6 +1048,28 @@ begin
       FY := Math.EnsureRange(FY + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
     until ChMapTile(ID, FX, FY, AZ);
     Self.Add(AZ, FX, FY, fcEnemy, ID);
+  end;
+end;
+
+procedure TMobs.AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum; const ACount: Byte);
+var
+  ID, FX, FY, FCount: Integer;
+begin
+  ID := Ord(AMobEnum);
+  repeat
+    FX := Math.RandomRange(1, High(Byte) - 1);
+    FY := Math.RandomRange(1, High(Byte) - 1);
+    if (Ord(AZ) > 0) then Break;
+  until (Player.GetDist(FX, FY) > 50) and ChMapTile(ID, FX, FY, AZ);
+  FCount := 0;
+  while (FCount < ACount) do
+  begin
+    repeat
+      FX := Math.EnsureRange(FX + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
+      FY := Math.EnsureRange(FY + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
+    until ChMapTile(ID, FX, FY, AZ);
+    Self.Add(AZ, FX, FY, fcEnemy, ID);
+    Inc(FCount);
   end;
 end;
 

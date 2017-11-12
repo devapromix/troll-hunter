@@ -261,7 +261,7 @@ uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
-  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory;
+  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest;
 
 { TScene }
 
@@ -882,6 +882,7 @@ begin
     TK_Y:
       if Mode.Wizard then
       begin
+        Quests.Add(qsKillNBears);
       end;
 
     // if Game.Wizard then Items.DelCorpses;
