@@ -481,8 +481,8 @@ var
 
 implementation
 
-uses Math, SysUtils, TypInfo, uTerminal, uPlayer, uMsgLog, uLanguage,
-  uItem, uSkill, uStatistic, uAttribute, uPathFind;
+uses Math, SysUtils, TypInfo, Dialogs, uTerminal, uPlayer, uMsgLog, uLanguage,
+  uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest;
 
 function MyCallback(X, Y: Integer): Boolean; stdcall;
 begin
@@ -765,6 +765,8 @@ var
   S, The: string;
   V: Byte;
 begin
+  // Quests
+  Quests.DoQuest(qtKillMobs, FID);
   Self.Alive := False;
   The := GetDescThe(Mobs.GetName(TMobEnum(ID)));
   case Math.RandomRange(0, 2) of
@@ -820,6 +822,8 @@ var
   NX, NY, Dist: Integer;
   The: string;
 begin
+  Exit;
+
   NX := 0;
   NY := 0;
   if (Force = fcNPC) then
@@ -1062,6 +1066,7 @@ begin
     if (Ord(AZ) > 0) then Break;
   until (Player.GetDist(FX, FY) > 50) and ChMapTile(ID, FX, FY, AZ);
   FCount := 0;
+  ShowMessage(Format('%dx%d', [FX, FY]));
   while (FCount < ACount) do
   begin
     repeat
@@ -1072,7 +1077,7 @@ begin
     Inc(FCount);
   end;
 end;
-
+    
 function TMobs.Count: Integer;
 begin
   Result := Length(FMob)

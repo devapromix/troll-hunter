@@ -882,7 +882,7 @@ begin
     TK_Y:
       if Mode.Wizard then
       begin
-        Quests.Add(qsKillNBears);
+        Quests.Add(qeKillNBears);
       end;
 
     // if Game.Wizard then Items.DelCorpses;

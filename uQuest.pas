@@ -21,14 +21,14 @@ type
 
 type
   TQuestBase = record
-    Level: Byte;
+    Level: Integer;
     QuestType: TQuestType;
 	  Mobs: TSetOfMobEnum;
 	  Amount: TMinMax;
   end;
 
 type
-  TQuestEnum = (qsKillNBears);
+  TQuestEnum = (qeKillNBears);
 
 const
   QuestBase: array [TQuestEnum] of TQuestBase = (
@@ -37,22 +37,31 @@ const
   );
 
 type
+  TQuestState = (qsActive, qsDone, qsFinish);
+
+type
   TQuest = record
-    Level: Byte;
+    Level: Integer;
+    QuestState: TQuestState;
     QuestType: TQuestType;
 	  Mob: TMobEnum;
-	  Amount: Byte;
+	  Amount: Integer;
+    Kills: Integer;
   end;
 
 type
   TQuests = class(TObject)
   private
     FQuest: array of TQuest;
+    function GetQuest(I: Integer): TQuest;
+    procedure SetQuest(I: Integer; const Value: TQuest);
   public
-    constructor Create;
     procedure Clear;
-	  function Count: Byte;
+    constructor Create;
+	  function Count: Integer;
 	  procedure Add(const QuestEnum: TQuestEnum);
+    property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
+    procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
   end;
 
 var
@@ -64,22 +73,44 @@ uses SysUtils, Dialogs, uMap;
 
 { TQuests }
 
+function TQuests.GetQuest(I: Integer): TQuest;
+begin
+  Result := FQuest[I]
+end;
+
+procedure TQuests.SetQuest(I: Integer; const Value: TQuest);
+begin
+  FQuest[I] := Value
+end;
+
+procedure TQuests.DoQuest(const AQuestType: TQuestType; const Value: Integer);
+var
+  I: Integer;
+begin
+  for I := 0 to Count - 1 do
+    case AQuestType of
+      qtKillMobs:
+        with FQuest[I] do
+          if ((QuestType = qtKillMobs) and (QuestState = qsActive) and (Mob = TMobEnum(Value))) then
+            Kills := Kills + 1;
+    end;
+end;
+
 procedure TQuests.Add(const QuestEnum: TQuestEnum);
 begin
   SetLength(FQuest, Count() + 1);
   with FQuest[Count() - 1] do
   begin
     Level := 1;
+    QuestState := qsActive;
     QuestType := qtKillMobs;
 	  Mob := mbBlack_Bear;
 	  Amount := 3;
+    // Counters
+    Kills := 0;
   end;
   Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
-  
-  //case QuestEnum of
-
-  //end;
-  ShowMessage('Quests.Add');
+//  ShowMessage('Quests.Add');
 end;
 
 procedure TQuests.Clear;
@@ -87,7 +118,7 @@ begin
   SetLength(FQuest, 0);
 end;
 
-function TQuests.Count: Byte;
+function TQuests.Count: Integer;
 begin
   Result := Length(FQuest);
 end;
