@@ -883,6 +883,7 @@ begin
       if Mode.Wizard then
       begin
         Quests.Add(qeKillNBears);
+
       end;
 
     // if Game.Wizard then Items.DelCorpses;
