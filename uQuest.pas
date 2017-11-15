@@ -1,4 +1,4 @@
-unit uQuest;
+﻿unit uQuest;
 
 interface
 
@@ -15,7 +15,7 @@ uses uCreature, uMob;
 
 type
   TQuestType = (qtKillMobs);
-  
+
 type
   TSetOfMobEnum = set of TMobEnum;
 
@@ -23,8 +23,8 @@ type
   TQuestBase = record
     Level: Integer;
     QuestType: TQuestType;
-	  Mobs: TSetOfMobEnum;
-	  Amount: TMinMax;
+    Mobs: TSetOfMobEnum;
+    Amount: TMinMax;
   end;
 
 type
@@ -32,9 +32,9 @@ type
 
 const
   QuestBase: array [TQuestEnum] of TQuestBase = (
-  // Kill N bears
-  (Level: 1; QuestType: qtKillMobs; Mobs: [mbBlack_Bear, mbGrizzly_Bear]; Amount: (Min: 3; Max: 5;);)
-  );
+    // Kill N bears
+    (Level: 1; QuestType: qtKillMobs; Mobs: [mbBlack_Bear, mbGrizzly_Bear];
+    Amount: (Min: 3; Max: 5;);));
 
 type
   TQuestState = (qsActive, qsDone, qsFinish);
@@ -44,8 +44,8 @@ type
     Level: Integer;
     QuestState: TQuestState;
     QuestType: TQuestType;
-	  Mob: TMobEnum;
-	  Amount: Integer;
+    Mob: TMobEnum;
+    Amount: Integer;
     Kills: Integer;
   end;
 
@@ -58,8 +58,8 @@ type
   public
     procedure Clear;
     constructor Create;
-	  function Count: Integer;
-	  procedure Add(const QuestEnum: TQuestEnum);
+    function Count: Integer;
+    procedure Add(const QuestEnum: TQuestEnum);
     property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
     procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
   end;
@@ -88,11 +88,12 @@ var
   I: Integer;
 begin
   for I := 0 to Count - 1 do
-    case AQuestType of
-      qtKillMobs:
-        with FQuest[I] do
-          if ((QuestType = qtKillMobs) and (QuestState = qsActive) and (Mob = TMobEnum(Value))) then
-            Kills := Kills + 1;
+    with FQuest[I] do
+    begin
+      // Killing monsters
+      if ((QuestType = AQuestType) and (QuestState = qsActive) and
+        (Mob = TMobEnum(Value))) then
+        Kills := Kills + 1;
     end;
 end;
 
@@ -104,13 +105,13 @@ begin
     Level := 1;
     QuestState := qsActive;
     QuestType := qtKillMobs;
-	  Mob := mbBlack_Bear;
-	  Amount := 3;
+    Mob := mbBlack_Bear;
+    Amount := 3;
     // Counters
     Kills := 0;
   end;
   Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
-//  ShowMessage('Quests.Add');
+  // ShowMessage('Quests.Add');
 end;
 
 procedure TQuests.Clear;
