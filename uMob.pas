@@ -38,20 +38,20 @@ type
 type
   TMobEnum = (
     // Dark Wood
-    mbBig_Rat, mbSpiny_Frog, mbGiant_Gecko, mbJackal, mbBlack_Bear, mbGrizzly_Bear,
-    mbAnaconda, mbWolf, mHound,
+    mbBig_Rat, mbSpiny_Frog, mbGiant_Gecko, mbJackal, mbBlack_Bear,
+    mbGrizzly_Bear, mbAnaconda, mbWolf, mHound,
     // Gray Cave
-    mbKobold, mbBig_Kobold, mbRed_Kobold, mbGnoll, mbBasilisk, mbWisp, mbWorm, mbNaga,
-    mbFire_Vortex,
+    mbKobold, mbBig_Kobold, mbRed_Kobold, mbGnoll, mbBasilisk, mbWisp, mbWorm,
+    mbNaga, mbFire_Vortex,
     // Deep Cave
-    mbScorpion, mbWasp, mbAnt, mbSoldier_Ant, mbScarab, mbBig_Spider, mbFire_Crab,
-    mbDire_Wolf, mbPan, mbFaun,
+    mbScorpion, mbWasp, mbAnt, mbSoldier_Ant, mbScarab, mbBig_Spider,
+    mbFire_Crab, mbDire_Wolf, mbPan, mbFaun,
     // Blood Cave
-    mbGoblin, mbDark_Goblin, mbBlack_Goblin, mbHobgoblin, mbGargoyle, mbWarg, mbWerewolf,
-    mbDraconian, mbOrc, mbOrc_Brute, mbOrc_Warrior, mbOrc_Warlord,
+    mbGoblin, mbDark_Goblin, mbBlack_Goblin, mbHobgoblin, mbGargoyle, mbWarg,
+    mbWerewolf, mbDraconian, mbOrc, mbOrc_Brute, mbOrc_Warrior, mbOrc_Warlord,
     // Drom
-    mbZombie, mbOgre, mbMummy, mbGhoul, mbVampire, mbVulture, mbCyclops, mbSkeleton,
-    mbWraith, mbLich, mbPhantom, mbTroll_Brute,
+    mbZombie, mbOgre, mbMummy, mbGhoul, mbVampire, mbVulture, mbCyclops,
+    mbSkeleton, mbWraith, mbLich, mbPhantom, mbTroll_Brute,
     // Dark Wood (Bosses)
     mbBlack_Hound, mbGiant_Newt, mbIguana,
     // Gray Cave (Bosses)
@@ -463,7 +463,8 @@ type
     procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
       AForce: TForce = fcEnemy; AID: Integer = -1);
     procedure AddGroup(const AZ: TMapEnum); overload;
-    procedure AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum; const ACount: Byte); overload;
+    procedure AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum;
+      const ACount: Byte); overload;
     function Count: Integer;
     procedure Process;
     procedure Render(AX, AY: Byte);
@@ -1055,7 +1056,8 @@ begin
   end;
 end;
 
-procedure TMobs.AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum; const ACount: Byte);
+procedure TMobs.AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum;
+  const ACount: Byte);
 var
   ID, FX, FY, FCount: Integer;
 begin
@@ -1063,7 +1065,8 @@ begin
   repeat
     FX := Math.RandomRange(1, High(Byte) - 1);
     FY := Math.RandomRange(1, High(Byte) - 1);
-    if (Ord(AZ) > 0) then Break;
+    if (Ord(AZ) > 0) then
+      Break;
   until (Player.GetDist(FX, FY) > 50) and ChMapTile(ID, FX, FY, AZ);
   FCount := 0;
   ShowMessage(Format('%dx%d', [FX, FY]));
@@ -1077,7 +1080,7 @@ begin
     Inc(FCount);
   end;
 end;
-    
+
 function TMobs.Count: Integer;
 begin
   Result := Length(FMob)
