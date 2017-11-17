@@ -1205,7 +1205,7 @@ begin
     SL.Append(Format('%s: %d', [_('Gold'), Gold]));
     SL.SaveToFile(GetDateTime('-', '-') + '-character-dump.txt');
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
 end;
 

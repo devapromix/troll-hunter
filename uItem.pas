@@ -1812,7 +1812,7 @@ begin
     end;
     Result := SL.Text;
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
 end;
 
