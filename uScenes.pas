@@ -7,7 +7,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
+    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest,
     scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scIdentification, scBackground);
   // scClasses, scRaces
@@ -92,6 +92,13 @@ type
 
 type
   TSceneCalendar = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
+type
+  TSceneQuest = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: Word); override;
@@ -258,7 +265,7 @@ var
 implementation
 
 uses
-  SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
+  SysUtils, Math, uTerminal, uPlayer, BearLibTerminal, Dialogs,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest;
@@ -404,6 +411,8 @@ begin
         FScene[I] := TSceneIdentification.Create;
       scBackground:
         FScene[I] := TSceneBackground.Create;
+      scQuest:
+        FScene[I] := TSceneQuest.Create;
     end;
 end;
 
@@ -1420,10 +1429,13 @@ begin
     Add(_('Buy items (amulets and rings)'));
   if (ntBootsTrader_C in NPCType) then
     Add(_('Buy items (boots)'));
-  if (ntRuneTrader_D in NPCType) then
-    Add(_('Buy items (runes)'));
   if (ntSell_C in NPCType) then
     Add(_('Sell items'));
+  if (ntRuneTrader_D in NPCType) then
+    Add(_('Buy items (runes)'));
+  // Quests
+  if (ntQuest_D in NPCType) then
+    Add(_('Kill N bears (quest)'));
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True);
@@ -1491,6 +1503,8 @@ begin
       begin
         if (ntRuneTrader_D in NPCType) then
           AddShop(shRunes);
+        if (ntQuest_D in NPCType) then
+          Scenes.SetScene(scQuest, scDialog);
       end;
   end;
 end;
@@ -1984,6 +1998,24 @@ begin
       Player.IdentItem(Key - TK_A);
   else
     Game.Timer := High(Byte);
+  end
+end;
+
+{ TSceneQuest }
+
+procedure TSceneQuest.Render;
+begin
+  UI.Title(_('Quest'), 1);
+
+
+  AddKey('Esc', _('Close'), True);
+end;
+
+procedure TSceneQuest.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE:
+      Scenes.GoBack();
   end
 end;
 

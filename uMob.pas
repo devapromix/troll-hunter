@@ -17,7 +17,7 @@ type
     ntWpnTrader_B, ntSmithTrader_B, ntArmTrader_A, ntGemTrader_C, ntShTrader_A,
     ntHelmTrader_A, ntPotTrader_B, ntHealTrader_B, ntGlovesTrader_B,
     ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
-    ntFoodTrader_A, ntRuneTrader_D);
+    ntFoodTrader_A, ntRuneTrader_D, ntQuest_D);
 
 type
   TMobBase = record
@@ -387,7 +387,7 @@ const
     // Armor Trader
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clWhite;
-    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C]),
+    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C, ntQuest_D]),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDarkWood]; MaxLife: 100; Level: 10;

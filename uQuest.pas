@@ -1,4 +1,4 @@
-﻿unit uQuest;
+unit uQuest;
 
 interface
 
