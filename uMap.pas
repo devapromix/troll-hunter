@@ -335,6 +335,9 @@ var
   X, Y: Byte;
   Z: TMapEnum;
 
+const
+  Pd = 11;
+
   procedure GenCave(D: Byte; C, V: Word);
   var
     I: Word;
@@ -342,8 +345,8 @@ var
     for I := 0 to C do
     begin
       repeat
-        X := Math.RandomRange(10, High(Byte) - 10);
-        Y := Math.RandomRange(10, High(Byte) - 10);
+        X := Math.RandomRange(Pd, High(Byte) - Pd);
+        Y := Math.RandomRange(Pd, High(Byte) - Pd);
       until (GetTileEnum(X, Y, pred(Z)) = teDefaultFloor);
       Self.AddTiles(X, Y, Z, D, V, teDefaultWall, teDefaultFloor);
       SetTileEnum(X, Y, pred(Z), teDnStairs);
@@ -356,8 +359,8 @@ var
     X, Y: Byte;
   begin
     repeat
-      X := Math.RandomRange(10, High(Byte) - 10);
-      Y := Math.RandomRange(10, High(Byte) - 10);
+      X := Math.RandomRange(Pd, High(Byte) - Pd);
+      Y := Math.RandomRange(Pd, High(Byte) - Pd);
     until (GetTileEnum(X, Y, ADeep) = ABaseTileEnum);
     AddSpot(X, Y, Math.RandomRange(49, High(Byte)), ADeep, ABaseTileEnum,
       ATileEnum);
@@ -578,7 +581,7 @@ begin
   begin
     // Add mobs
     IsBoss := False;
-    for I := 0 to 255 do
+    for I := 0 to High(Byte) do
       Mobs.AddGroup(Z);
   end;
 end;
