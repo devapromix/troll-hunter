@@ -57,14 +57,14 @@ type
     function GetQuest(I: Integer): TQuest;
     procedure SetQuest(I: Integer; const Value: TQuest);
   public
-    procedure Clear;
-    constructor Create;
-    function Count: Integer;
-    procedure Add(const QuestEnum: TQuestEnum);
+    procedure Clear();
+    constructor Create();
+    function Count(): Integer;
+    procedure Add(const AQuestEnum: TQuestEnum);
     property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
     procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
     property Current: TQuestEnum read FCurrent write FCurrent;
-    function GetName(const QuestEnum: TQuestEnum): string;
+    function GetName(const AQuestEnum: TQuestEnum): string;
   end;
 
 var
@@ -76,7 +76,7 @@ uses SysUtils, Dialogs, uMap, uMsgLog, uLanguage;
 
 { TQuests }
 
-function TQuests.GetName(const QuestEnum: TQuestEnum): string;
+function TQuests.GetName(const AQuestEnum: TQuestEnum): string;
 begin
   Result := 'Kill bears';
 end;
@@ -95,7 +95,7 @@ procedure TQuests.DoQuest(const AQuestType: TQuestType; const Value: Integer);
 var
   I: Integer;
 begin
-  for I := 0 to Count - 1 do
+  for I := 0 to Count() - 1 do
     with FQuest[I] do
     begin
       // Killing monsters
@@ -105,41 +105,44 @@ begin
     end;
 end;
 
-procedure TQuests.Add(const QuestEnum: TQuestEnum);
+procedure TQuests.Add(const AQuestEnum: TQuestEnum);
 begin
-  SetLength(FQuest, Count() + 1);
-  with FQuest[Count() - 1] do
+  if True then
   begin
-    Level := 1;
-    QuestState := qsActive;
-    QuestType := qtKillMobs;
-    Mob := mbBlack_Bear;
-    Amount := 3;
-    // Counters
-    Kills := 0;
+    SetLength(FQuest, Count() + 1);
+    with FQuest[Count() - 1] do
+    begin
+      Level := 1;
+      QuestState := qsActive;
+      QuestType := qtKillMobs;
+      Mob := mbBlack_Bear;
+      Amount := 3;
+      // Counters
+      Kills := 0;
+    end;
+    Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
+    MsgLog.Add(_('The new quest is added to the log.'));
   end;
-  Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
-  MsgLog.Add(_('The new quest is added to the log.'));
 end;
 
-procedure TQuests.Clear;
+procedure TQuests.Clear();
 begin
   SetLength(FQuest, 0);
 end;
 
-function TQuests.Count: Integer;
+function TQuests.Count(): Integer;
 begin
   Result := Length(FQuest);
 end;
 
-constructor TQuests.Create;
+constructor TQuests.Create();
 begin
-  Clear;
+  Clear();
 end;
 
 initialization
 
-Quests := TQuests.Create;
+Quests := TQuests.Create();
 
 finalization
 
