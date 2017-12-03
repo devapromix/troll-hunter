@@ -64,6 +64,7 @@ type
     property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
     procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
     property Current: TQuestEnum read FCurrent write FCurrent;
+    function GetName(const QuestEnum: TQuestEnum): string;
   end;
 
 var
@@ -74,6 +75,11 @@ implementation
 uses SysUtils, Dialogs, uMap;
 
 { TQuests }
+
+function TQuests.GetName(const QuestEnum: TQuestEnum): string;
+begin
+  Result := 'Kill bears';
+end;
 
 function TQuests.GetQuest(I: Integer): TQuest;
 begin
@@ -113,7 +119,6 @@ begin
     Kills := 0;
   end;
   Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
-  // ShowMessage('Quests.Add');
 end;
 
 procedure TQuests.Clear;

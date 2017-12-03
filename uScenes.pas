@@ -7,8 +7,8 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest,
-    scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
+    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
+    scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scIdentification, scBackground);
   // scClasses, scRaces
 
@@ -2011,8 +2011,7 @@ end;
 
 procedure TSceneQuest.Render;
 begin
-  UI.Title(_('Quest'), 1);
-
+  UI.Title(Quests.GetName(Quests.Current), 1);
 
   AddKey('Esc', _('Decline'));
   AddKey('Enter', _('Accept'), True);
@@ -2024,7 +2023,10 @@ begin
     TK_ESCAPE:
       Scenes.GoBack();
     TK_ENTER, TK_KP_ENTER:
-      ;
+      begin
+        Quests.Add(Quests.Current);
+        Scenes.GoBack();
+      end
   end
 end;
 
