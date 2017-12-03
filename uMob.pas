@@ -1069,7 +1069,8 @@ begin
       Break;
   until (Player.GetDist(FX, FY) > 50) and ChMapTile(ID, FX, FY, AZ);
   FCount := 0;
-  ShowMessage(Format('%dx%d', [FX, FY]));
+  if Mode.Wizard then
+    MsgLog.Add(Format('%dx%d', [FX, FY]));
   while (FCount < ACount) do
   begin
     repeat

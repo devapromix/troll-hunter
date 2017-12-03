@@ -2027,6 +2027,8 @@ begin
         Quests.Add(Quests.Current);
         Scenes.GoBack();
       end
+  else
+    Game.Timer := High(Byte);
   end
 end;
 

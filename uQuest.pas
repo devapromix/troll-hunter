@@ -72,7 +72,7 @@ var
 
 implementation
 
-uses SysUtils, Dialogs, uMap;
+uses SysUtils, Dialogs, uMap, uMsgLog, uLanguage;
 
 { TQuests }
 
@@ -119,6 +119,7 @@ begin
     Kills := 0;
   end;
   Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
+  MsgLog.Add(_('The new quest is added to the log.'));
 end;
 
 procedure TQuests.Clear;
