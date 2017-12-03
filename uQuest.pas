@@ -1,4 +1,4 @@
-unit uQuest;
+﻿unit uQuest;
 
 interface
 
@@ -52,6 +52,7 @@ type
 type
   TQuests = class(TObject)
   private
+    FCurrent: TQuestEnum;
     FQuest: array of TQuest;
     function GetQuest(I: Integer): TQuest;
     procedure SetQuest(I: Integer; const Value: TQuest);
@@ -62,6 +63,7 @@ type
     procedure Add(const QuestEnum: TQuestEnum);
     property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
     procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
+    property Current: TQuestEnum read FCurrent write FCurrent;
   end;
 
 var

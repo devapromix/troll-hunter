@@ -1446,7 +1446,13 @@ procedure TSceneDialog.Update(var Key: Word);
   procedure AddShop(AShop: TShopEnum);
   begin
     Shops.Current := AShop;
-    Scenes.SetScene(scBuy);
+    Scenes.SetScene(scBuy, scDialog);
+  end;
+
+  procedure AddQuest(AQuest: TQuestEnum);
+  begin
+    Quests.Current := AQuest;
+    Scenes.SetScene(scQuest, scDialog);
   end;
 
 begin
@@ -1504,7 +1510,7 @@ begin
         if (ntRuneTrader_D in NPCType) then
           AddShop(shRunes);
         if (ntQuest_D in NPCType) then
-          Scenes.SetScene(scQuest, scDialog);
+          AddQuest(qeKillNBears);
       end;
   end;
 end;
@@ -2008,7 +2014,8 @@ begin
   UI.Title(_('Quest'), 1);
 
 
-  AddKey('Esc', _('Close'), True);
+  AddKey('Esc', _('Decline'));
+  AddKey('Enter', _('Accept'), True);
 end;
 
 procedure TSceneQuest.Update(var Key: Word);
@@ -2016,6 +2023,8 @@ begin
   case Key of
     TK_ESCAPE:
       Scenes.GoBack();
+    TK_ENTER, TK_KP_ENTER:
+      ;
   end
 end;
 
