@@ -1288,7 +1288,7 @@ begin
     else
       Result := Format(_('%s is lying here.'), [S]);
   end;
-  if Mode.Wizard then
+  if Mode.Wizard and Game.ShowID then
     Result := Result + Format(' ID: %d', [ID]);
 end;
 

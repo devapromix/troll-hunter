@@ -1801,6 +1801,7 @@ begin
     AddOption('M', _('Show map'), Game.ShowMap);
     AddOption('T', _('Reload all shops'), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
+    AddOption('I', _('Show ID of items'), Game.ShowID);
   end;
 
   AddKey('Esc', _('Back'), True);
@@ -1838,6 +1839,9 @@ begin
     TK_T:
       if Mode.Wizard then
         Shops.New;
+    TK_I:
+      if Mode.Wizard then
+        Game.ShowID := not Game.ShowID;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end

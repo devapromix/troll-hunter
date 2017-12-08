@@ -120,6 +120,7 @@ type
     FWon: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
+    FShowID: Boolean;
     FLCorpses: Boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
@@ -137,6 +138,7 @@ type
     property Won: Boolean read FWon write FWon;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
+    property ShowID: Boolean read FShowID write FShowID;
     property LCorpses: Boolean read FLCorpses write FLCorpses;
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
@@ -185,6 +187,7 @@ begin
   CanClose := False;
   ShowEffects := False;
   ShowMap := True;
+  ShowID := False;
   LCorpses := True;
   Difficulty := dfNormal;
   FSpawn := TSpawn.Create;
