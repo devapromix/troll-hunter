@@ -106,8 +106,14 @@ type
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb,
     // Keys
     ivKey,
-    // Gems
-    ivRuby, ivTopaz, ivEmerald, ivSapphire,
+    // Ruby (Gems)
+    ivRuby1, ivRuby2, ivRuby3, ivRuby4, ivRuby5, ivRuby6, ivRuby7,
+    // Topaz (Gems)
+    ivTopaz1, ivTopaz2, ivTopaz3, ivTopaz4, ivTopaz5, ivTopaz6, ivTopaz7,
+    // Sapphire (Gems)
+    ivSapphire1, ivSapphire2, ivSapphire3, ivSapphire4, ivSapphire5, ivSapphire6, ivSapphire7,
+    // Emerald (Gems)
+    ivEmerald1, ivEmerald2, ivEmerald3, ivEmerald4, ivEmerald5, ivEmerald6, ivEmerald7,
     // Rings
     ivRing,
     // Amulets
@@ -444,30 +450,177 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 50; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
-    // Ruby
+    // Ruby #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];
+    Price: 750; Color: clRed; Deep: [deDarkWood]; Effects: [efCraft];
+    Value: 0;),
+    // Ruby #2
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1000; Color: clRed; Deep: [deDarkWood .. deGrayCave]; Effects: [efCraft];
     Value: 1;),
-    // Topaz
+    // Ruby #3
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1250; Color: clRed; Deep: [deGrayCave .. deDeepCave]; Effects: [efCraft];
+    Value: 2;),
+    // Ruby #4
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1500; Color: clRed; Deep: [deDeepCave .. deBloodCave]; Effects: [efCraft];
+    Value: 3;),
+    // Ruby #5
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1750; Color: clRed; Deep: [deBloodCave .. deDrom]; Effects: [efCraft];
+    Value: 4;),
+    // Ruby #6
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2000; Color: clRed; Deep: [deBloodCave .. deDrom]; Effects: [efCraft];
+    Value: 5;),
+    // Ruby #7
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2500; Color: clRed; Deep: [deDrom]; Effects: [efCraft];
+    Value: 6;),
+
+    // Topaz #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efCraft]; Value: 1;),
-    // Emerald
+    Price: 750; Color: clYellow; Deep: [deDarkWood];
+    Effects: [efCraft]; Value: 7;),
+    // Topaz #2
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deGrayCave];
+    Effects: [efCraft]; Value: 8;),
+    // Topaz #3
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1250; Color: clYellow; Deep: [deGrayCave .. deDeepCave];
+    Effects: [efCraft]; Value: 9;),
+    // Topaz #4
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1500; Color: clYellow; Deep: [deDeepCave .. deBloodCave];
+    Effects: [efCraft]; Value: 10;),
+    // Topaz #5
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1750; Color: clYellow; Deep: [deBloodCave .. deDrom];
+    Effects: [efCraft]; Value: 11;),
+    // Topaz #6
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2000; Color: clYellow; Deep: [deBloodCave .. deDrom];
+    Effects: [efCraft]; Value: 12;),
+    // Topaz #7
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2500; Color: clYellow; Deep: [deDrom];
+    Effects: [efCraft]; Value: 13;),
+
+    // Sapphire #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom];
-    Effects: [efCraft]; Value: 1;),
-    // Sapphire
+    Price: 750; Color: clBlue; Deep: [deDarkWood]; Effects: [efCraft];
+    Value: 14;),
+    // Sapphire #2
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1000; Color: clBlue; Deep: [deDarkWood .. deGrayCave]; Effects: [efCraft];
+    Value: 15;),
+    // Sapphire #3
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1250; Color: clBlue; Deep: [deGrayCave .. deDeepCave]; Effects: [efCraft];
+    Value: 16;),
+    // Sapphire #4
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1500; Color: clBlue; Deep: [deDeepCave .. deBloodCave]; Effects: [efCraft];
+    Value: 17;),
+    // Sapphire #5
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1750; Color: clBlue; Deep: [deBloodCave .. deDrom]; Effects: [efCraft];
+    Value: 18;),
+    // Sapphire #6
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2000; Color: clBlue; Deep: [deBloodCave .. deDrom]; Effects: [efCraft];
+    Value: 19;),
+    // Sapphire #7
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2500; Color: clBlue; Deep: [deDrom]; Effects: [efCraft];
+    Value: 20;),
+
+    // Emerald #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];
-    Value: 1;),
+    Price: 750; Color: clGreen; Deep: [deDarkWood];
+    Effects: [efCraft]; Value: 21;),
+    // Emerald #2
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1000; Color: clGreen; Deep: [deDarkWood .. deGrayCave];
+    Effects: [efCraft]; Value: 22;),
+    // Emerald #3
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1250; Color: clGreen; Deep: [deGrayCave .. deDeepCave];
+    Effects: [efCraft]; Value: 23;),
+    // Emerald #4
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1500; Color: clGreen; Deep: [deDeepCave .. deBloodCave];
+    Effects: [efCraft]; Value: 24;),
+    // Emerald #5
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1750; Color: clGreen; Deep: [deBloodCave .. deDrom];
+    Effects: [efCraft]; Value: 25;),
+    // Emerald #6
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2000; Color: clGreen; Deep: [deBloodCave .. deDrom];
+    Effects: [efCraft]; Value: 26;),
+    // Emerald #7
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2500; Color: clGreen; Deep: [deDrom];
+    Effects: [efCraft]; Value: 27;),
 
     // Ring
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
@@ -479,6 +632,7 @@ const
     MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+
     /// / == Dark Wood == ////
 
     // Cap
@@ -596,7 +750,7 @@ const
     Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 7; Max: 9;));
     Price: 220; Color: clDarkRed; Deep: [deDarkWood];),
 
-    // == Gray Cave == //
+    /// / == Gray Cave == ////
 
     // Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
@@ -713,7 +867,7 @@ const
     Damage: (MinDamage: (Min: 8; Max: 10;); MaxDamage: (Min: 17; Max: 19;));
     Price: 410; Color: clDarkRed; Deep: [deGrayCave];),
 
-    // == Deep Cave == //
+    /// / == Deep Cave == ////
 
     // Great Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
@@ -830,7 +984,7 @@ const
     Damage: (MinDamage: (Min: 15; Max: 18;); MaxDamage: (Min: 30; Max: 33;));
     Price: 650; Color: clDarkRed; Deep: [deDeepCave];),
 
-    // == Blood Cave == //
+    /// / == Blood Cave == ////
 
     // Horned Helmet
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
@@ -947,7 +1101,7 @@ const
     Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 48; Max: 51;));
     Price: 850; Color: clDarkRed; Deep: [deBloodCave];),
 
-    // == Drom == //
+    /// / == Drom == ////
 
     // Casque
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
@@ -1078,6 +1232,7 @@ type
     FItemName: array [TItemEnum] of string;
     function GetName(I: TItemEnum): string; overload;
   public
+    Index: Byte;
     class procedure Make(ID: Byte; var AItem: Item);
     class procedure CalcItem(var AItem: Item; APrice: Word = 0);
     constructor Create;
@@ -1118,6 +1273,7 @@ type
     function GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
     procedure DelCorpses();
     procedure AddPlants;
+    procedure DoCraft(const SuffixIndex: Byte);
   end;
 
 var
@@ -1951,6 +2107,11 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TItems.DoCraft(const SuffixIndex: Byte);
+begin
+  Index := Ord(TSuffixEnum(of_Strength1)) + SuffixIndex;
 end;
 
 initialization

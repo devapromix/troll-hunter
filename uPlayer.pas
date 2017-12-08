@@ -127,7 +127,7 @@ var
 
 implementation
 
-uses Classes, SysUtils, Math, uItem, uGame, uMap, uScenes,
+uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
   uBearLibItemsCommon, uBearLibItemsDungeon, uBearLibItemsInventory;
@@ -538,7 +538,7 @@ begin
     Exit;
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
   begin
-    FItem.Identify := 1;
+    FItem.Identify := Items.Index;
     Affixes.DoSuffix(FItem);
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
     begin
@@ -845,8 +845,8 @@ begin
   begin
     Value := FItem.Price div 4;
     Items.AddItemToInv(ivGold, Value);
-    MsgLog.Add(Format(_('You sold %s (+%d gold).'), [Items.GetNameThe(FItem),
-      Value]));
+    MsgLog.Add(Format(_('You sold %s (+%d gold).'),
+      [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
 end;
@@ -1462,17 +1462,16 @@ begin
   // Craft
   if (efCraft in Effects) then
   begin
-    if Value > 0 then
-      Scenes.SetScene(scCraft);
+    Items.DoCraft(Value);
+    Scenes.SetScene(scCraft);
   end;
-
   // Teleportation
   if (efTeleportation in Effects) then
   begin
     VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
       .Value + Value);
-    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value
-      + Value);
+    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
+      .Value + Value);
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));

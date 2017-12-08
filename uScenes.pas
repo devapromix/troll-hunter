@@ -261,6 +261,7 @@ type
 type
   TSceneCraft = class(TScene)
   public
+    Suffix: Byte;
     procedure Render; override;
     procedure Update(var Key: Word); override;
   end;
