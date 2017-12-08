@@ -448,22 +448,26 @@ const
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
+    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];
+    Value: 1;),
     // Topaz
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
+    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efCraft]; Value: 1;),
     // Emerald
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
+    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom];
+    Effects: [efCraft]; Value: 1;),
     // Sapphire
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
+    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];
+    Value: 1;),
 
     // Ring
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;

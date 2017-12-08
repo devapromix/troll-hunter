@@ -534,15 +534,19 @@ var
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
-  if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
+  if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > 0)) then
     Exit;
-  FItem.Identify := 1;
-  if (Items_Inventory_SetItem(Index, FItem) > 0) then
+  if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
   begin
-    MsgLog.Add(Format(_('You crafted %s.'), [Items.GetNameThe(FItem)]));
-    Scenes.SetScene(scInv);
+    FItem.Identify := 1;
+    Affixes.DoSuffix(FItem);
+    if (Items_Inventory_SetItem(Index, FItem) > 0) then
+    begin
+      MsgLog.Add(Format(_('You crafted %s.'), [Items.GetNameThe(FItem)]));
+      Scenes.SetScene(scInv);
+    end;
+    Self.Calc;
   end;
-  Self.Calc;
 end;
 
 constructor TPlayer.Create;
@@ -1458,8 +1462,10 @@ begin
   // Craft
   if (efCraft in Effects) then
   begin
-    Scenes.SetScene(scCraft);
+    if Value > 0 then
+      Scenes.SetScene(scCraft);
   end;
+
   // Teleportation
   if (efTeleportation in Effects) then
   begin
