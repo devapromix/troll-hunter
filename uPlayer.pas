@@ -534,7 +534,7 @@ var
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
-  if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > 0)) then
+  if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > -1)) then
     Exit;
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
   begin
