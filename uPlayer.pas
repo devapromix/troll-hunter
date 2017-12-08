@@ -110,6 +110,7 @@ type
     procedure Sell(Index: Integer);
     procedure RepairItem(Index: Integer);
     procedure IdentItem(Index: Integer);
+    procedure CraftItem(Index: Integer);
     procedure BreakItem(Index: Integer; Value: Byte = 1); overload;
     procedure BreakItem(ASlot: TSlotType; Value: Byte = 1); overload;
     procedure BreakItem(); overload;
@@ -528,6 +529,22 @@ begin
   Fill();
 end;
 
+procedure TPlayer.CraftItem(Index: Integer);
+var
+  FItem: Item;
+begin
+  FItem := Items_Inventory_GetItem(Index);
+  if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
+    Exit;
+  FItem.Identify := 1;
+  if (Items_Inventory_SetItem(Index, FItem) > 0) then
+  begin
+    MsgLog.Add(Format(_('You crafted %s.'), [Items.GetNameThe(FItem)]));
+    Scenes.SetScene(scInv);
+  end;
+  Self.Calc;
+end;
+
 constructor TPlayer.Create;
 begin
   inherited;
@@ -824,8 +841,8 @@ begin
   begin
     Value := FItem.Price div 4;
     Items.AddItemToInv(ivGold, Value);
-    MsgLog.Add(Format(_('You sold %s (+%d gold).'),
-      [Items.GetNameThe(FItem), Value]));
+    MsgLog.Add(Format(_('You sold %s (+%d gold).'), [Items.GetNameThe(FItem),
+      Value]));
   end;
   Self.Calc;
 end;
@@ -1438,13 +1455,18 @@ begin
   begin
     Scenes.SetScene(scIdentification);
   end;
+  // Craft
+  if (efCraft in Effects) then
+  begin
+    Scenes.SetScene(scCraft);
+  end;
   // Teleportation
   if (efTeleportation in Effects) then
   begin
     VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
       .Value + Value);
-    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
-      .Value + Value);
+    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value
+      + Value);
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));

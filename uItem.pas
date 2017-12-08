@@ -52,7 +52,7 @@ const
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
-    PlantTypeItems + RuneTypeItems + BookTypeItems;
+    PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems +
     CoinTypeItems;
@@ -104,8 +104,10 @@ type
     ivRune_of_Town_Portal,
     // Foods
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb,
+    // Keys
+    ivKey,
     // Gems
-    ivKey, ivRuby, ivTopaz, ivEmerald, ivSapphire,
+    ivRuby, ivTopaz, ivEmerald, ivSapphire,
     // Rings
     ivRing,
     // Amulets
@@ -446,22 +448,22 @@ const
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom];),
+    Price: 750; Color: clRed; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
     // Topaz
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 750; Color: clYellow; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
     // Emerald
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom];),
+    Price: 750; Color: clGreen; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
     // Sapphire
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom];),
+    Price: 750; Color: clBlue; Deep: [deDarkWood .. deDrom]; Effects: [efCraft];),
 
     // Ring
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;

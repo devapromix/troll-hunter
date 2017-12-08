@@ -9,7 +9,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification, scBackground);
+    scSpellbook, scOptions, scTalents, scIdentification, scBackground, scCraft);
   // scClasses, scRaces
 
 type
@@ -258,6 +258,13 @@ type
     procedure Update(var Key: Word); override;
   end;
 
+type
+  TSceneCraft = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: Word); override;
+  end;
+
 var
   NPCName: string = '';
   NPCType: set of TNPCType = [];
@@ -413,6 +420,8 @@ begin
         FScene[I] := TSceneBackground.Create;
       scQuest:
         FScene[I] := TSceneQuest.Create;
+      scCraft:
+        FScene[I] := TSceneCraft.Create;
     end;
 end;
 
@@ -2006,6 +2015,32 @@ begin
       Scenes.SetScene(scInv);
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
+  else
+    Game.Timer := High(Byte);
+  end
+end;
+
+{ TSceneCraft }
+
+procedure TSceneCraft.Render;
+begin
+  UI.Title(_('Craft'), 1, clDarkestRed);
+
+  UI.FromAToZ();
+  Items.RenderInventory();
+  MsgLog.Render(2, True);
+
+  AddKey('Esc', _('Close'));
+  AddKey('A-Z', _('Select an item'), True);
+end;
+
+procedure TSceneCraft.Update(var Key: Word);
+begin
+  case Key of
+    TK_ESCAPE:
+      Scenes.SetScene(scInv);
+    TK_A .. TK_Z:
+      Player.CraftItem(Key - TK_A);
   else
     Game.Timer := High(Byte);
   end
