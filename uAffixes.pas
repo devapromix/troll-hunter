@@ -5,10 +5,12 @@ interface
 uses uCreature, uItem, uBeaRLibItemsCommon;
 
 type
+  TSetOfItem = set of TItemType;
+
   TSuffixBase = record
     Level: TMinMax;
     Price: Word;
-    Occurence: set of TItemType;
+    Occurence: TSetOfItem;
     MaxDurability: TMinMax;
     Defense: TMinMax;
     Damage: TBaseDamage;
@@ -65,6 +67,7 @@ const
     (),
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
+
     // (Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
@@ -342,6 +345,7 @@ type
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     procedure DoSuffix(var AItem: Item);
+    procedure DoCraft(const Effect: TEffect; const Index: Byte);
   end;
 
 var
@@ -360,6 +364,20 @@ begin
   for I := Low(TSuffixEnum) to High(TSuffixEnum) do
     FSuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ',
       [rfReplaceAll]);
+end;
+
+procedure TAffixes.DoCraft(const Effect: TEffect; const Index: Byte);
+begin
+  case Effect of
+    efCraftStr:
+      Items.Index:= Ord(TSuffixEnum(of_Strength1)) + Index;
+    efCraftDex:
+      Items.Index:= Ord(TSuffixEnum(of_Dexterity1)) + Index;
+    efCraftWil:
+      Items.Index:= Ord(TSuffixEnum(of_Willpower1)) + Index;
+    efCraftPer:
+      Items.Index:= Ord(TSuffixEnum(of_Perception1)) + Index;
+  end;
 end;
 
 procedure TAffixes.DoSuffix(var AItem: Item);

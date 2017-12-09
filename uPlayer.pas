@@ -1460,9 +1460,24 @@ begin
     Scenes.SetScene(scIdentification);
   end;
   // Craft
-  if (efCraft in Effects) then
+  if (efCraftStr in Effects) then
   begin
-    Items.DoCraft(Value);
+    Affixes.DoCraft(efCraftStr, Value);
+    Scenes.SetScene(scCraft);
+  end;
+  if (efCraftDex in Effects) then
+  begin
+    Affixes.DoCraft(efCraftDex, Value);
+    Scenes.SetScene(scCraft);
+  end;
+  if (efCraftWil in Effects) then
+  begin
+    Affixes.DoCraft(efCraftWil, Value);
+    Scenes.SetScene(scCraft);
+  end;
+  if (efCraftPer in Effects) then
+  begin
+    Affixes.DoCraft(efCraftPer, Value);
     Scenes.SetScene(scCraft);
   end;
   // Teleportation

@@ -8,11 +8,12 @@ const
   PVMax = 250;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efCraft,
-    efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold,
-    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
-    efPrmAxe, efPrmSpear, efPrmMace, ef2xGold, efBloodlust, efPrmLife,
-    efPrmMana, efPrmDV, efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer);
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
+    efCraftStr, efCraftDex, efCraftWil, efCraftPer, efTownPortal, efMagicEye,
+    efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge,
+    efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
+    efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
+    efPrmStr, efPrmDex, efPrmWil, efPrmPer);
 
 type
   TEffects = set of TEffect;
