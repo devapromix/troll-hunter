@@ -85,14 +85,17 @@ type
   TItemEnum = (
     // All maps
     None, ivCorpse, ivGold,
-    // Potions
-    ivLesser_Healing_Potion, ivGreater_Healing_Potion, ivHeroic_Healing_Potion,
-    ivPotion_of_Full_Healing, ivLesser_Rejuvenation_Potion,
-    ivGreater_Rejuvenation_Potion, ivHeroic_Rejuvenation_Potion,
-    ivPotion_of_Full_Rejuvenation, ivLesser_Mana_Potion, ivGreater_Mana_Potion,
-    ivHeroic_Mana_Potion, ivPotion_of_Full_Mana, ivSoothing_Balm,
-    ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
+    // Healing Potions
+    ivMinor_Healing_Potion, ivLesser_Healing_Potion, ivGreater_Healing_Potion,
+    ivHeroic_Healing_Potion, ivPotion_of_Full_Healing,
+    // Rejuvenation Potions
+    ivLesser_Rejuvenation_Potion, ivGreater_Rejuvenation_Potion,
+    ivHeroic_Rejuvenation_Potion, ivPotion_of_Full_Rejuvenation,
+    // Mana Potions
+    ivMinor_Mana_Potion, ivLesser_Mana_Potion, ivGreater_Mana_Potion,
+    ivHeroic_Mana_Potion, ivPotion_of_Full_Mana,
     // Elixirs and Extracts
+    ivSoothing_Balm, ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
     ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
@@ -109,15 +112,17 @@ type
     // Keys
     ivKey,
     // Ruby (Gems)
-    ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby, ivImperial_Ruby, ivRoyal_Ruby,
+    ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby,
+    ivImperial_Ruby, ivRoyal_Ruby,
     // Topaz (Gems)
-    ivChipped_Topaz, ivFlawed_Topaz, ivTopaz, ivFlawless_Topaz, ivPerfect_Topaz, ivImperial_Topaz, ivRoyal_Topaz,
+    ivChipped_Topaz, ivFlawed_Topaz, ivTopaz, ivFlawless_Topaz, ivPerfect_Topaz,
+    ivImperial_Topaz, ivRoyal_Topaz,
     // Sapphire (Gems)
-    ivChipped_Sapphire, ivFlawed_Sapphire, ivSapphire, ivFlawless_Sapphire, ivPerfect_Sapphire,
-    ivImperial_Sapphire, ivRoyal_Sapphire,
+    ivChipped_Sapphire, ivFlawed_Sapphire, ivSapphire, ivFlawless_Sapphire,
+    ivPerfect_Sapphire, ivImperial_Sapphire, ivRoyal_Sapphire,
     // Emerald (Gems)
-    ivChipped_Emerald, ivFlawed_Emerald, ivEmerald, ivFlawless_Emerald, ivPerfect_Emerald, ivImperial_Emerald,
-    ivRoyal_Emerald,
+    ivChipped_Emerald, ivFlawed_Emerald, ivEmerald, ivFlawless_Emerald,
+    ivPerfect_Emerald, ivImperial_Emerald, ivRoyal_Emerald,
     // Rings
     ivRing,
     // Amulets
@@ -177,6 +182,9 @@ type
     );
 
 const
+  TavernItems = [ivKey, ivScroll_Of_Hunger];
+
+const
   ItemBase: array [TItemEnum] of TItemBase = (
     /// / == All maps == ////
 
@@ -196,6 +204,12 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 0; Color: clYellow; Deep: [deDarkWood .. deDrom]),
 
+    // Minor Healing Potion
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 25; Color: clLightestRed; Deep: [deDarkWood]; Effects: [efLife];
+    Value: 25;),
     // Lesser Healing Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -218,7 +232,7 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 500; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
+    Price: 250; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
     Effects: [efLife]; Value: 250;),
 
     // Lesser Rejuvenation Potion
@@ -246,6 +260,12 @@ const
     Price: 750; Color: clDarkYellow; Deep: [deBloodCave .. deDrom];
     Effects: [efLife, efMana]; Value: 250;),
 
+    // Minor Mana Potion
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 25; Color: clLightestBlue; Deep: [deDarkWood]; Effects: [efMana];
+    Value: 25;),
     // Lesser Mana Potion
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -494,7 +514,8 @@ const
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 2500; Color: clRed; Deep: [deDrom]; Effects: [efCraftStr]; Value: 6;),
+    Price: 2500; Color: clRed; Deep: [deDrom]; Effects: [efCraftStr];
+    Value: 6;),
 
     // Topaz #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
@@ -579,7 +600,8 @@ const
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 2500; Color: clBlue; Deep: [deDrom]; Effects: [efCraftWil]; Value: 6;),
+    Price: 2500; Color: clBlue; Deep: [deDrom]; Effects: [efCraftWil];
+    Value: 6;),
 
     // Emerald #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;

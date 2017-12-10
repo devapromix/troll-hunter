@@ -51,16 +51,6 @@ implementation
 uses
   SysUtils, Math, uMap, uCreature, uAttribute;
 
-const
-  ManaPotionsItems = [ivLesser_Mana_Potion, ivGreater_Mana_Potion, ivHeroic_Mana_Potion,
-    ivPotion_of_Full_Mana];
-  HealItems = [ivLesser_Healing_Potion, ivGreater_Healing_Potion,
-    ivHeroic_Healing_Potion, ivPotion_Of_Full_Healing, ivLesser_Rejuvenation_Potion,
-    ivGreater_Rejuvenation_Potion, ivHeroic_Rejuvenation_Potion,
-    ivPotion_Of_Full_Rejuvenation, ivScroll_Of_Minor_Healing, ivScroll_Of_Lesser_Healing,
-    ivScroll_Of_Greater_Healing, ivScroll_Of_Full_Healing];
-  TavernItems = [ivKey, ivScroll_Of_Hunger];
-
   { TShop }
 
 procedure TShop.Add(const AItem: Item);
@@ -145,9 +135,9 @@ var
       shTavern:
         Result := ID in TavernItems;
       shHealer:
-        Result := ID in HealItems;
+        Result := efLife in ItemBase[ID].Effects;
       shMana:
-        Result := ID in ManaPotionsItems;
+        Result := (efMana in ItemBase[ID].Effects) and not (efLife in ItemBase[ID].Effects);
       shPotions:
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shScrolls:
