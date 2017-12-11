@@ -51,7 +51,7 @@ implementation
 uses
   SysUtils, Math, uMap, uCreature, uAttribute;
 
-  { TShop }
+{ TShop }
 
 procedure TShop.Add(const AItem: Item);
 begin
@@ -99,6 +99,7 @@ var
 begin
   for S := Low(TShopEnum) to High(TShopEnum) do
     FShop[S] := TShop.Create;
+  Current := shPotions;
 end;
 
 destructor TShops.Destroy;
@@ -137,7 +138,8 @@ var
       shHealer:
         Result := efLife in ItemBase[ID].Effects;
       shMana:
-        Result := (efMana in ItemBase[ID].Effects) and not (efLife in ItemBase[ID].Effects);
+        Result := (efMana in ItemBase[ID].Effects) and
+          not(efLife in ItemBase[ID].Effects);
       shPotions:
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shScrolls:
@@ -205,7 +207,6 @@ end;
 initialization
 
 Shops := TShops.Create;
-Shops.Current := shPotions;
 
 finalization
 
