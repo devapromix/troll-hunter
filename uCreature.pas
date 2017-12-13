@@ -15,6 +15,10 @@ type
     efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
     efPrmStr, efPrmDex, efPrmWil, efPrmPer);
 
+const
+  CraftEffLow = efCraftStr;
+  CraftEffHigh = efCraftPer;
+
 type
   TEffects = set of TEffect;
 

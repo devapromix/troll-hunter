@@ -1388,6 +1388,7 @@ end;
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word = 0);
 var
   V, VX, VY: Word;
+  Ef: TEffect;
 const
   F = '%s +%d.';
 
@@ -1459,27 +1460,15 @@ begin
   begin
     Scenes.SetScene(scIdentification);
   end;
+
   // Craft
-  if (efCraftStr in Effects) then
-  begin
-    Affixes.DoCraft(efCraftStr, Value);
-    Scenes.SetScene(scCraft);
-  end;
-  if (efCraftDex in Effects) then
-  begin
-    Affixes.DoCraft(efCraftDex, Value);
-    Scenes.SetScene(scCraft);
-  end;
-  if (efCraftWil in Effects) then
-  begin
-    Affixes.DoCraft(efCraftWil, Value);
-    Scenes.SetScene(scCraft);
-  end;
-  if (efCraftPer in Effects) then
-  begin
-    Affixes.DoCraft(efCraftPer, Value);
-    Scenes.SetScene(scCraft);
-  end;
+  for Ef := CraftEffLow to CraftEffHigh do
+    if (Ef in Effects) then
+    begin
+      Affixes.DoCraft(Ef, Value);
+      Scenes.SetScene(scCraft);
+    end;
+
   // Teleportation
   if (efTeleportation in Effects) then
   begin
