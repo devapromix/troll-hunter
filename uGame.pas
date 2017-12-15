@@ -109,7 +109,7 @@ type
   TSpawn = class(TEntity);
 
 type
-  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apScroll,
+  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apOil, apScroll,
     apKey, apPlant, apFullscreen, apHdLevOfItem);
 
 type

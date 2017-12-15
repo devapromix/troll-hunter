@@ -44,13 +44,14 @@ const
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
-  RepairTypeItems = [itOil];
+  OilTypeItems = [itOil];
   JewelryTypeItems = [itRing, itAmulet];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
+  RepairTypeItems = OilTypeItems;
   SmithTypeItems = RepairTypeItems + DefenseTypeItems + DamageTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
@@ -60,7 +61,7 @@ const
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems
-    + PlantTypeItems;
+    + PlantTypeItems + OilTypeItems;
   // NotEquipTypeItems - NotDropTypeItems;
 
 type
@@ -1382,13 +1383,14 @@ var
 begin
   S := '';
   T := '';
+  Level := '';
   Result := '';
   ID := AItem.ItemID;
   IT := ItemBase[TItemEnum(ID)].ItemType;
   // Level
   if (ItemBase[TItemEnum(AItem.ItemID)].Level > Player.Attributes.Attrib[atLev]
     .Value) or not Game.GetOption(apHdLevOfItem) then
-    Level := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level) else Level := '';
+    Level := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
   // Info
   if not IsManyItems then
   begin

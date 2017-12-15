@@ -1801,6 +1801,7 @@ begin
   AddOption('F', _('Auto pickup foods'), Game.GetOption(apFood));
   AddOption('Y', _('Auto pickup plants'), Game.GetOption(apPlant));
   AddOption('P', _('Auto pickup potions'), Game.GetOption(apPotion));
+  AddOption('O', _('Auto pickup oils'), Game.GetOption(apOil));
   AddOption('S', _('Auto pickup scrolls'), Game.GetOption(apScroll));
   AddOption('R', _('Auto pickup runes'), Game.GetOption(apRune));
   AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
@@ -1846,6 +1847,8 @@ begin
       Game.ChOption(apPlant);
     TK_P:
       Game.ChOption(apPotion);
+    TK_O:
+      Game.ChOption(apOil);
     TK_S:
       Game.ChOption(apScroll);
     TK_R:

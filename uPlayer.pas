@@ -375,6 +375,8 @@ begin
         Exit;
       if ((ItemType in PotionTypeItems) and not Game.GetOption(apPotion)) then
         Exit;
+      if ((ItemType in OilTypeItems) and not Game.GetOption(apOil)) then
+        Exit;
       if ((ItemType in ScrollTypeItems) and not Game.GetOption(apScroll)) then
         Exit;
       if ((ItemType in RuneTypeItems) and not Game.GetOption(apRune)) then
