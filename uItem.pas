@@ -98,6 +98,14 @@ type
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
+{rough / необроблений
+imperfect / недосконалий
+common / типовий
+precious / дорогоцінний
+flawless / без недоліків
+perfect / досконалий
+outworldly / неземний}
+
 type
   TItemEnum = (
     // All maps

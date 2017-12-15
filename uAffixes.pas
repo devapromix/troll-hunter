@@ -47,14 +47,17 @@ type
     of_Strength1, of_Strength2, of_Strength3, of_Strength4, of_Strength5,
     of_Strength6, of_Strength7,
     // Dexterity I - VII
-    of_Dexterity1, of_Dexterity2, of_Dexterity3, of_Dexterity4, of_Dexterity5,
-    of_Dexterity6, of_Dexterity7,
+    of_the_Mongoose, of_the_Fox, of_the_Lynx, of_the_Falcon, of_the_Panther,
+    of_the_Leopard, of_the_Jaguar,
     // Willpower I - VII
     of_Willpower1, of_Willpower2, of_Willpower3, of_Willpower4, of_Willpower5,
     of_Willpower6, of_Willpower7,
     // Perception I - VII
     of_Perception1, of_Perception2, of_Perception3, of_Perception4,
-    of_Perception5, of_Perception6, of_Perception7);
+    of_Perception5, of_Perception6, of_Perception7
+    //
+    //
+    );
 
 const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
@@ -271,25 +274,25 @@ const
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Strength: (Min: 26; Max: 30);),
 
-    // (Dexterity I)
+    // of_the_Mongoose (Dexterity I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
     Dexterity: (Min: 1; Max: 2);),
-    // (Dexterity II)
+    // of_the_Fox (Dexterity II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
     Dexterity: (Min: 3; Max: 5);),
-    // (Dexterity III)
+    // of_the_Lynx (Dexterity III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Dexterity: (Min: 6; Max: 9);),
-    // (Dexterity VI)
+    // of_the_Falcon (Dexterity VI)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Dexterity: (Min: 10; Max: 14);),
-    // (Dexterity V)
+    // of_the_Panther (Dexterity V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
     Dexterity: (Min: 15; Max: 20);),
-    // (Dexterity VI)
+    // of_the_Leopard (Dexterity VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
     Dexterity: (Min: 21; Max: 25);),
-    // (Dexterity VII)
+    // of_the_Jaguar (Dexterity VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Dexterity: (Min: 26; Max: 30);),
 
@@ -370,13 +373,13 @@ procedure TAffixes.DoCraft(const Effect: TEffect; const Index: Byte);
 begin
   case Effect of
     efCraftStr:
-      Items.Index:= Ord(TSuffixEnum(of_Strength1)) + Index;
+      Items.Index := Ord(TSuffixEnum(of_Strength1)) + Index;
     efCraftDex:
-      Items.Index:= Ord(TSuffixEnum(of_Dexterity1)) + Index;
+      Items.Index := Ord(TSuffixEnum(of_the_Mongoose)) + Index;
     efCraftWil:
-      Items.Index:= Ord(TSuffixEnum(of_Willpower1)) + Index;
+      Items.Index := Ord(TSuffixEnum(of_Willpower1)) + Index;
     efCraftPer:
-      Items.Index:= Ord(TSuffixEnum(of_Perception1)) + Index;
+      Items.Index := Ord(TSuffixEnum(of_Perception1)) + Index;
   end;
 end;
 
@@ -439,7 +442,7 @@ begin
     of_Strength1 .. of_Strength7:
       SetAtr(btStr, SB.Strength.Min, SB.Strength.Max);
     // Dexterity
-    of_Dexterity1 .. of_Dexterity7:
+    of_the_Mongoose .. of_the_Jaguar:
       SetAtr(btDex, SB.Dexterity.Min, SB.Dexterity.Max);
     // Willpower
     of_Willpower1 .. of_Willpower7:
