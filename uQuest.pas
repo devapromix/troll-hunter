@@ -60,6 +60,7 @@ type
     procedure Clear();
     constructor Create();
     function Count(): Integer;
+    function Amount(): Integer;
     procedure Add(const AQuestEnum: TQuestEnum);
     property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
     procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
@@ -123,6 +124,11 @@ begin
     Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
     MsgLog.Add(_('The new quest is added to the log.'));
   end;
+end;
+
+function TQuests.Amount: Integer;
+begin
+  Result := Ord(High(TQuestEnum)) + 1;
 end;
 
 procedure TQuests.Clear();

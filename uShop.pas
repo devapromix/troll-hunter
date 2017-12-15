@@ -157,7 +157,7 @@ var
       shWeapons:
         Result := ItemBase[ID].ItemType in WeaponTypeItems;
       shSmith:
-        Result := ItemBase[ID].ItemType in SmithTypeItems;
+        Result := ItemBase[ID].ItemType in SmithTypeItems + RepairTypeItems;
       shFoods:
         Result := ItemBase[ID].ItemType in FoodTypeItems + PlantTypeItems;
       shGem:
@@ -176,6 +176,8 @@ begin
   begin
     Shops.Shop[S].Clear;
     Max := EnsureRange(Player.Attributes.Attrib[atLev].Value * 4, 4, ItemMax);
+    if S = shSmith then
+      Max := EnsureRange(Max + 3, 7, ItemMax);
     for I := 0 to Max - 1 do
     begin
       repeat

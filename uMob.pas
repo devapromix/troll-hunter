@@ -823,7 +823,7 @@ var
   NX, NY, Dist: Integer;
   The: string;
 begin
-  Exit;
+//  Exit;
 
   NX := 0;
   NY := 0;

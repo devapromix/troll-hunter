@@ -3,7 +3,8 @@ unit uStatistic;
 interface
 
 type
-  TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk, stScrRead);
+  TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk,
+    stScrRead, stItUsed, stItIdent, stItCrafted, stItRep, stFdEat);
 
 type
   TStatistics = class(TObject)

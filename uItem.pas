@@ -6,14 +6,14 @@ uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe, itSpear, itMace,
-    itStaff, itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing,
-    itAmulet);
+    itOil, itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe, itSpear,
+    itMace, itStaff, itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet,
+    itRing, itAmulet);
 
 const
   ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
-    '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^', '&', '%',
-    '%', '=', '"');
+    '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^', '&',
+    '%', '%', '=', '"');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -44,24 +44,27 @@ const
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
+  RepairTypeItems = [itOil];
   JewelryTypeItems = [itRing, itAmulet];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
-  SmithTypeItems = WeaponTypeItems + ArmorTypeItems;
+  SmithTypeItems = RepairTypeItems + DefenseTypeItems + DamageTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
-    PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems;
+    PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
+    RepairTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
-  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + GemTypeItems +
-    CoinTypeItems;
-  NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + GemTypeItems +
-    CoinTypeItems;
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
+  NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems
     + PlantTypeItems;
   // NotEquipTypeItems - NotDropTypeItems;
+
+type
+  TUseProc = procedure(const Value: Integer);
 
 type
   TItemBase = record
@@ -79,6 +82,7 @@ type
     Effects: TEffects;
     Value: Word;
     ManaCost: Byte;
+    // OnUse: TUseProc;
   end;
 
 type
@@ -97,6 +101,8 @@ type
     // Elixirs and Extracts
     ivSoothing_Balm, ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
     ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
+    // Oils
+    ivOil_of_Blacksmith, ivOil_of_Fortitude,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
     ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
@@ -182,7 +188,9 @@ type
     );
 
 const
-  TavernItems = [ivKey, ivScroll_Of_Hunger];
+  TavernItems = [ivKey, ivScroll_of_Hunger];
+
+procedure UseOil(const Value: Integer);
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -328,6 +336,19 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 5000; Color: clDarkBlue; Deep: [deDarkWood .. deDrom];
     Effects: [efPrmMana]; Value: 1;),
+
+    // Oil of Blacksmith,
+    (Symbol: '!'; ItemType: itOil; SlotType: stNone; MaxStack: 5;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 250; Color: clLightGray; Deep: [deDarkWood .. deDrom];
+    Effects: [efRepair]; Value: 5; { OnUse: UseOil; } ),
+    // Oil of Fortitude
+    (Symbol: '!'; ItemType: itOil; SlotType: stNone; MaxStack: 5;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 350; Color: clWhite; Deep: [deDarkWood .. deDrom];
+    Effects: [efRepair]; Value: 10; { OnUse: UseOil; } ),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -1306,7 +1327,13 @@ implementation
 
 uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
-  uBearLibItemsInventory, Dialogs;
+  uBearLibItemsInventory, Dialogs, uScenes;
+
+procedure UseOil(const Value: Integer);
+begin
+  Items.Index := Value;
+  Scenes.SetScene(scRepair);
+end;
 
 { TItems }
 
@@ -1331,12 +1358,13 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
   ACount: Byte = 0; IsShort: Boolean = False): string;
 var
   ID: Integer;
-  S, T, K, D: string;
+  S, T, Level, D: string;
   IT: TItemType;
   V: Word;
 
   function GetAmount(): string;
   begin
+
     Result := Format('(%dx)', [AItem.Amount])
   end;
 
@@ -1346,7 +1374,7 @@ var
     if (AEffect in ItemBase[TItemEnum(ID)].Effects) then
     begin
       V := ItemBase[TItemEnum(ID)].Value;
-      if (V > 0) then
+      if ((V > 0) or (Sign = '&')) then
         S := S + Items.GetInfo(Sign, V, Color, RareColor) + ' ';
     end;
   end;
@@ -1357,6 +1385,10 @@ begin
   Result := '';
   ID := AItem.ItemID;
   IT := ItemBase[TItemEnum(ID)].ItemType;
+  // Level
+  if (ItemBase[TItemEnum(AItem.ItemID)].Level > Player.Attributes.Attrib[atLev]
+    .Value) or not Game.GetOption(apHdLevOfItem) then
+    Level := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level) else Level := '';
   // Info
   if not IsManyItems then
   begin
@@ -1372,12 +1404,17 @@ begin
     AddEffect(efFood, '+', 'Food');
     AddEffect(efCurePoison, '+', 'Poison');
     AddEffect(efBloodlust, '+', 'Poison', 'Blood');
+    AddEffect(efRepair, '+', 'Repair', 'Food');
+    AddEffect(efCraftStr, '&', 'Strength', 'Food');
+    AddEffect(efCraftDex, '&', 'Dexterity', 'Food');
+    AddEffect(efCraftWil, '&', 'Willpower', 'Food');
+    AddEffect(efCraftPer, '&', 'Perception', 'Food');
   end;
   // Amount
   if (AItem.Stack > 1) then
   begin
     if not(IT in NotInfoTypeItems) then
-      S := '[[' + Trim(S) + ']] ';
+      S := AddItemInfo([Level, S]);
     if (AItem.Amount > 1) then
       S := S + GetAmount();
   end
@@ -1405,34 +1442,31 @@ begin
       then
         T := Terminal.Colorize(T, 'Rare');
     end;
-    K := '';
-    if (ItemBase[TItemEnum(AItem.ItemID)].Level > 0) then
-      K := GetLevel(ItemBase[TItemEnum(AItem.ItemID)].Level);
     if (AItem.Bonus > 0) then
     begin
       if (Items.GetBonus(AItem, btVis) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVis),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVis),
           'Vision', 'Rare');
       if (Items.GetBonus(AItem, btLife) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife),
           'Life', 'Rare');
       if (Items.GetBonus(AItem, btMana) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana),
           'Mana', 'Rare');
     end;
     if (AItem.Attributes > 0) then
     begin
       if (Items.GetBonus(AItem, btStr) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btStr),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btStr),
           'Strength', 'Rare');
       if (Items.GetBonus(AItem, btDex) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btDex),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btDex),
           'Dexterity', 'Rare');
       if (Items.GetBonus(AItem, btWil) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btWil),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btWil),
           'Willpower', 'Rare');
       if (Items.GetBonus(AItem, btPer) > 0) then
-        K := K + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer),
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer),
           'Perception', 'Rare');
     end;
     D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
@@ -1441,7 +1475,7 @@ begin
       (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
       D := Terminal.Colorize(D, 'Rare');
 
-    S := S + AddItemInfo([K, T, D]);
+    S := S + AddItemInfo([Level, T, D]);
 
     if ((AItem.Identify = 0) or Player.Look) then
       S := '';
@@ -1728,6 +1762,8 @@ begin
     S := UI.Icon(icDrop);
   if (Color = 'Vision') then
     S := UI.Icon(icVision);
+  if (Color = 'Repair') then
+    S := UI.Icon(icHammer);
   if (Color = 'Strength') then
     S := UI.Icon(icStr);
   if (Color = 'Dexterity') then
@@ -1738,6 +1774,11 @@ begin
     S := UI.Icon(icLeaf);
   if (RareColor <> '') then
     Color := RareColor;
+  if (Sign = '&') then
+  begin
+    Result := Terminal.Colorize(S, Color);
+    Exit;
+  end;
   if (Value > 0) then
     Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
 end;
@@ -1807,7 +1848,8 @@ begin
       ptRepair:
         begin
           S := T;
-          if ((AItem.Stack = 1) and (AItem.Amount = 1)) then
+          if ((AItem.Stack = 1) and (AItem.Amount = 1) and (Items.Index = 0))
+          then
           begin
             RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
             if (RepairCost > 0) then

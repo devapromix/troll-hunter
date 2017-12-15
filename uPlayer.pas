@@ -543,6 +543,7 @@ begin
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
     begin
       MsgLog.Add(Format(_('You crafted %s.'), [Items.GetNameThe(FItem)]));
+      Statictics.Inc(stItCrafted);
       Scenes.SetScene(scInv);
     end;
     Self.Calc;
@@ -744,6 +745,13 @@ begin
       if (T in FoodTypeItems + PlantTypeItems) then
       begin
         MsgLog.Add(Format(_('You ate %s.'), [Items.GetNameThe(FItem)]));
+        Statictics.Inc(stFdEat);
+      end;
+      if (T in RepairTypeItems) then
+      begin
+        //ItemBase[I].OnUse(ItemBase[I].Value);
+        MsgLog.Add(Format(_('You use %s.'), [Items.GetNameThe(FItem)]));
+        Statictics.Inc(stItUsed);
       end;
       //
       if (T in ScrollTypeItems) then
@@ -917,6 +925,7 @@ begin
     (Items_Inventory_SetItem(Index, FItem) > 0)) then
   begin
     MsgLog.Add(Format(_('You identified %s.'), [Items.GetNameThe(FItem)]));
+    Statictics.Inc(stItIdent);
     Scenes.SetScene(scInv);
   end;
   Self.Calc;
@@ -930,6 +939,22 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Identify = 0) or (FItem.Amount > 1)) then
     Exit;
+  // Oil
+  if (Items.Index > 0) then
+  begin
+    Inc(FItem.MaxDurability);
+    FItem.Durability := Math.EnsureRange(FItem.Durability + Items.Index, 1,
+      FItem.MaxDurability);
+    if (Items_Inventory_SetItem(Index, FItem) > 0) then
+    begin
+      MsgLog.Add(Format(_('You repaired %s.'), [Items.GetNameThe(FItem)]));
+      Statictics.Inc(stItRep);
+      Calc;
+    end;
+    Scenes.SetScene(scInv);
+    Exit;
+  end;
+  // Smith
   RepairCost := (FItem.MaxDurability - FItem.Durability) * 10;
   if (RepairCost > 0) then
   begin
@@ -954,6 +979,7 @@ begin
         (Items_Inventory_SetItem(Index, FItem) > 0)) then
         MsgLog.Add(Format(_('You repaired %s (-%d gold).'),
           [Items.GetNameThe(FItem), RepairCost]));
+      Statictics.Inc(stItRep);
     end;
   end;
   Self.Calc;
@@ -1377,6 +1403,8 @@ begin
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
+  // Add oils
+  Items.AddItemToInv(ivOil_of_Blacksmith, IfThen(Mode.Wizard, 10, 3));
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins
@@ -1460,7 +1488,6 @@ begin
   begin
     Scenes.SetScene(scIdentification);
   end;
-
   // Craft
   for Ef := CraftEffLow to CraftEffHigh do
     if (Ef in Effects) then
@@ -1468,7 +1495,12 @@ begin
       Affixes.DoCraft(Ef, Value);
       Scenes.SetScene(scCraft);
     end;
-
+  // Repair
+  if (efRepair in Effects) then
+  begin
+    Items.Index := Value;
+    Scenes.SetScene(scRepair);
+  end;
   // Teleportation
   if (efTeleportation in Effects) then
   begin

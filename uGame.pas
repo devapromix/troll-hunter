@@ -5,19 +5,19 @@ interface
 uses uEntity, uMap, uLanguage;
 
 {
-        "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
-        "Blessed" : "A blessed combatant suffers less damage from physical and magical attacks."
-        "Blinded" : "When blinded, combatant's chance to hit when attack will be reduced considerably."
-        "Eagle-eyed" : "An eagle-eyed combatant is more likely to hit with physical attacks."
-        "Paralyzed" : "When paralyzed, a combatant cannot do anything and its turn is skipped."
-        "Poisoned" : "A poisoned combatant suffers poison damage each turn, although it will not die from it."
-        "Protected" : "A protected combatant is harder to hit with physical attacks."
-        "Quick" : "A quick combatant can take additional steps when moving each turn."
-        "Resistant" : "A resistant combatant is less affected by magical attacks."
-        "Rooted" : "A rooted combatant cannot move, although it may still attack and cast spells."
-        "Sluggish" : "A sluggish combatant is easier to hit with phsyical attacks."
-        "Strong" : "A strong combatant inflicts more damage with physical attacks."
-        "Weakened" : "A weakened combatant inflicts less damage with physical attacks."
+  "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
+  "Blessed" : "A blessed combatant suffers less damage from physical and magical attacks."
+  "Blinded" : "When blinded, combatant's chance to hit when attack will be reduced considerably."
+  "Eagle-eyed" : "An eagle-eyed combatant is more likely to hit with physical attacks."
+  "Paralyzed" : "When paralyzed, a combatant cannot do anything and its turn is skipped."
+  "Poisoned" : "A poisoned combatant suffers poison damage each turn, although it will not die from it."
+  "Protected" : "A protected combatant is harder to hit with physical attacks."
+  "Quick" : "A quick combatant can take additional steps when moving each turn."
+  "Resistant" : "A resistant combatant is less affected by magical attacks."
+  "Rooted" : "A rooted combatant cannot move, although it may still attack and cast spells."
+  "Sluggish" : "A sluggish combatant is easier to hit with phsyical attacks."
+  "Strong" : "A strong combatant inflicts more damage with physical attacks."
+  "Weakened" : "A weakened combatant inflicts less damage with physical attacks."
 }
 
 {
@@ -110,7 +110,7 @@ type
 
 type
   TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apScroll,
-    apKey, apPlant);
+    apKey, apPlant, apFullscreen, apHdLevOfItem);
 
 type
   TGame = class(TObject)
@@ -159,6 +159,7 @@ type
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
     property Language: TLanguage read FLanguage;
+    procedure ChScreen;
   end;
 
 var
@@ -166,10 +167,18 @@ var
 
 implementation
 
-uses SysUtils, uPlayer, uMsgLog, uScenes,
+uses SysUtils, Dialogs, uPlayer, uMsgLog, uScenes,
   BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook;
 
 { TGame }
+
+procedure TGame.ChScreen;
+begin
+  if FAPOption[apFullscreen] then
+    terminal_set('window.fullscreen=true')
+  else
+    terminal_set('window.fullscreen=false');
+end;
 
 constructor TGame.Create;
 var
@@ -266,6 +275,8 @@ end;
 
 procedure TGame.LoadConfig;
 begin
+  // Settings
+  FAPOption[apFullscreen] := terminal_get('window.fullscreen') = 'true';
   // Localization
   Language.UseLanguage(terminal_get('ini.localization.language'));
   // Load colors
@@ -288,6 +299,7 @@ end;
 
 procedure TGame.Start;
 begin
+  //
   Player.Clear;
   //
   Player.Skills.Start;

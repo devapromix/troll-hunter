@@ -35,6 +35,7 @@ type
   TMap = class(TObject)
   private
     FCurrent: TMapEnum;
+    FMapName: array [TMapEnum] of string;
     FVis: array [TMapEnum] of Boolean;
     FMap: array [Byte, Byte, TMapEnum] of TTileEnum;
     FFog: array [Byte, Byte, TMapEnum] of Boolean;
@@ -79,7 +80,7 @@ var
 
 implementation
 
-uses SysUtils, Math, Types, uPlayer, uMob, uItem, uLanguage, uTerminal, uGame,
+uses SysUtils, Math, Types, TypInfo, uPlayer, uMob, uItem, uLanguage, uTerminal, uGame,
   uCreature, uAttribute;
 
 { TMap }
@@ -311,8 +312,19 @@ begin
 end;
 
 constructor TMap.Create;
+var
+  I: TMapEnum;
+  P: Pointer;
+  S: string;
 begin
   Self.Current := deDarkWood;
+  P := TypeInfo(TMapEnum);
+  for I := Low(TMapEnum) to High(TMapEnum) do
+  begin
+    S := StringReplace(GetEnumName(P, Ord(I)), 'de', '', [rfReplaceAll]);
+    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
+    FMapName[I] := S;
+  end;
 end;
 
 destructor TMap.Destroy;
@@ -593,6 +605,7 @@ end;
 
 function TMap.GetTile(AX, AY: Byte): TTile;
 begin
+
   Result := Tile[FMap[AX][AY][Current]][Current];
 end;
 
@@ -606,18 +619,7 @@ begin
     end;
     Exit;
   end;
-  case Current of
-    deDarkWood:
-      Result := _('Dark Wood');
-    deGrayCave:
-      Result := _('Gray Cave');
-    deDeepCave:
-      Result := _('Deep Cave');
-    deBloodCave:
-      Result := _('Blood Cave');
-    deDrom:
-      Result := _('Drom');
-  end;
+  Result := _(FMapName[Current]);
 end;
 
 function TMap.GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;

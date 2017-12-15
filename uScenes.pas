@@ -294,10 +294,10 @@ procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
   AColor: Cardinal);
 begin
   Terminal.ForegroundColor(AColor);
-  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, UI.KeyToStr(AHotKey) + ' ' + AText
+  Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, UI.KeyToStr(AHotKey) + ' ' + AText
     + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clLightestBlue);
-  Terminal.Print(Math.IfThen(X = 1, CX - 1, CX + (CX - 1)), Y,
+  Terminal.Print(Math.IfThen(X = 1, CX - 2, CX + (CX - 2)), Y,
     '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
   Self.Add();
 end;
@@ -340,9 +340,9 @@ end;
 procedure TScene.Add(AText: string; AValue: Integer);
 begin
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+  Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clGreen);
-  Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, IntToStr(AValue),
+  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, IntToStr(AValue),
     TK_ALIGN_RIGHT);
   Self.Add();
 end;
@@ -350,9 +350,9 @@ end;
 procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
 begin
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(IfThen(X = 1, 3, CX + 3), Y, AText + ':', TK_ALIGN_LEFT);
+  Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(AColor);
-  Terminal.Print(IfThen(X = 1, CX - 1, CX + (CX - 1)), Y, AValue,
+  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue,
     TK_ALIGN_RIGHT);
   Self.Add();
 end;
@@ -1316,9 +1316,9 @@ begin
 
   Add(_('Name'), Player.Name);
   Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
-  Add(_('Race'), '');
-  Add(_('Class'), '');
-  Add(_('Game difficulty'), Game.GetStrDifficulty);
+  Add(_('Race'), 'Human');
+  Add(_('Class'), 'Warrior');
+  Add(_('Game Difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Statictics.Get(stScore));
   // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
@@ -1329,14 +1329,16 @@ begin
   Add(_('Potions Drunk'), Player.Statictics.Get(stPotDrunk));
   Add(_('Scrolls Read'), Player.Statictics.Get(stScrRead));
   Add(_('Spells Cast'), Player.Statictics.Get(stSpCast));
-  // Add(_('Foods Eaten'), );
+  Add(_('Foods Eaten'), Player.Statictics.Get(stFdEat));
   // Add(_('Melee Attack Performed'), );
   // Add(_('Ranged Attack Performed'), );
   // Add(_('Unarmed Attack Performed'), );
   // Add(_('Times Fallen Into Pit'), );
   // Add(_('Items Sold'), );
-  // Add(_('Items Identified'), );
-  // Add(_('Items Crafted'), );
+  Add(_('Items Used'), Player.Statictics.Get(stItUsed));
+  Add(_('Items Repaired'), Player.Statictics.Get(stItRep));
+  Add(_('Items Identified'), Player.Statictics.Get(stItIdent));
+  Add(_('Items Crafted'), Player.Statictics.Get(stItCrafted));
   // Add(_('Gold from Sales'), );
   // Add(_(''), );
 
@@ -1345,7 +1347,7 @@ begin
   Y := Y + 3;
   UI.Title(_('Version'), Y - 1);
   Y := Y + 1;
-  Add(_('Game version'), Game.GetVersion);
+  Add(_('Game Version'), Game.GetVersion);
   Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
   Self.Add();
   Add(_('BeaRLibItems'), Items_GetVersion);
@@ -1359,9 +1361,9 @@ begin
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
     Add(_('NPC'), 7);
-    Self.Add();
     Add(_('Items'), Ord(Length(ItemBase)));
     Add(_('Shops'), Shops.Count);
+    Add(_('Quests'), Quests.Amount);
   end;
 
   AddKey('Esc', _('Close'), True);
@@ -1475,7 +1477,10 @@ begin
         if (ntHealer_A in NPCType) then
           Player.ReceiveHealing;
         if (ntBlacksmith_A in NPCType) then
+        begin
+          Items.Index := 0;
           Scenes.SetScene(scRepair);
+        end;
         if (ntFoodTrader_A in NPCType) then
           AddShop(shFoods);
         if (ntShTrader_A in NPCType) then
@@ -1787,8 +1792,8 @@ end;
 
 procedure TSceneOptions.Render;
 begin
+  // Options
   UI.Title(_('Options'));
-
   X := 1;
   Y := 3;
   AddOption('C', _('Auto pickup coins'), Game.GetOption(apCoin));
@@ -1801,17 +1806,27 @@ begin
   AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
   AddOption('K', _('Auto pickup keys'), Game.GetOption(apKey));
 
+  // Settings
+  X := 1;
+  Y := Y + 3;
+  UI.Title(_('Settings'), Y - 1);
+  Y := Y + 1;
+  AddOption('W', _('Fullscreen'), Game.GetOption(apFullscreen), clLightBlue);
+
+  // Wizard mode
   if Mode.Wizard then
   begin
     X := 1;
     Y := Y + 3;
     UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    AddOption('W', _('Wizard Mode'), Mode.Wizard, clRed);
+    AddOption('Z', _('Wizard Mode'), Mode.Wizard, clRed);
     AddOption('M', _('Show map'), Game.ShowMap);
     AddOption('T', _('Reload all shops'), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
     AddOption('I', _('Show ID of items'), Game.ShowID);
+    AddOption('N', _('Hide level of item'),
+      Game.GetOption(apHdLevOfItem));
   end;
 
   AddKey('Esc', _('Back'), True);
@@ -1820,6 +1835,7 @@ end;
 procedure TSceneOptions.Update(var Key: Word);
 begin
   case Key of
+    // Options
     TK_C:
       Game.ChOption(apCoin);
     TK_G:
@@ -1838,7 +1854,14 @@ begin
       Game.ChOption(apKey);
     TK_B:
       Game.ChOption(apBook);
+    // Settings
     TK_W:
+      begin
+        Game.ChOption(apFullscreen);
+        Game.ChScreen;
+      end;
+    // Wizard mode
+    TK_Z:
       Mode.Wizard := False;
     TK_M:
       if Mode.Wizard then
@@ -1852,6 +1875,9 @@ begin
     TK_I:
       if Mode.Wizard then
         Game.ShowID := not Game.ShowID;
+    TK_N:
+      if Mode.Wizard then
+        Game.ChOption(apHdLevOfItem);
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end

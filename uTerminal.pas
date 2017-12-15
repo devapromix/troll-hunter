@@ -63,7 +63,7 @@ var
 
 implementation
 
-uses SysUtils, Classes, Math, uGame;
+uses SysUtils, Classes, Dialogs, Math, uGame;
 
 { TTerminal }
 

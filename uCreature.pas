@@ -13,7 +13,7 @@ type
     efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge,
     efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
     efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
-    efPrmStr, efPrmDex, efPrmWil, efPrmPer);
+    efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair);
 
 const
   CraftEffLow = efCraftStr;
@@ -129,7 +129,7 @@ begin
           abPoisoned:
             Value := 1;
           abBurning:
-            Value := Math.RandomRange(1, 3);
+            Value := Math.RandomRange(1, 2);
         else
           Value := 0;
         end;
