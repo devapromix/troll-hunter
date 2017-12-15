@@ -54,8 +54,10 @@ type
     of_Willpower6, of_Willpower7,
     // Perception I - VII
     of_Perception1, of_Perception2, of_Perception3, of_Perception4,
-    of_Perception5, of_Perception6, of_Perception7
+    of_Perception5, of_Perception6, of_Perception7,
     //
+    of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
+    of_the_Universe, of_the_Infinite
     //
     );
 
@@ -261,7 +263,7 @@ const
     // (Strength III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Strength: (Min: 6; Max: 9);),
-    // (Strength VI)
+    // (Strength IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Strength: (Min: 10; Max: 14);),
     // (Strength V)
@@ -274,25 +276,25 @@ const
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Strength: (Min: 26; Max: 30);),
 
-    // of_the_Mongoose (Dexterity I)
+    // of the Mongoose (Dexterity I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
     Dexterity: (Min: 1; Max: 2);),
-    // of_the_Fox (Dexterity II)
+    // of the Fox (Dexterity II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
     Dexterity: (Min: 3; Max: 5);),
-    // of_the_Lynx (Dexterity III)
+    // of the Lynx (Dexterity III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Dexterity: (Min: 6; Max: 9);),
-    // of_the_Falcon (Dexterity VI)
+    // of the Falcon (Dexterity IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Dexterity: (Min: 10; Max: 14);),
-    // of_the_Panther (Dexterity V)
+    // of the Panther (Dexterity V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
     Dexterity: (Min: 15; Max: 20);),
-    // of_the_Leopard (Dexterity VI)
+    // of the Leopard (Dexterity VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
     Dexterity: (Min: 21; Max: 25);),
-    // of_the_Jaguar (Dexterity VII)
+    // of the Jaguar (Dexterity VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Dexterity: (Min: 26; Max: 30);),
 
@@ -305,7 +307,7 @@ const
     // (Willpower III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Willpower: (Min: 6; Max: 9);),
-    // (Willpower VI)
+    // (Willpower IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Willpower: (Min: 10; Max: 14);),
     // (Willpower V)
@@ -327,7 +329,7 @@ const
     // (Perception III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Perception: (Min: 6; Max: 9);),
-    // (Perception VI)
+    // (Perception IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Perception: (Min: 10; Max: 14);),
     // (Perception V)
@@ -338,7 +340,25 @@ const
     Perception: (Min: 21; Max: 25);),
     // (Perception VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
-    Perception: (Min: 26; Max: 30);));
+    Perception: (Min: 26; Max: 30);),
+
+    // of the Sky (Additional All Attributes I)
+    (Level: (Min: 1; Max: 3); Price: 400; Occurence: JewelryTypeItems;),
+    // of the Meteor (Additional All Attributes II)
+    (Level: (Min: 2; Max: 5); Price: 800; Occurence: JewelryTypeItems;),
+    // of the Comet (Additional All Attributes III)
+    (Level: (Min: 3; Max: 7); Price: 1200; Occurence: JewelryTypeItems;),
+    // of the Heavens (Additional All Attributes IV)
+    (Level: (Min: 4; Max: 9); Price: 1600; Occurence: JewelryTypeItems;),
+    // of the Galaxy (Additional All Attributes V)
+    (Level: (Min: 5; Max: 11); Price: 2000; Occurence: JewelryTypeItems;),
+    // of the Universe (Additional All Attributes VI)
+    (Level: (Min: 6; Max: 13); Price: 2500; Occurence: JewelryTypeItems;),
+    // of the Infinite (Additional All Attributes VII)
+    (Level: (Min: 7; Max: 15); Price: 3000; Occurence: JewelryTypeItems;)
+
+    //
+    );
 
 type
   TAffixes = class(TObject)
@@ -386,6 +406,7 @@ end;
 procedure TAffixes.DoSuffix(var AItem: Item);
 var
   SB: TSuffixBase;
+  BT: TBonusType;
   Value: Byte;
 
   procedure SetLife();
@@ -450,6 +471,10 @@ begin
     // Perception
     of_Perception1 .. of_Perception7:
       SetAtr(btPer, SB.Perception.Min, SB.Perception.Max);
+    // Additional All Attributes
+    of_the_Sky .. of_the_Infinite:
+      for BT := btStr to btPer do
+        SetAtr(BT, SB.Level.Min, SB.Level.Max);
     // Defense
     of_Defense1 .. of_Defense7:
       begin
