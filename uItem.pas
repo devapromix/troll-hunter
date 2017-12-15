@@ -86,6 +86,18 @@ type
     // OnUse: TUseProc;
   end;
 
+  // Silver Sword , Forsworn Sword , Hero Sword
+  // Skyforge War Axe , Dragonbone War Axe
+
+  // Hide Boots
+
+  // Hide Shield , Iron Shield , Steel Shield , Dragonscale Shield , Dragonplate Shield
+  // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
+  // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
+  // Long Bow , Hunting Bow , Imperial Bow , Ancient Bow , Hero Bow , Dragonbone Bow
+
+  // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
+
 type
   TItemEnum = (
     // All maps
