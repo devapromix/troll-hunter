@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses Types, uCreature, uMob, uSkill, uStatistic, uTalent;
+uses Types, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic, uTalent;
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
@@ -130,7 +130,7 @@ implementation
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
-  uBearLibItemsCommon, uBearLibItemsDungeon, uBearLibItemsInventory;
+  uBearLibItemsDungeon, uBearLibItemsInventory;
 
 procedure RnItem(FItem: Item; const Index: Integer);
 begin
@@ -749,9 +749,8 @@ begin
         MsgLog.Add(Format(_('You ate %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stFdEat);
       end;
-      if (T in RepairTypeItems) then
+      if (T in OilTypeItems) then
       begin
-        //ItemBase[I].OnUse(ItemBase[I].Value);
         MsgLog.Add(Format(_('You use %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stItUsed);
       end;
@@ -780,6 +779,7 @@ begin
           Exit;
         end;
       end;
+      Items.CurrentItem := FItem;
       DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
       Self.Calc;
       Wait;
@@ -944,7 +944,14 @@ begin
   // Oil
   if (Items.Index > 0) then
   begin
-    Inc(FItem.MaxDurability);
+    case Items.CurrentItem.Defense of
+      // Cursed
+      - 1:
+        Dec(FItem.MaxDurability);
+      // Blessed
+      1:
+        Inc(FItem.MaxDurability);
+    end;
     FItem.Durability := Math.EnsureRange(FItem.Durability + Items.Index, 1,
       FItem.MaxDurability);
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
@@ -1405,8 +1412,12 @@ begin
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
-  // Add oils
-  Items.AddItemToInv(ivOil_of_Blacksmith, IfThen(Mode.Wizard, 10, 3));
+  // Add an oil
+  Items.AddItemToInv(ivOil);
+  Items.AddItemToInv(ivOil);
+  Items.AddItemToInv(ivOil);
+  Items.AddItemToInv(ivOil);
+  Items.AddItemToInv(ivOil);
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins
@@ -1500,8 +1511,8 @@ begin
   // Repair
   if (efRepair in Effects) then
   begin
-    Items.Index := Value;
-    Scenes.SetScene(scRepair);
+    Items.Index := Items.CurrentItem.Durability;
+    Scenes.SetScene(scRepair, scInv);
   end;
   // Teleportation
   if (efTeleportation in Effects) then

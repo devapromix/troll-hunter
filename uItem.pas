@@ -48,11 +48,14 @@ const
   JewelryTypeItems = [itRing, itAmulet];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
-  IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems;
+
+  IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
+    OilTypeItems;
+  AllwaysIdentTypeItems = JewelryTypeItems + OilTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   RepairTypeItems = OilTypeItems;
-  SmithTypeItems = RepairTypeItems + DefenseTypeItems + DamageTypeItems;
+  SmithTypeItems = DefenseTypeItems + DamageTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
     RepairTypeItems;
@@ -83,7 +86,6 @@ type
     Effects: TEffects;
     Value: Word;
     ManaCost: Byte;
-    // OnUse: TUseProc;
   end;
 
   // Silver Sword , Forsworn Sword , Hero Sword
@@ -98,13 +100,13 @@ type
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
-{rough / необроблений
-imperfect / недосконалий
-common / типовий
-precious / дорогоцінний
-flawless / без недоліків
-perfect / досконалий
-outworldly / неземний}
+  { rough / необроблений
+    imperfect / недосконалий
+    common / типовий
+    precious / дорогоцінний
+    flawless / без недоліків
+    perfect / досконалий
+    outworldly / неземний }
 
 type
   TItemEnum = (
@@ -123,7 +125,7 @@ type
     ivSoothing_Balm, ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
     ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
     // Oils
-    ivOil_of_Blacksmith, ivOil_of_Fortitude,
+    ivOil, ivOil_of_Blacksmith, ivOil_of_Fortitude,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
     ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
@@ -210,8 +212,6 @@ type
 
 const
   TavernItems = [ivKey, ivScroll_of_Hunger];
-
-procedure UseOil(const Value: Integer);
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -358,6 +358,12 @@ const
     Price: 5000; Color: clDarkBlue; Deep: [deDarkWood .. deDrom];
     Effects: [efPrmMana]; Value: 1;),
 
+    // Oil,
+    (Symbol: '!'; ItemType: itOil; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 100; Color: clLightGray; Deep: [deDarkWood .. deDrom];
+    Effects: [efRepair]; Value: 0; { OnUse: UseOil; } ),
     // Oil of Blacksmith,
     (Symbol: '!'; ItemType: itOil; SlotType: stNone; MaxStack: 5;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -1286,11 +1292,15 @@ const
 
     );
 
+const
+  tfBlessed = 1;
+  tfCursed = -1;
+
 type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
-  TBonusType = (btLife, btMana, btVis, btNN, btStr, btDex, btWil, btPer);
+  TBonusType = (btLife, btMana, btVis, btRep, btStr, btDex, btWil, btPer);
 
 type
   TItems = class(TEntity)
@@ -1299,6 +1309,7 @@ type
     function GetName(I: TItemEnum): string; overload;
   public
     Index: Byte;
+    CurrentItem: Item;
     class procedure Make(ID: Byte; var AItem: Item);
     class procedure CalcItem(var AItem: Item; APrice: Word = 0);
     constructor Create;
@@ -1350,12 +1361,6 @@ uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
   uBearLibItemsInventory, Dialogs, uScenes;
 
-procedure UseOil(const Value: Integer);
-begin
-  Items.Index := Value;
-  Scenes.SetScene(scRepair);
-end;
-
 { TItems }
 
 class procedure TItems.CalcItem(var AItem: Item; APrice: Word = 0);
@@ -1363,6 +1368,19 @@ begin
   // Damage
   if (AItem.MinDamage > 0) and (AItem.MinDamage >= AItem.MaxDamage) then
     AItem.MinDamage := AItem.MaxDamage - 1;
+  // Oil
+  if ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems then
+  begin
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + APrice +
+      Round(AItem.Durability * 4.7);
+    case AItem.Defense of
+      tfCursed:
+        AItem.Price := AItem.Price div 2;
+      tfBlessed:
+        AItem.Price := AItem.Price * 2;
+    end;
+    Exit;
+  end;
   // Price
   AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + APrice +
     Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
@@ -1464,6 +1482,7 @@ begin
       then
         T := Terminal.Colorize(T, 'Rare');
     end;
+
     if (AItem.Bonus > 0) then
     begin
       if (Items.GetBonus(AItem, btVis) > 0) then
@@ -1491,12 +1510,19 @@ begin
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer),
           'Perception', 'Rare');
     end;
-    D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
-      AItem.MaxDurability]);
-    if (AItem.Identify > 0) and
-      (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
-      D := Terminal.Colorize(D, 'Rare');
-
+    // Durability
+    D := '';
+    if IT in SmithTypeItems then
+    begin
+      D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
+        AItem.MaxDurability]);
+      if (AItem.Identify > 0) and
+        (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
+        D := Terminal.Colorize(D, 'Rare');
+    end;
+    if (IT in OilTypeItems) then
+      D := Terminal.Colorize(Format('%s+%d', [UI.Icon(icHammer),
+        AItem.Durability]), 'Rare');
     S := S + AddItemInfo([Level, T, D]);
 
     if ((AItem.Identify = 0) or Player.Look) then
@@ -1529,7 +1555,7 @@ class procedure TItems.Make(ID: Byte; var AItem: Item);
     Result := False;
     if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
       Result := (Math.RandomRange(0, 2) = 0) or
-        (ItemBase[TItemEnum(ID)].ItemType in JewelryTypeItems)
+        (ItemBase[TItemEnum(ID)].ItemType in AllwaysIdentTypeItems)
   end;
 
 begin
@@ -1897,7 +1923,7 @@ begin
       Result := Byte(AItem.Bonus shr 16);
     btVis:
       Result := Byte(AItem.Bonus shr 8);
-    btNN:
+    btRep:
       Result := Byte(AItem.Bonus);
     btStr:
       Result := Byte(AItem.Attributes shr 24);
@@ -1934,7 +1960,7 @@ begin
         V[0] := GetBonus(AItem, btLife);
         V[1] := GetBonus(AItem, btMana);
         V[2] := GetBonus(AItem, btVis);
-        V[3] := GetBonus(AItem, btNN);
+        V[3] := GetBonus(AItem, btRep);
       end;
   end;
 
@@ -1945,7 +1971,7 @@ begin
       V[1] := Value;
     btVis, btWil:
       V[2] := Value;
-    btNN, btPer:
+    btRep, btPer:
       V[3] := Value;
   end;
 
@@ -2133,6 +2159,15 @@ begin
   else
     Result := N;
   end;
+  if ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems then
+    case AItem.Defense of
+      tfCursed:
+        Result := Terminal.Colorize(_('Cursed') + ' ' + GetPureText(Result),
+          'Cursed');
+      tfBlessed:
+        Result := Terminal.Colorize(_('Blessed') + ' ' + GetPureText(Result),
+          'Blessed');
+    end;
 end;
 
 function TItems.GetNameThe(AItem: Item): string;

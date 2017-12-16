@@ -1479,7 +1479,7 @@ begin
         if (ntBlacksmith_A in NPCType) then
         begin
           Items.Index := 0;
-          Scenes.SetScene(scRepair);
+          Scenes.SetScene(scRepair, scDialog);
         end;
         if (ntFoodTrader_A in NPCType) then
           AddShop(shFoods);
@@ -1605,7 +1605,7 @@ begin
   case Key of
     TK_ESCAPE:
       // Close
-      Scenes.SetScene(scDialog);
+      Scenes.GoBack();
     TK_A .. TK_Z: // Repairing an item
       Player.RepairItem(Key - TK_A);
   else

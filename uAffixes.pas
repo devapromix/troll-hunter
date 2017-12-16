@@ -28,6 +28,8 @@ type
     None,
     // Vision I
     of_Radiance,
+    // Oil I - III
+    of_Smith1, of_Smith2, of_Smith3,
     // Life I - VII
     of_Life1, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
@@ -72,6 +74,13 @@ const
     (),
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
+
+    // of Smith1 (Oil I)
+    (Level: (Min: 1; Max: 5); Price: 50; Occurence: OilTypeItems),
+    // of Smith2 (Oil II)
+    (Level: (Min: 1; Max: 10); Price: 150; Occurence: OilTypeItems),
+    // of Smith3 (Oil III)
+    (Level: (Min: 1; Max: 15); Price: 250; Occurence: OilTypeItems),
 
     // (Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
@@ -446,6 +455,14 @@ begin
       begin
         Value := Items.GetBonus(AItem, btVis) + 1;
         Items.SetBonus(AItem, btVis, Value);
+      end;
+    // Oil
+    of_Smith1..of_Smith3:
+      begin
+        // Cursed or Blessed
+        AItem.Defense := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
+        // Repair Durability
+        AItem.Durability := Math.RandomRange(SB.Level.Min, SB.Level.Max + 1);
       end;
     // Life
     of_Life1 .. of_Life7:
