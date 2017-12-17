@@ -30,8 +30,8 @@ type
     None,
     // Vision I
     of_Radiance,
-    // Life, Mana
-    of_Healing, of_Mana, of_Rejuvenation,
+    // Life, Mana, Antidote
+    of_Healing, of_Mana, of_Rejuvenation, of_Antidote,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
@@ -91,6 +91,9 @@ const
     // of Rejuvenation
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
     Effects: [efLife, efMana];),
+    // of Antidote
+    (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
+    Effects: [efCurePoison];),
 
     // of Blacksmith (Oil I)
     (Level: (Min: 1; Max: 3); Price: 50; Occurence: FlaskTypeItems;
