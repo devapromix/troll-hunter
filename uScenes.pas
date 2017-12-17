@@ -276,7 +276,7 @@ uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal, Dialogs,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
-  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest;
+  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest, uAffixes;
 
 { TScene }
 
@@ -1364,6 +1364,8 @@ begin
     Add(_('Items'), Ord(Length(ItemBase)));
     Add(_('Shops'), Shops.Count);
     Add(_('Quests'), Quests.Amount);
+    Add(_('Talents'), Player.Talents.Amount);
+    Add(_('Affixes'), Affixes.Amount);
   end;
 
   AddKey('Esc', _('Close'), True);

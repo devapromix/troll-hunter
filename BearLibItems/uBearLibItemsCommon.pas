@@ -2,11 +2,15 @@ unit uBearLibItemsCommon;
 
 interface
 
+const
+  BonusCount = 2;
+
 type
   Item = record
     ItemID: Integer;
     X, Y: Integer;
     MapID: Integer;
+    Level: Integer;
     Identify: Integer;
     Stack: Integer;
     Amount: Integer;
@@ -20,8 +24,7 @@ type
     SlotID: Integer;
     Equipment: Integer;
     Price: Integer;
-    Attributes: Cardinal;
-    Bonus: Cardinal;
+    Bonus: array [0 .. BonusCount - 1] of Cardinal;
     Color: Cardinal;
   end;
 
@@ -32,7 +35,7 @@ const
   IntFalse = 0;
   IntTrue = 1;
 
-// Library
+  // Library
 procedure Items_Open(); stdcall;
 procedure Items_Close(); stdcall;
 function Items_GetVersion(): PWideChar; stdcall;
@@ -42,13 +45,15 @@ procedure Items_Clear_Item(var AItem: Item);
 
 // Common
 function HasItem(AItems: TItems; Index, AMapID: Integer): Boolean; overload;
-function HasItem(AItems: TItems; Index, AMapID: Integer; AX, AY: Integer): Boolean; overload;
+function HasItem(AItems: TItems; Index, AMapID: Integer; AX, AY: Integer)
+  : Boolean; overload;
 function IndexInRange(AItems: TItems; Index: Integer): Boolean;
 procedure AddItem(var AItems: TItems; AItem: Item);
 function DelItem(var AItems: TItems; Index: Integer): Item;
 function HasEmpty(AItems: TItems): Boolean;
 procedure Empty(var AItems: TItems);
-function GlobalIndex(AItems: TItems; MapID, Index: Integer; AX: Integer = -1; AY: Integer = -1): Integer;
+function GlobalIndex(AItems: TItems; MapID, Index: Integer; AX: Integer = -1;
+  AY: Integer = -1): Integer;
 
 implementation
 
@@ -57,7 +62,7 @@ uses uBearLibItemsDungeon, uBearLibItemsInventory;
 const
   LibVersion = '0.4.0';
 
-// Library
+  // Library
 
 procedure Items_Open(); stdcall;
 begin
@@ -79,6 +84,8 @@ end;
 // Add
 
 procedure Items_Clear_Item(var AItem: Item);
+var
+  I: Integer;
 begin
   with AItem do
   begin
@@ -86,6 +93,7 @@ begin
     X := -1;
     Y := -1;
     MapID := -1;
+    Level := 1;
     Identify := -1;
     Stack := 1;
     Amount := 1;
@@ -99,7 +107,8 @@ begin
     SlotID := 0;
     Equipment := 0;
     Price := 0;
-    Bonus := 0;
+    for I := 0 to BonusCount - 1 do
+      Bonus[I] := 0;
     Color := $FFFFFFFF;
   end;
 end;
@@ -111,11 +120,14 @@ begin
   Result := (AItems[Index].MapID = AMapID);
 end;
 
-function HasItem(AItems: TItems; Index, AMapID: Integer; AX, AY: Integer): Boolean;
+function HasItem(AItems: TItems; Index, AMapID: Integer;
+  AX, AY: Integer): Boolean;
 begin
   if (AX = -1) and (AY = -1) then
     Result := HasItem(AItems, Index, AMapID)
-      else Result := (AItems[Index].MapID = AMapID) and (AItems[Index].X = AX) and (AItems[Index].Y = AY);
+  else
+    Result := (AItems[Index].MapID = AMapID) and (AItems[Index].X = AX) and
+      (AItems[Index].Y = AY);
 end;
 
 function IndexInRange(AItems: TItems; Index: Integer): Boolean;
@@ -125,14 +137,14 @@ end;
 
 procedure AddItem(var AItems: TItems; AItem: Item);
 begin
-//  if (Length(AItems) <= Items_Inventory_GetSlotCount) then
-//  begin
-    SetLength(AItems, Length(AItems) + 1);
-    AItems[Length(AItems) - 1] := AItem;
-    {..}
-//  end else begin
+  // if (Length(AItems) <= Items_Inventory_GetSlotCount) then
+  // begin
+  SetLength(AItems, Length(AItems) + 1);
+  AItems[Length(AItems) - 1] := AItem;
+  { .. }
+  // end else begin
 
-//  end;
+  // end;
 end;
 
 function DelItem(var AItems: TItems; Index: Integer): Item;
@@ -156,13 +168,16 @@ begin
   SetLength(AItems, 0);
 end;
 
-function GlobalIndex(AItems: TItems; MapID, Index: Integer; AX: Integer = -1; AY: Integer = -1): Integer;
+function GlobalIndex(AItems: TItems; MapID, Index: Integer; AX: Integer = -1;
+  AY: Integer = -1): Integer;
 var
   I, P: Integer;
 begin
   Result := -1;
-  if HasEmpty(AItems) then Exit;
-  if not IndexInRange(AItems, Index)then Exit;
+  if HasEmpty(AItems) then
+    Exit;
+  if not IndexInRange(AItems, Index) then
+    Exit;
   P := 0;
   for I := 0 to Length(AItems) - 1 do
     if HasItem(AItems, I, MapID, AX, AY) then

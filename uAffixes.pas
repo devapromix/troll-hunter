@@ -28,8 +28,8 @@ type
     None,
     // Vision I
     of_Radiance,
-    // Oil I - III
-    of_Smith1, of_Smith2, of_Smith3,
+    // Oil I - VII
+    of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence, of_Permanence2, of_Permanence3,
     // Life I - VII
     of_Life1, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
@@ -57,11 +57,14 @@ type
     // Perception I - VII
     of_Perception1, of_Perception2, of_Perception3, of_Perception4,
     of_Perception5, of_Perception6, of_Perception7,
-    //
+    // Additional All Attributes I - VII
     of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
     of_the_Universe, of_the_Infinite
     //
     );
+
+    // of the Greatwolf
+    //
 
 const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
@@ -75,12 +78,27 @@ const
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
 
-    // of Smith1 (Oil I)
-    (Level: (Min: 1; Max: 5); Price: 50; Occurence: OilTypeItems),
-    // of Smith2 (Oil II)
-    (Level: (Min: 1; Max: 10); Price: 150; Occurence: OilTypeItems),
-    // of Smith3 (Oil III)
-    (Level: (Min: 1; Max: 15); Price: 250; Occurence: OilTypeItems),
+    // of Blacksmith (Oil I)
+    (Level: (Min: 1; Max: 3); Price: 50; Occurence: OilTypeItems;
+    MaxDurability: (Min: 1; Max: 6);),
+    // of Mastery (Oil II)
+    (Level: (Min: 2; Max: 5); Price: 100; Occurence: OilTypeItems;
+    MaxDurability: (Min: 7; Max: 12);),
+    // of Sharpness (Oil III)
+    (Level: (Min: 3; Max: 7); Price: 150; Occurence: OilTypeItems;
+    MaxDurability: (Min: 13; Max: 18);),
+    // of Fortitude (Oil VI)
+    (Level: (Min: 4; Max: 9); Price: 200; Occurence: OilTypeItems;
+    MaxDurability: (Min: 19; Max: 24);),
+    // of Permanence (Oil V)
+    (Level: (Min: 5; Max: 11); Price: 250; Occurence: OilTypeItems;
+    MaxDurability: (Min: 25; Max: 30);),
+    // of Permanence2 (Oil VI)
+    (Level: (Min: 6; Max: 13); Price: 400; Occurence: OilTypeItems;
+    MaxDurability: (Min: 31; Max: 40);),
+    // of Permanence3 (Oil VII)
+    (Level: (Min: 7; Max: 15); Price: 500; Occurence: OilTypeItems;
+    MaxDurability: (Min: 41; Max: 50);),
 
     // (Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
@@ -378,6 +396,7 @@ type
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     procedure DoSuffix(var AItem: Item);
     procedure DoCraft(const Effect: TEffect; const Index: Byte);
+    function Amount: Byte;
   end;
 
 var
@@ -386,6 +405,11 @@ var
 implementation
 
 uses SysUtils, TypInfo, Math, uTerminal, uGame;
+
+function TAffixes.Amount: Byte;
+begin
+  Result := Ord(High(TSuffixEnum)) + 1;
+end;
 
 constructor TAffixes.Create();
 var
@@ -457,12 +481,13 @@ begin
         Items.SetBonus(AItem, btVis, Value);
       end;
     // Oil
-    of_Smith1..of_Smith3:
+    of_Blacksmith .. of_Permanence3:
       begin
         // Cursed or Blessed
-        AItem.Defense := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
+        //AItem.Effect := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
         // Repair Durability
-        AItem.Durability := Math.RandomRange(SB.Level.Min, SB.Level.Max + 1);
+        //AItem.Durability := Math.RandomRange(SB.MaxDurability.Min,
+        //  SB.MaxDurability.Max + 1);
       end;
     // Life
     of_Life1 .. of_Life7:

@@ -83,6 +83,7 @@ type
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): Boolean;
     function Count: Byte;
+    function Amount: Byte;
     procedure DoTalent(Key: Byte);
   end;
 
@@ -130,6 +131,11 @@ begin
     S := StringReplace(S, '_', ' ', [rfReplaceAll]);
     FTalentName[I] := S;
   end;
+end;
+
+function TTalents.Amount: Byte;
+begin
+  Result := Ord(High(TTalentEnum)) + 1;
 end;
 
 constructor TTalents.Clear;

@@ -443,14 +443,14 @@ begin
       AddAttrib(atDef, FItem.Defense);
       AddAttrib(atMinDamage, FItem.MinDamage);
       AddAttrib(atMaxDamage, FItem.MaxDamage);
-      if (FItem.Bonus > 0) then
+      if (FItem.Bonus[0] > 0) then
       begin
         AddAttrib(atMaxLife, Items.GetBonus(FItem, btLife));
         AddAttrib(atMaxMana, Items.GetBonus(FItem, btMana));
         AddAttrib(atVision, Items.GetBonus(FItem, btVis));
         // AddAttrib(atVision, Items.GetBonus(FItem, btVis));
       end;
-      if (FItem.Attributes > 0) then
+      if (FItem.Bonus[1] > 0) then
       begin
         AddAttrib(atStr, Items.GetBonus(FItem, btStr));
         AddAttrib(atDex, Items.GetBonus(FItem, btDex));
@@ -713,17 +713,15 @@ var
   FItem: Item;
   I: TItemEnum;
   T: TItemType;
-  ItemLevel: Byte;
 begin
   if IsDead then
     Exit;
   FItem := Items_Inventory_GetItem(Index);
   // Need level
-  ItemLevel := ItemBase[TItemEnum(FItem.ItemID)].Level;
-  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Mode.Wizard then
+  if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
-      [ItemLevel]));
+      [FItem.Level]));
     Self.Calc;
     Exit;
   end;
@@ -802,15 +800,13 @@ procedure TPlayer.Equip(Index: Integer);
 var
   FItem: Item;
   I: Integer;
-  ItemLevel: Byte;
 begin
   // Need level
   FItem := Items_Inventory_GetItem(Index);
-  ItemLevel := ItemBase[TItemEnum(FItem.ItemID)].Level;
-  if (Attributes.Attrib[atLev].Value < ItemLevel) and not Mode.Wizard then
+  if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
     MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
-      [ItemLevel]));
+      [FItem.Level]));
     Self.Calc;
     Exit;
   end;
@@ -941,10 +937,10 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Identify = 0) or (FItem.Amount > 1)) then
     Exit;
-  // Oil
+{  // Oil
   if (Items.Index > 0) then
   begin
-    case Items.CurrentItem.Defense of
+    case Items.CurrentItem.Effect of
       // Cursed
       - 1:
         Dec(FItem.MaxDurability);
@@ -962,7 +958,7 @@ begin
     end;
     Scenes.SetScene(scInv);
     Exit;
-  end;
+  end; }
   // Smith
   RepairCost := (FItem.MaxDurability - FItem.Durability) * 10;
   if (RepairCost > 0) then
@@ -1350,8 +1346,6 @@ begin
     Items.AddItemToInv(ivPlate_Mail, 1, True, False);
     Items.AddItemToInv(ivPlated_Gauntlets, 1, True, False);
     Items.AddItemToInv(ivPlate_Boots, 1, True, False);
-    Items.AddItemToInv(ivRing, 1, True, False);
-    Items.AddItemToInv(ivAmulet, 1, True, False);
   end
   else
   begin
