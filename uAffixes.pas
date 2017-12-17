@@ -20,6 +20,8 @@ type
     Dexterity: TMinMax;
     Willpower: TMinMax;
     Perception: TMinMax;
+    Value: TMinMax;
+    Effects: TEffects;
   end;
 
 type
@@ -28,8 +30,10 @@ type
     None,
     // Vision I
     of_Radiance,
-    // Oil I - VII
-    of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence, of_Permanence2, of_Permanence3,
+    // Life, Mana
+    of_Healing, of_Mana, of_Rejuvenation,
+    // Oil I - V
+    of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
     of_Life1, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
@@ -63,8 +67,8 @@ type
     //
     );
 
-    // of the Greatwolf
-    //
+  // of the Greatwolf
+  //
 
 const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
@@ -78,27 +82,31 @@ const
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
 
+    // of Healing
+    (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
+    Effects: [efLife];),
+    // of Mana
+    (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
+    Effects: [efMana];),
+    // of Rejuvenation
+    (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
+    Effects: [efLife, efMana];),
+
     // of Blacksmith (Oil I)
-    (Level: (Min: 1; Max: 3); Price: 50; Occurence: OilTypeItems;
-    MaxDurability: (Min: 1; Max: 6);),
+    (Level: (Min: 1; Max: 3); Price: 50; Occurence: FlaskTypeItems;
+    Value: (Min: 5; Max: 9); Effects: [efRepair];),
     // of Mastery (Oil II)
-    (Level: (Min: 2; Max: 5); Price: 100; Occurence: OilTypeItems;
-    MaxDurability: (Min: 7; Max: 12);),
+    (Level: (Min: 2; Max: 6); Price: 100; Occurence: FlaskTypeItems;
+    Value: (Min: 10; Max: 14); Effects: [efRepair];),
     // of Sharpness (Oil III)
-    (Level: (Min: 3; Max: 7); Price: 150; Occurence: OilTypeItems;
-    MaxDurability: (Min: 13; Max: 18);),
+    (Level: (Min: 3; Max: 9); Price: 150; Occurence: FlaskTypeItems;
+    Value: (Min: 15; Max: 19); Effects: [efRepair];),
     // of Fortitude (Oil VI)
-    (Level: (Min: 4; Max: 9); Price: 200; Occurence: OilTypeItems;
-    MaxDurability: (Min: 19; Max: 24);),
+    (Level: (Min: 4; Max: 12); Price: 200; Occurence: FlaskTypeItems;
+    Value: (Min: 20; Max: 24); Effects: [efRepair];),
     // of Permanence (Oil V)
-    (Level: (Min: 5; Max: 11); Price: 250; Occurence: OilTypeItems;
-    MaxDurability: (Min: 25; Max: 30);),
-    // of Permanence2 (Oil VI)
-    (Level: (Min: 6; Max: 13); Price: 400; Occurence: OilTypeItems;
-    MaxDurability: (Min: 31; Max: 40);),
-    // of Permanence3 (Oil VII)
-    (Level: (Min: 7; Max: 15); Price: 500; Occurence: OilTypeItems;
-    MaxDurability: (Min: 41; Max: 50);),
+    (Level: (Min: 5; Max: 15); Price: 250; Occurence: FlaskTypeItems;
+    Value: (Min: 25; Max: 30); Effects: [efRepair];),
 
     // (Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
@@ -480,14 +488,21 @@ begin
         Value := Items.GetBonus(AItem, btVis) + 1;
         Items.SetBonus(AItem, btVis, Value);
       end;
+    // Healing
+    of_Healing:
+      begin
+
+      end;
     // Oil
-    of_Blacksmith .. of_Permanence3:
+    of_Blacksmith .. of_Permanence:
       begin
         // Cursed or Blessed
-        //AItem.Effect := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
+        // AItem.Effect := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
         // Repair Durability
-        //AItem.Durability := Math.RandomRange(SB.MaxDurability.Min,
-        //  SB.MaxDurability.Max + 1);
+        // AItem.Durability := Math.RandomRange(SB.MaxDurability.Min,
+        // SB.MaxDurability.Max + 1);
+        // AItem.Value := Math.RandomRange(SB.MaxDurability.Min,
+        // SB.MaxDurability.Max + 1);
       end;
     // Life
     of_Life1 .. of_Life7:
@@ -554,6 +569,11 @@ begin
         end;
       end;
   end;
+  // Effects
+  AItem.Effects := AItem.Effects + SB.Effects;
+  if (SB.Value.Min > 0) then
+    AItem.Value := Math.EnsureRange(Math.RandomRange(SB.Value.Min,
+      SB.Value.Max + 1), 0, High(Byte));
   // Price
   uItem.TItems.CalcItem(AItem, SB.Price);
 end;

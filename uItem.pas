@@ -6,13 +6,13 @@ uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itFlask, itOil, itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe,
+    itFlask, itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe,
     itSpear, itMace, itStaff, itWand, itShield, itHeadgear, itBodyArmor,
     itHands, itFeet, itRing, itAmulet, itTalisman);
 
 const
   ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
-    '!', '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^',
+    '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^',
     '&', '%', '%', '=', '"', '"');
 
   // From Angband:
@@ -44,17 +44,17 @@ const
   BootsTypeItems = [itFeet];
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
-  OilTypeItems = [itOil, itFlask];
+  FlaskTypeItems = [itFlask];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
-    OilTypeItems;
-  AllwaysIdentTypeItems = JewelryTypeItems + OilTypeItems;
+    FlaskTypeItems;
+  AllwaysIdentTypeItems = JewelryTypeItems + FlaskTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
-  RepairTypeItems = OilTypeItems;
+  RepairTypeItems = FlaskTypeItems;
   SmithTypeItems = DefenseTypeItems + DamageTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
@@ -64,7 +64,7 @@ const
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems
-    + PlantTypeItems + OilTypeItems;
+    + PlantTypeItems + FlaskTypeItems;
   // NotEquipTypeItems - NotDropTypeItems;
 
 type
@@ -124,8 +124,6 @@ type
     ivBasalt_Flask, ivBismuth_Flask, ivAquamarine_Flask, ivQuicksilver_Flask,
     ivSulphur_Flask, ivQuartz_Flask, ivJade_Flask, ivCoruscating_Flask,
     ivDivine_Flask, ivEternal_Flask,
-    // Oils,
-    ivOil,
     // Elixirs and Extracts
     ivSoothing_Balm, ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
     ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
@@ -335,69 +333,62 @@ const
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 50; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 50; Color: clWhite; Deep: [deDarkWood];
     Value: 25;),
     // Bismuth Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 100; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 100; Color: clWhite; Deep: [deDarkWood];
     Value: 50;),
     // Aquamarine Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 150; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 150; Color: clWhite; Deep: [deDarkWood];
     Value: 75;),
     // Quicksilver Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 200; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 200; Color: clWhite; Deep: [deDarkWood];
     Value: 100;),
     // Sulphur Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 250; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 250; Color: clWhite; Deep: [deDarkWood];
     Value: 125;),
     // Quartz Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 300; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 300; Color: clWhite; Deep: [deDarkWood];
     Value: 150;),
     // Jade Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 350; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 350; Color: clWhite; Deep: [deDarkWood];
     Value: 175;),
     // Coruscating Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 400; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 400; Color: clWhite; Deep: [deDarkWood];
     Value: 200;),
     // Divine Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 450; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 450; Color: clWhite; Deep: [deDarkWood];
     Value: 225;),
     // Eternal Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 500; Color: clWhite; Deep: [deDarkWood]; Effects: [efLife];
+    Price: 500; Color: clWhite; Deep: [deDarkWood];
     Value: 250;),
-
-    // Oil
-    (Symbol: '!'; ItemType: itOil; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 100; Color: clLightGray; Deep: [deDarkWood .. deDrom];
-    Effects: [efRepair]; Value: 0;),
 
     // Soothing Balm
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -756,156 +747,156 @@ const
 
     // Ring #1
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 15; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #2
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 20; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1250; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #3
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 25; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1500; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #4
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 30; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1750; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #5
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 35; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #6
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 40; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1250; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #7
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 45; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1500; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #8
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 50; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1750; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #9
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 55; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Ring #10
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
-    MaxDurability: 25; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 60; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2500; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     // Amulet #1
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1200; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #2
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 45; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1400; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #3
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 55; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1600; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #4
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 65; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1800; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #5
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 75; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #6
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 85; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2200; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #7
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 95; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2400; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #8
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 105; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2600; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #9
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 115; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2800; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Amulet #10
     (Symbol: ''''; ItemType: itAmulet; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 125; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 3000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     // Talisman #1
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 40; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #2
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 50; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1300; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #3
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 60; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1600; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #4
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 70; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 1900; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #5
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 80; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2200; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #6
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 90; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2500; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #7
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 100; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 2800; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #8
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 110; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 3100; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #9
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 120; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 3500; Color: clYellow; Deep: [deDarkWood .. deDrom];),
     // Talisman #10
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1;
-    MaxDurability: 35; Level: 1; Defense: (Min: 1; Max: 5);
+    MaxDurability: 130; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 1000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
+    Price: 4000; Color: clYellow; Deep: [deDarkWood .. deDrom];),
 
     /// / == Dark Wood == ////
 
@@ -1511,7 +1502,6 @@ type
     function GetName(I: TItemEnum): string; overload;
   public
     Index: Byte;
-    CurrentItem: Item;
     class procedure Make(ID: Byte; var AItem: Item);
     class procedure CalcItem(var AItem: Item; APrice: Word = 0);
     constructor Create;
@@ -1605,16 +1595,15 @@ var
 
   function GetAmount(): string;
   begin
-
     Result := Format('(%dx)', [AItem.Amount])
   end;
 
   procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
     const RareColor: string = '');
   begin
-    if (AEffect in ItemBase[TItemEnum(ID)].Effects) then
+    if (AEffect in AItem.Effects) then
     begin
-      V := ItemBase[TItemEnum(ID)].Value;
+      V := AItem.Value;
       if ((V > 0) or (Sign = '&')) then
         S := S + Items.GetInfo(Sign, V, Color, RareColor) + ' ';
     end;
@@ -1722,7 +1711,7 @@ begin
         (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
         D := Terminal.Colorize(D, 'Rare');
     end;
-    if (IT in OilTypeItems) then
+    if (IT in FlaskTypeItems) then
       D := Terminal.Colorize(Format('%s+%d', [UI.Icon(icHammer),
         AItem.Durability]), 'Rare');
     S := S + AddItemInfo([Level, T, D]);
@@ -1771,6 +1760,10 @@ begin
   // Color
   AItem.Color := ItemBase[TItemEnum(ID)].Color;
   // AItem.Color := Math.RandomRange($FF888888, $FFFFFFFF);
+  // Effects
+  AItem.Effects := ItemBase[TItemEnum(ID)].Effects;
+  // Value
+  AItem.Value := ItemBase[TItemEnum(ID)].Value;
   // Defense
   if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Defense.Min > 0) then
     AItem.Defense := Math.EnsureRange
@@ -2323,13 +2316,13 @@ begin
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
       SB := SuffixBase[TSuffixEnum(I)];
       // Level
-      if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
+      {if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
       begin
         Lev := Player.Attributes.Attrib[atLev].Value;
         AItem.Level := Math.EnsureRange(Math.RandomRange(Lev - 1,
           Lev + 2), 1, 15);
         AItem.Price := AItem.Price * AItem.Level;
-      end;
+      end;}
       if ((AItem.Level < SB.Level.Min) or (AItem.Level > SB.Level.Max)) then
         Continue;
       //

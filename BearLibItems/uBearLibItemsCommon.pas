@@ -2,6 +2,8 @@ unit uBearLibItemsCommon;
 
 interface
 
+uses uCreature;
+
 const
   BonusCount = 2;
 
@@ -26,6 +28,8 @@ type
     Price: Integer;
     Bonus: array [0 .. BonusCount - 1] of Cardinal;
     Color: Cardinal;
+    Effects: TEffects;
+    Value: Integer;
   end;
 
 type
@@ -110,6 +114,8 @@ begin
     for I := 0 to BonusCount - 1 do
       Bonus[I] := 0;
     Color := $FFFFFFFF;
+    Effects := [];
+    Value := 0;
   end;
 end;
 

@@ -130,16 +130,20 @@ var
   end;
 
   function Check: Boolean;
+  //var
+  //  Effects: TEffects;
   begin
     ID := GetItemID();
+    //Effects := ItemBase[ID].Effects;
     case S of
       shTavern:
         Result := ID in TavernItems;
       shHealer:
-        Result := efLife in ItemBase[ID].Effects;
+        //Result := efLife in Effects;
+        Result := ItemBase[ID].ItemType in PotionTypeItems;
       shMana:
-        Result := (efMana in ItemBase[ID].Effects) and
-          not(efLife in ItemBase[ID].Effects);
+        //Result := (efMana in Effects) and not(efLife in Effects);
+        Result := ItemBase[ID].ItemType in PotionTypeItems;
       shPotions:
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shScrolls:

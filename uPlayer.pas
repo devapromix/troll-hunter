@@ -375,7 +375,7 @@ begin
         Exit;
       if ((ItemType in PotionTypeItems) and not Game.GetOption(apPotion)) then
         Exit;
-      if ((ItemType in OilTypeItems) and not Game.GetOption(apOil)) then
+      if ((ItemType in FlaskTypeItems) and not Game.GetOption(apFlask)) then
         Exit;
       if ((ItemType in ScrollTypeItems) and not Game.GetOption(apScroll)) then
         Exit;
@@ -747,7 +747,7 @@ begin
         MsgLog.Add(Format(_('You ate %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stFdEat);
       end;
-      if (T in OilTypeItems) then
+      if (T in FlaskTypeItems) then
       begin
         MsgLog.Add(Format(_('You use %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stItUsed);
@@ -777,8 +777,7 @@ begin
           Exit;
         end;
       end;
-      Items.CurrentItem := FItem;
-      DoEffects(ItemBase[I].Effects, ItemBase[I].Value);
+      DoEffects(FItem.Effects, FItem.Value);
       Self.Calc;
       Wait;
     end;
@@ -937,17 +936,17 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Identify = 0) or (FItem.Amount > 1)) then
     Exit;
-{  // Oil
+  // Oil
   if (Items.Index > 0) then
   begin
-    case Items.CurrentItem.Effect of
+    {case Items.CurrentItem.Effect of
       // Cursed
       - 1:
         Dec(FItem.MaxDurability);
       // Blessed
       1:
         Inc(FItem.MaxDurability);
-    end;
+    end;}
     FItem.Durability := Math.EnsureRange(FItem.Durability + Items.Index, 1,
       FItem.MaxDurability);
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
@@ -958,7 +957,7 @@ begin
     end;
     Scenes.SetScene(scInv);
     Exit;
-  end; }
+  end;
   // Smith
   RepairCost := (FItem.MaxDurability - FItem.Durability) * 10;
   if (RepairCost > 0) then
@@ -1407,11 +1406,12 @@ begin
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
   // Add an oil
-  Items.AddItemToInv(ivOil);
-  Items.AddItemToInv(ivOil);
-  Items.AddItemToInv(ivOil);
-  Items.AddItemToInv(ivOil);
-  Items.AddItemToInv(ivOil);
+  Items.AddItemToInv(ivBasalt_Flask);
+  Items.AddItemToInv(ivBismuth_Flask);
+  Items.AddItemToInv(ivBasalt_Flask);
+  Items.AddItemToInv(ivBasalt_Flask);
+  Items.AddItemToInv(ivBasalt_Flask);
+
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins
@@ -1505,7 +1505,7 @@ begin
   // Repair
   if (efRepair in Effects) then
   begin
-    Items.Index := Items.CurrentItem.Durability;
+    Items.Index := Value;
     Scenes.SetScene(scRepair, scInv);
   end;
   // Teleportation
