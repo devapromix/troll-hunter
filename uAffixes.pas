@@ -441,6 +441,8 @@ begin
       Items.Index := Ord(TSuffixEnum(of_Willpower1)) + Index;
     efCraftPer:
       Items.Index := Ord(TSuffixEnum(of_Perception1)) + Index;
+    efCraftAtr:
+      Items.Index := Ord(TSuffixEnum(of_the_Sky)) + Index;
   end;
 end;
 

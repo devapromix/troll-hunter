@@ -6,14 +6,14 @@ uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itFlask, itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe,
-    itSpear, itMace, itStaff, itWand, itShield, itHeadgear, itBodyArmor,
-    itHands, itFeet, itRing, itAmulet, itTalisman);
+    itFlask, itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe, itSpear,
+    itMace, itStaff, itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet,
+    itRing, itAmulet, itTalisman);
 
 const
   ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
-    '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^',
-    '&', '%', '%', '=', '"', '"');
+    '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^', '&',
+    '%', '%', '=', '"', '"');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -153,6 +153,9 @@ type
     // Emerald (Gems)
     ivChipped_Emerald, ivFlawed_Emerald, ivEmerald, ivFlawless_Emerald,
     ivPerfect_Emerald, ivImperial_Emerald, ivRoyal_Emerald,
+    // Diamond (Gems)
+    ivChipped_Diamond, ivFlawed_Diamond, ivDiamond, ivFlawless_Diamond,
+    ivPerfect_Diamond, ivImperial_Diamond, ivRoyal_Diamond,
     // Rings
     ivMoonstone_Ring, ivValuable_Ring, ivPrecious_Ring, ivEthreal_Ring,
     ivExquisite_Ring, ivScarab_Ring, ivCrystal_Ring, ivPrismatic_Ring,
@@ -333,62 +336,52 @@ const
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 50; Color: clWhite; Deep: [deDarkWood];
-    Value: 25;),
+    Price: 50; Color: clWhite; Deep: [deDarkWood]; Value: 25;),
     // Bismuth Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 100; Color: clWhite; Deep: [deDarkWood];
-    Value: 50;),
+    Price: 100; Color: clWhite; Deep: [deDarkWood]; Value: 50;),
     // Aquamarine Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 150; Color: clWhite; Deep: [deDarkWood];
-    Value: 75;),
+    Price: 150; Color: clWhite; Deep: [deDarkWood]; Value: 75;),
     // Quicksilver Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 200; Color: clWhite; Deep: [deDarkWood];
-    Value: 100;),
+    Price: 200; Color: clWhite; Deep: [deDarkWood]; Value: 100;),
     // Sulphur Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 250; Color: clWhite; Deep: [deDarkWood];
-    Value: 125;),
+    Price: 250; Color: clWhite; Deep: [deDarkWood]; Value: 125;),
     // Quartz Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 300; Color: clWhite; Deep: [deDarkWood];
-    Value: 150;),
+    Price: 300; Color: clWhite; Deep: [deDarkWood]; Value: 150;),
     // Jade Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 350; Color: clWhite; Deep: [deDarkWood];
-    Value: 175;),
+    Price: 350; Color: clWhite; Deep: [deDarkWood]; Value: 175;),
     // Coruscating Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 400; Color: clWhite; Deep: [deDarkWood];
-    Value: 200;),
+    Price: 400; Color: clWhite; Deep: [deDarkWood]; Value: 200;),
     // Divine Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 450; Color: clWhite; Deep: [deDarkWood];
-    Value: 225;),
+    Price: 450; Color: clWhite; Deep: [deDarkWood]; Value: 225;),
     // Eternal Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 500; Color: clWhite; Deep: [deDarkWood];
-    Value: 250;),
+    Price: 500; Color: clWhite; Deep: [deDarkWood]; Value: 250;),
 
     // Soothing Balm
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
@@ -744,6 +737,48 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 2500; Color: clGreen; Deep: [deDrom]; Effects: [efCraftPer];
     Value: 6;),
+
+    // Diamond #1
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1000; Color: clLightBlue; Deep: [deDarkWood]; Effects: [efCraftAtr];
+    Value: 0;),
+    // Diamond #2
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 1500; Color: clLightBlue; Deep: [deDarkWood .. deGrayCave];
+    Effects: [efCraftAtr]; Value: 1;),
+    // Diamond #3
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2000; Color: clLightBlue; Deep: [deGrayCave .. deDeepCave];
+    Effects: [efCraftAtr]; Value: 2;),
+    // Diamond #4
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 2500; Color: clLightBlue; Deep: [deDeepCave .. deBloodCave];
+    Effects: [efCraftAtr]; Value: 3;),
+    // Diamond #5
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 3000; Color: clLightBlue; Deep: [deBloodCave .. deDrom];
+    Effects: [efCraftAtr]; Value: 4;),
+    // Diamond #6
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 3500; Color: clLightBlue; Deep: [deBloodCave .. deDrom];
+    Effects: [efCraftAtr]; Value: 5;),
+    // Diamond #7
+    (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 4000; Color: clLightBlue; Deep: [deDrom]; Effects: [efCraftAtr];),
 
     // Ring #1
     (Symbol: '='; ItemType: itRing; SlotType: stFinger; MaxStack: 1;
@@ -2316,13 +2351,13 @@ begin
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
       SB := SuffixBase[TSuffixEnum(I)];
       // Level
-      {if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
-      begin
+      { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
+        begin
         Lev := Player.Attributes.Attrib[atLev].Value;
         AItem.Level := Math.EnsureRange(Math.RandomRange(Lev - 1,
-          Lev + 2), 1, 15);
+        Lev + 2), 1, 15);
         AItem.Price := AItem.Price * AItem.Level;
-      end;}
+        end; }
       if ((AItem.Level < SB.Level.Min) or (AItem.Level > SB.Level.Max)) then
         Continue;
       //

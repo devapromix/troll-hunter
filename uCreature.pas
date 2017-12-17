@@ -9,7 +9,7 @@ const
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-    efCraftStr, efCraftDex, efCraftWil, efCraftPer, efTownPortal, efMagicEye,
+    efCraftStr, efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye,
     efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge,
     efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
     efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
@@ -17,7 +17,7 @@ type
 
 const
   CraftEffLow = efCraftStr;
-  CraftEffHigh = efCraftPer;
+  CraftEffHigh = efCraftAtr;
 
 type
   TEffects = set of TEffect;
