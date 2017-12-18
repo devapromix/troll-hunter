@@ -939,14 +939,14 @@ begin
   // Oil
   if (Items.Index > 0) then
   begin
-    {case Items.CurrentItem.Effect of
+    { case Items.CurrentItem.Effect of
       // Cursed
       - 1:
-        Dec(FItem.MaxDurability);
+      Dec(FItem.MaxDurability);
       // Blessed
       1:
-        Inc(FItem.MaxDurability);
-    end;}
+      Inc(FItem.MaxDurability);
+      end; }
     FItem.Durability := Math.EnsureRange(FItem.Durability + Items.Index, 1,
       FItem.MaxDurability);
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
@@ -1335,7 +1335,7 @@ end;
 
 procedure TPlayer.Start();
 var
-  D: Byte;
+  I, D: Byte;
 begin
 
   // Add armors
@@ -1390,28 +1390,39 @@ begin
   if Mode.Wizard then
   begin
     Items.AddItemToInv(ivRune_of_Full_Healing);
-    Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
-    Items.AddItemToInv(ivPotion_of_Full_Mana, 10);
-    Items.AddItemToInv(ivAntidote, 10);
+    // Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
+    // Items.AddItemToInv(ivPotion_of_Full_Mana, 10);
+    // Items.AddItemToInv(ivAntidote, 10);
     Items.AddItemToInv(ivScroll_of_Town_Portal, 10);
     Items.AddItemToInv(ivScroll_of_Identify, 10);
     Items.AddItemToInv(ivScroll_of_Bloodlust, 10);
   end
   else
   begin
-    Items.AddItemToInv(ivLesser_Healing_Potion, 5);
-    Items.AddItemToInv(ivLesser_Mana_Potion, 5);
-    Items.AddItemToInv(ivAntidote, 3);
+    // Items.AddItemToInv(ivLesser_Healing_Potion, 5);
+    // Items.AddItemToInv(ivLesser_Mana_Potion, 5);
+    // Items.AddItemToInv(ivAntidote, 3);
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
-  // Add an oil
-  Items.AddItemToInv(ivBasalt_Flask);
-  Items.AddItemToInv(ivBismuth_Flask);
-  Items.AddItemToInv(ivBasalt_Flask);
-  Items.AddItemToInv(ivBasalt_Flask);
-  Items.AddItemToInv(ivBasalt_Flask);
-
+  // Flasks
+  D := Math.IfThen(Mode.Wizard, 3, 3);
+  for I := 1 to D do
+  begin
+    Items.AddItemToInv(ivBasalt_Flask0, 1, False, True);
+  end;
+  for I := 1 to D do
+  begin
+    Items.AddItemToInv(ivBasalt_Flask, 1, False, True);
+  end;
+  for I := 1 to D do
+  begin
+    Items.AddItemToInv(ivEternal_Flask, 1, False, True);
+  end;
+  for I := 1 to D do
+  begin
+    Items.AddItemToInv(ivEternal_Flask2, 1, False, True);
+  end;
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins

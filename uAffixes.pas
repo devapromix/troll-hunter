@@ -84,31 +84,31 @@ const
 
     // of Healing
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
-    Effects: [efLife];),
+    Value: (Min: 1; Max: 9); Effects: [efLife];),
     // of Mana
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
-    Effects: [efMana];),
+    Value: (Min: 1; Max: 9); Effects: [efMana];),
     // of Rejuvenation
-    (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
-    Effects: [efLife, efMana];),
+    (Level: (Min: 1; Max: 15); Price: 35; Occurence: FlaskTypeItems;
+    Value: (Min: 1; Max: 9); Effects: [efLife, efMana];),
     // of Antidote
-    (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
-    Effects: [efCurePoison];),
+    (Level: (Min: 1; Max: 15); Price: 65; Occurence: FlaskTypeItems;
+    Value: (Min: 1; Max: 9); Effects: [efCurePoison];),
 
     // of Blacksmith (Oil I)
-    (Level: (Min: 1; Max: 3); Price: 50; Occurence: FlaskTypeItems;
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: FlaskTypeItems;
     Value: (Min: 5; Max: 9); Effects: [efRepair];),
     // of Mastery (Oil II)
-    (Level: (Min: 2; Max: 6); Price: 100; Occurence: FlaskTypeItems;
+    (Level: (Min: 2; Max: 6); Price: 200; Occurence: FlaskTypeItems;
     Value: (Min: 10; Max: 14); Effects: [efRepair];),
     // of Sharpness (Oil III)
-    (Level: (Min: 3; Max: 9); Price: 150; Occurence: FlaskTypeItems;
+    (Level: (Min: 3; Max: 9); Price: 300; Occurence: FlaskTypeItems;
     Value: (Min: 15; Max: 19); Effects: [efRepair];),
     // of Fortitude (Oil VI)
-    (Level: (Min: 4; Max: 12); Price: 200; Occurence: FlaskTypeItems;
+    (Level: (Min: 4; Max: 12); Price: 400; Occurence: FlaskTypeItems;
     Value: (Min: 20; Max: 24); Effects: [efRepair];),
     // of Permanence (Oil V)
-    (Level: (Min: 5; Max: 15); Price: 250; Occurence: FlaskTypeItems;
+    (Level: (Min: 5; Max: 15); Price: 500; Occurence: FlaskTypeItems;
     Value: (Min: 25; Max: 30); Effects: [efRepair];),
 
     // (Life I)
@@ -577,10 +577,10 @@ begin
   // Effects
   AItem.Effects := AItem.Effects + SB.Effects;
   if (SB.Value.Min > 0) then
-    AItem.Value := Math.EnsureRange(Math.RandomRange(SB.Value.Min,
+    AItem.Value := Math.EnsureRange(AItem.Value + Math.RandomRange(SB.Value.Min,
       SB.Value.Max + 1), 0, High(Byte));
   // Price
-  uItem.TItems.CalcItem(AItem, SB.Price);
+  uItem.TItems.CalcItem(AItem);
 end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
