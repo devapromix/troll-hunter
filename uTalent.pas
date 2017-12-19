@@ -11,7 +11,7 @@ type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
     tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
     tlAffinity_with_Swords, tlAffinity_with_Axes,
-    tlAffinity_with_Polearms, tlAffinity_with_Maces,
+    tlAffinity_with_Polearms, tlAffinity_with_Maces, tlAffinity_with_Staves,
     tlMiser { Скряга }, tlCareful { Осторожный }, tlIron_Skin { Железная Кожа },
     tlHardy { Выносливый }, tlCharged { Энергичный } );
 
@@ -47,6 +47,8 @@ const
     (Level: 3; TalentBonus: tbSkill; Effects: [efPrmSpear];),
     // Affinity with Maces
     (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMace];),
+    // Affinity with Staves
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmStaff];),
     // Miser
     (Level: 5; TalentBonus: tbNone; Effects: [ef2xGold];),
     // Careful
@@ -94,7 +96,7 @@ uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
 const
   TalentHint: array [TTalentEnum] of string = (
   '', 'Athletics', 'Dodge', 'Concentration', 'Toughness',
-  'Gold', 'Blade', 'Axe', 'Spear', 'Mace',
+  'Gold', 'Blade', 'Axe', 'Spear', 'Mace', 'Staff',
   'x2 to Gold', 'DV', 'PV', 'Life', 'Mana'
   );
 

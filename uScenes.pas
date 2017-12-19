@@ -236,6 +236,7 @@ type
 type
   TScenePlayer = class(TScene)
   private
+    FSkillCursorTop: ShortInt;
     procedure RenderPlayer;
     procedure RenderSkills;
   public
@@ -276,7 +277,8 @@ uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal, Dialogs,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
-  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest, uAffixes;
+  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
+  uAffixes;
 
 { TScene }
 
@@ -1073,7 +1075,7 @@ end;
 
 constructor TScenePlayer.Create;
 begin
-
+  FSkillCursorTop := 0;
 end;
 
 procedure TScenePlayer.Render;
@@ -1095,15 +1097,17 @@ procedure TScenePlayer.RenderPlayer;
 var
   W: Byte;
 begin
-  Y := 3;
+  Y := 1;
   X := Math.EnsureRange(Terminal.Window.Width div 4, 10, High(Byte));
   W := X * 2 - 3;
-  Terminal.Print(X, Y, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + 1, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
+
   UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax,
     clDarkRed, clDarkGray);
   Terminal.Print(X, Y + 2, Format('%s %d',
     [UI.Icon(icElixir) + ' ' + _('Level'), Player.Attributes.Attrib[atLev]
     .Value]), TK_ALIGN_CENTER);
+
   UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax,
     color_from_name('strength'), clDarkGray);
   Terminal.Print(X, Y + 4, Format('%s %d/%d',
@@ -1124,44 +1128,51 @@ begin
   Terminal.Print(X, Y + 10, Format('%s %d/%d',
     [UI.Icon(icLeaf) + ' ' + _('Perception'), Player.Attributes.Attrib[atPer]
     .Value, AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atDV].Value, DVMax,
+
+  UI.Bar(1, 0, Y + 12, W, Player.Attributes.Attrib[atDV].Value, DVMax,
     clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 14, Format('%s %d/%d',
+  Terminal.Print(X, Y + 12, Format('%s %d/%d',
     [UI.Icon(icDex) + ' ' + _('Defensive Value (DV)'),
     Player.Attributes.Attrib[atDV].Value, DVMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 16, W, Player.Attributes.Attrib[atPV].Value, PVMax,
+  UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atPV].Value, PVMax,
     clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 16, Format('%s %d/%d',
+  Terminal.Print(X, Y + 14, Format('%s %d/%d',
     [UI.Icon(icShield) + ' ' + _('Protection Value (PV)'),
     Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 18, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
-  Terminal.Print(X, Y + 18, Format('%s %d/%d',
+
+  UI.Bar(1, 0, Y + 16, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
+  Terminal.Print(X, Y + 16, Format('%s %d/%d',
     [UI.Icon(icLife) + ' ' + _('Life'), Player.Life, Player.MaxLife]),
     TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 20, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
-  Terminal.Print(X, Y + 20, Format('%s %d/%d',
+  UI.Bar(1, 0, Y + 18, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
+  Terminal.Print(X, Y + 18, Format('%s %d/%d',
     [UI.Icon(icMana) + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
     TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 22, W, Player.Vision, VisionMax, color_from_name('vision'),
+
+  UI.Bar(1, 0, Y + 20, W, Player.Vision, VisionMax, color_from_name('vision'),
     clDarkGray);
-  Terminal.Print(X, Y + 22, Format('%s %d/%d',
+  Terminal.Print(X, Y + 20, Format('%s %d/%d',
     [UI.Icon(icVision) + ' ' + _('Vision radius'), Player.Vision, VisionMax]),
     TK_ALIGN_CENTER);
 end;
 
+const
+  ScrMax = 13;
+
 procedure TScenePlayer.RenderSkills;
 var
   I: TSkillEnum;
-  A, B, D: Byte;
+  A, B, J, D: Byte;
 begin
-  Y := 3;
+  Y := 1;
   X := Terminal.Window.Width div 2;
   A := Terminal.Window.Width div 4;
   B := A * 3;
-  Terminal.Print(B, Y, Format(FT, [_('Skills')]), TK_ALIGN_CENTER);
-  for I := Low(TSkillEnum) to High(TSkillEnum) do
+  Terminal.Print(B, Y + 1, Format(FT, [_('Skills')]), TK_ALIGN_CENTER);
+  for J := 1 to ScrMax do
   begin
-    D := (Ord(I) * 2) + Y + 2;
+    I := TSkillEnum(FSkillCursorTop + J);
+    D := ((J - 1) * 2) + Y + 2;
     UI.Bar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
       clDarkGray);
     Terminal.Print(B, D, Format('%s %d/%d', [Player.Skills.GetName(I),
@@ -1182,6 +1193,16 @@ begin
       begin
         Game.Timer := High(Byte);
         Scenes.SetScene(scInv);
+      end;
+    TK_UP, TK_KP_8, TK_W:
+      begin
+        if (FSkillCursorTop > 0) then
+          Dec(FSkillCursorTop);
+      end;
+    TK_DOWN, TK_KP_2, TK_X:
+      begin
+        if (FSkillCursorTop < Ord(High(TSkillEnum)) - ScrMax) then
+          Inc(FSkillCursorTop);
       end;
   end;
 end;
@@ -1366,6 +1387,8 @@ begin
     Add(_('Quests'), Quests.Amount);
     Add(_('Talents'), Player.Talents.Amount);
     Add(_('Affixes'), Affixes.Amount);
+    Add(_('Items Types'), Ord(High(TItemType)));
+    Add(_('Skills'), Ord(High(TSkillEnum)));
   end;
 
   AddKey('Esc', _('Close'), True);
@@ -1808,6 +1831,7 @@ begin
   AddOption('R', _('Auto pickup runes'), Game.GetOption(apRune));
   AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
   AddOption('K', _('Auto pickup keys'), Game.GetOption(apKey));
+  AddOption('D', _('Show item price in inventory'), Game.GetOption(apShPrice));
 
   // Settings
   X := 1;
@@ -1828,8 +1852,7 @@ begin
     AddOption('T', _('Reload all shops'), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
     AddOption('I', _('Show ID of items'), Game.ShowID);
-    AddOption('N', _('Hide level of item'),
-      Game.GetOption(apHdLevOfItem));
+    AddOption('N', _('Hide level of item'), Game.GetOption(apHdLevOfItem));
   end;
 
   AddKey('Esc', _('Back'), True);
@@ -1859,6 +1882,8 @@ begin
       Game.ChOption(apKey);
     TK_B:
       Game.ChOption(apBook);
+    TK_D:
+      Game.ChOption(apShPrice);
     // Settings
     TK_W:
       begin

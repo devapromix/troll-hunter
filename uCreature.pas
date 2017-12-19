@@ -12,7 +12,7 @@ type
     efCraftStr, efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye,
     efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge,
     efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
-    efPrmMace, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
+    efPrmMace, efPrmStaff, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
     efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair);
 
 const

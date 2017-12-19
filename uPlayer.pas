@@ -341,6 +341,13 @@ begin
           Skills.DoSkill(skAthletics, 4);
           SatPerTurn := Ord(Game.Difficulty) + 7;
         end;
+      skStaff:
+        begin
+          Skills.DoSkill(FWeaponSkill, 2);
+          Skills.DoSkill(skDodge);
+          Skills.DoSkill(skConcentration, 3);
+          SatPerTurn := Ord(Game.Difficulty) + 8;
+        end;
     end;
     // Victory
     if (Mob.Life = 0) then
@@ -424,6 +431,8 @@ var
         Result := skSpear;
       itMace:
         Result := skMace;
+      itStaff:
+        Result := skStaff;
     else
       Result := skNone;
     end;
@@ -1609,6 +1618,9 @@ begin
   // Mace
   if (efPrmMace in Effects) then
     PrmSkill(skMace);
+  // Staff
+  if (efPrmStaff in Effects) then
+    PrmSkill(skStaff);
   // 2x to gold
   if (ef2xGold in Effects) then
   begin

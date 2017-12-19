@@ -21,6 +21,8 @@ type
     Willpower: TMinMax;
     Perception: TMinMax;
     Value: TMinMax;
+    PrmValue: Byte;
+    Rare: Boolean;
     Effects: TEffects;
   end;
 
@@ -30,8 +32,9 @@ type
     None,
     // Vision I
     of_Radiance,
-    // Life, Mana, Antidote
-    of_Healing, of_Mana, of_Rejuvenation, of_Antidote,
+    // Potions, Antidote, Extracts
+    of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation, of_Antidote,
+    of_Soothing, of_Poultice, of_the_Troll, of_the_Unicorn,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
@@ -63,7 +66,9 @@ type
     of_Perception5, of_Perception6, of_Perception7,
     // Additional All Attributes I - VII
     of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
-    of_the_Universe, of_the_Infinite
+    of_the_Universe, of_the_Infinite,
+    // Mage I - VII
+    of_Magic1, of_Magic2, of_Magic3, of_Magic4, of_Magic5, of_Magic6, of_Magic7
     //
     );
 
@@ -82,18 +87,33 @@ const
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
 
-    // of Healing
+    // of Healing (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efLife];),
-    // of Mana
+    // of Minor Mana (Flask I)
+    (Level: (Min: 1; Max: 1); Price: 0; Occurence: FlaskTypeItems;
+    Effects: [efMana];),
+    // of Mana (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efMana];),
-    // of Rejuvenation
+    // of Rejuvenation (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 35; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efLife, efMana];),
-    // of Antidote
+    // of Antidote (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 65; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efCurePoison];),
+    // of Soothing (Flask I - XII)
+    (Level: (Min: 1; Max: 15); Price: 20; Occurence: FlaskTypeItems;
+    Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efFood];),
+    // of Poultice (Flask I - XII)
+    (Level: (Min: 1; Max: 15); Price: 45; Occurence: FlaskTypeItems;
+    Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efCurePoison];),
+    // of the Troll (Flask I - XII)
+    (Level: (Min: 1; Max: 15); Price: 2000; Occurence: FlaskTypeItems;
+    PrmValue: 1; Rare: True; Effects: [efPrmLife];),
+    // of the Unicorn (Flask I - XII)
+    (Level: (Min: 1; Max: 15); Price: 2000; Occurence: FlaskTypeItems;
+    PrmValue: 1; Rare: True; Effects: [efPrmMana];),
 
     // of Blacksmith (Oil I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: FlaskTypeItems;
@@ -393,7 +413,29 @@ const
     // of the Universe (Additional All Attributes VI)
     (Level: (Min: 6; Max: 13); Price: 2500; Occurence: JewelryTypeItems;),
     // of the Infinite (Additional All Attributes VII)
-    (Level: (Min: 7; Max: 15); Price: 3000; Occurence: JewelryTypeItems;)
+    (Level: (Min: 7; Max: 15); Price: 3000; Occurence: JewelryTypeItems;),
+
+    // (Staves and Wands I)
+    (Level: (Min: 1; Max: 3); Price: 600; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 5; Max: 10);),
+    // (Staves and Wands II)
+    (Level: (Min: 2; Max: 5); Price: 900; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 15; Max: 20);),
+    // (Staves and Wands III)
+    (Level: (Min: 3; Max: 7); Price: 1200; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 25; Max: 30);),
+    // (Staves and Wands IV)
+    (Level: (Min: 4; Max: 9); Price: 1500; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 35; Max: 40);),
+    // (Staves and Wands V)
+    (Level: (Min: 5; Max: 11); Price: 1800; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 45; Max: 50);),
+    // (Staves and Wands VI)
+    (Level: (Min: 6; Max: 13); Price: 2100; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 55; Max: 60);),
+    // (Staves and Wands VII)
+    (Level: (Min: 7; Max: 15); Price: 2400; Occurence: MagicWeaponTypeItems;
+    Mana: (Min: 65; Max: 70);)
 
     //
     );
@@ -513,7 +555,7 @@ begin
     of_Life1 .. of_Life7:
       SetLife();
     // Mana
-    of_Mana1 .. of_Mana7:
+    of_Mana1 .. of_Mana7, of_Magic1 .. of_Magic7:
       SetMana();
     // Life and Mana
     of_Atr1 .. of_Atr7:
@@ -575,10 +617,12 @@ begin
       end;
   end;
   // Effects
-  AItem.Effects := AItem.Effects + SB.Effects;
+  AItem.Effects := SB.Effects;
   if (SB.Value.Min > 0) then
     AItem.Value := Math.EnsureRange(AItem.Value + Math.RandomRange(SB.Value.Min,
       SB.Value.Max + 1), 0, High(Byte));
+  if (SB.PrmValue > 0) then
+    AItem.Value := SB.PrmValue;
   // Price
   uItem.TItems.CalcItem(AItem);
 end;

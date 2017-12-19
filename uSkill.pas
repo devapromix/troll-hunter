@@ -6,12 +6,14 @@ type
   TSkillEnum = (
     //
     skNone,
+    //
+    skStealth,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
     // Weapon skills
-    skBlade, skAxe, skSpear, skMace,
+    skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow,
     // Skills
-    skStealth, skHealing);
+    skHealing);
 
 type
   TSkill = record

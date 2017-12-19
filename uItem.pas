@@ -7,13 +7,13 @@ uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
     itFlask, itScroll, itBook, itRune, itFood, itPlant, itBlade, itAxe, itSpear,
-    itMace, itStaff, itWand, itShield, itHeadgear, itBodyArmor, itHands, itFeet,
-    itRing, itAmulet, itTalisman);
+    itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear, itBodyArmor,
+    itHands, itFeet, itRing, itAmulet, itTalisman, itArrow);
 
 const
   ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
-    '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '+', '^', '&',
-    '%', '%', '=', '"', '"');
+    '!', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '-', ')', '+',
+    '^', '&', '%', '%', '=', '"', '"', '{');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -46,8 +46,10 @@ const
   HelmTypeItems = [itHeadgear];
   FlaskTypeItems = [itFlask];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
-  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff];
+  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow,
+    itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
+  MagicWeaponTypeItems = [itStaff, itWand];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
     FlaskTypeItems;
@@ -120,12 +122,11 @@ type
       ivMinor_Mana_Potion, ivLesser_Mana_Potion, ivGreater_Mana_Potion,
       ivHeroic_Mana_Potion, ivPotion_of_Full_Mana, }
     // Flasks
-    ivBasalt_Flask0, ivBasalt_Flask, ivBismuth_Flask, ivAquamarine_Flask, ivQuicksilver_Flask,
-    ivSulphur_Flask, ivQuartz_Flask, ivJade_Flask, ivCoruscating_Flask,
-    ivDivine_Flask, ivEternal_Flask, ivEternal_Flask2,
+    ivBasalt_Flask0, ivBasalt_Flask, ivBismuth_Flask, ivAquamarine_Flask,
+    ivQuicksilver_Flask, ivSulphur_Flask, ivQuartz_Flask, ivJade_Flask,
+    ivCoruscating_Flask, ivDivine_Flask, ivEternal_Flask, ivEternal_Flask2,
     // Elixirs and Extracts
-    ivSoothing_Balm, ivHealing_Poultice, ivAntidote, ivFortifying_Potion,
-    ivTroll_Blood_Extract, ivUnicorn_Blood_Extract,
+    ivFortifying_Potion,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
     ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
@@ -178,6 +179,7 @@ type
     ivHatchet, ivBattle_Axe, // Axe
     ivShort_Spear, ivSpear, // Spear
     ivSlag_Hammer, ivSpiked_Cudgel, // Mace
+    ivStaff1, ivStaff2, // Staff
     // Gray Cave
     ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
     ivHard_Leather_Armor, ivBattle_Armor, ivFancy_Clothes, ivRobe, // Body Armor
@@ -188,6 +190,7 @@ type
     ivMeat_Axe, ivFlesh_Tearer, // Axe
     ivJavelin, ivFuscina, // Spear
     ivWarhammer, ivWar_Mace, // Mace
+    ivStaff3, ivStaff4, // Staff
     // Deep Cave
     ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
     ivBrigantine_Armor, ivRing_Mail, ivLight_Furs, ivClean_Robe, // Body Armor
@@ -198,6 +201,7 @@ type
     ivWar_Axe, ivDark_Axe, // Axe
     ivWar_Spear, ivHarpoon, // Spear
     ivFlanged_Mace, ivWar_Gavel, // Mace
+    ivStaff5, ivStaff6, // Staff
     // Blood Cave
     ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
     ivChain_Mail, ivScale_Mail, ivThick_Furs, ivHard_Robe, // Body Armor
@@ -208,6 +212,7 @@ type
     ivBerserker_Axe, ivMarauder_Axe, // Axe
     ivSilvan_Whisper, ivImpaler, // Spear
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
+    ivStaff7, ivStaff8, // Staff
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
     ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
@@ -218,7 +223,8 @@ type
     ivRune_Sword, ivTroll_Slayer, // Blade
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
-    ivWar_Maul, ivDoom_Hammer // Mace
+    ivWar_Maul, ivDoom_Hammer, // Mace
+    ivStaff9, ivStaff10 // Staff
     );
 
 const
@@ -392,43 +398,12 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 600; Color: clWhite; Deep: [deDarkWood]; Value: 220;),
 
-    // Soothing Balm
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 90; Color: clLightestYellow; Deep: [deDarkWood .. deDeepCave];
-    Effects: [efLife, efMana, efFood]; Value: 40;),
-    // Healing Poultice
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 180; Color: clLightYellow; Deep: [deGrayCave .. deBloodCave];
-    Effects: [efLife, efMana, efCurePoison]; Value: 80;),
-    // Antidote
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 250; Color: clLightestGreen; Deep: [deDarkWood .. deDrom];
-    Effects: [efCurePoison]; Value: 100;),
     // Fortifying Potion
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 300; Color: clLightYellow; Deep: [deDarkWood .. deDrom];
     Effects: [efCureWeak]; Value: 1;),
-
-    // Troll Blood Extract
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 5000; Color: clDarkRed; Deep: [deDarkWood .. deDrom];
-    Effects: [efPrmLife]; Value: 1;),
-    // Unicorn Blood Extract
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 5000; Color: clDarkBlue; Deep: [deDarkWood .. deDrom];
-    Effects: [efPrmMana]; Value: 1;),
 
     // Scroll of minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
@@ -1058,6 +1033,16 @@ const
     MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 7; Max: 9;));
     Price: 220; Color: clDarkRed; Deep: [deDarkWood];),
+    // Staff1
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 2; Max: 3;));
+    Price: 300; Color: clDarkGreen; Deep: [deDarkWood];),
+    // Staff2
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;));
+    Price: 400; Color: clDarkGreen; Deep: [deDarkWood];),
 
     /// / == Gray Cave == ////
 
@@ -1175,6 +1160,16 @@ const
     MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 10;); MaxDamage: (Min: 17; Max: 19;));
     Price: 410; Color: clDarkRed; Deep: [deGrayCave];),
+    // Staff3
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 3; Max: 4;); MaxDamage: (Min: 4; Max: 5;));
+    Price: 500; Color: clDarkGreen; Deep: [deGrayCave];),
+    // Staff4
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 4; Max: 5;); MaxDamage: (Min: 6; Max: 7;));
+    Price: 600; Color: clDarkGreen; Deep: [deGrayCave];),
 
     /// / == Deep Cave == ////
 
@@ -1292,6 +1287,16 @@ const
     MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 18;); MaxDamage: (Min: 30; Max: 33;));
     Price: 650; Color: clDarkRed; Deep: [deDeepCave];),
+    // Staff5
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 6; Max: 7;));
+    Price: 700; Color: clDarkGreen; Deep: [deDeepCave];),
+    // Staff6
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 6; Max: 7;); MaxDamage: (Min: 8; Max: 9;));
+    Price: 800; Color: clDarkGreen; Deep: [deDeepCave];),
 
     /// / == Blood Cave == ////
 
@@ -1409,6 +1414,16 @@ const
     MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 48; Max: 51;));
     Price: 850; Color: clDarkRed; Deep: [deBloodCave];),
+    // Staff7
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 7; Max: 8;); MaxDamage: (Min: 8; Max: 9;));
+    Price: 900; Color: clDarkGreen; Deep: [deBloodCave];),
+    // Staff8
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 8; Max: 9;); MaxDamage: (Min: 10; Max: 11;));
+    Price: 1000; Color: clDarkGreen; Deep: [deBloodCave];),
 
     /// / == Drom == ////
 
@@ -1525,7 +1540,17 @@ const
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 36; Max: 40;); MaxDamage: (Min: 70; Max: 80;));
-    Price: 1000; Color: clDarkRed; Deep: [deDrom];)
+    Price: 1000; Color: clDarkRed; Deep: [deDrom];),
+    // Staff9
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 9; Max: 10;); MaxDamage: (Min: 11; Max: 12;));
+    Price: 1100; Color: clDarkGreen; Deep: [deDrom];),
+    // Staff10
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
+    Price: 1200; Color: clDarkGreen; Deep: [deDrom];)
 
     );
 
@@ -1575,7 +1600,7 @@ type
     procedure Loot(const AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
-    function Identify(var AItem: Item; IsNew: Boolean = False): Boolean;
+    function Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False): Boolean;
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
@@ -1611,8 +1636,9 @@ begin
   // Flask
   if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in FlaskTypeItems) then
   begin
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price +
-      AItem.Value;
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price;
+    if not SB.Rare then
+      AItem.Price := AItem.Price + AItem.Value;
     Exit;
   end;
   { // Oil
@@ -1629,9 +1655,14 @@ begin
     Exit;
     end; }
   // Price
-  AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price +
-    Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
-    Round(AItem.MaxDamage * 5.6);
+  if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in IdentTypeItems) then
+  begin
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price +
+      Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
+      Round(AItem.MaxDamage * 5.6);
+  end
+  else
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price;
 end;
 
 function TItems.ChItem(AItem: Item): Boolean;
@@ -1695,6 +1726,8 @@ begin
     AddEffect(efCraftDex, '&', 'Dexterity', 'Dexterity');
     AddEffect(efCraftWil, '&', 'Willpower', 'Willpower');
     AddEffect(efCraftPer, '&', 'Perception', 'Perception');
+    AddEffect(efPrmMana, '*', 'Mana');
+    AddEffect(efPrmLife, '*', 'Life');
   end;
   // Amount
   if (AItem.Stack > 1) then
@@ -2159,6 +2192,9 @@ begin
               S := GetPrice(RepairCost);
           end;
         end;
+    else
+      if ((AItem.Price > 0) and Game.GetOption(apShPrice)) then
+        S := GetPrice(AItem.Price);
     end;
     if Game.Timer > 0 then
       Terminal.Print(Status.Left - L, AY + I, S)
@@ -2360,7 +2396,7 @@ begin
       PriceType);
 end;
 
-function TItems.Identify(var AItem: Item; IsNew: Boolean = False): Boolean;
+function TItems.Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False): Boolean;
 var
   I, Lev: Byte;
   SB: TSuffixBase;
@@ -2385,6 +2421,12 @@ begin
       //
       if not(ItemBase[TItemEnum(AItem.ItemID)].ItemType in SB.Occurence) then
         Continue;
+      // Rare
+      if not IsRare and SB.Rare then
+      begin
+        Identify(AItem, IsNew, Math.RandomRange(0, 7) = 0);
+        //Exit; Для тестів унікальних флаконів
+      end;
       //
       AItem.Identify := I;
       Affixes.DoSuffix(AItem);
