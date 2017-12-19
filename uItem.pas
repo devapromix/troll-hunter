@@ -112,15 +112,6 @@ type
   TItemEnum = (
     // All maps
     None, ivCorpse, ivGold,
-    { // Healing Potions
-      ivMinor_Healing_Potion, ivLesser_Healing_Potion, ivGreater_Healing_Potion,
-      ivHeroic_Healing_Potion, ivPotion_of_Full_Healing,
-      // Rejuvenation Potions
-      ivLesser_Rejuvenation_Potion, ivGreater_Rejuvenation_Potion,
-      ivHeroic_Rejuvenation_Potion, ivPotion_of_Full_Rejuvenation,
-      // Mana Potions
-      ivMinor_Mana_Potion, ivLesser_Mana_Potion, ivGreater_Mana_Potion,
-      ivHeroic_Mana_Potion, ivPotion_of_Full_Mana, }
     // Flasks
     ivBasalt_Flask0, ivBasalt_Flask, ivBismuth_Flask, ivAquamarine_Flask,
     ivQuicksilver_Flask, ivSulphur_Flask, ivQuartz_Flask, ivJade_Flask,
@@ -168,6 +159,9 @@ type
     ivLongtooth_Talisman, ivDark_Eye, ivBlack_Maw_Talisman, ivVoid_Eye,
     ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
+    // Daggers
+    ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
+    ivDagger8, ivDagger9, ivDagger10,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
@@ -917,6 +911,57 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 4000; Color: clYellow; Deep: [deDrom];),
 
+    // Dagger #1
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;));
+    Price: 125; Color: clDarkBlue; Deep: [deDarkWood];),
+    // Dagger #2
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 16; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;));
+    Price: 150; Color: clDarkBlue; Deep: [deDarkWood];),
+    // Dagger #3
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 19; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
+    Price: 175; Color: clDarkBlue; Deep: [deGrayCave];),
+    // Dagger #4
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 22; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;));
+    Price: 200; Color: clDarkBlue; Deep: [deGrayCave];),
+    // Dagger #5
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 25; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;));
+    Price: 225; Color: clDarkBlue; Deep: [deDeepCave];),
+    // Dagger #6
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 28; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;));
+    Price: 250; Color: clDarkBlue; Deep: [deDeepCave];),
+    // Dagger #7
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 31; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;));
+    Price: 275; Color: clDarkBlue; Deep: [deBloodCave];),
+    // Dagger #8
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 34; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;));
+    Price: 300; Color: clDarkBlue; Deep: [deBloodCave];),
+    // Dagger #9
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 37; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;));
+    Price: 325; Color: clDarkBlue; Deep: [deDrom];),
+    // Dagger #10
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
+    Price: 350; Color: clDarkBlue; Deep: [deDrom];),
+
     /// / == Dark Wood == ////
 
     // Cap
@@ -1600,7 +1645,8 @@ type
     procedure Loot(const AX, AY: Byte; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
-    function Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False): Boolean;
+    function Identify(var AItem: Item; IsNew: Boolean = False;
+      IsRare: Boolean = False): Boolean;
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
@@ -2396,7 +2442,8 @@ begin
       PriceType);
 end;
 
-function TItems.Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False): Boolean;
+function TItems.Identify(var AItem: Item; IsNew: Boolean = False;
+  IsRare: Boolean = False): Boolean;
 var
   I, Lev: Byte;
   SB: TSuffixBase;
@@ -2425,7 +2472,7 @@ begin
       if not IsRare and SB.Rare then
       begin
         Identify(AItem, IsNew, Math.RandomRange(0, 7) = 0);
-        //Exit; Для тестів унікальних флаконів
+        // Exit; Для тестів унікальних флаконів
       end;
       //
       AItem.Identify := I;
