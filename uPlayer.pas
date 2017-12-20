@@ -1414,7 +1414,7 @@ begin
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
-  // Flasks
+{  // Flasks
   D := Math.IfThen(Mode.Wizard, 3, 3);
   for I := 1 to D do
   begin
@@ -1431,7 +1431,7 @@ begin
   for I := 1 to D do
   begin
     Items.AddItemToInv(ivEternal_Flask2, 1, False, True);
-  end;
+  end;     }
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins

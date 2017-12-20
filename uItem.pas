@@ -113,9 +113,9 @@ type
     // All maps
     None, ivCorpse, ivGold,
     // Flasks
-    ivBasalt_Flask0, ivBasalt_Flask, ivBismuth_Flask, ivAquamarine_Flask,
+    ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask, ivAquamarine_Flask,
     ivQuicksilver_Flask, ivSulphur_Flask, ivQuartz_Flask, ivJade_Flask,
-    ivCoruscating_Flask, ivDivine_Flask, ivEternal_Flask, ivEternal_Flask2,
+    ivCoruscating_Flask, ivDivine_Flask, ivDiamond_Flask, ivEternal_Flask,
     // Elixirs and Extracts
     ivFortifying_Potion,
     // Scrolls
@@ -159,9 +159,15 @@ type
     ivLongtooth_Talisman, ivDark_Eye, ivBlack_Maw_Talisman, ivVoid_Eye,
     ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
+    // Wands
+    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
+    ivWand9, ivWand10,
     // Daggers
     ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
     ivDagger8, ivDagger9, ivDagger10,
+    // Bows
+    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
+    ivBow9, ivBow10,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
@@ -331,17 +337,22 @@ const
       Price: 500; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
       Effects: [efMana]; Value: 250;), }
 
-    // Basalt Flask 0
+    // Ruby Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 20; Color: clWhite; Deep: [deDarkWood]; Value: 10;),
-    // Basalt Flask
+    Price: 25; Color: clWhite; Deep: [deDarkWood]; Value: 10;),
+    // Amethyst Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 50; Color: clWhite; Deep: [deDarkWood]; Value: 20;),
     // Bismuth Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 75; Color: clWhite; Deep: [deDarkWood]; Value: 30;),
+    // Silver Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
@@ -381,12 +392,12 @@ const
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 450; Color: clWhite; Deep: [deDarkWood]; Value: 180;),
-    // Eternal Flask
+    // Diamond Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 500; Color: clWhite; Deep: [deDarkWood]; Value: 200;),
-    // Eternal Flask 2
+    // Eternal Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
@@ -911,6 +922,57 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 4000; Color: clYellow; Deep: [deDrom];),
 
+    // Wand #1
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 10; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;));
+    Price: 550; Color: clDarkBlue; Deep: [deDarkWood];),
+    // Wand #2
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 12; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;));
+    Price: 600; Color: clDarkBlue; Deep: [deDarkWood];),
+    // Wand #3
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 14; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
+    Price: 650; Color: clDarkBlue; Deep: [deGrayCave];),
+    // Wand #4
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 16; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;));
+    Price: 700; Color: clDarkBlue; Deep: [deGrayCave];),
+    // Wand #5
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 18; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;));
+    Price: 750; Color: clDarkBlue; Deep: [deDeepCave];),
+    // Wand #6
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 20; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;));
+    Price: 800; Color: clDarkBlue; Deep: [deDeepCave];),
+    // Wand #7
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 22; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;));
+    Price: 850; Color: clDarkBlue; Deep: [deBloodCave];),
+    // Wand #8
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 24; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;));
+    Price: 900; Color: clDarkBlue; Deep: [deBloodCave];),
+    // Wand #9
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 27; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;));
+    Price: 950; Color: clDarkBlue; Deep: [deDrom];),
+    // Wand #10
+    (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 30; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
+    Price: 1000; Color: clDarkBlue; Deep: [deDrom];),
+
     // Dagger #1
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
@@ -961,6 +1023,57 @@ const
     MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
     Price: 350; Color: clDarkBlue; Deep: [deDrom];),
+
+    // Bow #1
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;));
+    Price: 200; Color: clDarkBlue; Deep: [deDarkWood];),
+    // Bow #2
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 40; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;));
+    Price: 250; Color: clDarkBlue; Deep: [deDarkWood];),
+    // Bow #3
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 45; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
+    Price: 300; Color: clDarkBlue; Deep: [deGrayCave];),
+    // Bow #4
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 50; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;));
+    Price: 350; Color: clDarkBlue; Deep: [deGrayCave];),
+    // Bow #5
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 55; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;));
+    Price: 400; Color: clDarkBlue; Deep: [deDeepCave];),
+    // Bow #6
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 60; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;));
+    Price: 450; Color: clDarkBlue; Deep: [deDeepCave];),
+    // Bow #7
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 65; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;));
+    Price: 500; Color: clDarkBlue; Deep: [deBloodCave];),
+    // Bow #8
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 70; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;));
+    Price: 550; Color: clDarkBlue; Deep: [deBloodCave];),
+    // Bow #9
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 75; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;));
+    Price: 600; Color: clDarkBlue; Deep: [deDrom];),
+    // Bow #10
+    (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 80; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
+    Price: 700; Color: clDarkBlue; Deep: [deDrom];),
 
     /// / == Dark Wood == ////
 
