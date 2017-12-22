@@ -7,8 +7,8 @@ const
 
 type
   TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana,
-    atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atVision, atSat,
-    atLev, atExp);
+    atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atVision, atSat, atLev,
+    atExp, atLifeAfEachKill, atManaAfEachKill, atReLife, atReMana);
 
 type
   TAttrib = record
@@ -28,10 +28,13 @@ type
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
     procedure Modify(I: TAttribEnum; AValue: Integer; APrm: Integer = 0);
+    procedure ModifyValue(I: TAttribEnum; AValue: Integer);
     procedure SetValue(I: TAttribEnum; AValue: Integer);
   end;
 
 implementation
+
+uses Math;
 
 { TAttributes }
 
@@ -66,6 +69,19 @@ procedure TAttributes.Modify(I: TAttribEnum; AValue, APrm: Integer);
 begin
   FAttrib[I].Value := FAttrib[I].Value + AValue;
   FAttrib[I].Prm := FAttrib[I].Prm + APrm;
+end;
+
+procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Integer);
+begin
+  FAttrib[I].Value := FAttrib[I].Value + AValue;
+  case I of
+    atLife:
+      FAttrib[I].Value := EnsureRange(FAttrib[I].Value, 0,
+        FAttrib[atMaxLife].Value);
+    atMana:
+      FAttrib[I].Value := EnsureRange(FAttrib[I].Value, 0,
+        FAttrib[atMaxMana].Value);
+  end;
 end;
 
 procedure TAttributes.SetAttrib(I: TAttribEnum; const Value: TAttrib);

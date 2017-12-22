@@ -32,9 +32,12 @@ type
     None,
     // Vision I
     of_Radiance,
-    // Potions, Antidote, Extracts
-    of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation, of_Antidote,
-    of_Soothing, of_Poultice, of_the_Troll, of_the_Unicorn,
+    // Potions, Antidote, Elixirs, Extracts
+    of_Minor_Healing, of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation, of_Fortifying,
+    of_Antidote, of_Soothing, of_Poultice,
+    // Rare Elixirs
+    of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf, of_the_Ogre, of_the_Troll,
+    of_prmMana1, of_prmMana2, of_prmMana3, of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
@@ -72,9 +75,6 @@ type
     //
     );
 
-  // of the Greatwolf
-  //
-
 const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
   DamageSuffixes = [of_Damage1 .. of_Damage7];
@@ -87,6 +87,9 @@ const
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
 
+    // of Minor Healing (Flask I)
+    (Level: (Min: 1; Max: 1); Price: 0; Occurence: FlaskTypeItems;
+    Effects: [efLife];),
     // of Healing (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efLife];),
@@ -99,6 +102,9 @@ const
     // of Rejuvenation (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 35; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efLife, efMana];),
+    // of Fortifying (Flask I)
+    (Level: (Min: 1; Max: 1); Price: 75; Occurence: FlaskTypeItems;
+    Value: (Min: 0; Max: 0); Effects: [efCureWeak];),
     // of Antidote (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 65; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efCurePoison];),
@@ -108,12 +114,50 @@ const
     // of Poultice (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 45; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efCurePoison];),
-    // of the Troll (Flask I - XII)
-    (Level: (Min: 1; Max: 15); Price: 2000; Occurence: FlaskTypeItems;
+
+    // (Perma Life I)
+    (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;
     PrmValue: 1; Rare: True; Effects: [efPrmLife];),
-    // of the Unicorn (Flask I - XII)
-    (Level: (Min: 1; Max: 15); Price: 2000; Occurence: FlaskTypeItems;
+    // (Perma Life II)
+    (Level: (Min: 2; Max: 5); Price: 3000; Occurence: FlaskTypeItems;
+    PrmValue: 2; Rare: True; Effects: [efPrmLife];),
+    // (Perma Life III)
+    (Level: (Min: 3; Max: 7); Price: 4000; Occurence: FlaskTypeItems;
+    PrmValue: 3; Rare: True; Effects: [efPrmLife];),
+    // (Perma Life IV)
+    (Level: (Min: 4; Max: 9); Price: 5000; Occurence: FlaskTypeItems;
+    PrmValue: 4; Rare: True; Effects: [efPrmLife];),
+    // of the Greatwolf (Perma Life V)
+    (Level: (Min: 5; Max: 11); Price: 6000; Occurence: FlaskTypeItems;
+    PrmValue: 5; Rare: True; Effects: [efPrmLife];),
+    // of the Ogre (Perma Life VI)
+    (Level: (Min: 6; Max: 13); Price: 7000; Occurence: FlaskTypeItems;
+    PrmValue: 6; Rare: True; Effects: [efPrmLife];),
+    // of the Troll (Perma Life VII)
+    (Level: (Min: 7; Max: 15); Price: 8000; Occurence: FlaskTypeItems;
+    PrmValue: 7; Rare: True; Effects: [efPrmLife];),
+
+    // (Perma Mana I)
+    (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;
     PrmValue: 1; Rare: True; Effects: [efPrmMana];),
+    // (Perma Mana II)
+    (Level: (Min: 1; Max: 5); Price: 3000; Occurence: FlaskTypeItems;
+    PrmValue: 2; Rare: True; Effects: [efPrmMana];),
+    // (Perma Mana III)
+    (Level: (Min: 1; Max: 7); Price: 4000; Occurence: FlaskTypeItems;
+    PrmValue: 3; Rare: True; Effects: [efPrmMana];),
+    // (Perma Mana IV)
+    (Level: (Min: 1; Max: 9); Price: 5000; Occurence: FlaskTypeItems;
+    PrmValue: 4; Rare: True; Effects: [efPrmMana];),
+    // (Perma Mana V)
+    (Level: (Min: 1; Max: 11); Price: 6000; Occurence: FlaskTypeItems;
+    PrmValue: 5; Rare: True; Effects: [efPrmMana];),
+    // (Perma Mana VI)
+    (Level: (Min: 1; Max: 13); Price: 7000; Occurence: FlaskTypeItems;
+    PrmValue: 6; Rare: True; Effects: [efPrmMana];),
+    // of the Unicorn (Perma Mana VII)
+    (Level: (Min: 1; Max: 15); Price: 8000; Occurence: FlaskTypeItems;
+    PrmValue: 7; Rare: True; Effects: [efPrmMana];),
 
     // of Blacksmith (Oil I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: FlaskTypeItems;

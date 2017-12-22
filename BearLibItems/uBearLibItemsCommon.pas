@@ -5,7 +5,7 @@ interface
 uses uCreature;
 
 const
-  BonusCount = 2;
+  BonusCount = 3;
 
 type
   Item = record

@@ -50,6 +50,7 @@ const
     itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   MagicWeaponTypeItems = [itStaff, itWand];
+  RangedWeaponItems = [itBow];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
     FlaskTypeItems;
@@ -113,11 +114,11 @@ type
     // All maps
     None, ivCorpse, ivGold,
     // Flasks
-    ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask, ivAquamarine_Flask,
-    ivQuicksilver_Flask, ivSulphur_Flask, ivQuartz_Flask, ivJade_Flask,
-    ivCoruscating_Flask, ivDivine_Flask, ivDiamond_Flask, ivEternal_Flask,
-    // Elixirs and Extracts
-    ivFortifying_Potion,
+    ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask,
+    ivAquamarine_Flask, ivSapphire_Flask, ivQuicksilver_Flask, ivTopaz_Flask,
+    ivSulphur_Flask, ivGranite_Flask, ivQuartz_Flask, ivSacred_Flask,
+    ivJade_Flask, ivHallowed_Flask, ivCoruscating_Flask, ivSanctified_Flask,
+    ivDivine_Flask, ivGold_Flask, ivDiamond_Flask, ivEternal_Flask,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
     ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
@@ -250,93 +251,6 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Price: 0; Color: clYellow; Deep: [deDarkWood .. deDrom]),
 
-    { // Minor Healing Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 25; Color: clLightestRed; Deep: [deDarkWood]; Effects: [efLife];
-      Value: 25;),
-      // Lesser Healing Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 50; Color: clLightestRed; Deep: [deDarkWood .. deDeepCave];
-      Effects: [efLife]; Value: 50;),
-      // Greater Healing Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 100; Color: clLightRed; Deep: [deGrayCave .. deBloodCave];
-      Effects: [efLife]; Value: 100;),
-      // Heroic Healing Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 200; Color: clRed; Deep: [deDeepCave .. deDrom]; Effects: [efLife];
-      Value: 200;),
-      // Potion of Full Healing
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 250; Color: clDarkRed; Deep: [deBloodCave .. deDrom];
-      Effects: [efLife]; Value: 250;),
-
-      // Lesser Rejuvenation Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 75; Color: clLightestYellow; Deep: [deDarkWood .. deDeepCave];
-      Effects: [efLife, efMana]; Value: 50;),
-      // Greater Rejuvenation Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 150; Color: clLightYellow; Deep: [deGrayCave .. deBloodCave];
-      Effects: [efLife, efMana]; Value: 100;),
-      // Heroic Rejuvenation Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 300; Color: clYellow; Deep: [deDeepCave .. deDrom];
-      Effects: [efLife, efMana]; Value: 200;),
-      // Potion Of Full Rejuvenation
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 750; Color: clDarkYellow; Deep: [deBloodCave .. deDrom];
-      Effects: [efLife, efMana]; Value: 250;),
-
-      // Minor Mana Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 25; Color: clLightestBlue; Deep: [deDarkWood]; Effects: [efMana];
-      Value: 25;),
-      // Lesser Mana Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 50; Color: clLightestBlue; Deep: [deDarkWood .. deDeepCave];
-      Effects: [efMana]; Value: 50;),
-      // Greater Mana Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 100; Color: clLightBlue; Deep: [deGrayCave .. deBloodCave];
-      Effects: [efMana]; Value: 100;),
-      // Heroic Mana Potion
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 200; Color: clBlue; Deep: [deDeepCave .. deDrom]; Effects: [efMana];
-      Value: 200;),
-      // Potion of Full Mana
-      (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 10;
-      MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
-      Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-      Price: 500; Color: clDarkBlue; Deep: [deBloodCave .. deDrom];
-      Effects: [efMana]; Value: 250;), }
-
     // Ruby Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -361,56 +275,84 @@ const
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 150; Color: clWhite; Deep: [deDarkWood]; Value: 60;),
+    Price: 125; Color: clWhite; Deep: [deGrayCave]; Value: 50;),
+    // Sapphire Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 150; Color: clWhite; Deep: [deGrayCave]; Value: 60;),
     // Quicksilver Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 200; Color: clWhite; Deep: [deDarkWood]; Value: 80;),
+    Price: 175; Color: clWhite; Deep: [deGrayCave]; Value: 70;),
+    // Topaz Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 200; Color: clWhite; Deep: [deGrayCave]; Value: 80;),
     // Sulphur Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 250; Color: clWhite; Deep: [deDarkWood]; Value: 100;),
+    Price: 225; Color: clWhite; Deep: [deDeepCave]; Value: 90;),
+    // Granite Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 250; Color: clWhite; Deep: [deDeepCave]; Value: 100;),
     // Quartz Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 300; Color: clWhite; Deep: [deDarkWood]; Value: 120;),
+    Price: 275; Color: clWhite; Deep: [deDeepCave]; Value: 110;),
+    // Sacred Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 300; Color: clWhite; Deep: [deDeepCave]; Value: 120;),
     // Jade Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 350; Color: clWhite; Deep: [deDarkWood]; Value: 140;),
+    Price: 325; Color: clWhite; Deep: [deBloodCave]; Value: 130;),
+    // Hallowed Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 350; Color: clWhite; Deep: [deBloodCave]; Value: 140;),
     // Coruscating Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 400; Color: clWhite; Deep: [deDarkWood]; Value: 160;),
+    Price: 375; Color: clWhite; Deep: [deBloodCave]; Value: 150;),
+    // Sanctified Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 400; Color: clWhite; Deep: [deBloodCave]; Value: 160;),
     // Divine Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 450; Color: clWhite; Deep: [deDarkWood]; Value: 180;),
+    Price: 425; Color: clWhite; Deep: [deDrom]; Value: 170;),
+    // Gold Flask
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
+    Price: 450; Color: clWhite; Deep: [deDrom]; Value: 180;),
     // Diamond Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 500; Color: clWhite; Deep: [deDarkWood]; Value: 200;),
+    Price: 475; Color: clWhite; Deep: [deDrom]; Value: 190;),
     // Eternal Flask
     (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 600; Color: clWhite; Deep: [deDarkWood]; Value: 220;),
+    Price: 500; Color: clWhite; Deep: [deDrom]; Value: 200;),
 
-    // Fortifying Potion
-    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 300; Color: clLightYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efCureWeak]; Value: 1;),
-
-    // Scroll of minor healing
+    // Scroll of Minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
@@ -471,20 +413,20 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 100; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
+    Price: 75; Color: clLightGreen; Deep: [deDarkWood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 20;),
     // Scroll of Bloodlust
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 300; Color: clLightRed; Deep: [deDarkWood .. deDrom];
+    Price: 100; Color: clLightRed; Deep: [deDarkWood .. deDrom];
     Effects: [efBloodlust]; Value: 10; ManaCost: 25;),
     // Scroll of Identify
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Price: 50; Color: clLightYellow; Deep: [deDarkWood .. deDrom];
-    Effects: [efIdentification]; Value: 1; ManaCost: 15;),
+    Price: 35; Color: clLightYellow; Deep: [deDarkWood .. deDrom];
+    Effects: [efIdentification]; Value: 1; ManaCost: 5;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3;
@@ -1720,7 +1662,8 @@ type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
-  TBonusType = (btLife, btMana, btVis, btRep, btStr, btDex, btWil, btPer);
+  TBonusType = (btLife, btMana, btVis, btRep, btStr, btDex, btWil, btPer,
+    btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill);
 
 type
   TItems = class(TEntity)
@@ -1845,12 +1788,28 @@ var
 
   procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
     const RareColor: string = '');
-  begin
-    if (AEffect in AItem.Effects) then
+  var
+    Ef: TEffect;
+
+    procedure Add(Color: string);
+    var
+      V: Word;
     begin
       V := AItem.Value;
       if ((V > 0) or (Sign = '&')) then
         S := S + Items.GetInfo(Sign, V, Color, RareColor) + ' ';
+    end;
+
+  begin
+    if (AEffect in AItem.Effects) then
+    begin
+      if (AEffect = efCraftAtr) then
+      begin
+        for Ef := CraftEffLow to Pred(CraftEffHigh) do
+          Add(EfNameStr[Ef]);
+        Exit;
+      end;
+      Add(Color);
     end;
   end;
 
@@ -1885,6 +1844,7 @@ begin
     AddEffect(efCraftDex, '&', 'Dexterity', 'Dexterity');
     AddEffect(efCraftWil, '&', 'Willpower', 'Willpower');
     AddEffect(efCraftPer, '&', 'Perception', 'Perception');
+    AddEffect(efCraftAtr, '&', '', '');
     AddEffect(efPrmMana, '*', 'Mana');
     AddEffect(efPrmLife, '*', 'Life');
   end;
@@ -1996,7 +1956,7 @@ var
   begin
     Result := False;
     if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
-      Result := (Math.RandomRange(0, 2) = 0) or
+      Result := (Math.RandomRange(0, 4) = 0) or
         (ItemBase[TItemEnum(ID)].ItemType in AllwaysIdentTypeItems)
   end;
 
@@ -2043,7 +2003,7 @@ begin
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
-  // Bonuses
+  // Clear Bonuses
   for I := 0 to BonusCount - 1 do
     AItem.Bonus[I] := 0;
   // Price
@@ -2250,7 +2210,11 @@ begin
   if (Color = 'Life') then
     S := UI.Icon(icLife);
   if (Color = 'Mana') then
+  begin
+    if (Player.Mana < Value) then
+      Color := 'NoMana';
     S := UI.Icon(icMana);
+  end;
   if (Color = 'Food') then
     S := UI.Icon(icFood);
   if (Color = 'Poison') then

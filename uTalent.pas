@@ -10,10 +10,11 @@ const
 type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
     tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
-    tlAffinity_with_Swords, tlAffinity_with_Axes,
-    tlAffinity_with_Polearms, tlAffinity_with_Maces, tlAffinity_with_Staves,
-    tlMiser { Скряга }, tlCareful { Осторожный }, tlIron_Skin { Железная Кожа },
-    tlHardy { Выносливый }, tlCharged { Энергичный } );
+    tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
+    tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
+    tlAffinity_with_Daggers, tlAffinity_with_Bows, tlMiser { Скряга } ,
+    tlCareful { Осторожный } , tlIron_Skin { Железная Кожа } ,
+    tlHardy { Выносливый } , tlCharged { Энергичный } );
 
 type
   TTalentBonus = (tbNone, tbAttrib, tbSkill, tbTalent, tbGold);
@@ -49,6 +50,12 @@ const
     (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMace];),
     // Affinity with Staves
     (Level: 3; TalentBonus: tbSkill; Effects: [efPrmStaff];),
+    // Affinity with Wands
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmWand];),
+    // Affinity with Daggers
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmDagger];),
+    // Affinity with Bows
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBow];),
     // Miser
     (Level: 5; TalentBonus: tbNone; Effects: [ef2xGold];),
     // Careful
@@ -94,13 +101,11 @@ implementation
 uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
 
 const
-  TalentHint: array [TTalentEnum] of string = (
-  '', 'Athletics', 'Dodge', 'Concentration', 'Toughness',
-  'Gold', 'Blade', 'Axe', 'Spear', 'Mace', 'Staff',
-  'x2 to Gold', 'DV', 'PV', 'Life', 'Mana'
-  );
+  TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',
+    'Concentration', 'Toughness', 'Gold', 'Blade', 'Axe', 'Spear', 'Mace',
+    'Staff', 'Wand', 'Dagger', 'Bow', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
 
-{ TTalents }
+  { TTalents }
 
 procedure TTalents.Add(const ATalent: TTalentEnum);
 var
@@ -162,8 +167,8 @@ var
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
-    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value)
-      and (T <> tlNone)) then
+    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and
+      (T <> tlNone)) then
     begin
       if (Key = K) then
       begin

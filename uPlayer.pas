@@ -328,7 +328,7 @@ begin
           Skills.DoSkill(skDodge);
           SatPerTurn := Ord(Game.Difficulty) + 6;
         end;
-      skSpear:
+      skSpear, skDagger:
         begin
           Skills.DoSkill(FWeaponSkill, 2);
           Skills.DoSkill(skAthletics);
@@ -341,12 +341,18 @@ begin
           Skills.DoSkill(skAthletics, 4);
           SatPerTurn := Ord(Game.Difficulty) + 7;
         end;
-      skStaff:
+      skStaff, skWand:
         begin
           Skills.DoSkill(FWeaponSkill, 2);
           Skills.DoSkill(skDodge);
           Skills.DoSkill(skConcentration, 3);
           SatPerTurn := Ord(Game.Difficulty) + 8;
+        end;
+      skBow:
+        begin
+          Skills.DoSkill(FWeaponSkill, 2);
+          Skills.DoSkill(skDodge, 4);
+          SatPerTurn := Ord(Game.Difficulty) + 4;
         end;
     end;
     // Victory
@@ -433,6 +439,12 @@ var
         Result := skMace;
       itStaff:
         Result := skStaff;
+      itWand:
+        Result := skWand;
+      itDagger:
+        Result := skDagger;
+      itBow:
+        Result := skBow;
     else
       Result := skNone;
     end;
@@ -465,6 +477,13 @@ begin
         AddAttrib(atDex, Items.GetBonus(FItem, btDex));
         AddAttrib(atWil, Items.GetBonus(FItem, btWil));
         AddAttrib(atPer, Items.GetBonus(FItem, btPer));
+      end;
+      if (FItem.Bonus[2] > 0) then
+      begin
+        AddAttrib(atReLife, Items.GetBonus(FItem, btReLife));
+        AddAttrib(atReMana, Items.GetBonus(FItem, btReMana));
+        AddAttrib(atLifeAfEachKill, Items.GetBonus(FItem, btLifeAfEachKill));
+        AddAttrib(atManaAfEachKill, Items.GetBonus(FItem, btManaAfEachKill));
       end;
       if (ItemBase[ID].SlotType = stMainHand) then
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
@@ -726,6 +745,13 @@ begin
   if IsDead then
     Exit;
   FItem := Items_Inventory_GetItem(Index);
+  // Unidentified
+  if FItem.Identify = 0 then
+  begin
+    MsgLog.Add(_('You can not use this yet (unidentified)!'));
+    Self.Calc;
+    Exit;
+  end;
   // Need level
   if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
@@ -736,6 +762,13 @@ begin
   end;
   I := TItemEnum(FItem.ItemID);
   T := ItemBase[I].ItemType;
+  // No mana
+  if (Player.Mana < ItemBase[I].ManaCost) then
+  begin
+    MsgLog.Add(Format(_('You need more mana!'), [FItem.Level]));
+    Self.Calc;
+    Exit;
+  end;
   if (T in NotEquipTypeItems) then
   begin
     if (T in UseTypeItems) then
@@ -1414,24 +1447,25 @@ begin
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
-{  // Flasks
-  D := Math.IfThen(Mode.Wizard, 3, 3);
-  for I := 1 to D do
-  begin
+  Items.AddItemToInv(ivFlawed_Diamond);
+  { // Flasks
+    D := Math.IfThen(Mode.Wizard, 3, 3);
+    for I := 1 to D do
+    begin
     Items.AddItemToInv(ivBasalt_Flask0, 1, False, True);
-  end;
-  for I := 1 to D do
-  begin
+    end;
+    for I := 1 to D do
+    begin
     Items.AddItemToInv(ivBasalt_Flask, 1, False, True);
-  end;
-  for I := 1 to D do
-  begin
+    end;
+    for I := 1 to D do
+    begin
     Items.AddItemToInv(ivEternal_Flask, 1, False, True);
-  end;
-  for I := 1 to D do
-  begin
+    end;
+    for I := 1 to D do
+    begin
     Items.AddItemToInv(ivEternal_Flask2, 1, False, True);
-  end;     }
+    end; }
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
   // Add coins
@@ -1621,6 +1655,15 @@ begin
   // Staff
   if (efPrmStaff in Effects) then
     PrmSkill(skStaff);
+  // Wand
+  if (efPrmWand in Effects) then
+    PrmSkill(skWand);
+  // Dagger
+  if (efPrmDagger in Effects) then
+    PrmSkill(skDagger);
+  // Bow
+  if (efPrmBow in Effects) then
+    PrmSkill(skBow);
   // 2x to gold
   if (ef2xGold in Effects) then
   begin
@@ -1654,25 +1697,25 @@ begin
   if (efPrmStr in Effects) then
   begin
     PrmValue(efPrmStr, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(_('Strength +1'));
+    MsgLog.Add(Format(_('Strength +%d'), [Value]));
   end;
   // Dexterity
   if (efPrmDex in Effects) then
   begin
     PrmValue(efPrmDex, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(_('Dexterity +1'));
+    MsgLog.Add(Format(_('Dexterity +%d'), [Value]));
   end;
   // Willpower
   if (efPrmWil in Effects) then
   begin
     PrmValue(efPrmWil, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(_('Willpower +1'));
+    MsgLog.Add(Format(_('Willpower +%d'), [Value]));
   end;
   // Perception
   if (efPrmPer in Effects) then
   begin
     PrmValue(efPrmPer, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(_('Perception +1'));
+    MsgLog.Add(Format(_('Perception +%d'), [Value]));
   end;
 end;
 

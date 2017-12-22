@@ -9,15 +9,20 @@ const
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-    efCraftStr, efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye,
-    efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge,
-    efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
-    efPrmMace, efPrmStaff, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
-    efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair);
+    efCraftStr, efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal,
+    efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics,
+    efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe,
+    efPrmSpear, efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow,
+    ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV, efPrmStr,
+    efPrmDex, efPrmWil, efPrmPer, efRepair);
 
 const
   CraftEffLow = efCraftStr;
   CraftEffHigh = efCraftAtr;
+
+const
+  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength',
+    'Dexterity', 'Willpower', 'Perception');
 
 type
   TEffects = set of TEffect;

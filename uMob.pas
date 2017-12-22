@@ -781,6 +781,10 @@ begin
   MsgLog.Add(S);
   Player.Statictics.Inc(stKills);
 
+  // Mana and Life After Each Kill
+  Player.Attributes.ModifyValue(atLife, Player.Attributes.Attrib[atLifeAfEachKill].Value);
+  Player.Attributes.ModifyValue(atMana, Player.Attributes.Attrib[atManaAfEachKill].Value);
+
   if Boss then
     V := 25
   else

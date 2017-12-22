@@ -38,7 +38,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uLanguage, uItem, uShop;
+uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer, uCreature, uAttribute;
 
 { TCalendar }
 
@@ -111,7 +111,10 @@ end;
 
 procedure TCalendar.OnHour();
 begin
-  //Game.Log('Hour');
+  // Replenish Life
+  Player.Attributes.ModifyValue(atLife, Player.Attributes.Attrib[atReLife].Value);
+  // Regenerate Mana
+  Player.Attributes.ModifyValue(atMana, Player.Attributes.Attrib[atReMana].Value);
 end;
 
 procedure TCalendar.OnMonth();
