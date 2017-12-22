@@ -2347,6 +2347,14 @@ begin
       Result := Byte(AItem.Bonus[1] shr 8);
     btPer:
       Result := Byte(AItem.Bonus[1]);
+    btReLife:
+      Result := Byte(AItem.Bonus[2] shr 24);
+    btReMana:
+      Result := Byte(AItem.Bonus[2] shr 16);
+    btLifeAfEachKill:
+      Result := Byte(AItem.Bonus[2] shr 8);
+    btManaAfEachKill:
+      Result := Byte(AItem.Bonus[2]);
   else
     Result := 0;
   end;
@@ -2372,15 +2380,22 @@ begin
     V[2] := GetBonus(AItem, btVis);
     V[3] := GetBonus(AItem, btRep);
   end;
+  if (BonusType in [btReLife .. btManaAfEachKill]) then
+  begin
+    V[0] := GetBonus(AItem, btReLife);
+    V[1] := GetBonus(AItem, btReMana);
+    V[2] := GetBonus(AItem, btLifeAfEachKill);
+    V[3] := GetBonus(AItem, btManaAfEachKill);
+  end;
 
   case BonusType of
-    btLife, btStr:
+    btLife, btStr, btReLife:
       V[0] := Value;
-    btMana, btDex:
+    btMana, btDex, btReMana:
       V[1] := Value;
-    btVis, btWil:
+    btVis, btWil, btLifeAfEachKill:
       V[2] := Value;
-    btRep, btPer:
+    btRep, btPer, btManaAfEachKill:
       V[3] := Value;
   end;
 
@@ -2391,6 +2406,8 @@ begin
       AItem.Bonus[0] := I;
     btStr .. btPer:
       AItem.Bonus[1] := I;
+    btReLife .. btManaAfEachKill:
+      AItem.Bonus[2] := I;
   end;
 end;
 
