@@ -530,33 +530,55 @@ begin
   UI.Title(_('Help'));
 
   Terminal.Print(CX, 3,
-    _('The land Elvion is surrounded by mountains. In the center of this land'),
+    _('Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains.'),
     TK_ALIGN_CENTER);
   Terminal.Print(CX, 4,
-    _('there is village, Dork. The land is in danger, because The Troll King and'),
+    _('In the center of this land there is a village named Dork. It''s people are in'),
     TK_ALIGN_CENTER);
   Terminal.Print(CX, 5,
+    _('grave danger as the Troll King and his armies are marching to lay waste on all of'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(CX, 6,
+    _('its inhabitants. Unless a hero will rise to take a stand against the forces of evil.'),
+    TK_ALIGN_CENTER);
+
+  Terminal.Print(CX, 8,
+    _('You are the hero who departs on a quest to stop the enemies and save your homeland,'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(CX, 9,
+    _('Elvion. Survive, gather equipment, fight adversaries and be ready for the final'),
+    TK_ALIGN_CENTER);
+  Terminal.Print(CX, 10, _('confrontation. Good luck! You will need it.'),
+    TK_ALIGN_CENTER);
+
+  { Terminal.Print(CX, 3,
+    _('The land Elvion is surrounded by mountains. In the center of this land'),
+    TK_ALIGN_CENTER);
+    Terminal.Print(CX, 4,
+    _('there is village, Dork. The land is in danger, because The Troll King and'),
+    TK_ALIGN_CENTER);
+    Terminal.Print(CX, 5,
     _('his armies are coming. Only a legendary hero can kill the monster.'),
     TK_ALIGN_CENTER);
 
-  Terminal.Print(CX, 7,
+    Terminal.Print(CX, 7,
     _('You play as a lonely hero who has to slay trolls to save your land Elvion.'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, 8,
+    Terminal.Print(CX, 8,
     _('You can gather equipment, fight enemies and try to survive for your final'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, 9, _('confrontation with boss. Good luck!'),
-    TK_ALIGN_CENTER);
+    Terminal.Print(CX, 9, _('confrontation with boss. Good luck!'),
+    TK_ALIGN_CENTER); }
 
-  UI.Title(_('Keybindings'), 11);
+  UI.Title(_('Keybindings'), 12);
 
-  Terminal.Print(CX, 13, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
+  Terminal.Print(CX, 14, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
     [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'),
     UI.KeyToStr('QWEADZXC'), _('Wait'), UI.KeyToStr('5'), UI.KeyToStr('S'),
     _('Effects'), UI.KeyToStr('TAB')]), TK_ALIGN_CENTER);
 
   X := 1;
-  Y := 15;
+  Y := 16;
   AddLine('<', _('Go up stairs'));
   AddLine('>', _('Go down stairs'));
   AddLine('G', _('Pick up an item from the floor'));
@@ -1381,13 +1403,13 @@ begin
     Y := Y + 1;
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
-    Add(_('NPC'), 7);
+    Add(_('NPCs'), 7);
     Add(_('Items'), Ord(Length(ItemBase)));
     Add(_('Shops'), Shops.Count);
     Add(_('Quests'), Quests.Amount);
     Add(_('Talents'), Player.Talents.Amount);
     Add(_('Affixes'), Affixes.Amount);
-    Add(_('Items Types'), Ord(High(TItemType)));
+    Add(_('Item Types'), Ord(High(TItemType)));
     Add(_('Skills'), Ord(High(TSkillEnum)));
   end;
 
@@ -1821,17 +1843,17 @@ begin
   UI.Title(_('Options'));
   X := 1;
   Y := 3;
-  AddOption('C', _('Auto pickup coins'), Game.GetOption(apCoin));
-  AddOption('G', _('Auto pickup gems'), Game.GetOption(apGem));
-  AddOption('F', _('Auto pickup foods'), Game.GetOption(apFood));
-  AddOption('Y', _('Auto pickup plants'), Game.GetOption(apPlant));
-  AddOption('P', _('Auto pickup potions'), Game.GetOption(apPotion));
-  AddOption('O', _('Auto pickup flasks'), Game.GetOption(apFlask));
-  AddOption('S', _('Auto pickup scrolls'), Game.GetOption(apScroll));
-  AddOption('R', _('Auto pickup runes'), Game.GetOption(apRune));
-  AddOption('B', _('Auto pickup books'), Game.GetOption(apBook));
-  AddOption('K', _('Auto pickup keys'), Game.GetOption(apKey));
-  AddOption('D', _('Show item price in inventory'), Game.GetOption(apShPrice));
+  AddOption('C', _('Auto pick up coins'), Game.GetOption(apCoin));
+  AddOption('G', _('Auto pick up gems'), Game.GetOption(apGem));
+  AddOption('F', _('Auto pick up food'), Game.GetOption(apFood));
+  AddOption('Y', _('Auto pick up plants'), Game.GetOption(apPlant));
+  AddOption('P', _('Auto pick up potions'), Game.GetOption(apPotion));
+  AddOption('O', _('Auto pick up flasks'), Game.GetOption(apFlask));
+  AddOption('S', _('Auto pick up scrolls'), Game.GetOption(apScroll));
+  AddOption('R', _('Auto pick up runes'), Game.GetOption(apRune));
+  AddOption('B', _('Auto pick up books'), Game.GetOption(apBook));
+  AddOption('K', _('Auto pick up keys'), Game.GetOption(apKey));
+  AddOption('D', _('Show items price in inventory'), Game.GetOption(apShPrice));
 
   // Settings
   X := 1;
@@ -1852,7 +1874,7 @@ begin
     AddOption('T', _('Reload all shops'), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
     AddOption('I', _('Show ID of items'), Game.ShowID);
-    AddOption('N', _('Hide level of item'), Game.GetOption(apHdLevOfItem));
+    AddOption('N', _('Hide level of an item'), Game.GetOption(apHdLevOfItem));
   end;
 
   AddKey('Esc', _('Back'), True);
