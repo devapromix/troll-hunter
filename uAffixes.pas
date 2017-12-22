@@ -73,8 +73,10 @@ type
     of_the_Universe, of_the_Infinite,
     // Mage I - VII
     of_Magic1, of_Magic2, of_Magic3, of_Magic4, of_Magic5, of_Magic6, of_Magic7,
-    //
-    of_Regeneration
+    // Replenish Life I - III
+    of_ReLife1, of_ReLife2, of_ReLife3,
+    // Regeneration Mana
+    of_Regeneration, of_ReMana2, of_ReMana3
     //
     );
 
@@ -484,8 +486,24 @@ const
     (Level: (Min: 7; Max: 15); Price: 2400; Occurence: MagicWeaponTypeItems;
     Mana: (Min: 65; Max: 70);),
 
-    // (Regeneration I)
+    // (Replenish Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Life: (Min: 1; Max: 3);),
+    // (Replenish Life II)
+    (Level: (Min: 4; Max: 8); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Life: (Min: 1; Max: 3);),
+    // (Replenish Life III)
+    (Level: (Min: 9; Max: 15); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Life: (Min: 1; Max: 3);),
+
+    // of Regeneration (Regeneration Mana I)
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 1; Max: 3);),
+    // (Regeneration Mana II)
+    (Level: (Min: 4; Max: 8); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 1; Max: 3);),
+    // (Regeneration Mana III)
+    (Level: (Min: 9; Max: 15); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
     Mana: (Min: 1; Max: 3);)
     //
     );
@@ -547,7 +565,7 @@ var
   BT: TBonusType;
   Value: Byte;
 
-  procedure SetLife();
+  procedure SetLife(AValue: TBonusType);
   begin
     if (SB.Life.Min > 0) then
     begin
@@ -557,7 +575,7 @@ var
     end;
   end;
 
-  procedure SetMana();
+  procedure SetMana(AValue: TBonusType);
   begin
     if (SB.Mana.Min > 0) then
     begin
@@ -603,15 +621,15 @@ begin
       end;
     // Life
     of_Life1 .. of_Life7:
-      SetLife();
+      SetLife(btLife);
     // Mana
     of_Mana1 .. of_Mana7, of_Magic1 .. of_Magic7:
-      SetMana();
+      SetMana(btMana);
     // Life and Mana
     of_Atr1 .. of_Atr7:
       begin
-        SetLife();
-        SetMana();
+        SetLife(btLife);
+        SetMana(btMana);
       end;
     // Strength
     of_Strength1 .. of_Strength7:
@@ -665,11 +683,12 @@ begin
           end;
         end;
       end;
-    // Regeneration
-    of_Regeneration:
-      begin
-        Items.SetBonus(AItem, btReMana, Value);
-      end;
+    // Replenish Life
+    of_ReLife1..of_ReLife3:
+      SetLife(btReLife);
+    // Regeneration Mana
+    of_Regeneration..of_ReMana3:
+      SetMana(btReMana);
   end;
   // Effects
   AItem.Effects := SB.Effects;
