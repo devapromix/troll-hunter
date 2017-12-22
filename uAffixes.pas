@@ -33,11 +33,12 @@ type
     // Vision I
     of_Radiance,
     // Potions, Antidote, Elixirs, Extracts
-    of_Minor_Healing, of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation, of_Fortifying,
-    of_Antidote, of_Soothing, of_Poultice,
+    of_Minor_Healing, of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation,
+    of_Fortifying, of_Antidote, of_Soothing, of_Poultice,
     // Rare Elixirs
-    of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf, of_the_Ogre, of_the_Troll,
-    of_prmMana1, of_prmMana2, of_prmMana3, of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
+    of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf,
+    of_the_Ogre, of_the_Troll, of_prmMana1, of_prmMana2, of_prmMana3,
+    of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
@@ -71,7 +72,9 @@ type
     of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
     of_the_Universe, of_the_Infinite,
     // Mage I - VII
-    of_Magic1, of_Magic2, of_Magic3, of_Magic4, of_Magic5, of_Magic6, of_Magic7
+    of_Magic1, of_Magic2, of_Magic3, of_Magic4, of_Magic5, of_Magic6, of_Magic7,
+    //
+    of_Regeneration
     //
     );
 
@@ -479,8 +482,11 @@ const
     Mana: (Min: 55; Max: 60);),
     // (Staves and Wands VII)
     (Level: (Min: 7; Max: 15); Price: 2400; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 65; Max: 70);)
+    Mana: (Min: 65; Max: 70);),
 
+    // (Regeneration I)
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 1; Max: 3);)
     //
     );
 
@@ -658,6 +664,11 @@ begin
               AItem.Durability := Math.RandomRange(0, 5) + 1;
           end;
         end;
+      end;
+    // Regeneration
+    of_Regeneration:
+      begin
+        Items.SetBonus(AItem, btReMana, Value);
       end;
   end;
   // Effects
