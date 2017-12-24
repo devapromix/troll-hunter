@@ -494,12 +494,19 @@ end;
 
 procedure TSceneTitle.Render;
 begin
-  UI.RenderTile(''); { ??? }
+//  UI.RenderTile(''); { ??? }
   Logo.Render(True);
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
-  Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
-    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
+  // Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
+  // [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
+
+  if Mode.Wizard then
+  begin
+    Self.AddKey('Z', _('Wizard Mode'), True);
+  end
+  else
+    Self.AddKey('N', _('New game'), True);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -507,8 +514,14 @@ begin
   case Key of
     TK_ESCAPE:
       Game.CanClose := True;
+    TK_N:
+      if not Mode.Wizard then
+        Scenes.SetScene(scDifficulty);
     TK_ENTER, TK_KP_ENTER:
-      Scenes.SetScene(scDifficulty);
+      if Mode.Wizard then
+        Scenes.SetScene(scDifficulty);
+    TK_Z:
+      Mode.Wizard := False;
   end;
 end;
 

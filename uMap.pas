@@ -80,7 +80,8 @@ var
 
 implementation
 
-uses SysUtils, Math, Types, TypInfo, uPlayer, uMob, uItem, uLanguage, uTerminal, uGame,
+uses SysUtils, Math, Types, TypInfo, uPlayer, uMob, uItem, uLanguage, uTerminal,
+  uGame,
   uCreature, uAttribute;
 
 { TMap }
@@ -346,6 +347,7 @@ var
   I: Word;
   X, Y: Byte;
   Z: TMapEnum;
+  GatePos: TPoint;
 
 const
   Pd = 11;
@@ -481,6 +483,7 @@ const
     procedure AddGate(AX, AY: Byte; SX, SY: ShortInt);
     begin
       SetTileEnum(AX + SX, AY + SY, Z, teGate);
+      GatePos := Point(AX + SX, AY + SY);
       if (SX = 0) then
       begin
         SetTileEnum(AX + 1, AY + SY, Z, teGate);
