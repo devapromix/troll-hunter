@@ -493,6 +493,13 @@ end;
 { TSceneTitle }
 
 procedure TSceneTitle.Render;
+const
+  L = 12;
+  T = 15;
+  Max = 10;
+var
+  I: Char;
+  J: Byte;
 begin
 //  UI.RenderTile(''); { ??? }
   Logo.Render(True);
@@ -500,13 +507,24 @@ begin
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
   // Terminal.Print(CX, Screen.Height - 3, Format(_('Press %s to start...'),
   // [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
+  Terminal.ForegroundColor(clWhite);
+  Terminal.Print(L + 4, T, _('Which hero shall you play?'));
+
+  J := 1;
+  for I := 'A'  to 'Z' do
+  begin
+    Terminal.Print(L, T + J + 1, Format('%s %s', [UI.KeyToStr(I), '-------------']));
+    Inc(J);
+    if (J > Max) then Break;
+  end;
+
 
   if Mode.Wizard then
   begin
     Self.AddKey('Z', _('Wizard Mode'), True);
   end
   else
-    Self.AddKey('N', _('New game'), True);
+    Self.AddKey('Space', _('Create a new hero'), True);
 end;
 
 procedure TSceneTitle.Update(var Key: Word);
@@ -514,7 +532,7 @@ begin
   case Key of
     TK_ESCAPE:
       Game.CanClose := True;
-    TK_N:
+    TK_SPACE:
       if not Mode.Wizard then
         Scenes.SetScene(scDifficulty);
     TK_ENTER, TK_KP_ENTER:
