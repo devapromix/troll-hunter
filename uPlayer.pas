@@ -12,7 +12,7 @@ const
   // Player
   VisionMax = 15;
   DVMax = 80;
-  LevelExpMax = 8;
+  LevelExpMax = 5;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
