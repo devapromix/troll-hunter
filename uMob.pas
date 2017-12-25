@@ -782,8 +782,18 @@ begin
   Player.Statictics.Inc(stKills);
 
   // Mana and Life After Each Kill
-  Player.Attributes.ModifyValue(atLife, Player.Attributes.Attrib[atLifeAfEachKill].Value);
-  Player.Attributes.ModifyValue(atMana, Player.Attributes.Attrib[atManaAfEachKill].Value);
+  V := Player.Attributes.Attrib[atLifeAfEachKill].Value;
+  if (V > 0) then
+  begin
+    Player.Attributes.ModifyValue(atLife, V);
+    MsgLog.Add('+++');
+  end;
+  V := Player.Attributes.Attrib[atManaAfEachKill].Value;
+  if (V > 0) then
+  begin
+    Player.Attributes.ModifyValue(atMana, V);
+    MsgLog.Add('+++');
+  end;
 
   if Boss then
     V := 25
@@ -827,7 +837,7 @@ var
   NX, NY, Dist: Integer;
   The: string;
 begin
-//  Exit;
+  // Exit;
 
   NX := 0;
   NY := 0;

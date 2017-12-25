@@ -77,10 +77,10 @@ type
     of_ReLife1, of_ReLife2, of_ReLife3,
     // Regeneration Mana I - III
     of_Regeneration, of_ReMana2, of_ReMana3,
-    //
-    of_LifeAfEachKill,
-    //
-    of_ManaAfEachKill
+    // Life After Each Kill I - III
+    of_LifeAfEachKill1, of_LifeAfEachKill2, of_LifeAfEachKill3,
+    // Mana After Each Kill I - III
+    of_ManaAfEachKill1, of_ManaAfEachKill2, of_ManaAfEachKill3
     //
     );
 
@@ -490,32 +490,53 @@ const
     (Level: (Min: 7; Max: 15); Price: 2400; Occurence: MagicWeaponTypeItems;
     Mana: (Min: 65; Max: 70);),
 
-    // (Replenish Life I)
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    // of (Replenish Life I)
+    (Level: (Min: 1; Max: 3); Price: 100;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
     Life: (Min: 1; Max: 3);),
-    // (Replenish Life II)
-    (Level: (Min: 4; Max: 8); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 1; Max: 3);),
-    // (Replenish Life III)
-    (Level: (Min: 9; Max: 15); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 1; Max: 3);),
+    // of (Replenish Life II)
+    (Level: (Min: 4; Max: 8); Price: 150;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Life: (Min: 4; Max: 6);),
+    // of (Replenish Life III)
+    (Level: (Min: 9; Max: 15); Price: 200;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Life: (Min: 7; Max: 9);),
 
     // of Regeneration (Regeneration Mana I)
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    (Level: (Min: 1; Max: 3); Price: 100;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
     Mana: (Min: 1; Max: 3);),
-    // (Regeneration Mana II)
-    (Level: (Min: 4; Max: 8); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 1; Max: 3);),
-    // (Regeneration Mana III)
-    (Level: (Min: 9; Max: 15); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 1; Max: 3);),
-    // of_ (Life After Each Kill I - III),
-    (Level: (Min: 1; Max: 3); Price: 200; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 1; Max: 3);),
+    // of (Regeneration Mana II)
+    (Level: (Min: 4; Max: 8); Price: 150;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 4; Max: 6);),
+    // of (Regeneration Mana III)
+    (Level: (Min: 9; Max: 15); Price: 200;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 7; Max: 9);),
 
-    // of_ (Mana After Each Kill I - III),
-    (Level: (Min: 1; Max: 3); Price: 200; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 1; Max: 3);)
+    // of (Life After Each Kill I),
+    (Level: (Min: 1; Max: 3); Price: 100;
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 1; Max: 3);),
+    // of (Life After Each Kill II),
+    (Level: (Min: 4; Max: 8); Price: 150;
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 4; Max: 6);),
+    // of (Life After Each Kill III),
+    (Level: (Min: 9; Max: 15); Price: 200;
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 7; Max: 9);),
+
+    // of (Mana After Each Kill I),
+    (Level: (Min: 1; Max: 3); Price: 100;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 1; Max: 3);),
+    // of (Mana After Each Kill II),
+    (Level: (Min: 4; Max: 8); Price: 150;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 4; Max: 6);),
+    // of (Mana After Each Kill III),
+    (Level: (Min: 9; Max: 15); Price: 200;
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems; Mana: (Min: 7; Max: 9);)
     //
     );
 
@@ -695,11 +716,17 @@ begin
         end;
       end;
     // Replenish Life
-    of_ReLife1..of_ReLife3:
+    of_ReLife1 .. of_ReLife3:
       SetLife(btReLife);
     // Regeneration Mana
-    of_Regeneration..of_ReMana3:
+    of_Regeneration .. of_ReMana3:
       SetMana(btReMana);
+    // Life After Each Kill
+    of_LifeAfEachKill1 .. of_LifeAfEachKill3:
+      SetLife(btLifeAfEachKill);
+    // Mana After Each Kill
+    of_ManaAfEachKill1 .. of_ManaAfEachKill3:
+      SetMana(btManaAfEachKill);
   end;
   // Effects
   AItem.Effects := SB.Effects;
