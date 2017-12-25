@@ -597,23 +597,23 @@ var
   BT: TBonusType;
   Value: Byte;
 
-  procedure SetLife(AValue: TBonusType);
+  procedure SetLife(ABonusType: TBonusType);
   begin
     if (SB.Life.Min > 0) then
     begin
-      Value := Math.EnsureRange(Items.GetBonus(AItem, btLife) +
+      Value := Math.EnsureRange(Items.GetBonus(AItem, ABonusType) +
         Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1, High(Byte));
-      Items.SetBonus(AItem, btLife, Value);
+      Items.SetBonus(AItem, ABonusType, Value);
     end;
   end;
 
-  procedure SetMana(AValue: TBonusType);
+  procedure SetMana(ABonusType: TBonusType);
   begin
     if (SB.Mana.Min > 0) then
     begin
-      Value := Math.EnsureRange(Items.GetBonus(AItem, btMana) +
+      Value := Math.EnsureRange(Items.GetBonus(AItem, ABonusType) +
         Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1, High(Byte));
-      Items.SetBonus(AItem, btMana, Value);
+      Items.SetBonus(AItem, ABonusType, Value);
     end;
   end;
 

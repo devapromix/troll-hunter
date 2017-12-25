@@ -130,7 +130,7 @@ implementation
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
-  uBearLibItemsDungeon, uBearLibItemsInventory;
+  uBearLibItemsDungeon, uBearLibItemsInventory, Dialogs;
 
 procedure RnItem(FItem: Item; const Index: Integer);
 begin
@@ -480,6 +480,7 @@ begin
       end;
       if (FItem.Bonus[2] > 0) then
       begin
+        ShowMessage('');
         AddAttrib(atReLife, Items.GetBonus(FItem, btReLife));
         AddAttrib(atReMana, Items.GetBonus(FItem, btReMana));
         AddAttrib(atLifeAfEachKill, Items.GetBonus(FItem, btLifeAfEachKill));
