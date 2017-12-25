@@ -75,8 +75,12 @@ type
     of_Magic1, of_Magic2, of_Magic3, of_Magic4, of_Magic5, of_Magic6, of_Magic7,
     // Replenish Life I - III
     of_ReLife1, of_ReLife2, of_ReLife3,
-    // Regeneration Mana
-    of_Regeneration, of_ReMana2, of_ReMana3
+    // Regeneration Mana I - III
+    of_Regeneration, of_ReMana2, of_ReMana3,
+    //
+    of_LifeAfEachKill,
+    //
+    of_ManaAfEachKill
     //
     );
 
@@ -504,6 +508,13 @@ const
     Mana: (Min: 1; Max: 3);),
     // (Regeneration Mana III)
     (Level: (Min: 9; Max: 15); Price: 100; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 1; Max: 3);),
+    // of_ (Life After Each Kill I - III),
+    (Level: (Min: 1; Max: 3); Price: 200; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Life: (Min: 1; Max: 3);),
+
+    // of_ (Mana After Each Kill I - III),
+    (Level: (Min: 1; Max: 3); Price: 200; Occurence: JewelryTypeItems + MagicWeaponTypeItems;
     Mana: (Min: 1; Max: 3);)
     //
     );
