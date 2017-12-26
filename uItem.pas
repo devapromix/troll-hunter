@@ -1689,7 +1689,7 @@ type
     procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
       overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-      EqFlag: Boolean = False; IdFlag: Boolean = False); overload;
+      EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: Word = 0); overload;
     function GetInventory: string;
     function GetPrice(Price: Word; F: Boolean = False): string;
     function GetLevel(L: Byte): string;
@@ -1702,7 +1702,7 @@ type
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
     function Identify(var AItem: Item; IsNew: Boolean = False;
-      IsRare: Boolean = False): Boolean;
+      IsRare: Boolean = False; Index: Word = 0): Boolean;
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
@@ -2445,7 +2445,7 @@ begin
 end;
 
 procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-  EqFlag: Boolean = False; IdFlag: Boolean = False);
+  EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: Word = 0);
 var
   FItem: Item;
 begin
@@ -2455,7 +2455,7 @@ begin
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
   if IdFlag and (FItem.Identify = 0) then
-    Items.Identify(FItem, True);
+    Items.Identify(FItem, True, False, SufID);
   Items_Inventory_AppendItem(FItem);
 end;
 
@@ -2537,7 +2537,7 @@ begin
 end;
 
 function TItems.Identify(var AItem: Item; IsNew: Boolean = False;
-  IsRare: Boolean = False): Boolean;
+  IsRare: Boolean = False; Index: Word = 0): Boolean;
 var
   I, Lev: Byte;
   SB: TSuffixBase;
@@ -2548,6 +2548,7 @@ begin
     repeat
       // Random suffix
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
+      if (Index > 0) then I := Index;
       SB := SuffixBase[TSuffixEnum(I)];
       // Level
       { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
@@ -2565,7 +2566,7 @@ begin
       // Rare
       if not IsRare and SB.Rare then
       begin
-        Identify(AItem, IsNew, Math.RandomRange(0, 7) = 0);
+        Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
         // Exit; Для тестів унікальних флаконів
       end;
       //

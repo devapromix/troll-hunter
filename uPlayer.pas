@@ -480,7 +480,6 @@ begin
       end;
       if (FItem.Bonus[2] > 0) then
       begin
-        ShowMessage('');
         AddAttrib(atReLife, Items.GetBonus(FItem, btReLife));
         AddAttrib(atReMana, Items.GetBonus(FItem, btReMana));
         AddAttrib(atLifeAfEachKill, Items.GetBonus(FItem, btLifeAfEachKill));
@@ -537,6 +536,11 @@ begin
     .Value div 3, 1, High(Byte) - 1),
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2,
     High(Byte)));
+  //
+  Attributes.SetValue(atReLife, FAttrib[atReLife]);
+  Attributes.SetValue(atReMana, FAttrib[atReMana]);
+  Attributes.SetValue(atLifeAfEachKill, FAttrib[atLifeAfEachKill]);
+  Attributes.SetValue(atManaAfEachKill, FAttrib[atManaAfEachKill]);
 end;
 
 procedure TPlayer.Clear();
@@ -1449,6 +1453,7 @@ begin
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
   Items.AddItemToInv(ivFlawed_Diamond);
+  Items.AddItemToInv(ivCap, 1, True, True, Ord(of_LifeAfEachKill1));
   { // Flasks
     D := Math.IfThen(Mode.Wizard, 3, 3);
     for I := 1 to D do

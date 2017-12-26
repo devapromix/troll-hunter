@@ -1194,7 +1194,7 @@ begin
     clDarkGreen, clDarkGray);
   Terminal.Print(X, Y + 14, Format('%s %d/%d',
     [UI.Icon(icShield) + ' ' + _('Protection Value (PV)'),
-    Player.Attributes.Attrib[atLifeAfEachKill].Value, PVMax]), TK_ALIGN_CENTER);
+    Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
 
   UI.Bar(1, 0, Y + 16, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
   Terminal.Print(X, Y + 16, Format('%s %d/%d',
