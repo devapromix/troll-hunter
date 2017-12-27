@@ -112,9 +112,9 @@ end;
 procedure TCalendar.OnHour();
 begin
   // Replenish Life
-  Player.Attributes.ModifyValue(atLife, Player.Attributes.Attrib[atReLife].Value);
+  Player.Life := Player.Life + Player.Attributes.Attrib[atReLife].Value;
   // Regenerate Mana
-  Player.Attributes.ModifyValue(atMana, Player.Attributes.Attrib[atReMana].Value);
+  Player.Mana := Player.Mana + Player.Attributes.Attrib[atReMana].Value;
 end;
 
 procedure TCalendar.OnMonth();

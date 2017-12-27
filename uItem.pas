@@ -1913,6 +1913,21 @@ begin
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer),
           'Perception', 'Rare');
     end;
+    if (AItem.Bonus[2] > 0) then
+    begin
+      if (Items.GetBonus(AItem, btReLife) > 0) then
+        Level := Level + ' ' + Items.GetInfo('@', Items.GetBonus(AItem, btReLife),
+          'Life', 'Rare');
+      if (Items.GetBonus(AItem, btReMana) > 0) then
+        Level := Level + ' ' + Items.GetInfo('@', Items.GetBonus(AItem, btReMana),
+          'Mana', 'Rare');
+      if (Items.GetBonus(AItem, btLifeAfEachKill) > 0) then
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btLifeAfEachKill),
+          'Life', 'Rare');
+      if (Items.GetBonus(AItem, btManaAfEachKill) > 0) then
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btManaAfEachKill),
+          'Mana', 'Rare');
+    end;
     // Durability
     D := '';
     if IT in SmithTypeItems then
@@ -2203,17 +2218,27 @@ function TItems.GetInfo(Sign: string; Value: Word; Color: string;
 var
   S: string;
 begin
-  S := '@';
+  S := '';
   Result := '';
   if (Sign = '*') then
     Sign := '';
+  if (Sign = 'x') then
+  begin
+    Sign := '';
+    S := UI.Icon(icPlus);
+  end;
+  if (Sign = '@') then
+  begin
+    Sign := '';
+    S := UI.Icon(icElixir);
+  end;
   if (Color = 'Life') then
-    S := UI.Icon(icLife);
+    S := S + UI.Icon(icLife);
   if (Color = 'Mana') then
   begin
     if (Player.Mana < Value) then
       Color := 'NoMana';
-    S := UI.Icon(icMana);
+    S := S + UI.Icon(icMana);
   end;
   if (Color = 'Food') then
     S := UI.Icon(icFood);
@@ -2567,7 +2592,7 @@ begin
       if not IsRare and SB.Rare then
       begin
         Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
-        // Exit; Для тестів унікальних флаконів
+        if not Mode.Wizard then Exit;
       end;
       //
       AItem.Identify := I;

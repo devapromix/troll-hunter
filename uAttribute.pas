@@ -8,7 +8,11 @@ const
 type
   TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana,
     atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atVision, atSat, atLev,
-    atExp, atLifeAfEachKill, atManaAfEachKill, atReLife, atReMana);
+    atExp, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill);
+
+const
+  AttrLow = atReLife;
+  AttrHigh = atManaAfEachKill;
 
 type
   TAttrib = record
@@ -73,7 +77,7 @@ end;
 
 procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Integer);
 begin
-  FAttrib[I].Value := FAttrib[I].Value + AValue;
+  Modify(I, AValue);
   case I of
     atLife:
       FAttrib[I].Value := EnsureRange(FAttrib[I].Value, 0,

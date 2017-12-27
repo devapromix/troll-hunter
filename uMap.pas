@@ -81,8 +81,7 @@ var
 implementation
 
 uses SysUtils, Math, Types, TypInfo, uPlayer, uMob, uItem, uLanguage, uTerminal,
-  uGame,
-  uCreature, uAttribute;
+  uGame, uCreature, uAttribute, uScenes, BearLibTerminal;
 
 { TMap }
 

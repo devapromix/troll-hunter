@@ -237,9 +237,15 @@ type
 type
   TScenePlayer = class(TScene)
   private
+    D, W: Byte;
     FSkillCursorTop: ShortInt;
+    FRenderInfo: Boolean;
     procedure RenderPlayer;
+    procedure RenderInfo;
     procedure RenderSkills;
+    procedure Add; overload;
+    procedure Add(const AStr, AIcons, ABarColor: string;
+      const ACur, AMax: Integer); overload;
   public
     constructor Create;
     procedure Render; override;
@@ -1136,84 +1142,97 @@ end;
 
 procedure TScenePlayer.Render;
 begin
+  D := 2;
+  Y := 0;
+  X := Math.EnsureRange(Terminal.Window.Width div 4, 10, High(Byte));
+
   if Mode.Wizard then
     UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']))
   else
     UI.Title(Player.Name);
 
-  Self.RenderPlayer();
+  if FRenderInfo then
+    RenderInfo
+  else
+    Self.RenderPlayer();
   Self.RenderSkills();
 
   AddKey('Esc', _('Close'));
   AddKey('Tab', _('Background'));
+  if FRenderInfo then
+    AddKey('Left', _('Previous page'))
+  else
+    AddKey('Right', _('Next page'));
   AddKey('Space', _('Inventory'), True);
 end;
 
-procedure TScenePlayer.RenderPlayer;
-var
-  W: Byte;
+procedure TScenePlayer.Add();
 begin
-  Y := 1;
-  X := Math.EnsureRange(Terminal.Window.Width div 4, 10, High(Byte));
   W := X * 2 - 3;
-  Terminal.Print(X, Y + 1, Format(FT, [_('Attributes')]), TK_ALIGN_CENTER);
+  UI.Bar(1, 0, Y + (D * 2), W, Player.Attributes.Attrib[atExp].Value,
+    LevelExpMax, clDarkRed, clDarkGray);
+  Terminal.Print(X, Y + (D * 2),
+    Format('%s %d', [UI.Icon(icElixir) + ' ' + _('Level'),
+    Player.Attributes.Attrib[atLev].Value]), TK_ALIGN_CENTER);
+  Inc(D);
+end;
 
-  UI.Bar(1, 0, Y + 2, W, Player.Attributes.Attrib[atExp].Value, LevelExpMax,
-    clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + 2, Format('%s %d',
-    [UI.Icon(icElixir) + ' ' + _('Level'), Player.Attributes.Attrib[atLev]
-    .Value]), TK_ALIGN_CENTER);
+procedure TScenePlayer.Add(const AStr, AIcons, ABarColor: string;
+  const ACur, AMax: Integer);
+begin
+  W := X * 2 - 3;
+  UI.Bar(1, 0, Y + (D * 2), W, ACur, AMax, color_from_name(LowerCase(ABarColor)
+    ), clDarkGray);
+  Terminal.Print(X, Y + (D * 2), Format('%s %d/%d', [AIcons + ' ' + _(AStr),
+    ACur, AMax]), TK_ALIGN_CENTER);
+  Inc(D);
+end;
 
-  UI.Bar(1, 0, Y + 4, W, Player.Attributes.Attrib[atStr].Value, AttribMax,
-    color_from_name('strength'), clDarkGray);
-  Terminal.Print(X, Y + 4, Format('%s %d/%d',
-    [UI.Icon(icStr) + ' ' + _('Strength'), Player.Attributes.Attrib[atStr]
-    .Value, AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 6, W, Player.Attributes.Attrib[atDex].Value, AttribMax,
-    color_from_name('dexterity'), clDarkGray);
-  Terminal.Print(X, Y + 6, Format('%s %d/%d',
-    [UI.Icon(icDex) + ' ' + _('Dexterity'), Player.Attributes.Attrib[atDex]
-    .Value, AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 8, W, Player.Attributes.Attrib[atWil].Value, AttribMax,
-    color_from_name('willpower'), clDarkGray);
-  Terminal.Print(X, Y + 8, Format('%s %d/%d',
-    [UI.Icon(icBook) + ' ' + _('Willpower'), Player.Attributes.Attrib[atWil]
-    .Value, AttribMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 10, W, Player.Attributes.Attrib[atPer].Value, AttribMax,
-    color_from_name('perception'), clDarkGray);
-  Terminal.Print(X, Y + 10, Format('%s %d/%d',
-    [UI.Icon(icLeaf) + ' ' + _('Perception'), Player.Attributes.Attrib[atPer]
-    .Value, AttribMax]), TK_ALIGN_CENTER);
-
-  UI.Bar(1, 0, Y + 12, W, Player.Attributes.Attrib[atDV].Value, DVMax,
-    clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 12, Format('%s %d/%d',
-    [UI.Icon(icDex) + ' ' + _('Defensive Value (DV)'),
-    Player.Attributes.Attrib[atDV].Value, DVMax]), TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 14, W, Player.Attributes.Attrib[atPV].Value, PVMax,
-    clDarkGreen, clDarkGray);
-  Terminal.Print(X, Y + 14, Format('%s %d/%d',
-    [UI.Icon(icShield) + ' ' + _('Protection Value (PV)'),
-    Player.Attributes.Attrib[atPV].Value, PVMax]), TK_ALIGN_CENTER);
-
-  UI.Bar(1, 0, Y + 16, W, Player.Life, Player.MaxLife, clLife, clDarkGray);
-  Terminal.Print(X, Y + 16, Format('%s %d/%d',
-    [UI.Icon(icLife) + ' ' + _('Life'), Player.Life, Player.MaxLife]),
+procedure TScenePlayer.RenderPlayer;
+begin
+  Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (1/2)']),
     TK_ALIGN_CENTER);
-  UI.Bar(1, 0, Y + 18, W, Player.Mana, Player.MaxMana, clMana, clDarkGray);
-  Terminal.Print(X, Y + 18, Format('%s %d/%d',
-    [UI.Icon(icMana) + ' ' + _('Mana'), Player.Mana, Player.MaxMana]),
-    TK_ALIGN_CENTER);
+  // Level
+  Add();
+  // Attributes
+  Add('Strength', UI.Icon(icStr), 'Strength', Player.Attributes.Attrib[atStr]
+    .Value, AttribMax);
+  Add('Dexterity', UI.Icon(icDex), 'Dexterity', Player.Attributes.Attrib[atDex]
+    .Value, AttribMax);
+  Add('Willpower', UI.Icon(icBook), 'Willpower', Player.Attributes.Attrib[atWil]
+    .Value, AttribMax);
+  Add('Perception', UI.Icon(icLeaf), 'Perception',
+    Player.Attributes.Attrib[atPer].Value, AttribMax);
+  // DV and PV
+  Add('Defensive Value (DV)', UI.Icon(icDex), 'Darkest Green',
+    Player.Attributes.Attrib[atDV].Value, DVMax);
+  Add('Protection Value (PV)', UI.Icon(icShield), 'Darkest Green',
+    Player.Attributes.Attrib[atPV].Value, PVMax);
+  // Life and Mana
+  Add('Life', UI.Icon(icLife), 'Life', Player.Life, Player.MaxLife);
+  Add('Mana', UI.Icon(icMana), 'Mana', Player.Mana, Player.MaxMana);
+  // Vision radius
+  Add('Vision radius', UI.Icon(icVision), 'Vision', Player.Vision, VisionMax);
+end;
 
-  UI.Bar(1, 0, Y + 20, W, Player.Vision, VisionMax, color_from_name('vision'),
-    clDarkGray);
-  Terminal.Print(X, Y + 20, Format('%s %d/%d',
-    [UI.Icon(icVision) + ' ' + _('Vision radius'), Player.Vision, VisionMax]),
+procedure TScenePlayer.RenderInfo;
+begin
+  Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (2/2)']),
     TK_ALIGN_CENTER);
+  //
+  Add('Replenish life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',
+    Player.Attributes.Attrib[atReLife].Value, 33);
+  Add('Regeneration mana', UI.Icon(icElixir) + UI.Icon(icMana), 'Mana',
+    Player.Attributes.Attrib[atReMana].Value, 33);
+  //
+  Add('Life after each kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Life',
+    Player.Attributes.Attrib[atLifeAfEachKill].Value, 33);
+  Add('Mana after each kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana',
+    Player.Attributes.Attrib[atManaAfEachKill].Value, 33);
 end;
 
 const
-  ScrMax = 13;
+  ScrMax = 12;
 
 procedure TScenePlayer.RenderSkills;
 var
@@ -1224,7 +1243,7 @@ begin
   X := Terminal.Window.Width div 2;
   A := Terminal.Window.Width div 4;
   B := A * 3;
-  Terminal.Print(B, Y + 1, Format(FT, [_('Skills')]), TK_ALIGN_CENTER);
+  Terminal.Print(B, Y, Format(FT, [_('Skills')]), TK_ALIGN_CENTER);
   for J := 1 to ScrMax do
   begin
     I := TSkillEnum(FSkillCursorTop + J);
@@ -1239,13 +1258,19 @@ end;
 procedure TScenePlayer.Update(var Key: Word);
 begin
   case Key of
+    // Close
     TK_ESCAPE:
-      // Close
       Scenes.SetScene(scGame);
+    // Background
     TK_TAB:
-      // Background
       Scenes.SetScene(scBackground, scPlayer);
-    TK_SPACE: // Inventory
+    // Information
+    TK_LEFT, TK_A, TK_KP_4:
+      FRenderInfo := False;
+    TK_RIGHT, TK_D, TK_KP_6:
+      FRenderInfo := True;
+    // Inventory
+    TK_SPACE:
       begin
         Game.Timer := High(Byte);
         Scenes.SetScene(scInv);
@@ -1906,6 +1931,7 @@ begin
     AddOption('Z', _('Wizard Mode'), Mode.Wizard, clRed);
     AddOption('M', _('Show map'), Game.ShowMap);
     AddOption('T', _('Reload all shops'), False);
+    // AddOption('J', _(''), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
     AddOption('I', _('Show ID of items'), Game.ShowID);
     AddOption('N', _('Hide level of an item'), Game.GetOption(apHdLevOfItem));
@@ -1957,13 +1983,19 @@ begin
         Game.LCorpses := not Game.LCorpses;
     TK_T:
       if Mode.Wizard then
+      begin
         Shops.New;
+        Scenes.SetScene(scGame);
+      end;
     TK_I:
       if Mode.Wizard then
         Game.ShowID := not Game.ShowID;
     TK_N:
       if Mode.Wizard then
         Game.ChOption(apHdLevOfItem);
+    // TK_J:
+    // if Mode.Wizard then
+    // ;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end
@@ -2201,6 +2233,7 @@ procedure TSceneBackground.Update(var Key: Word);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
+      if (Scenes.FPrevSceneEnum = scName) then
       begin
         Scenes.SetScene(scLoad);
         Terminal.Refresh;

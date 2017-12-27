@@ -409,6 +409,7 @@ end;
 procedure TPlayer.Calc;
 var
   FAttrib: array [TAttribEnum] of Word;
+  Attrib: TAttribEnum;
   I, FCount: Integer;
   ID: TItemEnum;
   FItem: Item;
@@ -536,11 +537,8 @@ begin
     .Value div 3, 1, High(Byte) - 1),
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2,
     High(Byte)));
-  //
-  Attributes.SetValue(atReLife, FAttrib[atReLife]);
-  Attributes.SetValue(atReMana, FAttrib[atReMana]);
-  Attributes.SetValue(atLifeAfEachKill, FAttrib[atLifeAfEachKill]);
-  Attributes.SetValue(atManaAfEachKill, FAttrib[atManaAfEachKill]);
+  for Attrib := AttrLow to AttrHigh do
+    Attributes.SetValue(Attrib, FAttrib[Attrib]);
 end;
 
 procedure TPlayer.Clear();
