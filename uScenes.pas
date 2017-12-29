@@ -1220,14 +1220,14 @@ begin
   Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (2/2)']),
     TK_ALIGN_CENTER);
   //
-  Add('Replenish life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',
+  Add('Replenish Life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',
     Player.Attributes.Attrib[atReLife].Value, 33);
-  Add('Regeneration mana', UI.Icon(icElixir) + UI.Icon(icMana), 'Mana',
+  Add('Regeneration Mana', UI.Icon(icElixir) + UI.Icon(icMana), 'Mana',
     Player.Attributes.Attrib[atReMana].Value, 33);
   //
-  Add('Life after each kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Life',
+  Add('To Life after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Life',
     Player.Attributes.Attrib[atLifeAfEachKill].Value, 33);
-  Add('Mana after each kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana',
+  Add('To Mana after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana',
     Player.Attributes.Attrib[atManaAfEachKill].Value, 33);
 end;
 

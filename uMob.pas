@@ -784,17 +784,10 @@ begin
   // Mana and Life After Each Kill
   V := Player.Attributes.Attrib[atLifeAfEachKill].Value;
   if (V > 0) then
-  begin
-    Player.Attributes.ModifyValue(atLife, V);
-    MsgLog.Add('+++');
-  end;
+    Player.Life := Player.Life + V;
   V := Player.Attributes.Attrib[atManaAfEachKill].Value;
   if (V > 0) then
-  begin
-    Player.Attributes.ModifyValue(atMana, V);
-    MsgLog.Add('+++');
-  end;
-
+    Player.Mana := Player.Mana + V;
   if Boss then
     V := 25
   else
