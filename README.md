@@ -7,13 +7,6 @@ Far away in an uncharted region of the Earth land Elvion lies surrounded by moun
 
 You are the hero who departs on a quest to stop the enemies and save your homeland, Elvion. Survive, gather equipment, fight adversaries and be ready for the final confrontation. Good luck! You will need it.
 
-## Screenshots
-![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_1.png)
-
-![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_2.png)
-
-![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_3.png)
-
 ## Current State
 The game is currently in demo stage with very limited contents and lots of issues to solve and improve.
 
@@ -29,6 +22,13 @@ at least 64Mb VRAM recommended
 
 No installation is required, just extract all files to one folder and play.
 You may need to set "executable" bit in Linux.
+
+## Screenshots
+![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_1.png)
+
+![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_2.png)
+
+![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_3.png)
 
 ## Credits
 Copyright (C) 2017-2018 by Sergiy Tkach (Apromix).
