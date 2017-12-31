@@ -569,77 +569,67 @@ procedure TSceneHelp.Render;
 begin
   UI.Title(_('Help'));
 
-  Terminal.Print(CX, 3,
-    _('Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains.'),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, 4,
-    _('In the center of this land there is a village named Dork. It''s people are in'),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, 5,
-    _('grave danger as the Troll King and his armies are marching to lay waste on all of'),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, 6,
-    _('its inhabitants. Unless a hero will rise to take a stand against the forces of evil.'),
-    TK_ALIGN_CENTER);
+  case Scenes.FPrevSceneEnum of
+    scPlayer:
+    begin
+      UI.Title(_('Keybindings'), 4);
+    end;
+    scGame:
+      begin
+        Terminal.Print(CX, 3,
+          _('Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains.'),
+          TK_ALIGN_CENTER);
+        Terminal.Print(CX, 4,
+          _('In the center of this land there is a village named Dork. It''s people are in'),
+          TK_ALIGN_CENTER);
+        Terminal.Print(CX, 5,
+          _('grave danger as the Troll King and his armies are marching to lay waste on all of'),
+          TK_ALIGN_CENTER);
+        Terminal.Print(CX, 6,
+          _('its inhabitants. Unless a hero will rise to take a stand against the forces of evil.'),
+          TK_ALIGN_CENTER);
 
-  Terminal.Print(CX, 8,
-    _('You are the hero who departs on a quest to stop the enemies and save your homeland,'),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, 9,
-    _('Elvion. Survive, gather equipment, fight adversaries and be ready for the final'),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, 10, _('confrontation. Good luck! You will need it.'),
-    TK_ALIGN_CENTER);
+        Terminal.Print(CX, 8,
+          _('You are the hero who departs on a quest to stop the enemies and save your homeland,'),
+          TK_ALIGN_CENTER);
+        Terminal.Print(CX, 9,
+          _('Elvion. Survive, gather equipment, fight adversaries and be ready for the final'),
+          TK_ALIGN_CENTER);
+        Terminal.Print(CX, 10, _('confrontation. Good luck! You will need it.'),
+          TK_ALIGN_CENTER);
 
-  { Terminal.Print(CX, 3,
-    _('The land Elvion is surrounded by mountains. In the center of this land'),
-    TK_ALIGN_CENTER);
-    Terminal.Print(CX, 4,
-    _('there is village, Dork. The land is in danger, because The Troll King and'),
-    TK_ALIGN_CENTER);
-    Terminal.Print(CX, 5,
-    _('his armies are coming. Only a legendary hero can kill the monster.'),
-    TK_ALIGN_CENTER);
+        UI.Title(_('Keybindings'), 12);
 
-    Terminal.Print(CX, 7,
-    _('You play as a lonely hero who has to slay trolls to save your land Elvion.'),
-    TK_ALIGN_CENTER);
-    Terminal.Print(CX, 8,
-    _('You can gather equipment, fight enemies and try to survive for your final'),
-    TK_ALIGN_CENTER);
-    Terminal.Print(CX, 9, _('confrontation with boss. Good luck!'),
-    TK_ALIGN_CENTER); }
+        Terminal.Print(CX, 14, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
+          [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'),
+          UI.KeyToStr('QWEADZXC'), _('Wait'), UI.KeyToStr('5'),
+          UI.KeyToStr('S'), _('Effects'), UI.KeyToStr('TAB')]),
+          TK_ALIGN_CENTER);
 
-  UI.Title(_('Keybindings'), 12);
+        X := 1;
+        Y := 16;
+        AddLine('<', _('Go up stairs'));
+        AddLine('>', _('Go down stairs'));
+        AddLine('G', _('Pick up an item from the floor'));
+        AddLine('F', _('Drop an item to the floor'));
+        AddLine('L', _('Look mode'));
+        AddLine('R', _('Rest'));
+        AddLine('M', _('View messages'));
+        // AddLine('B', _('Spellbook'));
+        AddLine('T', _('Talents'));
+        AddLine('N', _('Show statistics'));
+        AddLine('O', _('Options'));
+        AddLine('I', _('Inventory'));
+        AddLine('P', _('Character screen'));
+        AddLine('K', _('Calendar'));
+        AddLine('?', _('Show this help screen'));
 
-  Terminal.Print(CX, 14, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
-    [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'),
-    UI.KeyToStr('QWEADZXC'), _('Wait'), UI.KeyToStr('5'), UI.KeyToStr('S'),
-    _('Effects'), UI.KeyToStr('TAB')]), TK_ALIGN_CENTER);
-
-  X := 1;
-  Y := 16;
-  AddLine('<', _('Go up stairs'));
-  AddLine('>', _('Go down stairs'));
-  AddLine('G', _('Pick up an item from the floor'));
-  AddLine('F', _('Drop an item to the floor'));
-  AddLine('L', _('Look mode'));
-  AddLine('R', _('Rest'));
-  AddLine('M', _('View messages'));
-  // AddLine('B', _('Spellbook'));
-  AddLine('T', _('Talents'));
-  AddLine('N', _('Show statistics'));
-  AddLine('O', _('Options'));
-  AddLine('I', _('Inventory'));
-  AddLine('P', _('Character screen'));
-  AddLine('K', _('Calendar'));
-  AddLine('?', _('Show this help screen'));
-
-  UI.Title(_('Character dump'), Terminal.Window.Height - 6);
-  Terminal.Print(CX, Terminal.Window.Height - 4,
-    Format(_('The game saves a character dump to %s file.'),
-    [UI.KeyToStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
-
+        UI.Title(_('Character dump'), Terminal.Window.Height - 6);
+        Terminal.Print(CX, Terminal.Window.Height - 4,
+          Format(_('The game saves a character dump to %s file.'),
+          [UI.KeyToStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
+      end;
+  end;
   Self.AddKey('Esc', _('Close'), True);
 end;
 
@@ -648,7 +638,7 @@ begin
   case Key of
     TK_ESCAPE:
       // Close
-      Scenes.SetScene(scGame);
+      Scenes.GoBack;
   end;
 end;
 
@@ -975,7 +965,7 @@ begin
     TK_T:
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
-      Scenes.SetScene(scHelp);
+      Scenes.SetScene(scHelp, scGame);
   end;
 end;
 
@@ -1163,7 +1153,8 @@ begin
     AddKey('Left', _('Previous page'))
   else
     AddKey('Right', _('Next page'));
-  AddKey('Space', _('Inventory'), True);
+  AddKey('Space', _('Inventory'));
+  AddKey('?', _('Help'), True);
 end;
 
 procedure TScenePlayer.Add();
@@ -1239,11 +1230,12 @@ var
   I: TSkillEnum;
   A, B, J, D: Byte;
 begin
-  Y := 1;
+  Y := 2;
   X := Terminal.Window.Width div 2;
   A := Terminal.Window.Width div 4;
   B := A * 3;
-  Terminal.Print(B, Y, Format(FT, [_('Skills')]), TK_ALIGN_CENTER);
+  Terminal.Print(B, Y, Format(FT, [Format(_('Skills (%d-%d)'),
+    [FSkillCursorTop + 1, FSkillCursorTop + ScrMax])]), TK_ALIGN_CENTER);
   for J := 1 to ScrMax do
   begin
     I := TSkillEnum(FSkillCursorTop + J);
@@ -1285,6 +1277,8 @@ begin
         if (FSkillCursorTop < Ord(High(TSkillEnum)) - ScrMax) then
           Inc(FSkillCursorTop);
       end;
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scPlayer);
   end;
 end;
 
