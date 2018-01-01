@@ -13,6 +13,10 @@ const
   VisionMax = 15;
   DVMax = 80;
   LevelExpMax = 5;
+  ReLifeMax = 10;
+  ReManaMax = 20;
+  LifeAEKMax = 8;
+  ManaAEKMax = 12;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;

@@ -782,12 +782,12 @@ begin
   Player.Statictics.Inc(stKills);
 
   // Mana and Life After Each Kill
-  V := Player.Attributes.Attrib[atLifeAfEachKill].Value;
+  V := EnsureRange(Player.Attributes.Attrib[atLifeAfEachKill].Value, 0, LifeAEKMax);
   if (V > 0) then
-    Player.Life := Player.Life + V;
-  V := Player.Attributes.Attrib[atManaAfEachKill].Value;
+    Player.Life := EnsureRange(Player.Life + V, 0, Player.MaxLife);
+  V := EnsureRange(Player.Attributes.Attrib[atManaAfEachKill].Value, 0, ManaAEKMax);
   if (V > 0) then
-    Player.Mana := Player.Mana + V;
+    Player.Mana := EnsureRange(Player.Mana + V, 0, Player.MaxMana);
   if Boss then
     V := 25
   else

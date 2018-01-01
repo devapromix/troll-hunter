@@ -1146,6 +1146,7 @@ end;
 
 constructor TScenePlayer.Create;
 begin
+  FRenderInfo := False;
   FSkillCursorTop := 0;
 end;
 
@@ -1161,7 +1162,7 @@ begin
     UI.Title(Player.Name);
 
   if FRenderInfo then
-    RenderInfo
+    RenderInfo()
   else
     Self.RenderPlayer();
   Self.RenderSkills();
@@ -1230,14 +1231,17 @@ begin
     TK_ALIGN_CENTER);
   //
   Add('Replenish Life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',
-    Player.Attributes.Attrib[atReLife].Value, 33);
+    Player.Attributes.Attrib[atReLife].Value, ReLifeMax);
   Add('Regeneration Mana', UI.Icon(icElixir) + UI.Icon(icMana), 'Mana',
-    Player.Attributes.Attrib[atReMana].Value, 33);
+    Player.Attributes.Attrib[atReMana].Value, ReManaMax);
   //
   Add('To Life after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Life',
-    Player.Attributes.Attrib[atLifeAfEachKill].Value, 33);
+    Player.Attributes.Attrib[atLifeAfEachKill].Value, LifeAEKMax);
   Add('To Mana after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana',
-    Player.Attributes.Attrib[atManaAfEachKill].Value, 33);
+    Player.Attributes.Attrib[atManaAfEachKill].Value, ManaAEKMax);
+  //
+  Add('Satiation', UI.Icon(icFood), 'Food',
+    Player.Attributes.Attrib[atSat].Value, EngorgedMax);
 end;
 
 const

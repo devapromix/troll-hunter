@@ -501,30 +501,30 @@ const
     // of (Replenish Life III)
     (Level: (Min: 9; Max: 15); Price: 200;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 7; Max: 9);),
+    Life: (Min: 7; Max: 10);),
 
     // of Regeneration (Regeneration Mana I)
     (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 1; Max: 3);),
+    Mana: (Min: 1; Max: 4);),
     // of (Regeneration Mana II)
     (Level: (Min: 4; Max: 8); Price: 150;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 4; Max: 6);),
+    Mana: (Min: 5; Max: 9);),
     // of (Regeneration Mana III)
     (Level: (Min: 9; Max: 15); Price: 200;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 7; Max: 9);),
+    Mana: (Min: 10; Max: 15);),
 
     // of (Life After Each Kill I),
     (Level: (Min: 1; Max: 3); Price: 100;
-    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 1; Max: 3);),
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 1; Max: 2);),
     // of (Life After Each Kill II),
     (Level: (Min: 4; Max: 8); Price: 150;
-    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 4; Max: 6);),
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 3; Max: 4);),
     // of (Life After Each Kill III),
     (Level: (Min: 9; Max: 15); Price: 200;
-    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 7; Max: 9);),
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 5; Max: 6);),
 
     // of (Mana After Each Kill I),
     (Level: (Min: 1; Max: 3); Price: 100;

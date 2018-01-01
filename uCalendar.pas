@@ -38,7 +38,8 @@ var
 
 implementation
 
-uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer, uCreature, uAttribute;
+uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer,
+  uCreature, uAttribute;
 
 { TCalendar }
 
@@ -68,17 +69,17 @@ end;
 
 function TCalendar.GetDayName(): string;
 const
-  DayName: array [1..7] of string = (
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+  DayName: array [1 .. 7] of string = ('Monday', 'Tuesday', 'Wednesday',
+    'Thursday', 'Friday', 'Saturday', 'Sunday');
 begin
   Result := DayName[DayOfWeek];
 end;
 
 function TCalendar.GetMonthName(AMonth: Byte): string;
 const
-  MonthName: array [1..12] of string = ('January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August', 'September', 'October', 'November',
-    'December');
+  MonthName: array [1 .. 12] of string = ('January', 'February', 'March',
+    'April', 'May', 'June', 'July', 'August', 'September', 'October',
+    'November', 'December');
 begin
   if (AMonth = 0) then
     AMonth := FMonth;
@@ -106,15 +107,17 @@ end;
 
 procedure TCalendar.OnDay();
 begin
-
+  // Replenish Life
+  Player.Life := EnsureRange(Player.Life + EnsureRange(Player.Attributes.Attrib
+    [atReLife].Value, 0, ReLifeMax), 0, Player.MaxLife);
+  // Regenerate Mana
+  Player.Mana := EnsureRange(Player.Mana + EnsureRange(Player.Attributes.Attrib
+    [atReMana].Value, 0, ReManaMax), 0, Player.MaxMana);
 end;
 
 procedure TCalendar.OnHour();
 begin
-  // Replenish Life
-  Player.Life := Player.Life + Player.Attributes.Attrib[atReLife].Value;
-  // Regenerate Mana
-  Player.Mana := Player.Mana + Player.Attributes.Attrib[atReMana].Value;
+
 end;
 
 procedure TCalendar.OnMonth();
