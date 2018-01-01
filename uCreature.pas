@@ -6,6 +6,8 @@ uses uEntity, uAbility, uAttribute;
 
 const
   PVMax = 250;
+  MaxDamMax = 255;
+  MinDamMax = MaxDamMax - 1;
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
@@ -90,8 +92,8 @@ end;
 
 function TCreature.GetDamage: TDamage;
 begin
-  Result.Min := Attributes.Attrib[atMinDamage].Value;
-  Result.Max := Attributes.Attrib[atMaxDamage].Value;
+  Result.Min := EnsureRange(Attributes.Attrib[atMinDamage].Value, 1, MinDamMax);
+  Result.Max := EnsureRange(Attributes.Attrib[atMaxDamage].Value, 2, MaxDamMax);
 end;
 
 function TCreature.GetRealDamage(ADamage, APV: Word): Word;
@@ -107,10 +109,8 @@ end;
 
 procedure TCreature.SetDamage(AMin, AMax: Word);
 begin
-  if (AMin < 1) then
-    AMin := 1;
-  if (AMax < 2) then
-    AMax := 2;
+  AMin := EnsureRange(AMin, 1, MinDamMax);
+  AMax := EnsureRange(AMax, 2, MaxDamMax);
   if (AMin >= AMax) then
     AMin := AMax - 1;
   Attributes.SetValue(atMinDamage, AMin);

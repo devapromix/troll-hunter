@@ -570,10 +570,28 @@ begin
   UI.Title(_('Help'));
 
   case Scenes.FPrevSceneEnum of
+    scInv:
+      begin
+        UI.Title(_('Keybindings'), 4);
+        X := 1;
+        Y := 6;
+        AddLine('Tab', _('Drop an item to the floor'));
+        AddLine('Space', _('Character Screen'));
+        AddLine('A-Z', _('Use an item'));
+      end;
     scPlayer:
-    begin
-      UI.Title(_('Keybindings'), 4);
-    end;
+      begin
+        UI.Title(_('Keybindings'), 4);
+
+        Terminal.Print(CX, 6, Format('%s: %s, %s, %s',
+          [_('Scroll pages and skills'), UI.KeyToStr('arrow keys'),
+          UI.KeyToStr('numpad'), UI.KeyToStr('WADX')]), TK_ALIGN_CENTER);
+
+        X := 1;
+        Y := 8;
+        AddLine('Tab', _('Show Background'));
+        AddLine('Space', _('Show Inventory'));
+      end;
     scGame:
       begin
         Terminal.Print(CX, 3,
@@ -617,12 +635,12 @@ begin
         AddLine('M', _('View messages'));
         // AddLine('B', _('Spellbook'));
         AddLine('T', _('Talents'));
-        AddLine('N', _('Show statistics'));
+        AddLine('N', _('Show Statistics'));
         AddLine('O', _('Options'));
-        AddLine('I', _('Inventory'));
-        AddLine('P', _('Character screen'));
+        AddLine('I', _('Show Inventory'));
+        AddLine('P', _('Character Screen'));
         AddLine('K', _('Calendar'));
-        AddLine('?', _('Show this help screen'));
+        AddLine('?', _('Show this Help Screen'));
 
         UI.Title(_('Character dump'), Terminal.Window.Height - 6);
         Terminal.Print(CX, Terminal.Window.Height - 4,
@@ -1074,9 +1092,8 @@ begin
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'));
-  AddKey('Tab', _('Drop'));
-  AddKey('Space', _('Skills and attributes'));
-  AddKey('A-Z', _('Use an item'), True);
+  AddKey('?', _('Help'), True);
+
 end;
 
 procedure TSceneInv.Update(var Key: Word);
@@ -1087,6 +1104,8 @@ begin
       Scenes.SetScene(scGame);
     TK_TAB: // Drop
       Scenes.SetScene(scDrop, scInv);
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scInv);
     TK_SPACE: // Player
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z: // Use an item
@@ -1148,12 +1167,6 @@ begin
   Self.RenderSkills();
 
   AddKey('Esc', _('Close'));
-  AddKey('Tab', _('Background'));
-  if FRenderInfo then
-    AddKey('Left', _('Previous page'))
-  else
-    AddKey('Right', _('Next page'));
-  AddKey('Space', _('Inventory'));
   AddKey('?', _('Help'), True);
 end;
 
@@ -1194,6 +1207,11 @@ begin
     .Value, AttribMax);
   Add('Perception', UI.Icon(icLeaf), 'Perception',
     Player.Attributes.Attrib[atPer].Value, AttribMax);
+  // Damage
+  Add('Min Damage', UI.Icon(icSword), 'Darker Yellow',
+    Player.Attributes.Attrib[atMinDamage].Value, MinDamMax);
+  Add('Max Damage', UI.Icon(icSword), 'Darker Yellow',
+    Player.Attributes.Attrib[atMaxDamage].Value, MaxDamMax);
   // DV and PV
   Add('Defensive Value (DV)', UI.Icon(icDex), 'Darkest Green',
     Player.Attributes.Attrib[atDV].Value, DVMax);
