@@ -1662,7 +1662,7 @@ type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
-  TBonusType = (btLife, btMana, btVis, btGold, btStr, btDex, btWil, btPer,
+  TBonusType = (btLife, btMana, btVis, btExtraGold, btStr, btDex, btWil, btPer,
     btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill);
 
 type
@@ -1898,8 +1898,8 @@ begin
       if (Items.GetBonus(AItem, btMana) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana),
           'Mana', 'Rare');
-      if (Items.GetBonus(AItem, btGold) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btGold),
+      if (Items.GetBonus(AItem, btExtraGold) > 0) then
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btExtraGold),
           'Gold', 'Rare');
     end;
     if (AItem.Bonus[1] > 0) then
@@ -2377,7 +2377,7 @@ begin
       Result := Byte(AItem.Bonus[0] shr 16);
     btVis:
       Result := Byte(AItem.Bonus[0] shr 8);
-    btGold:
+    btExtraGold:
       Result := Byte(AItem.Bonus[0]);
     btStr:
       Result := Byte(AItem.Bonus[1] shr 24);
@@ -2413,12 +2413,12 @@ begin
     V[2] := GetBonus(AItem, btWil);
     V[3] := GetBonus(AItem, btPer);
   end;
-  if (BonusType in [btLife .. btGold]) then
+  if (BonusType in [btLife .. btExtraGold]) then
   begin
     V[0] := GetBonus(AItem, btLife);
     V[1] := GetBonus(AItem, btMana);
     V[2] := GetBonus(AItem, btVis);
-    V[3] := GetBonus(AItem, btGold);
+    V[3] := GetBonus(AItem, btExtraGold);
   end;
   if (BonusType in [btReLife .. btManaAfEachKill]) then
   begin
@@ -2435,14 +2435,14 @@ begin
       V[1] := Value;
     btVis, btWil, btLifeAfEachKill:
       V[2] := Value;
-    btGold, btPer, btManaAfEachKill:
+    btExtraGold, btPer, btManaAfEachKill:
       V[3] := Value;
   end;
 
   I := (V[0] shl 24) or (V[1] shl 16) or (V[2] shl 8) or V[3];
 
   case BonusType of
-    btLife .. btGold:
+    btLife .. btExtraGold:
       AItem.Bonus[0] := I;
     btStr .. btPer:
       AItem.Bonus[1] := I;

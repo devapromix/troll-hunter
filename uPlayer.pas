@@ -474,7 +474,7 @@ begin
         AddAttrib(atMaxLife, Items.GetBonus(FItem, btLife));
         AddAttrib(atMaxMana, Items.GetBonus(FItem, btMana));
         AddAttrib(atVision, Items.GetBonus(FItem, btVis));
-        AddAttrib(atExtraGold, Items.GetBonus(FItem, btGold));
+        AddAttrib(atExtraGold, Items.GetBonus(FItem, btExtraGold));
       end;
       if (FItem.Bonus[1] > 0) then
       begin

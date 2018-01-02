@@ -746,7 +746,7 @@ begin
       begin
         Value := Math.EnsureRange(Value + Math.RandomRange(SB.Value.Min,
           SB.Value.Max + 1), 0, 100);
-        Items.SetBonus(AItem, btGold, Value);
+        Items.SetBonus(AItem, btExtraGold, Value);
       end;
   end;
   // Effects
