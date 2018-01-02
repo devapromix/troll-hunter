@@ -2,7 +2,7 @@
 
 interface
 
-uses uCreature, uMob;
+uses uTypes, uCreature, uMob;
 
 { TODO -cУбить существо : Убить уникального босса на локации (от первой до предпоследней). }
 { TODO -cУбить существо : Убить N существ на локации (от первой до последней). }
@@ -21,7 +21,7 @@ type
 
 type
   TQuestBase = record
-    Level: Integer;
+    Level: Int;
     QuestType: TQuestType;
     Mobs: TSetOfMobEnum;
     Amount: TMinMax;
@@ -41,12 +41,12 @@ type
 
 type
   TQuest = record
-    Level: Integer;
+    Level: Int;
     QuestState: TQuestState;
     QuestType: TQuestType;
     Mob: TMobEnum;
-    Amount: Integer;
-    Kills: Integer;
+    Amount: Int;
+    Kills: Int;
   end;
 
 type
@@ -54,16 +54,16 @@ type
   private
     FCurrent: TQuestEnum;
     FQuest: array of TQuest;
-    function GetQuest(I: Integer): TQuest;
-    procedure SetQuest(I: Integer; const Value: TQuest);
+    function GetQuest(I: Int): TQuest;
+    procedure SetQuest(I: Int; const Value: TQuest);
   public
     procedure Clear();
     constructor Create();
-    function Count(): Integer;
-    function Amount(): Integer;
+    function Count(): Int;
+    function Amount(): Int;
     procedure Add(const AQuestEnum: TQuestEnum);
-    property Quest[I: Integer]: TQuest read GetQuest write SetQuest;
-    procedure DoQuest(const AQuestType: TQuestType; const Value: Integer);
+    property Quest[I: Int]: TQuest read GetQuest write SetQuest;
+    procedure DoQuest(const AQuestType: TQuestType; const Value: Int);
     property Current: TQuestEnum read FCurrent write FCurrent;
     function GetName(const AQuestEnum: TQuestEnum): string;
   end;
@@ -82,19 +82,19 @@ begin
   Result := 'Kill bears';
 end;
 
-function TQuests.GetQuest(I: Integer): TQuest;
+function TQuests.GetQuest(I: Int): TQuest;
 begin
   Result := FQuest[I]
 end;
 
-procedure TQuests.SetQuest(I: Integer; const Value: TQuest);
+procedure TQuests.SetQuest(I: Int; const Value: TQuest);
 begin
   FQuest[I] := Value
 end;
 
-procedure TQuests.DoQuest(const AQuestType: TQuestType; const Value: Integer);
+procedure TQuests.DoQuest(const AQuestType: TQuestType; const Value: Int);
 var
-  I: Integer;
+  I: Int;
 begin
   for I := 0 to Count() - 1 do
     with FQuest[I] do
@@ -126,7 +126,7 @@ begin
   end;
 end;
 
-function TQuests.Amount: Integer;
+function TQuests.Amount: Int;
 begin
   Result := Ord(High(TQuestEnum)) + 1;
 end;
@@ -136,7 +136,7 @@ begin
   SetLength(FQuest, 0);
 end;
 
-function TQuests.Count(): Integer;
+function TQuests.Count(): Int;
 begin
   Result := Length(FQuest);
 end;

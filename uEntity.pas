@@ -2,21 +2,21 @@ unit uEntity;
 
 interface
 
-uses uAbility, uMap;
+uses uTypes, uAbility, uMap;
 
 type
   TEntity = class(TObject)
   private
-    FX: Byte;
-    FY: Byte;
+    FX: UInt;
+    FY: UInt;
     FZ: TMapEnum;
   public
     constructor Create;
     destructor Destroy; override;
-    property X: Byte read FX write FX;
-    property Y: Byte read FY write FY;
+    property X: UInt read FX write FX;
+    property Y: UInt read FY write FY;
     property Z: TMapEnum read FZ write FZ;
-    function GetDist(ToX, ToY: Single): Word;
+    function GetDist(ToX, ToY: Single): UInt;
     function GetCapit(S: string): string;
     function GetDescAn(S: string): string;
     function GetDescThe(S: string): string;
@@ -70,14 +70,14 @@ begin
   Result := 'the ' + Result;
 end;
 
-function TEntity.GetDist(ToX, ToY: Single): Word;
+function TEntity.GetDist(ToX, ToY: Single): UInt;
 begin
   Result := Round(Sqrt(Sqr(ToX - X) + Sqr(ToY - Y)));
 end;
 
 function TEntity.GetPureText(S: string): string;
 var
-  I: Integer;
+  I: Int;
   B: Boolean;
 begin
   B := True;

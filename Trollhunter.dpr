@@ -36,10 +36,11 @@ uses
   uBearLibItemsCommon in 'BearLibItems\uBearLibItemsCommon.pas',
   uBearLibItemsDungeon in 'BearLibItems\uBearLibItemsDungeon.pas',
   uBearLibItemsInventory in 'BearLibItems\uBearLibItemsInventory.pas',
-  uQuest in 'uQuest.pas';
+  uQuest in 'uQuest.pas',
+  uTypes in 'uTypes.pas';
 
 var
-  Key: Word = 0;
+  Key: UInt = 0;
   IsRender: Boolean = True;
 
 begin

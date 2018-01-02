@@ -2,7 +2,7 @@ unit uMob;
 
 interface
 
-uses uGame, uMap, uEntity, uCreature, uAbility;
+uses uTypes, uGame, uMap, uEntity, uCreature, uAbility;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead,
@@ -24,11 +24,11 @@ type
     Symbol: Char;
     Boss: Boolean;
     Maps: set of TMapEnum;
-    MaxLife: Word;
-    Level: Byte;
-    PV: Byte;
-    DV: Byte;
-    MaxCount: Byte;
+    MaxLife: UInt;
+    Level: UInt;
+    PV: UInt;
+    DV: UInt;
+    MaxCount: UInt;
     Damage: TDamage;
     Color: Cardinal;
     NPCType: set of TNPCType;
@@ -422,29 +422,29 @@ type
 type
   TMob = class(TCreature)
   private
-    FID: Byte;
+    FID: UInt;
     FForce: TForce;
     Maps: TMapEnum;
     Boss: Boolean;
     FColor: Cardinal;
     FAlive: Boolean;
-    function GetVision: Byte;
+    function GetVision: UInt;
   public
     constructor Create();
     destructor Destroy; override;
-    procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-      AID: Integer = -1; AForce: TForce = fcEnemy);
-    procedure AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
+    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
+      AID: Int = -1; AForce: TForce = fcEnemy);
+    procedure AddNPC(AX, AY: UInt; AZ: TMapEnum; ANPCID: UInt);
     procedure Process;
-    procedure Render(AX, AY: Byte);
-    procedure Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
+    procedure Render(AX, AY: UInt);
+    procedure Walk(AX, AY: UInt; PX: UInt = 0; PY: UInt = 0);
     procedure Attack;
     procedure Defeat;
     procedure DropItems;
-    property ID: Byte read FID write FID;
+    property ID: UInt read FID write FID;
     property Force: TForce read FForce write FForce;
     property Color: Cardinal read FColor;
-    property Vision: Byte read GetVision;
+    property Vision: UInt read GetVision;
     property Alive: Boolean read FAlive write FAlive;
   end;
 
@@ -453,29 +453,29 @@ type
   private
     FMobName: array [TMobEnum] of string;
     FMob: array of TMob;
-    function GetMob(I: Integer): TMob;
-    procedure SetMob(I: Integer; const Value: TMob);
+    function GetMob(I: Int): TMob;
+    procedure SetMob(I: Int; const Value: TMob);
     function GetName(I: TMobEnum): string;
-    function ChMob(I: Integer; AX, AY: Byte): Boolean;
+    function ChMob(I: Int; AX, AY: UInt): Boolean;
   public
     constructor Create();
     destructor Destroy; override;
-    procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-      AForce: TForce = fcEnemy; AID: Integer = -1);
+    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
+      AForce: TForce = fcEnemy; AID: Int = -1);
     procedure AddGroup(const AZ: TMapEnum); overload;
     procedure AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum;
-      const ACount: Byte); overload;
-    function Count: Integer;
+      const ACount: UInt); overload;
+    function Count: Int;
     procedure Process;
-    procedure Render(AX, AY: Byte);
-    function GetFreeTile(AX, AY: Byte): Boolean;
-    function GetIndex(AX, AY: Byte): Integer;
-    property Mob[I: Integer]: TMob read GetMob write SetMob;
+    procedure Render(AX, AY: UInt);
+    function GetFreeTile(AX, AY: UInt): Boolean;
+    function GetIndex(AX, AY: UInt): Int;
+    property Mob[I: Int]: TMob read GetMob write SetMob;
     property Name[I: TMobEnum]: string read GetName;
   end;
 
 type
-  TGetXYVal = function(X, Y: Integer): Boolean; stdcall;
+  TGetXYVal = function(X, Y: Int): Boolean; stdcall;
 
 var
   Mobs: TMobs = nil;
@@ -485,14 +485,14 @@ implementation
 uses Math, SysUtils, TypInfo, Dialogs, uTerminal, uPlayer, uMsgLog, uLanguage,
   uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest;
 
-function MyCallback(X, Y: Integer): Boolean; stdcall;
+function MyCallback(X, Y: Int): Boolean; stdcall;
 begin
   Result := (Map.GetTileEnum(X, Y, Map.Current) in FreeTiles);
 end;
 
 { TMob }
 
-procedure TMob.AddNPC(AX, AY: Byte; AZ: TMapEnum; ANPCID: Byte);
+procedure TMob.AddNPC(AX, AY: UInt; AZ: TMapEnum; ANPCID: UInt);
 begin
   Self.Clear;
   X := AX;
@@ -506,17 +506,17 @@ begin
   Life := MaxLife;
 end;
 
-function ChMapTile(AMobID, AX, AY: Byte; AZ: TMapEnum): Boolean;
+function ChMapTile(AMobID, AX, AY: UInt; AZ: TMapEnum): Boolean;
 begin
   Result := (Map.GetTileEnum(AX, AY, AZ) in SpawnTiles) and (Player.X <> AX) and
     (Player.Y <> AY) and Mobs.GetFreeTile(AX, AY) and
     (AZ in MobBase[TMobEnum(AMobID)].Maps);
 end;
 
-procedure TMob.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-  AID: Integer = -1; AForce: TForce = fcEnemy);
+procedure TMob.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
+  AID: Int = -1; AForce: TForce = fcEnemy);
 var
-  I, V, FX, FY: Byte;
+  I, V, FX, FY: UInt;
 begin
   I := 0;
   repeat
@@ -527,14 +527,14 @@ begin
     if (AX >= 0) then
       FX := AX
     else
-      FX := Math.RandomRange(1, High(Byte) - 1);
+      FX := Math.RandomRange(1, UIntMax - 1);
     if (AY >= 0) then
       FY := AY
     else
-      FY := Math.RandomRange(1, High(Byte) - 1);
+      FY := Math.RandomRange(1, UIntMax - 1);
     if (AForce <> fcEnemy) then
       Break;
-    if (I >= High(Byte)) then
+    if (I >= UIntMax) then
       Exit;
     Inc(I);
   until ChMapTile(ID, FX, FY, AZ);
@@ -553,7 +553,7 @@ begin
   // Life
   V := Math.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss,
     (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25, 0), 0,
-    High(Byte));
+    UIntMax);
   MaxLife := Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V,
     MobBase[TMobEnum(ID)].MaxLife + (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)
     ].Level) + V);
@@ -585,8 +585,8 @@ end;
 procedure TMob.Attack;
 var
   The: string;
-  Dam: Word;
-  L: Byte;
+  Dam: UInt;
+  L: UInt;
 
   procedure Miss();
   begin
@@ -608,7 +608,7 @@ begin
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L + 10, L + 25), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L + 10, L + 25), 0, UIntMax);
       Abilities.Modify(abBloodlust, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s feel lust for blood (%d).'),
         Abilities.GetColor(abBloodlust)), [The, Dam]));
@@ -644,7 +644,7 @@ begin
       (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(1, L), 0, UIntMax);
       Player.Abilities.Modify(abStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is stuns you (%d).'),
         Abilities.GetColor(abStunned)), [The, Dam]));
@@ -656,7 +656,7 @@ begin
       (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(10, L * 10), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(10, L * 10), 0, UIntMax);
       Player.Abilities.Modify(abWeak, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has weakened you (%d).'),
         Abilities.GetColor(abWeak)), [The, Dam]));
@@ -669,9 +669,9 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 5),
-        L * (Ord(Game.Difficulty) + 9)), 0, High(Byte));
+        L * (Ord(Game.Difficulty) + 9)), 0, UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
-        Dam := Math.EnsureRange(Dam * 3, 0, High(Byte));
+        Dam := Math.EnsureRange(Dam * 3, 0, UIntMax);
       Player.Abilities.Modify(abDiseased, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has infected you (%d).'),
         Abilities.GetColor(abDiseased)), [The, Dam]));
@@ -683,7 +683,7 @@ begin
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L * 5, L * 15), 0, UIntMax);
       Player.Abilities.Modify(abPoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s is poisoning you (%d).'),
         Abilities.GetColor(abPoisoned)), [The, Dam]));
@@ -695,7 +695,7 @@ begin
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L * 10, L * 20), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L * 10, L * 20), 0, UIntMax);
       Player.Abilities.Modify(abAfraid, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'),
         Abilities.GetColor(abAfraid)), [The, Dam]));
@@ -708,9 +708,9 @@ begin
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 3),
-        L * (Ord(Game.Difficulty) + 5)), 0, High(Byte));
+        L * (Ord(Game.Difficulty) + 5)), 0, UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
-        Dam := Math.EnsureRange(Dam * 3, 0, High(Byte));
+        Dam := Math.EnsureRange(Dam * 3, 0, UIntMax);
       Player.Abilities.Modify(abCursed, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has cursed you (%d).'),
         Abilities.GetColor(abCursed)), [The, Dam]));
@@ -722,7 +722,7 @@ begin
       (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L + 2, L + 5), 0, High(Byte));
+      Dam := Math.EnsureRange(Math.RandomRange(L + 2, L + 5), 0, UIntMax);
       Player.Abilities.Modify(abBurning, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s has burnt you (%d).'),
         Abilities.GetColor(abBurning)), [The, Dam]));
@@ -732,7 +732,7 @@ begin
     // Attack
     Dam := EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
       Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
-      (Ord(Game.Difficulty) * 3)), 0, High(Word));
+      (Ord(Game.Difficulty) * 3)), 0, UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
@@ -764,7 +764,7 @@ end;
 procedure TMob.Defeat;
 var
   S, The: string;
-  V: Byte;
+  V: UInt;
 begin
   // Quests
   Quests.DoQuest(qtKillMobs, FID);
@@ -819,7 +819,7 @@ begin
     Items.Loot(Self.X, Self.Y, ivCorpse);
 end;
 
-function TMob.GetVision: Byte;
+function TMob.GetVision: UInt;
 begin
   Result := EnsureRange(VisionMax - (Player.Skills.Skill[skStealth]
     .Value div 6), 3, VisionMax);
@@ -827,7 +827,7 @@ end;
 
 procedure TMob.Process;
 var
-  NX, NY, Dist: Integer;
+  NX, NY, Dist: Int;
   The: string;
 begin
   // Exit;
@@ -857,7 +857,7 @@ begin
   if (Dist <= 2) and Player.IsRest then
     Player.IsRest := False;
   // A*
-  if not PathFind(High(Byte) + 1, High(Byte) + 1, X, Y, Player.X, Player.Y,
+  if not PathFind(UIntMax + 1, UIntMax + 1, X, Y, Player.X, Player.Y,
     @MyCallback, NX, NY) then
     Exit;
   if (NX = Player.X) and (NY = Player.Y) then
@@ -876,7 +876,7 @@ begin
     Self.Defeat;
 end;
 
-procedure TMob.Render(AX, AY: Byte);
+procedure TMob.Render(AX, AY: UInt);
 var
   C: Char;
 begin
@@ -898,10 +898,10 @@ begin
       C, Color, clBkPlayer);
 end;
 
-procedure TMob.Walk(AX, AY: Byte; PX: Byte = 0; PY: Byte = 0);
+procedure TMob.Walk(AX, AY: UInt; PX: UInt = 0; PY: UInt = 0);
 var
   NX, NY: ShortInt;
-  FX, FY: Byte;
+  FX, FY: UInt;
 begin
   NX := 0;
   NY := 0;
@@ -1012,10 +1012,10 @@ end;
 
 { TMobs }
 
-procedure TMobs.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-  AForce: TForce = fcEnemy; AID: Integer = -1);
+procedure TMobs.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
+  AForce: TForce = fcEnemy; AID: Int = -1);
 var
-  I: Integer;
+  I: Int;
 
   procedure AddMob();
   begin
@@ -1037,14 +1037,14 @@ end;
 
 procedure TMobs.AddGroup(const AZ: TMapEnum);
 var
-  ID, FX, FY, FCount: Byte;
-  I: Integer;
+  ID, FX, FY, FCount: UInt;
+  I: Int;
 begin
   repeat
     ID := Math.RandomRange(0, Ord(mbTroll_King) + 1);
     repeat
-      FX := Math.RandomRange(1, High(Byte) - 1);
-      FY := Math.RandomRange(1, High(Byte) - 1);
+      FX := Math.RandomRange(1, UIntMax - 1);
+      FY := Math.RandomRange(1, UIntMax - 1);
       if (Ord(AZ) > 0) then
         Break;
     until (Player.GetDist(FX, FY) > 50);
@@ -1056,22 +1056,22 @@ begin
   for I := 1 to FCount do
   begin
     repeat
-      FX := Math.EnsureRange(FX + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
-      FY := Math.EnsureRange(FY + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
+      FX := Math.EnsureRange(FX + (RandomRange(0, 3) - 1), 1, UIntMax - 1);
+      FY := Math.EnsureRange(FY + (RandomRange(0, 3) - 1), 1, UIntMax - 1);
     until ChMapTile(ID, FX, FY, AZ);
     Self.Add(AZ, FX, FY, fcEnemy, ID);
   end;
 end;
 
 procedure TMobs.AddGroup(const AZ: TMapEnum; const AMobEnum: TMobEnum;
-  const ACount: Byte);
+  const ACount: UInt);
 var
-  ID, FX, FY, FCount: Integer;
+  ID, FX, FY, FCount: Int;
 begin
   ID := Ord(AMobEnum);
   repeat
-    FX := Math.RandomRange(1, High(Byte) - 1);
-    FY := Math.RandomRange(1, High(Byte) - 1);
+    FX := Math.RandomRange(1, UIntMax - 1);
+    FY := Math.RandomRange(1, UIntMax - 1);
     if (Ord(AZ) > 0) then
       Break;
   until (Player.GetDist(FX, FY) > 50) and ChMapTile(ID, FX, FY, AZ);
@@ -1081,15 +1081,15 @@ begin
   while (FCount < ACount) do
   begin
     repeat
-      FX := Math.EnsureRange(FX + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
-      FY := Math.EnsureRange(FY + (RandomRange(0, 3) - 1), 1, High(Byte) - 1);
+      FX := Math.EnsureRange(FX + (RandomRange(0, 3) - 1), 1, UIntMax - 1);
+      FY := Math.EnsureRange(FY + (RandomRange(0, 3) - 1), 1, UIntMax - 1);
     until ChMapTile(ID, FX, FY, AZ);
     Self.Add(AZ, FX, FY, fcEnemy, ID);
     Inc(FCount);
   end;
 end;
 
-function TMobs.Count: Integer;
+function TMobs.Count: Int;
 begin
   Result := Length(FMob)
 end;
@@ -1115,22 +1115,22 @@ end;
 
 destructor TMobs.Destroy;
 var
-  I: Integer;
+  I: Int;
 begin
   for I := 0 to Count - 1 do
     FreeAndNil(FMob[I]);
   inherited;
 end;
 
-function TMobs.ChMob(I: Integer; AX, AY: Byte): Boolean;
+function TMobs.ChMob(I: Int; AX, AY: UInt): Boolean;
 begin
   with FMob[I] do
     Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y)
 end;
 
-function TMobs.GetFreeTile(AX, AY: Byte): Boolean;
+function TMobs.GetFreeTile(AX, AY: UInt): Boolean;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := True;
   for I := 0 to Count - 1 do
@@ -1141,9 +1141,9 @@ begin
     end;
 end;
 
-function TMobs.GetIndex(AX, AY: Byte): Integer;
+function TMobs.GetIndex(AX, AY: UInt): Int;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := -1;
   for I := 0 to Count - 1 do
@@ -1154,14 +1154,14 @@ begin
     end;
 end;
 
-function TMobs.GetMob(I: Integer): TMob;
+function TMobs.GetMob(I: Int): TMob;
 begin
   Result := FMob[I]
 end;
 
 procedure TMobs.Process;
 var
-  I: Integer;
+  I: Int;
 begin
   if (Count > 0) then
     for I := 0 to Count - 1 do
@@ -1169,9 +1169,9 @@ begin
         FMob[I].Process;
 end;
 
-procedure TMobs.Render(AX, AY: Byte);
+procedure TMobs.Render(AX, AY: UInt);
 var
-  I: Integer;
+  I: Int;
 begin
   if (Count > 0) then
     for I := 0 to Count - 1 do
@@ -1179,7 +1179,7 @@ begin
         FMob[I].Render(AX, AY);
 end;
 
-procedure TMobs.SetMob(I: Integer; const Value: TMob);
+procedure TMobs.SetMob(I: Int; const Value: TMob);
 begin
   FMob[I] := Value;
 end;

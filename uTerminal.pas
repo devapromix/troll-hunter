@@ -2,7 +2,7 @@ unit uTerminal;
 
 interface
 
-uses Types, BearLibTerminal;
+uses Types, uTypes, BearLibTerminal;
 
 type
   TGlyph = record
@@ -16,10 +16,10 @@ type
 
 type
   TEntSize = record
-    Left: Integer;
-    Top: Integer;
-    Width: Integer;
-    Height: Integer;
+    Left: Int;
+    Top: Int;
+    Width: Int;
+    Height: Int;
   end;
 
 var
@@ -38,24 +38,24 @@ type
     procedure Refresh;
     procedure BackgroundColor(Value: Cardinal); overload;
     procedure ForegroundColor(Value: Cardinal); overload;
-    procedure Print(AX, AY: Integer; AText: string); overload;
-    procedure Print(AX, AY: Integer; AText: string; Align: Integer); overload;
-    procedure Print(AX, AY: Integer; AText: string;
-      AForegroundColor: Cardinal;
+    procedure Print(AX, AY: Int; AText: string); overload;
+    procedure Print(AX, AY: Int; AText: string; Align: Int); overload;
+    procedure Print(AX, AY: Int; AText: string; AForegroundColor: Cardinal;
       ABackgroundColor: Cardinal); overload;
-    procedure Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
-      Align: Byte); overload;
-    function Pick(const AX, AY: Byte): Byte;
+    procedure Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
+      Align: UInt); overload;
+    function Pick(const AX, AY: UInt): UInt;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
     function GetColorFromIni(AKey: string): string; overload;
     function GetColorFromIni(AKey: string; ADefault: string): Cardinal;
       overload;
     function Colorize(const AStr, AColor: string): string; overload;
-    function Colorize(const ANum: Integer; const AColor: string): string; overload;
+    function Colorize(const ANum: Int; const AColor: string)
+      : string; overload;
     function GetTextScreenshot: string;
-    function SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
-    function GetColor(Color: Integer): Cardinal;
+    function SetEntSize(ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
+    function GetColor(Color: Int): Cardinal;
   end;
 
 var
@@ -77,7 +77,7 @@ begin
   terminal_clear();
 end;
 
-function TTerminal.Colorize(const ANum: Integer; const AColor: string): string;
+function TTerminal.Colorize(const ANum: Int; const AColor: string): string;
 begin
   Result := Format('[color=%s]%d[/color]', [LowerCase(AColor), ANum]);
 end;
@@ -105,9 +105,10 @@ begin
   terminal_color(Value);
 end;
 
-function TTerminal.GetColor(Color: Integer): Cardinal;
+function TTerminal.GetColor(Color: Int): Cardinal;
 begin
-  Result := color_from_argb($FF, Byte(Color), Byte(Color shr 8), Byte(Color shr 16));
+  Result := color_from_argb($FF, UInt(Color), UInt(Color shr 8),
+    UInt(Color shr 16));
 end;
 
 function TTerminal.GetColorFromIni(AKey: string; ADefault: string): Cardinal;
@@ -115,14 +116,15 @@ var
   S: string;
 begin
   S := GetColorFromIni(AKey);
-  if (S = '') then S := ADefault;
+  if (S = '') then
+    S := ADefault;
   Result := color_from_name(S);
 end;
 
 function TTerminal.GetTextScreenshot: string;
 var
   SL: TStringList;
-  X, Y, C: Byte;
+  X, Y, C: UInt;
   S: string;
 begin
   SL := TStringList.Create;
@@ -157,9 +159,9 @@ var
   Wizard: string;
 begin
   Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 100),
-    100, High(Byte));
+    100, UIntMax);
   Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'),
-    30), 30, High(Byte) div 2);
+    30), 30, UIntMax div 2);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
   Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'),
     35), 35, 50);
@@ -184,30 +186,29 @@ begin
     [Round(FChar.Width * 1.4), Round(FChar.Height * 1.4)]));
 end;
 
-procedure TTerminal.Print(AX, AY: Integer; AText: string);
+procedure TTerminal.Print(AX, AY: Int; AText: string);
 begin
   terminal_print(AX, AY, TK_ALIGN_DEFAULT, AText);
 end;
 
-procedure TTerminal.Print(AX, AY: Integer; AText: string; Align: Integer);
+procedure TTerminal.Print(AX, AY: Int; AText: string; Align: Int);
 begin
   terminal_print(AX, AY, Align, AText);
 end;
 
-function TTerminal.Pick(const AX, AY: Byte): Byte;
+function TTerminal.Pick(const AX, AY: UInt): UInt;
 begin
   Result := terminal_pick(AX, AY, 0);
 end;
 
-procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Integer; AText: string;
-  Align: Byte);
+procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
+  Align: UInt);
 begin
   terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
 end;
 
-procedure TTerminal.Print(AX, AY: Integer; AText: string;
-  AForegroundColor: Cardinal;
-  ABackgroundColor: Cardinal);
+procedure TTerminal.Print(AX, AY: Int; AText: string;
+  AForegroundColor: Cardinal; ABackgroundColor: Cardinal);
 begin
   terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);
@@ -219,7 +220,7 @@ begin
   terminal_refresh;
 end;
 
-function TTerminal.SetEntSize(ALeft, ATop, AWidth, AHeight: Byte): TEntSize;
+function TTerminal.SetEntSize(ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
 begin
   Result.Left := ALeft;
   Result.Top := ATop;

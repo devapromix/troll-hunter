@@ -2,13 +2,16 @@ unit uAttribute;
 
 interface
 
+uses uTypes;
+
 const
   AttribMax = 100;
 
 type
   TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana,
-    atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atExtraGold, atVision, atSat, atLev,
-    atExp, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill);
+    atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atExtraGold, atVision,
+    atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill,
+    atManaAfEachKill);
 
 const
   AttrLow = atReLife;
@@ -16,8 +19,8 @@ const
 
 type
   TAttrib = record
-    Value: Word;
-    Prm: Word;
+    Value: UInt;
+    Prm: UInt;
   end;
 
 type
@@ -31,9 +34,9 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
-    procedure Modify(I: TAttribEnum; AValue: Integer; APrm: Integer = 0);
-    procedure ModifyValue(I: TAttribEnum; AValue: Integer);
-    procedure SetValue(I: TAttribEnum; AValue: Integer);
+    procedure Modify(I: TAttribEnum; AValue: Int; APrm: Int = 0);
+    procedure ModifyValue(I: TAttribEnum; AValue: Int);
+    procedure SetValue(I: TAttribEnum; AValue: Int);
   end;
 
 implementation
@@ -69,13 +72,13 @@ begin
   Result := FAttrib[I];
 end;
 
-procedure TAttributes.Modify(I: TAttribEnum; AValue, APrm: Integer);
+procedure TAttributes.Modify(I: TAttribEnum; AValue, APrm: Int);
 begin
   FAttrib[I].Value := FAttrib[I].Value + AValue;
   FAttrib[I].Prm := FAttrib[I].Prm + APrm;
 end;
 
-procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Integer);
+procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Int);
 begin
   Modify(I, AValue);
   case I of
@@ -93,7 +96,7 @@ begin
   FAttrib[I] := Value;
 end;
 
-procedure TAttributes.SetValue(I: TAttribEnum; AValue: Integer);
+procedure TAttributes.SetValue(I: TAttribEnum; AValue: Int);
 begin
   FAttrib[I].Value := AValue;
 end;

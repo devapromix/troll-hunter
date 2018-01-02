@@ -2,7 +2,7 @@ unit uLanguage;
 
 interface
 
-uses Classes;
+uses uTypes, Classes;
 
 type
   TLanguage = class(TObject)
@@ -69,7 +69,7 @@ end;
 procedure TLanguage.LoadFromFile(AFileName: string);
 var
   S: string;
-  I, J: Integer;
+  I, J: Int;
   SL: TStringList;
 begin
   if not FileExists(AFileName) then
@@ -109,7 +109,7 @@ end;
 
 function TLanguage.Get(const AValue: string): string;
 var
-  I: Integer;
+  I: Int;
 begin
   I := FID.IndexOf(AValue);
   if (I < 0) or (FValue[I] = '') then

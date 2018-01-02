@@ -2,16 +2,18 @@ unit uLogo;
 
 interface
 
+uses uTypes;
+
 type
   TLogo = class(TObject)
   private
-    FX: Byte;
+    FX: UInt;
     FL: array [0 .. 17] of string;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Render(const IsSword: Boolean);
-    function Width: Byte;
+    function Width: UInt;
   end;
 
 var
@@ -46,7 +48,7 @@ const
 
 constructor TLogo.Create;
 var
-  X, Y: Byte;
+  X, Y: UInt;
   C: Char;
 begin
   for Y := 0 to 17 do
@@ -85,7 +87,7 @@ end;
 
 procedure TLogo.Render(const IsSword: Boolean);
 var
-  I: Byte;
+  I: UInt;
 begin
   FX := Screen.Width div 2;
   for I := 0 to 17 do
@@ -93,7 +95,7 @@ begin
   if IsSword then
 end;
 
-function TLogo.Width: Byte;
+function TLogo.Width: UInt;
 begin
   Result := Length(T[0]);
 end;

@@ -3,7 +3,7 @@ unit uMsgLog;
 interface
 
 uses
-  Classes;
+  uTypes, Classes;
 
 type
   TMsgLog = class(TObject)
@@ -14,12 +14,12 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Render(const Y: Byte = 0; Flag: Boolean = False);
+    procedure Render(const Y: UInt = 0; Flag: Boolean = False);
     procedure Clear;
     procedure Add(S: string);
     procedure Turn;
     property Msg: string read FMsg write FMsg;
-    function GetLastMsg(const ACount: Integer): string;
+    function GetLastMsg(const ACount: Int): string;
     procedure RenderAllMessages;
   end;
 
@@ -38,7 +38,7 @@ const
 procedure TMsgLog.Add(S: string);
 begin
   FMsg := FMsg + ' ' + Trim(S);
-  Game.Timer := High(Byte);
+  Game.Timer := UIntMax;
 end;
 
 procedure TMsgLog.Clear;
@@ -59,9 +59,9 @@ begin
   inherited;
 end;
 
-function TMsgLog.GetLastMsg(const ACount: Integer): string;
+function TMsgLog.GetLastMsg(const ACount: Int): string;
 var
-  I, C: Integer;
+  I, C: Int;
   SL: TStringList;
   Color: string;
 begin
@@ -82,7 +82,7 @@ begin
   end;
 end;
 
-procedure TMsgLog.Render(const Y: Byte = 0; Flag: Boolean = False);
+procedure TMsgLog.Render(const Y: UInt = 0; Flag: Boolean = False);
 begin
   if (Flag and (Game.Timer = 0)) then
     Exit;
@@ -99,7 +99,7 @@ end;
 procedure TMsgLog.RenderAllMessages;
 var
   S, Color: string;
-  I, C: Integer;
+  I, C: Int;
 begin
   S := '';
   C := Math.Min(Screen.Height - 3, FLog.Count);
@@ -131,3 +131,4 @@ finalization
 FreeAndNil(MsgLog);
 
 end.
+

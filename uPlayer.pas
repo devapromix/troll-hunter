@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses Types, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic, uTalent;
+uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic, uTalent;
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
@@ -41,19 +41,19 @@ const
 type
   TPlayer = class(TCreature)
   private
-    FLX: Byte;
-    FLY: Byte;
-    FMana: Word;
-    FMaxMana: Word;
-    FMaxMap: Byte;
+    FLX: UInt;
+    FLY: UInt;
+    FMana: UInt;
+    FMaxMana: UInt;
+    FMaxMap: UInt;
     FLook: Boolean;
-    FGold: Integer;
+    FGold: Int;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
     FItemIsDrop: Boolean;
-    FItemIndex: Integer;
-    FItemAmount: Integer;
-    FSatPerTurn: Byte;
+    FItemIndex: Int;
+    FItemAmount: Int;
+    FSatPerTurn: UInt;
     FBackground: string;
     FIsRest: Boolean;
     FName: string;
@@ -61,34 +61,34 @@ type
     FTalents: TTalents;
     FSkills: TSkills;
     procedure GenNPCText;
-    function GetVision: Byte;
-    function GetSatiation: Word;
+    function GetVision: UInt;
+    function GetSatiation: UInt;
     function GenerateBackground(): string;
   public
     constructor Create;
     destructor Destroy; override;
-    property LX: Byte read FLX write FLX;
-    property LY: Byte read FLY write FLY;
-    property Satiation: Word read GetSatiation; // Nutrition
-    property Mana: Word read FMana write FMana;
-    property MaxMana: Word read FMaxMana write FMaxMana;
-    property Vision: Byte read GetVision;
-    property MaxMap: Byte read FMaxMap write FMaxMap;
+    property LX: UInt read FLX write FLX;
+    property LY: UInt read FLY write FLY;
+    property Satiation: UInt read GetSatiation; // Nutrition
+    property Mana: UInt read FMana write FMana;
+    property MaxMana: UInt read FMaxMana write FMaxMana;
+    property Vision: UInt read GetVision;
+    property MaxMap: UInt read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
-    property Gold: Integer read FGold write FGold;
+    property Gold: Int read FGold write FGold;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
-    property ItemIndex: Integer read FItemIndex write FItemIndex;
-    property ItemAmount: Integer read FItemAmount write FItemAmount;
-    property SatPerTurn: Byte read FSatPerTurn write FSatPerTurn;
+    property ItemIndex: Int read FItemIndex write FItemIndex;
+    property ItemAmount: Int read FItemAmount write FItemAmount;
+    property SatPerTurn: UInt read FSatPerTurn write FSatPerTurn;
     property Statictics: TStatistics read FStatistics write FStatistics;
     property Background: string read FBackground;
     property Name: string read FName write FName;
     property Skills: TSkills read FSkills write FSkills;
     property Talents: TTalents read FTalents write FTalents;
-    procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
-    procedure Render(AX, AY: Byte);
+    procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Int);
+    procedure Render(AX, AY: UInt);
     procedure Move(Dir: TDirectionEnum);
     procedure RenderInfo;
     procedure Calc;
@@ -100,30 +100,30 @@ type
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
     procedure Defeat(AKiller: string = '');
-    procedure Attack(Index: Integer);
+    procedure Attack(Index: Int);
     procedure ReceiveHealing;
-    procedure Buy(Index: Integer);
+    procedure Buy(Index: Int);
     procedure PickUp;
-    procedure PickUpAmount(Index: Integer);
-    procedure Drop(Index: Integer);
-    procedure DropAmount(Index: Integer);
-    procedure Use(Index: Integer);
-    procedure DoEffects(const Effects: TEffects; const Value: Word = 0);
-    procedure Equip(Index: Integer);
-    procedure UnEquip(Index: Integer);
-    procedure Sell(Index: Integer);
-    procedure RepairItem(Index: Integer);
-    procedure IdentItem(Index: Integer);
-    procedure CraftItem(Index: Integer);
-    procedure BreakItem(Index: Integer; Value: Byte = 1); overload;
-    procedure BreakItem(ASlot: TSlotType; Value: Byte = 1); overload;
+    procedure PickUpAmount(Index: Int);
+    procedure Drop(Index: Int);
+    procedure DropAmount(Index: Int);
+    procedure Use(Index: Int);
+    procedure DoEffects(const Effects: TEffects; const Value: UInt = 0);
+    procedure Equip(Index: Int);
+    procedure UnEquip(Index: Int);
+    procedure Sell(Index: Int);
+    procedure RepairItem(Index: Int);
+    procedure IdentItem(Index: Int);
+    procedure CraftItem(Index: Int);
+    procedure BreakItem(Index: Int; Value: UInt = 1); overload;
+    procedure BreakItem(ASlot: TSlotType; Value: UInt = 1); overload;
     procedure BreakItem(); overload;
-    procedure AddExp(Value: Byte = 1);
+    procedure AddExp(Value: UInt = 1);
     procedure Start;
-    procedure Rest(ATurns: Word);
+    procedure Rest(ATurns: UInt);
     procedure Dialog(AMob: TMob);
     procedure AutoPickup();
-    procedure RenderWeather(const AX, AY, AWidth: Byte);
+    procedure RenderWeather(const AX, AY, AWidth: UInt);
   end;
 
 var
@@ -136,7 +136,7 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
   uBearLibItemsDungeon, uBearLibItemsInventory, Dialogs;
 
-procedure RnItem(FItem: Item; const Index: Integer);
+procedure RnItem(FItem: Item; const Index: Int);
 begin
   if (FItem.Durability = 0) then
   begin
@@ -206,7 +206,7 @@ end;
 
 procedure TPlayer.AddTurn;
 var
-  V, C: Byte;
+  V, C: UInt;
 begin
   if IsDead then
     Exit;
@@ -227,7 +227,7 @@ begin
     begin
       C := Skills.Skill[skHealing].Value;
       if Abilities.IsAbility(abRegen) then
-        C := EnsureRange(C * 3, C, High(Byte));
+        C := EnsureRange(C * 3, C, UIntMax);
       Life := EnsureRange(Life + C, 0, MaxLife);
     end;
     V := EnsureRange(100 - Skills.Skill[skConcentration].Value, 25, 100);
@@ -235,7 +235,7 @@ begin
     begin
       C := Skills.Skill[skConcentration].Value;
       if Abilities.IsAbility(abRegen) then
-        C := EnsureRange(C * 3, C, High(Byte));
+        C := EnsureRange(C * 3, C, UIntMax);
       Mana := EnsureRange(Mana + C, 0, MaxMana);
     end;
   end;
@@ -245,11 +245,11 @@ begin
   Mobs.Process;
 end;
 
-procedure TPlayer.Attack(Index: Integer);
+procedure TPlayer.Attack(Index: Int);
 var
-  V, Ch: Byte;
+  V, Ch: UInt;
   Mob: TMob;
-  Dam, Cr: Word;
+  Dam, Cr: UInt;
   CrStr, The: string;
 
   procedure Miss();
@@ -278,7 +278,7 @@ begin
     CrStr := '';
     // Attack
     Dam := EnsureRange(RandomRange(Self.GetDamage.Min, GetDamage.Max + 1), 0,
-      High(Word));
+      UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Dec(Dam, Dam div 3);
@@ -370,7 +370,7 @@ end;
 
 procedure TPlayer.AutoPickup;
 var
-  Index, FCount: Integer;
+  Index, FCount: Int;
   ItemType: TItemType;
   FItem: Item;
 begin
@@ -412,13 +412,13 @@ end;
 
 procedure TPlayer.Calc;
 var
-  FAttrib: array [TAttribEnum] of Word;
+  FAttrib: array [TAttribEnum] of UInt;
   Attrib: TAttribEnum;
-  I, FCount: Integer;
+  I, FCount: Int;
   ID: TItemEnum;
   FItem: Item;
 
-  procedure AddAttrib(const AAttrib: TAttribEnum; const Value: Word);
+  procedure AddAttrib(const AAttrib: TAttribEnum; const Value: UInt);
   begin
     FAttrib[AAttrib] := FAttrib[AAttrib] + Value;
   end;
@@ -495,8 +495,7 @@ begin
     end;
   end;
   //
-  Self.Gold := EnsureRange(Items_Inventory_GetItemAmount(Ord(ivGold)), 0,
-    High(Integer));
+  Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
   //
   Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value *
     1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] +
@@ -539,9 +538,9 @@ begin
   //
   Attributes.SetValue(atExtraGold, EnsureRange(FAttrib[atExtraGold], 0, ExtraGoldMax));
   Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr]
-    .Value div 3, 1, High(Byte) - 1),
+    .Value div 3, 1, UIntMax - 1),
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2,
-    High(Byte)));
+    UIntMax));
   for Attrib := AttrLow to AttrHigh do
     Attributes.SetValue(Attrib, FAttrib[Attrib]);
 end;
@@ -567,7 +566,7 @@ begin
   Fill();
 end;
 
-procedure TPlayer.CraftItem(Index: Integer);
+procedure TPlayer.CraftItem(Index: Int);
 var
   FItem: Item;
 begin
@@ -619,7 +618,7 @@ end;
 
 procedure TPlayer.Dialog(AMob: TMob);
 begin
-  Game.Timer := High(Byte);
+  Game.Timer := UIntMax;
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
   NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
   Scenes.SetScene(scDialog);
@@ -646,7 +645,7 @@ begin
   MsgLog.Add(Format(_('%s says: "%s"'), [NPCName, S]));
 end;
 
-function TPlayer.GetVision: Byte;
+function TPlayer.GetVision: UInt;
 begin
   Result := EnsureRange((Attributes.Attrib[atVision].Value - Abilities.Ability
     [abBlinded]) + 3, 0, VisionMax);
@@ -687,14 +686,14 @@ begin
   end;
 end;
 
-function TPlayer.GetSatiation: Word;
+function TPlayer.GetSatiation: UInt;
 begin
   Result := EnsureRange(Attributes.Attrib[atSat].Value, 0, EngorgedMax);
 end;
 
 procedure TPlayer.Move(Dir: TDirectionEnum);
 var
-  FX, FY: Byte;
+  FX, FY: UInt;
 begin
   if Look then
   begin
@@ -744,7 +743,7 @@ begin
   end;
 end;
 
-procedure TPlayer.Use(Index: Integer);
+procedure TPlayer.Use(Index: Int);
 var
   FItem: Item;
   I: TItemEnum;
@@ -845,10 +844,10 @@ begin
   // MsgLog.Add(Format(_('You don''t know how to use %s.'), [The]));
 end;
 
-procedure TPlayer.Equip(Index: Integer);
+procedure TPlayer.Equip(Index: Int);
 var
   FItem: Item;
-  I: Integer;
+  I: Int;
 begin
   // Need level
   FItem := Items_Inventory_GetItem(Index);
@@ -875,7 +874,7 @@ begin
   Wait;
 end;
 
-procedure TPlayer.UnEquip(Index: Integer);
+procedure TPlayer.UnEquip(Index: Int);
 var
   FItem: Item;
 begin
@@ -888,9 +887,9 @@ begin
   end;
 end;
 
-procedure TPlayer.Sell(Index: Integer);
+procedure TPlayer.Sell(Index: Int);
 var
-  Value: Integer;
+  Value: Int;
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
@@ -926,7 +925,7 @@ begin
   end;
 end;
 
-procedure TPlayer.Buy(Index: Integer);
+procedure TPlayer.Buy(Index: Int);
 var
   FItem: Item;
 begin
@@ -945,7 +944,7 @@ end;
 
 procedure TPlayer.ReceiveHealing;
 var
-  Cost: Word;
+  Cost: UInt;
 begin
   Cost := Round((MaxLife - Life) * 1.6);
   if (Self.Gold >= Cost) then
@@ -961,7 +960,7 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.IdentItem(Index: Integer);
+procedure TPlayer.IdentItem(Index: Int);
 var
   FItem: Item;
 begin
@@ -978,9 +977,9 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.RepairItem(Index: Integer);
+procedure TPlayer.RepairItem(Index: Int);
 var
-  RepairCost: Word;
+  RepairCost: UInt;
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
@@ -1039,14 +1038,14 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.BreakItem(Index: Integer; Value: Byte = 1);
+procedure TPlayer.BreakItem(Index: Int; Value: UInt = 1);
 var
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  FItem.Durability := Math.EnsureRange(FItem.Durability - Value, 0, High(Byte));
+  FItem.Durability := Math.EnsureRange(FItem.Durability - Value, 0, UIntMax);
   if ((FItem.Durability > 0) and
     (FItem.Durability < (FItem.MaxDurability div 4))) then
     MsgLog.Add(Terminal.Colorize
@@ -1058,9 +1057,9 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.BreakItem(ASlot: TSlotType; Value: Byte = 1);
+procedure TPlayer.BreakItem(ASlot: TSlotType; Value: UInt = 1);
 var
-  FCount, I: Integer;
+  FCount, I: Int;
   FItem: Item;
   FI: TItemEnum;
 begin
@@ -1081,7 +1080,7 @@ begin
 
 end;
 
-procedure TPlayer.Drop(Index: Integer);
+procedure TPlayer.Drop(Index: Int);
 var
   AItem: Item;
 
@@ -1112,7 +1111,7 @@ begin
   Self.Calc();
 end;
 
-procedure TPlayer.DropAmount(Index: Integer);
+procedure TPlayer.DropAmount(Index: Int);
 var
   FItem: Item;
 begin
@@ -1136,7 +1135,7 @@ end;
 
 procedure TPlayer.PickUp();
 var
-  FCount: Integer;
+  FCount: Int;
 begin
   Statictics.Inc(stFound);
   Corpses.DelCorpse(X, Y);
@@ -1152,7 +1151,7 @@ begin
     else
     begin
       // Items scene
-      Game.Timer := High(Byte);
+      Game.Timer := UIntMax;
       Scenes.SetScene(scItems);
     end;
   end
@@ -1160,7 +1159,7 @@ begin
     MsgLog.Add(_('There is nothing here to pick up.'));
 end;
 
-procedure TPlayer.PickUpAmount(Index: Integer);
+procedure TPlayer.PickUpAmount(Index: Int);
 var
   FItem: Item;
 begin
@@ -1178,7 +1177,7 @@ begin
   Wait();
 end;
 
-procedure TPlayer.Render(AX, AY: Byte);
+procedure TPlayer.Render(AX, AY: UInt);
 begin
   if (Self.Life = 0) then
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
@@ -1233,11 +1232,11 @@ begin
   end;
 end;
 
-procedure TPlayer.RenderWeather(const AX, AY, AWidth: Byte);
+procedure TPlayer.RenderWeather(const AX, AY, AWidth: UInt);
 var
   SunOrMoonGlyphColor, SunOrMoonGlyph, SunOrMoon, SkyColor, SkyBef,
     SkyAft: string;
-  Left: Byte;
+  Left: UInt;
 
   procedure Add(const ASunOrMoonGlyph, ASunOrMoonGlyphColor, ASkyColor: string);
   begin
@@ -1310,7 +1309,7 @@ begin
   end;
 end;
 
-procedure TPlayer.SetAmountScene(IsDrop: Boolean; Index, Amount: Integer);
+procedure TPlayer.SetAmountScene(IsDrop: Boolean; Index, Amount: Int);
 begin
   ItemIsDrop := IsDrop;
   ItemIndex := Index;
@@ -1326,7 +1325,7 @@ begin
   MsgLog.Clear;
 end;
 
-procedure TPlayer.AddExp(Value: Byte = 1);
+procedure TPlayer.AddExp(Value: UInt = 1);
 begin
   Attributes.Modify(atExp, Value);
   if (Attributes.Attrib[atExp].Value >= LevelExpMax) then
@@ -1364,9 +1363,9 @@ begin
   Move(drOrigin);
 end;
 
-procedure TPlayer.Rest(ATurns: Word);
+procedure TPlayer.Rest(ATurns: UInt);
 var
-  T: Word;
+  T: UInt;
 begin
   IsRest := True;
   MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));
@@ -1385,7 +1384,7 @@ end;
 
 procedure TPlayer.Start();
 var
-  I, D: Byte;
+  I, D: UInt;
 begin
 
   // Add armors
@@ -1489,9 +1488,9 @@ begin
   Self.Calc();
 end;
 
-procedure TPlayer.DoEffects(const Effects: TEffects; const Value: Word = 0);
+procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);
 var
-  V, VX, VY: Word;
+  V, VX, VY: UInt;
   Ef: TEffect;
 const
   F = '%s +%d.';
@@ -1503,7 +1502,7 @@ const
     Fill();
   end;
 
-  procedure PrmValue(AEffect: TEffect; Value: Byte);
+  procedure PrmValue(AEffect: TEffect; Value: UInt);
   begin
     case AEffect of
       efPrmLife:
@@ -1623,7 +1622,7 @@ begin
     begin
       V := Self.Skills.Skill[skHealing].Value + Value;
       Abilities.Ability[abPoisoned] :=
-        Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0, High(Word));
+        Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0, UIntMax);
       Self.Skills.DoSkill(skHealing);
       if Abilities.IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))

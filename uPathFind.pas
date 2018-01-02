@@ -2,11 +2,13 @@ unit uPathFind; // By KIPAR
 
 interface
 
-type
-  TGetXYVal = function(X, Y: Integer): Boolean; stdcall;
+uses uTypes;
 
-function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
-  Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
+type
+  TGetXYVal = function(X, Y: Int): Boolean; stdcall;
+
+function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int;
+  Callback: TGetXYVal; var TargetX, TargetY: Int): Boolean;
 
 implementation
 
@@ -18,19 +20,19 @@ const
   KDIAG = 12;
 
 type
-  TBytePoint = record
-    X, Y: Byte;
+  TUIntPoint = record
+    X, Y: UInt;
   end;
 
 type
   TPathFindBlock = record
-    CostWay: Integer;
-    Parent: TBytePoint;
+    CostWay: Int;
+    Parent: TUIntPoint;
   end;
 
 type
   TOpenBlock = record
-    Cost, X, Y: Integer;
+    Cost, X, Y: Int;
   end;
 
   POpenBlock = ^TOpenBlock;
@@ -39,31 +41,31 @@ type
 
 var
   Cells: TPathFindMap;
-  FAULT: Integer;
-  SavedMapX, SavedMapY: Integer;
+  FAULT: Int;
+  SavedMapX, SavedMapY: Int;
   Open: array [0 .. MAXLEN] of POpenBlock;
   OpenRaw: array [0 .. MAXLEN] of TOpenBlock;
 
 procedure InitCrap;
 var
-  I: Integer;
+  I: Int;
 begin
   for I := 0 to MAXLEN do
     Open[I] := @OpenRaw[I];
 end;
 
-function Heuristic(dx, dy: Integer): Integer;
+function Heuristic(dx, dy: Int): Int;
 begin
   Result := KNORM * Max(dx, dy) + (KDIAG - KNORM) * Min(dx, dy);
 end;
 
 var
-  NOpen: Integer = 0;
+  NOpen: Int = 0;
 
-function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
-  Callback: TGetXYVal; var TargetX, TargetY: Integer): Boolean;
+function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int;
+  Callback: TGetXYVal; var TargetX, TargetY: Int): Boolean;
 
-  procedure HeapSwap(I, j: Integer);
+  procedure HeapSwap(I, j: Int);
   var
     tmp: POpenBlock;
   begin
@@ -74,7 +76,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
 
   procedure HeapAdd;
   var
-    I, Parent: Integer;
+    I, Parent: Int;
   begin
     I := NOpen - 1;
     Parent := (I - 1) div 2;
@@ -86,9 +88,9 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
     end;
   end;
 
-  procedure Heapify(I: Integer);
+  procedure Heapify(I: Int);
   var
-    leftChild, rightChild, largestChild: Integer;
+    leftChild, rightChild, largestChild: Int;
   begin
     repeat
       leftChild := 2 * I + 1;
@@ -108,7 +110,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
     until false;
   end;
 
-  procedure AddToOpen(X, Y, FrX, FrY, NewCost: Integer);
+  procedure AddToOpen(X, Y, FrX, FrY, NewCost: Int);
   begin
     if not InRange(X, 0, MapX - 1) then
       exit;
@@ -138,7 +140,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Integer;
   end;
 
 var
-  CurX, CurY: Integer;
+  CurX, CurY: Int;
 begin
   Result := false;
   if not InRange(ToX, 0, MapX - 1) then

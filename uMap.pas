@@ -2,6 +2,8 @@ unit uMap;
 
 interface
 
+uses uTypes;
+
 type
   TMapEnum = (deDarkWood, deGrayCave, deDeepCave, deBloodCave, deDrom);
 
@@ -40,9 +42,9 @@ type
     FMap: array [Byte, Byte, TMapEnum] of TTileEnum;
     FFog: array [Byte, Byte, TMapEnum] of Boolean;
     FFOV: array [Byte, Byte] of Boolean;
-    procedure AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
+    procedure AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum;
       ABaseTileEnum, ATileEnum: TTileEnum);
-    procedure AddTiles(AX, AY: Byte; AZ: TMapEnum; AType: Byte; ADen: Word;
+    procedure AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt;
       ABaseTileEnum, ATileEnum: TTileEnum);
     procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
       ATile: TTileEnum; AZ: TMapEnum);
@@ -56,19 +58,19 @@ type
     procedure Clear(Z: TMapEnum; ATileEnum: TTileEnum);
     procedure Gen;
     property Current: TMapEnum read FCurrent write FCurrent;
-    function InMap(AX, AY: Integer): Boolean;
-    function InView(AX, AY: Integer): Boolean;
-    function GetFog(AX, AY: Byte): Boolean;
-    procedure SetFog(AX, AY: Byte; AFlag: Boolean);
+    function InMap(AX, AY: Int): Boolean;
+    function InView(AX, AY: Int): Boolean;
+    function GetFog(AX, AY: UInt): Boolean;
+    procedure SetFog(AX, AY: UInt; AFlag: Boolean);
     procedure ClearFOV;
-    function GetFOV(AX, AY: Byte): Boolean;
-    procedure SetFOV(AX, AY: Byte; AFlag: Boolean);
-    function GetTile(AX, AY: Byte): TTile; overload;
+    function GetFOV(AX, AY: UInt): Boolean;
+    procedure SetFOV(AX, AY: UInt; AFlag: Boolean);
+    function GetTile(AX, AY: UInt): TTile; overload;
     function GetTile(ATileEnum: TTileEnum): TTile; overload;
-    procedure SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
-    function GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
+    procedure SetTileEnum(AX, AY: UInt; AZ: TMapEnum; ATileEnum: TTileEnum);
+    function GetTileEnum(AX, AY: UInt; AZ: TMapEnum): TTileEnum;
     property Name: string read GetName;
-    function EnsureRange(Value: Integer): Byte;
+    function EnsureRange(Value: Int): UInt;
   end;
 
 var
@@ -191,12 +193,12 @@ begin
   AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDrom);
 end;
 
-procedure TMap.AddSpot(AX, AY: Byte; ASize: Word; AZ: TMapEnum;
+procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum;
   ABaseTileEnum, ATileEnum: TTileEnum);
 var
   Z: TMapEnum;
-  X, Y: Byte;
-  I: Word;
+  X, Y: UInt;
+  I: UInt;
 begin
   X := AX;
   Y := AY;
@@ -211,7 +213,7 @@ begin
         Continue;
       SetTileEnum(X, Y, Z, ATileEnum);
     end;
-    if (Round(Random(6)) = 1) and (X < High(Byte)) then
+    if (Round(Random(6)) = 1) and (X < UIntMax) then
     begin
       X := X + 1;
       if (GetTileEnum(X, Y, Z) <> ABaseTileEnum) then
@@ -225,7 +227,7 @@ begin
         Continue;
       SetTileEnum(X, Y, Z, ATileEnum);
     end;
-    if (Round(Random(6)) = 1) and (Y < High(Byte)) then
+    if (Round(Random(6)) = 1) and (Y < UIntMax) then
     begin
       Y := Y + 1;
       if (GetTileEnum(X, Y, Z) <> ABaseTileEnum) then
@@ -246,14 +248,14 @@ begin
   end;
 end;
 
-procedure TMap.AddTiles(AX, AY: Byte; AZ: TMapEnum; AType: Byte; ADen: Word;
+procedure TMap.AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt;
   ABaseTileEnum, ATileEnum: TTileEnum);
 var
-  K: Word;
-  X, Y: Byte;
+  K: UInt;
+  X, Y: UInt;
   Z: TMapEnum;
 
-  procedure ModTile(const X, Y: Byte);
+  procedure ModTile(const X, Y: UInt);
   begin
     if (GetTileEnum(X, Y, Z) = ABaseTileEnum) then
       SetTileEnum(X, Y, Z, ATileEnum);
@@ -271,7 +273,7 @@ begin
       X := X - 1;
       ModTile(X, Y);
     end;
-    if (Round(Random(AType)) = 1) and (X < High(Byte)) then
+    if (Round(Random(AType)) = 1) and (X < UIntMax) then
     begin
       X := X + 1;
       ModTile(X, Y);
@@ -281,7 +283,7 @@ begin
       Y := Y - 1;
       ModTile(X, Y);
     end;
-    if (Round(Random(AType)) = 1) and (Y < High(Byte)) then
+    if (Round(Random(AType)) = 1) and (Y < UIntMax) then
     begin
       Y := Y + 1;
       ModTile(X, Y);
@@ -291,7 +293,7 @@ end;
 
 procedure TMap.ClearFOV;
 var
-  X, Y, V: Integer;
+  X, Y, V: Int;
 begin
   V := Player.Attributes.Attrib[atVision].Value;
   for Y := Player.Y - V to Player.Y + V do
@@ -301,10 +303,10 @@ end;
 
 procedure TMap.Clear(Z: TMapEnum; ATileEnum: TTileEnum);
 var
-  X, Y: Byte;
+  X, Y: UInt;
 begin
-  for Y := 0 to High(Byte) do
-    for X := 0 to High(Byte) do
+  for Y := 0 to UIntMax do
+    for X := 0 to UIntMax do
     begin
       FMap[X][Y][Z] := ATileEnum;
       FFog[X][Y][Z] := True;
@@ -333,9 +335,9 @@ begin
   inherited;
 end;
 
-function TMap.EnsureRange(Value: Integer): Byte;
+function TMap.EnsureRange(Value: Int): UInt;
 begin
-  Result := Math.EnsureRange(Value, 0, High(Byte));
+  Result := Math.EnsureRange(Value, 0, UIntMax);
 end;
 
 var
@@ -343,23 +345,23 @@ var
 
 procedure TMap.Gen;
 var
-  I: Word;
-  X, Y: Byte;
+  I: UInt;
+  X, Y: UInt;
   Z: TMapEnum;
   GatePos: TPoint;
 
 const
   Pd = 11;
 
-  procedure GenCave(D: Byte; C, V: Word);
+  procedure GenCave(D: UInt; C, V: UInt);
   var
-    I: Word;
+    I: UInt;
   begin
     for I := 0 to C do
     begin
       repeat
-        X := Math.RandomRange(Pd, High(Byte) - Pd);
-        Y := Math.RandomRange(Pd, High(Byte) - Pd);
+        X := Math.RandomRange(Pd, UIntMax - Pd);
+        Y := Math.RandomRange(Pd, UIntMax - Pd);
       until (GetTileEnum(X, Y, pred(Z)) = teDefaultFloor);
       Self.AddTiles(X, Y, Z, D, V, teDefaultWall, teDefaultFloor);
       SetTileEnum(X, Y, pred(Z), teDnStairs);
@@ -369,20 +371,20 @@ const
 
   procedure AddArea(ADeep: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
   var
-    X, Y: Byte;
+    X, Y: UInt;
   begin
     repeat
-      X := Math.RandomRange(Pd, High(Byte) - Pd);
-      Y := Math.RandomRange(Pd, High(Byte) - Pd);
+      X := Math.RandomRange(Pd, UIntMax - Pd);
+      Y := Math.RandomRange(Pd, UIntMax - Pd);
     until (GetTileEnum(X, Y, ADeep) = ABaseTileEnum);
-    AddSpot(X, Y, Math.RandomRange(49, High(Byte)), ADeep, ABaseTileEnum,
+    AddSpot(X, Y, Math.RandomRange(49, UIntMax), ADeep, ABaseTileEnum,
       ATileEnum);
   end;
 
-  procedure AddFrame(AX, AY, AW, AH: Byte; ABaseTileEnum: TTileEnum);
+  procedure AddFrame(AX, AY, AW, AH: UInt; ABaseTileEnum: TTileEnum);
   var
-    X, Y: Byte;
-    PX, PY: Byte;
+    X, Y: UInt;
+    PX, PY: UInt;
   begin
     PX := AX - (AW div 2);
     PY := AY - (AH div 2);
@@ -393,11 +395,11 @@ const
           SetTileEnum(X, Y, Z, ABaseTileEnum);
   end;
 
-  procedure AddRect(AX, AY, AW, AH: Byte;
+  procedure AddRect(AX, AY, AW, AH: UInt;
     AFloorTileEnum, AWallTileEnum: TTileEnum; IsFog: Boolean = False);
   var
-    X, Y: Byte;
-    PX, PY: Byte;
+    X, Y: UInt;
+    PX, PY: UInt;
   begin
     PX := AX - (AW div 2);
     PY := AY - (AH div 2);
@@ -414,9 +416,9 @@ const
       end;
   end;
 
-  procedure AddNPC(AX, AY: Byte);
+  procedure AddNPC(AX, AY: UInt);
   var
-    I: Byte;
+    I: UInt;
   begin
     repeat
       I := Math.RandomRange(0, 7);
@@ -425,12 +427,12 @@ const
     BNPC[I] := True;
   end;
 
-  procedure AddHouse(AX, AY, CX, CY, D: Byte; AV: Boolean; F: Boolean);
+  procedure AddHouse(AX, AY, CX, CY, D: UInt; AV: Boolean; F: Boolean);
   var
-    W, H: Byte;
+    W, H: UInt;
     IsDoor: Boolean;
 
-    procedure AddDoor(X, Y: Byte);
+    procedure AddDoor(X, Y: UInt);
     begin
       if IsDoor then
         Exit;
@@ -470,16 +472,16 @@ const
       AddDoor(AX, AY - (H div 2));
   end;
 
-  procedure AddVillage(AX, AY: Byte);
+  procedure AddVillage(AX, AY: UInt);
   var
-    I, J, T, X, Y, PX, PY: Byte;
+    I, J, T, X, Y, PX, PY: UInt;
     HP: array [0 .. 7] of Boolean;
   const
     House: array [0 .. 7] of TPoint = ((X: - 10; Y: - 10;), (X: 10; Y: - 10;
       ), (X: - 10; Y: 10;), (X: 10; Y: 10;), (X: 0; Y: 10;), (X: - 10; Y: 0;
       ), (X: 10; Y: 0;), (X: 0; Y: - 10;));
 
-    procedure AddGate(AX, AY: Byte; SX, SY: ShortInt);
+    procedure AddGate(AX, AY: UInt; SX, SY: ShortInt);
     begin
       SetTileEnum(AX + SX, AY + SY, Z, teGate);
       GatePos := Point(AX + SX, AY + SY);
@@ -550,10 +552,10 @@ begin
           Self.SetVis(Z, True);
           Self.Clear(Z, teDefaultFloor);
           for I := 0 to 9999 do
-            Self.SetTileEnum(Math.RandomRange(0, High(Byte)),
-              Math.RandomRange(0, High(Byte)), Z, teDefaultWall);
-          Game.Spawn.X := RandomRange(25, High(Byte) - 25);
-          Game.Spawn.Y := RandomRange(25, High(Byte) - 25);
+            Self.SetTileEnum(Math.RandomRange(0, UIntMax),
+              Math.RandomRange(0, UIntMax), Z, teDefaultWall);
+          Game.Spawn.X := RandomRange(25, UIntMax - 25);
+          Game.Spawn.Y := RandomRange(25, UIntMax - 25);
           Game.Portal.X := Game.Spawn.X;
           Game.Portal.Y := Game.Spawn.Y;
           AddVillage(Game.Spawn.X, Game.Spawn.Y);
@@ -595,7 +597,7 @@ begin
   begin
     // Add mobs
     IsBoss := False;
-    for I := 0 to High(Byte) do
+    for I := 0 to UIntMax do
       Mobs.AddGroup(Z);
   end;
 end;
@@ -605,7 +607,7 @@ begin
   Result := Tile[ATileEnum][Current];
 end;
 
-function TMap.GetTile(AX, AY: Byte): TTile;
+function TMap.GetTile(AX, AY: UInt): TTile;
 begin
 
   Result := Tile[FMap[AX][AY][Current]][Current];
@@ -624,7 +626,7 @@ begin
   Result := _(FMapName[Current]);
 end;
 
-function TMap.GetTileEnum(AX, AY: Byte; AZ: TMapEnum): TTileEnum;
+function TMap.GetTileEnum(AX, AY: UInt; AZ: TMapEnum): TTileEnum;
 begin
   Result := FMap[AX][AY][AZ];
 end;
@@ -634,30 +636,30 @@ begin
   Result := FVis[AZ];
 end;
 
-procedure TMap.SetTileEnum(AX, AY: Byte; AZ: TMapEnum; ATileEnum: TTileEnum);
+procedure TMap.SetTileEnum(AX, AY: UInt; AZ: TMapEnum; ATileEnum: TTileEnum);
 begin
   FMap[AX][AY][AZ] := ATileEnum;
 end;
 
-function TMap.GetFog(AX, AY: Byte): Boolean;
+function TMap.GetFog(AX, AY: UInt): Boolean;
 begin
   Result := FFog[AX][AY][Current];
 end;
 
-procedure TMap.SetFog(AX, AY: Byte; AFlag: Boolean);
+procedure TMap.SetFog(AX, AY: UInt; AFlag: Boolean);
 begin
   FFog[AX][AY][Current] := AFlag;
 end;
 
-function TMap.InMap(AX, AY: Integer): Boolean;
+function TMap.InMap(AX, AY: Int): Boolean;
 begin
-  Result := (AX >= 0) and (AY >= 0) and (AX <= High(Byte)) and
-    (AY <= High(Byte))
+  Result := (AX >= 0) and (AY >= 0) and (AX <= UIntMax) and
+    (AY <= UIntMax)
 end;
 
-function TMap.InView(AX, AY: Integer): Boolean;
+function TMap.InView(AX, AY: Int): Boolean;
 var
-  PX, PY: Integer;
+  PX, PY: Int;
 begin
   PX := View.Width div 2;
   PY := View.Height div 2;
@@ -665,12 +667,12 @@ begin
     (AX <= Player.X + PX - 1) and (AY <= Player.Y + PY - 1);
 end;
 
-function TMap.GetFOV(AX, AY: Byte): Boolean;
+function TMap.GetFOV(AX, AY: UInt): Boolean;
 begin
   Result := FFOV[AX][AY];
 end;
 
-procedure TMap.SetFOV(AX, AY: Byte; AFlag: Boolean);
+procedure TMap.SetFOV(AX, AY: UInt; AFlag: Boolean);
 begin
   FFOV[AX][AY] := AFlag;
 end;

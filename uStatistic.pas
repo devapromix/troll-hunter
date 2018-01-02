@@ -2,6 +2,8 @@ unit uStatistic;
 
 interface
 
+uses uTypes;
+
 type
   TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk,
     stScrRead, stItUsed, stItIdent, stItCrafted, stItRep, stFdEat);
@@ -9,13 +11,13 @@ type
 type
   TStatistics = class(TObject)
   private
-    FStat: array [TStatEnum] of Word;
+    FStat: array [TStatEnum] of UInt;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    procedure Inc(const I: TStatEnum; const Value: Word = 1);
-    function Get(const I: TStatEnum): Word;
+    procedure Inc(const I: TStatEnum; const Value: UInt = 1);
+    function Get(const I: TStatEnum): UInt;
   end;
 
 implementation
@@ -41,12 +43,12 @@ begin
   inherited;
 end;
 
-function TStatistics.Get(const I: TStatEnum): Word;
+function TStatistics.Get(const I: TStatEnum): UInt;
 begin
   Result := FStat[I];
 end;
 
-procedure TStatistics.Inc(const I: TStatEnum; const Value: Word = 1);
+procedure TStatistics.Inc(const I: TStatEnum; const Value: UInt = 1);
 begin
   FStat[I] := FStat[I] + Value;
 end;

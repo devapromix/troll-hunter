@@ -2,14 +2,14 @@ unit uAffixes;
 
 interface
 
-uses uCreature, uItem, uBeaRLibItemsCommon;
+uses uTypes, uCreature, uItem, uBeaRLibItemsCommon;
 
 type
   TSetOfItem = set of TItemType;
 
   TSuffixBase = record
     Level: TMinMax;
-    Price: Word;
+    Price: UInt;
     Occurence: TSetOfItem;
     MaxDurability: TMinMax;
     Defense: TMinMax;
@@ -21,7 +21,7 @@ type
     Willpower: TMinMax;
     Perception: TMinMax;
     Value: TMinMax;
-    PrmValue: Byte;
+    PrmValue: UInt;
     Rare: Boolean;
     Effects: TEffects;
   end;
@@ -562,8 +562,8 @@ type
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     procedure DoSuffix(var AItem: Item);
-    procedure DoCraft(const Effect: TEffect; const Index: Byte);
-    function Amount: Byte;
+    procedure DoCraft(const Effect: TEffect; const Index: UInt);
+    function Amount: UInt;
   end;
 
 var
@@ -573,7 +573,7 @@ implementation
 
 uses SysUtils, TypInfo, Math, uTerminal, uGame;
 
-function TAffixes.Amount: Byte;
+function TAffixes.Amount: UInt;
 begin
   Result := Ord(High(TSuffixEnum)) + 1;
 end;
@@ -589,7 +589,7 @@ begin
       [rfReplaceAll]);
 end;
 
-procedure TAffixes.DoCraft(const Effect: TEffect; const Index: Byte);
+procedure TAffixes.DoCraft(const Effect: TEffect; const Index: UInt);
 begin
   case Effect of
     efCraftStr:
@@ -609,14 +609,14 @@ procedure TAffixes.DoSuffix(var AItem: Item);
 var
   SB: TSuffixBase;
   BT: TBonusType;
-  Value: Byte;
+  Value: UInt;
 
   procedure SetLife(ABonusType: TBonusType);
   begin
     if (SB.Life.Min > 0) then
     begin
       Value := Math.EnsureRange(Items.GetBonus(AItem, ABonusType) +
-        Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1, High(Byte));
+        Math.RandomRange(SB.Life.Min, SB.Life.Max + 1), 1, UIntMax);
       Items.SetBonus(AItem, ABonusType, Value);
     end;
   end;
@@ -626,17 +626,17 @@ var
     if (SB.Mana.Min > 0) then
     begin
       Value := Math.EnsureRange(Items.GetBonus(AItem, ABonusType) +
-        Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1, High(Byte));
+        Math.RandomRange(SB.Mana.Min, SB.Mana.Max + 1), 1, UIntMax);
       Items.SetBonus(AItem, ABonusType, Value);
     end;
   end;
 
-  procedure SetAtr(const ABType: TBonusType; const AMin, AMax: Byte);
+  procedure SetAtr(const ABType: TBonusType; const AMin, AMax: UInt);
   var
-    Value: Byte;
+    Value: UInt;
   begin
     Value := Math.EnsureRange(Items.GetBonus(AItem, ABType) +
-      Math.RandomRange(AMin, AMax + 1), 1, High(Byte));
+      Math.RandomRange(AMin, AMax + 1), 1, UIntMax);
     Items.SetBonus(AItem, ABType, Value);
   end;
 
@@ -699,7 +699,7 @@ begin
         if (SB.Defense.Min > 0) then
           AItem.Defense := AItem.Defense + Math.EnsureRange
             (Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1,
-            High(Byte));
+            UIntMax);
       end;
     // Damage
     of_Damage1 .. of_Damage7:
@@ -707,11 +707,11 @@ begin
         if (SB.Damage.MinDamage.Min > 0) then
           AItem.MinDamage := AItem.MinDamage +
             Math.EnsureRange(Math.RandomRange(SB.Damage.MinDamage.Min,
-            SB.Damage.MinDamage.Max + 1), 1, High(Byte) - 1);
+            SB.Damage.MinDamage.Max + 1), 1, UIntMax - 1);
         if (SB.Damage.MaxDamage.Min > 0) then
           AItem.MaxDamage := AItem.MaxDamage +
             Math.EnsureRange(Math.RandomRange(SB.Damage.MaxDamage.Min,
-            SB.Damage.MaxDamage.Max + 1), 2, High(Byte));
+            SB.Damage.MaxDamage.Max + 1), 2, UIntMax);
       end;
     // Durability
     of_Craftmanship .. of_Permanance:
@@ -720,7 +720,7 @@ begin
         begin
           AItem.MaxDurability := AItem.MaxDurability +
             Math.EnsureRange(Math.RandomRange(SB.MaxDurability.Min,
-            SB.MaxDurability.Max + 1), 1, High(Byte));
+            SB.MaxDurability.Max + 1), 1, UIntMax);
           case Game.Difficulty of
             dfEasy:
               AItem.Durability := AItem.MaxDurability;
@@ -753,7 +753,7 @@ begin
   AItem.Effects := SB.Effects;
   if (SB.Value.Min > 0) then
     AItem.Value := Math.EnsureRange(AItem.Value + Math.RandomRange(SB.Value.Min,
-      SB.Value.Max + 1), 0, High(Byte));
+      SB.Value.Max + 1), 0, UIntMax);
   if (SB.PrmValue > 0) then
     AItem.Value := SB.PrmValue;
   // Price

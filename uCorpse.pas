@@ -2,26 +2,28 @@ unit uCorpse;
 
 interface
 
+uses uTypes;
+
 const
   CorpseMax = 10;
 
 type
   TCorpse = record
-    X, Y, Z: Byte;
+    X, Y, Z: UInt;
   end;
 
   TCorpses = class(TObject)
   private
     FCorpse: array [0 .. CorpseMax - 1] of TCorpse;
-    procedure Save(Index, AX, AY, AZ: Byte);
-    procedure Load(Index: Byte);
+    procedure Save(Index, AX, AY, AZ: UInt);
+    procedure Load(Index: UInt);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Render(AX, AY: Byte);
-    function IsCorpse(AX, AY: Byte): Boolean;
+    procedure Render(AX, AY: UInt);
+    function IsCorpse(AX, AY: UInt): Boolean;
     procedure Append();
-    procedure DelCorpse(AX, AY: Byte);
+    procedure DelCorpse(AX, AY: UInt);
   end;
 
 var
@@ -33,7 +35,7 @@ uses SysUtils, uPlayer, uMap, uGame, uTerminal;
 
 { TCorpses }
 
-procedure TCorpses.Save(Index, AX, AY, AZ: Byte);
+procedure TCorpses.Save(Index, AX, AY, AZ: UInt);
 var
 //  F: TIniFile;
   S: string;
@@ -44,16 +46,16 @@ begin
     F.EraseSection(S);
     if ((AX > 0) and (AY > 0)) then
     begin
-      F.WriteInteger(S, 'X', AX);
-      F.WriteInteger(S, 'Y', AY);
-      F.WriteInteger(S, 'Z', AZ);
+      F.WriteInt(S, 'X', AX);
+      F.WriteInt(S, 'Y', AY);
+      F.WriteInt(S, 'Z', AZ);
     end;
   finally
     F.Free;
   end;}
 end;
 
-procedure TCorpses.Load(Index: Byte);
+procedure TCorpses.Load(Index: UInt);
 var
 //  F: TIniFile;
   S: string;
@@ -61,9 +63,9 @@ begin
 {  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
     S := IntToStr(Index);
-    FCorpse[Index].X := F.ReadInteger(S, 'X', 0);
-    FCorpse[Index].Y := F.ReadInteger(S, 'Y', 0);
-    FCorpse[Index].Z := F.ReadInteger(S, 'Z', 0);
+    FCorpse[Index].X := F.ReadInt(S, 'X', 0);
+    FCorpse[Index].Y := F.ReadInt(S, 'Y', 0);
+    FCorpse[Index].Z := F.ReadInt(S, 'Z', 0);
   finally
     F.Free;
   end; }
@@ -72,11 +74,11 @@ end;
 procedure TCorpses.Append;
 var
 //  F: TIniFile;
-  I: Byte;
+  I: UInt;
   S: string;
 begin
-  if (Player.X = 0) or (Player.Y = 0) or (Player.X = High(Byte)) or
-    (Player.Y = High(Byte)) then
+  if (Player.X = 0) or (Player.Y = 0) or (Player.X = UIntMax) or
+    (Player.Y = UIntMax) then
     Exit;
 {  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
@@ -99,7 +101,7 @@ end;
 constructor TCorpses.Create;
 var
 //  F: TIniFile;
-  I: Byte;
+  I: UInt;
 begin
 {  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
@@ -110,13 +112,13 @@ begin
   end;   }
 end;
 
-procedure TCorpses.DelCorpse(AX, AY: Byte);
+procedure TCorpses.DelCorpse(AX, AY: UInt);
 var
-  I: Byte;
+  I: UInt;
 begin
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
+    if (UInt(Ord(Map.Current)) <> FCorpse[I].Z) then
       Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
     begin
@@ -133,14 +135,14 @@ begin
   inherited;
 end;
 
-function TCorpses.IsCorpse(AX, AY: Byte): Boolean;
+function TCorpses.IsCorpse(AX, AY: UInt): Boolean;
 var
-  I: Byte;
+  I: UInt;
 begin
   Result := False;
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
+    if (UInt(Ord(Map.Current)) <> FCorpse[I].Z) then
       Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
     begin
@@ -150,14 +152,14 @@ begin
   end;
 end;
 
-procedure TCorpses.Render(AX, AY: Byte);
+procedure TCorpses.Render(AX, AY: UInt);
 var
   Color: Cardinal;
-  X, Y, I: Byte;
+  X, Y, I: UInt;
 begin
   for I := 0 to CorpseMax - 1 do
   begin
-    if (Byte(Ord(Map.Current)) <> FCorpse[I].Z) then
+    if (UInt(Ord(Map.Current)) <> FCorpse[I].Z) then
       Continue;
     if not Map.InView(FCorpse[I].X, FCorpse[I].Y) or
       (not Mode.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then

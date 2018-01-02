@@ -2,18 +2,18 @@ unit uSpellbook;
 
 interface
 
-uses uCreature;
+uses uTypes, uCreature;
 
 type
   TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation, spMagicEye);
 
 type
   TSpellBase = record
-    Level: Byte;
+    Level: UInt;
     Effects: TEffects;
-    Value: Word;
-    ManaCost: Byte;
-    Price: Word;
+    Value: UInt;
+    ManaCost: UInt;
+    Price: UInt;
   end;
 
 const
@@ -46,7 +46,7 @@ type
     procedure AddSpell(ASpellEnum: TSpellEnum);
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
     procedure Start;
-    procedure DoSpell(Index: Byte);
+    procedure DoSpell(Index: UInt);
   end;
 
 var
@@ -71,9 +71,9 @@ begin
     FSpell[I].Enable := True;
 end;
 
-procedure TSpellbook.DoSpell(Index: Byte);
+procedure TSpellbook.DoSpell(Index: UInt);
 var
-  C: Byte;
+  C: UInt;
   I: TSpellEnum;
 begin
   C := 0;

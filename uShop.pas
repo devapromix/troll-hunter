@@ -3,7 +3,7 @@ unit uShop;
 interface
 
 uses
-  uBeaRLibItemsCommon, uPlayer, uItem;
+  uBeaRLibItemsCommon, uTypes, uPlayer, uItem;
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
@@ -17,13 +17,13 @@ type
   TShop = class
   private
     FItemsStore: TItemsStore;
-    FCount: Byte;
+    FCount: UInt;
   public
     constructor Create;
     procedure Clear;
-    property Count: Byte read FCount;
+    property Count: UInt read FCount;
     procedure Add(const AItem: Item);
-    function GetItem(const Index: Byte): Item;
+    function GetItem(const Index: UInt): Item;
   end;
 
 type
@@ -38,7 +38,7 @@ type
     procedure New;
     procedure Clear;
     procedure Render;
-    function Count: Byte;
+    function Count: UInt;
     property Current: TShopEnum read FCurrent write FCurrent;
     property Shop[I: TShopEnum]: TShop read GetShop write SetShop;
   end;
@@ -61,7 +61,7 @@ end;
 
 procedure TShop.Clear;
 var
-  I: Byte;
+  I: UInt;
 begin
   for I := Low(FItemsStore) to High(FItemsStore) do
     Items_Clear_Item(FItemsStore[I]);
@@ -73,7 +73,7 @@ begin
   Self.Clear;
 end;
 
-function TShop.GetItem(const Index: Byte): Item;
+function TShop.GetItem(const Index: UInt): Item;
 begin
   Result := FItemsStore[EnsureRange(Index, 0, ItemMax)];
 end;
@@ -88,7 +88,7 @@ begin
     FShop[S].Clear;
 end;
 
-function TShops.Count: Byte;
+function TShops.Count: UInt;
 begin
   Result := Length(FShop);
 end;
@@ -119,7 +119,7 @@ end;
 procedure TShops.New;
 var
   FItem: Item;
-  I, Max: Byte;
+  I, Max: UInt;
   ID: TItemEnum;
   S: TShopEnum;
 
@@ -197,7 +197,7 @@ end;
 
 procedure TShops.Render;
 var
-  I, C: Integer;
+  I, C: Int;
 begin
   C := EnsureRange(Shops.Shop[Shops.Current].Count, 0, ItemMax);
   for I := 0 to C - 1 do

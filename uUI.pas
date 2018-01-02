@@ -2,7 +2,7 @@ unit uUI;
 
 interface
 
-uses uMsgLog;
+uses uTypes, uMsgLog;
 
 type
   TIconEnum = (icMale, icFemale, icPlus, icMinus, icQuestion, icGold, icFlag,
@@ -13,10 +13,10 @@ type
 
 type
   UI = class(TObject)
-    class procedure Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
+    class procedure Bar(X, LM, Y, Wd: UInt; Cur, Max: UInt;
       AColor, DarkColor: Cardinal);
-    class procedure Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
-    class procedure FromAToZ(const Max: Byte = 0);
+    class procedure Title(const S: string; AY: UInt = 1; BGColor: Cardinal = 0);
+    class procedure FromAToZ(const Max: UInt = 0);
     class procedure RenderTile(const S: string);
     class function KeyToStr(AKey: string; AStr: string = '';
       AColor: string = 'Key'): string;
@@ -38,10 +38,10 @@ const
 
   { UI }
 
-class procedure UI.Bar(X, LM, Y, Wd: Byte; Cur, Max: Word;
+class procedure UI.Bar(X, LM, Y, Wd: UInt; Cur, Max: UInt;
   AColor, DarkColor: Cardinal);
 var
-  I, L, W: Byte;
+  I, L, W: UInt;
 begin
   L := Wd;
   W := Round(Cur / Max * L);
@@ -55,10 +55,10 @@ begin
   end;
 end;
 
-class procedure UI.FromAToZ(const Max: Byte = 0);
+class procedure UI.FromAToZ(const Max: UInt = 0);
 var
   I: Char;
-  J: Byte;
+  J: UInt;
 begin
   if Mode.Wizard then
     for I := 'A' to 'Z' do
@@ -93,9 +93,9 @@ begin
   Terminal.Print(0, 0, '[U+E000]');
 end;
 
-class procedure UI.Title(const S: string; AY: Byte = 1; BGColor: Cardinal = 0);
+class procedure UI.Title(const S: string; AY: UInt = 1; BGColor: Cardinal = 0);
 var
-  GX: Byte;
+  GX: UInt;
 begin
   if (BGColor > 0) then
   begin

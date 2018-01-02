@@ -2,7 +2,7 @@ unit uCreature;
 
 interface
 
-uses uEntity, uAbility, uAttribute;
+uses uTypes, uEntity, uAbility, uAttribute;
 
 const
   PVMax = 250;
@@ -32,8 +32,8 @@ type
 
 type
   TMinMax = record
-    Min: Word;
-    Max: Word;
+    Min: UInt;
+    Max: UInt;
   end;
 
   TDamage = TMinMax;
@@ -46,21 +46,21 @@ type
 type
   TCreature = class(TEntity)
   private
-    FLife: Word;
-    FMaxLife: Word;
+    FLife: UInt;
+    FMaxLife: UInt;
     FAbilities: TAbilities;
     FAttributes: TAttributes;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    procedure SetDamage(AMin, AMax: Word);
+    procedure SetDamage(AMin, AMax: UInt);
     function GetDamage: TDamage;
-    function GetRealDamage(ADamage, APV: Word): Word;
+    function GetRealDamage(ADamage, APV: UInt): UInt;
     function IsDead: Boolean;
     procedure OnTurn;
-    property Life: Word read FLife write FLife;
-    property MaxLife: Word read FMaxLife write FMaxLife;
+    property Life: UInt read FLife write FLife;
+    property MaxLife: UInt read FMaxLife write FMaxLife;
     property Abilities: TAbilities read FAbilities write FAbilities;
     property Attributes: TAttributes read FAttributes write FAttributes;
   end;
@@ -97,7 +97,7 @@ begin
   Result.Max := EnsureRange(Attributes.Attrib[atMaxDamage].Value, 2, MaxDamMax);
 end;
 
-function TCreature.GetRealDamage(ADamage, APV: Word): Word;
+function TCreature.GetRealDamage(ADamage, APV: UInt): UInt;
 begin
   Result := EnsureRange(ADamage - Round((ADamage * ((APV * 100) / PVMax)) /
     100), 0, ADamage);
@@ -108,7 +108,7 @@ begin
   Result := Life = 0
 end;
 
-procedure TCreature.SetDamage(AMin, AMax: Word);
+procedure TCreature.SetDamage(AMin, AMax: UInt);
 begin
   AMin := EnsureRange(AMin, 1, MinDamMax);
   AMax := EnsureRange(AMax, 2, MaxDamMax);
@@ -121,7 +121,7 @@ end;
 procedure TCreature.OnTurn;
 var
   I: TAbilityEnum;
-  Value: Byte;
+  Value: UInt;
 begin
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
     if (Abilities.Ability[I] > 0) then

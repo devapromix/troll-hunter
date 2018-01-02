@@ -2,6 +2,8 @@ unit uAbility;
 
 interface
 
+uses uTypes;
+
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
     abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid);
@@ -13,16 +15,16 @@ type
   TAbilities = class(TObject)
   private
     FAbilityName: array [TAbilityEnum] of string;
-    FAbility: array [TAbilityEnum] of Word;
-    function GetAbility(I: TAbilityEnum): Word;
-    procedure SetAbility(I: TAbilityEnum; const Value: Word);
+    FAbility: array [TAbilityEnum] of UInt;
+    function GetAbility(I: TAbilityEnum): UInt;
+    procedure SetAbility(I: TAbilityEnum; const Value: UInt);
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Ability[I: TAbilityEnum]: Word read GetAbility write SetAbility;
+    property Ability[I: TAbilityEnum]: UInt read GetAbility write SetAbility;
     function IsAbility(Value: TAbilityEnum): Boolean;
-    procedure Modify(I: TAbilityEnum; Value: Integer);
+    procedure Modify(I: TAbilityEnum; Value: Int);
     function GetName(Value: TAbilityEnum): string;
     function GetColor(Value: TAbilityEnum): string;
   end;
@@ -38,7 +40,7 @@ const
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
 
-procedure TAbilities.Modify(I: TAbilityEnum; Value: Integer);
+procedure TAbilities.Modify(I: TAbilityEnum; Value: Int);
 begin
   FAbility[I] := FAbility[I] + Value;
 end;
@@ -69,7 +71,7 @@ begin
   inherited;
 end;
 
-function TAbilities.GetAbility(I: TAbilityEnum): Word;
+function TAbilities.GetAbility(I: TAbilityEnum): UInt;
 begin
   Result := FAbility[I]
 end;
@@ -84,7 +86,7 @@ begin
   Result := Ability[Value] > 0;
 end;
 
-procedure TAbilities.SetAbility(I: TAbilityEnum; const Value: Word);
+procedure TAbilities.SetAbility(I: TAbilityEnum; const Value: UInt);
 begin
   FAbility[I] := Value;
 end;

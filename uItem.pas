@@ -2,7 +2,7 @@ unit uItem;
 
 interface
 
-uses uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
+uses uTypes, uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
@@ -74,17 +74,17 @@ type
     Symbol: Char;
     ItemType: TItemType;
     SlotType: TSlotType;
-    MaxStack: Word;
-    MaxDurability: Word;
-    Level: Byte;
+    MaxStack: UInt;
+    MaxDurability: UInt;
+    Level: UInt;
     Defense: TMinMax;
     Damage: TBaseDamage;
-    Price: Word;
+    Price: UInt;
     Color: Cardinal;
     Deep: set of TMapEnum;
     Effects: TEffects;
-    Value: Word;
-    ManaCost: Byte;
+    Value: UInt;
+    ManaCost: UInt;
   end;
 
   // Silver Sword , Forsworn Sword , Hero Sword
@@ -1671,47 +1671,47 @@ type
     FItemName: array [TItemEnum] of string;
     function GetName(I: TItemEnum): string; overload;
   public
-    Index: Byte;
-    class procedure Make(ID: Word; var AItem: Item);
+    Index: UInt;
+    class procedure Make(ID: UInt; var AItem: Item);
     class procedure CalcItem(var AItem: Item);
     constructor Create;
     destructor Destroy; override;
-    procedure Render(AX, AY: Byte);
-    procedure Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-      AID: Integer = -1; IsRare: Boolean = False);
-    function GetItemEnum(AItemID: Integer): TItemEnum;
+    procedure Render(AX, AY: UInt);
+    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
+      AID: Int = -1; IsRare: Boolean = False);
+    function GetItemEnum(AItemID: Int): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
-      ACount: Byte = 0; IsShort: Boolean = False): string;
-    function RenderInvItem(const AX, AY, I: Integer; AItem: Item;
+      ACount: UInt = 0; IsShort: Boolean = False): string;
+    function RenderInvItem(const AX, AY, I: Int; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
     function GetSlotName(const SlotType: TSlotType): string;
-    procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
+    procedure AddItemToInv(Index: Int = 0; AFlag: Boolean = False);
       overload;
-    procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
+    procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1;
       EqFlag: Boolean = False; IdFlag: Boolean = False;
-      SufID: Word = 0); overload;
+      SufID: UInt = 0); overload;
     function GetInventory: string;
-    function GetPrice(Price: Word; F: Boolean = False): string;
-    function GetLevel(L: Byte): string;
-    function GetInfo(Sign: string; Value: Word; Color: string;
+    function GetPrice(Price: UInt; F: Boolean = False): string;
+    function GetLevel(L: UInt): string;
+    function GetInfo(Sign: string; Value: UInt; Color: string;
       RareColor: string = ''): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
-    procedure LootGold(const AX, AY: Byte);
-    procedure Loot(const AX, AY: Byte; AItemEnum: TItemEnum); overload;
-    procedure Loot(const AX, AY: Byte; AIsBoss: Boolean); overload;
+    procedure LootGold(const AX, AY: UInt);
+    procedure Loot(const AX, AY: UInt; AItemEnum: TItemEnum); overload;
+    procedure Loot(const AX, AY: UInt; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
     function Identify(var AItem: Item; IsNew: Boolean = False;
-      IsRare: Boolean = False; Index: Word = 0): Boolean;
+      IsRare: Boolean = False; Index: UInt = 0): Boolean;
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
     procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
-      const Value: Byte);
+      const Value: UInt);
     function StrToItemEnum(const S: string): TItemEnum;
-    function GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
+    function GetBonus(const AItem: Item; const BonusType: TBonusType): UInt;
     procedure DelCorpses();
     procedure AddPlants;
   end;
@@ -1775,12 +1775,12 @@ begin
 end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
-  ACount: Byte = 0; IsShort: Boolean = False): string;
+  ACount: UInt = 0; IsShort: Boolean = False): string;
 var
-  ID: Integer;
+  ID: Int;
   S, T, Level, D: string;
   IT: TItemType;
-  V: Word;
+  V: UInt;
 
   function GetAmount(): string;
   begin
@@ -1794,7 +1794,7 @@ var
 
     procedure Add(Color: string);
     var
-      V: Word;
+      V: UInt;
     begin
       V := AItem.Value;
       if ((V > 0) or (Sign = '&')) then
@@ -1967,9 +1967,9 @@ begin
     Result := Result + Format(' ID: %d', [ID]);
 end;
 
-class procedure TItems.Make(ID: Word; var AItem: Item);
+class procedure TItems.Make(ID: UInt; var AItem: Item);
 var
-  I: Byte;
+  I: UInt;
 
   function IsIdentify(): Boolean;
   begin
@@ -1996,7 +1996,7 @@ begin
   if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Defense.Min > 0) then
     AItem.Defense := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].Defense.Min,
-      ItemBase[TItemEnum(ID)].Defense.Max + 1), 1, High(Byte))
+      ItemBase[TItemEnum(ID)].Defense.Max + 1), 1, UIntMax)
   else
     AItem.Defense := 0;
   // Damage
@@ -2004,21 +2004,21 @@ begin
   then
     AItem.MinDamage := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
-      ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1), 1, High(Byte) - 1)
+      ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1), 1, UIntMax - 1)
   else
     AItem.MinDamage := 0;
   if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min > 0)
   then
     AItem.MaxDamage := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
-      ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1), 2, High(Byte))
+      ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1), 2, UIntMax)
   else
     AItem.MaxDamage := 0;
   // Durability
   if (AItem.Stack = 1) then
     AItem.MaxDurability := Math.EnsureRange
       (Math.RandomRange(ItemBase[TItemEnum(ID)].MaxDurability - 5,
-      ItemBase[TItemEnum(ID)].MaxDurability + 6), 10, High(Byte))
+      ItemBase[TItemEnum(ID)].MaxDurability + 6), 10, UIntMax)
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
@@ -2031,12 +2031,12 @@ begin
   AItem.Identify := Math.IfThen(IsIdentify(), 0, -1);
 end;
 
-procedure TItems.Add(AZ: TMapEnum; AX: Integer = -1; AY: Integer = -1;
-  AID: Integer = -1; IsRare: Boolean = False);
+procedure TItems.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
+  AID: Int = -1; IsRare: Boolean = False);
 var
-  I, ID, FX, FY: Byte;
+  I, ID, FX, FY: UInt;
   FItem: Item;
-  Value: Integer;
+  Value: Int;
   IT: TItemType;
 begin
   I := 0;
@@ -2048,12 +2048,12 @@ begin
     if (AX >= 0) then
       FX := AX
     else
-      FX := Math.RandomRange(1, High(Byte) - 1);
+      FX := Math.RandomRange(1, UIntMax - 1);
     if (AY >= 0) then
       FY := AY
     else
-      FY := Math.RandomRange(1, High(Byte) - 1);
-    if (I >= High(Byte)) then
+      FY := Math.RandomRange(1, UIntMax - 1);
+    if (I >= UIntMax) then
     begin
       ID := Ord(ivGold);
       Break;
@@ -2091,14 +2091,14 @@ begin
   AddItemToDungeon(FItem);
 end;
 
-procedure TItems.Loot(const AX, AY: Byte; AItemEnum: TItemEnum);
+procedure TItems.Loot(const AX, AY: UInt; AItemEnum: TItemEnum);
 begin
   Add(Map.Current, AX, AY, Ord(AItemEnum));
 end;
 
-procedure TItems.Loot(const AX, AY: Byte; AIsBoss: Boolean);
+procedure TItems.Loot(const AX, AY: UInt; AIsBoss: Boolean);
 var
-  V, I: Byte;
+  V, I: UInt;
 const
   M = 10;
 begin
@@ -2122,10 +2122,10 @@ begin
   end;
 end;
 
-procedure TItems.Render(AX, AY: Byte);
+procedure TItems.Render(AX, AY: UInt);
 var
-  MapID: Byte;
-  I, Count: Integer;
+  MapID: UInt;
+  I, Count: Int;
   FColor: Cardinal;
   FSymbol: Char;
   FItem: Item;
@@ -2200,7 +2200,7 @@ begin
     Terminal.GetColorFromIni('Equip'));
 end;
 
-function TItems.GetPrice(Price: Word; F: Boolean = False): string;
+function TItems.GetPrice(Price: UInt; F: Boolean = False): string;
 var
   Color: string;
 begin
@@ -2208,10 +2208,10 @@ begin
     Color := 'lighter yellow'
   else
     Color := 'light red';
-  Result := Terminal.Colorize(UI.Icon(icGold) + IntToStr(Price), Color);
+  Result := Terminal.Colorize(UI.Icon(icGold) + Price.ToString, Color);
 end;
 
-function TItems.GetLevel(L: Byte): string;
+function TItems.GetLevel(L: UInt): string;
 var
   Color: string;
 begin
@@ -2222,7 +2222,7 @@ begin
   Result := Terminal.Colorize(Format('%s%d', [UI.Icon(icElixir), L]), Color);
 end;
 
-function TItems.GetInfo(Sign: string; Value: Word; Color: string;
+function TItems.GetInfo(Sign: string; Value: UInt; Color: string;
   RareColor: string = ''): string;
 var
   S, P: string;
@@ -2282,21 +2282,21 @@ begin
     Result := Trim(Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]), Color));
 end;
 
-function TItems.RenderInvItem(const AX, AY, I: Integer; AItem: Item;
+function TItems.RenderInvItem(const AX, AY, I: Int; AItem: Item;
   IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
 var
   S: string;
   D: TItemBase;
-  RepairCost: Word;
+  RepairCost: UInt;
 
 const
   T = '------';
   L = Length(T) + 1;
 
-  function GetRedPrice(Price: Word): string;
+  function GetRedPrice(Price: UInt): string;
   begin
-    Result := Terminal.Colorize(UI.Icon(icGold) + IntToStr(Price), 'Light Red');
+    Result := Terminal.Colorize(UI.Icon(icGold) + Price.ToString, 'Light Red');
   end;
 
 begin
@@ -2368,42 +2368,42 @@ begin
     Result := Result + S;
 end;
 
-function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): Byte;
+function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): UInt;
 begin
   case BonusType of
     btLife:
-      Result := Byte(AItem.Bonus[0] shr 24);
+      Result := UInt(AItem.Bonus[0] shr 24);
     btMana:
-      Result := Byte(AItem.Bonus[0] shr 16);
+      Result := UInt(AItem.Bonus[0] shr 16);
     btVis:
-      Result := Byte(AItem.Bonus[0] shr 8);
+      Result := UInt(AItem.Bonus[0] shr 8);
     btExtraGold:
-      Result := Byte(AItem.Bonus[0]);
+      Result := UInt(AItem.Bonus[0]);
     btStr:
-      Result := Byte(AItem.Bonus[1] shr 24);
+      Result := UInt(AItem.Bonus[1] shr 24);
     btDex:
-      Result := Byte(AItem.Bonus[1] shr 16);
+      Result := UInt(AItem.Bonus[1] shr 16);
     btWil:
-      Result := Byte(AItem.Bonus[1] shr 8);
+      Result := UInt(AItem.Bonus[1] shr 8);
     btPer:
-      Result := Byte(AItem.Bonus[1]);
+      Result := UInt(AItem.Bonus[1]);
     btReLife:
-      Result := Byte(AItem.Bonus[2] shr 24);
+      Result := UInt(AItem.Bonus[2] shr 24);
     btReMana:
-      Result := Byte(AItem.Bonus[2] shr 16);
+      Result := UInt(AItem.Bonus[2] shr 16);
     btLifeAfEachKill:
-      Result := Byte(AItem.Bonus[2] shr 8);
+      Result := UInt(AItem.Bonus[2] shr 8);
     btManaAfEachKill:
-      Result := Byte(AItem.Bonus[2]);
+      Result := UInt(AItem.Bonus[2]);
   else
     Result := 0;
   end;
 end;
 
 procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType;
-  const Value: Byte);
+  const Value: UInt);
 var
-  V: array [0 .. 3] of Byte;
+  V: array [0 .. 3] of UInt;
   I: Cardinal;
 begin
   if (BonusType in [btStr .. btPer]) then
@@ -2453,7 +2453,7 @@ end;
 
 function TItems.AddItemInfo(V: array of string): string;
 var
-  I: Byte;
+  I: UInt;
 begin
   Result := '';
   for I := 0 to Length(V) - 1 do
@@ -2467,7 +2467,7 @@ end;
 procedure TItems.AddItemToDungeon(AItem: Item);
 var
   FItem: Item;
-  I, FCount: Integer;
+  I, FCount: Int;
 begin
   // Add an item
   Items_Dungeon_AppendItem(AItem);
@@ -2485,8 +2485,8 @@ begin
   end;
 end;
 
-procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-  EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: Word = 0);
+procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1;
+  EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: UInt = 0);
 var
   FItem: Item;
 begin
@@ -2500,10 +2500,10 @@ begin
   Items_Inventory_AppendItem(FItem);
 end;
 
-procedure TItems.AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
+procedure TItems.AddItemToInv(Index: Int = 0; AFlag: Boolean = False);
 var
   FItem: Item;
-  MapID: Integer;
+  MapID: Int;
 begin
   MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
@@ -2529,7 +2529,7 @@ end;
 function TItems.GetInventory: string;
 var
   SL: TStringList;
-  I, FCount: Integer;
+  I, FCount: Int;
   FItem: Item;
   S: string;
 begin
@@ -2550,12 +2550,12 @@ begin
   end;
 end;
 
-function TItems.GetItemEnum(AItemID: Integer): TItemEnum;
+function TItems.GetItemEnum(AItemID: Int): TItemEnum;
 begin
   Result := TItemEnum(AItemID);
 end;
 
-procedure TItems.LootGold(const AX, AY: Byte);
+procedure TItems.LootGold(const AX, AY: UInt);
 begin
   Loot(AX, AY, ivGold);
   if (Math.RandomRange(0, 4) = 0) then
@@ -2569,7 +2569,7 @@ end;
 
 procedure TItems.RenderInventory(PriceType: TPriceType = ptNone);
 var
-  I, FCount: Integer;
+  I, FCount: Int;
 begin
   FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
   for I := 0 to FCount - 1 do
@@ -2578,9 +2578,9 @@ begin
 end;
 
 function TItems.Identify(var AItem: Item; IsNew: Boolean = False;
-  IsRare: Boolean = False; Index: Word = 0): Boolean;
+  IsRare: Boolean = False; Index: UInt = 0): Boolean;
 var
-  I, Lev: Byte;
+  I, Lev: UInt;
   SB: TSuffixBase;
 begin
   Result := False;
@@ -2639,7 +2639,7 @@ begin
           S := ' [[' + _('Unidentified') + ']]';
         Result := Terminal.Colorize(N + S, 'Unidentified');
       end;
-    1 .. High(Byte):
+    1 .. UIntMax:
       begin
         Result := N + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify));
         if (AItem.SlotID > 0) then
@@ -2668,7 +2668,7 @@ end;
 
 procedure TItems.DelCorpses;
 var
-  I: Integer;
+  I: Int;
   M: TMapEnum;
   FItem: Item;
 begin
@@ -2689,7 +2689,7 @@ end;
 
 procedure TItems.AddPlants;
 var
-  I, FCount: Integer;
+  I, FCount: Int;
   M: TMapEnum;
   FItem: Item;
 begin

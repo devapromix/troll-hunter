@@ -2,26 +2,28 @@ unit uCalendar;
 
 interface
 
+uses uTypes;
+
 type
   TCalendar = class(TObject)
   private
-    FMinute: Byte;
-    FHour: Byte;
-    FDay: Byte;
-    FDayOfWeek: Byte;
-    FMonth: Byte;
-    FYear: Word;
+    FMinute: UInt;
+    FHour: UInt;
+    FDay: UInt;
+    FDayOfWeek: UInt;
+    FMonth: UInt;
+    FYear: UInt;
   public
-    constructor Create(const ADay, AMonth: Byte; const AYear: Word);
-    property Minute: Byte read FMinute;
-    property Hour: Byte read FHour;
-    property Day: Byte read FDay;
-    property DayOfWeek: Byte read FDayOfWeek;
-    property Month: Byte read FMonth;
-    property Year: Word read FYear;
-    function DaysPerMonth(AMonth: Byte): Byte;
-    function DaysThisMonth(): Byte;
-    function GetMonthName(AMonth: Byte = 0): string;
+    constructor Create(const ADay, AMonth: UInt; const AYear: UInt);
+    property Minute: UInt read FMinute;
+    property Hour: UInt read FHour;
+    property Day: UInt read FDay;
+    property DayOfWeek: UInt read FDayOfWeek;
+    property Month: UInt read FMonth;
+    property Year: UInt read FYear;
+    function DaysPerMonth(AMonth: UInt): UInt;
+    function DaysThisMonth(): UInt;
+    function GetMonthName(AMonth: UInt = 0): string;
     function GetDayName(): string;
     function GetTime(): string;
     function GetTimeStr(): string;
@@ -43,7 +45,7 @@ uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer,
 
 { TCalendar }
 
-constructor TCalendar.Create(const ADay, AMonth: Byte; const AYear: Word);
+constructor TCalendar.Create(const ADay, AMonth: UInt; const AYear: UInt);
 begin
   Randomize();
   FMinute := Math.RandomRange(0, 60);
@@ -54,15 +56,15 @@ begin
   FYear := AYear;
 end;
 
-function TCalendar.DaysPerMonth(AMonth: Byte): Byte;
+function TCalendar.DaysPerMonth(AMonth: UInt): UInt;
 const
-  DaysInMonth: array [1 .. 12] of Integer = (31, 28, 31, 30, 31, 30, 31, 31, 30,
+  DaysInMonth: array [1 .. 12] of UInt = (31, 28, 31, 30, 31, 30, 31, 31, 30,
     31, 30, 31);
 begin
   Result := DaysInMonth[AMonth];
 end;
 
-function TCalendar.DaysThisMonth(): Byte;
+function TCalendar.DaysThisMonth(): UInt;
 begin
   Result := DaysPerMonth(Month)
 end;
@@ -75,7 +77,7 @@ begin
   Result := DayName[DayOfWeek];
 end;
 
-function TCalendar.GetMonthName(AMonth: Byte): string;
+function TCalendar.GetMonthName(AMonth: UInt): string;
 const
   MonthName: array [1 .. 12] of string = ('January', 'February', 'March',
     'April', 'May', 'June', 'July', 'August', 'September', 'October',

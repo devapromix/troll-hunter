@@ -2,7 +2,7 @@ unit uGame;
 
 interface
 
-uses uEntity, uMap, uLanguage;
+uses uTypes, uEntity, uMap, uLanguage;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
@@ -106,6 +106,8 @@ var
 
 type
   TDifficulty = (dfEasy, dfNormal, dfHard, dfHell);
+
+type
   TSpawn = class(TEntity);
 
 type
@@ -116,7 +118,7 @@ type
   TGame = class(TObject)
   private
     FDifficulty: TDifficulty;
-    FTimer: Byte;
+    FTimer: UInt;
     FWon: Boolean;
     FCanClose: Boolean;
     FShowMap: Boolean;
@@ -134,7 +136,7 @@ type
     constructor Create;
     destructor Destroy; override;
     property Difficulty: TDifficulty read FDifficulty write FDifficulty;
-    property Timer: Byte read FTimer write FTimer;
+    property Timer: UInt read FTimer write FTimer;
     property Won: Boolean read FWon write FWon;
     property CanClose: Boolean read FCanClose write FCanClose;
     property ShowMap: Boolean read FShowMap write FShowMap;
@@ -182,7 +184,7 @@ end;
 
 constructor TGame.Create;
 var
-  I: Byte;
+  I: UInt;
   J: TAPOptionEnum;
 begin
   Randomize;

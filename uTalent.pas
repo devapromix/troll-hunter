@@ -2,7 +2,7 @@ unit uTalent;
 
 interface
 
-uses uCreature;
+uses uTypes, uCreature;
 
 const
   TalentMax = 10;
@@ -21,7 +21,7 @@ type
 
 type
   TTalentBase = record
-    Level: Byte;
+    Level: UInt;
     TalentBonus: TTalentBonus;
     Effects: TEffects;
   end;
@@ -70,7 +70,7 @@ const
 type
   TTalent = record
     Enum: TTalentEnum;
-    Level: Byte;
+    Level: UInt;
   end;
 
 type
@@ -79,21 +79,21 @@ type
     FIsPoint: Boolean;
     FTalent: array [0 .. TalentMax - 1] of TTalent;
     FTalentName: array [TTalentEnum] of string;
-    function GetTalent(I: Byte): TTalent;
-    procedure SetTalent(I: Byte; const Value: TTalent);
+    function GetTalent(I: UInt): TTalent;
+    procedure SetTalent(I: UInt; const Value: TTalent);
   public
     constructor Create;
     destructor Destroy; override;
     constructor Clear;
     property IsPoint: Boolean read FIsPoint write FIsPoint;
-    property Talent[I: Byte]: TTalent read GetTalent write SetTalent;
+    property Talent[I: UInt]: TTalent read GetTalent write SetTalent;
     function GetName(I: TTalentEnum): string;
     function GetHint(I: TTalentEnum): string;
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): Boolean;
-    function Count: Byte;
-    function Amount: Byte;
-    procedure DoTalent(Key: Byte);
+    function Count: UInt;
+    function Amount: UInt;
+    procedure DoTalent(Key: UInt);
   end;
 
 implementation
@@ -109,7 +109,7 @@ const
 
 procedure TTalents.Add(const ATalent: TTalentEnum);
 var
-  I: Byte;
+  I: UInt;
 begin
   for I := 0 to TalentMax - 1 do
     if (FTalent[I].Enum = tlNone) then
@@ -119,7 +119,7 @@ begin
     end;
 end;
 
-function TTalents.Count: Byte;
+function TTalents.Count: UInt;
 begin
   Result := Length(FTalent);
 end;
@@ -140,14 +140,14 @@ begin
   end;
 end;
 
-function TTalents.Amount: Byte;
+function TTalents.Amount: UInt;
 begin
   Result := Ord(High(TTalentEnum)) + 1;
 end;
 
 constructor TTalents.Clear;
 var
-  I: Byte;
+  I: UInt;
 begin
   IsPoint := True;
   for I := 0 to TalentMax - 1 do
@@ -160,10 +160,10 @@ begin
   inherited;
 end;
 
-procedure TTalents.DoTalent(Key: Byte);
+procedure TTalents.DoTalent(Key: UInt);
 var
   T: TTalentEnum;
-  K: Byte;
+  K: UInt;
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
@@ -208,14 +208,14 @@ begin
   Result := FTalentName[I]
 end;
 
-function TTalents.GetTalent(I: Byte): TTalent;
+function TTalents.GetTalent(I: UInt): TTalent;
 begin
   Result := FTalent[I]
 end;
 
 function TTalents.IsTalent(const ATalent: TTalentEnum): Boolean;
 var
-  I: Byte;
+  I: UInt;
 begin
   Result := False;
   for I := 0 to TalentMax - 1 do
@@ -226,7 +226,7 @@ begin
     end;
 end;
 
-procedure TTalents.SetTalent(I: Byte; const Value: TTalent);
+procedure TTalents.SetTalent(I: UInt; const Value: TTalent);
 begin
   FTalent[I] := Value;
 end;

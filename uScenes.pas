@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes, Types, uBearLibItemsCommon, uMob, uGame;
+  Classes, Types, uTypes, uBearLibItemsCommon, uMob, uGame;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -16,18 +16,18 @@ type
   TScene = class(TObject)
   private
     KStr: string;
-    X, Y, CX, CY: Integer;
+    X, Y, CX, CY: Int;
     procedure AddOption(AHotKey, AText: string; AOption: Boolean;
       AColor: Cardinal = $FFAAAAAA); overload;
     procedure AddLine(AHotKey, AText: string);
     procedure Add(); overload;
-    procedure Add(AText: string; AValue: Integer); overload;
+    procedure Add(AText: string; AValue: Int); overload;
     procedure Add(AText: string; AValue: string;
       AColor: Cardinal = $FF00FF00); overload;
   public
     constructor Create;
     procedure Render; virtual; abstract;
-    procedure Update(var Key: Word); virtual; abstract;
+    procedure Update(var Key: UInt); virtual; abstract;
     procedure AddKey(AKey, AStr: string; IsRender: Boolean = False); overload;
     procedure AddKey(AKey, AStr, AAdvStr: string;
       IsRender: Boolean = False); overload;
@@ -43,7 +43,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
     property SceneEnum: TSceneEnum read FSceneEnum write FSceneEnum;
     function GetScene(I: TSceneEnum): TScene;
     procedure SetScene(ASceneEnum: TSceneEnum); overload;
@@ -59,7 +59,7 @@ type
   TSceneTitle = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
     procedure RenderHeroes();
   end;
 
@@ -67,155 +67,155 @@ type
   TSceneStatistics = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneOptions = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneSpellbook = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneDifficulty = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneCalendar = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneQuest = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneRest = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneBackground = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneDialog = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneBuy = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneTalents = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneSell = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneRepair = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneName = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneLoad = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneQuit = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneDef = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneWin = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneInv = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneDrop = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneAmount = class(TScene)
   public
-    MaxAmount: Integer;
+    MaxAmount: Int;
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneItems = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
@@ -224,20 +224,20 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneGame = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TScenePlayer = class(TScene)
   private
-    D, W: Byte;
+    D, W: UInt;
     FSkillCursorTop: ShortInt;
     FRenderInfo: Boolean;
     procedure RenderPlayer;
@@ -245,33 +245,33 @@ type
     procedure RenderSkills;
     procedure Add; overload;
     procedure Add(const AStr, AIcons, ABarColor: string;
-      const ACur, AMax: Integer); overload;
+      const ACur, AMax: Int); overload;
   public
     constructor Create;
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneMessages = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneIdentification = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 type
   TSceneCraft = class(TScene)
   public
-    Suffix: Byte;
+    Suffix: UInt;
     procedure Render; override;
-    procedure Update(var Key: Word); override;
+    procedure Update(var Key: UInt); override;
   end;
 
 var
@@ -346,12 +346,12 @@ begin
   Self.Add();
 end;
 
-procedure TScene.Add(AText: string; AValue: Integer);
+procedure TScene.Add(AText: string; AValue: Int);
 begin
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clGreen);
-  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, IntToStr(AValue),
+  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue.ToString(),
     TK_ALIGN_RIGHT);
   Self.Add();
 end;
@@ -469,7 +469,7 @@ end;
 
 procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
 begin
-  Game.Timer := High(Byte);
+  Game.Timer := UIntMax;
   Game.ShowEffects := False;
   Self.SceneEnum := ASceneEnum;
   Render;
@@ -481,7 +481,7 @@ begin
   SetScene(ASceneEnum);
 end;
 
-procedure TScenes.Update(var Key: Word);
+procedure TScenes.Update(var Key: UInt);
 begin
   if (FScene[SceneEnum] <> nil) then
     FScene[SceneEnum].Update(Key);
@@ -522,7 +522,7 @@ const
   L = 12;
   T = 15;
 var
-  J: Byte;
+  J: UInt;
   V: TAJ;
 begin
   Terminal.ForegroundColor(clWhite);
@@ -531,11 +531,11 @@ begin
   for V := 'A' to 'J' do
   begin
     J := Ord(V) - 65;
-    Terminal.Print(L, T + J + 2, UI.KeyToStr(V, IntToStr(J)));
+    Terminal.Print(L, T + J + 2, UI.KeyToStr(V, J.ToString));
   end;
 end;
 
-procedure TSceneTitle.Update(var Key: Word);
+procedure TSceneTitle.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -651,7 +651,7 @@ begin
   Self.AddKey('Esc', _('Close'), True);
 end;
 
-procedure TSceneHelp.Update(var Key: Word);
+procedure TSceneHelp.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -664,15 +664,15 @@ end;
 
 procedure TSceneGame.Render;
 var
-  I, PX, PY, DX, DY, R: Integer;
+  I, PX, PY, DX, DY, R: Int;
   T: TTile;
   Min, Max: TPoint;
   S: string;
 
-  procedure RenderLook(X, Y: Byte; T: TTile; IsMob: Boolean);
+  procedure RenderLook(X, Y: UInt; T: TTile; IsMob: Boolean);
   var
     S: string;
-    C: Integer;
+    C: Int;
     FItem: Item;
   begin
     S := '';
@@ -701,10 +701,10 @@ var
       TK_ALIGN_TOP);
   end;
 
-  procedure AddTo(X, Y: Integer);
+  procedure AddTo(X, Y: Int);
   var
-    I, L: Integer;
-    AX, AY: Byte;
+    I, L: Int;
+    AX, AY: UInt;
     LR: Real;
   begin
     L := Math.Max(Abs(Player.X - X), Abs(Player.Y - Y)) + 1;
@@ -805,7 +805,7 @@ begin
   MsgLog.Render;
 end;
 
-procedure TSceneGame.Update(var Key: Word);
+procedure TSceneGame.Update(var Key: UInt);
 begin
   MsgLog.Turn;
   MsgLog.Msg := '';
@@ -995,7 +995,7 @@ begin
     TK_ALIGN_CENTER);
 end;
 
-procedure TSceneLoad.Update(var Key: Word);
+procedure TSceneLoad.Update(var Key: UInt);
 begin
 
 end;
@@ -1009,7 +1009,7 @@ begin
     [UI.KeyToStr('Y'), UI.KeyToStr('N')]), TK_ALIGN_CENTER);
 end;
 
-procedure TSceneQuit.Update(var Key: Word);
+procedure TSceneQuit.Update(var Key: UInt);
 begin
   case Key of
     TK_Y:
@@ -1041,7 +1041,7 @@ begin
 
 end;
 
-procedure TSceneDef.Update(var Key: Word);
+procedure TSceneDef.Update(var Key: UInt);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
@@ -1069,7 +1069,7 @@ begin
     [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
-procedure TSceneWin.Update(var Key: Word);
+procedure TSceneWin.Update(var Key: UInt);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
@@ -1096,7 +1096,7 @@ begin
 
 end;
 
-procedure TSceneInv.Update(var Key: Word);
+procedure TSceneInv.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1111,7 +1111,7 @@ begin
     TK_A .. TK_Z: // Use an item
       Player.Use(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1129,7 +1129,7 @@ begin
   AddKey('A-Z', _('Drop an item'), True);
 end;
 
-procedure TSceneDrop.Update(var Key: Word);
+procedure TSceneDrop.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1138,7 +1138,7 @@ begin
     TK_A .. TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1154,7 +1154,7 @@ procedure TScenePlayer.Render;
 begin
   D := 2;
   Y := 0;
-  X := Math.EnsureRange(Terminal.Window.Width div 4, 10, High(Byte));
+  X := Math.EnsureRange(Terminal.Window.Width div 4, 10, UIntMax);
 
   if Mode.Wizard then
     UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']))
@@ -1183,7 +1183,7 @@ begin
 end;
 
 procedure TScenePlayer.Add(const AStr, AIcons, ABarColor: string;
-  const ACur, AMax: Integer);
+  const ACur, AMax: Int);
 begin
   W := X * 2 - 3;
   UI.Bar(1, 0, Y + (D * 2), W, ACur, AMax, color_from_name(LowerCase(ABarColor)
@@ -1240,9 +1240,8 @@ begin
   Add('To Mana after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana',
     Player.Attributes.Attrib[atManaAfEachKill].Value, ManaAEKMax);
   //
-  Add('Extra Gold from Monsters (%)', UI.Icon(icPlus) + UI.Icon(icGold),
-    'Gold', Player.Attributes.Attrib[atExtraGold].Value,
-    ExtraGoldMax);
+  Add('Extra Gold from Monsters (%)', UI.Icon(icPlus) + UI.Icon(icGold), 'Gold',
+    Player.Attributes.Attrib[atExtraGold].Value, ExtraGoldMax);
   //
   Add('Satiation', UI.Icon(icFood), 'Food', Player.Attributes.Attrib[atSat]
     .Value, EngorgedMax);
@@ -1254,7 +1253,7 @@ const
 procedure TScenePlayer.RenderSkills;
 var
   I: TSkillEnum;
-  A, B, J, D: Byte;
+  A, B, J, D: UInt;
 begin
   Y := 2;
   X := Terminal.Window.Width div 2;
@@ -1273,7 +1272,7 @@ begin
   end;
 end;
 
-procedure TScenePlayer.Update(var Key: Word);
+procedure TScenePlayer.Update(var Key: UInt);
 begin
   case Key of
     // Close
@@ -1290,7 +1289,7 @@ begin
     // Inventory
     TK_SPACE:
       begin
-        Game.Timer := High(Byte);
+        Game.Timer := UIntMax;
         Scenes.SetScene(scInv);
       end;
     TK_UP, TK_KP_8, TK_W:
@@ -1333,9 +1332,9 @@ begin
   AddKey('Enter', _('Apply'), True);
 end;
 
-procedure TSceneAmount.Update(var Key: Word);
+procedure TSceneAmount.Update(var Key: UInt);
 
-  procedure ChAmount(Value: Integer);
+  procedure ChAmount(Value: Int);
   begin
     Player.ItemAmount := EnsureRange(Value, 1, MaxAmount);
     Render;
@@ -1363,7 +1362,7 @@ end;
 
 procedure TSceneItems.Render;
 var
-  I, FCount, MapID: Integer;
+  I, FCount, MapID: Int;
   FItem: Item;
 begin
   MapID := Ord(Map.Current);
@@ -1388,9 +1387,9 @@ begin
     Scenes.SetScene(scGame);
 end;
 
-procedure TSceneItems.Update(var Key: Word);
+procedure TSceneItems.Update(var Key: UInt);
 var
-  I, FCount: Integer;
+  I, FCount: Int;
 begin
   case Key of
     TK_ESCAPE: // Close
@@ -1406,7 +1405,7 @@ begin
       // Pick up
       Items.AddItemToInv(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1419,7 +1418,7 @@ begin
   AddKey('Esc', _('Close'), True);
 end;
 
-procedure TSceneMessages.Update(var Key: Word);
+procedure TSceneMessages.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1495,7 +1494,7 @@ begin
   AddKey('Esc', _('Close'), True);
 end;
 
-procedure TSceneStatistics.Update(var Key: Word);
+procedure TSceneStatistics.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1508,7 +1507,7 @@ end;
 
 procedure TSceneDialog.Render;
 var
-  V: Integer;
+  V: Int;
   S: string;
 
   procedure Add(S: string);
@@ -1579,7 +1578,7 @@ begin
   AddKey('Esc', _('Close'), True);
 end;
 
-procedure TSceneDialog.Update(var Key: Word);
+procedure TSceneDialog.Update(var Key: UInt);
 
   procedure AddShop(AShop: TShopEnum);
   begin
@@ -1670,7 +1669,7 @@ begin
   AddKey('A-Z', _('Selling an item'), True);
 end;
 
-procedure TSceneSell.Update(var Key: Word);
+procedure TSceneSell.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1679,7 +1678,7 @@ begin
     TK_A .. TK_Z: // Selling an item
       Player.Sell(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1698,7 +1697,7 @@ begin
   AddKey('A-Z', _('Buy an item'), True);
 end;
 
-procedure TSceneBuy.Update(var Key: Word);
+procedure TSceneBuy.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1707,7 +1706,7 @@ begin
     TK_A .. TK_Z: // Buy items
       Player.Buy(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1726,7 +1725,7 @@ begin
   AddKey('A-Z', _('Repairing an item'), True);
 end;
 
-procedure TSceneRepair.Update(var Key: Word);
+procedure TSceneRepair.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1735,7 +1734,7 @@ begin
     TK_A .. TK_Z: // Repairing an item
       Player.RepairItem(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1747,7 +1746,7 @@ procedure TSceneCalendar.Render;
     AAdvValue: string = ''); overload;
   var
     S: string;
-    X: Word;
+    X: UInt;
   begin
     X := Screen.Width div 3;
     S := '';
@@ -1765,10 +1764,10 @@ procedure TSceneCalendar.Render;
     Inc(Y);
   end;
 
-  procedure Add(const AText: string; AValue: Integer;
+  procedure Add(const AText: string; AValue: Int;
     AAdvValue: string = ''); overload;
   begin
-    Add(AText, IntToStr(AValue), AAdvValue);
+    Add(AText, AValue.ToString(), AAdvValue);
   end;
 
 begin
@@ -1786,7 +1785,7 @@ begin
   AddKey('Esc', _('Close'), True);
 end;
 
-procedure TSceneCalendar.Update(var Key: Word);
+procedure TSceneCalendar.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1813,7 +1812,7 @@ begin
   AddKey('Esc', _('Back'), True);
 end;
 
-procedure TSceneDifficulty.Update(var Key: Word);
+procedure TSceneDifficulty.Update(var Key: UInt);
 begin
   case Key of
     TK_A .. TK_D, TK_ENTER, TK_KP_ENTER:
@@ -1865,7 +1864,7 @@ begin
   AddKey('Esc', _('Back'), True);
 end;
 
-procedure TSceneRest.Update(var Key: Word);
+procedure TSceneRest.Update(var Key: UInt);
 begin
   case Key of
     TK_A, TK_B, TK_C:
@@ -1887,7 +1886,7 @@ begin
   AddKey('Esc', _('Back'), True);
 end;
 
-procedure TSceneName.Update(var Key: Word);
+procedure TSceneName.Update(var Key: UInt);
 begin
   case Key of
     TK_BACKSPACE:
@@ -1960,7 +1959,7 @@ begin
   AddKey('Esc', _('Back'), True);
 end;
 
-procedure TSceneOptions.Update(var Key: Word);
+procedure TSceneOptions.Update(var Key: UInt);
 begin
   case Key of
     // Options
@@ -2026,7 +2025,7 @@ end;
 procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
-  V: Byte;
+  V: UInt;
 
   function IsSpell(I: TSpellEnum): Boolean;
   begin
@@ -2059,7 +2058,7 @@ begin
   AddKey('A-Z', _('Cast spell'), True);
 end;
 
-procedure TSceneSpellbook.Update(var Key: Word);
+procedure TSceneSpellbook.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -2073,7 +2072,7 @@ end;
 
 procedure TSceneTalents.Render;
 var
-  V, I: Byte;
+  V, I: UInt;
   T: TTalentEnum;
 
   procedure Add(const S, H: string; F: Boolean = True); overload;
@@ -2138,7 +2137,7 @@ begin
     AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
-procedure TSceneTalents.Update(var Key: Word);
+procedure TSceneTalents.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -2173,7 +2172,7 @@ begin
   AddKey('A-Z', _('Select an item'), True);
 end;
 
-procedure TSceneIdentification.Update(var Key: Word);
+procedure TSceneIdentification.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -2181,7 +2180,7 @@ begin
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end
 end;
 
@@ -2199,7 +2198,7 @@ begin
   AddKey('A-Z', _('Select an item'), True);
 end;
 
-procedure TSceneCraft.Update(var Key: Word);
+procedure TSceneCraft.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -2207,7 +2206,7 @@ begin
     TK_A .. TK_Z:
       Player.CraftItem(Key - TK_A);
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end
 end;
 
@@ -2221,7 +2220,7 @@ begin
   AddKey('Enter', _('Accept'), True);
 end;
 
-procedure TSceneQuest.Update(var Key: Word);
+procedure TSceneQuest.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -2232,7 +2231,7 @@ begin
         Scenes.GoBack();
       end
   else
-    Game.Timer := High(Byte);
+    Game.Timer := UIntMax;
   end
 end;
 
@@ -2249,7 +2248,7 @@ begin
   AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
-procedure TSceneBackground.Update(var Key: Word);
+procedure TSceneBackground.Update(var Key: UInt);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:

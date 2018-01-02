@@ -2,6 +2,8 @@ unit uSkill;
 
 interface
 
+uses uTypes;
+
 type
   TSkillEnum = (
     //
@@ -17,8 +19,8 @@ type
 
 type
   TSkill = record
-    Value: Integer;
-    Exp: Integer;
+    Value: Int;
+    Exp: Int;
   end;
 
 type
@@ -33,8 +35,8 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
-    procedure DoSkill(ASkill: TSkillEnum; AExpValue: Byte = 1);
-    procedure Modify(I: TSkillEnum; Value: Integer);
+    procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
+    procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
     procedure Start;
   end;
@@ -82,7 +84,7 @@ begin
   inherited;
 end;
 
-procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: Byte);
+procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: UInt);
 begin
   if (Skill[ASkill].Value < SkillMax) and (ASkill <> skNone) then
   begin
@@ -118,7 +120,7 @@ begin
   Result := FSkill[I]
 end;
 
-procedure TSkills.Modify(I: TSkillEnum; Value: Integer);
+procedure TSkills.Modify(I: TSkillEnum; Value: Int);
 begin
   FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin,
     SkillMax);
