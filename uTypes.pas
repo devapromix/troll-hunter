@@ -17,7 +17,7 @@ type
   end;
 
 const
-  UIntMax = 250;
+  UIntMax = High(Byte);
 
 implementation
 
