@@ -1672,7 +1672,7 @@ type
     function GetName(I: TItemEnum): string; overload;
   public
     Index: Byte;
-    class procedure Make(ID: Byte; var AItem: Item);
+    class procedure Make(ID: Word; var AItem: Item);
     class procedure CalcItem(var AItem: Item);
     constructor Create;
     destructor Destroy; override;
@@ -1967,7 +1967,7 @@ begin
     Result := Result + Format(' ID: %d', [ID]);
 end;
 
-class procedure TItems.Make(ID: Byte; var AItem: Item);
+class procedure TItems.Make(ID: Word; var AItem: Item);
 var
   I: Byte;
 
@@ -2255,7 +2255,7 @@ begin
   if (Color = 'Poison') then
     S := UI.Icon(icDrop);
   if (Color = 'Vision') then
-    S := UI.Icon(icVision);
+    S := S + UI.Icon(icVision);
   if (Color = 'Repair') then
     S := UI.Icon(icHammer);
   if (Color = 'Strength') then
@@ -2275,11 +2275,11 @@ begin
     Color := RareColor;
   if (Sign = '&') then
   begin
-    Result := Terminal.Colorize(S, Color);
+    Result := Trim(Terminal.Colorize(S, Color));
     Exit;
   end;
   if (Value > 0) then
-    Result := Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]), Color);
+    Result := Trim(Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]), Color));
 end;
 
 function TItems.RenderInvItem(const AX, AY, I: Integer; AItem: Item;
@@ -2457,10 +2457,11 @@ var
 begin
   Result := '';
   for I := 0 to Length(V) - 1 do
-    Result := Result + V[I] + ' ';
+    Result := Result + Trim(V[I]) + ' ';
   Result := Trim(Result);
   if (Result <> '') then
     Result := '[[' + Result + ']]';
+  Result := SysUtils.StringReplace(Result, '  ', ' ', [rfReplaceAll]);
 end;
 
 procedure TItems.AddItemToDungeon(AItem: Item);

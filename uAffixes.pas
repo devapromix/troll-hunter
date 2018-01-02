@@ -745,7 +745,7 @@ begin
     of_ExtraGoldFromMonsters1 .. of_ExtraGoldFromMonsters3:
       begin
         Value := Math.EnsureRange(Value + Math.RandomRange(SB.Value.Min,
-          SB.Value.Max + 1), 0, 100);
+          SB.Value.Max + 1), 0, ExtraGoldMax div 3);
         Items.SetBonus(AItem, btExtraGold, Value);
       end;
   end;
