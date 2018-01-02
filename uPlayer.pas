@@ -474,7 +474,7 @@ begin
         AddAttrib(atMaxLife, Items.GetBonus(FItem, btLife));
         AddAttrib(atMaxMana, Items.GetBonus(FItem, btMana));
         AddAttrib(atVision, Items.GetBonus(FItem, btVis));
-        // AddAttrib(atVision, Items.GetBonus(FItem, btVis));
+        AddAttrib(atExtraGold, Items.GetBonus(FItem, btGold));
       end;
       if (FItem.Bonus[1] > 0) then
       begin
@@ -537,6 +537,7 @@ begin
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) +
     FAttrib[atVision]);
   //
+  Attributes.SetValue(atExtraGold, EnsureRange(FAttrib[atExtraGold], 0, ExtraGoldMax));
   Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr]
     .Value div 3, 1, High(Byte) - 1),
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2,
@@ -1454,6 +1455,12 @@ begin
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
+  Items.AddItemToInv(ivMoonstone_Ring);
+  Items.AddItemToInv(ivMoonstone_Ring);
+  Items.AddItemToInv(ivMoonstone_Ring);
+  Items.AddItemToInv(ivMoonstone_Ring);
+  Items.AddItemToInv(ivMoonstone_Ring);
+  Items.AddItemToInv(ivMoonstone_Ring);
   Items.AddItemToInv(ivFlawed_Diamond);
   Items.AddItemToInv(ivCap, 1, True, True, Ord(of_LifeAfEachKill1));
   { // Flasks

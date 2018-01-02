@@ -1662,7 +1662,7 @@ type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
-  TBonusType = (btLife, btMana, btVis, btRep, btStr, btDex, btWil, btPer,
+  TBonusType = (btLife, btMana, btVis, btGold, btStr, btDex, btWil, btPer,
     btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill);
 
 type
@@ -1689,7 +1689,8 @@ type
     procedure AddItemToInv(Index: Integer = 0; AFlag: Boolean = False);
       overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: Word = 1;
-      EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: Word = 0); overload;
+      EqFlag: Boolean = False; IdFlag: Boolean = False;
+      SufID: Word = 0); overload;
     function GetInventory: string;
     function GetPrice(Price: Word; F: Boolean = False): string;
     function GetLevel(L: Byte): string;
@@ -1889,7 +1890,7 @@ begin
     if (AItem.Bonus[0] > 0) then
     begin
       if (Items.GetBonus(AItem, btVis) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btVis),
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btVis),
           'Vision', 'Rare');
       if (Items.GetBonus(AItem, btLife) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife),
@@ -1897,6 +1898,9 @@ begin
       if (Items.GetBonus(AItem, btMana) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana),
           'Mana', 'Rare');
+      if (Items.GetBonus(AItem, btGold) > 0) then
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btGold),
+          'Gold', 'Rare');
     end;
     if (AItem.Bonus[1] > 0) then
     begin
@@ -1916,17 +1920,17 @@ begin
     if (AItem.Bonus[2] > 0) then
     begin
       if (Items.GetBonus(AItem, btReLife) > 0) then
-        Level := Level + ' ' + Items.GetInfo('@', Items.GetBonus(AItem, btReLife),
-          'Life', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('@',
+          Items.GetBonus(AItem, btReLife), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btReMana) > 0) then
-        Level := Level + ' ' + Items.GetInfo('@', Items.GetBonus(AItem, btReMana),
-          'Mana', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('@',
+          Items.GetBonus(AItem, btReMana), 'Mana', 'Rare');
       if (Items.GetBonus(AItem, btLifeAfEachKill) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btLifeAfEachKill),
-          'Life', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('x',
+          Items.GetBonus(AItem, btLifeAfEachKill), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btManaAfEachKill) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btManaAfEachKill),
-          'Mana', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('x',
+          Items.GetBonus(AItem, btManaAfEachKill), 'Mana', 'Rare');
     end;
     // Durability
     D := '';
@@ -2071,6 +2075,11 @@ begin
           Value * Value * (5 - Ord(Game.Difficulty))) + 1;
         if Player.Talents.IsTalent(tlMiser) then
           FItem.Amount := FItem.Amount * 2;
+        // Extra Gold from Monsters
+        if (Player.Attributes.Attrib[atExtraGold].Value > 0) then
+          FItem.Amount := FItem.Amount +
+            Round(Player.Attributes.Attrib[atExtraGold].Value *
+            FItem.Amount / 100);
       end;
   end;
   if ((FItem.Stack = 1) and (IT in WeaponTypeItems + ArmorTypeItems)) then
@@ -2216,9 +2225,10 @@ end;
 function TItems.GetInfo(Sign: string; Value: Word; Color: string;
   RareColor: string = ''): string;
 var
-  S: string;
+  S, P: string;
 begin
   S := '';
+  P := '';
   Result := '';
   if (Sign = '*') then
     Sign := '';
@@ -2256,6 +2266,11 @@ begin
     S := UI.Icon(icBook);
   if (Color = 'Perception') then
     S := UI.Icon(icLeaf);
+  if (Color = 'Gold') then
+  begin
+    S := S + UI.Icon(icGold);
+    P := '%';
+  end;
   if (RareColor <> '') then
     Color := RareColor;
   if (Sign = '&') then
@@ -2264,7 +2279,7 @@ begin
     Exit;
   end;
   if (Value > 0) then
-    Result := Terminal.Colorize(Format('%s%s%d', [S, Sign, Value]), Color);
+    Result := Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]), Color);
 end;
 
 function TItems.RenderInvItem(const AX, AY, I: Integer; AItem: Item;
@@ -2362,7 +2377,7 @@ begin
       Result := Byte(AItem.Bonus[0] shr 16);
     btVis:
       Result := Byte(AItem.Bonus[0] shr 8);
-    btRep:
+    btGold:
       Result := Byte(AItem.Bonus[0]);
     btStr:
       Result := Byte(AItem.Bonus[1] shr 24);
@@ -2398,12 +2413,12 @@ begin
     V[2] := GetBonus(AItem, btWil);
     V[3] := GetBonus(AItem, btPer);
   end;
-  if (BonusType in [btLife .. btRep]) then
+  if (BonusType in [btLife .. btGold]) then
   begin
     V[0] := GetBonus(AItem, btLife);
     V[1] := GetBonus(AItem, btMana);
     V[2] := GetBonus(AItem, btVis);
-    V[3] := GetBonus(AItem, btRep);
+    V[3] := GetBonus(AItem, btGold);
   end;
   if (BonusType in [btReLife .. btManaAfEachKill]) then
   begin
@@ -2420,14 +2435,14 @@ begin
       V[1] := Value;
     btVis, btWil, btLifeAfEachKill:
       V[2] := Value;
-    btRep, btPer, btManaAfEachKill:
+    btGold, btPer, btManaAfEachKill:
       V[3] := Value;
   end;
 
   I := (V[0] shl 24) or (V[1] shl 16) or (V[2] shl 8) or V[3];
 
   case BonusType of
-    btLife .. btRep:
+    btLife .. btGold:
       AItem.Bonus[0] := I;
     btStr .. btPer:
       AItem.Bonus[1] := I;
@@ -2573,7 +2588,8 @@ begin
     repeat
       // Random suffix
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
-      if (Index > 0) then I := Index;
+      if (Index > 0) then
+        I := Index;
       SB := SuffixBase[TSuffixEnum(I)];
       // Level
       { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
@@ -2591,8 +2607,10 @@ begin
       // Rare
       if not IsRare and SB.Rare then
       begin
-        Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
-        if not Mode.Wizard then Exit;
+        Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1,
+          9)) = 0, Index);
+        if not Mode.Wizard then
+          Exit;
       end;
       //
       AItem.Identify := I;

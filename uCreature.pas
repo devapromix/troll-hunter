@@ -8,6 +8,7 @@ const
   PVMax = 250;
   MaxDamMax = 255;
   MinDamMax = MaxDamMax - 1;
+  ExtraGoldMax = 200;
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,

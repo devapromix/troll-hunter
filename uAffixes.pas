@@ -80,7 +80,10 @@ type
     // Life After Each Kill I - III
     of_LifeAfEachKill1, of_LifeAfEachKill2, of_LifeAfEachKill3,
     // Mana After Each Kill I - III
-    of_ManaAfEachKill1, of_ManaAfEachKill2, of_ManaAfEachKill3
+    of_ManaAfEachKill1, of_ManaAfEachKill2, of_ManaAfEachKill3,
+    // Extra Gold from Monsters I - III
+    of_ExtraGoldFromMonsters1, of_ExtraGoldFromMonsters2,
+    of_ExtraGoldFromMonsters3
     //
     );
 
@@ -536,7 +539,18 @@ const
     Mana: (Min: 4; Max: 6);),
     // of (Mana After Each Kill III),
     (Level: (Min: 9; Max: 15); Price: 200;
-    Occurence: JewelryTypeItems + MagicWeaponTypeItems; Mana: (Min: 7; Max: 9);)
+    Occurence: JewelryTypeItems + MagicWeaponTypeItems;
+    Mana: (Min: 7; Max: 9);),
+
+    // of (Extra Gold from Monsters I),
+    (Level: (Min: 1; Max: 3); Price: 150; Occurence: JewelryTypeItems;
+    Value: (Min: 1; Max: 10);),
+    // of (Extra Gold from Monsters II),
+    (Level: (Min: 4; Max: 8); Price: 200; Occurence: JewelryTypeItems;
+    Value: (Min: 11; Max: 25);),
+    // of (Extra Gold from Monsters III),
+    (Level: (Min: 9; Max: 15); Price: 250; Occurence: JewelryTypeItems;
+    Value: (Min: 26; Max: 50);)
     //
     );
 
@@ -727,6 +741,13 @@ begin
     // Mana After Each Kill
     of_ManaAfEachKill1 .. of_ManaAfEachKill3:
       SetMana(btManaAfEachKill);
+    // Extra Gold from Monsters
+    of_ExtraGoldFromMonsters1 .. of_ExtraGoldFromMonsters3:
+      begin
+        Value := Math.EnsureRange(Value + Math.RandomRange(SB.Value.Min,
+          SB.Value.Max + 1), 0, 100);
+        Items.SetBonus(AItem, btGold, Value);
+      end;
   end;
   // Effects
   AItem.Effects := SB.Effects;

@@ -1240,8 +1240,12 @@ begin
   Add('To Mana after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana',
     Player.Attributes.Attrib[atManaAfEachKill].Value, ManaAEKMax);
   //
-  Add('Satiation', UI.Icon(icFood), 'Food',
-    Player.Attributes.Attrib[atSat].Value, EngorgedMax);
+  Add('Extra Gold from Monsters (%)', UI.Icon(icPlus) + UI.Icon(icGold),
+    'Gold', Player.Attributes.Attrib[atExtraGold].Value,
+    ExtraGoldMax);
+  //
+  Add('Satiation', UI.Icon(icFood), 'Food', Player.Attributes.Attrib[atSat]
+    .Value, EngorgedMax);
 end;
 
 const
