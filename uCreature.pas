@@ -67,7 +67,7 @@ type
 
 implementation
 
-uses SysUtils, Math;
+uses SysUtils, Math, uHelpers;
 
 { TCreature }
 
@@ -98,9 +98,11 @@ begin
 end;
 
 function TCreature.GetRealDamage(ADamage, APV: UInt): UInt;
+var
+  Value: UInt;
 begin
-  Result := EnsureRange(ADamage - Round((ADamage * ((APV * 100) / PVMax)) /
-    100), 0, ADamage);
+  Value := Round(ADamage * ((APV * 100) / PVMax) / 100);
+  Result := ADamage - Value.InRange(ADamage);
 end;
 
 function TCreature.IsDead: Boolean;
@@ -140,7 +142,7 @@ begin
           Value := 0;
         end;
         if (Value > 0) then
-          Life := Math.EnsureRange(Life - Value, 0, MaxLife);
+          Life := Life - Value.InRange(MaxLife);
       end;
     end;
 end;

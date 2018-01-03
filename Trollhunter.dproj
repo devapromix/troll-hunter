@@ -75,6 +75,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="uTypes.pas"/>
         <DCCReference Include="BearLibTerminal.pas"/>
         <DCCReference Include="uGame.pas"/>
         <DCCReference Include="uLanguage.pas"/>
@@ -104,7 +105,7 @@
         <DCCReference Include="BearLibItems\uBearLibItemsDungeon.pas"/>
         <DCCReference Include="BearLibItems\uBearLibItemsInventory.pas"/>
         <DCCReference Include="uQuest.pas"/>
-        <DCCReference Include="uTypes.pas"/>
+        <DCCReference Include="uHelpers.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

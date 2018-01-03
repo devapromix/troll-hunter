@@ -2,7 +2,8 @@ unit uPlayer;
 
 interface
 
-uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic, uTalent;
+uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
+  uTalent;
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
@@ -134,7 +135,7 @@ implementation
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
-  uBearLibItemsDungeon, uBearLibItemsInventory, Dialogs;
+  uBearLibItemsDungeon, uBearLibItemsInventory, Dialogs, uHelpers;
 
 procedure RnItem(FItem: Item; const Index: Int);
 begin
@@ -277,8 +278,8 @@ begin
   begin
     CrStr := '';
     // Attack
-    Dam := EnsureRange(RandomRange(Self.GetDamage.Min, GetDamage.Max + 1), 0,
-      UIntMax);
+    Dam := EnsureRange(RandomRange(Self.GetDamage.Min, GetDamage.Max + 1),
+      0, UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Dec(Dam, Dam div 3);
@@ -536,7 +537,8 @@ begin
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) +
     FAttrib[atVision]);
   //
-  Attributes.SetValue(atExtraGold, EnsureRange(FAttrib[atExtraGold], 0, ExtraGoldMax));
+  Attributes.SetValue(atExtraGold, EnsureRange(FAttrib[atExtraGold], 0,
+    ExtraGoldMax));
   Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr]
     .Value div 3, 1, UIntMax - 1),
     EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2,
@@ -1454,15 +1456,15 @@ begin
     Items.AddItemToInv(ivScroll_of_Town_Portal);
     Items.AddItemToInv(ivScroll_of_Identify);
   end;
-  Items.AddItemToInv(ivMoonstone_Ring);
-  Items.AddItemToInv(ivMoonstone_Ring);
-  Items.AddItemToInv(ivMoonstone_Ring);
-  Items.AddItemToInv(ivMoonstone_Ring);
-  Items.AddItemToInv(ivMoonstone_Ring);
-  Items.AddItemToInv(ivMoonstone_Ring);
-  Items.AddItemToInv(ivFlawed_Diamond);
-  Items.AddItemToInv(ivCap, 1, True, True, Ord(of_LifeAfEachKill1));
-  { // Flasks
+  { Items.AddItemToInv(ivMoonstone_Ring);
+    Items.AddItemToInv(ivMoonstone_Ring);
+    Items.AddItemToInv(ivMoonstone_Ring);
+    Items.AddItemToInv(ivMoonstone_Ring);
+    Items.AddItemToInv(ivMoonstone_Ring);
+    Items.AddItemToInv(ivMoonstone_Ring);
+    Items.AddItemToInv(ivFlawed_Diamond);
+    Items.AddItemToInv(ivCap, 1, True, True, Ord(of_LifeAfEachKill1));
+  }  { // Flasks
     D := Math.IfThen(Mode.Wizard, 3, 3);
     for I := 1 to D do
     begin

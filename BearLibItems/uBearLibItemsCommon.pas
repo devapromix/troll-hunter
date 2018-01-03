@@ -2,34 +2,34 @@ unit uBearLibItemsCommon;
 
 interface
 
-uses uCreature;
+uses uTypes, uCreature;
 
 const
   BonusCount = 3;
 
 type
   Item = record
-    ItemID: Integer;
-    X, Y: Integer;
-    MapID: Integer;
-    Level: Integer;
-    Identify: Integer;
-    Stack: Integer;
-    Amount: Integer;
-    MinDamage: Integer;
-    MaxDamage: Integer;
-    Defense: Integer;
-    Durability: Integer;
-    MaxDurability: Integer;
-    Weight: Integer;
-    Size: Integer;
-    SlotID: Integer;
-    Equipment: Integer;
-    Price: Integer;
+    ItemID: Int;
+    X, Y: Int;
+    MapID: Int;
+    Level: Int;
+    Identify: Int;
+    Stack: Int;
+    Amount: Int;
+    MinDamage: Int;
+    MaxDamage: Int;
+    Defense: Int;
+    Durability: Int;
+    MaxDurability: Int;
+    Weight: Int;
+    Size: Int;
+    SlotID: Int;
+    Equipment: Int;
+    Price: Int;
     Bonus: array [0 .. BonusCount - 1] of Cardinal;
     Color: Cardinal;
     Effects: TEffects;
-    Value: Integer;
+    Value: Int;
   end;
 
 type
@@ -48,16 +48,16 @@ function Items_GetVersion(): PWideChar; stdcall;
 procedure Items_Clear_Item(var AItem: Item);
 
 // Common
-function HasItem(AItems: TItems; Index, AMapID: Integer): Boolean; overload;
-function HasItem(AItems: TItems; Index, AMapID: Integer; AX, AY: Integer)
+function HasItem(AItems: TItems; Index, AMapID: Int): Boolean; overload;
+function HasItem(AItems: TItems; Index, AMapID: Int; AX, AY: Int)
   : Boolean; overload;
-function IndexInRange(AItems: TItems; Index: Integer): Boolean;
+function IndexInRange(AItems: TItems; Index: Int): Boolean;
 procedure AddItem(var AItems: TItems; AItem: Item);
-function DelItem(var AItems: TItems; Index: Integer): Item;
+function DelItem(var AItems: TItems; Index: Int): Item;
 function HasEmpty(AItems: TItems): Boolean;
 procedure Empty(var AItems: TItems);
-function GlobalIndex(AItems: TItems; MapID, Index: Integer; AX: Integer = -1;
-  AY: Integer = -1): Integer;
+function GlobalIndex(AItems: TItems; MapID, Index: Int; AX: Int = -1;
+  AY: Int = -1): Int;
 
 implementation
 
@@ -89,7 +89,7 @@ end;
 
 procedure Items_Clear_Item(var AItem: Item);
 var
-  I: Integer;
+  I: Int;
 begin
   with AItem do
   begin
@@ -121,13 +121,13 @@ end;
 
 // Common
 
-function HasItem(AItems: TItems; Index, AMapID: Integer): Boolean;
+function HasItem(AItems: TItems; Index, AMapID: Int): Boolean;
 begin
   Result := (AItems[Index].MapID = AMapID);
 end;
 
-function HasItem(AItems: TItems; Index, AMapID: Integer;
-  AX, AY: Integer): Boolean;
+function HasItem(AItems: TItems; Index, AMapID: Int;
+  AX, AY: Int): Boolean;
 begin
   if (AX = -1) and (AY = -1) then
     Result := HasItem(AItems, Index, AMapID)
@@ -136,7 +136,7 @@ begin
       (AItems[Index].Y = AY);
 end;
 
-function IndexInRange(AItems: TItems; Index: Integer): Boolean;
+function IndexInRange(AItems: TItems; Index: Int): Boolean;
 begin
   Result := (Index >= 0) and (Index < Length(AItems));
 end;
@@ -153,9 +153,9 @@ begin
   // end;
 end;
 
-function DelItem(var AItems: TItems; Index: Integer): Item;
+function DelItem(var AItems: TItems; Index: Int): Item;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := AItems[Index];
   if (Length(AItems) > 1) then
@@ -174,10 +174,10 @@ begin
   SetLength(AItems, 0);
 end;
 
-function GlobalIndex(AItems: TItems; MapID, Index: Integer; AX: Integer = -1;
-  AY: Integer = -1): Integer;
+function GlobalIndex(AItems: TItems; MapID, Index: Int; AX: Int = -1;
+  AY: Int = -1): Int;
 var
-  I, P: Integer;
+  I, P: Int;
 begin
   Result := -1;
   if HasEmpty(AItems) then

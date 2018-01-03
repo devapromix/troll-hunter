@@ -3,7 +3,7 @@ unit uShop;
 interface
 
 uses
-  uBeaRLibItemsCommon, uTypes, uPlayer, uItem;
+  uTypes, uBeaRLibItemsCommon, uPlayer, uItem;
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
@@ -49,7 +49,7 @@ var
 implementation
 
 uses
-  SysUtils, Math, uMap, uCreature, uAttribute;
+  SysUtils, Math, uMap, uCreature, uAttribute, uHelpers;
 
 { TShop }
 
@@ -75,7 +75,7 @@ end;
 
 function TShop.GetItem(const Index: UInt): Item;
 begin
-  Result := FItemsStore[EnsureRange(Index, 0, ItemMax)];
+  Result := FItemsStore[Index.InRange(ItemMax)];
 end;
 
 { TShops }
@@ -130,19 +130,19 @@ var
   end;
 
   function Check: Boolean;
-  //var
-  //  Effects: TEffects;
+  // var
+  // Effects: TEffects;
   begin
     ID := GetItemID();
-    //Effects := ItemBase[ID].Effects;
+    // Effects := ItemBase[ID].Effects;
     case S of
       shTavern:
         Result := ID in TavernItems;
       shHealer:
-        //Result := efLife in Effects;
+        // Result := efLife in Effects;
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shMana:
-        //Result := (efMana in Effects) and not(efLife in Effects);
+        // Result := (efMana in Effects) and not(efLife in Effects);
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shPotions:
         Result := ItemBase[ID].ItemType in PotionTypeItems;

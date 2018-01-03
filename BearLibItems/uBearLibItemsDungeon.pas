@@ -2,36 +2,36 @@ unit uBearLibItemsDungeon;
 
 interface
 
-uses uBearLibItemsCommon;
+uses uTypes, uBearLibItemsCommon;
 
 procedure Items_Dungeon_Clear(); stdcall;
-procedure Items_Dungeon_MapClear(MapID: Integer); stdcall;
-procedure Items_Dungeon_MapClearXY(MapID: Integer; AX, AY: Integer); stdcall;
+procedure Items_Dungeon_MapClear(MapID: Int); stdcall;
+procedure Items_Dungeon_MapClearXY(MapID: Int; AX, AY: Int); stdcall;
 
-function Items_Dungeon_GetCount(): Integer; stdcall;
-function Items_Dungeon_GetMapCount(MapID: Integer): Integer; stdcall;
-function Items_Dungeon_GetMapCountXY(MapID: Integer; AX, AY: Integer): Integer; stdcall;
+function Items_Dungeon_GetCount(): Int; stdcall;
+function Items_Dungeon_GetMapCount(MapID: Int): Int; stdcall;
+function Items_Dungeon_GetMapCountXY(MapID: Int; AX, AY: Int): Int; stdcall;
 
-function Items_Dungeon_GetItemCount(ItemID: Integer): Integer; stdcall;
-function Items_Dungeon_GetMapItemCount(MapID, ItemID: Integer): Integer; stdcall;
-function Items_Dungeon_GetMapItemCountXY(MapID, ItemID: Integer; AX, AY: Integer): Integer; stdcall;
+function Items_Dungeon_GetItemCount(ItemID: Int): Int; stdcall;
+function Items_Dungeon_GetMapItemCount(MapID, ItemID: Int): Int; stdcall;
+function Items_Dungeon_GetMapItemCountXY(MapID, ItemID: Int; AX, AY: Int): Int; stdcall;
 
-function Items_Dungeon_SetItem(Index: Integer; AItem: Item): Integer; stdcall;
-function Items_Dungeon_GetItem(Index: Integer): Item; stdcall;
+function Items_Dungeon_SetItem(Index: Int; AItem: Item): Int; stdcall;
+function Items_Dungeon_GetItem(Index: Int): Item; stdcall;
 
-function Items_Dungeon_SetMapItem(MapID, Index: Integer; AItem: Item): Integer; stdcall;
-function Items_Dungeon_GetMapItem(MapID, Index: Integer): Item; stdcall;
+function Items_Dungeon_SetMapItem(MapID, Index: Int; AItem: Item): Int; stdcall;
+function Items_Dungeon_GetMapItem(MapID, Index: Int): Item; stdcall;
 
-function Items_Dungeon_SetMapItemXY(MapID, Index: Integer; AX, AY: Integer; AItem: Item): Integer; stdcall;
-function Items_Dungeon_GetMapItemXY(MapID, Index: Integer; AX, AY: Integer): Item; stdcall;
+function Items_Dungeon_SetMapItemXY(MapID, Index: Int; AX, AY: Int; AItem: Item): Int; stdcall;
+function Items_Dungeon_GetMapItemXY(MapID, Index: Int; AX, AY: Int): Item; stdcall;
 
 procedure Items_Dungeon_AppendItem(AItem: Item); stdcall;
 
-function Items_Dungeon_DeleteItem(Index: Integer; var AItem: Item): Integer; stdcall;
-function Items_Dungeon_DeleteMapItem(MapID: Integer; Index: Integer; var AItem: Item): Integer; stdcall;
-function Items_Dungeon_DeleteMapItemXY(MapID: Integer; Index, AX, AY: Integer; var AItem: Item): Integer; stdcall;
+function Items_Dungeon_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
+function Items_Dungeon_DeleteMapItem(MapID: Int; Index: Int; var AItem: Item): Int; stdcall;
+function Items_Dungeon_DeleteMapItemXY(MapID: Int; Index, AX, AY: Int; var AItem: Item): Int; stdcall;
 
-function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Integer): Integer; stdcall;
+function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Int): Int; stdcall;
 
 implementation
 
@@ -43,18 +43,18 @@ begin
   Empty(MapItems);
 end;
 
-procedure Items_Dungeon_MapClear(MapID: Integer); stdcall;
+procedure Items_Dungeon_MapClear(MapID: Int); stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   for I := 0 to Length(MapItems) - 1 do
     if HasItem(MapItems, I, MapID) then
       DelItem(MapItems, I);
 end;
 
-procedure Items_Dungeon_MapClearXY(MapID: Integer; AX, AY: Integer); stdcall;
+procedure Items_Dungeon_MapClearXY(MapID: Int; AX, AY: Int); stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   if HasEmpty(MapItems) then Exit;
   for I := 0 to Length(MapItems) - 1 do
@@ -62,14 +62,14 @@ begin
        DelItem(MapItems, I);
 end;
 
-function Items_Dungeon_GetCount(): Integer; stdcall;
+function Items_Dungeon_GetCount(): Int; stdcall;
 begin
   Result := Length(MapItems);
 end;
 
-function Items_Dungeon_GetMapCount(MapID: Integer): Integer; stdcall;
+function Items_Dungeon_GetMapCount(MapID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(MapItems) - 1 do
@@ -77,9 +77,9 @@ begin
       Inc(Result);
 end;
 
-function Items_Dungeon_GetMapCountXY(MapID: Integer; AX, AY: Integer): Integer; stdcall;
+function Items_Dungeon_GetMapCountXY(MapID: Int; AX, AY: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   if HasEmpty(MapItems) then Exit;
@@ -88,9 +88,9 @@ begin
       Inc(Result);
 end;
 
-function Items_Dungeon_GetItemCount(ItemID: Integer): Integer; stdcall;
+function Items_Dungeon_GetItemCount(ItemID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(MapItems) - 1 do
@@ -98,9 +98,9 @@ begin
       Inc(Result);
 end;
 
-function Items_Dungeon_GetMapItemCount(MapID, ItemID: Integer): Integer; stdcall;
+function Items_Dungeon_GetMapItemCount(MapID, ItemID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(MapItems) - 1 do
@@ -108,9 +108,9 @@ begin
       Inc(Result);
 end;
 
-function Items_Dungeon_GetMapItemCountXY(MapID, ItemID: Integer; AX, AY: Integer): Integer; stdcall;
+function Items_Dungeon_GetMapItemCountXY(MapID, ItemID: Int; AX, AY: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   if HasEmpty(MapItems) then Exit;
@@ -120,7 +120,7 @@ begin
         Inc(Result);
 end;
 
-function Items_Dungeon_SetItem(Index: Integer; AItem: Item): Integer; stdcall;
+function Items_Dungeon_SetItem(Index: Int; AItem: Item): Int; stdcall;
 begin
   Result := IntFalse;
   if IndexInRange(MapItems, Index) then
@@ -130,14 +130,14 @@ begin
   end;
 end;
 
-function Items_Dungeon_GetItem(Index: Integer): Item; stdcall;
+function Items_Dungeon_GetItem(Index: Int): Item; stdcall;
 begin
   Result := MapItems[Index];
 end;
 
-function Items_Dungeon_SetMapItem(MapID, Index: Integer; AItem: Item): Integer; stdcall;
+function Items_Dungeon_SetMapItem(MapID, Index: Int; AItem: Item): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := IntFalse;
   if HasEmpty(MapItems) then Exit;
@@ -148,9 +148,9 @@ begin
   Result := Items_Dungeon_SetItem(I, AItem);
 end;
 
-function Items_Dungeon_GetMapItem(MapID, Index: Integer): Item; stdcall;
+function Items_Dungeon_GetMapItem(MapID, Index: Int): Item; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Items_Clear_Item(Result);
   if HasEmpty(MapItems) then Exit;
@@ -161,9 +161,9 @@ begin
   if (Result.Amount < 0) then Exit;
 end;
 
-function Items_Dungeon_SetMapItemXY(MapID, Index: Integer; AX, AY: Integer; AItem: Item): Integer; stdcall;
+function Items_Dungeon_SetMapItemXY(MapID, Index: Int; AX, AY: Int; AItem: Item): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := IntFalse;
   if HasEmpty(MapItems) then Exit;
@@ -174,9 +174,9 @@ begin
   Result := Items_Dungeon_SetItem(I, AItem);
 end;
 
-function Items_Dungeon_GetMapItemXY(MapID, Index: Integer; AX, AY: Integer): Item; stdcall;
+function Items_Dungeon_GetMapItemXY(MapID, Index: Int; AX, AY: Int): Item; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Items_Clear_Item(Result);
   if HasEmpty(MapItems) then Exit;
@@ -189,11 +189,11 @@ end;
 
 procedure Items_Dungeon_AppendItem(AItem: Item); stdcall;
 var
-  I, J, A: Integer;
+  I, J, A: Int;
 
   procedure Add(AItem: Item); stdcall;
   var
-    A, J: Integer;
+    A, J: Int;
   begin
     A := AItem.Amount;
     while (A > 0) do
@@ -237,7 +237,7 @@ begin
   end else Add(AItem);
 end;
 
-function Items_Dungeon_DeleteItem(Index: Integer; var AItem: Item): Integer; stdcall;
+function Items_Dungeon_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
 begin
   Result := IntFalse;
   if IndexInRange(MapItems, Index) then
@@ -247,9 +247,9 @@ begin
   end;
 end;
 
-function Items_Dungeon_DeleteMapItem(MapID: Integer; Index: Integer; var AItem: Item): Integer; stdcall;
+function Items_Dungeon_DeleteMapItem(MapID: Int; Index: Int; var AItem: Item): Int; stdcall;
 var
-  I, P: Integer;
+  I, P: Int;
 begin
   Result := IntFalse;
   if not IndexInRange(MapItems, Index)then Exit;
@@ -267,9 +267,9 @@ begin
     end;
 end;
 
-function Items_Dungeon_DeleteMapItemXY(MapID: Integer; Index, AX, AY: Integer; var AItem: Item): Integer; stdcall;
+function Items_Dungeon_DeleteMapItemXY(MapID: Int; Index, AX, AY: Int; var AItem: Item): Int; stdcall;
 var
-  I, P: Integer;
+  I, P: Int;
 begin
   Result := IntFalse;
   if not IndexInRange(MapItems, Index)then Exit;
@@ -287,9 +287,9 @@ begin
     end;
 end;
 
-function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Integer): Integer; stdcall;
+function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   if HasEmpty(MapItems) then Exit;

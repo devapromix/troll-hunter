@@ -41,7 +41,7 @@ type
 
 implementation
 
-uses Math;
+uses Math, uHelpers;
 
 { TAttributes }
 
@@ -83,11 +83,9 @@ begin
   Modify(I, AValue);
   case I of
     atLife:
-      FAttrib[I].Value := EnsureRange(FAttrib[I].Value, 0,
-        FAttrib[atMaxLife].Value);
+      FAttrib[I].Value := FAttrib[I].Value.InRange(FAttrib[atMaxLife].Value);
     atMana:
-      FAttrib[I].Value := EnsureRange(FAttrib[I].Value, 0,
-        FAttrib[atMaxMana].Value);
+      FAttrib[I].Value := FAttrib[I].Value.InRange(FAttrib[atMaxMana].Value);
   end;
 end;
 

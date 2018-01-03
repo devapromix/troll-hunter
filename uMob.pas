@@ -432,8 +432,8 @@ type
   public
     constructor Create();
     destructor Destroy; override;
-    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
-      AID: Int = -1; AForce: TForce = fcEnemy);
+    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1;
+      AForce: TForce = fcEnemy);
     procedure AddNPC(AX, AY: UInt; AZ: TMapEnum; ANPCID: UInt);
     procedure Process;
     procedure Render(AX, AY: UInt);
@@ -483,7 +483,7 @@ var
 implementation
 
 uses Math, SysUtils, TypInfo, Dialogs, uTerminal, uPlayer, uMsgLog, uLanguage,
-  uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest;
+  uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest, uHelpers;
 
 function MyCallback(X, Y: Int): Boolean; stdcall;
 begin
@@ -513,8 +513,8 @@ begin
     (AZ in MobBase[TMobEnum(AMobID)].Maps);
 end;
 
-procedure TMob.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
-  AID: Int = -1; AForce: TForce = fcEnemy);
+procedure TMob.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1;
+  AForce: TForce = fcEnemy);
 var
   I, V, FX, FY: UInt;
 begin
@@ -552,8 +552,7 @@ begin
   FColor := MobBase[TMobEnum(ID)].Color;
   // Life
   V := Math.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss,
-    (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25, 0), 0,
-    UIntMax);
+    (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25, 0), 0, UIntMax);
   MaxLife := Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V,
     MobBase[TMobEnum(ID)].MaxLife + (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)
     ].Level) + V);
@@ -608,7 +607,7 @@ begin
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.EnsureRange(Math.RandomRange(L + 10, L + 25), 0, UIntMax);
+      Dam := Math.EnsureRange(Math.RandomRange(L + 5, L + 15), 0, UIntMax);
       Abilities.Modify(abBloodlust, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s feel lust for blood (%d).'),
         Abilities.GetColor(abBloodlust)), [The, Dam]));
@@ -782,12 +781,12 @@ begin
   Player.Statictics.Inc(stKills);
 
   // Mana and Life After Each Kill
-  V := EnsureRange(Player.Attributes.Attrib[atLifeAfEachKill].Value, 0, LifeAEKMax);
+  V := Player.Attributes.Attrib[atLifeAfEachKill].Value.InRange(LifeAEKMax);
   if (V > 0) then
-    Player.Life := EnsureRange(Player.Life + V, 0, Player.MaxLife);
-  V := EnsureRange(Player.Attributes.Attrib[atManaAfEachKill].Value, 0, ManaAEKMax);
+    Player.Life := Player.Life + EnsureRange(V, 0, Player.MaxLife);
+  V := Player.Attributes.Attrib[atManaAfEachKill].Value.InRange(ManaAEKMax);
   if (V > 0) then
-    Player.Mana := EnsureRange(Player.Mana + V, 0, Player.MaxMana);
+    Player.Mana := Player.Mana + EnsureRange(V, 0, Player.MaxMana);
   if Boss then
     V := 25
   else

@@ -8,6 +8,7 @@ program Trollhunter;
 uses
   SysUtils,
   Dialogs,
+  uTypes in 'uTypes.pas',
   BearLibTerminal in 'BearLibTerminal.pas',
   uGame in 'uGame.pas',
   uLanguage in 'uLanguage.pas',
@@ -37,7 +38,7 @@ uses
   uBearLibItemsDungeon in 'BearLibItems\uBearLibItemsDungeon.pas',
   uBearLibItemsInventory in 'BearLibItems\uBearLibItemsInventory.pas',
   uQuest in 'uQuest.pas',
-  uTypes in 'uTypes.pas';
+  uHelpers in 'uHelpers.pas';
 
 var
   Key: UInt = 0;

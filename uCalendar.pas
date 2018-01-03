@@ -41,7 +41,7 @@ var
 implementation
 
 uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer,
-  uCreature, uAttribute;
+  uCreature, uAttribute, uHelpers;
 
 { TCalendar }
 
@@ -110,11 +110,11 @@ end;
 procedure TCalendar.OnDay();
 begin
   // Replenish Life
-  Player.Life := EnsureRange(Player.Life + EnsureRange(Player.Attributes.Attrib
-    [atReLife].Value, 0, ReLifeMax), 0, Player.MaxLife);
+  Player.Life := Player.Life + Player.Attributes.Attrib[atReLife].Value.InRange
+    (ReLifeMax).InRange(Player.MaxLife);
   // Regenerate Mana
-  Player.Mana := EnsureRange(Player.Mana + EnsureRange(Player.Attributes.Attrib
-    [atReMana].Value, 0, ReManaMax), 0, Player.MaxMana);
+  Player.Mana := Player.Mana + Player.Attributes.Attrib[atReMana].Value.InRange
+    (ReManaMax).InRange(Player.MaxMana);
 end;
 
 procedure TCalendar.OnHour();

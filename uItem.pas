@@ -1708,10 +1708,10 @@ type
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: array of string): string;
-    procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
-      const Value: UInt);
     function StrToItemEnum(const S: string): TItemEnum;
-    function GetBonus(const AItem: Item; const BonusType: TBonusType): UInt;
+    procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
+      const Value: UInt8);
+    function GetBonus(const AItem: Item; const BonusType: TBonusType): UInt8;
     procedure DelCorpses();
     procedure AddPlants;
   end;
@@ -1723,7 +1723,7 @@ implementation
 
 uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
-  uBearLibItemsInventory, Dialogs, uScenes;
+  uBearLibItemsInventory, Dialogs, uScenes, uHelpers;
 
 { TItems }
 
@@ -2078,8 +2078,7 @@ begin
         // Extra Gold from Monsters
         if (Player.Attributes.Attrib[atExtraGold].Value > 0) then
           FItem.Amount := FItem.Amount +
-            Round(Player.Attributes.Attrib[atExtraGold].Value *
-            FItem.Amount / 100);
+        Player.Attributes.Attrib[atExtraGold].Value.Percent(FItem.Amount);
       end;
   end;
   if ((FItem.Stack = 1) and (IT in WeaponTypeItems + ArmorTypeItems)) then
@@ -2368,42 +2367,42 @@ begin
     Result := Result + S;
 end;
 
-function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): UInt;
+function TItems.GetBonus(const AItem: Item; const BonusType: TBonusType): UInt8;
 begin
   case BonusType of
     btLife:
-      Result := UInt(AItem.Bonus[0] shr 24);
+      Result := UInt8(AItem.Bonus[0] shr 24);
     btMana:
-      Result := UInt(AItem.Bonus[0] shr 16);
+      Result := UInt8(AItem.Bonus[0] shr 16);
     btVis:
-      Result := UInt(AItem.Bonus[0] shr 8);
+      Result := UInt8(AItem.Bonus[0] shr 8);
     btExtraGold:
-      Result := UInt(AItem.Bonus[0]);
+      Result := UInt8(AItem.Bonus[0]);
     btStr:
-      Result := UInt(AItem.Bonus[1] shr 24);
+      Result := UInt8(AItem.Bonus[1] shr 24);
     btDex:
-      Result := UInt(AItem.Bonus[1] shr 16);
+      Result := UInt8(AItem.Bonus[1] shr 16);
     btWil:
-      Result := UInt(AItem.Bonus[1] shr 8);
+      Result := UInt8(AItem.Bonus[1] shr 8);
     btPer:
-      Result := UInt(AItem.Bonus[1]);
+      Result := UInt8(AItem.Bonus[1]);
     btReLife:
-      Result := UInt(AItem.Bonus[2] shr 24);
+      Result := UInt8(AItem.Bonus[2] shr 24);
     btReMana:
-      Result := UInt(AItem.Bonus[2] shr 16);
+      Result := UInt8(AItem.Bonus[2] shr 16);
     btLifeAfEachKill:
-      Result := UInt(AItem.Bonus[2] shr 8);
+      Result := UInt8(AItem.Bonus[2] shr 8);
     btManaAfEachKill:
-      Result := UInt(AItem.Bonus[2]);
+      Result := UInt8(AItem.Bonus[2]);
   else
     Result := 0;
   end;
 end;
 
 procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType;
-  const Value: UInt);
+  const Value: UInt8);
 var
-  V: array [0 .. 3] of UInt;
+  V: array [0 .. 3] of UInt8;
   I: Cardinal;
 begin
   if (BonusType in [btStr .. btPer]) then

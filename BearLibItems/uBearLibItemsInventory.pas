@@ -2,53 +2,53 @@ unit uBearLibItemsInventory;
 
 interface
 
-uses uBearLibItemsCommon;
+uses uTypes, uBearLibItemsCommon;
 
 procedure Items_Inventory_Clear(); stdcall;
 
-function Items_Inventory_GetCount(): Integer; stdcall;
-function Items_Inventory_GetItemCount(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetCount(): Int; stdcall;
+function Items_Inventory_GetItemCount(ItemID: Int): Int; stdcall;
 
-function Items_Inventory_GetWeight(): Integer; stdcall;
-function Items_Inventory_GetItemWeight(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetWeight(): Int; stdcall;
+function Items_Inventory_GetItemWeight(ItemID: Int): Int; stdcall;
 
-function Items_Inventory_GetSize(): Integer; stdcall;
-function Items_Inventory_GetItemSize(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetSize(): Int; stdcall;
+function Items_Inventory_GetItemSize(ItemID: Int): Int; stdcall;
 
-function Items_Inventory_GetItemAmount(ItemID: Integer): Integer; stdcall;
-function Items_Inventory_DeleteItemAmount(ItemID, Amount: Integer): Integer; stdcall;
+function Items_Inventory_GetItemAmount(ItemID: Int): Int; stdcall;
+function Items_Inventory_DeleteItemAmount(ItemID, Amount: Int): Int; stdcall;
 
-function Items_Inventory_SetItem(Index: Integer; AItem: Item): Integer; stdcall;
-function Items_Inventory_GetItem(Index: Integer): Item; stdcall;
+function Items_Inventory_SetItem(Index: Int; AItem: Item): Int; stdcall;
+function Items_Inventory_GetItem(Index: Int): Item; stdcall;
 
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall;
-function Items_Inventory_DeleteItem(Index: Integer; var AItem: Item): Integer; stdcall;
+function Items_Inventory_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
 
-function Items_Inventory_EquipItem(Index: Integer): Integer; stdcall;
-function Items_Inventory_UnEquipItem(Index: Integer): Integer; stdcall;
+function Items_Inventory_EquipItem(Index: Int): Int; stdcall;
+function Items_Inventory_UnEquipItem(Index: Int): Int; stdcall;
 
-procedure Items_Inventory_SetSlotCount(ACount: Integer); stdcall;
-function Items_Inventory_GetSlotCount: Integer; stdcall;
+procedure Items_Inventory_SetSlotCount(ACount: Int); stdcall;
+function Items_Inventory_GetSlotCount: Int; stdcall;
 
 implementation
 
 var
   InvItems: TItems;
-  SlotMax: Integer = 26;
+  SlotMax: Int = 26;
 
 procedure Items_Inventory_Clear(); stdcall;
 begin
   Empty(InvItems);
 end;
 
-function Items_Inventory_GetCount(): Integer; stdcall;
+function Items_Inventory_GetCount(): Int; stdcall;
 begin
   Result := Length(InvItems);
 end;
 
-function Items_Inventory_GetItemCount(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetItemCount(ItemID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(InvItems) - 1 do
@@ -56,18 +56,18 @@ begin
       Inc(Result);
 end;
 
-function Items_Inventory_GetWeight(): Integer; stdcall;
+function Items_Inventory_GetWeight(): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(InvItems) - 1 do
     Inc(Result, InvItems[I].Weight);
 end;
 
-function Items_Inventory_GetItemWeight(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetItemWeight(ItemID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(InvItems) - 1 do
@@ -75,18 +75,18 @@ begin
       Inc(Result, InvItems[I].Weight);
 end;
 
-function Items_Inventory_GetSize(): Integer; stdcall;
+function Items_Inventory_GetSize(): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(InvItems) - 1 do
     Inc(Result, InvItems[I].Size);
 end;
 
-function Items_Inventory_GetItemSize(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetItemSize(ItemID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(InvItems) - 1 do
@@ -94,9 +94,9 @@ begin
       Inc(Result, InvItems[I].Size);
 end;
 
-function Items_Inventory_GetItemAmount(ItemID: Integer): Integer; stdcall;
+function Items_Inventory_GetItemAmount(ItemID: Int): Int; stdcall;
 var
-  I: Integer;
+  I: Int;
 begin
   Result := 0;
   for I := 0 to Length(InvItems) - 1 do
@@ -104,9 +104,9 @@ begin
       Inc(Result, InvItems[I].Amount);
 end;
 
-function Items_Inventory_DeleteItemAmount(ItemID, Amount: Integer): Integer; stdcall;
+function Items_Inventory_DeleteItemAmount(ItemID, Amount: Int): Int; stdcall;
 var
-  I, C: Integer;
+  I, C: Int;
   FItem: Item;
 begin
   Result := IntFalse;
@@ -131,13 +131,13 @@ begin
     end;
 end;
 
-function Items_Inventory_GetItem(Index: Integer): Item; stdcall;
+function Items_Inventory_GetItem(Index: Int): Item; stdcall;
 begin
   if IndexInRange(InvItems, Index) then
     Result := InvItems[Index];
 end;
 
-function Items_Inventory_SetItem(Index: Integer; AItem: Item): Integer; stdcall;
+function Items_Inventory_SetItem(Index: Int; AItem: Item): Int; stdcall;
 begin
   Result := IntFalse;
   if (AItem.Amount <= 0) then
@@ -154,7 +154,7 @@ end;
 
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall;
 var
-  I, J, A: Integer;
+  I, J, A: Int;
 begin
   if (AItem.Stack > 1) then
   begin
@@ -185,7 +185,7 @@ begin
   end else AddItem(InvItems, AItem);
 end;
 
-function Items_Inventory_DeleteItem(Index: Integer; var AItem: Item): Integer; stdcall;
+function Items_Inventory_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
 begin
   Result := IntFalse;
   if IndexInRange(InvItems, Index) then
@@ -195,9 +195,9 @@ begin
   end;
 end;
 
-function Items_Inventory_EquipItem(Index: Integer): Integer; stdcall;
+function Items_Inventory_EquipItem(Index: Int): Int; stdcall;
 var
-  I, FSlot: Integer;
+  I, FSlot: Int;
 begin
   Result := -1;
   if IndexInRange(InvItems, Index) then
@@ -217,7 +217,7 @@ begin
   end;
 end;
 
-function Items_Inventory_UnEquipItem(Index: Integer): Integer; stdcall;
+function Items_Inventory_UnEquipItem(Index: Int): Int; stdcall;
 begin
   Result := IntFalse;
   if IndexInRange(InvItems, Index) then
@@ -228,13 +228,13 @@ begin
     end;
 end;
 
-procedure Items_Inventory_SetSlotCount(ACount: Integer); stdcall;
+procedure Items_Inventory_SetSlotCount(ACount: Int); stdcall;
 begin
   SlotMax := ACount;
   if (SlotMax < 1) then SlotMax := 1;
 end;
 
-function Items_Inventory_GetSlotCount: Integer; stdcall;
+function Items_Inventory_GetSlotCount: Int; stdcall;
 begin
   Result := SlotMax;
 end;
