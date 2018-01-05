@@ -63,6 +63,7 @@ type
     property MaxLife: UInt read FMaxLife write FMaxLife;
     property Abilities: TAbilities read FAbilities write FAbilities;
     property Attributes: TAttributes read FAttributes write FAttributes;
+    procedure Fill;
   end;
 
 implementation
@@ -89,6 +90,12 @@ begin
   FreeAndNil(FAbilities);
   FreeAndNil(FAttributes);
   inherited;
+end;
+
+procedure TCreature.Fill;
+begin
+//  Attributes.SetValue(atLife, atMaxLife);
+  Attributes.SetValue(atMana, atMaxMana);
 end;
 
 function TCreature.GetDamage: TDamage;

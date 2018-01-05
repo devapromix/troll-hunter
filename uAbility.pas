@@ -16,17 +16,17 @@ type
   private
     FAbilityName: array [TAbilityEnum] of string;
     FAbility: array [TAbilityEnum] of UInt;
-    function GetAbility(I: TAbilityEnum): UInt;
-    procedure SetAbility(I: TAbilityEnum; const Value: UInt);
+    function GetAbility(const I: TAbilityEnum): UInt;
+    procedure SetAbility(const I: TAbilityEnum; const Value: UInt);
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Ability[I: TAbilityEnum]: UInt read GetAbility write SetAbility;
-    function IsAbility(Value: TAbilityEnum): Boolean;
-    procedure Modify(I: TAbilityEnum; Value: Int);
-    function GetName(Value: TAbilityEnum): string;
-    function GetColor(Value: TAbilityEnum): string;
+    property Ability[const I: TAbilityEnum]: UInt read GetAbility write SetAbility;
+    function IsAbility(const Value: TAbilityEnum): Boolean;
+    procedure Modify(const I: TAbilityEnum; const Value: Int);
+    function GetName(const Value: TAbilityEnum): string;
+    function GetColor(const Value: TAbilityEnum): string;
   end;
 
 implementation
@@ -40,7 +40,7 @@ const
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
 
-procedure TAbilities.Modify(I: TAbilityEnum; Value: Int);
+procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin
   FAbility[I] := FAbility[I] + Value;
 end;
@@ -71,27 +71,27 @@ begin
   inherited;
 end;
 
-function TAbilities.GetAbility(I: TAbilityEnum): UInt;
+function TAbilities.GetAbility(const I: TAbilityEnum): UInt;
 begin
   Result := FAbility[I]
 end;
 
-function TAbilities.GetColor(Value: TAbilityEnum): string;
+function TAbilities.GetColor(const Value: TAbilityEnum): string;
 begin
   Result := AbilityColor[Value];
 end;
 
-function TAbilities.IsAbility(Value: TAbilityEnum): Boolean;
+function TAbilities.IsAbility(const Value: TAbilityEnum): Boolean;
 begin
   Result := Ability[Value] > 0;
 end;
 
-procedure TAbilities.SetAbility(I: TAbilityEnum; const Value: UInt);
+procedure TAbilities.SetAbility(const I: TAbilityEnum; const Value: UInt);
 begin
   FAbility[I] := Value;
 end;
 
-function TAbilities.GetName(Value: TAbilityEnum): string;
+function TAbilities.GetName(const Value: TAbilityEnum): string;
 begin
   Result := FAbilityName[Value];
 end;

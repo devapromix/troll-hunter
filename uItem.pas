@@ -1866,7 +1866,7 @@ begin
     S := S + UI.Icon(icLife);
   if (Color = 'Mana') then
   begin
-    if (Player.Mana < Value) then
+    if (Player.Attributes.Attrib[atMana].Value < Value) then
       Color := 'NoMana';
     S := S + UI.Icon(icMana);
   end;

@@ -1179,7 +1179,7 @@ begin
   Add('Protection Value (PV)', UI.Icon(icShield), 'Darkest Green', Player.Attributes.Attrib[atPV].Value, PVMax);
   // Life and Mana
   Add('Life', UI.Icon(icLife), 'Life', Player.Life, Player.MaxLife);
-  Add('Mana', UI.Icon(icMana), 'Mana', Player.Mana, Player.MaxMana);
+  Add('Mana', UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atMana].Value, Player.Attributes.Attrib[atMaxMana].Value);
   // Vision radius
   Add('Vision radius', UI.Icon(icVision), 'Vision', Player.Vision, VisionMax);
 end;

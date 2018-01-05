@@ -8,10 +8,8 @@ const
   AttribMax = 100;
 
 type
-  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana,
-    atMaxMana, atPV, atDV, atStr, atDex, atWil, atPer, atExtraGold, atVision,
-    atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill,
-    atManaAfEachKill);
+  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana, atPV, atDV, atStr, atDex, atWil,
+    atPer, atExtraGold, atVision, atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill);
 
 const
   AttrLow = atReLife;
@@ -34,8 +32,9 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
-    procedure Modify(I: TAttribEnum; AValue: Int; APrm: Int = 0);
-    procedure SetValue(I: TAttribEnum; AValue: Int);
+    procedure Modify(const I: TAttribEnum; const AValue: Int; const APrm: Int = 0);
+    procedure SetValue(const I: TAttribEnum; const AValue: Int); overload;
+    procedure SetValue(const I, J: TAttribEnum); overload;
   end;
 
 implementation
@@ -71,29 +70,34 @@ begin
   Result := FAttrib[I];
 end;
 
-procedure TAttributes.Modify(I: TAttribEnum; AValue, APrm: Int);
+procedure TAttributes.Modify(const I: TAttribEnum; const AValue, APrm: Int);
+var
+  V: Int;
 begin
-  FAttrib[I].Value := FAttrib[I].Value + AValue;
+  V := FAttrib[I].Value + AValue;
+  if (V < 0) then
+    V := 0;
+  FAttrib[I].Value := V;
   FAttrib[I].Prm := FAttrib[I].Prm + APrm;
-end;
-
-{procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Int);
-begin
-  Modify(I, AValue);
   case I of
     atLife:
-      FAttrib[I].Value := FAttrib[I].Value.InRange(FAttrib[atMaxLife].Value);
+      SetValue(I, FAttrib[I].Value.InRange(FAttrib[atMaxLife].Value));
     atMana:
-      FAttrib[I].Value := FAttrib[I].Value.InRange(FAttrib[atMaxMana].Value);
+      SetValue(I, FAttrib[I].Value.InRange(FAttrib[atMaxMana].Value));
   end;
-end;}
+end;
 
 procedure TAttributes.SetAttrib(I: TAttribEnum; const Value: TAttrib);
 begin
   FAttrib[I] := Value;
 end;
 
-procedure TAttributes.SetValue(I: TAttribEnum; AValue: Int);
+procedure TAttributes.SetValue(const I, J: TAttribEnum);
+begin
+  FAttrib[I].Value := FAttrib[J].Value;
+end;
+
+procedure TAttributes.SetValue(const I: TAttribEnum; const AValue: Int);
 begin
   FAttrib[I].Value := AValue;
 end;

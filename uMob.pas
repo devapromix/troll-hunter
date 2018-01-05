@@ -684,7 +684,7 @@ begin
     Player.Life := Game.EnsureRange(Player.Life + V, Player.MaxLife);
   V := Player.Attributes.Attrib[atManaAfEachKill].Value.InRange(ManaAEKMax);
   if (V > 0) then
-    Player.Mana := Game.EnsureRange(Player.Mana + V, Player.MaxMana);
+    Player.Attributes.Modify(atMana, V);
   if Boss then
     V := 25
   else

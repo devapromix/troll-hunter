@@ -285,11 +285,12 @@ end;
 
 procedure TMap.ClearFOV;
 var
-  X, Y, V: Int;
+  X, Y: Int;
+  Vision: UInt;
 begin
-  V := Player.Attributes.Attrib[atVision].Value;
-  for Y := Player.Y - V to Player.Y + V do
-    for X := Player.X - V to Player.X + V do
+  Vision := Player.Attributes.Attrib[atVision].Value.InRange(VisionMax);
+  for Y := Player.Y - Vision to Player.Y + Vision do
+    for X := Player.X - Vision to Player.X + Vision do
       FFOV[Self.EnsureRange(X)][Self.EnsureRange(Y)] := False;
 end;
 

@@ -115,7 +115,7 @@ begin
   // Replenish Life
   Player.Life := Re(Player.Life + Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax), Player.MaxLife);
   // Regenerate Mana
-  Player.Mana := Re(Player.Mana + Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax), Player.MaxMana);
+  Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax));
 end;
 
 procedure TCalendar.OnHour();

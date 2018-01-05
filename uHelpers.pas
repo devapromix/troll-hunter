@@ -2,7 +2,7 @@ unit uHelpers;
 
 interface
 
-uses uTypes, uBearLibItemsCommon, uPlayer;
+uses uTypes, uBearLibItemsCommon, uPlayer, Generics.Defaults;
 
 type
   TIntHelper = record helper for Int

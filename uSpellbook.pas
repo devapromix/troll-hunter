@@ -18,17 +18,16 @@ type
 
 const
   SpellBase: array [TSpellEnum] of TSpellBase = (
-  // Heal
-  (Level: 1; Effects:[efLife]; Value: 100; ManaCost: 20; Price: 200;),
-  // Town Portal
-  (Level: 2; Effects:[efTownPortal]; Value: 0; ManaCost: 24; Price: 500;),
-  // Cure Poison
-  (Level: 2; Effects:[efCurePoison]; Value: 0; ManaCost: 30; Price: 600;),
-  // Teleportation
-  (Level: 3; Effects:[efTeleportation]; Value: 7; ManaCost: 40; Price: 750;),
-  // Magic Eye
-  (Level: 3; Effects:[efMagicEye]; Value: 20; ManaCost: 50; Price: 900;)
-  );
+    // Heal
+    (Level: 1; Effects: [efLife]; Value: 100; ManaCost: 20; Price: 200;),
+    // Town Portal
+    (Level: 2; Effects: [efTownPortal]; Value: 0; ManaCost: 24; Price: 500;),
+    // Cure Poison
+    (Level: 2; Effects: [efCurePoison]; Value: 0; ManaCost: 30; Price: 600;),
+    // Teleportation
+    (Level: 3; Effects: [efTeleportation]; Value: 7; ManaCost: 40; Price: 750;),
+    // Magic Eye
+    (Level: 3; Effects: [efMagicEye]; Value: 20; ManaCost: 50; Price: 900;));
 
 type
   TSpell = record
@@ -39,7 +38,7 @@ type
 type
   TSpellbook = class(TObject)
   private
-    FSpell: array[TSpellEnum] of TSpell;
+    FSpell: array [TSpellEnum] of TSpell;
   public
     procedure Clear;
     function GetSpellName(ASpellEnum: TSpellEnum): string;
@@ -54,7 +53,7 @@ var
 
 implementation
 
-uses SysUtils, uLanguage, uPlayer, uMsgLog, uStatistic, uUI;
+uses SysUtils, uLanguage, uPlayer, uMsgLog, uStatistic, uUI, uAttribute;
 
 { TSpellbook }
 
@@ -82,12 +81,14 @@ begin
     begin
       if (Index = C) then
       begin
-        if (Player.Mana >= FSpell[I].Spell.ManaCost) then
+        if (Player.Attributes.Attrib[atMana].Value >= FSpell[I].Spell.ManaCost) then
         begin
           Player.Statictics.Inc(stSpCast);
-          Player.Mana := Player.Mana - FSpell[I].Spell.ManaCost;
+          Player.Attributes.Modify(atMana, -FSpell[I].Spell.ManaCost);
           Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
-        end else begin
+        end
+        else
+        begin
           MsgLog.Add(_('You need more mana!'));
           Player.Calc;
           Player.Wait;
@@ -125,14 +126,14 @@ var
 begin
   Self.Clear;
   for I := Low(TSpellEnum) to High(TSpellEnum) do
-  with FSpell[I].Spell do
-  begin
-    Level := SpellBase[I].Level;
-    Effects := SpellBase[I].Effects;
-    Value := SpellBase[I].Value;
-    ManaCost := SpellBase[I].ManaCost;
-    Price := SpellBase[I].Price;
-  end;
+    with FSpell[I].Spell do
+    begin
+      Level := SpellBase[I].Level;
+      Effects := SpellBase[I].Effects;
+      Value := SpellBase[I].Value;
+      ManaCost := SpellBase[I].ManaCost;
+      Price := SpellBase[I].Price;
+    end;
 end;
 
 initialization

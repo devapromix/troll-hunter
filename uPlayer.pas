@@ -41,8 +41,6 @@ type
   private
     FLX: UInt;
     FLY: UInt;
-    FMana: UInt;
-    FMaxMana: UInt;
     FMaxMap: UInt;
     FLook: Boolean;
     FGold: Int;
@@ -68,8 +66,6 @@ type
     property LX: UInt read FLX write FLX;
     property LY: UInt read FLY write FLY;
     property Satiation: UInt read GetSatiation; // Nutrition
-    property Mana: UInt read FMana write FMana;
-    property MaxMana: UInt read FMaxMana write FMaxMana;
     property Vision: UInt read GetVision;
     property MaxMap: UInt read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
@@ -216,7 +212,7 @@ begin
       C := Skills.Skill[skConcentration].Value;
       if Abilities.IsAbility(abRegen) then
         C := EnsureRange(C * 3, C, UIntMax);
-      Mana := Game.EnsureRange(Mana + C, MaxMana);
+      Attributes.Modify(atMana, C);
     end;
   end;
   OnTurn();
@@ -502,8 +498,8 @@ begin
     Attributes.Attrib[atPV].Prm, PVMax));
   MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) +
     FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm;
-  MaxMana := Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) +
-    FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm;
+  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) +
+    Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
   //
   Attributes.SetValue(atExtraGold, FAttrib[atExtraGold].InRange(ExtraGoldMax));
@@ -595,7 +591,8 @@ end;
 procedure TPlayer.Fill;
 begin
   Life := MaxLife;
-  Mana := MaxMana;
+  Attributes.SetValue(atMana, atMaxMana);
+  // Mana := MaxMana;
 end;
 
 procedure TPlayer.GenNPCText;
@@ -733,7 +730,7 @@ begin
   I := TItemEnum(FItem.ItemID);
   T := ItemBase[I].ItemType;
   // No mana
-  if (Player.Mana < ItemBase[I].ManaCost) then
+  if (Player.Attributes.Attrib[atMana].Value < ItemBase[I].ManaCost) then
   begin
     MsgLog.Add(Format(_('You need more mana!'), [FItem.Level]));
     Self.Calc;
@@ -775,10 +772,10 @@ begin
       end;
       if (T in ScrollTypeItems + RuneTypeItems) then
       begin
-        if (Self.Mana >= ItemBase[I].ManaCost) then
+        if (Attributes.Attrib[atMana].Value >= ItemBase[I].ManaCost) then
         begin
           Skills.DoSkill(skConcentration);
-          Self.Mana := Self.Mana - ItemBase[I].ManaCost;
+          Attributes.Modify(atMana, -ItemBase[I].ManaCost);
           Statictics.Inc(stSpCast);
         end
         else
@@ -1154,10 +1151,12 @@ begin
   Terminal.Print(Status.Left - 1, Status.Top + 1, ' ' + UI.Icon(icLife, 'Life') + ' ' +
     Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2, ' ' + UI.Icon(icMana, 'Mana') + ' ' +
-    Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]), 'Mana'));
+    Terminal.Colorize(Format(F, [_('Mana'), Self.Attributes.Attrib[atMana].Value,
+    Self.Attributes.Attrib[atMaxMana].Value]), 'Mana'));
   // Bars
   UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Life, MaxLife, clLife, clDarkGray);
-  UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16, Mana, MaxMana, clMana, clDarkGray);
+  UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16, Self.Attributes.Attrib[atMana].Value,
+    Self.Attributes.Attrib[atMaxMana].Value, clMana, clDarkGray);
   case Game.ShowEffects of
     False:
       begin
@@ -1487,8 +1486,9 @@ begin
   begin
     V := Skills.Skill[skConcentration].Value + Value;
     MsgLog.Add(_('You feel magical energies restoring.'));
-    MsgLog.Add(Format(F, [_('Mana'), Min(MaxMana - Mana, V)]));
-    Mana := EnsureRange(Mana + V, 0, MaxMana);
+    MsgLog.Add(Format(F, [_('Mana'), Min(Self.Attributes.Attrib[atMaxMana].Value - Self.Attributes.Attrib[atMana]
+      .Value, V)]));
+    Self.Attributes.Modify(atMana, V);
     Skills.DoSkill(skConcentration, 5);
   end;
   // Food
