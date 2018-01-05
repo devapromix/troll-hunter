@@ -571,7 +571,7 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, uTerminal, uGame;
+uses SysUtils, TypInfo, Math, uTerminal, uGame, uPlayer, uHelpers;
 
 function TAffixes.Amount: UInt;
 begin
@@ -698,8 +698,7 @@ begin
       begin
         if (SB.Defense.Min > 0) then
           AItem.Defense := AItem.Defense + Math.EnsureRange
-            (Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1,
-            UIntMax);
+            (Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1, UIntMax);
       end;
     // Damage
     of_Damage1 .. of_Damage7:
@@ -744,16 +743,17 @@ begin
     // Extra Gold from Monsters
     of_ExtraGoldFromMonsters1 .. of_ExtraGoldFromMonsters3:
       begin
-        Value := Math.EnsureRange(Value + Math.RandomRange(SB.Value.Min,
-          SB.Value.Max + 1), 0, ExtraGoldMax div 3);
-        Items.SetBonus(AItem, btExtraGold, Value);
+        Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+        Items.SetBonus(AItem, btExtraGold, Value.InRange(ExtraGoldMax div 3));
       end;
   end;
   // Effects
   AItem.Effects := SB.Effects;
   if (SB.Value.Min > 0) then
-    AItem.Value := Math.EnsureRange(AItem.Value + Math.RandomRange(SB.Value.Min,
-      SB.Value.Max + 1), 0, UIntMax);
+  begin
+    Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+    AItem.Value := AItem.Value + Value.InRange(UIntMax);
+  end;
   if (SB.PrmValue > 0) then
     AItem.Value := SB.PrmValue;
   // Price

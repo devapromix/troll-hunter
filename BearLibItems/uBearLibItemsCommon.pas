@@ -12,7 +12,7 @@ type
     ItemID: Int;
     X, Y: Int;
     MapID: Int;
-    Level: Int;
+    Level: UInt;
     Identify: Int;
     Stack: Int;
     Amount: Int;

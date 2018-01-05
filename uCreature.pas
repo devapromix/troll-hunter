@@ -67,7 +67,7 @@ type
 
 implementation
 
-uses SysUtils, Math, uHelpers;
+uses SysUtils, Math, uHelpers, uGame;
 
 { TCreature }
 
@@ -142,7 +142,7 @@ begin
           Value := 0;
         end;
         if (Value > 0) then
-          Life := Life - Value.InRange(MaxLife);
+          Life := Game.EnsureRange(Life - Value, MaxLife);
       end;
     end;
 end;

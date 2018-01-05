@@ -35,7 +35,6 @@ type
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
     procedure Modify(I: TAttribEnum; AValue: Int; APrm: Int = 0);
-    procedure ModifyValue(I: TAttribEnum; AValue: Int);
     procedure SetValue(I: TAttribEnum; AValue: Int);
   end;
 
@@ -78,7 +77,7 @@ begin
   FAttrib[I].Prm := FAttrib[I].Prm + APrm;
 end;
 
-procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Int);
+{procedure TAttributes.ModifyValue(I: TAttribEnum; AValue: Int);
 begin
   Modify(I, AValue);
   case I of
@@ -87,7 +86,7 @@ begin
     atMana:
       FAttrib[I].Value := FAttrib[I].Value.InRange(FAttrib[atMaxMana].Value);
   end;
-end;
+end;}
 
 procedure TAttributes.SetAttrib(I: TAttribEnum; const Value: TAttrib);
 begin

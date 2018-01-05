@@ -6,8 +6,7 @@ uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
   uTalent;
 
 type
-  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
-    stNeck, stFinger);
+  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand, stNeck, stFinger);
 
 const
   // Player
@@ -31,13 +30,11 @@ const
   AttribPrm = 7;
 
 type
-  TDirectionEnum = (drEast, drWest, drSouth, drNorth, drSouthEast, drSouthWest,
-    drNorthEast, drNorthWest, drOrigin);
+  TDirectionEnum = (drEast, drWest, drSouth, drNorth, drSouthEast, drSouthWest, drNorthEast, drNorthWest, drOrigin);
 
 const
-  Direction: array [TDirectionEnum] of TPoint = ((X: 1; Y: 0), (X: - 1; Y: 0),
-    (X: 0; Y: 1), (X: 0; Y: - 1), (X: 1; Y: 1), (X: - 1; Y: 1), (X: 1; Y: - 1),
-    (X: - 1; Y: - 1), (X: 0; Y: 0));
+  Direction: array [TDirectionEnum] of TPoint = ((X: 1; Y: 0), (X: - 1; Y: 0), (X: 0; Y: 1), (X: 0; Y: - 1), (X: 1;
+    Y: 1), (X: - 1; Y: 1), (X: 1; Y: - 1), (X: - 1; Y: - 1), (X: 0; Y: 0));
 
 type
   TPlayer = class(TCreature)
@@ -142,8 +139,7 @@ begin
   if (FItem.Durability = 0) then
   begin
     Items_Inventory_DeleteItem(Index, FItem);
-    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'),
-      [Items.GetNameThe(FItem)]), clAlarm));
+    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'), [Items.GetNameThe(FItem)]), clAlarm));
   end;
 end;
 
@@ -152,8 +148,8 @@ end;
 // Generate a random background (from Kharne roguelike)
 function TPlayer.GenerateBackground(): string;
 type
-  TConPartsEnum = (cpChild, cpClass, cpParent, cpCredit, cpBackground,
-    cpEyeType, cpEyeColour, cpHairStyle, cpHairColour, cpComplexion);
+  TConPartsEnum = (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType, cpEyeColour, cpHairStyle,
+    cpHairColour, cpComplexion);
 var
   I: TConPartsEnum;
   SL: array [TConPartsEnum] of TStringList;
@@ -165,39 +161,24 @@ begin
   try
     SL[cpChild].DelimitedText := _('"an only child","one of two children",' +
       '"one of many children","the only surviving child"');
-    SL[cpClass].DelimitedText :=
-      _('"lower-class", "middle-class",' + '"upper-class"');
+    SL[cpClass].DelimitedText := _('"lower-class", "middle-class",' + '"upper-class"');
     SL[cpParent].DelimitedText := _('"mercenary","merchant","businessman",' +
       '"craftsman","soldier","templar","priest"');
-    SL[cpBackground].DelimitedText :=
-      _('"contented","peaceful",' + '"troubled","settled","disturbed"');
-    SL[cpCredit].DelimitedText :=
-      _('"a credit to","a disgrace to",' + '"the black sheep of"');
-    SL[cpEyeType].DelimitedText :=
-      _('"dull","unusually piercing",' + '"piercing","striking"');
-    SL[cpEyeColour].DelimitedText :=
-      _('"grey","violet","green","blue",' + '"brown"');
-    SL[cpHairStyle].DelimitedText :=
-      _('"wavy","curly","straight","short",' + '"long"');
-    SL[cpHairColour].DelimitedText :=
-      _('"auburn","blonde","black","dark",' + '"ginger","grey"');
-    SL[cpComplexion].DelimitedText :=
-      _('"an average","a sallow","a fair",' + '"a dark","a light"');
+    SL[cpBackground].DelimitedText := _('"contented","peaceful",' + '"troubled","settled","disturbed"');
+    SL[cpCredit].DelimitedText := _('"a credit to","a disgrace to",' + '"the black sheep of"');
+    SL[cpEyeType].DelimitedText := _('"dull","unusually piercing",' + '"piercing","striking"');
+    SL[cpEyeColour].DelimitedText := _('"grey","violet","green","blue",' + '"brown"');
+    SL[cpHairStyle].DelimitedText := _('"wavy","curly","straight","short",' + '"long"');
+    SL[cpHairColour].DelimitedText := _('"auburn","blonde","black","dark",' + '"ginger","grey"');
+    SL[cpComplexion].DelimitedText := _('"an average","a sallow","a fair",' + '"a dark","a light"');
 
-    Result := Format
-      (Terminal.Colorize
-      (_('You are %s of a %s %s. You had a %s upbringing and you ' +
-      'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.'),
-      'Yellow'), [SL[cpChild][Random(SL[cpChild].Count - 1)],
-      SL[cpClass][Random(SL[cpClass].Count - 1)],
-      SL[cpParent][Random(SL[cpParent].Count - 1)],
-      SL[cpBackground][Random(SL[cpBackground].Count - 1)],
-      SL[cpCredit][Random(SL[cpCredit].Count - 1)],
-      SL[cpEyeType][Random(SL[cpEyeType].Count - 1)],
-      SL[cpEyeColour][Random(SL[cpEyeColour].Count - 1)],
-      SL[cpHairStyle][Random(SL[cpHairStyle].Count - 1)],
-      SL[cpHairColour][Random(SL[cpHairColour].Count - 1)],
-      SL[cpComplexion][Random(SL[cpComplexion].Count - 1)]]);
+    Result := Format(Terminal.Colorize(_('You are %s of a %s %s. You had a %s upbringing and you ' +
+      'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.'), 'Yellow'),
+      [SL[cpChild][Random(SL[cpChild].Count - 1)], SL[cpClass][Random(SL[cpClass].Count - 1)],
+      SL[cpParent][Random(SL[cpParent].Count - 1)], SL[cpBackground][Random(SL[cpBackground].Count - 1)],
+      SL[cpCredit][Random(SL[cpCredit].Count - 1)], SL[cpEyeType][Random(SL[cpEyeType].Count - 1)],
+      SL[cpEyeColour][Random(SL[cpEyeColour].Count - 1)], SL[cpHairStyle][Random(SL[cpHairStyle].Count - 1)],
+      SL[cpHairColour][Random(SL[cpHairColour].Count - 1)], SL[cpComplexion][Random(SL[cpComplexion].Count - 1)]]);
 
   finally
     for I := Low(TConPartsEnum) to High(TConPartsEnum) do
@@ -218,9 +199,7 @@ begin
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
   if (Satiation < StarvingMax) then
-  begin
-    Life := EnsureRange(Life - 1, 0, MaxLife);
-  end
+    Life := Game.EnsureRange(Life - 1, MaxLife)
   else if not Abilities.IsAbility(abDiseased) then
   begin
     V := EnsureRange(100 - Skills.Skill[skHealing].Value, 25, 100);
@@ -229,7 +208,7 @@ begin
       C := Skills.Skill[skHealing].Value;
       if Abilities.IsAbility(abRegen) then
         C := EnsureRange(C * 3, C, UIntMax);
-      Life := EnsureRange(Life + C, 0, MaxLife);
+      Life := Game.EnsureRange(Life + C, MaxLife);
     end;
     V := EnsureRange(100 - Skills.Skill[skConcentration].Value, 25, 100);
     if (Statictics.Get(stTurn) mod V = 0) then
@@ -237,7 +216,7 @@ begin
       C := Skills.Skill[skConcentration].Value;
       if Abilities.IsAbility(abRegen) then
         C := EnsureRange(C * 3, C, UIntMax);
-      Mana := EnsureRange(Mana + C, 0, MaxMana);
+      Mana := Game.EnsureRange(Mana + C, MaxMana);
     end;
   end;
   OnTurn();
@@ -273,13 +252,11 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) and
-    not Abilities.IsAbility(abCursed) then
+  if (Mob.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
     // Attack
-    Dam := EnsureRange(RandomRange(Self.GetDamage.Min, GetDamage.Max + 1),
-      0, UIntMax);
+    Dam := Game.EnsureRange(RandomRange(Self.GetDamage.Min, GetDamage.Max + 1), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Dec(Dam, Dam div 3);
@@ -310,11 +287,10 @@ begin
       Exit;
     end;
     // Attack
-    Mob.Life := EnsureRange(Mob.Life - Dam, 0, Mob.Life);
+    Mob.Life := Game.EnsureRange(Mob.Life - Dam, Mob.Life);
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     // Break weapon
-    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
-    then
+    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
       BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
@@ -377,8 +353,7 @@ var
 begin
   if Self.IsDead then
     Exit;
-  FCount := EnsureRange(Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y),
-    0, ItemMax);
+  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y).InRange(ItemMax);
   for Index := FCount - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
@@ -458,7 +433,7 @@ var
 
 begin
   ClearAttrib();
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -498,17 +473,14 @@ begin
   //
   Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
   //
-  Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value *
-    1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] +
-    Attributes.Attrib[atStr].Prm, 1, AttribMax));
-  Attributes.SetValue(atDex,
-    EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] +
-    Attributes.Attrib[atDex].Prm, 1, AttribMax));
-  Attributes.SetValue(atWil,
-    EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) +
-    FAttrib[atWil] + Attributes.Attrib[atWil].Prm, 1, AttribMax));
-  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value *
-    1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm, 1, AttribMax));
+  Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value * 1.2) +
+    Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] + Attributes.Attrib[atStr].Prm, 1, AttribMax));
+  Attributes.SetValue(atDex, EnsureRange(Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] + Attributes.Attrib
+    [atDex].Prm, 1, AttribMax));
+  Attributes.SetValue(atWil, EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil] +
+    Attributes.Attrib[atWil].Prm, 1, AttribMax));
+  Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] +
+    Attributes.Attrib[atPer].Prm, 1, AttribMax));
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
@@ -524,25 +496,19 @@ begin
     Attributes.SetValue(atPer, Attributes.Attrib[atPer].Value div 3);
   end;
   //
-  Attributes.SetValue(atDV, EnsureRange(Round(Attributes.Attrib[atDex].Value *
-    (DVMax / AttribMax)) + Attributes.Attrib[atDV].Prm, 0, DVMax));
-  Attributes.SetValue(atPV, EnsureRange(Round(Skills.Skill[skToughness].Value /
-    1.4) - 4 + FAttrib[atDef] + Attributes.Attrib[atPV].Prm, 0, PVMax));
-  MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) +
-    Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] +
-    Attributes.Attrib[atMaxLife].Prm;
-  MaxMana := Round(Attributes.Attrib[atWil].Value * 4.2) +
-    Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] +
-    Attributes.Attrib[atMaxMana].Prm;
-  Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) +
-    FAttrib[atVision]);
+  Attributes.SetValue(atDV, Game.EnsureRange(Round(Attributes.Attrib[atDex].Value * (DVMax / AttribMax)) +
+    Attributes.Attrib[atDV].Prm, DVMax));
+  Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAttrib[atDef] +
+    Attributes.Attrib[atPV].Prm, PVMax));
+  MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) +
+    FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm;
+  MaxMana := Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) +
+    FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm;
+  Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
   //
-  Attributes.SetValue(atExtraGold, EnsureRange(FAttrib[atExtraGold], 0,
-    ExtraGoldMax));
-  Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr]
-    .Value div 3, 1, UIntMax - 1),
-    EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2,
-    UIntMax));
+  Attributes.SetValue(atExtraGold, FAttrib[atExtraGold].InRange(ExtraGoldMax));
+  Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr].Value div 3, 1, UIntMax - 1),
+    EnsureRange(FAttrib[atMaxDamage] + Attributes.Attrib[atStr].Value div 2, 2, UIntMax));
   for Attrib := AttrLow to AttrHigh do
     Attributes.SetValue(Attrib, FAttrib[Attrib]);
 end;
@@ -649,8 +615,7 @@ end;
 
 function TPlayer.GetVision: UInt;
 begin
-  Result := EnsureRange((Attributes.Attrib[atVision].Value - Abilities.Ability
-    [abBlinded]) + 3, 0, VisionMax);
+  Result := Game.EnsureRange((Attributes.Attrib[atVision].Value - Abilities.Ability[abBlinded]) + 3, VisionMax);
 end;
 
 function TPlayer.GetSatiationStr: string;
@@ -690,7 +655,7 @@ end;
 
 function TPlayer.GetSatiation: UInt;
 begin
-  Result := EnsureRange(Attributes.Attrib[atSat].Value, 0, EngorgedMax);
+  Result := Attributes.Attrib[atSat].Value.InRange(EngorgedMax);
 end;
 
 procedure TPlayer.Move(Dir: TDirectionEnum);
@@ -700,14 +665,13 @@ begin
   if Look then
   begin
     if Map.InMap(LX + Direction[Dir].X, LY + Direction[Dir].Y) and
-      ((Map.InView(LX + Direction[Dir].X, LY + Direction[Dir].Y) and
-      not Map.GetFog(LX + Direction[Dir].X, LY + Direction[Dir].Y)) or
-      Mode.Wizard) then
+      ((Map.InView(LX + Direction[Dir].X, LY + Direction[Dir].Y) and not Map.GetFog(LX + Direction[Dir].X,
+      LY + Direction[Dir].Y)) or Mode.Wizard) then
     begin
-      LX := Map.EnsureRange(Math.EnsureRange(LX + Direction[Dir].X,
-        X - (View.Width div 2), X + (View.Width div 2 - 1)));
-      LY := Map.EnsureRange(Math.EnsureRange(LY + Direction[Dir].Y,
-        Y - (View.Height div 2), Y + (View.Height div 2 - 1)));
+      LX := Map.EnsureRange(Math.EnsureRange(LX + Direction[Dir].X, X - (View.Width div 2),
+        X + (View.Width div 2 - 1)));
+      LY := Map.EnsureRange(Math.EnsureRange(LY + Direction[Dir].Y, Y - (View.Height div 2),
+        Y + (View.Height div 2 - 1)));
     end;
   end
   else
@@ -716,12 +680,10 @@ begin
       Exit;
     FX := Map.EnsureRange(X + Direction[Dir].X);
     FY := Map.EnsureRange(Y + Direction[Dir].Y);
-    if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Mode.Wizard
-    then
+    if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Mode.Wizard then
       Exit;
     // Stunned or burning
-    if (Self.Abilities.IsAbility(abStunned) or
-      Self.Abilities.IsAbility(abBurning)) then
+    if (Self.Abilities.IsAbility(abStunned) or Self.Abilities.IsAbility(abBurning)) then
     begin
       AddTurn;
       Exit;
@@ -764,8 +726,7 @@ begin
   // Need level
   if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
-    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
-      [FItem.Level]));
+    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'), [FItem.Level]));
     Self.Calc;
     Exit;
   end;
@@ -855,8 +816,7 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
-    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'),
-      [FItem.Level]));
+    MsgLog.Add(Format(_('You can not use this yet (need level %d)!'), [FItem.Level]));
     Self.Calc;
     Exit;
   end;
@@ -901,8 +861,7 @@ begin
   begin
     Value := FItem.Price div 4;
     Items.AddItemToInv(ivGold, Value);
-    MsgLog.Add(Format(_('You sold %s (+%d gold).'),
-      [Items.GetNameThe(FItem), Value]));
+    MsgLog.Add(Format(_('You sold %s (+%d gold).'), [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
 end;
@@ -934,8 +893,7 @@ begin
   FItem := Shops.Shop[Shops.Current].GetItem(Index);
   if (Items_Inventory_DeleteItemAmount(Ord(ivGold), FItem.Price) > 0) then
   begin
-    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [Items.GetNameThe(FItem),
-      FItem.Price]));
+    MsgLog.Add(Format(_('You bought %s (-%d gold).'), [Items.GetNameThe(FItem), FItem.Price]));
     Items_Inventory_AppendItem(FItem);
     Self.Calc;
     // The %s just frowns. Maybe you'll return when you have enough gold?
@@ -969,8 +927,7 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  if (Items.Identify(FItem) and (FItem.Identify > 0) and
-    (Items_Inventory_SetItem(Index, FItem) > 0)) then
+  if (Items.Identify(FItem) and (FItem.Identify > 0) and (Items_Inventory_SetItem(Index, FItem) > 0)) then
   begin
     MsgLog.Add(Format(_('You identified %s.'), [Items.GetNameThe(FItem)]));
     Statictics.Inc(stItIdent);
@@ -998,8 +955,7 @@ begin
       1:
       Inc(FItem.MaxDurability);
       end; }
-    FItem.Durability := Math.EnsureRange(FItem.Durability + Items.Index, 1,
-      FItem.MaxDurability);
+    FItem.Durability := Math.EnsureRange(FItem.Durability + Items.Index, 1, FItem.MaxDurability);
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
     begin
       MsgLog.Add(Format(_('You repaired %s.'), [Items.GetNameThe(FItem)]));
@@ -1032,8 +988,7 @@ begin
       FItem.Durability := FItem.MaxDurability;
       if ((Items_Inventory_DeleteItemAmount(Ord(ivGold), RepairCost) > 0) and
         (Items_Inventory_SetItem(Index, FItem) > 0)) then
-        MsgLog.Add(Format(_('You repaired %s (-%d gold).'),
-          [Items.GetNameThe(FItem), RepairCost]));
+        MsgLog.Add(Format(_('You repaired %s (-%d gold).'), [Items.GetNameThe(FItem), RepairCost]));
       Statictics.Inc(stItRep);
     end;
   end;
@@ -1047,13 +1002,10 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  FItem.Durability := Math.EnsureRange(FItem.Durability - Value, 0, UIntMax);
-  if ((FItem.Durability > 0) and
-    (FItem.Durability < (FItem.MaxDurability div 4))) then
-    MsgLog.Add(Terminal.Colorize
-      (Format(_('%s soon will be totally broken (%d/%d).'),
-      [Items.GetNameThe(FItem), FItem.Durability, FItem.MaxDurability]),
-      clAlarm));
+  FItem.Durability := Game.EnsureRange(FItem.Durability - Value, UIntMax);
+  if ((FItem.Durability > 0) and (FItem.Durability < (FItem.MaxDurability div 4))) then
+    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'), [Items.GetNameThe(FItem),
+      FItem.Durability, FItem.MaxDurability]), clAlarm));
   Items_Inventory_SetItem(Index, FItem);
   RnItem(FItem, Index);
   Self.Calc;
@@ -1061,11 +1013,11 @@ end;
 
 procedure TPlayer.BreakItem(ASlot: TSlotType; Value: UInt = 1);
 var
-  FCount, I: Int;
   FItem: Item;
+  FCount, I: Int;
   FI: TItemEnum;
 begin
-  FCount := EnsureRange(Items_Inventory_GetCount(), 0, ItemMax);
+  FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
@@ -1127,8 +1079,7 @@ begin
   FItem.Amount := ItemAmount;
   Items.AddItemToDungeon(FItem);
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format(_('You drop %s (%dx).'), [Items.GetNameThe(FItem),
-      FItem.Amount]))
+    MsgLog.Add(Format(_('You drop %s (%dx).'), [Items.GetNameThe(FItem), FItem.Amount]))
   else
     MsgLog.Add(Format(_('You drop %s.'), [Items.GetNameThe(FItem)]));
   Scenes.SetScene(scDrop);
@@ -1171,8 +1122,7 @@ begin
   FItem.Amount := ItemAmount;
   Items_Inventory_AppendItem(FItem);
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem),
-      FItem.Amount]))
+    MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem), FItem.Amount]))
   else
     MsgLog.Add(Format(_('You picked up %s.'), [Items.GetNameThe(FItem)]));
   Scenes.SetScene(scItems);
@@ -1201,43 +1151,36 @@ var
 begin
   Terminal.ForegroundColor(clDefault);
   // Info
-  Terminal.Print(Status.Left - 1, Status.Top + 1, ' ' + UI.Icon(icLife, 'Life')
-    + ' ' + Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]), 'Life'));
-  Terminal.Print(Status.Left - 1, Status.Top + 2, ' ' + UI.Icon(icMana, 'Mana')
-    + ' ' + Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]), 'Mana'));
+  Terminal.Print(Status.Left - 1, Status.Top + 1, ' ' + UI.Icon(icLife, 'Life') + ' ' +
+    Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]), 'Life'));
+  Terminal.Print(Status.Left - 1, Status.Top + 2, ' ' + UI.Icon(icMana, 'Mana') + ' ' +
+    Terminal.Colorize(Format(F, [_('Mana'), Mana, MaxMana]), 'Mana'));
   // Bars
-  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Life, MaxLife,
-    clLife, clDarkGray);
-  UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16, Mana, MaxMana,
-    clMana, clDarkGray);
+  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Life, MaxLife, clLife, clDarkGray);
+  UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16, Mana, MaxMana, clMana, clDarkGray);
   case Game.ShowEffects of
     False:
       begin
-        Terminal.Print(Status.Left - 1, Status.Top + 3,
-          ' ' + Format('%s%d %s%d %s%d-%d %s%d %s', [UI.Icon(icFlag),
-          Statictics.Get(stTurn), UI.Icon(icGold), Gold, UI.Icon(icSword),
-          GetDamage.Min, GetDamage.Max, UI.Icon(icShield),
-          Attributes.Attrib[atPV].Value, GetSatiationStr()]));
-        Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
-          Status.Width);
+        Terminal.Print(Status.Left - 1, Status.Top + 3, ' ' + Format('%s%d %s%d %s%d-%d %s%d %s',
+          [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold), Gold, UI.Icon(icSword), GetDamage.Min,
+          GetDamage.Max, UI.Icon(icShield), Attributes.Attrib[atPV].Value, GetSatiationStr()]));
+        Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5, Status.Width);
       end;
   else
     begin
       S := '';
       for I := Low(TAbilityEnum) to High(TAbilityEnum) do
         if Abilities.IsAbility(I) then
-          S := S + Terminal.Colorize(Format(' %s (%d)', [Abilities.GetName(I),
-            Abilities.Ability[I]]), Abilities.GetColor(I));
-      Terminal.Print(Status.Left, Status.Top + 3, Log.Width, 2, S,
-        TK_ALIGN_TOP);
+          S := S + Terminal.Colorize(Format(' %s (%d)', [Abilities.GetName(I), Abilities.Ability[I]]),
+            Abilities.GetColor(I));
+      Terminal.Print(Status.Left, Status.Top + 3, Log.Width, 2, S, TK_ALIGN_TOP);
     end;
   end;
 end;
 
 procedure TPlayer.RenderWeather(const AX, AY, AWidth: UInt);
 var
-  SunOrMoonGlyphColor, SunOrMoonGlyph, SunOrMoon, SkyColor, SkyBef,
-    SkyAft: string;
+  SunOrMoonGlyphColor, SunOrMoonGlyph, SunOrMoon, SkyColor, SkyBef, SkyAft: string;
   Left: UInt;
 
   procedure Add(const ASunOrMoonGlyph, ASunOrMoonGlyphColor, ASkyColor: string);
@@ -1281,22 +1224,19 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format(_('%s: %s.'), [_('Difficulty'),
-      GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format(_('%s: %s.'), [_('Difficulty'), GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(AReason);
     if IsDead then
       SL.Append(Format(_('He scored %d points.'), [Statictics.Get(stScore)]))
     else
-      SL.Append(Format(_('He has scored %d points so far.'),
-        [Statictics.Get(stScore)]));
+      SL.Append(Format(_('He has scored %d points so far.'), [Statictics.Get(stScore)]));
     SL.Append('');
     SL.Append(Format(FT, [_('Screenshot')]));
     SL.Append(Game.Screenshot);
     SL.Append(Format(FT, [_('Defeated foes')]));
     SL.Append('');
-    SL.Append(Format('Total: %d creatures defeated.',
-      [Statictics.Get(stKills)]));
+    SL.Append(Format('Total: %d creatures defeated.', [Statictics.Get(stKills)]));
     SL.Append('');
     SL.Append(Format(FT, [_('Last messages')]));
     SL.Append('');
@@ -1335,8 +1275,7 @@ begin
     Attributes.Modify(atExp, -LevelExpMax);
     Attributes.Modify(atLev, 1);
     // You leveled up! You are now level %d!
-    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
-      [Attributes.Attrib[atLev].Value]), clAlarm));
+    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Attrib[atLev].Value]), clAlarm));
     if (Attributes.Attrib[atLev].Value mod 2 = 1) then
     begin
       Talents.IsPoint := True;
@@ -1345,8 +1284,7 @@ begin
     end
     else
       Talents.IsPoint := False;
-    Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib
-      [atLev].Value);
+    Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib[atLev].Value);
   end;
 end;
 
@@ -1354,8 +1292,7 @@ procedure TPlayer.Wait;
 begin
   if not Map.GetVis(Map.Current) then
   begin
-    MsgLog.Add(Terminal.Colorize
-      (Format(_('You have opened a new territory: %s.'), [Map.Name]), clAlarm));
+    MsgLog.Add(Terminal.Colorize(Format(_('You have opened a new territory: %s.'), [Map.Name]), clAlarm));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
       Statictics.Inc(stScore, Ord(Map.Current) * 15);
@@ -1581,10 +1518,8 @@ begin
   // Teleportation
   if (efTeleportation in Effects) then
   begin
-    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
-      .Value + Value);
-    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
-      .Value + Value);
+    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
+    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));
@@ -1593,8 +1528,7 @@ begin
   // Town Portal
   if (efTownPortal in Effects) then
   begin
-    Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap,
-      Game.PortalTile);
+    Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap, Game.PortalTile);
     if ((X = Game.Spawn.X) and (Y = Game.Spawn.Y)) then
       Exit;
     Game.PortalTile := Map.GetTileEnum(X, Y, Map.Current);
@@ -1623,8 +1557,7 @@ begin
     if Abilities.IsAbility(abPoisoned) then
     begin
       V := Self.Skills.Skill[skHealing].Value + Value;
-      Abilities.Ability[abPoisoned] :=
-        Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0, UIntMax);
+      Abilities.Ability[abPoisoned] := Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0, UIntMax);
       Self.Skills.DoSkill(skHealing);
       if Abilities.IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))

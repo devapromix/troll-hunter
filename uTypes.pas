@@ -3,7 +3,7 @@ unit uTypes;
 interface
 
 type
-  Int = System.Integer;
+  Int = System.NativeInt;
   UInt = System.Word;
 
 const

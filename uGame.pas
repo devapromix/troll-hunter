@@ -111,8 +111,8 @@ type
   TSpawn = class(TEntity);
 
 type
-  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apFlask, apScroll,
-    apKey, apPlant, apFullscreen, apHdLevOfItem, apShPrice);
+  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apFlask,
+    apScroll, apKey, apPlant, apFullscreen, apHdLevOfItem, apShPrice);
 
 type
   TGame = class(TObject)
@@ -158,6 +158,7 @@ type
     function GetCursor: string;
     function IfThen(AValue: Boolean; const ATrue: string;
       const AFalse: string): string;
+    function EnsureRange(const AValue, AMax: Int): Int;
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
     property Language: TLanguage read FLanguage;
@@ -169,8 +170,8 @@ var
 
 implementation
 
-uses SysUtils, Dialogs, uPlayer, uMsgLog, uScenes,
-  BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook;
+uses Math, SysUtils, Dialogs, uPlayer, uMsgLog, uScenes,
+  BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook, uHelpers;
 
 { TGame }
 
@@ -223,6 +224,11 @@ begin
   FreeAndNil(FPortal);
   FreeAndNil(FSpawn);
   inherited;
+end;
+
+function TGame.EnsureRange(const AValue, AMax: Int): Int;
+begin
+  Result := AValue.InRange(AMax);
 end;
 
 function TGame.IfThen(AValue: Boolean; const ATrue: string;

@@ -199,7 +199,7 @@ procedure TShops.Render;
 var
   I, C: Int;
 begin
-  C := EnsureRange(Shops.Shop[Shops.Current].Count, 0, ItemMax);
+  C := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
   for I := 0 to C - 1 do
     Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True,
       True, ptBuy);

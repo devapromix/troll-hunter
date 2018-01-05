@@ -56,10 +56,11 @@ procedure Items_Dungeon_MapClearXY(MapID: Int; AX, AY: Int); stdcall;
 var
   I: Int;
 begin
-  if HasEmpty(MapItems) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
   for I := 0 to Length(MapItems) - 1 do
     if HasItem(MapItems, I, MapID, AX, AY) then
-       DelItem(MapItems, I);
+      DelItem(MapItems, I);
 end;
 
 function Items_Dungeon_GetCount(): Int; stdcall;
@@ -82,7 +83,8 @@ var
   I: Int;
 begin
   Result := 0;
-  if HasEmpty(MapItems) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
   for I := 0 to Length(MapItems) - 1 do
     if HasItem(MapItems, I, MapID, AX, AY) then
       Inc(Result);
@@ -113,11 +115,11 @@ var
   I: Int;
 begin
   Result := 0;
-  if HasEmpty(MapItems) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
   for I := 0 to Length(MapItems) - 1 do
-    if HasItem(MapItems, I, MapID, AX, AY)
-      and (MapItems[I].ItemID = ItemID) then
-        Inc(Result);
+    if HasItem(MapItems, I, MapID, AX, AY) and (MapItems[I].ItemID = ItemID) then
+      Inc(Result);
 end;
 
 function Items_Dungeon_SetItem(Index: Int; AItem: Item): Int; stdcall;
@@ -140,11 +142,15 @@ var
   I: Int;
 begin
   Result := IntFalse;
-  if HasEmpty(MapItems) then Exit;
-  if not IndexInRange(MapItems, Index) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
+  if not IndexInRange(MapItems, Index) then
+    Exit;
   I := GlobalIndex(MapItems, MapID, Index);
-  if (I < 0) then Exit;
-  if (AItem.Amount <= 0) and (Items_Dungeon_DeleteItem(Index, AItem) = IntTrue) then Exit;
+  if (I < 0) then
+    Exit;
+  if (AItem.Amount <= 0) and (Items_Dungeon_DeleteItem(Index, AItem) = IntTrue) then
+    Exit;
   Result := Items_Dungeon_SetItem(I, AItem);
 end;
 
@@ -153,12 +159,16 @@ var
   I: Int;
 begin
   Items_Clear_Item(Result);
-  if HasEmpty(MapItems) then Exit;
-  if not IndexInRange(MapItems, Index) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
+  if not IndexInRange(MapItems, Index) then
+    Exit;
   I := GlobalIndex(MapItems, MapID, Index);
-  if (I < 0) then Exit;
+  if (I < 0) then
+    Exit;
   Result := Items_Dungeon_GetItem(I);
-  if (Result.Amount < 0) then Exit;
+  if (Result.Amount < 0) then
+    Exit;
 end;
 
 function Items_Dungeon_SetMapItemXY(MapID, Index: Int; AX, AY: Int; AItem: Item): Int; stdcall;
@@ -166,11 +176,15 @@ var
   I: Int;
 begin
   Result := IntFalse;
-  if HasEmpty(MapItems) then Exit;
-  if not IndexInRange(MapItems, Index) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
+  if not IndexInRange(MapItems, Index) then
+    Exit;
   I := GlobalIndex(MapItems, MapID, Index, AX, AY);
-  if (I < 0) then Exit;
-  if (AItem.Amount <= 0) and (Items_Dungeon_DeleteMapItemXY(MapID, Index, AX, AY, AItem) = IntTrue) then Exit;
+  if (I < 0) then
+    Exit;
+  if (AItem.Amount <= 0) and (Items_Dungeon_DeleteMapItemXY(MapID, Index, AX, AY, AItem) = IntTrue) then
+    Exit;
   Result := Items_Dungeon_SetItem(I, AItem);
 end;
 
@@ -179,12 +193,16 @@ var
   I: Int;
 begin
   Items_Clear_Item(Result);
-  if HasEmpty(MapItems) then Exit;
-  if not IndexInRange(MapItems, Index) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
+  if not IndexInRange(MapItems, Index) then
+    Exit;
   I := GlobalIndex(MapItems, MapID, Index, AX, AY);
-  if (I < 0) then Exit;
+  if (I < 0) then
+    Exit;
   Result := Items_Dungeon_GetItem(I);
-  if (Result.Amount < 0) then Exit;
+  if (Result.Amount < 0) then
+    Exit;
 end;
 
 procedure Items_Dungeon_AppendItem(AItem: Item); stdcall;
@@ -199,7 +217,8 @@ var
     while (A > 0) do
     begin
       J := AItem.Stack;
-      if (A - J < 0) then J := A;
+      if (A - J < 0) then
+        J := A;
       Dec(A, J);
       AItem.Amount := J;
       AddItem(MapItems, AItem);
@@ -214,13 +233,13 @@ begin
       A := AItem.Amount;
       if not HasEmpty(MapItems) then
         for I := 0 to Length(MapItems) - 1 do
-          if HasItem(MapItems, I, AItem.MapID, AItem.X, AItem.Y)
-            and (MapItems[I].ItemID = AItem.ItemID) then
+          if HasItem(MapItems, I, AItem.MapID, AItem.X, AItem.Y) and (MapItems[I].ItemID = AItem.ItemID) then
           begin
             if (MapItems[I].Amount < AItem.Stack) then
             begin
               J := AItem.Stack - MapItems[I].Amount;
-              if (A - J < 0) then J := A;
+              if (A - J < 0) then
+                J := A;
               Dec(A, J);
               Inc(MapItems[I].Amount, J);
             end;
@@ -228,13 +247,18 @@ begin
       while (A > 0) do
       begin
         J := AItem.Stack;
-        if (A - J < 0) then J := A;
+        if (A - J < 0) then
+          J := A;
         Dec(A, J);
         AItem.Amount := J;
         AddItem(MapItems, AItem);
       end;
-    end else Add(AItem);
-  end else Add(AItem);
+    end
+    else
+      Add(AItem);
+  end
+  else
+    Add(AItem);
 end;
 
 function Items_Dungeon_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
@@ -249,10 +273,12 @@ end;
 
 function Items_Dungeon_DeleteMapItem(MapID: Int; Index: Int; var AItem: Item): Int; stdcall;
 var
-  I, P: Int;
+  I: Int;
+  P: Int;
 begin
   Result := IntFalse;
-  if not IndexInRange(MapItems, Index)then Exit;
+  if not IndexInRange(MapItems, Index) then
+    Exit;
   P := 0;
   for I := 0 to Length(MapItems) - 1 do
     if HasItem(MapItems, I, MapID) then
@@ -269,10 +295,12 @@ end;
 
 function Items_Dungeon_DeleteMapItemXY(MapID: Int; Index, AX, AY: Int; var AItem: Item): Int; stdcall;
 var
-  I, P: Int;
+  I: Int;
+  P: Int;
 begin
   Result := IntFalse;
-  if not IndexInRange(MapItems, Index)then Exit;
+  if not IndexInRange(MapItems, Index) then
+    Exit;
   P := 0;
   for I := 0 to Length(MapItems) - 1 do
     if HasItem(MapItems, I, MapID, AX, AY) then
@@ -292,11 +320,11 @@ var
   I: Int;
 begin
   Result := 0;
-  if HasEmpty(MapItems) then Exit;
+  if HasEmpty(MapItems) then
+    Exit;
   for I := 0 to Length(MapItems) - 1 do
-    if HasItem(MapItems, I, MapID, AX, AY)
-      and (MapItems[I].ItemID = ItemID) then
-        Inc(Result, MapItems[I].Amount);
+    if HasItem(MapItems, I, MapID, AX, AY) and (MapItems[I].ItemID = ItemID) then
+      Inc(Result, MapItems[I].Amount);
 end;
 
 end.

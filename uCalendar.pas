@@ -58,8 +58,7 @@ end;
 
 function TCalendar.DaysPerMonth(AMonth: UInt): UInt;
 const
-  DaysInMonth: array [1 .. 12] of UInt = (31, 28, 31, 30, 31, 30, 31, 31, 30,
-    31, 30, 31);
+  DaysInMonth: array [1 .. 12] of UInt = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 begin
   Result := DaysInMonth[AMonth];
 end;
@@ -71,17 +70,15 @@ end;
 
 function TCalendar.GetDayName(): string;
 const
-  DayName: array [1 .. 7] of string = ('Monday', 'Tuesday', 'Wednesday',
-    'Thursday', 'Friday', 'Saturday', 'Sunday');
+  DayName: array [1 .. 7] of string = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 begin
   Result := DayName[DayOfWeek];
 end;
 
 function TCalendar.GetMonthName(AMonth: UInt): string;
 const
-  MonthName: array [1 .. 12] of string = ('January', 'February', 'March',
-    'April', 'May', 'June', 'July', 'August', 'September', 'October',
-    'November', 'December');
+  MonthName: array [1 .. 12] of string = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December');
 begin
   if (AMonth = 0) then
     AMonth := FMonth;
@@ -108,13 +105,17 @@ begin
 end;
 
 procedure TCalendar.OnDay();
+
+  function Re(const AValue, AMaxValue: UInt): UInt;
+  begin
+    Result := AValue.InRange(AMaxValue);
+  end;
+
 begin
   // Replenish Life
-  Player.Life := Player.Life + Player.Attributes.Attrib[atReLife].Value.InRange
-    (ReLifeMax).InRange(Player.MaxLife);
+  Player.Life := Re(Player.Life + Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax), Player.MaxLife);
   // Regenerate Mana
-  Player.Mana := Player.Mana + Player.Attributes.Attrib[atReMana].Value.InRange
-    (ReManaMax).InRange(Player.MaxMana);
+  Player.Mana := Re(Player.Mana + Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax), Player.MaxMana);
 end;
 
 procedure TCalendar.OnHour();
