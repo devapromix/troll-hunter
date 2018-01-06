@@ -11,21 +11,18 @@ const
   ExtraGoldMax = 200;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-    efCraftStr, efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal,
-    efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics,
-    efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe,
-    efPrmSpear, efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow,
-    ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV, efPrmStr,
-    efPrmDex, efPrmWil, efPrmPer, efRepair);
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efCraftStr, efCraftDex, efCraftWil, efCraftPer,
+    efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge,
+    efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, efPrmStaff, efPrmWand, efPrmDagger,
+    efPrmBow, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer,
+    efRepair);
 
 const
   CraftEffLow = efCraftStr;
   CraftEffHigh = efCraftAtr;
 
 const
-  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength',
-    'Dexterity', 'Willpower', 'Perception');
+  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength', 'Dexterity', 'Willpower', 'Perception');
 
 type
   TEffects = set of TEffect;
@@ -56,7 +53,7 @@ type
     function GetDamage: TDamage;
     function GetRealDamage(ADamage, APV: UInt): UInt;
     function IsDead: Boolean;
-    procedure OnTurn;
+    function OnTurn: Boolean;
     property Abilities: TAbilities read FAbilities write FAbilities;
     property Attributes: TAttributes read FAttributes write FAttributes;
     procedure Fill;
@@ -123,17 +120,20 @@ begin
   Attributes.SetValue(atMaxDamage, AMax);
 end;
 
-procedure TCreature.OnTurn;
+function TCreature.OnTurn: Boolean;
 var
   I: TAbilityEnum;
   Value: UInt;
 begin
+  Result := False;
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
     if (Abilities.Ability[I] > 0) then
     begin
       if (I in [abSleeping]) then
         Continue;
-      Abilities.Ability[I] := Abilities.Ability[I] - 1;
+      Abilities.Modify(I, -1);
+      if (Abilities.Ability[I] = 0) then
+        Result := True;
       if (I in [abPoisoned, abBurning]) and not IsDead then
       begin
         case I of

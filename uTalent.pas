@@ -162,8 +162,8 @@ end;
 
 procedure TTalents.DoTalent(Key: UInt);
 var
-  T: TTalentEnum;
   K: UInt;
+  T: TTalentEnum;
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do

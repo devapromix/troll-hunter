@@ -102,10 +102,10 @@ const
     Damage: (Min: 2; Max: 3;); Color: $FF9955FF; NPCType: []; Abilities: [];),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 10; Level: 2; PV: 5; DV: 8; MaxCount: 1;
-    Damage: (Min: 4; Max: 5;); Color: $FF444444; NPCType: []; Abilities: [abStunned, abAfraid];),
+    Damage: (Min: 4; Max: 5;); Color: $FF444444; NPCType: []; Abilities: [abStunned, abAfraid, abArmor_Reduction];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDarkWood]; MaxLife: 14; Level: 2; PV: 5; DV: 9; MaxCount: 1;
-    Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA; NPCType: []; Abilities: [abStunned, abAfraid];),
+    Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA; NPCType: []; Abilities: [abStunned, abAfraid, abArmor_Reduction];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDarkWood]; MaxLife: 18; Level: 2; PV: 3; DV: 9; MaxCount: 1;
     Damage: (Min: 1; Max: 3;); Color: $FF339955; NPCType: []; Abilities: [abPoisoned, abDiseased, abDrunk];),
@@ -142,7 +142,7 @@ const
     Damage: (Min: 3; Max: 5;); Color: $FF777700; NPCType: []; Abilities: [abBlinded, abDiseased, abAfraid];),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGrayCave]; MaxLife: 42; Level: 5; PV: 7; DV: 18; MaxCount: 1;
-    Damage: (Min: 3; Max: 5;); Color: $FF7777CC; NPCType: []; Abilities: [abPoisoned];),
+    Damage: (Min: 3; Max: 5;); Color: $FF7777CC; NPCType: []; Abilities: [abPoisoned, abArmor_Reduction];),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGrayCave]; MaxLife: 43; Level: 5; PV: 9; DV: 20; MaxCount: 1;
     Damage: (Min: 4; Max: 5;); Color: $FF299AFF; NPCType: []; Abilities: [abBurning, abBlinded];),
@@ -178,7 +178,7 @@ const
     Damage: (Min: 7; Max: 8;); Color: $FF992233; NPCType: []; Abilities: [abBurning, abCursed];),
     // Faun
     (Symbol: 'f'; Boss: False; Maps: [deDeepCave]; MaxLife: 73; Level: 7; PV: 10; DV: 30; MaxCount: 1;
-    Damage: (Min: 7; Max: 9;); Color: $FF992233; NPCType: []; Abilities: [abBlinded];),
+    Damage: (Min: 7; Max: 9;); Color: $FF992233; NPCType: []; Abilities: [abBlinded, abArmor_Reduction];),
 
     // == Blood Cave == //
 
@@ -219,7 +219,8 @@ const
     Damage: (Min: 11; Max: 15;); Color: $FF445544; NPCType: []; Abilities: [abBloodlust];),
     // Orc Warlord
     (Symbol: 'o'; Boss: False; Maps: [deBloodCave]; MaxLife: 90; Level: 9; PV: 30; DV: 40; MaxCount: 3;
-    Damage: (Min: 11; Max: 15;); Color: $FF445544; NPCType: []; Abilities: [abBurning, abBloodlust];),
+    Damage: (Min: 11; Max: 15;); Color: $FF445544; NPCType: [];
+    Abilities: [abBurning, abBloodlust, abArmor_Reduction];),
 
     // == Drom == //
 
@@ -239,7 +240,7 @@ const
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10; PV: 45; DV: 45; MaxCount: 3;
     Damage: (Min: 14; Max: 18;); Color: $FF773333; NPCType: [];
-    Abilities: [abBurning, abBloodlust, abCursed, abDiseased];),
+    Abilities: [abBurning, abBloodlust, abCursed, abDiseased, abArmor_Reduction];),
     // Vulture
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 50; DV: 45; MaxCount: 2;
     Damage: (Min: 15; Max: 19;); Color: $FFAA3333; NPCType: [];
@@ -256,7 +257,8 @@ const
     Abilities: [abBurning, abBlinded, abCursed, abDiseased, abAfraid];),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 20; DV: 48; MaxCount: 1;
-    Damage: (Min: 22; Max: 25;); Color: $FF223333; NPCType: []; Abilities: [abBlinded, abCursed, abAfraid, abDrunk];),
+    Damage: (Min: 22; Max: 25;); Color: $FF223333; NPCType: [];
+    Abilities: [abBlinded, abCursed, abAfraid, abDrunk, abArmor_Reduction];),
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 10; DV: 49; MaxCount: 1;
     Damage: (Min: 23; Max: 30;); Color: $FF223333; NPCType: []; Abilities: [abBurning, abBlinded];),
@@ -280,7 +282,7 @@ const
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGrayCave]; MaxLife: 60; Level: 5; PV: 60; DV: 32; MaxCount: 1;
     Damage: (Min: 10; Max: 15;); Color: $FFAA77CC; NPCType: [];
-    Abilities: [abStunned, abBurning, abBloodlust, abCursed];),
+    Abilities: [abStunned, abBurning, abBloodlust, abCursed, abArmor_Reduction];),
     // Swamp Worm
     (Symbol: 'w'; Boss: True; Maps: [deGrayCave]; MaxLife: 63; Level: 5; PV: 80; DV: 35; MaxCount: 1;
     Damage: (Min: 12; Max: 18;); Color: $FF6699BB; NPCType: [];
@@ -306,10 +308,12 @@ const
     Damage: (Min: 24; Max: 25;); Color: $FF22FF33; NPCType: []; Abilities: [abStunned, abAfraid];),
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBloodCave]; MaxLife: 100; Level: 10; PV: 190; DV: 57; MaxCount: 1;
-    Damage: (Min: 25; Max: 30;); Color: $FF223333; NPCType: []; Abilities: [abStunned, abBloodlust, abAfraid];),
+    Damage: (Min: 25; Max: 30;); Color: $FF223333; NPCType: [];
+    Abilities: [abStunned, abBloodlust, abAfraid, abArmor_Reduction];),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15; PV: 200; DV: 60; MaxCount: 1;
-    Damage: (Min: 50; Max: 75;); Color: $FFDD7711; NPCType: []; Abilities: [abBurning, abBloodlust, abAfraid];),
+    Damage: (Min: 50; Max: 75;); Color: $FFDD7711; NPCType: [];
+    Abilities: [abBurning, abBloodlust, abAfraid, abArmor_Reduction];),
 
     // == NPC == //
 
@@ -536,7 +540,7 @@ begin
     if (abDrunk in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Math.RandomRange(10, L + 10);
+      Dam := Math.RandomRange(7, L + 10);
       Player.Abilities.Modify(abBlinded, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('You are drunk (%d).'), Abilities.GetColor(abDrunk)), [Dam]));
       Game.ShowEffects := True;
@@ -603,6 +607,17 @@ begin
       Player.Abilities.Modify(abAfraid, Dam);
       MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'), Abilities.GetColor(abAfraid)), [The, Dam]));
       Game.ShowEffects := True;
+      Exit;
+    end;
+    // Armor Reduction (10%)
+    if (abArmor_Reduction in MobBase[TMobEnum(ID)].Abilities) and (Math.RandomRange(0, 10) = 0) then
+    begin
+      L := MobBase[TMobEnum(ID)].Level;
+      Dam := Game.EnsureRange(Math.RandomRange(L * 3, L * 7), UIntMax);
+      Player.Abilities.Modify(abArmor_Reduction, Dam);
+      //MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'), Abilities.GetColor(abArmor_Reduction)), [The, Dam]));
+      Game.ShowEffects := True;
+      Player.Calc;
       Exit;
     end;
     // Cursed (10%)

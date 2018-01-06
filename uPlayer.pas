@@ -212,7 +212,7 @@ begin
       Attributes.Modify(atMana, C);
     end;
   end;
-  OnTurn();
+  if OnTurn() then Calc;
   if IsDead then
     Defeat;
   Mobs.Process;
@@ -488,15 +488,23 @@ begin
   begin
     Attributes.SetValue(atPer, Attributes.Attrib[atPer].Value div 3);
   end;
-  //
+  // DV
   Attributes.SetValue(atDV, Game.EnsureRange(Round(Attributes.Attrib[atDex].Value * (DVMax / AttribMax)) +
     Attributes.Attrib[atDV].Prm, DVMax));
+  // PV
   Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAttrib[atDef] +
     Attributes.Attrib[atPV].Prm, PVMax));
+  if Abilities.IsAbility(abArmor_Reduction) then
+  begin
+    Attributes.SetValue(atPV, Attributes.Attrib[atPV].Value div 2);
+  end;
+  // Life
   Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) +
     Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
+  // Mana
   Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) +
     Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
+  // Vision
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
   //
   Attributes.SetValue(atExtraGold, FAttrib[atExtraGold].InRange(ExtraGoldMax));

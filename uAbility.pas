@@ -5,8 +5,8 @@ interface
 uses uTypes;
 
 type
-  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
-    abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid);
+  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen, abSleeping, abBloodlust, abCursed, abDrunk,
+    abDiseased, abWeak, abAfraid, abArmor_Reduction);
 
 type
   TSetOfAbility = set of TAbilityEnum;
@@ -36,9 +36,8 @@ uses SysUtils, TypInfo;
 { TAbility }
 
 const
-  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',
-    'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
-    'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green');
+  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White', 'Dark Yellow', 'Light Red', 'Lighter Red',
+    'Yellow', 'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green', 'Light Yellow');
 
 procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin
@@ -57,12 +56,16 @@ constructor TAbilities.Create;
 var
   I: TAbilityEnum;
   P: Pointer;
+  S: string;
 begin
   Self.Clear;
   P := TypeInfo(TAbilityEnum);
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    FAbilityName[I] := StringReplace(GetEnumName(P, Ord(I)), 'ab', '',
-      [rfReplaceAll]);
+  begin
+    S := StringReplace(GetEnumName(P, Ord(I)), 'ab', '', [rfReplaceAll]);
+    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
+    FAbilityName[I] := S;
+  end;
 end;
 
 destructor TAbilities.Destroy;
