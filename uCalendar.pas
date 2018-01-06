@@ -105,15 +105,9 @@ begin
 end;
 
 procedure TCalendar.OnDay();
-
-  function Re(const AValue, AMaxValue: UInt): UInt;
-  begin
-    Result := AValue.InRange(AMaxValue);
-  end;
-
 begin
   // Replenish Life
-  Player.Life := Re(Player.Life + Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax), Player.MaxLife);
+  Player.Attributes.Modify(atLife, Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax));
   // Regenerate Mana
   Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax));
 end;

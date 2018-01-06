@@ -428,8 +428,8 @@ begin
   Boss := False;
   Alive := True;
   Force := fcNPC;
-  MaxLife := 100;
-  Life := MaxLife;
+  Attributes.SetValue(atMaxLife, 100);
+  Self.Fill;
 end;
 
 function ChMapTile(AMobID, AX, AY: UInt; AZ: TMapEnum): Boolean;
@@ -477,9 +477,9 @@ begin
   // Life
   V := Game.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss, (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25,
     0), UIntMax);
-  MaxLife := Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V, MobBase[TMobEnum(ID)].MaxLife +
-    (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level) + V);
-  Life := MaxLife;
+  Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V, MobBase[TMobEnum(ID)].MaxLife +
+    (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level) + V));
+  Self.Fill;
   // DV
   V := MobBase[TMobEnum(ID)].DV + (Ord(Game.Difficulty) * 5);
   Attributes.SetValue(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10), 5, DVMax - 10));
@@ -642,11 +642,11 @@ begin
       Exit;
     end;
     // Damage
-    Player.Life := Game.EnsureRange(Player.Life - Dam, Player.Life);
+    Player.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
     if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)) then
       Player.BreakItem();
-    if (Player.Life = 0) then
+    if Player.IsDead then
       Player.Defeat(Mobs.GetName(TMobEnum(ID)));
   end
   else
@@ -681,7 +681,7 @@ begin
   // Mana and Life After Each Kill
   V := Player.Attributes.Attrib[atLifeAfEachKill].Value.InRange(LifeAEKMax);
   if (V > 0) then
-    Player.Life := Game.EnsureRange(Player.Life + V, Player.MaxLife);
+    Player.Attributes.Modify(atLife, V);
   V := Player.Attributes.Attrib[atManaAfEachKill].Value.InRange(ManaAEKMax);
   if (V > 0) then
     Player.Attributes.Modify(atMana, V);
@@ -767,7 +767,7 @@ begin
   else
     Self.Walk(X, Y, Player.X, Player.Y);
   OnTurn();
-  if (Self.Life = 0) then
+  if Self.IsDead then
     Self.Defeat;
 end;
 

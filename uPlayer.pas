@@ -86,7 +86,6 @@ type
     procedure Move(Dir: TDirectionEnum);
     procedure RenderInfo;
     procedure Calc;
-    procedure Fill;
     procedure Wait;
     procedure Clear();
     procedure AddTurn;
@@ -195,7 +194,7 @@ begin
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
   if (Satiation < StarvingMax) then
-    Life := Game.EnsureRange(Life - 1, MaxLife)
+    Attributes.Modify(atLife, -1)
   else if not Abilities.IsAbility(abDiseased) then
   begin
     V := EnsureRange(100 - Skills.Skill[skHealing].Value, 25, 100);
@@ -204,7 +203,7 @@ begin
       C := Skills.Skill[skHealing].Value;
       if Abilities.IsAbility(abRegen) then
         C := EnsureRange(C * 3, C, UIntMax);
-      Life := Game.EnsureRange(Life + C, MaxLife);
+      Attributes.Modify(atLife, C);
     end;
     V := EnsureRange(100 - Skills.Skill[skConcentration].Value, 25, 100);
     if (Statictics.Get(stTurn) mod V = 0) then
@@ -216,8 +215,8 @@ begin
     end;
   end;
   OnTurn();
-  if (Life = 0) then
-    Self.Defeat;
+  if IsDead then
+    Defeat;
   Mobs.Process;
 end;
 
@@ -283,7 +282,7 @@ begin
       Exit;
     end;
     // Attack
-    Mob.Life := Game.EnsureRange(Mob.Life - Dam, Mob.Life);
+    Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
@@ -333,7 +332,7 @@ begin
         end;
     end;
     // Victory
-    if (Mob.Life = 0) then
+    if Mob.IsDead then
       Mob.Defeat;
   end
   else
@@ -496,8 +495,8 @@ begin
     Attributes.Attrib[atDV].Prm, DVMax));
   Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAttrib[atDef] +
     Attributes.Attrib[atPV].Prm, PVMax));
-  MaxLife := Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) +
-    FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm;
+  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) +
+    Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
   Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) +
     Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
@@ -586,13 +585,6 @@ begin
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
   NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
   Scenes.SetScene(scDialog);
-end;
-
-procedure TPlayer.Fill;
-begin
-  Life := MaxLife;
-  Attributes.SetValue(atMana, atMaxMana);
-  // Mana := MaxMana;
 end;
 
 procedure TPlayer.GenNPCText;
@@ -903,12 +895,12 @@ procedure TPlayer.ReceiveHealing;
 var
   Cost: UInt;
 begin
-  Cost := Round((MaxLife - Life) * 1.6);
+  Cost := Round((Attributes.Attrib[atMaxLife].Value - Attributes.Attrib[atLife].Value) * 1.6);
   if (Self.Gold >= Cost) then
   begin
     if (Items_Inventory_DeleteItemAmount(Ord(ivGold), Cost) > 0) then
     begin
-      Life := MaxLife;
+      Attributes.SetValue(atLife, atMaxLife);
       MsgLog.Add(Format(_('You feel better (-%d gold).'), [Cost]));
     end;
   end
@@ -1128,7 +1120,7 @@ end;
 
 procedure TPlayer.Render(AX, AY: UInt);
 begin
-  if (Self.Life = 0) then
+  if IsDead then
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
   begin
@@ -1149,12 +1141,12 @@ begin
   Terminal.ForegroundColor(clDefault);
   // Info
   Terminal.Print(Status.Left - 1, Status.Top + 1, ' ' + UI.Icon(icLife, 'Life') + ' ' +
-    Terminal.Colorize(Format(F, [_('Life'), Life, MaxLife]), 'Life'));
+    Terminal.Colorize(Format(F, [_('Life'), Attributes.Attrib[atLife].Value, Attributes.Attrib[atMaxLife].Value]), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2, ' ' + UI.Icon(icMana, 'Mana') + ' ' +
     Terminal.Colorize(Format(F, [_('Mana'), Self.Attributes.Attrib[atMana].Value,
     Self.Attributes.Attrib[atMaxMana].Value]), 'Mana'));
   // Bars
-  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Life, MaxLife, clLife, clDarkGray);
+  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Attributes.Attrib[atLife].Value, Attributes.Attrib[atMaxLife].Value, clLife, clDarkGray);
   UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16, Self.Attributes.Attrib[atMana].Value,
     Self.Attributes.Attrib[atMaxMana].Value, clMana, clDarkGray);
   case Game.ShowEffects of
@@ -1477,8 +1469,8 @@ begin
       2:
         MsgLog.Add(_('You feel a wee bit better.'));
     end;
-    MsgLog.Add(Format(F, [_('Life'), Min(MaxLife - Life, V)]));
-    Life := EnsureRange(Self.Life + V, 0, MaxLife);
+    MsgLog.Add(Format(F, [_('Life'), Min(Attributes.Attrib[atMaxLife].Value - Attributes.Attrib[atLife].Value, V)]));
+    Attributes.Modify(atLife, V);
     Skills.DoSkill(skHealing);
   end;
   // Mana

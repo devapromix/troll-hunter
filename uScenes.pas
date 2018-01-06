@@ -479,7 +479,7 @@ begin
       begin
         if (SceneEnum = scTitle) then
           Game.CanClose := True;
-        if Mode.Game and not(SceneEnum in [scWin, scDef, scQuit]) and (Player.Life > 0) then
+        if Mode.Game and not(SceneEnum in [scWin, scDef, scQuit]) and not Player.IsDead then
           SetScene(scQuit, SceneEnum);
       end;
   end;
@@ -673,8 +673,8 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)], UI.Icon(icLife), Mobs.Mob[C].Life,
-          Mobs.Mob[C].MaxLife]);
+        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)], UI.Icon(icLife),
+          Mobs.Mob[C].Attributes.Attrib[atLife].Value, Mobs.Mob[C].Attributes.Attrib[atMaxLife].Value]);
       end;
     end;
     //
@@ -1178,8 +1178,10 @@ begin
   Add('Defensive Value (DV)', UI.Icon(icDex), 'Darkest Green', Player.Attributes.Attrib[atDV].Value, DVMax);
   Add('Protection Value (PV)', UI.Icon(icShield), 'Darkest Green', Player.Attributes.Attrib[atPV].Value, PVMax);
   // Life and Mana
-  Add('Life', UI.Icon(icLife), 'Life', Player.Life, Player.MaxLife);
-  Add('Mana', UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atMana].Value, Player.Attributes.Attrib[atMaxMana].Value);
+  Add('Life', UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atLife].Value,
+    Player.Attributes.Attrib[atMaxLife].Value);
+  Add('Mana', UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atMana].Value,
+    Player.Attributes.Attrib[atMaxMana].Value);
   // Vision radius
   Add('Vision radius', UI.Icon(icVision), 'Vision', Player.Vision, VisionMax);
 end;
@@ -1477,7 +1479,7 @@ begin
   // Heal
   if (ntHealer_A in NPCType) then
   begin
-    V := Player.MaxLife - Player.Life;
+    V := Player.Attributes.Attrib[atMaxLife].Value - Player.Attributes.Attrib[atLife].Value;
     if (V > 0) then
       S := ' (' + Items.GetInfo('+', V, 'Life') + ' ' + Items.GetPrice(Round(V * 1.6)) + ')'
     else

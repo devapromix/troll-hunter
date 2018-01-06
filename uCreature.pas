@@ -46,8 +46,6 @@ type
 type
   TCreature = class(TEntity)
   private
-    FLife: UInt;
-    FMaxLife: UInt;
     FAbilities: TAbilities;
     FAttributes: TAttributes;
   public
@@ -59,8 +57,6 @@ type
     function GetRealDamage(ADamage, APV: UInt): UInt;
     function IsDead: Boolean;
     procedure OnTurn;
-    property Life: UInt read FLife write FLife;
-    property MaxLife: UInt read FMaxLife write FMaxLife;
     property Abilities: TAbilities read FAbilities write FAbilities;
     property Attributes: TAttributes read FAttributes write FAttributes;
     procedure Fill;
@@ -94,7 +90,7 @@ end;
 
 procedure TCreature.Fill;
 begin
-//  Attributes.SetValue(atLife, atMaxLife);
+  Attributes.SetValue(atLife, atMaxLife);
   Attributes.SetValue(atMana, atMaxMana);
 end;
 
@@ -114,7 +110,7 @@ end;
 
 function TCreature.IsDead: Boolean;
 begin
-  Result := Life = 0
+  Result := (Attributes.Attrib[atLife].Value = 0);
 end;
 
 procedure TCreature.SetDamage(AMin, AMax: UInt);
@@ -149,7 +145,7 @@ begin
           Value := 0;
         end;
         if (Value > 0) then
-          Life := Game.EnsureRange(Life - Value, MaxLife);
+          Attributes.Modify(atLife, -Value);
       end;
     end;
 end;
