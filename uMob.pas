@@ -477,8 +477,8 @@ begin
   // Life
   V := Game.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss, (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25,
     0), UIntMax);
-  Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V, MobBase[TMobEnum(ID)].MaxLife +
-    (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level) + V));
+  Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife + V,
+    MobBase[TMobEnum(ID)].MaxLife + (Ord(Game.Difficulty) * MobBase[TMobEnum(ID)].Level) + V));
   Self.Fill;
   // DV
   V := MobBase[TMobEnum(ID)].DV + (Ord(Game.Difficulty) * 5);

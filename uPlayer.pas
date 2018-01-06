@@ -58,14 +58,12 @@ type
     FSkills: TSkills;
     procedure GenNPCText;
     function GetVision: UInt;
-    function GetSatiation: UInt;
     function GenerateBackground(): string;
   public
     constructor Create;
     destructor Destroy; override;
     property LX: UInt read FLX write FLX;
     property LY: UInt read FLY write FLY;
-    property Satiation: UInt read GetSatiation; // Nutrition
     property Vision: UInt read GetVision;
     property MaxMap: UInt read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
@@ -189,11 +187,11 @@ begin
     Exit;
   Statictics.Inc(stTurn);
   Calendar.Turn;
-  if (Satiation > 0) then
+  if (Attributes.Attrib[atSat].Value > 0) then
     Attributes.Modify(atSat, -SatPerTurn);
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
-  if (Satiation < StarvingMax) then
+  if (Attributes.Attrib[atSat].Value < StarvingMax) then
     Attributes.Modify(atLife, -1)
   else if not Abilities.IsAbility(abDiseased) then
   begin
@@ -610,7 +608,7 @@ end;
 function TPlayer.GetSatiationStr: string;
 begin
   Result := '';
-  case Satiation of
+  case Attributes.Attrib[atSat].Value of
     0 .. StarvingMax:
       Result := _('Starving');
     StarvingMax + 1 .. 1500:
@@ -630,9 +628,9 @@ begin
   begin
     if (Result = '') then
       Result := _('Satiated');
-    Result := Result + Format(' (%d)', [Satiation]);
+    Result := Result + Format(' (%d)', [Attributes.Attrib[atSat].Value]);
   end;
-  case Satiation of
+  case Attributes.Attrib[atSat].Value of
     0 .. StarvingMax:
       Result := Terminal.Colorize(Result, 'Light Red');
     StarvingMax + 1 .. SatiatedMax:
@@ -640,11 +638,6 @@ begin
   else
     Result := Terminal.Colorize(Result, 'Light Green');
   end;
-end;
-
-function TPlayer.GetSatiation: UInt;
-begin
-  Result := Attributes.Attrib[atSat].Value.InRange(EngorgedMax);
 end;
 
 procedure TPlayer.Move(Dir: TDirectionEnum);

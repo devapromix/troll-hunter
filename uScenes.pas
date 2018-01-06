@@ -239,8 +239,7 @@ type
     procedure RenderPlayer;
     procedure RenderInfo;
     procedure RenderSkills;
-    procedure Add; overload;
-    procedure Add(const AStr, AIcons, ABarColor: string; const ACur, AMax: Int); overload;
+    procedure Add(const AStr, AIcons, ABarColor: string; const ACur, AMax: Int);
   public
     constructor Create;
     procedure Render; override;
@@ -1144,20 +1143,11 @@ begin
   AddKey('?', _('Help'), True);
 end;
 
-procedure TScenePlayer.Add();
-begin
-  W := X * 2 - 3;
-  UI.Bar(1, 0, Y + (D * 2), W, Player.Attributes.Attrib[atExp].Value, LevelExpMax, clDarkRed, clDarkGray);
-  Terminal.Print(X, Y + (D * 2), Format('%s %d', [UI.Icon(icElixir) + ' ' + _('Level'),
-    Player.Attributes.Attrib[atLev].Value]), TK_ALIGN_CENTER);
-  Inc(D);
-end;
-
 procedure TScenePlayer.Add(const AStr, AIcons, ABarColor: string; const ACur, AMax: Int);
 begin
   W := X * 2 - 3;
   UI.Bar(1, 0, Y + (D * 2), W, ACur, AMax, color_from_name(LowerCase(ABarColor)), clDarkGray);
-  Terminal.Print(X, Y + (D * 2), Format('%s %d/%d', [AIcons + ' ' + _(AStr), ACur, AMax]), TK_ALIGN_CENTER);
+  Terminal.Print(X, Y + (D * 2), Format('%s %d/%d', [AIcons + ' ' + AStr, ACur, AMax]), TK_ALIGN_CENTER);
   Inc(D);
 end;
 
@@ -1165,7 +1155,8 @@ procedure TScenePlayer.RenderPlayer;
 begin
   Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (1/2)']), TK_ALIGN_CENTER);
   // Level
-  Add();
+  Add(Format('%s %d', [_('Level'), Player.Attributes.Attrib[atLev].Value]), UI.Icon(icElixir), 'Gold',
+    Player.Attributes.Attrib[atExp].Value, LevelExpMax);
   // Attributes
   Add('Strength', UI.Icon(icStr), 'Strength', Player.Attributes.Attrib[atStr].Value, AttribMax);
   Add('Dexterity', UI.Icon(icDex), 'Dexterity', Player.Attributes.Attrib[atDex].Value, AttribMax);
