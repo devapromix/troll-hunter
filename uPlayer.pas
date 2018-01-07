@@ -113,6 +113,7 @@ type
     procedure Start;
     procedure Rest(ATurns: UInt);
     procedure Dialog(AMob: TMob);
+    procedure RnItem(FItem: Item; const Index: Int);
     procedure AutoPickup();
     procedure RenderWeather(const AX, AY, AWidth: UInt);
   end;
@@ -126,15 +127,6 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
   uBearLibItemsDungeon, uBearLibItemsInventory, Dialogs, uHelpers;
-
-procedure RnItem(FItem: Item; const Index: Int);
-begin
-  if (FItem.Durability = 0) then
-  begin
-    Items_Inventory_DeleteItem(Index, FItem);
-    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'), [Items.GetNameThe(FItem)]), clAlarm));
-  end;
-end;
 
 { TPlayer }
 
@@ -176,6 +168,15 @@ begin
   finally
     for I := Low(TConPartsEnum) to High(TConPartsEnum) do
       FreeAndNil(SL[I]);
+  end;
+end;
+
+procedure TPlayer.RnItem(FItem: Item; const Index: Int);
+begin
+  if (FItem.Durability = 0) then
+  begin
+    Items_Inventory_DeleteItem(Index, FItem);
+    MsgLog.Add(Terminal.Colorize(Format(_('%s been ruined irreversibly.'), [Items.GetNameThe(FItem)]), clAlarm));
   end;
 end;
 
