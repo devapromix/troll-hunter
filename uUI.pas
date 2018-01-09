@@ -13,8 +13,8 @@ type
 
 type
   UI = class(TObject)
-    class procedure Bar(X, LM, Y, Wd: UInt; Cur, Max: UInt;
-      AColor, DarkColor: Cardinal);
+    class procedure Bar(const X, LM, Y, Wd: UInt; const Cur, Max: UInt;
+      const AColor, ADarkColor: Cardinal);
     class procedure Title(const S: string; AY: UInt = 1; BGColor: Cardinal = 0);
     class procedure FromAToZ(const Max: UInt = 0);
     class procedure RenderTile(const S: string);
@@ -38,8 +38,8 @@ const
 
   { UI }
 
-class procedure UI.Bar(X, LM, Y, Wd: UInt; Cur, Max: UInt;
-  AColor, DarkColor: Cardinal);
+class procedure UI.Bar(const X, LM, Y, Wd: UInt; const Cur, Max: UInt;
+  const AColor, ADarkColor: Cardinal);
 var
   I, L, W: UInt;
 begin
@@ -47,7 +47,7 @@ begin
   W := Round(Cur / Max * L);
   for I := 0 to L do
   begin
-    Terminal.BackgroundColor(DarkColor);
+    Terminal.BackgroundColor(ADarkColor);
     if ((I <= W) and (Cur > 0)) then
       Terminal.BackgroundColor(AColor);
     Terminal.Print(X + I + LM, Y, ' ');

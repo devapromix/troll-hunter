@@ -105,6 +105,7 @@ type
     procedure Sell(Index: Int);
     procedure RepairItem(Index: Int);
     procedure IdentItem(Index: Int);
+    procedure IdentAllItems;
     procedure CraftItem(Index: Int);
     procedure BreakItem(Index: Int; Value: UInt = 1); overload;
     procedure BreakItem(ASlot: TSlotType; Value: UInt = 1); overload;
@@ -213,7 +214,8 @@ begin
       Attributes.Modify(atMana, C);
     end;
   end;
-  if OnTurn() then Calc;
+  if OnTurn() then
+    Calc;
   if IsDead then
     Defeat;
   Mobs.Process;
@@ -911,6 +913,27 @@ begin
   Self.Calc;
 end;
 
+procedure TPlayer.IdentAllItems;
+var
+  FItem: Item;
+  FCount, I: Int;
+  F: Boolean;
+begin
+  F := False;
+  FCount := Items_Inventory_GetCount().InRange(ItemMax);
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    if (FItem.Identify = 0) then
+    begin
+      Self.IdentItem(I);
+      F := True;
+    end;
+  end;
+  if F then
+    Self.Calc;
+end;
+
 procedure TPlayer.IdentItem(Index: Int);
 var
   FItem: Item;
@@ -1022,7 +1045,6 @@ begin
       end;
     end;
   end;
-
 end;
 
 procedure TPlayer.Drop(Index: Int);
@@ -1143,12 +1165,14 @@ begin
   Terminal.ForegroundColor(clDefault);
   // Info
   Terminal.Print(Status.Left - 1, Status.Top + 1, ' ' + UI.Icon(icLife, 'Life') + ' ' +
-    Terminal.Colorize(Format(F, [_('Life'), Attributes.Attrib[atLife].Value, Attributes.Attrib[atMaxLife].Value]), 'Life'));
+    Terminal.Colorize(Format(F, [_('Life'), Attributes.Attrib[atLife].Value, Attributes.Attrib[atMaxLife].Value]
+    ), 'Life'));
   Terminal.Print(Status.Left - 1, Status.Top + 2, ' ' + UI.Icon(icMana, 'Mana') + ' ' +
     Terminal.Colorize(Format(F, [_('Mana'), Self.Attributes.Attrib[atMana].Value,
     Self.Attributes.Attrib[atMaxMana].Value]), 'Mana'));
   // Bars
-  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Attributes.Attrib[atLife].Value, Attributes.Attrib[atMaxLife].Value, clLife, clDarkGray);
+  UI.Bar(Status.Left, 15, Status.Top + 1, Status.Width - 16, Attributes.Attrib[atLife].Value,
+    Attributes.Attrib[atMaxLife].Value, clLife, clDarkGray);
   UI.Bar(Status.Left, 15, Status.Top + 2, Status.Width - 16, Self.Attributes.Attrib[atMana].Value,
     Self.Attributes.Attrib[atMaxMana].Value, clMana, clDarkGray);
   case Game.ShowEffects of
@@ -1376,6 +1400,7 @@ begin
     // Items.AddItemToInv(ivAntidote, 10);
     Items.AddItemToInv(ivScroll_of_Town_Portal, 10);
     Items.AddItemToInv(ivScroll_of_Identify, 10);
+    Items.AddItemToInv(ivScroll_of_Full_Identify, 5);
     Items.AddItemToInv(ivScroll_of_Bloodlust, 10);
   end
   else
@@ -1493,9 +1518,9 @@ begin
   end;
   // Identification
   if (efIdentification in Effects) then
-  begin
     Scenes.SetScene(scIdentification);
-  end;
+  if (efAllIdentification in Effects) then
+    Player.IdentAllItems;
   // Craft
   for Ef := CraftEffLow to CraftEffHigh do
     if (Ef in Effects) then

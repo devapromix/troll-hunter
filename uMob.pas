@@ -1010,7 +1010,6 @@ begin
   for I := Low(TMobEnum) to High(TMobEnum) do
   begin
     S := StringReplace(GetEnumName(P, Ord(I)), 'mb', '', [rfReplaceAll]);
-    S.Remove()
     S := StringReplace(S, '1', '-', [rfReplaceAll]);
     S := StringReplace(S, '2', '(', [rfReplaceAll]);
     S := StringReplace(S, '3', ')', [rfReplaceAll]);

@@ -116,6 +116,7 @@ type
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing, ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing,
     ivScroll_of_Hunger, ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
     ivScroll_of_Disappearing, ivScroll_of_Town_Portal, ivScroll_of_Bloodlust, ivScroll_of_Identify,
+    ivScroll_of_Full_Identify,
     // Runes
     ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing, ivRune_of_Full_Healing,
     ivRune_of_Teleportation, ivRune_of_Town_Portal,
@@ -362,6 +363,10 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 35;
     Color: clLightYellow; Deep: [deDarkWood .. deDrom]; Effects: [efIdentification]; Value: 1; ManaCost: 5;),
+    // Scroll of Full Identify
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 75;
+    Color: clLightYellow; Deep: [deDarkWood .. deDrom]; Effects: [efAllIdentification]; Value: 1; ManaCost: 7;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 3;
@@ -1493,6 +1498,8 @@ begin
     AddEffect(efFood, '+', 'Food');
     AddEffect(efCurePoison, '+', 'Poison');
     AddEffect(efBloodlust, '+', 'Poison', 'Blood');
+    AddEffect(efIdentification, '&', 'Ident', 'Dark Yellow');
+    AddEffect(efAllIdentification, '&', 'Ident', 'Dark Yellow');
     AddEffect(efRepair, '+', 'Repair', 'Food');
     AddEffect(efCraftStr, '&', 'Strength', 'Strength');
     AddEffect(efCraftDex, '&', 'Dexterity', 'Dexterity');
@@ -1872,6 +1879,8 @@ begin
   end;
   if (Color = 'Food') then
     S := UI.Icon(icFood);
+  if (Color = 'Ident') then
+    S := UI.Icon(icQuestion);
   if (Color = 'Poison') then
     S := UI.Icon(icDrop);
   if (Color = 'Vision') then
