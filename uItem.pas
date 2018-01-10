@@ -1500,6 +1500,8 @@ begin
     AddEffect(efBloodlust, '+', 'Poison', 'Blood');
     AddEffect(efIdentification, '&', 'Ident', 'Dark Yellow');
     AddEffect(efAllIdentification, '&', 'Ident', 'Dark Yellow');
+    AddEffect(efTownPortal, '&', 'Portal', 'Dark Green');
+    AddEffect(efTeleportation, '&', 'Portal', 'Dark Green');
     AddEffect(efRepair, '+', 'Repair', 'Food');
     AddEffect(efCraftStr, '&', 'Strength', 'Strength');
     AddEffect(efCraftDex, '&', 'Dexterity', 'Dexterity');
@@ -1881,6 +1883,8 @@ begin
     S := UI.Icon(icFood);
   if (Color = 'Ident') then
     S := UI.Icon(icQuestion);
+  if (Color = 'Portal') then
+    S := UI.Icon(icFlag);
   if (Color = 'Poison') then
     S := UI.Icon(icDrop);
   if (Color = 'Vision') then
