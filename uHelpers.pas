@@ -21,6 +21,12 @@ type
   end;
 
 type
+  TStringHelper = record helper for
+    string
+    function GetName(P: string): string;
+  end;
+
+type
   TPlayerHelper = class helper for TPlayer
     function ToString2: string;
   end;
@@ -80,6 +86,14 @@ end;
 function TItemHelper.DoIt: string;
 begin
 
+end;
+
+{ TStringHelper }
+
+function TStringHelper.GetName(P: string): string;
+begin
+  Result := StringReplace(Self, P, '', [rfReplaceAll]);
+  Result := StringReplace(Result, '_', ' ', [rfReplaceAll]);
 end;
 
 end.

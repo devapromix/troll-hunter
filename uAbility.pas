@@ -31,7 +31,7 @@ type
 
 implementation
 
-uses SysUtils, TypInfo;
+uses SysUtils, TypInfo, uHelpers;
 
 { TAbility }
 
@@ -61,11 +61,7 @@ begin
   Self.Clear;
   P := TypeInfo(TAbilityEnum);
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-  begin
-    S := StringReplace(GetEnumName(P, Ord(I)), 'ab', '', [rfReplaceAll]);
-    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
-    FAbilityName[I] := S;
-  end;
+    FAbilityName[I] := GetEnumName(P, Ord(I)).GetName('ab');
 end;
 
 destructor TAbilities.Destroy;
