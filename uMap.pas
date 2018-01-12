@@ -310,16 +310,11 @@ constructor TMap.Create;
 var
   I: TMapEnum;
   P: Pointer;
-  S: string;
 begin
   Self.Current := deDarkWood;
   P := TypeInfo(TMapEnum);
   for I := Low(TMapEnum) to High(TMapEnum) do
-  begin
-    S := StringReplace(GetEnumName(P, Ord(I)), 'de', '', [rfReplaceAll]);
-    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
-    FMapName[I] := S;
-  end;
+    FMapName[I] := GetEnumName(P, Ord(I)).GetName('de');
 end;
 
 destructor TMap.Destroy;

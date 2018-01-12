@@ -1009,11 +1009,10 @@ begin
   P := TypeInfo(TMobEnum);
   for I := Low(TMobEnum) to High(TMobEnum) do
   begin
-    S := StringReplace(GetEnumName(P, Ord(I)), 'mb', '', [rfReplaceAll]);
+    S := GetEnumName(P, Ord(I)).GetName('mb');
     S := StringReplace(S, '1', '-', [rfReplaceAll]);
     S := StringReplace(S, '2', '(', [rfReplaceAll]);
     S := StringReplace(S, '3', ')', [rfReplaceAll]);
-    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
     FMobName[I] := S;
   end;
 end;

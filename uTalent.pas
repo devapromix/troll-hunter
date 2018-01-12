@@ -128,7 +128,6 @@ constructor TTalents.Create;
 var
   I: TTalentEnum;
   P: Pointer;
-  S: string;
 begin
   Self.Clear;
   P := TypeInfo(TTalentEnum);

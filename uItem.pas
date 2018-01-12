@@ -1795,11 +1795,7 @@ begin
   Items_Open();
   P := TypeInfo(TItemEnum);
   for I := Low(TItemEnum) to High(TItemEnum) do
-  begin
-    S := StringReplace(GetEnumName(P, Ord(I)), 'iv', '', [rfReplaceAll]);
-    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
-    FItemName[I] := S;
-  end;
+    FItemName[I] := GetEnumName(P, Ord(I)).GetName('iv');
   // if (StrToItemEnum('Gold') = ivGold) then ShowMessage('Gold');
 end;
 
