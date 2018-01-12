@@ -76,7 +76,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="uTypes.pas"/>
-        <DCCReference Include="BearLibTerminal.pas"/>
+        <DCCReference Include="Sources\BearLibTerminal.pas"/>
         <DCCReference Include="uGame.pas"/>
         <DCCReference Include="uLanguage.pas"/>
         <DCCReference Include="uTerminal.pas"/>

@@ -9,7 +9,7 @@ uses
   SysUtils,
   Dialogs,
   uTypes in 'uTypes.pas',
-  BearLibTerminal in 'BearLibTerminal.pas',
+  BearLibTerminal in 'Sources\BearLibTerminal.pas',
   uGame in 'uGame.pas',
   uLanguage in 'uLanguage.pas',
   uTerminal in 'uTerminal.pas',
