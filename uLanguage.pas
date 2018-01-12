@@ -38,7 +38,9 @@ begin
     if Mode.Language then
       Game.Language.FSL.Append(AValue + '=');
     Result := Game.Language.Get(AValue);
-  end else Result := AValue;
+  end
+  else
+    Result := AValue;
 end;
 
 procedure TLanguage.Clear;
@@ -48,11 +50,15 @@ begin
 end;
 
 constructor TLanguage.Create;
+var
+  F: string;
 begin
   FSL := TStringList.Create;
   FSL.Sorted := True;
   FSL.Duplicates := dupIgnore;
-  FSL.LoadFromFile(Game.GetPath('languages') + 'default.lng');
+  F := Game.GetPath('languages') + 'default.lng';
+  if FileExists(F) then
+    FSL.LoadFromFile(F);
   FID := TStringList.Create;
   FValue := TStringList.Create;
   FCurrent := 'en';
