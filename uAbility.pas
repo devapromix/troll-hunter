@@ -56,7 +56,6 @@ constructor TAbilities.Create;
 var
   I: TAbilityEnum;
   P: Pointer;
-  S: string;
 begin
   Self.Clear;
   P := TypeInfo(TAbilityEnum);
