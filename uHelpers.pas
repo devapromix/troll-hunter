@@ -23,7 +23,7 @@ type
 type
   TStringHelper = record helper for
     string
-    function GetName(P: string): string;
+    function GetName(const Pref: string): string;
   end;
 
 type
@@ -90,9 +90,9 @@ end;
 
 { TStringHelper }
 
-function TStringHelper.GetName(P: string): string;
+function TStringHelper.GetName(const Pref: string): string;
 begin
-  Result := StringReplace(Self, P, '', [rfReplaceAll]);
+  Result := StringReplace(Self, Pref, '', [rfReplaceAll]);
   Result := StringReplace(Result, '_', ' ', [rfReplaceAll]);
 end;
 

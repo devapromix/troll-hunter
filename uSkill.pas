@@ -50,7 +50,7 @@ const
 implementation
 
 uses SysUtils, TypInfo, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog,
-  uStatistic;
+  uStatistic, uHelpers;
 
 { TSkills }
 
@@ -74,7 +74,7 @@ begin
   Self.Clear;
   P := TypeInfo(TSkillEnum);
   for I := Low(TSkillEnum) to High(TSkillEnum) do
-    FSkillName[I] := StringReplace(GetEnumName(P, Ord(I)), 'sk', '', [rfReplaceAll]);
+    FSkillName[I] := GetEnumName(P, Ord(I)).GetName('sk');
 end;
 
 destructor TSkills.Destroy;

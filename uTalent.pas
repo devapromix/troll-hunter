@@ -98,7 +98,7 @@ type
 
 implementation
 
-uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute;
+uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute, uHelpers;
 
 const
   TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',
@@ -133,11 +133,7 @@ begin
   Self.Clear;
   P := TypeInfo(TTalentEnum);
   for I := Low(TTalentEnum) to High(TTalentEnum) do
-  begin
-    S := StringReplace(GetEnumName(P, Ord(I)), 'tl', '', [rfReplaceAll]);
-    S := StringReplace(S, '_', ' ', [rfReplaceAll]);
-    FTalentName[I] := S;
-  end;
+    FTalentName[I] := GetEnumName(P, Ord(I)).GetName('tl');
 end;
 
 function TTalents.Amount: UInt;
