@@ -204,7 +204,7 @@ begin
   Difficulty := dfNormal;
   FSpawn := TSpawn.Create;
   FPortal := TSpawn.Create;
-  PortalMap := deDarkWood;
+  PortalMap := deDark_Wood;
   PortalTile := teStoneFloor;
   FLanguage := TLanguage.Create;
   for I := 1 to ParamCount do

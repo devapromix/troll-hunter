@@ -856,14 +856,14 @@ begin
         begin
           Player.X := Game.Spawn.X;
           Player.Y := Game.Spawn.Y;
-          Map.Current := deDarkWood;
+          Map.Current := deDark_Wood;
           Scenes.SetScene(scGame);
           Exit;
         end;
         // Portal
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teTownPortal) then
         begin
-          Map.SetTileEnum(Player.X, Player.Y, deDarkWood, teStoneFloor);
+          Map.SetTileEnum(Player.X, Player.Y, deDark_Wood, teStoneFloor);
           Player.X := Game.Portal.X;
           Player.Y := Game.Portal.Y;
           Map.Current := Game.PortalMap;

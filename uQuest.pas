@@ -121,7 +121,7 @@ begin
       // Counters
       Kills := 0;
     end;
-    Mobs.AddGroup(deDarkWood, mbBlack_Bear, 3);
+    Mobs.AddGroup(deDark_Wood, mbBlack_Bear, 3);
     MsgLog.Add(_('The new quest is added to the log.'));
   end;
 end;

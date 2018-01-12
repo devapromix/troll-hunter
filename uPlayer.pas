@@ -1280,7 +1280,7 @@ procedure TPlayer.Spawn;
 begin
   X := Game.Spawn.X;
   Y := Game.Spawn.Y;
-  Map.Current := deDarkWood;
+  Map.Current := deDark_Wood;
   MsgLog.Clear;
 end;
 
@@ -1555,7 +1555,7 @@ begin
     Game.Portal.X := X;
     Game.Portal.Y := Y;
     Map.SetTileEnum(X, Y, Map.Current, tePortal);
-    Map.SetTileEnum(Game.Spawn.X, Game.Spawn.Y, deDarkWood, teTownPortal);
+    Map.SetTileEnum(Game.Spawn.X, Game.Spawn.Y, deDark_Wood, teTownPortal);
     Scenes.SetScene(scGame);
   end;
   // Magic Eye
