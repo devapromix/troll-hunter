@@ -573,11 +573,10 @@ begin
       begin
         UI.Title(_('Keybindings'), 5);
 
-        Terminal.Print(CX, 6, Format('%s: %s, %s, %s', [_('Scroll pages and skills'), UI.KeyToStr('arrow keys'),
-          UI.KeyToStr('numpad'), UI.KeyToStr('WADX')]), TK_ALIGN_CENTER);
-
         X := 1;
         Y := 8;
+        AddLine('Right/Left', _('Change tab'));
+        AddLine('Up/Down', _('Scroll skills'));
         AddLine('Tab', _('Show Background'));
         AddLine('Space', _('Show Inventory'));
       end;
@@ -1811,10 +1810,11 @@ end;
 
 procedure TSceneName.Render;
 begin
-  UI.Title(_('Name'));
+  UI.Title(_('Choose name'));
 
-  Terminal.Print(CX - 10, CY, _('Name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
+  Terminal.Print(CX - 10, CY, _('Enter you name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
 
+  AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'), True);
 end;
 

@@ -585,8 +585,7 @@ var
 begin
   P := TypeInfo(TSuffixEnum);
   for I := Low(TSuffixEnum) to High(TSuffixEnum) do
-    FSuffixName[I] := StringReplace(GetEnumName(P, Ord(I)), '_', ' ',
-      [rfReplaceAll]);
+    FSuffixName[I] := GetEnumName(P, Ord(I)).GetName('');
 end;
 
 procedure TAffixes.DoCraft(const Effect: TEffect; const Index: UInt);
