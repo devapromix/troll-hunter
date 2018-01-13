@@ -424,15 +424,15 @@ const
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
     Color: clYellow; Deep: [deDark_Wood .. deDrom];),
 
+    // Mana Orb
+    (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
+    Color: clLightBlue; Deep: [deDark_Wood .. deDrom]; Effects: [efMana]; Value: 35;),
+
     // Healing Herb
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
     Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLife]; Value: 25;),
-
-    // Mana Orb
-    (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
-    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efMana]; Value: 35;),
 
     // Ruby #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
