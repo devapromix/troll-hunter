@@ -752,7 +752,7 @@ begin
         MsgLog.Add(Format(_('You ate %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stFdEat);
       end;
-      if (T in FlaskTypeItems) then
+      if (T in MagicTypeItems + FlaskTypeItems) then
       begin
         MsgLog.Add(Format(_('You use %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stItUsed);

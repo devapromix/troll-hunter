@@ -29,7 +29,7 @@ const
 
 const
   CoinTypeItems = [itCoin];
-  PotionTypeItems = [itPotion, itFlask, itOrb];
+  PotionTypeItems = [itPotion, itFlask];
   ScrollTypeItems = [itScroll];
   RuneTypeItems = [itRune];
   BookTypeItems = [itBook];
@@ -43,6 +43,7 @@ const
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   FlaskTypeItems = [itFlask];
+  MagicTypeItems = [itOrb];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow, itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
@@ -56,7 +57,7 @@ const
   RepairTypeItems = FlaskTypeItems;
   SmithTypeItems = DefenseTypeItems + DamageTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems + PlantTypeItems + RuneTypeItems + BookTypeItems +
-    GemTypeItems + RepairTypeItems;
+    GemTypeItems + RepairTypeItems + MagicTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;

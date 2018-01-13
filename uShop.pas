@@ -6,9 +6,8 @@ uses
   uTypes, uBeaRLibItemsCommon, uPlayer, uItem;
 
 type
-  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
-    shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
-    shJewelry, shGem, shRunes);
+  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors, shGloves, shFoods, shWeapons, shBoots,
+    shTavern, shShields, shHelms, shJewelry, shGem, shRunes);
 
 type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
@@ -125,25 +124,24 @@ var
 
   function GetItemID(): TItemEnum;
   begin
-    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
-      Ord(High(TItemEnum)) + 1));
+    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)), Ord(High(TItemEnum)) + 1));
   end;
 
   function Check: Boolean;
-  // var
-  // Effects: TEffects;
+  var
+    Effects: TEffects;
   begin
     ID := GetItemID();
-    // Effects := ItemBase[ID].Effects;
+    Effects := ItemBase[ID].Effects;
     case S of
       shTavern:
         Result := ID in TavernItems;
       shHealer:
-        // Result := efLife in Effects;
-        Result := ItemBase[ID].ItemType in PotionTypeItems;
+        Result := efLife in Effects;
+      // Result := ItemBase[ID].ItemType in PotionTypeItems;
       shMana:
-        // Result := (efMana in Effects) and not(efLife in Effects);
-        Result := ItemBase[ID].ItemType in PotionTypeItems;
+        Result := (efMana in Effects) and not(efLife in Effects);
+      // Result := ItemBase[ID].ItemType in PotionTypeItems;
       shPotions:
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shScrolls:
@@ -201,8 +199,7 @@ var
 begin
   C := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True,
-      True, ptBuy);
+    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True, True, ptBuy);
 end;
 
 procedure TShops.SetShop(I: TShopEnum; const Value: TShop);
