@@ -62,7 +62,7 @@ const
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems + FoodTypeItems + RuneTypeItems + BookTypeItems +
-    GemTypeItems + KeyTypeItems + PlantTypeItems + FlaskTypeItems;
+    GemTypeItems + KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems;
 
 type
   TItemBase = record

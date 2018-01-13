@@ -138,10 +138,8 @@ var
         Result := ID in TavernItems;
       shHealer:
         Result := efLife in Effects;
-      // Result := ItemBase[ID].ItemType in PotionTypeItems;
       shMana:
         Result := (efMana in Effects) and not(efLife in Effects);
-      // Result := ItemBase[ID].ItemType in PotionTypeItems;
       shPotions:
         Result := ItemBase[ID].ItemType in PotionTypeItems;
       shScrolls:

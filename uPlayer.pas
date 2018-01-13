@@ -364,6 +364,8 @@ begin
         Exit;
       if ((ItemType in PotionTypeItems) and not Game.GetOption(apPotion)) then
         Exit;
+      if ((ItemType in MagicTypeItems) and not Game.GetOption(apMagic)) then
+        Exit;
       if ((ItemType in FlaskTypeItems) and not Game.GetOption(apFlask)) then
         Exit;
       if ((ItemType in ScrollTypeItems) and not Game.GetOption(apScroll)) then

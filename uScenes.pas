@@ -1511,7 +1511,7 @@ begin
   if (ntHealTrader_B in NPCType) then
     Add(_('Buy items (healing)'));
   if (ntPotManaTrader_B in NPCType) then
-    Add(_('Buy items (potions of mana)'));
+    Add(_('Buy items (items of mana)'));
   if (ntPotTrader_B in NPCType) then
     Add(_('Buy items (potions)'));
   if (ntGlovesTrader_B in NPCType) then
@@ -1875,7 +1875,8 @@ begin
   AddOption('F', _('Auto pick up food'), Game.GetOption(apFood));
   AddOption('Y', _('Auto pick up plants'), Game.GetOption(apPlant));
   AddOption('P', _('Auto pick up potions'), Game.GetOption(apPotion));
-  AddOption('O', _('Auto pick up flasks'), Game.GetOption(apFlask));
+  AddOption('U', _('Auto pick up flasks'), Game.GetOption(apFlask));
+  AddOption('O', _('Auto pick up magic items'), Game.GetOption(apMagic));
   AddOption('S', _('Auto pick up scrolls'), Game.GetOption(apScroll));
   AddOption('R', _('Auto pick up runes'), Game.GetOption(apRune));
   AddOption('B', _('Auto pick up books'), Game.GetOption(apBook));
@@ -1923,6 +1924,8 @@ begin
     TK_P:
       Game.ChOption(apPotion);
     TK_O:
+      Game.ChOption(apMagic);
+    TK_U:
       Game.ChOption(apFlask);
     TK_S:
       Game.ChOption(apScroll);
