@@ -9,7 +9,6 @@ uses
   SysUtils,
   Dialogs,
   uTypes in 'uTypes.pas',
-  BearLibTerminal in 'Sources\BearLibTerminal.pas',
   uGame in 'uGame.pas',
   uLanguage in 'uLanguage.pas',
   uTerminal in 'uTerminal.pas',
@@ -33,10 +32,11 @@ uses
   uCreature in 'uCreature.pas',
   uAttribute in 'uAttribute.pas',
   uUI in 'uUI.pas',
-  uPathFind in 'uPathFind.pas',
-  uBearLibItemsCommon in 'BearLibItems\uBearLibItemsCommon.pas',
-  uBearLibItemsDungeon in 'BearLibItems\uBearLibItemsDungeon.pas',
-  uBearLibItemsInventory in 'BearLibItems\uBearLibItemsInventory.pas',
+  BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
+  uPathFind in 'Sources\BearLibPathFind\uPathFind.pas',
+  uBearLibItemsCommon in 'Sources\BearLibItems\uBearLibItemsCommon.pas',
+  uBearLibItemsDungeon in 'Sources\BearLibItems\uBearLibItemsDungeon.pas',
+  uBearLibItemsInventory in 'Sources\BearLibItems\uBearLibItemsInventory.pas',
   uQuest in 'uQuest.pas',
   uHelpers in 'uHelpers.pas';
 

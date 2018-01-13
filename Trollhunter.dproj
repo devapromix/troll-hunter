@@ -76,7 +76,6 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="uTypes.pas"/>
-        <DCCReference Include="Sources\BearLibTerminal.pas"/>
         <DCCReference Include="uGame.pas"/>
         <DCCReference Include="uLanguage.pas"/>
         <DCCReference Include="uTerminal.pas"/>
@@ -100,10 +99,11 @@
         <DCCReference Include="uCreature.pas"/>
         <DCCReference Include="uAttribute.pas"/>
         <DCCReference Include="uUI.pas"/>
-        <DCCReference Include="uPathFind.pas"/>
-        <DCCReference Include="BearLibItems\uBearLibItemsCommon.pas"/>
-        <DCCReference Include="BearLibItems\uBearLibItemsDungeon.pas"/>
-        <DCCReference Include="BearLibItems\uBearLibItemsInventory.pas"/>
+        <DCCReference Include="Sources\BearLibTerminal\BearLibTerminal.pas"/>
+        <DCCReference Include="Sources\BearLibPathFind\uPathFind.pas"/>
+        <DCCReference Include="Sources\BearLibItems\uBearLibItemsCommon.pas"/>
+        <DCCReference Include="Sources\BearLibItems\uBearLibItemsDungeon.pas"/>
+        <DCCReference Include="Sources\BearLibItems\uBearLibItemsInventory.pas"/>
         <DCCReference Include="uQuest.pas"/>
         <DCCReference Include="uHelpers.pas"/>
         <BuildConfiguration Include="Debug">

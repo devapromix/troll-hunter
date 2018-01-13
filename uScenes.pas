@@ -8,8 +8,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv, scDrop, scItems, scAmount, scPlayer,
     scMessages, scStatistics, scDialog, scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification, scBackground, scCraft);
-  // scClasses, scRaces
+    scSpellbook, scOptions, scTalents, scIdentification, scBackground, scCraft, scClass, scRace);
 
 type
   TScene = class(TObject)
@@ -268,6 +267,20 @@ type
     procedure Update(var Key: UInt); override;
   end;
 
+type
+  TSceneRace = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: UInt); override;
+  end;
+
+type
+  TSceneClass = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: UInt); override;
+  end;
+
 var
   NPCName: string = '';
   NPCType: set of TNPCType = [];
@@ -420,6 +433,10 @@ begin
         FScene[I] := TSceneQuest.Create;
       scCraft:
         FScene[I] := TSceneCraft.Create;
+      scRace:
+        FScene[I] := TSceneRace.Create;
+      scClass:
+        FScene[I] := TSceneClass.Create;
     end;
 end;
 
@@ -1768,7 +1785,7 @@ begin
               Exit;
         end;
         Game.Start();
-        Scenes.SetScene(scTalents, scDifficulty);
+        Scenes.SetScene(scRace, scDifficulty);
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -1840,7 +1857,7 @@ begin
     TK_ESCAPE:
       begin
         Player.Talents.Clear;
-        Scenes.SetScene(scTalents, scDifficulty);
+        Scenes.SetScene(scTalents, scClass);
       end;
   end;
 end;
@@ -2191,6 +2208,54 @@ begin
       end;
     TK_ESCAPE:
       Scenes.GoBack();
+  end;
+end;
+
+{ TSceneRace }
+
+procedure TSceneRace.Render;
+begin
+  UI.Title(_('Choose a race'));
+
+  AddKey('Enter', _('Confirm'));
+  AddKey('Esc', _('Back'), True);
+end;
+
+procedure TSceneRace.Update(var Key: UInt);
+begin
+  case Key of
+    TK_ENTER, TK_KP_ENTER:
+      begin
+        Scenes.SetScene(scClass, scRace);
+      end;
+    TK_ESCAPE:
+      begin
+        Scenes.SetScene(scDifficulty);
+      end;
+  end;
+end;
+
+{ TSceneClass }
+
+procedure TSceneClass.Render;
+begin
+  UI.Title(_('Choose a class'));
+
+  AddKey('Enter', _('Confirm'));
+  AddKey('Esc', _('Back'), True);
+end;
+
+procedure TSceneClass.Update(var Key: UInt);
+begin
+  case Key of
+    TK_ENTER, TK_KP_ENTER:
+      begin
+        Scenes.SetScene(scTalents, scClass);
+      end;
+    TK_ESCAPE:
+      begin
+        Scenes.SetScene(scRace);
+      end;
   end;
 end;
 
