@@ -5,13 +5,13 @@ interface
 uses uTypes, uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
-  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itScroll, itBook, itRune,
-    itFood, itPlant, itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear,
+  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itScroll, itBook,
+    itRune, itFood, itPlant, itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear,
     itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman, itArrow);
 
 const
-  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', '?', '?', '*', ',', '&', '\', '/',
-    '|', '_', '~', '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{');
+  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '?', '?', '*', ',', '&', '\',
+    '/', '|', '_', '~', '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -29,7 +29,7 @@ const
 
 const
   CoinTypeItems = [itCoin];
-  PotionTypeItems = [itPotion, itFlask];
+  PotionTypeItems = [itPotion, itFlask, itOrb];
   ScrollTypeItems = [itScroll];
   RuneTypeItems = [itRune];
   BookTypeItems = [itBook];
@@ -121,9 +121,13 @@ type
     ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing, ivRune_of_Full_Healing,
     ivRune_of_Teleportation, ivRune_of_Town_Portal,
     // Foods
-    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb,
+    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
     // Keys
     ivKey,
+    //
+    ivMana_Orb,
+    //
+    ivHealing_Herb,
     // Ruby (Gems)
     ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby, ivImperial_Ruby, ivRoyal_Ruby,
     // Topaz (Gems)
@@ -410,11 +414,25 @@ const
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
     Color: clLightestGreen; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 150;),
+    // Hunk of Meat
+    (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
+    Color: clLightestYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 450;),
 
     // Key
     (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
     Color: clYellow; Deep: [deDark_Wood .. deDrom];),
+
+    // Healing Herb
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
+    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLife]; Value: 25;),
+
+    // Mana Orb
+    (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
+    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efMana]; Value: 35;),
 
     // Ruby #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -476,8 +494,8 @@ const
 
     // Sapphire #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clBlue; Deep: [deDark_Wood];
-    Effects: [efCraftWil]; Value: 0;),
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750; Color: clBlue;
+    Deep: [deDark_Wood]; Effects: [efCraftWil]; Value: 0;),
     // Sapphire #2
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clBlue;
