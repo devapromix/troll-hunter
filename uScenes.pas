@@ -160,7 +160,6 @@ type
   TSceneLoad = class(TScene)
   public
     procedure Render; override;
-    procedure Update(var Key: UInt); override;
   end;
 
 type
@@ -988,11 +987,6 @@ begin
   Terminal.Print(CX, CY, _('Creating the world, please wait...'), TK_ALIGN_CENTER);
 end;
 
-procedure TSceneLoad.Update(var Key: UInt);
-begin
-
-end;
-
 { TSceneQuit }
 
 procedure TSceneQuit.Render;
@@ -1113,8 +1107,8 @@ begin
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Drop an item'), True);
+  AddKey('A-Z', _('Drop an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneDrop.Update(var Key: UInt);
@@ -1290,8 +1284,8 @@ begin
   Terminal.Print(CX, CY, Format('%d/%dx', [Player.ItemAmount, FItem.Amount]), TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Close'));
-  AddKey('W', _('More'));
-  AddKey('X', _('Less'));
+  AddKey('UP/W', _('More'));
+  AddKey('DOWN/X', _('Less'));
   AddKey('Enter', _('Apply'), True);
 end;
 
@@ -1625,8 +1619,8 @@ begin
   Items.RenderInventory(ptSell);
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Selling an item'), True);
+  AddKey('A-Z', _('Selling an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneSell.Update(var Key: UInt);
@@ -1652,8 +1646,8 @@ begin
   Shops.Render;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Buy an item'), True);
+  AddKey('A-Z', _('Buy an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneBuy.Update(var Key: UInt);
@@ -1679,8 +1673,8 @@ begin
   Items.RenderInventory(ptRepair);
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Repairing an item'), True);
+  AddKey('A-Z', _('Repairing an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneRepair.Update(var Key: UInt);
@@ -1754,7 +1748,7 @@ end;
 
 procedure TSceneDifficulty.Render;
 begin
-  UI.Title(_('Difficulty'));
+  UI.Title(_('Choose a difficulty'));
 
   Terminal.Print(CX - 5, CY - 3, Format('%s %s', [UI.KeyToStr('A'), _('Easy')]), TK_ALIGN_LEFT);
   Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), _('Normal')]), TK_ALIGN_LEFT);
@@ -1827,7 +1821,7 @@ end;
 
 procedure TSceneName.Render;
 begin
-  UI.Title(_('Choose name'));
+  UI.Title(_('Choose a name'));
 
   Terminal.Print(CX - 10, CY, _('Enter you name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
 
@@ -2004,8 +1998,8 @@ begin
     end;
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Cast spell'), True);
+  AddKey('A-Z', _('Cast spell'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneSpellbook.Update(var Key: UInt);
@@ -2058,7 +2052,7 @@ var
   end;
 
 begin
-  UI.Title(_('Talents'));
+  UI.Title(_('Choose a talent'));
 
   V := 0;
   Y := 2;
@@ -2079,8 +2073,8 @@ begin
 
   if Player.Talents.IsPoint then
   begin
-    AddKey('Esc', _('Close'), _('Back'));
-    AddKey('A-Z', _('Select a talent'), True);
+    AddKey('A-Z', _('Select a talent'));
+    AddKey('Esc', _('Close'), _('Back'), True);
   end
   else
     AddKey('Esc', _('Close'), _('Back'), True);
@@ -2117,8 +2111,8 @@ begin
   Items.RenderInventory();
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Select an item'), True);
+  AddKey('A-Z', _('Select an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneIdentification.Update(var Key: UInt);
@@ -2143,8 +2137,8 @@ begin
   Items.RenderInventory();
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Close'));
-  AddKey('A-Z', _('Select an item'), True);
+  AddKey('A-Z', _('Select an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneCraft.Update(var Key: UInt);
@@ -2165,8 +2159,8 @@ procedure TSceneQuest.Render;
 begin
   UI.Title(Quests.GetName(Quests.Current), 1);
 
-  AddKey('Esc', _('Decline'));
-  AddKey('Enter', _('Accept'), True);
+  AddKey('Enter', _('Accept'));
+  AddKey('Esc', _('Decline'), True);
 end;
 
 procedure TSceneQuest.Update(var Key: UInt);
@@ -2193,6 +2187,8 @@ begin
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background, TK_ALIGN_BOTTOM);
 
+  if not Mode.Game then
+    AddKey('Enter', _('Start game'));
   AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
@@ -2200,7 +2196,7 @@ procedure TSceneBackground.Update(var Key: UInt);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
-      if (Scenes.FPrevSceneEnum = scName) then
+      if not Mode.Game then
       begin
         Scenes.SetScene(scLoad);
         Terminal.Refresh;

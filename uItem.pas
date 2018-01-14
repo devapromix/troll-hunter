@@ -427,12 +427,12 @@ const
 
     // Mana Orb
     (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 25;
     Color: clLightBlue; Deep: [deDark_Wood .. deDrom]; Effects: [efMana]; Value: 35;),
 
     // Healing Herb
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 15;
     Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLife]; Value: 25;),
 
     // Ruby #1
