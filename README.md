@@ -30,6 +30,10 @@ You may need to set "executable" bit in Linux.
 
 ![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_3.png)
 
+![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_4.png)
+
+![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_5.png)
+
 ## Credits
 Copyright (C) 2017-2018 by Sergiy Tkach (Apromix).
 
