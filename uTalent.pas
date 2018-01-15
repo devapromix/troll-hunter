@@ -170,8 +170,6 @@ begin
         Self.Add(T);
         IsPoint := False;
         Player.DoEffects(TalentBase[T].Effects);
-        if not Mode.Game then
-          Scenes.SetScene(scName);
         Break;
       end;
       Inc(K);

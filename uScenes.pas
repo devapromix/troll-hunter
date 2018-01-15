@@ -130,7 +130,10 @@ type
 
 type
   TSceneTalents = class(TScene)
+  private
+    FTalent: UInt;
   public
+    property Talent: UInt read FTalent write FTalent;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -2081,20 +2084,38 @@ begin
 end;
 
 procedure TSceneTalents.Update(var Key: UInt);
+var
+  K: UInt;
 begin
   case Key of
     TK_ESCAPE:
-      Scenes.GoBack;
+      begin
+        if not Mode.Game then
+          Player.Talents.Clear;
+        Scenes.GoBack;
+      end;
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
       begin
         if Player.Talents.IsPoint then
         begin
           case Key of
             TK_A .. TK_Z:
-              Player.Talents.DoTalent(Key - TK_A);
+              begin
+                K := Key - TK_A;
+                if Mode.Game then
+                  Player.Talents.DoTalent(K)
+                else if (K <= 5) then
+                begin
+                  Self.Talent := K;
+                  Scenes.SetScene(scName);
+                end;
+              end;
             TK_ENTER, TK_KP_ENTER:
-              if Mode.Wizard then
-                Player.Talents.DoTalent(Math.RandomRange(0, 5));
+              if Mode.Wizard and not Mode.Game then
+              begin
+                Self.Talent := Math.RandomRange(0, 5);
+                Scenes.SetScene(scName);
+              end;
           end;
         end;
       end;
@@ -2203,6 +2224,7 @@ begin
         Terminal_Delay(1000);
         Map.Gen;
         Mode.Game := True;
+        Player.Talents.DoTalent(TSceneTalents(Scenes.GetScene(scTalents)).Talent);
         Scenes.SetScene(scGame);
       end;
     TK_ESCAPE:

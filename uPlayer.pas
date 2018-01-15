@@ -12,7 +12,7 @@ const
   // Player
   VisionMax = 15;
   DVMax = 80;
-  LevelExpMax = 5;
+  LevelExpMax = 9;
   ReLifeMax = 10;
   ReManaMax = 20;
   LifeAEKMax = 8;
@@ -112,6 +112,7 @@ type
     procedure BreakItem(); overload;
     procedure AddExp(Value: UInt = 1);
     procedure Start;
+    procedure DoWeaponSkill;
     procedure Rest(ATurns: UInt);
     procedure Dialog(AMob: TMob);
     procedure RnItem(FItem: Item; const Index: Int);
@@ -221,6 +222,52 @@ begin
   Mobs.Process;
 end;
 
+procedure TPlayer.DoWeaponSkill;
+begin
+  case FWeaponSkill of
+    skBlade:
+      begin
+        Skills.DoSkill(FWeaponSkill, 2);
+        Skills.DoSkill(skAthletics, 2);
+        Skills.DoSkill(skDodge, 2);
+        SatPerTurn := Ord(Game.Difficulty) + 5;
+      end;
+    skAxe:
+      begin
+        Skills.DoSkill(FWeaponSkill, 2);
+        Skills.DoSkill(skAthletics, 3);
+        Skills.DoSkill(skDodge);
+        SatPerTurn := Ord(Game.Difficulty) + 6;
+      end;
+    skSpear, skDagger:
+      begin
+        Skills.DoSkill(FWeaponSkill, 2);
+        Skills.DoSkill(skAthletics);
+        Skills.DoSkill(skDodge, 3);
+        SatPerTurn := Ord(Game.Difficulty) + 4;
+      end;
+    skMace:
+      begin
+        Skills.DoSkill(FWeaponSkill, 2);
+        Skills.DoSkill(skAthletics, 4);
+        SatPerTurn := Ord(Game.Difficulty) + 7;
+      end;
+    skStaff, skWand:
+      begin
+        Skills.DoSkill(FWeaponSkill, 2);
+        Skills.DoSkill(skDodge);
+        Skills.DoSkill(skConcentration, 3);
+        SatPerTurn := Ord(Game.Difficulty) + 8;
+      end;
+    skBow:
+      begin
+        Skills.DoSkill(FWeaponSkill, 2);
+        Skills.DoSkill(skDodge, 4);
+        SatPerTurn := Ord(Game.Difficulty) + 4;
+      end;
+  end;
+end;
+
 procedure TPlayer.Attack(Index: Int);
 var
   V, Ch: UInt;
@@ -290,48 +337,7 @@ begin
       BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
-    case FWeaponSkill of
-      skBlade:
-        begin
-          Skills.DoSkill(FWeaponSkill, 2);
-          Skills.DoSkill(skAthletics, 2);
-          Skills.DoSkill(skDodge, 2);
-          SatPerTurn := Ord(Game.Difficulty) + 5;
-        end;
-      skAxe:
-        begin
-          Skills.DoSkill(FWeaponSkill, 2);
-          Skills.DoSkill(skAthletics, 3);
-          Skills.DoSkill(skDodge);
-          SatPerTurn := Ord(Game.Difficulty) + 6;
-        end;
-      skSpear, skDagger:
-        begin
-          Skills.DoSkill(FWeaponSkill, 2);
-          Skills.DoSkill(skAthletics);
-          Skills.DoSkill(skDodge, 3);
-          SatPerTurn := Ord(Game.Difficulty) + 4;
-        end;
-      skMace:
-        begin
-          Skills.DoSkill(FWeaponSkill, 2);
-          Skills.DoSkill(skAthletics, 4);
-          SatPerTurn := Ord(Game.Difficulty) + 7;
-        end;
-      skStaff, skWand:
-        begin
-          Skills.DoSkill(FWeaponSkill, 2);
-          Skills.DoSkill(skDodge);
-          Skills.DoSkill(skConcentration, 3);
-          SatPerTurn := Ord(Game.Difficulty) + 8;
-        end;
-      skBow:
-        begin
-          Skills.DoSkill(FWeaponSkill, 2);
-          Skills.DoSkill(skDodge, 4);
-          SatPerTurn := Ord(Game.Difficulty) + 4;
-        end;
-    end;
+    DoWeaponSkill;
     // Victory
     if Mob.IsDead then
       Mob.Defeat;
@@ -1597,7 +1603,10 @@ begin
   end;
   // Gold
   if (efPrmGold in Effects) then
+  begin
     Items.AddItemToInv(ivGold, StartGold);
+    Player.Calc;
+  end;
   // Athletics
   if (efPrmAthletics in Effects) then
     PrmSkill(skAthletics);
