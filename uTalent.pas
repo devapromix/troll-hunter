@@ -8,12 +8,10 @@ const
   TalentMax = 10;
 
 type
-  TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
-    tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
-    tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
-    tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
-    tlAffinity_with_Daggers, tlAffinity_with_Bows, tlMiser { Скряга } ,
-    tlCareful { Осторожный } , tlIron_Skin { Железная Кожа } ,
+  TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } , tlMage { Маг } , tlTough { Тяжелый } ,
+    tlWealthy { Богатый } , tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
+    tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands, tlAffinity_with_Daggers, tlAffinity_with_Bows,
+    tlBodybuilding, tlMeditation, tlMiser { Скряга } , tlCareful { Осторожный } , tlIron_Skin { Железная Кожа } ,
     tlHardy { Выносливый } , tlCharged { Энергичный } );
 
 type
@@ -41,31 +39,37 @@ const
     // Wealthy
     (Level: 1; TalentBonus: tbGold; Effects: [efPrmGold];),
     // Affinity with Swords
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBlade];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmBlade];),
     // Affinity with Axes
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmAxe];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmAxe];),
     // Affinity with Polearms
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmSpear];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmSpear];),
     // Affinity with Maces
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMace];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmMace];),
     // Affinity with Staves
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmStaff];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmStaff];),
     // Affinity with Wands
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmWand];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmWand];),
     // Affinity with Daggers
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmDagger];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmDagger];),
     // Affinity with Bows
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBow];),
+    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmBow];),
+    // Bodybuilding
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBodybuilding];),
+    // Meditation
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMeditation];),
     // Miser
-    (Level: 5; TalentBonus: tbNone; Effects: [ef2xGold];),
+    (Level: 4; TalentBonus: tbNone; Effects: [ef2xGold];),
     // Careful
-    (Level: 5; TalentBonus: tbTalent; Effects: [efPrmDV];),
+    (Level: 4; TalentBonus: tbTalent; Effects: [efPrmDV];),
     // Iron Skin
-    (Level: 5; TalentBonus: tbTalent; Effects: [efPrmPV];),
+    (Level: 4; TalentBonus: tbTalent; Effects: [efPrmPV];),
     // Hardy
     (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmLife];),
     // Charged
-    (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmMana];));
+    (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmMana];)
+    //
+    );
 
 type
   TTalent = record
@@ -101,9 +105,8 @@ implementation
 uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute, uHelpers;
 
 const
-  TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',
-    'Concentration', 'Toughness', 'Gold', 'Blade', 'Axe', 'Spear', 'Mace',
-    'Staff', 'Wand', 'Dagger', 'Bow', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
+  TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge', 'Concentration', 'Toughness', 'Gold', 'Blade',
+    'Axe', 'Spear', 'Mace', 'Staff', 'Wand', 'Dagger', 'Bow', 'Bodybuilding', 'Meditation', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
 
   { TTalents }
 
@@ -162,8 +165,7 @@ var
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
-    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and
-      (T <> tlNone)) then
+    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and (T <> tlNone)) then
     begin
       if (Key = K) then
       begin

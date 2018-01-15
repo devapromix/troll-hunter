@@ -15,7 +15,7 @@ type
     efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace,
     efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
-    efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair);
+    efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation);
 
 const
   CraftEffLow = efCraftStr;

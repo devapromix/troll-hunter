@@ -435,6 +435,11 @@ var
     end;
   end;
 
+  procedure HalfAttrib(Attrib: TAttribEnum);
+  begin
+    Attributes.SetValue(Attrib, Attributes.Attrib[Attrib].Value div 2);
+  end;
+
 begin
   ClearAttrib();
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
@@ -488,17 +493,13 @@ begin
   //
   if (Abilities.IsAbility(abWeak)) then
   begin
-    Attributes.SetValue(atStr, Attributes.Attrib[atStr].Value div 2);
-    Attributes.SetValue(atDex, Attributes.Attrib[atDex].Value div 2);
+    HalfAttrib(atStr);
+    HalfAttrib(atDex);
   end;
   if Abilities.IsAbility(abAfraid) then
-  begin
-    Attributes.SetValue(atWil, Attributes.Attrib[atWil].Value div 3);
-  end;
+    HalfAttrib(atWil);
   if Abilities.IsAbility(abDrunk) then
-  begin
-    Attributes.SetValue(atPer, Attributes.Attrib[atPer].Value div 3);
-  end;
+    HalfAttrib(atPer);
   // DV
   Attributes.SetValue(atDV, Game.EnsureRange(Round(Attributes.Attrib[atDex].Value * (DVMax / AttribMax)) +
     Attributes.Attrib[atDV].Prm, DVMax));
@@ -506,15 +507,13 @@ begin
   Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAttrib[atDef] +
     Attributes.Attrib[atPV].Prm, PVMax));
   if Abilities.IsAbility(abArmor_Reduction) then
-  begin
-    Attributes.SetValue(atPV, Attributes.Attrib[atPV].Value div 2);
-  end;
+    HalfAttrib(atPV);
   // Life
-  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) +
-    Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
+  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Skills.Skill[skBodybuilding].Value
+    * 5) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
   // Mana
-  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) +
-    Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
+  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Skills.Skill[skMeditation].Value *
+    5) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
   // Vision
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
   //
@@ -1643,6 +1642,12 @@ begin
   // Bow
   if (efPrmBow in Effects) then
     PrmSkill(skBow);
+  // Bodybuilding
+  if (efPrmBodybuilding in Effects) then
+    PrmSkill(skBodybuilding);
+  // Meditation
+  if (efPrmMeditation in Effects) then
+    PrmSkill(skMeditation);
   // 2x to gold
   if (ef2xGold in Effects) then
   begin
