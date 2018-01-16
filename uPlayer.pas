@@ -560,6 +560,7 @@ begin
     begin
       MsgLog.Add(Format(_('You crafted %s.'), [Items.GetNameThe(FItem)]));
       Statictics.Inc(stItCrafted);
+      Skills.DoSkill(skEnchant_Item, FItem.Level);
       Scenes.SetScene(scInv);
     end;
     Self.Calc;
@@ -1648,6 +1649,9 @@ begin
   // Meditation
   if (efPrmMeditation in Effects) then
     PrmSkill(skMeditation);
+  // Enchant Item
+  if (efPrmEnchant_Item in Effects) then
+    PrmSkill(skEnchant_Item);
   // 2x to gold
   if (ef2xGold in Effects) then
   begin

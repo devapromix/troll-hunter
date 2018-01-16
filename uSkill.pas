@@ -13,7 +13,7 @@ type
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
     //
-    skBodybuilding, skMeditation,
+    skBodybuilding, skMeditation, skEnchant_Item,
     // Weapon skills
     skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow,
     // Skills

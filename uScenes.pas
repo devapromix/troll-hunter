@@ -1084,11 +1084,16 @@ end;
 procedure TSceneInv.Update(var Key: UInt);
 begin
   case Key of
-    TK_ESCAPE:
-      // Close
+    TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
     TK_TAB: // Drop
       Scenes.SetScene(scDrop, scInv);
+    TK_ENTER, TK_KP_ENTER: // Enchant an item
+      begin                ...
+        Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)),
+          Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
+        Scenes.SetScene(scCraft);
+      end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scInv);
     TK_SPACE: // Player
@@ -2152,7 +2157,7 @@ end;
 
 procedure TSceneCraft.Render;
 begin
-  UI.Title(_('Craft'), 1, clDarkestRed);
+  UI.Title(_('Enchant an item'), 1, clDarkestRed);
 
   UI.FromAToZ();
   Items.RenderInventory();

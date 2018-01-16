@@ -11,7 +11,7 @@ type
   TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } , tlMage { Маг } , tlTough { Тяжелый } ,
     tlWealthy { Богатый } , tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
     tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands, tlAffinity_with_Daggers, tlAffinity_with_Bows,
-    tlBodybuilding, tlMeditation, tlMiser { Скряга } , tlCareful { Осторожный } , tlIron_Skin { Железная Кожа } ,
+    tlBodybuilding, tlMeditation, tlEnchant_Item, tlMiser { Скряга } , tlCareful { Осторожный } , tlIron_Skin { Железная Кожа } ,
     tlHardy { Выносливый } , tlCharged { Энергичный } );
 
 type
@@ -58,6 +58,8 @@ const
     (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBodybuilding];),
     // Meditation
     (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMeditation];),
+    // Enchant Item
+    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmEnchant_Item];),
     // Miser
     (Level: 4; TalentBonus: tbNone; Effects: [ef2xGold];),
     // Careful
@@ -106,7 +108,7 @@ uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute, 
 
 const
   TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge', 'Concentration', 'Toughness', 'Gold', 'Blade',
-    'Axe', 'Spear', 'Mace', 'Staff', 'Wand', 'Dagger', 'Bow', 'Bodybuilding', 'Meditation', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
+    'Axe', 'Spear', 'Mace', 'Staff', 'Wand', 'Dagger', 'Bow', 'Bodybuilding', 'Meditation', 'Enchant Item', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
 
   { TTalents }
 
