@@ -11,11 +11,11 @@ const
   ExtraGoldMax = 200;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efAllIdentification, efCraftStr, efCraftDex,
-    efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold,
-    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace,
-    efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV, efPrmPV,
-    efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation, efPrmEnchant_Item);
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efAllIdentification, efEnchantItem, efCraftStr,
+    efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak,
+    efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
+    efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
+    efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation, efPrmEnchant_Item);
 
 const
   CraftEffLow = efCraftStr;

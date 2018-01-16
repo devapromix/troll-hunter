@@ -113,11 +113,15 @@ type
     ivQuicksilver_Flask, ivTopaz_Flask, ivSulphur_Flask, ivGranite_Flask, ivQuartz_Flask, ivSacred_Flask, ivJade_Flask,
     ivHallowed_Flask, ivCoruscating_Flask, ivSanctified_Flask, ivDivine_Flask, ivGold_Flask, ivDiamond_Flask,
     ivEternal_Flask,
+    // Potions of Healing
+    ivPotion_of_Minor_Healing, ivPotion_of_Lesser_Healing, ivPotion_of_Greater_Healing, ivPotion_of_Full_Healing,
+    // Potions of Mana
+    ivPotion_of_Minor_Mana, ivPotion_of_Lesser_Mana, ivPotion_of_Greater_Mana, ivPotion_of_Full_Mana,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing, ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing,
     ivScroll_of_Hunger, ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
     ivScroll_of_Disappearing, ivScroll_of_Town_Portal, ivScroll_of_Bloodlust, ivScroll_of_Identify,
-    ivScroll_of_Full_Identify,
+    ivScroll_of_Full_Identify, ivScroll_of_Enchant_Item,
     // Runes
     ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing, ivRune_of_Full_Healing,
     ivRune_of_Teleportation, ivRune_of_Town_Portal,
@@ -317,6 +321,40 @@ const
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500;
     Color: clWhite; Deep: [deDrom]; Value: 200;),
 
+    // Potion of Minor Healing
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
+    Color: clLightestRed; Deep: [deDark_Wood .. deGray_Cave]; Effects: [efLife]; Value: 50;),
+    // Potion of Lesser Healing
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 2;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
+    Color: clLightRed; Deep: [deGray_Cave .. deDeep_Cave]; Effects: [efLife]; Value: 100;),
+    // Potion of Greater Healing
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 3;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 150;
+    Color: clRed; Deep: [deDeep_Cave .. deBlood_Cave]; Effects: [efLife]; Value: 150;),
+    // Potion of Full Healing
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 4;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 200;
+    Color: clDarkRed; Deep: [deBlood_Cave .. deDrom]; Effects: [efLife]; Value: 200;),
+
+    // Potion of Minor Mana
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 40;
+    Color: clLightestBlue; Deep: [deDark_Wood .. deGray_Cave]; Effects: [efMana]; Value: 60;),
+    // Potion of Lesser Mana
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 2;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 80;
+    Color: clLightBlue; Deep: [deGray_Cave .. deDeep_Cave]; Effects: [efMana]; Value: 120;),
+    // Potion of Greater Mana
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 3;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 120;
+    Color: clBlue; Deep: [deDeep_Cave .. deBlood_Cave]; Effects: [efMana]; Value: 180;),
+    // Potion of Full Mana
+    (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 4;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 160;
+    Color: clDarkBlue; Deep: [deBlood_Cave .. deDrom]; Effects: [efMana]; Value: 240;),
+
     // Scroll of Minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 40;
@@ -372,6 +410,10 @@ const
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 75;
     Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efAllIdentification]; Value: 1; ManaCost: 7;),
+    // Scroll of Enchant Item
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 750;
+    Color: clLightBlue; Deep: [deDark_Wood .. deDrom]; Effects: [efEnchantItem]; Value: 1; ManaCost: 75;),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 3;
@@ -433,7 +475,7 @@ const
     // Healing Herb
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 15;
-    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLife]; Value: 25;),
+    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLife, efFood]; Value: 25;),
 
     // Ruby #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);

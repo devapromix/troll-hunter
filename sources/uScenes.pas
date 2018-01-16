@@ -1088,11 +1088,9 @@ begin
       Scenes.SetScene(scGame);
     TK_TAB: // Drop
       Scenes.SetScene(scDrop, scInv);
-    TK_ENTER, TK_KP_ENTER: // Enchant an item
-      begin                ...
-        Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)),
-          Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
-        Scenes.SetScene(scCraft);
+    TK_ENTER, TK_KP_ENTER:
+      begin
+
       end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scInv);
@@ -1876,7 +1874,7 @@ begin
   AddOption('G', _('Auto pick up gems'), Game.GetOption(apGem));
   AddOption('F', _('Auto pick up food'), Game.GetOption(apFood));
   AddOption('Y', _('Auto pick up plants'), Game.GetOption(apPlant));
-  AddOption('P', _('Auto pick up potions'), Game.GetOption(apPotion));
+  AddOption('P', _('Auto pick up potions and flasks'), Game.GetOption(apPotion));
   AddOption('U', _('Auto pick up flasks'), Game.GetOption(apFlask));
   AddOption('O', _('Auto pick up magic items'), Game.GetOption(apMagic));
   AddOption('S', _('Auto pick up scrolls'), Game.GetOption(apScroll));

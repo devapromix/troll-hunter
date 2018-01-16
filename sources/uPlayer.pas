@@ -1403,13 +1403,14 @@ begin
   if Mode.Wizard then
   begin
     Items.AddItemToInv(ivRune_of_Full_Healing);
-    // Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
-    // Items.AddItemToInv(ivPotion_of_Full_Mana, 10);
+    Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
+    Items.AddItemToInv(ivPotion_of_Full_Mana, 10);
     // Items.AddItemToInv(ivAntidote, 10);
     Items.AddItemToInv(ivScroll_of_Town_Portal, 10);
     Items.AddItemToInv(ivScroll_of_Identify, 10);
     Items.AddItemToInv(ivScroll_of_Full_Identify, 5);
     Items.AddItemToInv(ivScroll_of_Bloodlust, 10);
+    Items.AddItemToInv(ivScroll_of_Enchant_Item, 10);
   end
   else
   begin
@@ -1536,6 +1537,13 @@ begin
       Affixes.DoCraft(Ef, Value);
       Scenes.SetScene(scCraft);
     end;
+  // Enchant Item
+  if (efEnchantItem in Effects) then
+  begin
+    Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)),
+      Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
+    Scenes.SetScene(scCraft);
+  end;
   // Repair
   if (efRepair in Effects) then
   begin
