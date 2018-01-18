@@ -2044,7 +2044,7 @@ begin
         end;
     else
       if ((AItem.Price > 0) and Game.GetOption(apShPrice)) then
-        S := GetPrice(AItem.Price);
+        S := GetPrice(AItem.Price, True);
     end;
     if Game.Timer > 0 then
       Terminal.Print(Status.Left - L, AY + I, S)
