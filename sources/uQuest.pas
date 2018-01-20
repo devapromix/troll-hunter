@@ -32,7 +32,7 @@ type
 
 const
   QuestBase: array [TQuestEnum] of TQuestBase = (
-    // Kill N bears
+    // The Hunt (Kill N creatures)
     (Level: 1; QuestType: qtKillMobs; Mobs: [mbBlack_Bear, mbGrizzly_Bear];
     Amount: (Min: 3; Max: 5;);));
 
