@@ -514,7 +514,7 @@ begin
   if Mode.Wizard then
   begin
     Self.AddKey('Space', _('Create a new hero'));
-    Self.AddKey('Z', _('Wizard Mode'), True);
+    Self.AddKey('Z', _('Turn Wizard Mode Off'), True);
   end
   else
     Self.AddKey('Space', _('Create a new hero'), True);
@@ -1438,7 +1438,7 @@ begin
   begin
     X := 1;
     Y := Y + 3;
-    UI.Title(_('Wizard Mode'), Y - 1);
+    UI.Title(_('Trun Wizard Mode Off'), Y - 1);
     Y := Y + 1;
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
