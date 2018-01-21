@@ -1438,7 +1438,7 @@ begin
   begin
     X := 1;
     Y := Y + 3;
-    UI.Title(_('Trun Wizard Mode Off'), Y - 1);
+    UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
@@ -1532,7 +1532,7 @@ begin
     Add(_('Buy items (runes)'));
   // Quests
   if (ntQuest_D in NPCType) then
-    Add(_('Kill N bears (quest)'));
+    Add(_('The Hunt (quest)'));
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'), True);
@@ -1897,7 +1897,7 @@ begin
     Y := Y + 3;
     UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
-    AddOption('Z', _('Wizard Mode'), Mode.Wizard, clRed);
+    AddOption('Z', _('Turn Wizard Mode Off'), Mode.Wizard, clRed);
     AddOption('M', _('Show map'), Game.ShowMap);
     AddOption('T', _('Reload all shops'), False);
     // AddOption('J', _(''), False);

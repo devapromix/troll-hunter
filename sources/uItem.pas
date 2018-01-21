@@ -5,12 +5,12 @@ interface
 uses uTypes, uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
-  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itScroll, itBook,
+  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itStone, itScroll, itBook,
     itRune, itFood, itPlant, itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear,
     itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman, itArrow);
 
 const
-  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '?', '?', '*', ',', '&', '\',
+  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&', '\',
     '/', '|', '_', '~', '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{');
 
   // From Angband:
@@ -43,7 +43,7 @@ const
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   FlaskTypeItems = [itFlask];
-  MagicTypeItems = [itOrb];
+  MagicTypeItems = [itOrb, itStone];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow, itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
@@ -118,6 +118,8 @@ type
     ivPotion_of_Minor_Healing, ivPotion_of_Lesser_Healing, ivPotion_of_Greater_Healing, ivPotion_of_Full_Healing,
     // Potions of Mana
     ivPotion_of_Minor_Mana, ivPotion_of_Lesser_Mana, ivPotion_of_Greater_Mana, ivPotion_of_Full_Mana,
+    // Stones
+    ivStone_of_Stamina, ivStone_of_Mana, ivStone_of_Recovery,
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing, ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing,
     ivScroll_of_Hunger, ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
@@ -355,6 +357,19 @@ const
     (Symbol: '!'; ItemType: itPotion; SlotType: stNone; MaxStack: 8; MaxDurability: 0; Level: 4;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 160;
     Color: clDarkBlue; Deep: [deBlood_Cave .. deDrom]; Effects: [efMana]; Value: 240;),
+
+    // Stone of
+    (Symbol: '8'; ItemType: itStone; SlotType: stNone; MaxStack: 32; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 25;
+    Color: clRed; Deep: [deDark_Wood .. deDrom]; Effects: [efLife]; Value: 25;),
+    // Stone of
+    (Symbol: '8'; ItemType: itStone; SlotType: stNone; MaxStack: 32; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 20;
+    Color: clBlue; Deep: [deDark_Wood .. deDrom]; Effects: [efMana]; Value: 25;),
+    // Stone of
+    (Symbol: '8'; ItemType: itStone; SlotType: stNone; MaxStack: 32; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 25;
+    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLife, efMana]; Value: 25;),
 
     // Scroll of Minor healing
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;

@@ -79,7 +79,7 @@ uses SysUtils, Dialogs, uMap, uMsgLog, uLanguage;
 
 function TQuests.GetName(const AQuestEnum: TQuestEnum): string;
 begin
-  Result := 'Kill bears';
+  Result := 'The Hunt';
 end;
 
 function TQuests.GetQuest(I: Int): TQuest;
