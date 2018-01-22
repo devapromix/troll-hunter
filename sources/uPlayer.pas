@@ -525,6 +525,8 @@ begin
 end;
 
 procedure TPlayer.Clear();
+var
+  PlayerName: string;
 begin
   inherited Clear();
   Skills.Clear();
@@ -537,7 +539,11 @@ begin
   Attributes.SetValue(atSat, SatiatedMax);
   Gold := 0;
   MaxMap := 0;
-  Name := _('PLAYER');
+  PlayerName := Trim(Terminal_Get('ini.player.name'));
+  if (PlayerName = '') then
+    Name := _('PLAYER')
+  else
+    Name := PlayerName;
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
   FBackground := GenerateBackground();
