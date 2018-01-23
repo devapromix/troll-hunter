@@ -58,7 +58,6 @@ type
     FSkills: TSkills;
     procedure GenNPCText;
     function GetVision: UInt;
-    function GenerateBackground(): string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -87,6 +86,7 @@ type
     procedure Wait;
     procedure Clear();
     procedure AddTurn;
+    procedure GenerateBackground();
     procedure Spawn;
     function GetSatiationStr: string;
     function SaveCharacterDump(AReason: string): string;
@@ -132,8 +132,8 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
 
 { TPlayer }
 
-// Generate a random background (from Kharne roguelike)
-function TPlayer.GenerateBackground(): string;
+// Generate a random player's background (from Kharne and UMoria roguelikes)
+procedure TPlayer.GenerateBackground();
 type
   TConPartsEnum = (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType, cpEyeColour, cpHairStyle,
     cpHairColour, cpComplexion);
@@ -142,24 +142,25 @@ var
   SL: array [TConPartsEnum] of TStringList;
 begin
   Randomize;
-  Result := '';
+  FBackground := '';
   for I := Low(TConPartsEnum) to High(TConPartsEnum) do
     SL[I] := TStringList.Create;
   try
     SL[cpChild].DelimitedText := _('"an only child","one of two children",' +
-      '"one of many children","the only surviving child"');
-    SL[cpClass].DelimitedText := _('"lower-class", "middle-class",' + '"upper-class"');
-    SL[cpParent].DelimitedText := _('"mercenary","merchant","businessman",' +
-      '"craftsman","soldier","templar","priest"');
-    SL[cpBackground].DelimitedText := _('"contented","peaceful",' + '"troubled","settled","disturbed"');
-    SL[cpCredit].DelimitedText := _('"a credit to","a disgrace to",' + '"the black sheep of"');
-    SL[cpEyeType].DelimitedText := _('"dull","unusually piercing",' + '"piercing","striking"');
-    SL[cpEyeColour].DelimitedText := _('"grey","violet","green","blue",' + '"brown"');
-    SL[cpHairStyle].DelimitedText := _('"wavy","curly","straight","short",' + '"long"');
-    SL[cpHairColour].DelimitedText := _('"auburn","blonde","black","dark",' + '"ginger","grey"');
-    SL[cpComplexion].DelimitedText := _('"an average","a sallow","a fair",' + '"a dark","a light"');
+      '"one of many children","the only surviving child","one of several children",' +
+      '"the illegitimate but acknowledged child","the illegitimate and unacknowledged child"');
+    SL[cpClass].DelimitedText := _('"lower-class", "middle-class","upper-class"');
+    SL[cpParent].DelimitedText := _('"mercenary","merchant","businessman","titled noble",' +
+      '"craftsman","soldier","templar","priest","guildsman","townsman"');
+    SL[cpBackground].DelimitedText := _('"contented","peaceful","troubled","settled","disturbed"');
+    SL[cpCredit].DelimitedText := _('"a credit to","a disgrace to","the black sheep of"');
+    SL[cpEyeType].DelimitedText := _('"dull","unusually piercing","piercing","striking","dark"');
+    SL[cpEyeColour].DelimitedText := _('"grey","violet","green","blue","brown","blue-gray"');
+    SL[cpHairStyle].DelimitedText := _('"wavy","curly","straight","short","long"');
+    SL[cpHairColour].DelimitedText := _('"auburn","blonde","black","dark","red","ginger","grey","brown"');
+    SL[cpComplexion].DelimitedText := _('"an average","a sallow","a fair","a dark","a light"');
 
-    Result := Format(Terminal.Colorize(_('You are %s of a %s %s. You had a %s upbringing and you ' +
+    FBackground := Format(Terminal.Colorize(_('You are %s of a %s %s. You had a %s upbringing and you ' +
       'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.'), 'Yellow'),
       [SL[cpChild][Random(SL[cpChild].Count - 1)], SL[cpClass][Random(SL[cpClass].Count - 1)],
       SL[cpParent][Random(SL[cpParent].Count - 1)], SL[cpBackground][Random(SL[cpBackground].Count - 1)],
@@ -546,7 +547,7 @@ begin
     Name := PlayerName;
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
-  FBackground := GenerateBackground();
+  GenerateBackground();
   Calc();
   Fill();
 end;

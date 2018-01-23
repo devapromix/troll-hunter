@@ -497,7 +497,7 @@ begin
       begin
         if (SceneEnum = scTitle) then
           Game.CanClose := True;
-        if Mode.Game and not(SceneEnum in [scWin, scDef, scQuit]) and not Player.IsDead then
+        if { Mode.Game and } not(SceneEnum in [scWin, scDef, scQuit]) and not Player.IsDead then
           SetScene(scQuit, SceneEnum);
       end;
   end;
@@ -1729,7 +1729,7 @@ procedure TSceneCalendar.Render;
 begin
   UI.Title(_('Calendar'));
 
-  Y := 12;
+  Y := 10;
   Player.RenderWeather(CX, Y - 6, CX);
   Add(_('Turn'), Player.Statictics.Get(stTurn));
   Add(_('Time'), Calendar.GetTime, Calendar.GetTimeStr);
@@ -1737,6 +1737,8 @@ begin
   Add(_('Month'), Calendar.Month, Calendar.GetMonthName);
   Add(_('Year'), Calendar.Year);
   Add(_('Map'), Map.Name);
+  Add(_('Wind'), '');
+  Add(_('Weather'), '');
 
   AddKey('Esc', _('Close'), True);
 end;
@@ -1829,7 +1831,7 @@ procedure TSceneName.Render;
 begin
   UI.Title(_('Choose a name'));
 
-  Terminal.Print(CX - 10, CY, _('Enter you name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
+  Terminal.Print(CX - 10, CY, _('Enter your player''s name') + ': ' + Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'), True);
@@ -2206,13 +2208,16 @@ end;
 
 procedure TSceneBackground.Render;
 begin
-  UI.Title(_('Background'));
+  UI.Title(_('Character Background'));
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background, TK_ALIGN_BOTTOM);
 
   if not Mode.Game then
+  begin
     AddKey('Enter', _('Start game'));
+    AddKey('Space', _('Re-roll'));
+  end;
   AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
@@ -2230,6 +2235,9 @@ begin
         Player.Talents.DoTalent(TSceneTalents(Scenes.GetScene(scTalents)).Talent);
         Scenes.SetScene(scGame);
       end;
+    TK_SPACE:
+      if not Mode.Game then
+        Player.GenerateBackground();
     TK_ESCAPE:
       Scenes.GoBack();
   end;

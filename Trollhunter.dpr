@@ -38,7 +38,8 @@ uses
   uBearLibItemsDungeon in 'Sources\BearLibItems\uBearLibItemsDungeon.pas',
   uBearLibItemsInventory in 'Sources\BearLibItems\uBearLibItemsInventory.pas',
   uQuest in 'Sources\uQuest.pas',
-  uHelpers in 'Sources\uHelpers.pas';
+  uHelpers in 'Sources\uHelpers.pas',
+  uWeather in 'sources\uWeather.pas';
 
 var
   Key: UInt = 0;
