@@ -524,11 +524,9 @@ begin
   if Abilities.IsAbility(abArmor_Reduction) then
     HalfAttrib(atPV);
   // Life
-  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Skills.Skill[skBodybuilding].Value
-    * 5) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
+  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
   // Mana
-  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Skills.Skill[skMeditation].Value *
-    5) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
+  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
   // Vision
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision] + Light);
   //
@@ -643,6 +641,7 @@ end;
 function TPlayer.GetVision: UInt;
 begin
   Result := Game.EnsureRange((Attributes.Attrib[atVision].Value - Abilities.Ability[abBlinded]) + 3, VisionMax);
+  Result := Math.IfThen(Calendar.IsDay, Result, Result div 2);
 end;
 
 function TPlayer.GetSatiationStr: string;
@@ -886,6 +885,7 @@ begin
     MsgLog.Add(Format(_('You sold %s (+%d gold).'), [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
+  Wait;
 end;
 
 procedure TPlayer.BreakItem();
@@ -977,6 +977,7 @@ begin
     Scenes.SetScene(scInv);
   end;
   Self.Calc;
+  Wait;
 end;
 
 procedure TPlayer.RepairItem(Index: Int);
@@ -1237,12 +1238,10 @@ var
   end;
 
 begin
-  case Calendar.Hour of
-    6 .. 21:
-      Add(UI.Icon(icSun), 'Light Yellow', 'Lightest Blue');
+  if Calendar.IsDay then
+    Add(UI.Icon(icSun), 'Light Yellow', 'Lightest Blue')
   else
-    Add('(', 'Light White', 'Darker Gray');
-  end;
+    Add(UI.Icon(icMoon), 'Light White', 'Darker Gray');
   Left := Round(Calendar.Hour / 24 * AWidth);
   SunOrMoon := Terminal.Colorize(SunOrMoonGlyph, SunOrMoonGlyphColor);
   SkyBef := Terminal.Colorize(StringOfChar('_', Left), SkyColor);
@@ -1478,7 +1477,7 @@ end;
 
 procedure TPlayer.Turn;
 begin
-  //Items.
+  // Items.
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);

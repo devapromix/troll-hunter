@@ -1608,7 +1608,7 @@ begin
     S := ''
     // Light (Torch)
   else if (IT = itTorch) then
-    S := S + Format('(%d/%d)', [AItem.Value, ItemBase[TItemEnum(ID)].Value])
+    S := S + Format('(%s%d/%d)', [UI.Icon(icFlag), AItem.Value, ItemBase[TItemEnum(ID)].Value])
   else
   begin
     if (AItem.SlotID = 0) then
