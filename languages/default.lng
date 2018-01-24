@@ -15,6 +15,7 @@
 "mercenary","merchant","businessman","titled noble","craftsman","soldier","templar","priest","guildsman","townsman"=
 "wavy","curly","straight","short","long"=
 %d gold left=
+%s been ruined irreversibly.=
 %s blinded you (%d).=
 %s dies.=
 %s feel lust for blood (%d).=
@@ -29,6 +30,7 @@
 %s notices you!=
 %s says: "%s"=
 %s scared you (%d).=
+%s soon will be totally broken (%d/%d).=
 %s: %s.=
 Accept=
 Affixes=
@@ -271,4 +273,5 @@ You picked up %s.=
 You read %s.=
 You repaired %s (-%d gold).=
 You sold %s (+%d gold).=
+You unequip %s.=
 Your skill %s has raised to %d!=

@@ -46,6 +46,7 @@ type
     FAbilities: TAbilities;
     FAttributes: TAttributes;
   public
+    Light: Int;
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
@@ -74,6 +75,7 @@ end;
 constructor TCreature.Create;
 begin
   inherited;
+  Light := 0;
   FAttributes := TAttributes.Create;
   FAbilities := TAbilities.Create;
 end;
@@ -148,6 +150,7 @@ begin
           Attributes.Modify(atLife, -Value);
       end;
     end;
+    if (Light > 0) then Result := True;
 end;
 
 end.

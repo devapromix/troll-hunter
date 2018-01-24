@@ -491,13 +491,15 @@ end;
 procedure TScenes.Update(var Key: UInt);
 begin
   if (FScene[SceneEnum] <> nil) then
+  begin
     FScene[SceneEnum].Update(Key);
+  end;
   case Key of
     TK_CLOSE:
       begin
         if (SceneEnum = scTitle) then
           Game.CanClose := True;
-        if { Mode.Game and } not(SceneEnum in [scWin, scDef, scQuit]) and not Player.IsDead then
+        if Mode.Game and not(SceneEnum in [scWin, scDef, scQuit]) and not Player.IsDead then
           SetScene(scQuit, SceneEnum);
       end;
   end;

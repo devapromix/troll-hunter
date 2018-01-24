@@ -615,7 +615,7 @@ begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(L * 3, L * 7), UIntMax);
       Player.Abilities.Modify(abArmor_Reduction, Dam);
-      //MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'), Abilities.GetColor(abArmor_Reduction)), [The, Dam]));
+      // MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'), Abilities.GetColor(abArmor_Reduction)), [The, Dam]));
       Game.ShowEffects := True;
       Player.Calc;
       Exit;

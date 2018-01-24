@@ -6,7 +6,7 @@ uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
   uTalent;
 
 type
-  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand, stNeck, stFinger);
+  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand, stNeck, stFinger, stTorch);
 
 const
   // Player
@@ -118,6 +118,7 @@ type
     procedure RnItem(FItem: Item; const Index: Int);
     procedure AutoPickup();
     procedure RenderWeather(const AX, AY, AWidth: UInt);
+    procedure Turn;
   end;
 
 var
@@ -216,6 +217,7 @@ begin
       Attributes.Modify(atMana, C);
     end;
   end;
+  Turn;
   if OnTurn() then
     Calc;
   if IsDead then
@@ -442,6 +444,7 @@ var
   end;
 
 begin
+  Light := 0;
   ClearAttrib();
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
@@ -478,6 +481,17 @@ begin
       end;
       if (ItemBase[ID].SlotType = stMainHand) then
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
+      if (ItemBase[ID].SlotType = stTorch) then
+      begin
+        Light := FItem.Value;
+        FItem.Value := FItem.Value - 1;
+        Items_Inventory_SetItem(I, FItem);
+        if (FItem.Value <= 0) then
+        begin
+          Items_Inventory_DeleteItem(I, FItem);
+          Light := 0;
+        end;
+      end;
     end;
   end;
   //
@@ -516,7 +530,7 @@ begin
   Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Skills.Skill[skMeditation].Value *
     5) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
   // Vision
-  Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision]);
+  Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision] + Light);
   //
   Attributes.SetValue(atExtraGold, FAttrib[atExtraGold].InRange(ExtraGoldMax));
   Self.SetDamage(EnsureRange(FAttrib[atMinDamage] + Attributes.Attrib[atStr].Value div 3, 1, UIntMax - 1),
@@ -1455,10 +1469,16 @@ begin
     end; }
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
+  Items.AddItemToInv(ivTorch);
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));
   Self.Calc();
+end;
+
+procedure TPlayer.Turn;
+begin
+  //Items.
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);

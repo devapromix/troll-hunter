@@ -27,6 +27,7 @@ type
     function GetDayName(): string;
     function GetTime(): string;
     function GetTimeStr(): string;
+    function IsDay: Boolean;
     procedure OnHour();
     procedure OnDay();
     procedure OnWeek();
@@ -102,6 +103,11 @@ begin
   else
     Result := _('Night');
   end;
+end;
+
+function TCalendar.IsDay: Boolean;
+begin
+  Result := (Hour >= 6) and (Hour <= 21);
 end;
 
 procedure TCalendar.OnDay();

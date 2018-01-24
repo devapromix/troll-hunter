@@ -5,13 +5,13 @@ interface
 uses uTypes, uBearLibItemsCommon, uGame, uMap, uPlayer, uEntity, uCreature;
 
 type
-  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itStone, itScroll, itBook,
-    itRune, itFood, itPlant, itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear,
-    itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman, itArrow);
+  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itStone, itScroll,
+    itBook, itRune, itFood, itPlant, itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield,
+    itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman, itArrow, itTorch);
 
 const
-  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&', '\',
-    '/', '|', '_', '~', '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{');
+  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&',
+    '\', '/', '|', '_', '~', '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -49,6 +49,7 @@ const
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow];
+  TorchTypeItems = [itTorch];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems + FlaskTypeItems;
   AllwaysIdentTypeItems = JewelryTypeItems + FlaskTypeItems;
@@ -131,7 +132,7 @@ type
     // Foods
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
     // Keys
-    ivKey,
+    ivKey, ivTorch,
     //
     ivMana_Orb,
     //
@@ -224,7 +225,7 @@ type
     );
 
 const
-  TavernItems = [ivKey, ivScroll_of_Hunger];
+  TavernItems = [ivKey, ivScroll_of_Hunger, ivTorch];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -483,6 +484,11 @@ const
     (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
     Color: clYellow; Deep: [deDark_Wood .. deDrom];),
+
+    // Torch
+    (Symbol: 'i'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 60;
+    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 25;),
 
     // Mana Orb
     (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
@@ -1600,6 +1606,9 @@ begin
   // Corpse
   else if (TItemEnum(ID) = ivCorpse) then
     S := ''
+    // Light (Torch)
+  else if (IT = itTorch) then
+    S := S + Format('(%d/%d)', [AItem.Value, ItemBase[TItemEnum(ID)].Value])
   else
   begin
     if (AItem.SlotID = 0) then
@@ -1907,7 +1916,7 @@ end;
 function TItems.GetSlotName(const SlotType: TSlotType): string;
 const
   SlotName: array [TSlotType] of string = ('', 'Head', 'Torso', 'Hands', 'Feet', 'Main Hand', 'Off-Hand', 'Neck',
-    'Finger');
+    'Finger', 'In Hands');
 begin
   Result := Terminal.Colorize(Format('{%s}', [SlotName[SlotType]]), Terminal.GetColorFromIni('Equip'));
 end;
