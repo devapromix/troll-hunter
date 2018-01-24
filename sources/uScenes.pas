@@ -770,7 +770,10 @@ begin
               Terminal.ForegroundColor(clFog);
             if Map.GetFOV(X, Y) then
             begin
-              Terminal.ForegroundColor(T.Color);
+              if (Player.Light > 0) then
+                Terminal.ForegroundColor(clLightestYellow)
+              else
+                Terminal.ForegroundColor(T.Color);
               Map.SetFog(X, Y, False);
             end;
           end

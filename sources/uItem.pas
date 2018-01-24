@@ -132,7 +132,7 @@ type
     // Foods
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
     // Keys
-    ivKey, ivTorch,
+    ivKey, ivTorch, ivLight_Orb,
     //
     ivMana_Orb,
     //
@@ -225,7 +225,7 @@ type
     );
 
 const
-  TavernItems = [ivKey, ivScroll_of_Hunger, ivTorch];
+  TavernItems = [ivKey, ivScroll_of_Hunger, ivTorch, ivLight_Orb];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -488,7 +488,11 @@ const
     // Torch
     (Symbol: 'i'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 60;
-    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 25;),
+    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 100;),
+    // Light Orb
+    (Symbol: 'o'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
+    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 250;),
 
     // Mana Orb
     (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
