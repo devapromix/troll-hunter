@@ -129,13 +129,15 @@ type
     // Runes
     ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing, ivRune_of_Full_Healing,
     ivRune_of_Teleportation, ivRune_of_Town_Portal,
-    // Foods
+    // Foods and Plants
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
     // Keys
-    ivKey, ivTorch, ivLight_Orb,
-    //
-    ivMana_Orb,
-    //
+    ivKey,
+    // Torch
+    ivTorch,
+    // Orbs
+    ivLight_Orb, ivLife_Orb, ivMana_Orb,
+    // Foods and Plants
     ivHealing_Herb,
     // Ruby (Gems)
     ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby, ivImperial_Ruby, ivRoyal_Ruby,
@@ -212,8 +214,7 @@ type
     ivStaff7, ivStaff8, // Staff
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
-    ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
-    // Body Armor
+    ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk, // Body Armor
     ivTroll_Gauntlets, ivPlated_Gauntlets, // Gloves
     ivBattle_Boots, ivPlate_Boots, // Boots
     ivTower_Shield, ivGothic_Shield, // Shield
@@ -391,8 +392,8 @@ const
 
     // Scroll of Hunger
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500;
-    Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 250; ManaCost: 25;),
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
+    Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 350; ManaCost: 25;),
 
     // Scroll of Sidestepping
     (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 2;
@@ -462,23 +463,23 @@ const
     // Bread ration
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 200;
-    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 400;),
+    Color: clYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 600;),
     // Valley root
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 125;
-    Color: clLightestYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 250;),
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
+    Color: clLightestYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 300;),
     // Rat pod
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 150;
-    Color: clLightestGreen; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 300;),
+    Color: clLightestGreen; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 450;),
     // Kobold bulb
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 75;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50;
     Color: clLightestGreen; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 150;),
     // Hunk of Meat
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 225;
-    Color: clLightestYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 450;),
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300;
+    Color: clLightestYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efFood]; Value: 900;),
 
     // Key
     (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1;
@@ -489,11 +490,15 @@ const
     (Symbol: 'i'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 60;
     Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 100;),
-    // Light Orb
-    (Symbol: 'o'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
-    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 100;
-    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 250;),
 
+    // Light Orb
+    (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 75;
+    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Effects: [efLight]; Value: 150;),
+    // Life Orb
+    (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 55;
+    Color: clLightRed; Deep: [deDark_Wood .. deDrom]; Effects: [efLife, efCurePoison]; Value: 45;),
     // Mana Orb
     (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 25;

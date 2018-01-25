@@ -17,6 +17,8 @@ const
   ReManaMax = 20;
   LifeAEKMax = 8;
   ManaAEKMax = 12;
+  LifeTurnMax = 150;
+  ManaTurnMax = 90;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
@@ -197,26 +199,7 @@ begin
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
   if (Attributes.Attrib[atSat].Value < StarvingMax) then
-    Attributes.Modify(atLife, -1)
-  else if not Abilities.IsAbility(abDiseased) then
-  begin
-    V := EnsureRange(100 - Skills.Skill[skHealing].Value, 25, 100);
-    if (Statictics.Get(stTurn) mod V = 0) then
-    begin
-      C := Skills.Skill[skHealing].Value;
-      if Abilities.IsAbility(abRegen) then
-        C := EnsureRange(C * 3, C, UIntMax);
-      Attributes.Modify(atLife, C);
-    end;
-    V := EnsureRange(100 - Skills.Skill[skConcentration].Value, 25, 100);
-    if (Statictics.Get(stTurn) mod V = 0) then
-    begin
-      C := Skills.Skill[skConcentration].Value;
-      if Abilities.IsAbility(abRegen) then
-        C := EnsureRange(C * 3, C, UIntMax);
-      Attributes.Modify(atMana, C);
-    end;
-  end;
+    Attributes.Modify(atLife, -1);
   Turn;
   if OnTurn() then
     Calc;
@@ -483,7 +466,7 @@ begin
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
       if (ItemBase[ID].SlotType = stTorch) then
       begin
-        Light := FItem.Value;
+        Light := Light + FItem.Value;
         FItem.Value := FItem.Value - 1;
         Items_Inventory_SetItem(I, FItem);
         if (FItem.Value <= 0) then
@@ -524,9 +507,14 @@ begin
   if Abilities.IsAbility(abArmor_Reduction) then
     HalfAttrib(atPV);
   // Life
-  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
+  Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) +
+    Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
   // Mana
-  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
+  Attributes.SetValue(atMaxMana, Round(Attributes.Attrib[atWil].Value * 4.2) +
+    Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] + Attributes.Attrib[atMaxMana].Prm);
+  // Light
+  if Abilities.IsAbility(abLight) then
+    Light := Light + Abilities.Ability[abLight];
   // Vision
   Attributes.SetValue(atVision, Round(Attributes.Attrib[atPer].Value / 8.3) + FAttrib[atVision] + Light);
   //
@@ -1475,11 +1463,6 @@ begin
   Self.Calc();
 end;
 
-procedure TPlayer.Turn;
-begin
-  // Items.
-end;
-
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);
 var
   V, VX, VY: UInt;
@@ -1522,7 +1505,7 @@ begin
   // Life
   if (efLife in Effects) then
   begin
-    V := Skills.Skill[skHealing].Value + Value;
+    V := Value;
     case RandomRange(0, 3) of
       0:
         MsgLog.Add(_('You feel healthy.'));
@@ -1533,7 +1516,6 @@ begin
     end;
     MsgLog.Add(Format(F, [_('Life'), Min(Attributes.Attrib[atMaxLife].Value - Attributes.Attrib[atLife].Value, V)]));
     Attributes.Modify(atLife, V);
-    Skills.DoSkill(skHealing);
   end;
   // Mana
   if (efMana in Effects) then
@@ -1543,7 +1525,7 @@ begin
     MsgLog.Add(Format(F, [_('Mana'), Min(Self.Attributes.Attrib[atMaxMana].Value - Self.Attributes.Attrib[atMana]
       .Value, V)]));
     Self.Attributes.Modify(atMana, V);
-    Skills.DoSkill(skConcentration, 5);
+    Skills.DoSkill(skConcentration);
   end;
   // Food
   if (efFood in Effects) then
@@ -1605,6 +1587,13 @@ begin
   begin
 
   end;
+  // Light
+  if (efLight in Effects) then
+  begin
+    Abilities.Modify(abLight, Value);
+    //MsgLog.Add(Format(_('You feel lust for blood (%d).'), [Value]));
+    Self.Calc;
+  end;
   // Bloodlust
   if (efBloodlust in Effects) then
   begin
@@ -1617,9 +1606,8 @@ begin
   begin
     if Abilities.IsAbility(abPoisoned) then
     begin
-      V := Self.Skills.Skill[skHealing].Value + Value;
+      V := Value;
       Abilities.Ability[abPoisoned] := Math.EnsureRange(Abilities.Ability[abPoisoned] - V, 0, UIntMax);
-      Self.Skills.DoSkill(skHealing);
       if Abilities.IsAbility(abPoisoned) then
         MsgLog.Add(_('You feel better.'))
       else
@@ -1738,6 +1726,29 @@ begin
   begin
     PrmValue(efPrmPer, IfThen(Value = 0, MinPrm, Value));
     MsgLog.Add(Format(_('Perception +%d'), [Value]));
+  end;
+end;
+
+procedure TPlayer.Turn();
+var
+  Turns: UInt;
+begin
+  // Regen
+  if Abilities.IsAbility(abRegen) then
+  begin
+    Attributes.Modify(atLife);
+    Attributes.Modify(atMana, Math.RandomRange(0, 3) + 1);
+  end;
+  if not Abilities.IsAbility(abDiseased) then
+  begin
+    // Replenish Life
+    Turns := LifeTurnMax - Skills.Skill[skBodybuilding].Value;
+    if (Statictics.Get(stTurn) mod Turns = 0) then
+      Attributes.Modify(atLife, Skills.Skill[skBodybuilding].Value);
+    // Regenerate Mana
+    Turns := ManaTurnMax - Skills.Skill[skMeditation].Value;
+    if (Statictics.Get(stTurn) mod Turns = 0) then
+      Attributes.Modify(atMana, Skills.Skill[skMeditation].Value);
   end;
 end;
 

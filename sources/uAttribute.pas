@@ -32,7 +32,7 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
-    procedure Modify(const I: TAttribEnum; const AValue: Int; const APrm: Int = 0);
+    procedure Modify(const I: TAttribEnum; const AValue: Int = 1; const APrm: Int = 0);
     procedure SetValue(const I: TAttribEnum; const AValue: Int); overload;
     procedure SetValue(const I, J: TAttribEnum); overload;
   end;

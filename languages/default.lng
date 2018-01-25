@@ -280,5 +280,6 @@ You read %s.=
 You repaired %s (-%d gold).=
 You sold %s (+%d gold).=
 You unequip %s.=
+You use %s.=
 You were slain by %s. Press %s=
 Your skill %s has raised to %d!=

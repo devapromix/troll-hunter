@@ -15,9 +15,7 @@ type
     //
     skBodybuilding, skMeditation, skEnchant_Item,
     // Weapon skills
-    skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow,
-    // Skills
-    skHealing);
+    skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow);
 
 type
   TSkill = record

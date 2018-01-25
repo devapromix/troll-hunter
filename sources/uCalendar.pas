@@ -42,7 +42,7 @@ var
 implementation
 
 uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer,
-  uCreature, uAttribute, uHelpers;
+  uCreature, uAttribute, uHelpers, uSkill;
 
 { TCalendar }
 
@@ -112,15 +112,16 @@ end;
 
 procedure TCalendar.OnDay();
 begin
-  // Replenish Life
-  Player.Attributes.Modify(atLife, Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax));
-  // Regenerate Mana
-  Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax));
 end;
 
 procedure TCalendar.OnHour();
 begin
-
+  // Replenish Life
+  if (Player.Attributes.Attrib[atReLife].Value > 0) then
+    Player.Attributes.Modify(atLife, Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax));
+  // Regenerate Mana
+  if (Player.Attributes.Attrib[atReMana].Value > 0) then
+    Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax));
 end;
 
 procedure TCalendar.OnMonth();

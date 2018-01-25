@@ -6,7 +6,7 @@ uses uTypes;
 
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen, abSleeping, abBloodlust, abCursed, abDrunk,
-    abDiseased, abWeak, abAfraid, abArmor_Reduction);
+    abDiseased, abWeak, abAfraid, abArmor_Reduction, abLight);
 
 type
   TSetOfAbility = set of TAbilityEnum;
@@ -37,7 +37,8 @@ uses SysUtils, TypInfo, uHelpers;
 
 const
   AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White', 'Dark Yellow', 'Light Red', 'Lighter Red',
-    'Yellow', 'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green', 'Light Yellow');
+    'Yellow', 'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green', 'Light Yellow',
+    'Lighter Yellow');
 
 procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin
