@@ -1036,7 +1036,7 @@ begin
     Exit;
   FItem.Durability := Game.EnsureRange(FItem.Durability - Value, UIntMax);
   if ((FItem.Durability > 0) and (FItem.Durability < (FItem.MaxDurability div 4))) then
-    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'), [Items.GetNameThe(FItem),
+    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'), [GetCapit(Items.GetNameThe(FItem)),
       FItem.Durability, FItem.MaxDurability]), clAlarm));
   Items_Inventory_SetItem(Index, FItem);
   RnItem(FItem, Index);

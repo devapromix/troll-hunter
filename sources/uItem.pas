@@ -134,7 +134,7 @@ type
     // Keys
     ivKey,
     // Torch
-    ivTorch,
+    ivTorch, ivOil_Lamp,
     // Orbs
     ivLight_Orb, ivLife_Orb, ivMana_Orb,
     // Foods and Plants
@@ -226,7 +226,7 @@ type
     );
 
 const
-  TavernItems = [ivKey, ivScroll_of_Hunger, ivTorch, ivLight_Orb];
+  TavernItems = [ivKey, ivScroll_of_Hunger, ivTorch, ivOil_Lamp, ivLight_Orb];
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -489,7 +489,11 @@ const
     // Torch
     (Symbol: 'i'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
     Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 60;
-    Color: clLightYellow; Deep: [deDark_Wood .. deDrom]; Value: 100;),
+    Color: clLighterRed; Deep: [deDark_Wood .. deDrom]; Value: 100;),
+    // Oil Lamp
+    (Symbol: 'O'; ItemType: itTorch; SlotType: stTorch; MaxStack: 1; MaxDurability: 0; Level: 1;
+    Defense: (Min: 0; Max: 0); Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 90;
+    Color: clLighterYellow; Deep: [deDark_Wood .. deDrom]; Value: 150;),
 
     // Light Orb
     (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1;

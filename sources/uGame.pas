@@ -63,11 +63,17 @@ const
   clLightBlue = $FF8888FF;
   clLightYellow = $FFFFFF88;
 
+  clLighterGray = $FFAAAAAA;
+  clLighterRed = $FFFFAAAA;
+  clLighterGreen = $FFAAFFAA;
+  clLighterBlue = $FFAAAAFF;
+  clLighterYellow = $FFFFFFAA;
+
   clLightestGray = $FFBBBBBB;
-  clLightestRed = $FFFFAAAA;
-  clLightestGreen = $FFAAFFAA;
-  clLightestBlue = $FFAAAAFF;
-  clLightestYellow = $FFFFFFAA;
+  clLightestRed = $FFFFCCCC;
+  clLightestGreen = $FFCCFFCC;
+  clLightestBlue = $FFCCCCFF;
+  clLightestYellow = $FFFFFFCC;
 
   clDarkGray = $FF222222;
   clDarkRed = $FF880000;
