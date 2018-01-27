@@ -1036,8 +1036,8 @@ begin
     Exit;
   FItem.Durability := Game.EnsureRange(FItem.Durability - Value, UIntMax);
   if ((FItem.Durability > 0) and (FItem.Durability < (FItem.MaxDurability div 4))) then
-    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'), [GetCapit(Items.GetNameThe(FItem)),
-      FItem.Durability, FItem.MaxDurability]), clAlarm));
+    MsgLog.Add(Terminal.Colorize(Format(_('%s soon will be totally broken (%d/%d).'),
+      [GetCapit(Items.GetNameThe(FItem)), FItem.Durability, FItem.MaxDurability]), clAlarm));
   Items_Inventory_SetItem(Index, FItem);
   RnItem(FItem, Index);
   Self.Calc;
@@ -1239,6 +1239,7 @@ end;
 
 function TPlayer.SaveCharacterDump(AReason: string): string;
 var
+  MorgueFileName: string;
   SL: TStringList;
 
   function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
@@ -1257,13 +1258,17 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format(_('%s: %s.'), [_('Difficulty'), GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.', [_('Difficulty'), GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
+    SL.Append(Player.Name);
     SL.Append(AReason);
     if IsDead then
       SL.Append(Format(_('He scored %d points.'), [Statictics.Get(stScore)]))
     else
       SL.Append(Format(_('He has scored %d points so far.'), [Statictics.Get(stScore)]));
+    SL.Append('');
+    SL.Append(Format(FT, [_('Statistics')]));
+    SL.Append(Format(_('Game time: %d turns.'), [Statictics.Get(stTurn)]));
     SL.Append('');
     SL.Append(Format(FT, [_('Screenshot')]));
     SL.Append(Game.Screenshot);
@@ -1278,7 +1283,9 @@ begin
     SL.Append('');
     SL.Append(GetPureText(Items.GetInventory));
     SL.Append(Format('%s: %d', [_('Gold'), Gold]));
-    SL.SaveToFile(GetDateTime('-', '-') + '-character-dump.txt');
+    ForceDirectories(Game.GetPath('morgue'));
+    MorgueFileName := Format('%s-%s-character-dump.txt', [Player.Name, GetDateTime('-', '-')]);
+    SL.SaveToFile(Game.GetPath('morgue') + MorgueFileName);
   finally
     FreeAndNil(SL);
   end;
@@ -1591,7 +1598,7 @@ begin
   if (efLight in Effects) then
   begin
     Abilities.Modify(abLight, Value);
-    //MsgLog.Add(Format(_('You feel lust for blood (%d).'), [Value]));
+    // MsgLog.Add(Format(_('You feel lust for blood (%d).'), [Value]));
     Self.Calc;
   end;
   // Bloodlust

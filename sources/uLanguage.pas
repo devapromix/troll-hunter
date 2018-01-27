@@ -56,6 +56,7 @@ begin
   FSL := TStringList.Create;
   FSL.Sorted := True;
   FSL.Duplicates := dupIgnore;
+  ForceDirectories(Game.GetPath('languages'));
   F := Game.GetPath('languages') + 'default.lng';
   if FileExists(F) then
     FSL.LoadFromFile(F);
