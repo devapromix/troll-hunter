@@ -34,7 +34,7 @@ type
     of_Radiance,
     // Potions, Antidote, Elixirs, Extracts
     of_Minor_Healing, of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation,
-    of_Fortifying, of_Antidote, of_Soothing, of_Poultice,
+    of_Fortifying, of_Antidote, of_Soothing, of_Poultice, of_Berserk,
     // Rare Elixirs
     of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf,
     of_the_Ogre, of_the_Troll, of_prmMana1, of_prmMana2, of_prmMana3,
@@ -126,6 +126,9 @@ const
     // of Poultice (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 45; Occurence: FlaskTypeItems;
     Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efCurePoison];),
+    // of Berserk (Flask I - XII)
+    (Level: (Min: 1; Max: 15); Price: 25; Occurence: FlaskTypeItems;
+    Value: (Min: 1; Max: 9); Effects: [efBerserk];),
 
     // (Perma Life I)
     (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;

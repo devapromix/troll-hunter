@@ -421,9 +421,14 @@ var
     end;
   end;
 
-  procedure HalfAttrib(Attrib: TAttribEnum);
+  procedure LoAttrib(Attrib: TAttribEnum);
   begin
     Attributes.SetValue(Attrib, Attributes.Attrib[Attrib].Value div 2);
+  end;
+
+  procedure HiAttrib(Attrib: TAttribEnum);
+  begin
+    Attributes.SetValue(Attrib, Attributes.Attrib[Attrib].Value * 2);
   end;
 
 begin
@@ -489,15 +494,20 @@ begin
   Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] +
     Attributes.Attrib[atPer].Prm, 1, AttribMax));
   //
+  if (Abilities.IsAbility(abBerserk)) then
+  begin
+    HiAttrib(atStr);
+    HiAttrib(atDex);
+  end;
   if (Abilities.IsAbility(abWeak)) then
   begin
-    HalfAttrib(atStr);
-    HalfAttrib(atDex);
+    LoAttrib(atStr);
+    LoAttrib(atDex);
   end;
   if Abilities.IsAbility(abAfraid) then
-    HalfAttrib(atWil);
+    LoAttrib(atWil);
   if Abilities.IsAbility(abDrunk) then
-    HalfAttrib(atPer);
+    LoAttrib(atPer);
   // DV
   Attributes.SetValue(atDV, Game.EnsureRange(Round(Attributes.Attrib[atDex].Value * (DVMax / AttribMax)) +
     Attributes.Attrib[atDV].Prm, DVMax));
@@ -505,7 +515,7 @@ begin
   Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAttrib[atDef] +
     Attributes.Attrib[atPV].Prm, PVMax));
   if Abilities.IsAbility(abArmor_Reduction) then
-    HalfAttrib(atPV);
+    LoAttrib(atPV);
   // Life
   Attributes.SetValue(atMaxLife, Round(Attributes.Attrib[atStr].Value * 3.6) +
     Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] + Attributes.Attrib[atMaxLife].Prm);
@@ -1600,6 +1610,12 @@ begin
     Abilities.Modify(abLight, Value);
     // MsgLog.Add(Format(_('You feel lust for blood (%d).'), [Value]));
     Self.Calc;
+  end;
+  // Berserk
+  if (efBerserk in Effects) then
+  begin
+    Abilities.Modify(abBerserk, Value);
+    MsgLog.Add(Format(_('You feel a sudden urge to kill things. (%d).'), [Value]));
   end;
   // Bloodlust
   if (efBloodlust in Effects) then
