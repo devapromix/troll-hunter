@@ -104,7 +104,7 @@ end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
 begin
-  FSL.SaveToFile(AFileName);
+  FSL.SaveToFile(AFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
 end;
 
 procedure TLanguage.UseLanguage(ACurrentLanguage: string);

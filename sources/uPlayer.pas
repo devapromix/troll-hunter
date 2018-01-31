@@ -1293,7 +1293,7 @@ begin
     SL.Append(Format('%s: %d', [_('Gold'), Gold]));
     ForceDirectories(Game.GetPath('morgue'));
     MorgueFileName := Format('%s-%s-character-dump.txt', [Player.Name, GetDateTime('-', '-')]);
-    SL.SaveToFile(Game.GetPath('morgue') + MorgueFileName);
+    SL.SaveToFile(Game.GetPath('morgue') + MorgueFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
   finally
     FreeAndNil(SL);
   end;
