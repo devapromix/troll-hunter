@@ -41,8 +41,8 @@ var
 
 implementation
 
-uses SysUtils, Math, uLanguage, uItem, uShop, uGame, uMsgLog, uPlayer,
-  uCreature, uAttribute, uHelpers, uSkill;
+uses SysUtils, Math, uLanguage, uItem, uShop, uMsgLog, uPlayer,
+  uCreature, uAttribute, uHelpers;
 
 { TCalendar }
 

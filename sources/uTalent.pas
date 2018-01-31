@@ -104,7 +104,7 @@ type
 
 implementation
 
-uses SysUtils, TypInfo, uLanguage, uSkill, uGame, uScenes, uPlayer, uAttribute, uHelpers;
+uses SysUtils, TypInfo, uLanguage, uSkill, uScenes, uPlayer, uAttribute, uHelpers;
 
 const
   TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge', 'Concentration', 'Toughness', 'Gold', 'Blade',

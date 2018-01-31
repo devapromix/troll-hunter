@@ -1482,7 +1482,7 @@ implementation
 
 uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
   uShop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
-  uBearLibItemsInventory, Dialogs, uScenes, uHelpers;
+  uBearLibItemsInventory, uHelpers;
 
 { TItems }
 
@@ -1898,13 +1898,11 @@ constructor TItems.Create;
 var
   I: TItemEnum;
   P: Pointer;
-  S: string;
 begin
   Items_Open();
   P := TypeInfo(TItemEnum);
   for I := Low(TItemEnum) to High(TItemEnum) do
     FItemName[I] := GetEnumName(P, Ord(I)).GetName('iv');
-  // if (StrToItemEnum('Gold') = ivGold) then ShowMessage('Gold');
 end;
 
 destructor TItems.Destroy;
@@ -2308,7 +2306,7 @@ end;
 
 function TItems.Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False; Index: UInt = 0): Boolean;
 var
-  I, Lev: UInt;
+  I: UInt;
   SB: TSuffixBase;
 begin
   Result := False;

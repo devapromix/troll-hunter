@@ -574,7 +574,7 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, uTerminal, uGame, uPlayer, uHelpers;
+uses SysUtils, TypInfo, Math, uTerminal, uGame, uHelpers;
 
 function TAffixes.Amount: UInt;
 begin

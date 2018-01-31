@@ -131,7 +131,7 @@ implementation
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
-  uBearLibItemsDungeon, uBearLibItemsInventory, Dialogs, uHelpers;
+  uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers;
 
 { TPlayer }
 
@@ -187,8 +187,6 @@ begin
 end;
 
 procedure TPlayer.AddTurn;
-var
-  V, C: UInt;
 begin
   if IsDead then
     Exit;
@@ -1373,7 +1371,7 @@ end;
 
 procedure TPlayer.Start();
 var
-  I, D: UInt;
+  D: UInt;
 begin
 
   // Add armors

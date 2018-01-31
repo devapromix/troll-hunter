@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses SysUtils, Dialogs, uMap, uMsgLog, uLanguage;
+uses SysUtils, uMap, uMsgLog, uLanguage;
 
 { TQuests }
 

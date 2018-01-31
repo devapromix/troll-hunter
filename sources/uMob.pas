@@ -412,7 +412,7 @@ var
 
 implementation
 
-uses Math, SysUtils, TypInfo, Dialogs, uTerminal, uPlayer, uMsgLog, uLanguage,
+uses Math, SysUtils, TypInfo, uTerminal, uPlayer, uMsgLog, uLanguage,
   uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest, uHelpers;
 
 function MyCallback(X, Y: Int): Boolean; stdcall;

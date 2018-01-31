@@ -39,7 +39,7 @@ type
 
 implementation
 
-uses Math, uHelpers;
+uses uHelpers;
 
 { TAttributes }
 

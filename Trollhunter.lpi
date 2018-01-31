@@ -28,7 +28,7 @@
         <CommandLineParams Value="-w -l"/>
       </local>
     </RunParams>
-    <Units Count="32">
+    <Units Count="33">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -157,6 +157,10 @@
         <Filename Value="sources\uHelpers.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit31>
+      <Unit32>
+        <Filename Value="sources\uWeather.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit32>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

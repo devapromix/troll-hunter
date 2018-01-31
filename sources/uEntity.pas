@@ -2,7 +2,7 @@ unit uEntity;
 
 interface
 
-uses uTypes, uAbility, uMap;
+uses uTypes, uMap;
 
 type
   TEntity = class(TObject)

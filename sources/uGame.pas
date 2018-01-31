@@ -176,7 +176,7 @@ var
 
 implementation
 
-uses Math, SysUtils, Dialogs, uPlayer, uMsgLog, uScenes,
+uses SysUtils, uPlayer, uMsgLog, uScenes,
   BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook, uHelpers;
 
 { TGame }

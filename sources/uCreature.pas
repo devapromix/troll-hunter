@@ -63,7 +63,7 @@ type
 
 implementation
 
-uses SysUtils, Math, uHelpers, uGame;
+uses SysUtils, Math, uHelpers;
 
 { TCreature }
 

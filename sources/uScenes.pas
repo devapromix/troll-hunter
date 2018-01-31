@@ -290,7 +290,7 @@ var
 implementation
 
 uses
-  SysUtils, Math, uTerminal, uPlayer, BearLibTerminal, Dialogs,
+  SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,

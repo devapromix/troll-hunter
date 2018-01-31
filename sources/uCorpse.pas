@@ -99,9 +99,9 @@ begin
 end;
 
 constructor TCorpses.Create;
-var
+//var
 //  F: TIniFile;
-  I: UInt;
+//  I: UInt;
 begin
 {  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
   try
