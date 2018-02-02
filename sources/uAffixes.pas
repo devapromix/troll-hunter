@@ -98,7 +98,7 @@ const
     // of Mana (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems; Value: (Min: 1; Max: 9); Effects: [efMana];),
     // of Rejuvenation (Flask I - XII)
-    (Level: (Min: 1; Max: 15); Price: 35; Occurence: FlaskTypeItems; Value: (Min: 1; Max: 9);
+    (Level: (Min: 1; Max: 15); Price: 45; Occurence: FlaskTypeItems; Value: (Min: 1; Max: 9);
     Effects: [efLife, efMana];),
     // of Fortifying (Flask I)
     (Level: (Min: 1; Max: 1); Price: 75; Occurence: FlaskTypeItems; Value: (Min: 0; Max: 0); Effects: [efCureWeak];),
