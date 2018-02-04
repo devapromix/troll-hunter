@@ -39,7 +39,8 @@ uses
   uBearLibItemsInventory in 'Sources\BearLibItems\uBearLibItemsInventory.pas',
   uQuest in 'Sources\uQuest.pas',
   uHelpers in 'Sources\uHelpers.pas',
-  uWeather in 'sources\uWeather.pas';
+  uWeather in 'sources\uWeather.pas',
+  uRace in 'sources\uRace.pas';
 
 var
   Key: UInt = 0;
