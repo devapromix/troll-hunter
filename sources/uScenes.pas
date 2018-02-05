@@ -294,7 +294,7 @@ uses
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
-  uAffixes, uHelpers;
+  uAffixes, uHelpers, uRace;
 
 { TScene }
 
@@ -2251,9 +2251,31 @@ end;
 { TSceneRace }
 
 procedure TSceneRace.Render;
+var
+  I: UInt;
+  R: TRaceEnum;
+
+  procedure Add(const AName: string);
+  var
+    C: Char;
+  begin
+    C := Chr(I + Ord('A'));
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(1, Y, UI.KeyToStr(C));
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(5, Y, AName);
+    Inc(I);
+    Inc(Y);
+  end;
+
 begin
   UI.Title(_('Choose a race'));
+  I := 0;
+  Y := 2;
+  for R := Low(TRaceEnum) to High(TRaceEnum) do
+    Add(Races.GetName(R));
 
+  AddKey('A-Z', _('Select a race'));
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'), True);
 end;
