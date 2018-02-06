@@ -6,7 +6,7 @@ uses
   uTypes;
 
 type
-  TRaceEnum = (rcHuman);
+  TRaceEnum = (rcHuman, rcElf, rcDwarf);
 
 type
   TRace = record
