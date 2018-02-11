@@ -3,7 +3,7 @@ unit uPlayer;
 interface
 
 uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
-  uTalent;
+  uTalent, uRace;
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand, stNeck, stFinger, stTorch);
@@ -39,6 +39,9 @@ const
     Y: 1), (X: - 1; Y: 1), (X: 1; Y: - 1), (X: - 1; Y: - 1), (X: 0; Y: 0));
 
 type
+  TSexEnum = (sxMale, sxFemale);
+
+type
   TPlayer = class(TCreature)
   private
     FLX: UInt;
@@ -48,6 +51,7 @@ type
     FGold: Int;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
+    FRace: TRaceEnum;
     FItemIsDrop: Boolean;
     FItemIndex: Int;
     FItemAmount: Int;
@@ -56,6 +60,7 @@ type
     FIsRest: Boolean;
     FName: string;
     FStatistics: TStatistics;
+    FSex: TSexEnum;
     FTalents: TTalents;
     FSkills: TSkills;
     procedure GenNPCText;
@@ -79,8 +84,10 @@ type
     property Background: string read FBackground;
     property Name: string read FName write FName;
     property Skills: TSkills read FSkills write FSkills;
+    property Race: TRaceEnum read FRace write FRace;
     property Talents: TTalents read FTalents write FTalents;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Int);
+    property Sex: TSexEnum read FSex write FSex;
     procedure Render(AX, AY: UInt);
     procedure Move(Dir: TDirectionEnum);
     procedure RenderInfo;
