@@ -1150,7 +1150,8 @@ begin
   X := Math.EnsureRange(Terminal.Window.Width div 4, 10, UIntMax);
 
   if Mode.Wizard then
-    UI.Title(Format('%s, %s, %s', [Player.Name, 'Race', 'Class']))
+    UI.Title(Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.Race), Game.IfThen(Player.Sex = sxMale,
+      _('Male'), _('Female')), 'Class']))
   else
     UI.Title(Player.Name);
 
@@ -1403,10 +1404,14 @@ begin
 
   Add(_('Name'), Player.Name);
   Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
-  Add(_('Race'), 'Human');
+  Add(_('Race'), Format('%s (%s)', [Races.GetName(Player.Race), Game.IfThen(Player.Sex = sxMale, _('Male'),
+    _('Female'))]));
   Add(_('Class'), 'Warrior');
   Add(_('Game Difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Statictics.Get(stScore));
+  Add(_('Age'), Player.Statictics.Get(stAge));
+  Add(_('Weight'), Player.Statictics.Get(stWeight));
+  Add(_('Height'), Player.Statictics.Get(stHeight));
   // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
   Add(_('Monsters Killed'), Player.Statictics.Get(stKills));
@@ -1431,7 +1436,7 @@ begin
 
   // Version
   X := 1;
-  Y := Y + 3;
+  Y := Y + 2;
   UI.Title(_('Version'), Y - 1);
   Y := Y + 1;
   Add(_('Game Version'), Game.GetVersion);
@@ -1442,7 +1447,7 @@ begin
   if Mode.Wizard then
   begin
     X := 1;
-    Y := Y + 3;
+    Y := Y + 2;
     UI.Title(_('Wizard Mode'), Y - 1);
     Y := Y + 1;
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
@@ -2262,7 +2267,10 @@ var
     C := Chr(I + Ord('A'));
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(1, Y, UI.KeyToStr(C));
-    Terminal.ForegroundColor(clWhite);
+    if (R = Player.Race) then
+      Terminal.ForegroundColor(clYellow)
+    else
+      Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, AName);
     Inc(I);
     Inc(Y);
@@ -2275,14 +2283,38 @@ begin
   for R := Low(TRaceEnum) to High(TRaceEnum) do
     Add(Races.GetName(R));
 
+  Terminal.ForegroundColor(clWhite);
+  Terminal.Print(CX, 3, _('Age') + ': ' + Terminal.Colorize(Player.Statictics.Get(stAge), 'Lush'));
+  Terminal.Print(CX, 4, _('Height') + ': ' + Terminal.Colorize(Player.Statictics.Get(stHeight), 'Lush'));
+  Terminal.Print(CX, 5, _('Weight') + ': ' + Terminal.Colorize(Player.Statictics.Get(stWeight), 'Lush'));
+  Terminal.Print(CX, 6, _('Sex') + ': ' + Terminal.Colorize(Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')
+    ), 'Lush'));
+
+  Terminal.Print(CX, 8, _('Strength') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Strength'));
+  Terminal.Print(CX, 9, _('Dexterity') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Dexterity'));
+  Terminal.Print(CX, 10, _('Willpower') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Willpower'));
+  Terminal.Print(CX, 11, _('Perception') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Perception'));
+
   AddKey('A-Z', _('Select a race'));
+  AddKey('Tab', _('Choose a sex'));
+  AddKey('Space', _('Re-roll'));
   AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'), True);
+  AddKey('Esc', _('Back'));
+  AddKey('?', _('Help'), True);
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
 begin
   case Key of
+    TK_TAB:
+      if (Player.Sex = sxMale) then
+        Player.Sex := sxFemale
+      else
+        Player.Sex := sxMale;
+    TK_A .. TK_Z:
+      begin
+        Player.Race := TRaceEnum(Math.EnsureRange(Ord(Key) - Ord(TK_A), 0, Ord(High(TRaceEnum))));
+      end;
     TK_ENTER, TK_KP_ENTER:
       begin
         Scenes.SetScene(scClass, scRace);
@@ -2291,6 +2323,8 @@ begin
       begin
         Scenes.SetScene(scDifficulty);
       end;
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scRace);
   end;
 end;
 
