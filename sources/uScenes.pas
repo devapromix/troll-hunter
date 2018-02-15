@@ -272,6 +272,7 @@ type
 type
   TSceneRace = class(TScene)
   public
+    procedure ReRoll;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -1798,6 +1799,7 @@ begin
         end;
         Game.Start();
         Scenes.SetScene(scRace, scDifficulty);
+        (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -2303,17 +2305,33 @@ begin
   AddKey('?', _('Help'), True);
 end;
 
+procedure TSceneRace.ReRoll;
+begin
+  case Player.Race of
+    rcHuman:
+      Player.Statictics.SetValue(stAge, Math.RandomRange(20, 50));
+    rcElf:
+      Player.Statictics.SetValue(stAge, Math.RandomRange(20, 500));
+    rcDwarf:
+      Player.Statictics.SetValue(stAge, Math.RandomRange(20, 200));
+  end;
+end;
+
 procedure TSceneRace.Update(var Key: UInt);
 begin
   case Key of
     TK_TAB:
-      if (Player.Sex = sxMale) then
-        Player.Sex := sxFemale
-      else
-        Player.Sex := sxMale;
+      begin
+        if (Player.Sex = sxMale) then
+          Player.Sex := sxFemale
+        else
+          Player.Sex := sxMale;
+        ReRoll;
+      end;
     TK_A .. TK_Z:
       begin
         Player.Race := TRaceEnum(Math.EnsureRange(Ord(Key) - Ord(TK_A), 0, Ord(High(TRaceEnum))));
+        ReRoll;
       end;
     TK_ENTER, TK_KP_ENTER:
       begin
@@ -2325,6 +2343,8 @@ begin
       end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scRace);
+    TK_SPACE:
+      ReRoll;
   end;
 end;
 

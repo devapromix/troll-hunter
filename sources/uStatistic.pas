@@ -18,6 +18,7 @@ type
     procedure Clear;
     procedure Inc(const I: TStatEnum; const Value: UInt = 1);
     function Get(const I: TStatEnum): UInt;
+    procedure SetValue(const I: TStatEnum; const Value: UInt);
   end;
 
 implementation
@@ -51,6 +52,11 @@ end;
 procedure TStatistics.Inc(const I: TStatEnum; const Value: UInt = 1);
 begin
   FStat[I] := FStat[I] + Value;
+end;
+
+procedure TStatistics.SetValue(const I: TStatEnum; const Value: UInt);
+begin
+  FStat[I] := Value;
 end;
 
 end.
