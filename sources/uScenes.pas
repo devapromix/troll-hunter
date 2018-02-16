@@ -2309,11 +2309,20 @@ procedure TSceneRace.ReRoll;
 begin
   case Player.Race of
     rcHuman:
-      Player.Statictics.SetValue(stAge, Math.RandomRange(20, 50));
+      begin
+        Player.Statictics.SetValue(stAge, Math.RandomRange(20, 50));
+        Player.Statictics.SetValue(stHeight, Math.RandomRange(160, 190));
+      end;
     rcElf:
-      Player.Statictics.SetValue(stAge, Math.RandomRange(20, 500));
+      begin
+        Player.Statictics.SetValue(stAge, Math.RandomRange(20, 500));
+        Player.Statictics.SetValue(stHeight, Math.RandomRange(190, 230));
+      end;
     rcDwarf:
-      Player.Statictics.SetValue(stAge, Math.RandomRange(20, 200));
+      begin
+        Player.Statictics.SetValue(stAge, Math.RandomRange(20, 200));
+        Player.Statictics.SetValue(stHeight, Math.RandomRange(110, 140));
+      end;
   end;
 end;
 
