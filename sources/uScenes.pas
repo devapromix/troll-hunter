@@ -2315,12 +2315,10 @@ begin
     rcElf:
       begin
         Player.Statictics.SetValue(stAge, Math.RandomRange(20, 500));
-        Player.Statictics.SetValue(stHeight, Math.RandomRange(190, 230));
       end;
     rcDwarf:
       begin
         Player.Statictics.SetValue(stAge, Math.RandomRange(20, 200));
-        Player.Statictics.SetValue(stHeight, Math.RandomRange(110, 140));
       end;
   end;
   Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceHeight[Player.Race].Min, RaceHeight[Player.Race].Max));
