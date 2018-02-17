@@ -2311,7 +2311,6 @@ begin
     rcHuman:
       begin
         Player.Statictics.SetValue(stAge, Math.RandomRange(20, 50));
-        Player.Statictics.SetValue(stHeight, Math.RandomRange(160, 190));
       end;
     rcElf:
       begin
@@ -2324,6 +2323,7 @@ begin
         Player.Statictics.SetValue(stHeight, Math.RandomRange(110, 140));
       end;
   end;
+  Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceHeight[Player.Race].Min, RaceHeight[Player.Race].Max));
 end;
 
 procedure TSceneRace.Update(var Key: UInt);

@@ -3,10 +3,20 @@ unit uRace;
 interface
 
 uses
-  uTypes;
+  uTypes, uCreature;
 
 type
   TRaceEnum = (rcHuman, rcElf, rcDwarf);
+
+const
+  RaceHeight: array[TRaceEnum] of TMinMax = (
+  // Human
+  (Min: 160; Max: 180;),
+  // Elf
+  (Min: 180; Max: 220;),
+  // Dwarf
+  (Min: 100; Max: 130;)
+  );
 
 type
   TRace = record
