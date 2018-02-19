@@ -9,6 +9,16 @@ type
   TRaceEnum = (rcHuman, rcElf, rcDwarf);
 
 const
+  RaceAge: array[TRaceEnum] of TMinMax = (
+  // Human
+  (Min: 18; Max: 50;),
+  // Elf
+  (Min: 25; Max: 500;),
+  // Dwarf
+  (Min: 20; Max: 200;)
+  );
+
+const
   RaceHeight: array[TRaceEnum] of TMinMax = (
   // Human
   (Min: 160; Max: 180;),
