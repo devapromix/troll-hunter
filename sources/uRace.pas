@@ -28,6 +28,16 @@ const
   (Min: 100; Max: 130;)
   );
 
+const
+  RaceWeight: array[TRaceEnum] of TMinMax = (
+  // Human
+  (Min: 70; Max: 110;),
+  // Elf
+  (Min: 50; Max: 110;),
+  // Dwarf
+  (Min: 60; Max: 110;)
+  );
+
 type
   TRace = record
 
