@@ -2309,6 +2309,7 @@ procedure TSceneRace.ReRoll;
 begin
   Player.Statictics.SetValue(stAge, Math.RandomRange(RaceAge[Player.Race].Min, RaceAge[Player.Race].Max));
   Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceHeight[Player.Race].Min, RaceHeight[Player.Race].Max));
+  Player.Statictics.SetValue(stWeight, Math.RandomRange(RaceWeight[Player.Race].Min, RaceWeight[Player.Race].Max));
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
