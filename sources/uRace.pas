@@ -8,34 +8,21 @@ uses
 type
   TRaceEnum = (rcHuman, rcElf, rcDwarf);
 
-const
-  RaceAge: array[TRaceEnum] of TMinMax = (
-  // Human
-  (Min: 18; Max: 50;),
-  // Elf
-  (Min: 25; Max: 500;),
-  // Dwarf
-  (Min: 20; Max: 200;)
-  );
+type
+  TRaceProp = record
+    Age: TMinMax;
+    Height: TMinMax;
+    Weight: TMinMax;
+  end;
 
 const
-  RaceHeight: array[TRaceEnum] of TMinMax = (
+  RaceProp: array[TRaceEnum] of TRaceProp = (
   // Human
-  (Min: 160; Max: 180;),
+  (Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;); Weight: (Min: 70; Max: 110;);),
   // Elf
-  (Min: 180; Max: 220;),
+  (Age: (Min: 25; Max: 500;); Height: (Min: 190; Max: 250;); Weight: (Min: 50; Max: 100;);),
   // Dwarf
-  (Min: 100; Max: 130;)
-  );
-
-const
-  RaceWeight: array[TRaceEnum] of TMinMax = (
-  // Human
-  (Min: 70; Max: 110;),
-  // Elf
-  (Min: 50; Max: 110;),
-  // Dwarf
-  (Min: 60; Max: 110;)
+  (Age: (Min: 20; Max: 200;); Height: (Min: 100; Max: 150;); Weight: (Min: 80; Max: 120;);)
   );
 
 type
