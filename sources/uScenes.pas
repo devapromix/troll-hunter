@@ -2292,10 +2292,15 @@ begin
   Terminal.Print(CX, 6, _('Sex') + ': ' + Terminal.Colorize(Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')
     ), 'Lush'));
 
-  Terminal.Print(CX, 8, _('Strength') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Strength'));
-  Terminal.Print(CX, 9, _('Dexterity') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Dexterity'));
-  Terminal.Print(CX, 10, _('Willpower') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Willpower'));
-  Terminal.Print(CX, 11, _('Perception') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Perception'));
+  // Attributes
+  Terminal.Print(CX, 8, _('Strength') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
+  Terminal.Print(CX, 9, _('Dexterity') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
+  Terminal.Print(CX, 10, _('Willpower') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
+  Terminal.Print(CX, 11, _('Perception') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
+
+  // Life and Mana
+  Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atMaxLife].Prm, 'Lush'));
+  Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atMaxMana].Prm, 'Lush'));
 
   AddKey('A-Z', _('Select a race'));
   AddKey('Tab', _('Choose a sex'));
