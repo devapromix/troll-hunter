@@ -8,8 +8,9 @@ const
   AttribMax = 100;
 
 type
-  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atLife, atMaxLife, atMana, atMaxMana, atPV, atDV, atStr, atDex, atWil,
-    atPer, atExtraGold, atVision, atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill);
+  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atRaceLife, atLife, atMaxLife, atRaceMana, atMana, atMaxMana, atPV,
+    atDV, atStr, atDex, atWil, atPer, atExtraGold, atVision, atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill,
+    atManaAfEachKill);
 
 const
   AttrLow = atReLife;

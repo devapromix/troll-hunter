@@ -2299,8 +2299,8 @@ begin
   Terminal.Print(CX, 11, _('Perception') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
 
   // Life and Mana
-  Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atMaxLife].Prm, 'Lush'));
-  Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atMaxMana].Prm, 'Lush'));
+  Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atRaceLife].Value, 'Lush'));
+  Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atRaceMana].Value, 'Lush'));
 
   AddKey('A-Z', _('Select a race'));
   AddKey('Tab', _('Choose a sex'));
@@ -2315,6 +2315,8 @@ begin
   Player.Statictics.SetValue(stAge, Math.RandomRange(RaceProp[Player.Race].Age.Min, RaceProp[Player.Race].Age.Max));
   Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceProp[Player.Race].Height.Min, RaceProp[Player.Race].Height.Max));
   Player.Statictics.SetValue(stWeight, Math.RandomRange(RaceProp[Player.Race].Weight.Min, RaceProp[Player.Race].Weight.Max));
+  Player.Attributes.SetValue(atRaceLife, Math.RandomRange(RaceProp[Player.Race].Life.Min, RaceProp[Player.Race].Life.Max));
+  Player.Attributes.SetValue(atRaceMana, Math.RandomRange(RaceProp[Player.Race].Mana.Min, RaceProp[Player.Race].Mana.Max));
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
