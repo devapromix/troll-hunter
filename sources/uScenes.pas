@@ -579,6 +579,23 @@ begin
   UI.Title(_('Help'));
 
   case Scenes.FPrevSceneEnum of
+    scClass:
+      begin
+        UI.Title(_('Keybindings'), 5);
+        X := 1;
+        Y := 7;
+        AddLine('Space', _('Re-roll'));
+        AddLine('A-Z', _('Select a class'));
+      end;
+    scRace:
+      begin
+        UI.Title(_('Keybindings'), 5);
+        X := 1;
+        Y := 7;
+        AddLine('Tab', _('Choose a sex'));
+        AddLine('Space', _('Re-roll'));
+        AddLine('A-Z', _('Select a race'));
+      end;
     scInv:
       begin
         Terminal.Print(CX, 3, Format(_('To drop an item, press the %s key and then press %s key to drop it.'),
@@ -2302,9 +2319,6 @@ begin
   Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atRaceLife].Value, 'Lush'));
   Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize(Player.Attributes.Attrib[atRaceMana].Value, 'Lush'));
 
-  AddKey('A-Z', _('Select a race'));
-  AddKey('Tab', _('Choose a sex'));
-  AddKey('Space', _('Re-roll'));
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
   AddKey('?', _('Help'), True);
@@ -2313,10 +2327,14 @@ end;
 procedure TSceneRace.ReRoll;
 begin
   Player.Statictics.SetValue(stAge, Math.RandomRange(RaceProp[Player.Race].Age.Min, RaceProp[Player.Race].Age.Max));
-  Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceProp[Player.Race].Height.Min, RaceProp[Player.Race].Height.Max));
-  Player.Statictics.SetValue(stWeight, Math.RandomRange(RaceProp[Player.Race].Weight.Min, RaceProp[Player.Race].Weight.Max));
-  Player.Attributes.SetValue(atRaceLife, Math.RandomRange(RaceProp[Player.Race].Life.Min, RaceProp[Player.Race].Life.Max));
-  Player.Attributes.SetValue(atRaceMana, Math.RandomRange(RaceProp[Player.Race].Mana.Min, RaceProp[Player.Race].Mana.Max));
+  Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceProp[Player.Race].Height.Min,
+    RaceProp[Player.Race].Height.Max));
+  Player.Statictics.SetValue(stWeight, Math.RandomRange(RaceProp[Player.Race].Weight.Min,
+    RaceProp[Player.Race].Weight.Max));
+  Player.Attributes.SetValue(atRaceLife, Math.RandomRange(RaceProp[Player.Race].Life.Min,
+    RaceProp[Player.Race].Life.Max));
+  Player.Attributes.SetValue(atRaceMana, Math.RandomRange(RaceProp[Player.Race].Mana.Min,
+    RaceProp[Player.Race].Mana.Max));
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
@@ -2357,7 +2375,8 @@ begin
   UI.Title(_('Choose a class'));
 
   AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'), True);
+  AddKey('Esc', _('Back'));
+  AddKey('?', _('Help'), True);
 end;
 
 procedure TSceneClass.Update(var Key: UInt);
@@ -2371,6 +2390,8 @@ begin
       begin
         Scenes.SetScene(scRace);
       end;
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scClass);
   end;
 end;
 
