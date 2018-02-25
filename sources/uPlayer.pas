@@ -144,16 +144,14 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem,
 
 // Generate a random player's background (from Kharne and UMoria roguelikes)
 procedure TPlayer.GenerateBackground();
-type
-  TConPartsEnum = (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType, cpEyeColour, cpHairStyle,
-    cpHairColour, cpComplexion);
 var
-  I: TConPartsEnum;
-  SL: array [TConPartsEnum] of TStringList;
+  I: (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType, cpEyeColour, cpHairStyle, cpHairColour,
+    cpComplexion);
+  SL: array [Low(I) .. High(I)] of TStringList;
 begin
   Randomize;
   FBackground := '';
-  for I := Low(TConPartsEnum) to High(TConPartsEnum) do
+  for I := Low(I) to High(I) do
     SL[I] := TStringList.Create;
   try
     SL[cpChild].DelimitedText := _('"an only child","one of two children",' +
@@ -177,9 +175,8 @@ begin
       SL[cpCredit][Random(SL[cpCredit].Count - 1)], SL[cpEyeType][Random(SL[cpEyeType].Count - 1)],
       SL[cpEyeColour][Random(SL[cpEyeColour].Count - 1)], SL[cpHairStyle][Random(SL[cpHairStyle].Count - 1)],
       SL[cpHairColour][Random(SL[cpHairColour].Count - 1)], SL[cpComplexion][Random(SL[cpComplexion].Count - 1)]]);
-
   finally
-    for I := Low(TConPartsEnum) to High(TConPartsEnum) do
+    for I := Low(I) to High(I) do
       FreeAndNil(SL[I]);
   end;
 end;
