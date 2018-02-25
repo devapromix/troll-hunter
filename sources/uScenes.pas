@@ -273,6 +273,7 @@ type
   TSceneRace = class(TScene)
   public
     procedure ReRoll;
+    procedure SelRand;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -281,6 +282,7 @@ type
   TSceneClass = class(TScene)
   public
     procedure ReRoll;
+    procedure SelRand;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -586,6 +588,7 @@ begin
         X := 1;
         Y := 7;
         AddLine('Space', _('Re-roll'));
+        AddLine('Backspace', _('Random'));
         AddLine('A-Z', _('Select a class'));
       end;
     scRace:
@@ -595,6 +598,7 @@ begin
         Y := 7;
         AddLine('Tab', _('Choose a sex'));
         AddLine('Space', _('Re-roll'));
+        AddLine('Backspace', _('Random'));
         AddLine('A-Z', _('Select a race'));
       end;
     scInv:
@@ -1817,7 +1821,10 @@ begin
         end;
         Game.Start();
         Scenes.SetScene(scRace, scDifficulty);
+        (Scenes.GetScene(scRace) as TSceneRace).SelRand;
         (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
+        (Scenes.GetScene(scClass) as TSceneClass).SelRand;
+        (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
       end;
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
@@ -2338,6 +2345,11 @@ begin
     RaceProp[Player.HRace].Mana.Max));
 end;
 
+procedure TSceneRace.SelRand;
+begin
+  Player.HRace := TRaceEnum(Math.RandomRange(0, Ord(High(TRaceEnum)) + 1));
+end;
+
 procedure TSceneRace.Update(var Key: UInt);
 begin
   case Key of
@@ -2362,6 +2374,11 @@ begin
     TK_ESCAPE:
       begin
         Scenes.SetScene(scDifficulty);
+      end;
+    TK_BACKSPACE:
+      begin
+        SelRand;
+        ReRoll;
       end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scRace);
@@ -2407,6 +2424,11 @@ end;
 
 procedure TSceneClass.ReRoll;
 begin
+  Player.HClass := TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1));
+end;
+
+procedure TSceneClass.SelRand;
+begin
 
 end;
 
@@ -2425,6 +2447,11 @@ begin
     TK_ESCAPE:
       begin
         Scenes.SetScene(scRace);
+      end;
+    TK_BACKSPACE:
+      begin
+        SelRand;
+        ReRoll;
       end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scClass);
