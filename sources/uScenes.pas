@@ -280,6 +280,7 @@ type
 type
   TSceneClass = class(TScene)
   public
+    procedure ReRoll;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -2355,6 +2356,7 @@ begin
       end;
     TK_ENTER, TK_KP_ENTER:
       begin
+        (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
         Scenes.SetScene(scClass, scRace);
       end;
     TK_ESCAPE:
@@ -2403,9 +2405,19 @@ begin
   AddKey('?', _('Help'), True);
 end;
 
+procedure TSceneClass.ReRoll;
+begin
+
+end;
+
 procedure TSceneClass.Update(var Key: UInt);
 begin
   case Key of
+    TK_A .. TK_Z:
+      begin
+        Player.HClass := TClassEnum(Math.EnsureRange(Ord(Key) - Ord(TK_A), 0, Ord(High(TClassEnum))));
+        ReRoll;
+      end;
     TK_ENTER, TK_KP_ENTER:
       begin
         Scenes.SetScene(scTalents, scClass);
