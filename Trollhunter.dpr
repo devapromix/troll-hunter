@@ -40,7 +40,8 @@ uses
   uQuest in 'Sources\uQuest.pas',
   uHelpers in 'Sources\uHelpers.pas',
   uWeather in 'sources\uWeather.pas',
-  uRace in 'sources\uRace.pas';
+  uRace in 'sources\uRace.pas',
+  uClass in 'sources\uClass.pas';
 
 var
   Key: UInt = 0;
