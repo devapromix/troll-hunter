@@ -295,7 +295,7 @@ uses
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
-  uAffixes, uHelpers, uRace;
+  uAffixes, uHelpers, uRace, uClass;
 
 { TScene }
 
@@ -1168,8 +1168,8 @@ begin
   X := Math.EnsureRange(Terminal.Window.Width div 4, 10, UIntMax);
 
   if Mode.Wizard then
-    UI.Title(Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.Race), Game.IfThen(Player.Sex = sxMale,
-      _('Male'), _('Female')), 'Class']))
+    UI.Title(Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace), Game.IfThen(Player.Sex = sxMale,
+      _('Male'), _('Female')), uClass.Classes.GetName(Player.HClass)]))
   else
     UI.Title(Player.Name);
 
@@ -1422,9 +1422,9 @@ begin
 
   Add(_('Name'), Player.Name);
   Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
-  Add(_('Race'), Format('%s (%s)', [Races.GetName(Player.Race), Game.IfThen(Player.Sex = sxMale, _('Male'),
+  Add(_('Race'), Format('%s (%s)', [Races.GetName(Player.HRace), Game.IfThen(Player.Sex = sxMale, _('Male'),
     _('Female'))]));
-  Add(_('Class'), 'Warrior');
+  Add(_('Class'), uClass.Classes.GetName(Player.HClass));
   Add(_('Game Difficulty'), Game.GetStrDifficulty);
   Add(_('Scores'), Player.Statictics.Get(stScore));
   Add(_('Age'), Player.Statictics.Get(stAge));
@@ -2286,7 +2286,7 @@ var
     C := Chr(I + Ord('A'));
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(1, Y, UI.KeyToStr(C));
-    if (R = Player.Race) then
+    if (R = Player.HRace) then
       Terminal.ForegroundColor(clYellow)
     else
       Terminal.ForegroundColor(clWhite);
@@ -2326,15 +2326,15 @@ end;
 
 procedure TSceneRace.ReRoll;
 begin
-  Player.Statictics.SetValue(stAge, Math.RandomRange(RaceProp[Player.Race].Age.Min, RaceProp[Player.Race].Age.Max));
-  Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceProp[Player.Race].Height.Min,
-    RaceProp[Player.Race].Height.Max));
-  Player.Statictics.SetValue(stWeight, Math.RandomRange(RaceProp[Player.Race].Weight.Min,
-    RaceProp[Player.Race].Weight.Max));
-  Player.Attributes.SetValue(atRaceLife, Math.RandomRange(RaceProp[Player.Race].Life.Min,
-    RaceProp[Player.Race].Life.Max));
-  Player.Attributes.SetValue(atRaceMana, Math.RandomRange(RaceProp[Player.Race].Mana.Min,
-    RaceProp[Player.Race].Mana.Max));
+  Player.Statictics.SetValue(stAge, Math.RandomRange(RaceProp[Player.HRace].Age.Min, RaceProp[Player.HRace].Age.Max));
+  Player.Statictics.SetValue(stHeight, Math.RandomRange(RaceProp[Player.HRace].Height.Min,
+    RaceProp[Player.HRace].Height.Max));
+  Player.Statictics.SetValue(stWeight, Math.RandomRange(RaceProp[Player.HRace].Weight.Min,
+    RaceProp[Player.HRace].Weight.Max));
+  Player.Attributes.SetValue(atRaceLife, Math.RandomRange(RaceProp[Player.HRace].Life.Min,
+    RaceProp[Player.HRace].Life.Max));
+  Player.Attributes.SetValue(atRaceMana, Math.RandomRange(RaceProp[Player.HRace].Mana.Min,
+    RaceProp[Player.HRace].Mana.Max));
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
@@ -2350,7 +2350,7 @@ begin
       end;
     TK_A .. TK_Z:
       begin
-        Player.Race := TRaceEnum(Math.EnsureRange(Ord(Key) - Ord(TK_A), 0, Ord(High(TRaceEnum))));
+        Player.HRace := TRaceEnum(Math.EnsureRange(Ord(Key) - Ord(TK_A), 0, Ord(High(TRaceEnum))));
         ReRoll;
       end;
     TK_ENTER, TK_KP_ENTER:
@@ -2371,8 +2371,32 @@ end;
 { TSceneClass }
 
 procedure TSceneClass.Render;
+var
+  I: UInt;
+  C: TClassEnum;
+
+  procedure Add(const AName: string);
+  var
+    L: Char;
+  begin
+    L := Chr(I + Ord('A'));
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(1, Y, UI.KeyToStr(L));
+    if (C = Player.HClass) then
+      Terminal.ForegroundColor(clYellow)
+    else
+      Terminal.ForegroundColor(clWhite);
+    Terminal.Print(5, Y, AName);
+    Inc(I);
+    Inc(Y);
+  end;
+
 begin
   UI.Title(_('Choose a class'));
+  I := 0;
+  Y := 2;
+  for C := Low(TClassEnum) to High(TClassEnum) do
+    Add(uClass.Classes.GetName(C));
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
