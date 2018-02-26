@@ -2346,8 +2346,13 @@ begin
 end;
 
 procedure TSceneRace.SelRand;
+var
+  R: TRaceEnum;
 begin
-  Player.HRace := TRaceEnum(Math.RandomRange(0, Ord(High(TRaceEnum)) + 1));
+  R := Player.HRace;
+  repeat
+    Player.HRace := TRaceEnum(Math.RandomRange(0, Ord(High(TRaceEnum)) + 1));
+  until (R <> Player.HRace);
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
@@ -2424,12 +2429,17 @@ end;
 
 procedure TSceneClass.ReRoll;
 begin
-  Player.HClass := TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1));
+
 end;
 
 procedure TSceneClass.SelRand;
+var
+  C: TClassEnum;
 begin
-
+  C := Player.HClass;
+  repeat
+    Player.HClass := TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1));
+  until (C <> Player.HClass);
 end;
 
 procedure TSceneClass.Update(var Key: UInt);
