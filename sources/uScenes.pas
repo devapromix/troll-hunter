@@ -2459,9 +2459,9 @@ begin
     TK_A .. TK_Z:
       begin
         I := Ord(Key) - Ord(TK_A);
-        Player.HRace := TRaceEnum(Math.EnsureRange(I, 0, Ord(High(TRaceEnum))));
-        if (I < 0) then
+        if (I > Ord(High(TRaceEnum))) then
           Exit;
+        Player.HRace := TRaceEnum(Math.EnsureRange(I, 0, Ord(High(TRaceEnum))));
         ReRoll;
       end;
     TK_ENTER, TK_KP_ENTER:
@@ -2536,12 +2536,17 @@ begin
 end;
 
 procedure TSceneClass.Update(var Key: UInt);
+var
+  I: Int;
 begin
   case Key of
     TK_A .. TK_Z:
       begin
-        Player.HClass := TClassEnum(Math.EnsureRange(Ord(Key) - Ord(TK_A), 0,
-          Ord(High(TClassEnum))));
+        I := Ord(Key) - Ord(TK_A);
+        if (I > Ord(High(TClassEnum))) then
+          Exit;
+        Player.HClass :=
+          TClassEnum(Math.EnsureRange(I, 0, Ord(High(TClassEnum))));
         ReRoll;
       end;
     TK_ENTER, TK_KP_ENTER:
