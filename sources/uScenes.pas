@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes, Types, uTypes, uBearLibItemsCommon, uMob, uGame;
+  Classes, Types, uTypes, uBearLibItemsCommon, uMob, uGame, uAttribute;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -245,7 +245,10 @@ type
     procedure RenderPlayer;
     procedure RenderInfo;
     procedure RenderSkills;
-    procedure Add(const AStr, AIcons, ABarColor: string; const ACur, AMax: Int);
+    procedure Add(const AStr, AIcons, ABarColor: string;
+      const ACur, AMax: Int); overload;
+    procedure Add(const AStr, AIcons, ABarColor: string; const ACur: TAttrib;
+      AMax: Int); overload;
   public
     constructor Create;
     procedure Render; override;
@@ -275,16 +278,22 @@ type
   end;
 
 type
-  TSceneRace = class(TScene)
+  TVScene = class(TScene)
+    procedure Render; override;
+  end;
+
+type
+  TSceneRace = class(TVScene)
   public
     procedure ReRoll;
     procedure SelRand;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
+    class procedure RenderInfo;
   end;
 
 type
-  TSceneClass = class(TScene)
+  TSceneClass = class(TVScene)
   public
     procedure ReRoll;
     procedure SelRand;
@@ -302,7 +311,7 @@ uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
-  uAttribute, uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
+  uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
   uAffixes, uHelpers, uRace, uClass;
 
 { TScene }
@@ -1232,6 +1241,21 @@ begin
   Inc(D);
 end;
 
+procedure TScenePlayer.Add(const AStr, AIcons, ABarColor: string;
+  const ACur: TAttrib; AMax: Int);
+begin
+  W := X * 2 - 3;
+  UI.Bar(1, 0, Y + (D * 2), W, ACur.Value, AMax,
+    color_from_name(LowerCase(ABarColor)), clDarkGray);
+  if Mode.Wizard then
+    Terminal.Print(X, Y + (D * 2), Format('%s %d(%d)/%d', [AIcons + ' ' + AStr,
+      ACur.Value, ACur.Prm, AMax]), TK_ALIGN_CENTER)
+  else
+    Terminal.Print(X, Y + (D * 2), Format('%s %d/%d', [AIcons + ' ' + AStr,
+      ACur.Value, AMax]), TK_ALIGN_CENTER);
+  Inc(D);
+end;
+
 procedure TScenePlayer.RenderPlayer;
 begin
   Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (1/2)']),
@@ -1241,14 +1265,14 @@ begin
     UI.Icon(icElixir), 'Gold', Player.Attributes.Attrib[atExp].Value,
     LevelExpMax);
   // Attributes
-  Add('Strength', UI.Icon(icStr), 'Strength', Player.Attributes.Attrib[atStr]
-    .Value, AttribMax);
-  Add('Dexterity', UI.Icon(icDex), 'Dexterity', Player.Attributes.Attrib[atDex]
-    .Value, AttribMax);
-  Add('Willpower', UI.Icon(icBook), 'Willpower', Player.Attributes.Attrib[atWil]
-    .Value, AttribMax);
+  Add('Strength', UI.Icon(icStr), 'Strength', Player.Attributes.Attrib[atStr],
+    AttribMax);
+  Add('Dexterity', UI.Icon(icDex), 'Dexterity', Player.Attributes.Attrib[atDex],
+    AttribMax);
+  Add('Willpower', UI.Icon(icBook), 'Willpower',
+    Player.Attributes.Attrib[atWil], AttribMax);
   Add('Perception', UI.Icon(icLeaf), 'Perception',
-    Player.Attributes.Attrib[atPer].Value, AttribMax);
+    Player.Attributes.Attrib[atPer], AttribMax);
   // Damage
   Add('Min Damage', UI.Icon(icSword), 'Darker Yellow',
     Player.Attributes.Attrib[atMinDamage].Value, MinDamMax);
@@ -1260,9 +1284,9 @@ begin
   Add('Protection Value (PV)', UI.Icon(icShield), 'Darkest Green',
     Player.Attributes.Attrib[atPV].Value, PVMax);
   // Life and Mana
-  Add('Life', UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atLife].Value,
+  Add('Life', UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atLife],
     Player.Attributes.Attrib[atMaxLife].Value);
-  Add('Mana', UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atMana].Value,
+  Add('Mana', UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atMana],
     Player.Attributes.Attrib[atMaxMana].Value);
   // Vision radius
   Add('Vision radius', UI.Icon(icVision), 'Vision', Player.Vision, VisionMax);
@@ -2353,6 +2377,40 @@ begin
   end;
 end;
 
+var
+  PrmAt: array [atStr .. atMana] of UInt;
+
+  { TVScene }
+
+procedure TVScene.Render;
+begin
+  Terminal.ForegroundColor(clWhite);
+  Terminal.Print(CX, 3, _('Age') + ': ' + Terminal.Colorize
+    (Player.Statictics.Get(stAge), 'Lush'));
+  Terminal.Print(CX, 4, _('Height') + ': ' + Terminal.Colorize
+    (Player.Statictics.Get(stHeight), 'Lush'));
+  Terminal.Print(CX, 5, _('Weight') + ': ' + Terminal.Colorize
+    (Player.Statictics.Get(stWeight), 'Lush'));
+  Terminal.Print(CX, 6, _('Sex') + ': ' + Terminal.Colorize
+    (Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')), 'Lush'));
+
+  // Attributes
+  Terminal.Print(CX, 8, _('Strength') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
+  Terminal.Print(CX, 9, _('Dexterity') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
+  Terminal.Print(CX, 10, _('Willpower') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
+  Terminal.Print(CX, 11, _('Perception') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
+
+  // Life and Mana
+  Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize
+    (Player.Attributes.Attrib[atLife].Prm, 'Lush'));
+  Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize
+    (Player.Attributes.Attrib[atMana].Prm, 'Lush'));
+end;
+
 { TSceneRace }
 
 procedure TSceneRace.Render;
@@ -2383,54 +2441,52 @@ begin
   for R := Low(TRaceEnum) to High(TRaceEnum) do
     Add(Races.GetName(R));
 
-  Terminal.ForegroundColor(clWhite);
-  Terminal.Print(CX, 3, _('Age') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(CX, 4, _('Height') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(CX, 5, _('Weight') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(CX, 6, _('Sex') + ': ' + Terminal.Colorize
-    (Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')), 'Lush'));
-
-  // Attributes
-  Terminal.Print(CX, 8, _('Strength') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(CX, 9, _('Dexterity') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(CX, 10, _('Willpower') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(CX, 11, _('Perception') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
-
-  // Life and Mana
-  Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize
-    (Player.Attributes.Attrib[atRaceLife].Value, 'Lush'));
-  Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize
-    (Player.Attributes.Attrib[atRaceMana].Value, 'Lush'));
+  inherited Render;
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
   AddKey('?', _('Help'), True);
 end;
 
-procedure TSceneRace.ReRoll;
+class procedure TSceneRace.RenderInfo;
 begin
-  Player.Statictics.SetValue(stAge,
-    Math.RandomRange(RaceProp[Player.HRace].Age.Min,
-    RaceProp[Player.HRace].Age.Max));
-  Player.Statictics.SetValue(stHeight,
-    Math.RandomRange(RaceProp[Player.HRace].Height.Min,
-    RaceProp[Player.HRace].Height.Max));
-  Player.Statictics.SetValue(stWeight,
-    Math.RandomRange(RaceProp[Player.HRace].Weight.Min,
-    RaceProp[Player.HRace].Weight.Max));
-  Player.Attributes.SetValue(atRaceLife,
-    Math.RandomRange(RaceProp[Player.HRace].Life.Min,
-    RaceProp[Player.HRace].Life.Max));
-  Player.Attributes.SetValue(atRaceMana,
-    Math.RandomRange(RaceProp[Player.HRace].Mana.Min,
-    RaceProp[Player.HRace].Mana.Max));
+
+end;
+
+procedure TSceneRace.ReRoll;
+var
+  V: TRaceProp;
+begin
+  V := RaceProp[Player.HRace];
+
+  // Age, Height and Weight
+  Player.Statictics.SetValue(stAge, Math.RandomRange(V.Age.Min, V.Age.Max + 1));
+  Player.Statictics.SetValue(stHeight, Math.RandomRange(V.Height.Min,
+    V.Height.Max + 1));
+  Player.Statictics.SetValue(stWeight, Math.RandomRange(V.Weight.Min,
+    V.Weight.Max + 1));
+
+  // Attributes
+  Player.Attributes.SetPrm(atStr, Math.RandomRange(V.Strength.Min,
+    V.Strength.Max + 1));
+  PrmAt[atStr] := Player.Attributes.Attrib[atStr].Prm;
+  Player.Attributes.SetPrm(atDex, Math.RandomRange(V.Dexterity.Min,
+    V.Dexterity.Max + 1));
+  PrmAt[atDex] := Player.Attributes.Attrib[atDex].Prm;
+  Player.Attributes.SetPrm(atWil, Math.RandomRange(V.Willpower.Min,
+    V.Willpower.Max + 1));
+  PrmAt[atWil] := Player.Attributes.Attrib[atWil].Prm;
+  Player.Attributes.SetPrm(atPer, Math.RandomRange(V.Perception.Min,
+    V.Perception.Max + 1));
+  PrmAt[atPer] := Player.Attributes.Attrib[atPer].Prm;
+
+  // Life and Mana
+  Player.Attributes.SetPrm(atLife, Math.RandomRange(V.Life.Min,
+    V.Life.Max + 1));
+  PrmAt[atLife] := Player.Attributes.Attrib[atLife].Prm;
+  Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min,
+    V.Mana.Max + 1));
+  PrmAt[atMana] := Player.Attributes.Attrib[atMana].Prm;
 end;
 
 procedure TSceneRace.SelRand;
@@ -2515,14 +2571,34 @@ begin
   for C := Low(TClassEnum) to High(TClassEnum) do
     Add(uClass.Classes.GetName(C));
 
+  inherited Render;
+
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
   AddKey('?', _('Help'), True);
 end;
 
 procedure TSceneClass.ReRoll;
+var
+  V: TClassProp;
 begin
+  V := ClassProp[Player.HClass];
 
+  // Attributes
+  Player.Attributes.SetPrm(atStr, Math.RandomRange(V.Strength.Min,
+    V.Strength.Max + 1) + PrmAt[atStr]);
+  Player.Attributes.SetPrm(atDex, Math.RandomRange(V.Dexterity.Min,
+    V.Dexterity.Max + 1) + PrmAt[atDex]);
+  Player.Attributes.SetPrm(atWil, Math.RandomRange(V.Willpower.Min,
+    V.Willpower.Max + 1) + PrmAt[atWil]);
+  Player.Attributes.SetPrm(atPer, Math.RandomRange(V.Perception.Min,
+    V.Perception.Max + 1) + PrmAt[atPer]);
+
+  // Life and Mana
+  Player.Attributes.SetPrm(atLife, Math.RandomRange(V.Life.Min, V.Life.Max + 1)
+    + PrmAt[atLife]);
+  Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min, V.Mana.Max + 1)
+    + PrmAt[atMana]);
 end;
 
 procedure TSceneClass.SelRand;
@@ -2564,6 +2640,8 @@ begin
       end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scClass);
+    TK_SPACE:
+      ReRoll;
   end;
 end;
 
