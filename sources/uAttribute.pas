@@ -8,8 +8,9 @@ const
   AttribMax = 100;
 
 type
-  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atRaceLife, atLife, atMaxLife, atRaceMana, atMana, atMaxMana, atPV,
-    atDV, atStr, atDex, atWil, atPer, atExtraGold, atVision, atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill,
+  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atPV, atDV, atStr, atDex,
+    atWil, atPer, atLife, atMana, atMaxLife, atMaxMana, atExtraGold, atVision,
+    atSat, atLev, atExp, atReLife, atReMana, atLifeAfEachKill,
     atManaAfEachKill);
 
 const
@@ -33,14 +34,16 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
-    procedure Modify(const I: TAttribEnum; const AValue: Int = 1; const APrm: Int = 0);
+    procedure Modify(const I: TAttribEnum; const AValue: Int = 1;
+      const APrm: Int = 0);
     procedure SetValue(const I: TAttribEnum; const AValue: Int); overload;
+    procedure SetPrm(const I: TAttribEnum; const APrm: Int);
     procedure SetValue(const I, J: TAttribEnum); overload;
   end;
 
 implementation
 
-uses uHelpers;
+uses uHelpers, dialogs;
 
 { TAttributes }
 
@@ -91,6 +94,11 @@ end;
 procedure TAttributes.SetAttrib(I: TAttribEnum; const Value: TAttrib);
 begin
   FAttrib[I] := Value;
+end;
+
+procedure TAttributes.SetPrm(const I: TAttribEnum; const APrm: Int);
+begin
+  FAttrib[I].Prm := APrm;
 end;
 
 procedure TAttributes.SetValue(const I, J: TAttribEnum);
