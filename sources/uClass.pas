@@ -2,8 +2,42 @@ unit uClass;
 
 interface
 
+uses
+  uTypes, uCreature;
+
 type
-  TClassEnum = (clWarrior, clMage);
+  TClassEnum = (clWarrior, clMage, clRanger, clThief);
+
+type
+  TClassProp = record
+    Strength: TMinMax;
+    Dexterity: TMinMax;
+    Willpower: TMinMax;
+    Perception: TMinMax;
+    Life: TMinMax;
+    Mana: TMinMax;
+  end;
+
+const
+  ClassProp: array [TClassEnum] of TClassProp = (
+    // Warrior
+    (Strength: (Min: 1; Max: 4;); Dexterity: (Min: 1; Max: 2;);
+    Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
+    Life: (Min: 10; Max: 15;); Mana: (Min: 0; Max: 0;);),
+    // Mage
+    (Strength: (Min: 0; Max: 0;); Dexterity: (Min: 0; Max: 0;);
+    Willpower: (Min: 1; Max: 4;); Perception: (Min: 1; Max: 2;);
+    Life: (Min: 0; Max: 0;); Mana: (Min: 15; Max: 25;);),
+    // Ranger
+    (Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 4;);
+    Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
+    Life: (Min: 5; Max: 10;); Mana: (Min: 1; Max: 5;);),
+    // Thief
+    (Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;);
+    Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
+    Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;);)
+    /// ///
+    );
 
 type
   TClasses = class(TObject)

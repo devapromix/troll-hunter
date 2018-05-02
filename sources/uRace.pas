@@ -6,13 +6,17 @@ uses
   uTypes, uCreature;
 
 type
-  TRaceEnum = (rcHuman, rcElf, rcDwarf);
+  TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);
 
 type
   TRaceProp = record
     Age: TMinMax;
     Height: TMinMax;
     Weight: TMinMax;
+    Strength: TMinMax;
+    Dexterity: TMinMax;
+    Willpower: TMinMax;
+    Perception: TMinMax;
     Life: TMinMax;
     Mana: TMinMax;
   end;
@@ -20,18 +24,30 @@ type
 const
   RaceProp: array [TRaceEnum] of TRaceProp = (
     // Human
-    (Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;); Weight: (Min: 70; Max: 110;);
-    Life: (Min: 5; Max: 8;);
+    (Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;);
+    Weight: (Min: 70; Max: 110;); Strength: (Min: 1; Max: 2;);
+    Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 1; Max: 2;);
+    Perception: (Min: 1; Max: 2;); Life: (Min: 5; Max: 8;);
     Mana: (Min: 5; Max: 8;);),
     // Elf
-    (Age: (Min: 25; Max: 500;); Height: (Min: 190; Max: 250;); Weight: (Min: 50; Max: 100;);
-    Life: (Min: 5; Max: 10;);
+    (Age: (Min: 75; Max: 800;); Height: (Min: 190; Max: 250;);
+    Weight: (Min: 50; Max: 100;); Strength: (Min: 1; Max: 1;);
+    Dexterity: (Min: 1; Max: 3;); Willpower: (Min: 1; Max: 3;);
+    Perception: (Min: 1; Max: 2;); Life: (Min: 5; Max: 10;);
+    Mana: (Min: 10; Max: 15;);),
+    // Gnome
+    (Age: (Min: 20; Max: 160;); Height: (Min: 90; Max: 130;);
+    Weight: (Min: 70; Max: 110;); Strength: (Min: 1; Max: 2;);
+    Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 1; Max: 3;);
+    Perception: (Min: 1; Max: 3;); Life: (Min: 5; Max: 10;);
     Mana: (Min: 10; Max: 15;);),
     // Dwarf
-    (Age: (Min: 20; Max: 200;); Height: (Min: 100; Max: 150;); Weight: (Min: 80; Max: 120;);
-    Life: (Min: 10; Max: 15;);
+    (Age: (Min: 20; Max: 250;); Height: (Min: 100; Max: 150;);
+    Weight: (Min: 80; Max: 120;); Strength: (Min: 1; Max: 3;);
+    Dexterity: (Min: 1; Max: 3;); Willpower: (Min: 1; Max: 1;);
+    Perception: (Min: 1; Max: 2;); Life: (Min: 10; Max: 15;);
     Mana: (Min: 5; Max: 10;);)
-    //////
+    /// ///
     );
 
 type
@@ -43,14 +59,9 @@ type
   TRaces = class(TObject)
   private
     FRaceName: array [TRaceEnum] of string;
-    FRace: array [TRaceEnum] of TRace;
-    function GetRace(I: TRaceEnum): TRace;
-    procedure SetRace(I: TRaceEnum; const Value: TRace);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
-    property Race[I: TRaceEnum]: TRace read GetRace write SetRace;
     function GetName(I: TRaceEnum): string;
   end;
 
@@ -63,23 +74,11 @@ uses TypInfo, SysUtils, uHelpers;
 
 { TRaces }
 
-procedure TRaces.Clear;
-var
-  I: TRaceEnum;
-begin
-  for I := Low(TRaceEnum) to High(TRaceEnum) do
-    with FRace[I] do
-    begin
-
-    end;
-end;
-
 constructor TRaces.Create;
 var
   I: TRaceEnum;
   P: Pointer;
 begin
-  Self.Clear;
   P := TypeInfo(TRaceEnum);
   for I := Low(TRaceEnum) to High(TRaceEnum) do
     FRaceName[I] := GetEnumName(P, Ord(I)).GetName('rc');
@@ -94,16 +93,6 @@ end;
 function TRaces.GetName(I: TRaceEnum): string;
 begin
   Result := FRaceName[I]
-end;
-
-function TRaces.GetRace(I: TRaceEnum): TRace;
-begin
-  Result := FRace[I]
-end;
-
-procedure TRaces.SetRace(I: TRaceEnum; const Value: TRace);
-begin
-  FRace[I] := Value
 end;
 
 initialization
