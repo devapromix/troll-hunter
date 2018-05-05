@@ -590,7 +590,6 @@ end;
 
 function TMap.GetTile(AX, AY: UInt): TTile;
 begin
-
   Result := Tile[FMap[AX][AY][Current]][Current];
 end;
 
