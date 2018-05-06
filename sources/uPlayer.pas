@@ -133,6 +133,7 @@ type
     procedure AutoPickup();
     procedure RenderWeather(const AX, AY, AWidth: UInt);
     procedure Turn;
+    procedure StartEquip;
   end;
 
 var
@@ -145,9 +146,13 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
   uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
   uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers;
 
-{ TPlayer }
+const
+  ClassMainWeapon: array [TClassEnum] of TItemEnum = (ivRusty_Sword, ivStaff1,
+    ivBow1, ivDagger1);
 
-// Generate a random player's background (from Kharne and UMoria roguelikes)
+  { TPlayer }
+
+  // Generate a random player's background (from Kharne and UMoria roguelikes)
 procedure TPlayer.GenerateBackground();
 var
   I: (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType,
@@ -1444,9 +1449,8 @@ begin
 end;
 
 procedure TPlayer.Start();
-var
-  D: UInt;
 begin
+  Exit;
   // ShowMessage('');
   // Add armors
   if Mode.Wizard then
@@ -1469,33 +1473,33 @@ begin
       Items.AddItemToInv(ivShoes, 1, True, True);
     end;
   end;
-  // Add weapon
-  if Mode.Wizard then
-  begin
+  { // Add weapon
+    if Mode.Wizard then
+    begin
     case Math.RandomRange(0, 4) of
-      0:
-        Items.AddItemToInv(ivTroll_Slayer, 1, True, False);
-      1:
-        Items.AddItemToInv(ivDemon_Axe, 1, True, False);
-      2:
-        Items.AddItemToInv(ivHoned_Spear, 1, True, False);
-      3:
-        Items.AddItemToInv(ivDoom_Hammer, 1, True, False);
+    0:
+    Items.AddItemToInv(ivTroll_Slayer, 1, True, False);
+    1:
+    Items.AddItemToInv(ivDemon_Axe, 1, True, False);
+    2:
+    Items.AddItemToInv(ivHoned_Spear, 1, True, False);
+    3:
+    Items.AddItemToInv(ivDoom_Hammer, 1, True, False);
     end;
-  end
-  else
-  begin
+    end
+    else
+    begin
     case Math.RandomRange(0, 4) of
-      0:
-        Items.AddItemToInv(ivRusty_Sword, 1, True, True);
-      1:
-        Items.AddItemToInv(ivHatchet, 1, True, True);
-      2:
-        Items.AddItemToInv(ivShort_Spear, 1, True, True);
-      3:
-        Items.AddItemToInv(ivSlag_Hammer, 1, True, True);
+    0:
+    Items.AddItemToInv(ivRusty_Sword, 1, True, True);
+    1:
+    Items.AddItemToInv(ivHatchet, 1, True, True);
+    2:
+    Items.AddItemToInv(ivShort_Spear, 1, True, True);
+    3:
+    Items.AddItemToInv(ivSlag_Hammer, 1, True, True);
     end;
-  end;
+    end; }
   // Add runes, potions and scrolls
   if Mode.Wizard then
   begin
@@ -1543,9 +1547,18 @@ begin
     begin
     Items.AddItemToInv(ivEternal_Flask2, 1, False, True);
     end; }
+end;
+
+procedure TPlayer.StartEquip;
+var
+  D: UInt;
+begin
+  // Main Weapon
+  Items.AddItemToInv(ClassMainWeapon[HClass], 1, True, True);
+
   // Add foods
-  Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 10, 3));
-  Items.AddItemToInv(ivTorch);
+  Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 9, 5));
+  Items.AddItemToInv(ivTorch, IfThen(Mode.Wizard, 9, 3));
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));

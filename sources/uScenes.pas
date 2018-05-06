@@ -1213,12 +1213,9 @@ begin
   Y := 0;
   X := Math.EnsureRange(Terminal.Window.Width div 4, 10, UIntMax);
 
-  if Mode.Wizard then
-    UI.Title(Format('%s, %s (%s), %s', [Player.Name,
-      Races.GetName(Player.HRace), Game.IfThen(Player.Sex = sxMale, _('Male'),
-      _('Female')), uClass.Classes.GetName(Player.HClass)]))
-  else
-    UI.Title(Player.Name);
+  UI.Title(Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
+    Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')),
+    uClass.Classes.GetName(Player.HClass)]));
 
   if FRenderInfo then
     RenderInfo()
@@ -1958,7 +1955,7 @@ procedure TSceneName.Render;
 begin
   UI.Title(_('Choose a name'));
 
-  Terminal.Print(CX - 10, CY, _('Enter your player''s name') + ': ' +
+  Terminal.Print(CX - 14, CY, _('Enter your player''s name') + ': ' +
     Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
 
   AddKey('Enter', _('Confirm'));
@@ -2367,6 +2364,7 @@ begin
         Mode.Game := True;
         Player.Talents.DoTalent
           (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
+        Player.StartEquip;
         Scenes.SetScene(scGame);
       end;
     TK_SPACE:
