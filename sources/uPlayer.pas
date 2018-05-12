@@ -1579,7 +1579,9 @@ begin
   Skills.Modify(ClassMainSkill[HClass], StartSkill);
   // Add
   Skills.Modify(ClassAddSkill[HClass], StartSkill);
+  // Calc
   Calc;
+  Fill;
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);

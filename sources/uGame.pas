@@ -314,7 +314,6 @@ end;
 procedure TGame.Start;
 begin
   Player.Clear;
-  Player.Skills.Start;
   Player.Start;
   Player.Calc;
   Player.Fill;

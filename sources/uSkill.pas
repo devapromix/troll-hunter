@@ -38,7 +38,6 @@ type
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
-    procedure Start;
   end;
 
 const
@@ -125,17 +124,6 @@ end;
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);
 begin
   FSkill[I] := Value
-end;
-
-procedure TSkills.Start;
-begin
-{  if Mode.Wizard then
-    for I := Low(TSkillEnum) to High(TSkillEnum) do
-      with FSkill[I] do
-      begin
-        Value := Math.RandomRange(SkillMin, SkillMax);
-        Exp := Math.RandomRange(0, SkillExpMax);
-      end;  }
 end;
 
 end.
