@@ -134,6 +134,7 @@ type
     procedure RenderWeather(const AX, AY, AWidth: UInt);
     procedure Turn;
     procedure StartEquip;
+    procedure StartSkills;
   end;
 
 var
@@ -149,6 +150,12 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
 const
   ClassMainWeapon: array [TClassEnum] of TItemEnum = (ivRusty_Sword, ivStaff1,
     ivBow1, ivDagger1);
+  ClassWeaponSkill: array [TClassEnum] of TSkillEnum = (skBlade, skStaff, skBow,
+    skDagger);
+  ClassMainSkill: array [TClassEnum] of TSkillEnum = (skAthletics, skConcentration,
+    skDodge, skToughness);
+  ClassAddSkill: array [TClassEnum] of TSkillEnum = (skBodybuilding, skMeditation,
+    skDodge, skStealth);
 
   { TPlayer }
 
@@ -1562,6 +1569,17 @@ begin
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));
+end;
+
+procedure TPlayer.StartSkills;
+begin
+  // Weapon
+  Skills.Modify(ClassWeaponSkill[HClass], StartSkill);
+  // Main
+  Skills.Modify(ClassMainSkill[HClass], StartSkill);
+  // Add
+  Skills.Modify(ClassAddSkill[HClass], StartSkill);
+  Calc;
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);

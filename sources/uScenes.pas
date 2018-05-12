@@ -2365,6 +2365,7 @@ begin
         Player.Talents.DoTalent
           (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
         Player.StartEquip;
+        Player.StartSkills;
         Scenes.SetScene(scGame);
       end;
     TK_SPACE:
