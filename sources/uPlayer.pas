@@ -1574,14 +1574,14 @@ end;
 procedure TPlayer.StartSkills;
 begin
   // Weapon
-  Skills.Modify(ClassWeaponSkill[HClass], StartSkill);
+  Skills.Modify(ClassWeaponSkill[HClass], BeginSkill);
   // Main
-  Skills.Modify(ClassMainSkill[HClass], StartSkill);
+  Skills.Modify(ClassMainSkill[HClass], BeginSkill);
   // Add
   Skills.Modify(ClassAddSkill[HClass], StartSkill);
   // Calc
-  Calc;
-  Fill;
+  Calc();
+  Fill();
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);

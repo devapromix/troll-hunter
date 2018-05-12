@@ -44,6 +44,7 @@ const
   SkillMin = 5;
   SkillMax = 75;
   SkillExpMax = 50;
+  BeginSkill = 10;
   StartSkill = 5;
 
 implementation
