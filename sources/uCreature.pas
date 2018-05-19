@@ -4,6 +4,8 @@ interface
 
 uses uTypes, uEntity, uAbility, uAttribute;
 
+{ TODO -cNPC : Нужен кто-то, кто будет идентифицировать предметы за деньги. }
+
 const
   PVMax = 250;
   MaxDamMax = 255;
