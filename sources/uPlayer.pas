@@ -1665,14 +1665,14 @@ begin
     if (Ef in Effects) then
     begin
       Affixes.DoCraft(Ef, Value);
-      Scenes.SetScene(scCraft);
+      Scenes.SetScene(scEnchant);
     end;
   // Enchant Item
   if (efEnchantItem in Effects) then
   begin
     Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)),
       Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
-    Scenes.SetScene(scCraft);
+    Scenes.SetScene(scEnchant);
   end;
   // Repair
   if (efRepair in Effects) then

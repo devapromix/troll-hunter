@@ -9,7 +9,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification, scBackground, scCraft,
+    scSpellbook, scOptions, scTalents, scIdentification, scBackground, scEnchant,
     scClass, scRace);
 
 type
@@ -270,14 +270,6 @@ type
   end;
 
 type
-  TSceneCraft = class(TScene)
-  public
-    Suffix: UInt;
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TVScene = class(TScene)
     procedure Render; override;
   end;
@@ -312,7 +304,7 @@ uses
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
-  uAffixes, uHelpers, uRace, uClass;
+  uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant;
 
 { TScene }
 
@@ -457,8 +449,8 @@ begin
         FScene[I] := TSceneBackground.Create;
       scQuest:
         FScene[I] := TSceneQuest.Create;
-      scCraft:
-        FScene[I] := TSceneCraft.Create;
+      scEnchant:
+        FScene[I] := TSceneEnchant.Create;
       scRace:
         FScene[I] := TSceneRace.Create;
       scClass:
@@ -2277,32 +2269,6 @@ begin
       Scenes.SetScene(scInv);
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
-  end
-end;
-
-{ TSceneCraft }
-
-procedure TSceneCraft.Render;
-begin
-  UI.Title(_('Enchant an item'), 1, clDarkestRed);
-
-  UI.FromAToZ();
-  Items.RenderInventory();
-  MsgLog.Render(2, True);
-
-  AddKey('A-Z', _('Select an item'));
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneCraft.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      Scenes.SetScene(scInv);
-    TK_A .. TK_Z:
-      Player.CraftItem(Key - TK_A);
   else
     Game.Timer := UIntMax;
   end
