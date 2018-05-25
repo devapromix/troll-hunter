@@ -229,6 +229,7 @@ Wizard Mode=
 Wooden Floor=
 Wooden Wall=
 You are %s of a %s %s. You had a %s upbringing and you are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.=
+You are drunk (%d).=
 You are the hero who departs on a quest to stop the enemies and save your homeland,=
 You bought %s (-%d gold).=
 You can not use this yet (unidentified)!=
