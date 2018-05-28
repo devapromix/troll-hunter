@@ -41,7 +41,10 @@ uses
   uHelpers in 'Sources\uHelpers.pas',
   uWeather in 'sources\uWeather.pas',
   uRace in 'sources\uRace.pas',
-  uClass in 'sources\uClass.pas';
+  uClass in 'sources\uClass.pas',
+  Trollhunter.Scene.Enchant in 'sources\Trollhunter.Scene.Enchant.pas',
+  Trollhunter.Scene.Name in 'sources\Trollhunter.Scene.Name.pas',
+  Trollhunter.Scene.Rest in 'sources\Trollhunter.Scene.Rest.pas';
 
 var
   Key: UInt = 0;

@@ -9,14 +9,13 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification, scBackground, scEnchant,
-    scClass, scRace);
+    scSpellbook, scOptions, scTalents, scIdentification, scBackground,
+    scEnchant, scClass, scRace);
 
 type
   TScene = class(TObject)
   private
     KStr: string;
-    X, Y, CX, CY: Int;
     procedure AddOption(AHotKey, AText: string; AOption: Boolean;
       AColor: Cardinal = $FFAAAAAA); overload;
     procedure AddLine(AHotKey, AText: string);
@@ -25,6 +24,8 @@ type
     procedure Add(AText: string; AValue: string;
       AColor: Cardinal = $FF00FF00); overload;
   public
+    CX, CY: Int;
+    X, Y: Int;
     constructor Create;
     procedure Render; virtual; abstract;
     procedure Update(var Key: UInt); virtual; abstract;
@@ -106,13 +107,6 @@ type
   end;
 
 type
-  TSceneRest = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneBackground = class(TScene)
   public
     procedure Render; override;
@@ -152,13 +146,6 @@ type
 
 type
   TSceneRepair = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneName = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -304,7 +291,8 @@ uses
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
-  uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant;
+  uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
+  Trollhunter.Scene.Name, Trollhunter.Scene.Rest;
 
 { TScene }
 
@@ -1501,6 +1489,7 @@ begin
   Add(_('Age'), Player.Statictics.Get(stAge));
   Add(_('Weight'), Player.Statictics.Get(stWeight));
   Add(_('Height'), Player.Statictics.Get(stHeight));
+  Add(_('Metabolism'), Player.Statictics.Get(stMetabolism));
   // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
   Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
   Add(_('Monsters Killed'), Player.Statictics.Get(stKills));
@@ -1907,80 +1896,6 @@ begin
   end;
 end;
 
-{ TSceneRest }
-
-procedure TSceneRest.Render;
-begin
-  UI.Title(_('Rest'));
-
-  UI.FromAToZ;
-  Y := 1;
-
-  Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
-    TK_ALIGN_LEFT);
-  Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
-    TK_ALIGN_LEFT);
-  Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' +
-    _('Rest for 1000 turns'), TK_ALIGN_LEFT);
-
-  MsgLog.Render(2, True);
-
-  AddKey('Esc', _('Back'), True);
-end;
-
-procedure TSceneRest.Update(var Key: UInt);
-begin
-  case Key of
-    TK_A, TK_B, TK_C:
-      Player.Rest(StrToInt('1' + StringOfChar('0', Key - TK_A + 1)));
-    TK_ESCAPE:
-      Scenes.SetScene(scGame);
-  end
-end;
-
-{ TSceneName }
-
-procedure TSceneName.Render;
-begin
-  UI.Title(_('Choose a name'));
-
-  Terminal.Print(CX - 14, CY, _('Enter your player''s name') + ': ' +
-    Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
-
-  AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'), True);
-end;
-
-procedure TSceneName.Update(var Key: UInt);
-begin
-  case Key of
-    TK_BACKSPACE:
-      begin
-        if (Player.Name <> '') then
-          Player.Name := Copy(Player.Name, 1, Length(Player.Name) - 1);
-      end;
-    TK_ENTER, TK_KP_ENTER:
-      begin
-        if (Player.Name = '') then
-          Player.Name := _('PLAYER');
-        Scenes.SetScene(scBackground, scName);
-      end;
-    TK_A .. TK_Z:
-      begin
-        if (Length(Player.Name) < 10) then
-          Player.Name := Player.Name + Chr(Key - TK_A + 65);
-      end;
-    TK_ESCAPE:
-      begin
-        Player.Talents.Clear;
-        Scenes.SetScene(scTalents, scClass);
-      end;
-  end;
-end;
-
 { TSceneOptions }
 
 procedure TSceneOptions.Render;
@@ -2358,21 +2273,23 @@ begin
     (Player.Statictics.Get(stWeight), 'Lush'));
   Terminal.Print(CX, 6, _('Sex') + ': ' + Terminal.Colorize
     (Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')), 'Lush'));
+  Terminal.Print(CX, 7, _('Metabolism') + ': ' +
+    Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 
   // Attributes
-  Terminal.Print(CX, 8, _('Strength') + ': ' +
+  Terminal.Print(CX, 9, _('Strength') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(CX, 9, _('Dexterity') + ': ' +
+  Terminal.Print(CX, 10, _('Dexterity') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(CX, 10, _('Willpower') + ': ' +
+  Terminal.Print(CX, 11, _('Willpower') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(CX, 11, _('Perception') + ': ' +
+  Terminal.Print(CX, 12, _('Perception') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
 
   // Life and Mana
-  Terminal.Print(CX, 13, _('Life') + ': ' + Terminal.Colorize
+  Terminal.Print(CX, 14, _('Life') + ': ' + Terminal.Colorize
     (Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(CX, 14, _('Mana') + ': ' + Terminal.Colorize
+  Terminal.Print(CX, 15, _('Mana') + ': ' + Terminal.Colorize
     (Player.Attributes.Attrib[atMana].Prm, 'Lush'));
 end;
 
@@ -2407,6 +2324,9 @@ begin
     Add(Races.GetName(R));
 
   inherited Render;
+  Terminal.ForegroundColor(clGray);
+  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
+    _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
@@ -2421,15 +2341,23 @@ end;
 procedure TSceneRace.ReRoll;
 var
   V: TRaceProp;
+  Age, Height, Weight, Metabolism: Integer;
 begin
   V := RaceProp[Player.HRace];
 
-  // Age, Height and Weight
-  Player.Statictics.SetValue(stAge, Math.RandomRange(V.Age.Min, V.Age.Max + 1));
-  Player.Statictics.SetValue(stHeight, Math.RandomRange(V.Height.Min,
-    V.Height.Max + 1));
-  Player.Statictics.SetValue(stWeight, Math.RandomRange(V.Weight.Min,
-    V.Weight.Max + 1));
+  Age := Math.RandomRange(V.Age.Min, V.Age.Max + 1);
+  Player.Statictics.SetValue(stAge, Age);
+
+  Height := Math.RandomRange(V.Height.Min, V.Height.Max + 1);
+  Player.Statictics.SetValue(stHeight, Height);
+
+  Weight := Math.RandomRange(V.Weight.Min, V.Weight.Max + 1);
+  Player.Statictics.SetValue(stWeight, Weight);
+
+  Metabolism := Math.EnsureRange(Math.RandomRange(V.Metabolism.Min,
+    V.Metabolism.Max + 1) + Round(Height div 50) + Round(Weight div 15),
+    MetabolismMin, MetabolismMax);
+  Player.Statictics.SetValue(stMetabolism, Metabolism);
 
   // Attributes
   Player.Attributes.SetPrm(atStr, Math.RandomRange(V.Strength.Min,

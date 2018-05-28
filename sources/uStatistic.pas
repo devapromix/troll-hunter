@@ -6,7 +6,8 @@ uses uTypes;
 
 type
   TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk,
-    stScrRead, stItUsed, stItIdent, stItCrafted, stItRep, stFdEat, stAge, stWeight, stHeight);
+    stScrRead, stItUsed, stItIdent, stItCrafted, stItRep, stFdEat, stAge,
+    stWeight, stHeight, stMetabolism);
 
 type
   TStatistics = class(TObject)
