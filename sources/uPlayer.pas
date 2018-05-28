@@ -24,6 +24,9 @@ const
   StarvingMax = 500;
   SatiatedMax = 8000;
   EngorgedMax = 15000;
+  // Metabolism
+  MetabolismMin = 65;
+  MetabolismMax = 135;
   // Inventory
   ItemMax = 26;
   StartGold = 250;
@@ -152,10 +155,10 @@ const
     ivBow1, ivDagger1);
   ClassWeaponSkill: array [TClassEnum] of TSkillEnum = (skBlade, skStaff, skBow,
     skDagger);
-  ClassMainSkill: array [TClassEnum] of TSkillEnum = (skAthletics, skConcentration,
-    skDodge, skToughness);
-  ClassAddSkill: array [TClassEnum] of TSkillEnum = (skBodybuilding, skMeditation,
-    skDodge, skStealth);
+  ClassMainSkill: array [TClassEnum] of TSkillEnum = (skAthletics,
+    skConcentration, skDodge, skToughness);
+  ClassAddSkill: array [TClassEnum] of TSkillEnum = (skBodybuilding,
+    skMeditation, skDodge, skStealth);
 
   { TPlayer }
 
@@ -230,7 +233,8 @@ begin
     Exit;
   Statictics.Inc(stTurn);
   Calendar.Turn;
-  if (Attributes.Attrib[atSat].Value > 0) then
+  if (Attributes.Attrib[atSat].Value > 0) and
+    (Math.RandomRange(0, MetabolismMax) <= Player.Statictics.Get(stMetabolism)) then
     Attributes.Modify(atSat, -SatPerTurn);
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
