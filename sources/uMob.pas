@@ -34,7 +34,7 @@ type
 type
   TMobEnum = (
     // Dark _Wood
-    mbBig_Rat, mbSpiny_Frog, mbGiant_Gecko, mbJackal, mbBlack_Bear, mbGrizzly_Bear, mbAnaconda, mbWolf, mHound,
+    mbBig_Rat, mbSpiny_Frog, mbGiant_Gecko, mbJackal, mbBlack_Bear, mbGrizzly_Bear, mbAnaconda, mbWolf, mbHound,
     // Gray Cave
     mbKobold, mbBig_Kobold, mbRed_Kobold, mbGnoll, mbBasilisk, mbWisp, mbWorm, mbNaga, mbFire_Vortex,
     // Deep Cave

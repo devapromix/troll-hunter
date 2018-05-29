@@ -5,8 +5,9 @@ interface
 uses uTypes;
 
 type
-  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen, abSleeping, abBloodlust, abCursed, abDrunk,
-    abDiseased, abWeak, abAfraid, abArmor_Reduction, abLight, abBerserk);
+  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
+    abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid,
+    abArmor_Reduction, abLight, abBerserk);
 
 type
   TSetOfAbility = set of TAbilityEnum;
@@ -22,7 +23,8 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Ability[const I: TAbilityEnum]: UInt read GetAbility write SetAbility;
+    property Ability[const I: TAbilityEnum]: UInt read GetAbility
+      write SetAbility;
     function IsAbility(const Value: TAbilityEnum): Boolean;
     procedure Modify(const I: TAbilityEnum; const Value: Int);
     function GetName(const Value: TAbilityEnum): string;
@@ -36,9 +38,10 @@ uses SysUtils, TypInfo, uHelpers;
 { TAbility }
 
 const
-  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White', 'Dark Yellow', 'Light Red', 'Lighter Red',
-    'Yellow', 'Dark Red', 'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green', 'Light Yellow',
-    'Lighter Yellow', 'Light Red');
+  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',
+    'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
+    'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green',
+    'Light Yellow', 'Lighter Yellow', 'Light Red');
 
 procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin

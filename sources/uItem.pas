@@ -1916,7 +1916,7 @@ end;
 function TItems.ChItem(AItem: Item): Boolean;
 begin
   Result := (ItemBase[TItemEnum(AItem.ItemID)].ItemType in CorpseTypeItems) or
-    (AItem.Stack > 1) or (AItem.Amount > 1);
+    (AItem.Stack > 1) or (AItem.Amount > 1) or (AItem.Identify = 0);
 end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;

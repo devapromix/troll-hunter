@@ -72,6 +72,7 @@ type
     FSkills: TSkills;
     procedure GenNPCText;
     function GetVision: UInt;
+    procedure Empty;
   public
     constructor Create;
     destructor Destroy; override;
@@ -597,10 +598,7 @@ begin
   Skills.Clear();
   Spellbook.Clear();
   Items_Inventory_Clear();
-  Killer := '';
-  Look := False;
-  IsRest := False;
-  SatPerTurn := 2;
+  Self.Empty;
   Attributes.SetValue(atSat, SatiatedMax);
   Gold := 0;
   MaxMap := 0;
@@ -1327,6 +1325,14 @@ begin
   Terminal.Print(AX, AY, SkyBef + SunOrMoon + SkyAft, TK_ALIGN_CENTER);
 end;
 
+procedure TPlayer.Empty;
+begin
+  Killer := '';
+  Look := False;
+  IsRest := False;
+  SatPerTurn := 2;
+end;
+
 function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   MorgueFileName: string;
@@ -1399,7 +1405,10 @@ begin
   X := Game.Spawn.X;
   Y := Game.Spawn.Y;
   Map.Current := deDark_Wood;
+  Self.Abilities.Clear;
   MsgLog.Clear;
+  Self.Empty();
+  ShowMessage('');
 end;
 
 procedure TPlayer.AddExp(Value: UInt = 1);
