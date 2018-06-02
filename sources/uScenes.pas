@@ -100,13 +100,6 @@ type
   end;
 
 type
-  TSceneQuest = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneBackground = class(TScene)
   public
     procedure Render; override;
@@ -269,7 +262,7 @@ uses
   uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
   uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
-  Trollhunter.Scene.RacesAndClasses;
+  Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest;
 
 { TScene }
 
@@ -2161,31 +2154,6 @@ begin
       Scenes.SetScene(scInv);
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
-  end
-end;
-
-{ TSceneQuest }
-
-procedure TSceneQuest.Render;
-begin
-  UI.Title(Quests.GetName(Quests.Current), 1);
-
-  AddKey('Enter', _('Accept'));
-  AddKey('Esc', _('Decline'), True);
-end;
-
-procedure TSceneQuest.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      Scenes.GoBack();
-    TK_ENTER, TK_KP_ENTER:
-      begin
-        Quests.Add(Quests.Current);
-        Scenes.GoBack();
-      end
   else
     Game.Timer := UIntMax;
   end
