@@ -649,6 +649,7 @@ procedure TPlayer.Defeat(AKiller: string = '');
 begin
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
+  MsgLog.Add(Terminal.Colorize(_('Better luck next time!'), 'Light Yellow'));
   if (Game.Difficulty < dfHard) then
     MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]))
   else
@@ -1408,7 +1409,7 @@ begin
   Self.Abilities.Clear;
   MsgLog.Clear;
   Self.Empty();
-  ShowMessage('');
+//  ShowMessage('');
 end;
 
 procedure TPlayer.AddExp(Value: UInt = 1);
