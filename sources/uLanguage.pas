@@ -1,4 +1,4 @@
-unit uLanguage;
+﻿unit uLanguage;
 
 interface
 
@@ -83,7 +83,7 @@ begin
     Exit;
   SL := TStringList.Create;
   try
-    SL.LoadFromFile(AFileName);
+    SL.LoadFromFile(AFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
     for I := 0 to SL.Count - 1 do
     begin
       S := SL[I];
