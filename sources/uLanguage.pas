@@ -1,43 +1,49 @@
-﻿unit uLanguage;
+unit uLanguage;
 
 interface
 
-uses uTypes, Classes;
+uses Classes;
 
 type
   TLanguage = class(TObject)
   private
     FID: TStringList;
+    FSL: TStringList;
     FValue: TStringList;
     FCurrent: string;
+    FUseDefaultLanguage: Boolean;
+    function GetPath(SubDir: string): string;
   public
-    FSL: TStringList;
     function Get(const AValue: string): string;
-    constructor Create;
+    constructor Create(const AUseDefaultLanguage: Boolean = False);
     destructor Destroy; override;
     procedure Clear;
-    procedure SaveLanguage;
+    procedure SaveDefault;
     procedure LoadFromFile(AFileName: string);
     procedure SaveToFile(AFileName: string);
     procedure UseLanguage(ACurrentLanguage: string);
     property Current: string read FCurrent write FCurrent;
+    property UseDefaultLanguage: Boolean read FUseDefaultLanguage;
   end;
 
 function _(const AValue: string): string;
 
+var
+  Language: TLanguage;
+
 implementation
 
-uses SysUtils, uGame;
+uses SysUtils;
 
 { TLanguage }
 
 function _(const AValue: string): string;
 begin
-  if Assigned(Game) then
+  if Assigned(Language) then
   begin
-    if Mode.Language then
-      Game.Language.FSL.Append(AValue + '=');
-    Result := Game.Language.Get(AValue);
+    if Language.UseDefaultLanguage then
+      Language.FSL.Append(AValue + '=');
+    Result := Language.Get(AValue) + '+';
   end
   else
     Result := AValue;
@@ -49,20 +55,20 @@ begin
   FValue.Clear;
 end;
 
-constructor TLanguage.Create;
+constructor TLanguage.Create(const AUseDefaultLanguage: Boolean = False);
 var
   F: string;
 begin
   FSL := TStringList.Create;
   FSL.Sorted := True;
   FSL.Duplicates := dupIgnore;
-  ForceDirectories(Game.GetPath('languages'));
-  F := Game.GetPath('languages') + 'default.lng';
+  FUseDefaultLanguage := AUseDefaultLanguage;
+  F := GetPath('languages') + 'default.lng';
   if FileExists(F) then
     FSL.LoadFromFile(F);
   FID := TStringList.Create;
   FValue := TStringList.Create;
-  FCurrent := 'en';
+  FCurrent := 'english';
 end;
 
 destructor TLanguage.Destroy;
@@ -76,14 +82,14 @@ end;
 procedure TLanguage.LoadFromFile(AFileName: string);
 var
   S: string;
-  I, J: Int;
+  I, J: Integer;
   SL: TStringList;
 begin
   if not FileExists(AFileName) then
     Exit;
   SL := TStringList.Create;
   try
-    SL.LoadFromFile(AFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
+    SL.LoadFromFile(AFileName);
     for I := 0 to SL.Count - 1 do
     begin
       S := SL[I];
@@ -97,32 +103,39 @@ begin
   end;
 end;
 
-procedure TLanguage.SaveLanguage;
+procedure TLanguage.SaveDefault;
 begin
-  SaveToFile(Game.GetPath('languages') + 'default.lng');
+  if Language.UseDefaultLanguage then
+    SaveToFile(GetPath('languages') + 'default.lng');
 end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
 begin
-  FSL.SaveToFile(AFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
+  FSL.SaveToFile(AFileName);
 end;
 
 procedure TLanguage.UseLanguage(ACurrentLanguage: string);
 begin
   Clear;
   Current := ACurrentLanguage;
-  LoadFromFile(Game.GetPath('languages') + Current + '.lng');
+  LoadFromFile(GetPath('languages') + Current + '.lng');
 end;
 
 function TLanguage.Get(const AValue: string): string;
 var
-  I: Int;
+  I: Integer;
 begin
   I := FID.IndexOf(AValue);
   if (I < 0) or (FValue[I] = '') then
     Result := AValue
   else
     Result := FValue[I];
+end;
+
+function TLanguage.GetPath(SubDir: string): string;
+begin
+  Result := ExtractFilePath(ParamStr(0));
+  Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
 end.

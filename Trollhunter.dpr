@@ -46,7 +46,8 @@ uses
   Trollhunter.Scene.Name in 'sources\Trollhunter.Scene.Name.pas',
   Trollhunter.Scene.Rest in 'sources\Trollhunter.Scene.Rest.pas',
   Trollhunter.Scene.RacesAndClasses in 'sources\Trollhunter.Scene.RacesAndClasses.pas',
-  Trollhunter.Scene.Quest in 'sources\Trollhunter.Scene.Quest.pas';
+  Trollhunter.Scene.Quest in 'sources\Trollhunter.Scene.Quest.pas',
+  uUtils in 'sources\uUtils.pas';
 
 var
   Key: UInt = 0;
