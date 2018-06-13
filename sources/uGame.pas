@@ -104,7 +104,6 @@ type
   TMode = record
     Game: Boolean;
     Wizard: Boolean;
-    Language: Boolean;
   end;
 
 var
@@ -137,7 +136,6 @@ type
     FPortalTile: TTileEnum;
     FShowEffects: Boolean;
     FAPOption: array [TAPOptionEnum] of Boolean;
-    FLanguage: TLanguage;
   public
     constructor Create;
     destructor Destroy; override;
@@ -167,7 +165,6 @@ type
     function EnsureRange(const AValue, AMax: Int): Int;
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
-    property Language: TLanguage read FLanguage;
     procedure ChScreen;
   end;
 
@@ -193,13 +190,14 @@ constructor TGame.Create;
 var
   I: UInt;
   J: TAPOptionEnum;
+  IsUseLang: Boolean;
 begin
   Randomize;
   Timer := 0;
   Won := False;
   Mode.Game := False;
   Mode.Wizard := False;
-  Mode.Language := False;
+  IsUseLang := False;
   for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
     FAPOption[J] := True;
   CanClose := False;
@@ -212,21 +210,21 @@ begin
   FPortal := TSpawn.Create;
   PortalMap := deDark_Wood;
   PortalTile := teStoneFloor;
-  FLanguage := TLanguage.Create;
   for I := 1 to ParamCount do
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
       Mode.Wizard := True;
     if (LowerCase(ParamStr(I)) = '-l') then
-      Mode.Language := True;
+      IsUseLang := True;
   end;
+  Language := TLanguage.Create(IsUseLang);
+  Language.UseLanguage('russian');
 end;
 
 destructor TGame.Destroy;
 begin
-  if Mode.Language then
-    Language.SaveLanguage();
-  FreeAndNil(FLanguage);
+  Language.SaveDefault;
+  FreeAndNil(Language);
   FreeAndNil(FPortal);
   FreeAndNil(FSpawn);
   inherited;

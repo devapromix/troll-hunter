@@ -25,7 +25,7 @@ type
 
 implementation
 
-uses SysUtils, uGame;
+uses SysUtils, uGame, uLanguage;
 
 { TEntity }
 
@@ -52,7 +52,7 @@ begin
   if (Trim(S) <> '') then
     Result := LowerCase(S)
       else Result := '(???)' + S;
-  if (Game.Language.Current <> 'en') then
+  if (Language.Current <> 'english') then
     Exit;
   if (Result[1] in ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + Result
@@ -65,7 +65,7 @@ begin
   if (Trim(S) <> '') then
     Result := LowerCase(S)
       else Result := '(???)' + S;
-  if (Game.Language.Current <> 'en') then
+  if (Language.Current <> 'english') then
     Exit;
   Result := 'the ' + Result;
 end;
