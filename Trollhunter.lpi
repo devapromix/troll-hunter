@@ -28,7 +28,7 @@
         <CommandLineParams Value="-w -l"/>
       </local>
     </RunParams>
-    <Units Count="33">
+    <Units Count="44">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -161,6 +161,50 @@
         <Filename Value="sources\uWeather.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit32>
+      <Unit33>
+        <Filename Value="sources\Trollhunter.Item.Shop.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="sources\uRace.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="sources\uClass.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="sources\Trollhunter.Scene.Enchant.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="sources\Trollhunter.Scene.Name.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="sources\Trollhunter.Scene.Rest.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="sources\Trollhunter.Scene.RacesAndClasses.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="sources\Trollhunter.Scene.Quest.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="sources\uUtils.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="sources\Trollhunter.Scene.Background.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="sources\Trollhunter.Item.Types.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit43>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
