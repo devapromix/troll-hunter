@@ -253,7 +253,7 @@ uses
   uMap, Trollhunter.UI.Log, uItem, uLanguage, uCorpse, uCalendar, Trollhunter.Item.Shop,
   uSpellbook, uTalent, uSkill, Trollhunter.UI.Logo, uEntity, uCreature, uStatistic,
   Trollhunter.UI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
-  uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
+  Trollhunter.Item.Affixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
   Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest,
   Trollhunter.Scene.Background, Trollhunter.Item.Types;
