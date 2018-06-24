@@ -172,7 +172,7 @@ var
 
 implementation
 
-uses SysUtils, uPlayer, uMsgLog, uScenes, Math, Dialogs,
+uses SysUtils, uPlayer, Trollhunter.UI.Log, uScenes, Math, Dialogs,
   BearLibTerminal, uItem, uMob, uTerminal, Trollhunter.Item.Shop, uSpellbook,
   uHelpers;
 

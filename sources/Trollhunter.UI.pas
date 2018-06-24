@@ -2,7 +2,7 @@ unit Trollhunter.UI;
 
 interface
 
-uses uTypes, uMsgLog;
+uses uTypes, Trollhunter.UI.Log;
 
 type
   TIconEnum = (icMale, icFemale, icPlus, icMinus, icQuestion, icGold, icFlag,

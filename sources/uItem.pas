@@ -1630,7 +1630,7 @@ var
 
 implementation
 
-uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
+uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, Trollhunter.UI.Log,
   Trollhunter.Item.Shop, uTalent, uAffixes, uAttribute, Trollhunter.UI,
   uBearLibItemsDungeon,
   uBearLibItemsInventory, uHelpers;

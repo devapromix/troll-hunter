@@ -41,7 +41,8 @@ var
 
 implementation
 
-uses SysUtils, Math, uLanguage, uItem, Trollhunter.Item.Shop, uMsgLog, uPlayer,
+uses SysUtils, Math, uLanguage, uItem, Trollhunter.Item.Shop,
+  Trollhunter.UI.Log, uPlayer,
   uCreature, uAttribute, uHelpers;
 
 { TCalendar }
@@ -59,7 +60,8 @@ end;
 
 function TCalendar.DaysPerMonth(AMonth: UInt): UInt;
 const
-  DaysInMonth: array [1 .. 12] of UInt = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+  DaysInMonth: array [1 .. 12] of UInt = (31, 28, 31, 30, 31, 30, 31, 31, 30,
+    31, 30, 31);
 begin
   Result := DaysInMonth[AMonth];
 end;
@@ -71,15 +73,17 @@ end;
 
 function TCalendar.GetDayName(): string;
 const
-  DayName: array [1 .. 7] of string = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+  DayName: array [1 .. 7] of string = ('Monday', 'Tuesday', 'Wednesday',
+    'Thursday', 'Friday', 'Saturday', 'Sunday');
 begin
   Result := DayName[DayOfWeek];
 end;
 
 function TCalendar.GetMonthName(AMonth: UInt): string;
 const
-  MonthName: array [1 .. 12] of string = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December');
+  MonthName: array [1 .. 12] of string = ('January', 'February', 'March',
+    'April', 'May', 'June', 'July', 'August', 'September', 'October',
+    'November', 'December');
 begin
   if (AMonth = 0) then
     AMonth := FMonth;
@@ -118,10 +122,12 @@ procedure TCalendar.OnHour();
 begin
   // Replenish Life
   if (Player.Attributes.Attrib[atReLife].Value > 0) then
-    Player.Attributes.Modify(atLife, Player.Attributes.Attrib[atReLife].Value.InRange(ReLifeMax));
+    Player.Attributes.Modify(atLife, Player.Attributes.Attrib[atReLife]
+      .Value.InRange(ReLifeMax));
   // Regenerate Mana
   if (Player.Attributes.Attrib[atReMana].Value > 0) then
-    Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana].Value.InRange(ReManaMax));
+    Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana]
+      .Value.InRange(ReManaMax));
 end;
 
 procedure TCalendar.OnMonth();

@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses SysUtils, uLanguage, uPlayer, uMsgLog, uStatistic, Trollhunter.UI,
+uses SysUtils, uLanguage, uPlayer, Trollhunter.UI.Log, uStatistic, Trollhunter.UI,
   uAttribute;
 
 { TSpellbook }

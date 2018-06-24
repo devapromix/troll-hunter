@@ -100,7 +100,7 @@
         <DCCReference Include="Sources\uMap.pas"/>
         <DCCReference Include="Sources\uItem.pas"/>
         <DCCReference Include="Sources\uMob.pas"/>
-        <DCCReference Include="Sources\uMsgLog.pas"/>
+        <DCCReference Include="Sources\Trollhunter.UI.Log.pas"/>
         <DCCReference Include="Sources\uCorpse.pas"/>
         <DCCReference Include="Sources\uEntity.pas"/>
         <DCCReference Include="Sources\uCalendar.pas"/>
@@ -109,7 +109,7 @@
         <DCCReference Include="Sources\uTalent.pas"/>
         <DCCReference Include="Sources\uAbility.pas"/>
         <DCCReference Include="Sources\uSkill.pas"/>
-        <DCCReference Include="Sources\uLogo.pas"/>
+        <DCCReference Include="Sources\Trollhunter.UI.Logo.pas"/>
         <DCCReference Include="Sources\uStatistic.pas"/>
         <DCCReference Include="Sources\uAffixes.pas"/>
         <DCCReference Include="Sources\uCreature.pas"/>

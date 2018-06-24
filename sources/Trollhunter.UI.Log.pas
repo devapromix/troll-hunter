@@ -1,4 +1,4 @@
-unit uMsgLog;
+unit Trollhunter.UI.Log;
 
 interface
 

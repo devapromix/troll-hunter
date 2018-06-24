@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses SysUtils, uMap, uMsgLog, uLanguage;
+uses SysUtils, uMap, Trollhunter.UI.Log, uLanguage;
 
 { TQuests }
 

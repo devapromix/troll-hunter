@@ -49,8 +49,8 @@ const
 
 implementation
 
-uses SysUtils, TypInfo, Math, uLanguage, uTerminal, uPlayer, uGame, uMsgLog,
-  uStatistic, uHelpers;
+uses SysUtils, TypInfo, Math, uLanguage, uTerminal, uPlayer, uGame,
+  Trollhunter.UI.Log, uStatistic, uHelpers;
 
 { TSkills }
 
@@ -87,15 +87,17 @@ procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: UInt);
 begin
   if (Skill[ASkill].Value < SkillMax) and (ASkill <> skNone) then
   begin
-    FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0, AExpValue + 1) + 1;
+    FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0,
+      AExpValue + 1) + 1;
     if (Skill[ASkill].Exp >= SkillExpMax) then
     begin
       FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
       Inc(FSkill[ASkill].Value);
-      FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin, SkillMax);
+      FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
+        SkillMax);
       // Add message {!!!}
-      MsgLog.Add(Terminal.Colorize(Format(_('Your skill %s has raised to %d!'), [GetName(ASkill), FSkill[ASkill].Value]
-        ), clAlarm));
+      MsgLog.Add(Terminal.Colorize(Format(_('Your skill %s has raised to %d!'),
+        [GetName(ASkill), FSkill[ASkill].Value]), clAlarm));
       // Add exp
       Player.AddExp();
       // Add scores
@@ -119,7 +121,8 @@ end;
 
 procedure TSkills.Modify(I: TSkillEnum; Value: Int);
 begin
-  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin, SkillMax);
+  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin,
+    SkillMax);
 end;
 
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);

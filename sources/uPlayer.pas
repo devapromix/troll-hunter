@@ -147,7 +147,7 @@ var
 implementation
 
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
-  uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
+  uTerminal, Trollhunter.UI.Log, uLanguage, uCorpse, uCalendar,
   Trollhunter.Item.Shop, BearLibTerminal, uAbility, uAffixes, uAttribute,
   uSpellbook, Trollhunter.UI,
   uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers,
