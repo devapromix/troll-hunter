@@ -1,4 +1,4 @@
-unit uTerminal;
+unit Trollhunter.Terminal;
 
 interface
 

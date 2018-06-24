@@ -173,7 +173,7 @@ var
 implementation
 
 uses SysUtils, uPlayer, Trollhunter.UI.Log, uScenes, Math, Dialogs,
-  BearLibTerminal, uItem, uMob, uTerminal, Trollhunter.Item.Shop, uSpellbook,
+  BearLibTerminal, uItem, uMob, Trollhunter.Terminal, Trollhunter.Item.Shop, uSpellbook,
   uHelpers;
 
 { TGame }

@@ -11,7 +11,7 @@ uses
   Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
   uGame in 'Sources\uGame.pas',
   uLanguage in 'Sources\uLanguage.pas',
-  uTerminal in 'Sources\uTerminal.pas',
+  Trollhunter.Terminal in 'Sources\Trollhunter.Terminal.pas',
   uScenes in 'Sources\uScenes.pas',
   uPlayer in 'Sources\uPlayer.pas',
   uMap in 'Sources\uMap.pas',

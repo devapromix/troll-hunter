@@ -572,7 +572,7 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, uTerminal, uGame, uHelpers, uItem;
+uses SysUtils, TypInfo, Math, Trollhunter.Terminal, uGame, uHelpers, uItem;
 
 function TAffixes.Amount: UInt;
 begin

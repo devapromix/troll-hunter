@@ -249,7 +249,7 @@ var
 implementation
 
 uses
-  SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
+  SysUtils, Math, Trollhunter.Terminal, uPlayer, BearLibTerminal,
   uMap, Trollhunter.UI.Log, uItem, uLanguage, uCorpse, uCalendar, Trollhunter.Item.Shop,
   uSpellbook, uTalent, uSkill, Trollhunter.UI.Logo, uEntity, uCreature, uStatistic,
   Trollhunter.UI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,

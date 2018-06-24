@@ -487,7 +487,7 @@ var
 
 implementation
 
-uses Math, SysUtils, TypInfo, uTerminal, uPlayer, Trollhunter.UI.Log, uLanguage,
+uses Math, SysUtils, TypInfo, Trollhunter.Terminal, uPlayer, Trollhunter.UI.Log, uLanguage,
   uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest, uHelpers,
   Trollhunter.Item.Types;
 

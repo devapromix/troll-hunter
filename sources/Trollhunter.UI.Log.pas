@@ -28,7 +28,7 @@ var
 
 implementation
 
-uses SysUtils, Math, uTerminal, BearLibTerminal, uPlayer, uGame;
+uses SysUtils, Math, Trollhunter.Terminal, BearLibTerminal, uPlayer, uGame;
 
 { TMsgLog }
 

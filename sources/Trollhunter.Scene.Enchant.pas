@@ -14,8 +14,8 @@ type
 
 implementation
 
-uses Trollhunter.UI, uLanguage, uItem, Trollhunter.UI.Log, uTerminal, BearLibTerminal,
-  uPlayer, uGame;
+uses Trollhunter.UI, uLanguage, uItem, Trollhunter.UI.Log, Trollhunter.Terminal,
+  BearLibTerminal, uPlayer, uGame;
 
 { TSceneEnchant }
 

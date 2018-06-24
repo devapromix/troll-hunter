@@ -21,7 +21,7 @@ var
 
 implementation
 
-uses SysUtils, BearLibTerminal, uTerminal;
+uses SysUtils, BearLibTerminal, Trollhunter.Terminal;
 
 const
   T: array [0 .. 17] of string =

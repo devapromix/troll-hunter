@@ -13,7 +13,7 @@ type
 
 implementation
 
-uses uTerminal, Trollhunter.UI, uPlayer, uGame, uLanguage, BearLibTerminal;
+uses Trollhunter.Terminal, Trollhunter.UI, uPlayer, uGame, uLanguage, BearLibTerminal;
 
 { TSceneName }
 

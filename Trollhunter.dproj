@@ -94,7 +94,7 @@
         <DCCReference Include="Sources\Trollhunter.Types.pas"/>
         <DCCReference Include="Sources\uGame.pas"/>
         <DCCReference Include="Sources\uLanguage.pas"/>
-        <DCCReference Include="Sources\uTerminal.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Terminal.pas"/>
         <DCCReference Include="Sources\uScenes.pas"/>
         <DCCReference Include="Sources\uPlayer.pas"/>
         <DCCReference Include="Sources\uMap.pas"/>

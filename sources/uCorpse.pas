@@ -31,7 +31,7 @@ var
 
 implementation
 
-uses SysUtils, uPlayer, uMap, uGame, uTerminal;
+uses SysUtils, uPlayer, uMap, uGame, Trollhunter.Terminal;
 
 { TCorpses }
 

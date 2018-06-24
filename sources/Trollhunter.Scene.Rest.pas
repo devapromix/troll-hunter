@@ -15,7 +15,7 @@ implementation
 
 { TSceneRest }
 
-uses SysUtils, Trollhunter.UI, uTerminal, BearLibTerminal, uLanguage,
+uses SysUtils, Trollhunter.UI, Trollhunter.Terminal, BearLibTerminal, uLanguage,
   Trollhunter.UI.Log, uPlayer;
 
 procedure TSceneRest.Render;

@@ -85,8 +85,8 @@ var
 
 implementation
 
-uses SysUtils, Math, Types, TypInfo, uPlayer, uMob, uItem, uLanguage, uTerminal,
-  uGame, uCreature, uAttribute, uScenes, uHelpers;
+uses SysUtils, Math, Types, TypInfo, uPlayer, uMob, uItem, uLanguage,
+  Trollhunter.Terminal, uGame, uCreature, uAttribute, uScenes, uHelpers;
 
 { TMap }
 

@@ -33,7 +33,7 @@ type
 
 implementation
 
-uses Math, BearLibTerminal, uLanguage, uTerminal, uPlayer, uAttribute, uAbility,
+uses Math, BearLibTerminal, uLanguage, Trollhunter.Terminal, uPlayer, uAttribute, uAbility,
   uGame, uRace, uClass, Trollhunter.UI, uStatistic, uSkill;
 
 var
