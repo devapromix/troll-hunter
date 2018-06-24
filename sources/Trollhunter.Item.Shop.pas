@@ -1,4 +1,4 @@
-unit uShop;
+unit Trollhunter.Item.Shop;
 
 interface
 
@@ -48,7 +48,7 @@ var
 implementation
 
 uses
-  SysUtils, Math, uMap, uCreature, uAttribute, uHelpers;
+  SysUtils, Math, uMap, uCreature, uAttribute, uHelpers, Trollhunter.Item.Types;
 
 { TShop }
 

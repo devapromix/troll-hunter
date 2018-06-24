@@ -174,7 +174,8 @@ var
 implementation
 
 uses SysUtils, uPlayer, uMsgLog, uScenes, Math, Dialogs,
-  BearLibTerminal, uItem, uMob, uTerminal, uShop, uSpellbook, uHelpers;
+  BearLibTerminal, uItem, uMob, uTerminal, Trollhunter.Item.Shop, uSpellbook,
+  uHelpers;
 
 { TGame }
 

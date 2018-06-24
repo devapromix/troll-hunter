@@ -148,22 +148,14 @@ implementation
 
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
-  uShop, BearLibTerminal, uAbility, uAffixes, uAttribute, uSpellbook, uUI,
-  uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers;
+  Trollhunter.Item.Shop, BearLibTerminal, uAbility, uAffixes, uAttribute,
+  uSpellbook, uUI,
+  uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers,
+  Trollhunter.Item.Types;
 
-const
-  ClassMainWeapon: array [TClassEnum] of TItemEnum = (ivRusty_Sword, ivStaff1,
-    ivBow1, ivDagger1);
-  ClassWeaponSkill: array [TClassEnum] of TSkillEnum = (skBlade, skStaff, skBow,
-    skDagger);
-  ClassMainSkill: array [TClassEnum] of TSkillEnum = (skAthletics,
-    skConcentration, skDodge, skToughness);
-  ClassAddSkill: array [TClassEnum] of TSkillEnum = (skBodybuilding,
-    skMeditation, skDodge, skStealth);
+{ TPlayer }
 
-  { TPlayer }
-
-  // Generate a random player's background (from Kharne and UMoria roguelikes)
+// Generate a random player's background (from Kharne and UMoria roguelikes)
 procedure TPlayer.GenerateBackground();
 var
   I: (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType,
@@ -235,7 +227,8 @@ begin
   Statictics.Inc(stTurn);
   Calendar.Turn;
   if (Attributes.Attrib[atSat].Value > 0) and
-    (Math.RandomRange(0, MetabolismMax) <= Player.Statictics.Get(stMetabolism)) then
+    (Math.RandomRange(0, MetabolismMax) <= Player.Statictics.Get(stMetabolism))
+  then
     Attributes.Modify(atSat, -SatPerTurn);
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
@@ -1409,7 +1402,7 @@ begin
   Self.Abilities.Clear;
   MsgLog.Clear;
   Self.Empty();
-//  ShowMessage('');
+  // ShowMessage('');
 end;
 
 procedure TPlayer.AddExp(Value: UInt = 1);
@@ -1575,7 +1568,7 @@ var
   D: UInt;
 begin
   // Main Weapon
-  Items.AddItemToInv(ClassMainWeapon[HClass], 1, True, True);
+  // Items.AddItemToInv(ClassMainWeapon[HClass], 1, True, True);
 
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 9, 5));
@@ -1588,11 +1581,11 @@ end;
 procedure TPlayer.StartSkills;
 begin
   // Weapon
-  Skills.Modify(ClassWeaponSkill[HClass], BeginSkill);
+  Skills.Modify(ClassProp[Player.HClass].Skill[skWeapon], BeginSkill);
   // Main
-  Skills.Modify(ClassMainSkill[HClass], BeginSkill);
+  Skills.Modify(ClassProp[Player.HClass].Skill[skMain], BeginSkill);
   // Add
-  Skills.Modify(ClassAddSkill[HClass], StartSkill);
+  Skills.Modify(ClassProp[Player.HClass].Skill[skAdd], StartSkill);
   // Calc
   Calc();
   Fill();

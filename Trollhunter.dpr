@@ -21,7 +21,7 @@ uses
   uCorpse in 'Sources\uCorpse.pas',
   uEntity in 'Sources\uEntity.pas',
   uCalendar in 'Sources\uCalendar.pas',
-  uShop in 'Sources\uShop.pas',
+  Trollhunter.Item.Shop in 'Sources\Trollhunter.Item.Shop.pas',
   uSpellbook in 'Sources\uSpellbook.pas',
   uTalent in 'Sources\uTalent.pas',
   uAbility in 'Sources\uAbility.pas',
@@ -47,7 +47,9 @@ uses
   Trollhunter.Scene.Rest in 'sources\Trollhunter.Scene.Rest.pas',
   Trollhunter.Scene.RacesAndClasses in 'sources\Trollhunter.Scene.RacesAndClasses.pas',
   Trollhunter.Scene.Quest in 'sources\Trollhunter.Scene.Quest.pas',
-  uUtils in 'sources\uUtils.pas';
+  uUtils in 'sources\uUtils.pas',
+  Trollhunter.Scene.Background in 'sources\Trollhunter.Scene.Background.pas',
+  Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas';
 
 var
   Key: UInt = 0;

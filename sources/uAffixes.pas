@@ -2,11 +2,9 @@ unit uAffixes;
 
 interface
 
-uses uTypes, uCreature, uItem, uBeaRLibItemsCommon;
+uses uTypes, uCreature, Trollhunter.Item.Types, uBeaRLibItemsCommon;
 
 type
-  TSetOfItem = set of TItemType;
-
   TSuffixBase = record
     Level: TMinMax;
     Price: UInt;
@@ -446,7 +444,7 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, uTerminal, uGame, uHelpers;
+uses SysUtils, TypInfo, Math, uTerminal, uGame, uHelpers, uItem;
 
 function TAffixes.Amount: UInt;
 begin

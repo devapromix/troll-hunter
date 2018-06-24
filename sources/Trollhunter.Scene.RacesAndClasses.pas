@@ -6,6 +6,9 @@ uses uTypes, uScenes;
 
 type
   TVScene = class(TScene)
+  private
+    DX: UInt;
+  public
     procedure Render; override;
   end;
 
@@ -31,7 +34,7 @@ type
 implementation
 
 uses Math, BearLibTerminal, uLanguage, uTerminal, uPlayer, uAttribute, uAbility,
-  uGame, uRace, uClass, uUI, uStatistic;
+  uGame, uRace, uClass, uUI, uStatistic, uSkill;
 
 var
   PrmAt: array [atStr .. atMana] of UInt;
@@ -40,32 +43,33 @@ var
 
 procedure TVScene.Render;
 begin
+  DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(CX, 3, _('Age') + ': ' + Terminal.Colorize
+  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize
     (Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(CX, 4, _('Height') + ': ' + Terminal.Colorize
+  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize
     (Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(CX, 5, _('Weight') + ': ' + Terminal.Colorize
+  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize
     (Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(CX, 6, _('Sex') + ': ' + Terminal.Colorize
+  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize
     (Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')), 'Lush'));
-  Terminal.Print(CX, 7, _('Metabolism') + ': ' +
+  Terminal.Print(DX, 7, _('Metabolism') + ': ' +
     Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 
   // Attributes
-  Terminal.Print(CX, 9, _('Strength') + ': ' +
+  Terminal.Print(DX, 9, _('Strength') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(CX, 10, _('Dexterity') + ': ' +
+  Terminal.Print(DX, 10, _('Dexterity') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(CX, 11, _('Willpower') + ': ' +
+  Terminal.Print(DX, 11, _('Willpower') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(CX, 12, _('Perception') + ': ' +
+  Terminal.Print(DX, 12, _('Perception') + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
 
   // Life and Mana
-  Terminal.Print(CX, 14, _('Life') + ': ' + Terminal.Colorize
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize
     (Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(CX, 15, _('Mana') + ': ' + Terminal.Colorize
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize
     (Player.Attributes.Attrib[atMana].Prm, 'Lush'));
 end;
 
@@ -100,8 +104,9 @@ begin
     Add(Races.GetName(R));
 
   inherited Render;
+
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY,
+  Terminal.Print(DX, CY - (CY div 2), CX, CY,
     _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);
 
   AddKey('Enter', _('Confirm'));
@@ -241,6 +246,16 @@ begin
     Add(uClass.Classes.GetName(C));
 
   inherited Render;
+
+  Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize
+    (Classes.GetItems(Player.HClass), 'Lush'));
+
+  Terminal.Print(DX, 19, _('Skills') + ': ' + Terminal.Colorize
+    (Classes.GetSkills(Player.HClass), 'Lush'));
+
+  Terminal.ForegroundColor(clGray);
+  Terminal.Print(DX, CY - (CY div 2), CX, CY,
+    _(Classes.GetDescription(Player.HClass)), TK_ALIGN_BOTTOM);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));

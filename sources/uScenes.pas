@@ -100,13 +100,6 @@ type
   end;
 
 type
-  TSceneBackground = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneDialog = class(TScene)
   public
     procedure Render; override;
@@ -257,12 +250,13 @@ implementation
 
 uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
-  uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, uShop,
+  uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, Trollhunter.Item.Shop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
   uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
   uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
-  Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest;
+  Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest,
+  Trollhunter.Scene.Background, Trollhunter.Item.Types;
 
 { TScene }
 
@@ -2157,49 +2151,6 @@ begin
   else
     Game.Timer := UIntMax;
   end
-end;
-
-{ TSceneBackground }
-
-procedure TSceneBackground.Render;
-begin
-  UI.Title(_('Character Background'));
-
-  Terminal.ForegroundColor(clGray);
-  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background,
-    TK_ALIGN_BOTTOM);
-
-  if not Mode.Game then
-  begin
-    AddKey('Enter', _('Start game'));
-    AddKey('Space', _('Re-roll'));
-  end;
-  AddKey('Esc', _('Close'), _('Back'), True);
-end;
-
-procedure TSceneBackground.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ENTER, TK_KP_ENTER:
-      if not Mode.Game then
-      begin
-        Scenes.SetScene(scLoad);
-        Terminal.Refresh;
-        Terminal_Delay(1000);
-        Map.Gen;
-        Mode.Game := True;
-        Player.Talents.DoTalent
-          (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
-        Player.StartEquip;
-        Player.StartSkills;
-        Scenes.SetScene(scGame);
-      end;
-    TK_SPACE:
-      if not Mode.Game then
-        Player.GenerateBackground();
-    TK_ESCAPE:
-      Scenes.GoBack();
-  end;
 end;
 
 initialization

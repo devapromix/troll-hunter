@@ -43,7 +43,7 @@ begin
   begin
     if Language.UseDefaultLanguage then
       Language.FSL.Append(AValue + '=');
-    Result := Language.Get(AValue) + '+';
+    Result := Language.Get(AValue);
   end
   else
     Result := AValue;
