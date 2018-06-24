@@ -5,7 +5,8 @@ interface
 uses uTypes, uCreature;
 
 type
-  TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation, spMagicEye);
+  TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation,
+    spMagicEye);
 
 type
   TSpellBase = record
@@ -53,7 +54,8 @@ var
 
 implementation
 
-uses SysUtils, uLanguage, uPlayer, uMsgLog, uStatistic, uUI, uAttribute;
+uses SysUtils, uLanguage, uPlayer, uMsgLog, uStatistic, Trollhunter.UI,
+  uAttribute;
 
 { TSpellbook }
 
@@ -81,7 +83,8 @@ begin
     begin
       if (Index = C) then
       begin
-        if (Player.Attributes.Attrib[atMana].Value >= FSpell[I].Spell.ManaCost) then
+        if (Player.Attributes.Attrib[atMana].Value >= FSpell[I].Spell.ManaCost)
+        then
         begin
           Player.Statictics.Inc(stSpCast);
           Player.Attributes.Modify(atMana, -FSpell[I].Spell.ManaCost);

@@ -1631,7 +1631,8 @@ var
 implementation
 
 uses Math, Classes, TypInfo, SysUtils, uTerminal, uLanguage, uMsgLog,
-  Trollhunter.Item.Shop, uTalent, uAffixes, uAttribute, uUI, uBearLibItemsDungeon,
+  Trollhunter.Item.Shop, uTalent, uAffixes, uAttribute, Trollhunter.UI,
+  uBearLibItemsDungeon,
   uBearLibItemsInventory, uHelpers;
 
 { TItems }

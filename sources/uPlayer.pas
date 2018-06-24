@@ -149,7 +149,7 @@ implementation
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
   uTerminal, uMsgLog, uLanguage, uCorpse, uCalendar,
   Trollhunter.Item.Shop, BearLibTerminal, uAbility, uAffixes, uAttribute,
-  uSpellbook, uUI,
+  uSpellbook, Trollhunter.UI,
   uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers,
   Trollhunter.Item.Types;
 

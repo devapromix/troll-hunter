@@ -1,4 +1,4 @@
-unit uUI;
+unit Trollhunter.UI;
 
 interface
 

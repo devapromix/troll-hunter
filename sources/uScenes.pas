@@ -252,7 +252,7 @@ uses
   SysUtils, Math, uTerminal, uPlayer, BearLibTerminal,
   uMap, uMsgLog, uItem, uLanguage, uCorpse, uCalendar, Trollhunter.Item.Shop,
   uSpellbook, uTalent, uSkill, uLogo, uEntity, uCreature, uStatistic,
-  uUI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
+  Trollhunter.UI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
   uAffixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
   Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest,

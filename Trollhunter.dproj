@@ -114,7 +114,7 @@
         <DCCReference Include="Sources\uAffixes.pas"/>
         <DCCReference Include="Sources\uCreature.pas"/>
         <DCCReference Include="Sources\uAttribute.pas"/>
-        <DCCReference Include="Sources\uUI.pas"/>
+        <DCCReference Include="Sources\Trollhunter.UI.pas"/>
         <DCCReference Include="Sources\BearLibTerminal\BearLibTerminal.pas"/>
         <DCCReference Include="Sources\BearLibPathFind\uPathFind.pas"/>
         <DCCReference Include="Sources\BearLibItems\uBearLibItemsCommon.pas"/>
@@ -213,13 +213,13 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>

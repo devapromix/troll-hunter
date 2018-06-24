@@ -15,7 +15,8 @@ implementation
 
 { TSceneBackground }
 
-uses uUI, BearLibTerminal, uTerminal, uPlayer, uLanguage, uGame, uMap;
+uses Trollhunter.UI, BearLibTerminal, uTerminal, uPlayer, uLanguage, uGame,
+  uMap;
 
 procedure TSceneBackground.Render;
 begin

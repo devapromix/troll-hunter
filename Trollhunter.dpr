@@ -31,7 +31,7 @@ uses
   uAffixes in 'Sources\uAffixes.pas',
   uCreature in 'Sources\uCreature.pas',
   uAttribute in 'Sources\uAttribute.pas',
-  uUI in 'Sources\uUI.pas',
+  Trollhunter.UI in 'Sources\Trollhunter.UI.pas',
   BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
   uPathFind in 'Sources\BearLibPathFind\uPathFind.pas',
   uBearLibItemsCommon in 'Sources\BearLibItems\uBearLibItemsCommon.pas',

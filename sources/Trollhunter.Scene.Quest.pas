@@ -15,7 +15,7 @@ implementation
 
 { TSceneQuest }
 
-uses uUI, uQuest, uLanguage, BearLibTerminal, uGame;
+uses Trollhunter.UI, uQuest, uLanguage, BearLibTerminal, uGame;
 
 procedure TSceneQuest.Render;
 begin
