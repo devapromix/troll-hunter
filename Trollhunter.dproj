@@ -130,7 +130,7 @@
         <DCCReference Include="sources\Trollhunter.Scene.Rest.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.RacesAndClasses.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Quest.pas"/>
-        <DCCReference Include="sources\uUtils.pas"/>
+        <DCCReference Include="sources\Trollhunter.Utils.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Background.pas"/>
         <DCCReference Include="sources\Trollhunter.Item.Types.pas"/>
         <BuildConfiguration Include="Debug">

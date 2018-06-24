@@ -151,7 +151,7 @@ uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
   Trollhunter.Item.Shop, BearLibTerminal, uAbility, uAffixes, uAttribute,
   uSpellbook, Trollhunter.UI,
   uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers,
-  Trollhunter.Item.Types;
+  Trollhunter.Item.Types, Trollhunter.Utils;
 
 { TPlayer }
 
@@ -1376,10 +1376,10 @@ begin
     SL.Append('');
     SL.Append(GetPureText(Items.GetInventory));
     SL.Append(Format('%s: %d', [_('Gold'), Gold]));
-    ForceDirectories(Game.GetPath('morgue'));
+    ForceDirectories(Utils.GetPath('morgue'));
     MorgueFileName := Format('%s-%s-character-dump.txt',
       [Player.Name, GetDateTime('-', '-')]);
-    SL.SaveToFile(Game.GetPath('morgue') + MorgueFileName{$IFNDEF FPC},
+    SL.SaveToFile(Utils.GetPath('morgue') + MorgueFileName{$IFNDEF FPC},
       TEncoding.UTF8{$ENDIF});
   finally
     FreeAndNil(SL);

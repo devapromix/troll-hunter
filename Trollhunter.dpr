@@ -47,7 +47,7 @@ uses
   Trollhunter.Scene.Rest in 'sources\Trollhunter.Scene.Rest.pas',
   Trollhunter.Scene.RacesAndClasses in 'sources\Trollhunter.Scene.RacesAndClasses.pas',
   Trollhunter.Scene.Quest in 'sources\Trollhunter.Scene.Quest.pas',
-  uUtils in 'sources\uUtils.pas',
+  Trollhunter.Utils in 'sources\Trollhunter.Utils.pas',
   Trollhunter.Scene.Background in 'sources\Trollhunter.Scene.Background.pas',
   Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas';
 

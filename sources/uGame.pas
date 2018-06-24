@@ -149,7 +149,6 @@ type
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
     property Portal: TSpawn read FPortal write FPortal;
-    function GetPath(SubDir: string = ''): string;
     function GetStrDifficulty: string;
     function GetVersion: string;
     property PortalMap: TMapEnum read FPortalMap write FPortalMap;
@@ -253,12 +252,6 @@ end;
 function TGame.GetOption(I: TAPOptionEnum): Boolean;
 begin
   Result := FAPOption[I]
-end;
-
-function TGame.GetPath(SubDir: string): string;
-begin
-  Result := ExtractFilePath(ParamStr(0));
-  Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
 function TGame.GetStrDifficulty: string;
