@@ -8,7 +8,7 @@ program Trollhunter;
 uses
   SysUtils,
   Dialogs,
-  uTypes in 'Sources\uTypes.pas',
+  Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
   uGame in 'Sources\uGame.pas',
   uLanguage in 'Sources\uLanguage.pas',
   uTerminal in 'Sources\uTerminal.pas',
@@ -28,7 +28,7 @@ uses
   uSkill in 'Sources\uSkill.pas',
   Trollhunter.UI.Logo in 'Sources\Trollhunter.UI.Logo.pas',
   uStatistic in 'Sources\uStatistic.pas',
-  uAffixes in 'Sources\uAffixes.pas',
+  Trollhunter.Item.Affixes in 'Sources\Trollhunter.Item.Affixes.pas',
   uCreature in 'Sources\uCreature.pas',
   uAttribute in 'Sources\uAttribute.pas',
   Trollhunter.UI in 'Sources\Trollhunter.UI.pas',

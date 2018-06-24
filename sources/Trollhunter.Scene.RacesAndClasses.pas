@@ -2,7 +2,7 @@ unit Trollhunter.Scene.RacesAndClasses;
 
 interface
 
-uses uTypes, uScenes;
+uses Trollhunter.Types, uScenes;
 
 type
   TVScene = class(TScene)

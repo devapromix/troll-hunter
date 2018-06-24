@@ -2,7 +2,7 @@ unit Trollhunter.Scene.Rest;
 
 interface
 
-uses uScenes, uTypes;
+uses uScenes, Trollhunter.Types;
 
 type
   TSceneRest = class(TScene)

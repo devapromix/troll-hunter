@@ -2,7 +2,7 @@ unit uPathFind; // By KIPAR
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 type
   TGetXYVal = function(X, Y: Int): Boolean; stdcall;

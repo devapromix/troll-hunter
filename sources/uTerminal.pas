@@ -2,7 +2,7 @@ unit uTerminal;
 
 interface
 
-uses Types, uTypes, BearLibTerminal;
+uses Types, Trollhunter.Types, BearLibTerminal;
 
 type
   TGlyph = record

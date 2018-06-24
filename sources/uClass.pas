@@ -3,7 +3,7 @@ unit uClass;
 interface
 
 uses
-  uTypes, Trollhunter.Item.Types, uCreature, uSkill;
+  Trollhunter.Types, Trollhunter.Item.Types, uCreature, uSkill;
 
 type
   TClassEnum = (clWarrior, clMage, clRanger, clThief);

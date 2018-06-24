@@ -2,7 +2,7 @@ unit uBearLibItemsDungeon;
 
 interface
 
-uses uTypes, uBearLibItemsCommon;
+uses Trollhunter.Types, uBearLibItemsCommon;
 
 procedure Items_Dungeon_Clear(); stdcall;
 procedure Items_Dungeon_MapClear(MapID: Int); stdcall;

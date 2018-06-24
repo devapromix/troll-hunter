@@ -2,7 +2,7 @@ unit uBearLibItemsCommon;
 
 interface
 
-uses uTypes, uCreature;
+uses Trollhunter.Types, uCreature;
 
 const
   BonusCount = 3;

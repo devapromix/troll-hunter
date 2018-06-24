@@ -2,7 +2,7 @@ unit uSkill;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 type
   TSkillEnum = (

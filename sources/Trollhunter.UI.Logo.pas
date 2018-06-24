@@ -2,7 +2,7 @@ unit Trollhunter.UI.Logo;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 type
   TLogo = class(TObject)

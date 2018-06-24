@@ -2,7 +2,7 @@ unit uCorpse;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 const
   CorpseMax = 10;

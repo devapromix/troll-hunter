@@ -2,7 +2,7 @@ unit uTalent;
 
 interface
 
-uses uTypes, uCreature;
+uses Trollhunter.Types, uCreature;
 
 const
   TalentMax = 10;

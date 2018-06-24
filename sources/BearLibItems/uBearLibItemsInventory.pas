@@ -2,7 +2,7 @@ unit uBearLibItemsInventory;
 
 interface
 
-uses uTypes, uBearLibItemsCommon;
+uses Trollhunter.Types, uBearLibItemsCommon;
 
 procedure Items_Inventory_Clear(); stdcall;
 

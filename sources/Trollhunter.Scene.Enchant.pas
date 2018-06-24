@@ -2,7 +2,7 @@ unit Trollhunter.Scene.Enchant;
 
 interface
 
-uses uTypes, uScenes;
+uses Trollhunter.Types, uScenes;
 
 type
   TSceneEnchant = class(TScene)

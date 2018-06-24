@@ -3,7 +3,7 @@ unit Trollhunter.UI.Log;
 interface
 
 uses
-  uTypes, Classes;
+  Trollhunter.Types, Classes;
 
 type
   TMsgLog = class(TObject)

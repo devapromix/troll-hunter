@@ -4,7 +4,7 @@ interface
 
 { TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
 
-uses uTypes, Trollhunter.Item.Types, uBearLibItemsCommon, uGame, uMap, uPlayer,
+uses Trollhunter.Types, Trollhunter.Item.Types, uBearLibItemsCommon, uGame, uMap, uPlayer,
   uEntity, uCreature;
 
 type

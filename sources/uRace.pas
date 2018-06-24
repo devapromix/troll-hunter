@@ -3,7 +3,7 @@ unit uRace;
 interface
 
 uses
-  uTypes, uCreature;
+  Trollhunter.Types, uCreature;
 
 type
   TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);

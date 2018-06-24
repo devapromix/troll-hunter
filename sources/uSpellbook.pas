@@ -2,7 +2,7 @@ unit uSpellbook;
 
 interface
 
-uses uTypes, uCreature;
+uses Trollhunter.Types, uCreature;
 
 type
   TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation,

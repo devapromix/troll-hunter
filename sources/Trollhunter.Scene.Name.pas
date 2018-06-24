@@ -2,7 +2,7 @@ unit Trollhunter.Scene.Name;
 
 interface
 
-uses uScenes, uTypes;
+uses uScenes, Trollhunter.Types;
 
 type
   TSceneName = class(TScene)

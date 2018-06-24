@@ -2,7 +2,7 @@ unit uAbility;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,

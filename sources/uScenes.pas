@@ -3,7 +3,7 @@ unit uScenes;
 interface
 
 uses
-  Classes, Types, uTypes, uBearLibItemsCommon, uMob, uGame, uAttribute;
+  Classes, Types, Trollhunter.Types, uBearLibItemsCommon, uMob, uGame, uAttribute;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,

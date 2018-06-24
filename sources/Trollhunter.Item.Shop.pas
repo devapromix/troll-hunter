@@ -3,7 +3,7 @@ unit Trollhunter.Item.Shop;
 interface
 
 uses
-  uTypes, uBeaRLibItemsCommon, uPlayer, uItem;
+  Trollhunter.Types, uBeaRLibItemsCommon, uPlayer, uItem;
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors, shGloves, shFoods, shWeapons, shBoots,

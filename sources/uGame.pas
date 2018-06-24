@@ -2,7 +2,7 @@ unit uGame;
 
 interface
 
-uses uTypes, uEntity, uMap, uLanguage;
+uses Trollhunter.Types, uEntity, uMap, uLanguage;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."

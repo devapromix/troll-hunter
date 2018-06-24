@@ -2,7 +2,7 @@ unit uCalendar;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 type
   TCalendar = class(TObject)

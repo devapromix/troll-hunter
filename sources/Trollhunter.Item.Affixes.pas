@@ -2,7 +2,7 @@ unit Trollhunter.Item.Affixes;
 
 interface
 
-uses uTypes, uCreature, Trollhunter.Item.Types, uBeaRLibItemsCommon;
+uses Trollhunter.Types, uCreature, Trollhunter.Item.Types, uBeaRLibItemsCommon;
 
 type
   TSuffixBase = record

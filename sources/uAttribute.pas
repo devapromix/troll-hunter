@@ -2,7 +2,7 @@ unit uAttribute;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 const
   AttribMax = 100;

@@ -2,7 +2,7 @@ unit Trollhunter.Scene.Background;
 
 interface
 
-uses uTypes, uScenes;
+uses Trollhunter.Types, uScenes;
 
 type
   TSceneBackground = class(TScene)

@@ -2,7 +2,7 @@ unit uStatistic;
 
 interface
 
-uses uTypes;
+uses Trollhunter.Types;
 
 type
   TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk,

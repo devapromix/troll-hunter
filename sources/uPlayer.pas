@@ -2,7 +2,7 @@ unit uPlayer;
 
 interface
 
-uses Types, uTypes, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
+uses Types, Trollhunter.Types, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
   uTalent, uRace, uClass;
 
 type
