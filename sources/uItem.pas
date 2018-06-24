@@ -1054,7 +1054,7 @@ const
     MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 7; Max: 9;));
     Price: 220; Color: clDarkRed; Deep: [deDark_Wood];),
-    // Staff1
+    // Quarterstaff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 2; Max: 3;));

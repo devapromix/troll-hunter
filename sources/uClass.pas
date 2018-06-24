@@ -9,8 +9,8 @@ type
   TClassEnum = (clWarrior, clMage, clRanger, clThief);
 
 const
-  ClassMainWeapon: array [TClassEnum] of TItemEnum = (ivRusty_Sword, ivStaff1,
-    ivBow1, ivDagger1);
+  ClassMainWeapon: array [TClassEnum] of TItemEnum = (ivRusty_Sword,
+    ivQuarterstaff, ivBow1, ivDagger1);
 
 type
   TClassSkillEnum = (skWeapon, skMain, skAdd);
