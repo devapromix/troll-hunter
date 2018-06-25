@@ -49,7 +49,8 @@ uses
   Trollhunter.Scene.Quest in 'sources\Trollhunter.Scene.Quest.pas',
   Trollhunter.Utils in 'sources\Trollhunter.Utils.pas',
   Trollhunter.Scene.Background in 'sources\Trollhunter.Scene.Background.pas',
-  Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas';
+  Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas',
+  Trollhunter.Player.Types in 'sources\Trollhunter.Player.Types.pas';
 
 var
   Key: UInt = 0;

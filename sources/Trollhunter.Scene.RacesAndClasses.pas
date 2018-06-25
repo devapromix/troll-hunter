@@ -34,7 +34,8 @@ type
 implementation
 
 uses Math, BearLibTerminal, uLanguage, Trollhunter.Terminal, uPlayer, uAttribute, uAbility,
-  uGame, uRace, uClass, Trollhunter.UI, uStatistic, uSkill;
+  uGame, uRace, uClass, Trollhunter.UI, uStatistic, uSkill,
+  Trollhunter.Player.Types;
 
 var
   PrmAt: array [atStr .. atMana] of UInt;

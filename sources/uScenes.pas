@@ -3,7 +3,8 @@ unit uScenes;
 interface
 
 uses
-  Classes, Types, Trollhunter.Types, uBearLibItemsCommon, uMob, uGame, uAttribute;
+  Classes, Types, Trollhunter.Types, uBearLibItemsCommon, uMob, uGame,
+  uAttribute;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -250,13 +251,16 @@ implementation
 
 uses
   SysUtils, Math, Trollhunter.Terminal, uPlayer, BearLibTerminal,
-  uMap, Trollhunter.UI.Log, uItem, uLanguage, uCorpse, uCalendar, Trollhunter.Item.Shop,
-  uSpellbook, uTalent, uSkill, Trollhunter.UI.Logo, uEntity, uCreature, uStatistic,
+  uMap, Trollhunter.UI.Log, uItem, uLanguage, uCorpse, uCalendar,
+  Trollhunter.Item.Shop,
+  uSpellbook, uTalent, uSkill, Trollhunter.UI.Logo, uEntity, uCreature,
+  uStatistic,
   Trollhunter.UI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
   Trollhunter.Item.Affixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
   Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest,
-  Trollhunter.Scene.Background, Trollhunter.Item.Types;
+  Trollhunter.Scene.Background, Trollhunter.Item.Types,
+  Trollhunter.Player.Types;
 
 { TScene }
 

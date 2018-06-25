@@ -2,12 +2,8 @@ unit uPlayer;
 
 interface
 
-uses Types, Trollhunter.Types, uCreature, uMob, uBearLibItemsCommon, uSkill, uStatistic,
-  uTalent, uRace, uClass;
-
-type
-  TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
-    stNeck, stFinger, stTorch);
+uses Types, Trollhunter.Types, Trollhunter.Player.Types, uCreature, uMob,
+  uBearLibItemsCommon, uSkill, uStatistic, uTalent, uRace, uClass;
 
 const
   // Player
@@ -34,18 +30,6 @@ const
   MinPrm = 1;
   TalentPrm = 3;
   AttribPrm = 7;
-
-type
-  TDirectionEnum = (drEast, drWest, drSouth, drNorth, drSouthEast, drSouthWest,
-    drNorthEast, drNorthWest, drOrigin);
-
-const
-  Direction: array [TDirectionEnum] of TPoint = ((X: 1; Y: 0), (X: - 1; Y: 0),
-    (X: 0; Y: 1), (X: 0; Y: - 1), (X: 1; Y: 1), (X: - 1; Y: 1), (X: 1; Y: - 1),
-    (X: - 1; Y: - 1), (X: 0; Y: 0));
-
-type
-  TSexEnum = (sxMale, sxFemale);
 
 type
   TPlayer = class(TCreature)
@@ -148,7 +132,8 @@ implementation
 
 uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
   Trollhunter.Terminal, Trollhunter.UI.Log, uLanguage, uCorpse, uCalendar,
-  Trollhunter.Item.Shop, BearLibTerminal, uAbility, Trollhunter.Item.Affixes, uAttribute,
+  Trollhunter.Item.Shop, BearLibTerminal, uAbility, Trollhunter.Item.Affixes,
+  uAttribute,
   uSpellbook, Trollhunter.UI,
   uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers,
   Trollhunter.Item.Types, Trollhunter.Utils;
@@ -1565,27 +1550,32 @@ end;
 
 procedure TPlayer.StartEquip;
 var
+  J: TSlotType;
   D: UInt;
 begin
-  // Main Weapon
-  // Items.AddItemToInv(ClassMainWeapon[HClass], 1, True, True);
-
+  // Equipment
+  for J := Low(ClassProp[HClass].Item) to High(ClassProp[HClass].Item) do
+    if (ClassProp[HClass].Item[J] <> TItemEnum.None) then
+      Items.AddItemToInv(ClassProp[HClass].Item[J], 1, True, True);
   // Add foods
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 9, 5));
   Items.AddItemToInv(ivTorch, IfThen(Mode.Wizard, 9, 3));
   // Add coins
   D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
   Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));
+  // Calc
+  Calc();
+  Fill();
 end;
 
 procedure TPlayer.StartSkills;
+var
+  I: TClassSkillEnum;
 begin
-  // Weapon
-  Skills.Modify(ClassProp[Player.HClass].Skill[skWeapon], BeginSkill);
-  // Main
-  Skills.Modify(ClassProp[Player.HClass].Skill[skMain], BeginSkill);
-  // Add
-  Skills.Modify(ClassProp[Player.HClass].Skill[skAdd], StartSkill);
+  // Skills
+  for I := Low(TClassSkillEnum) to High(TClassSkillEnum) do
+    Skills.Modify(ClassProp[Player.HClass].Skill[I],
+      uClass.Classes.GetSkillBeginValue(I));
   // Calc
   Calc();
   Fill();
