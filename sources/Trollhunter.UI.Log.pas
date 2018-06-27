@@ -3,7 +3,8 @@ unit Trollhunter.UI.Log;
 interface
 
 uses
-  Trollhunter.Types, Classes;
+  Trollhunter.Types,
+  Classes;
 
 type
   TMsgLog = class(TObject)
@@ -28,7 +29,12 @@ var
 
 implementation
 
-uses SysUtils, Math, Trollhunter.Terminal, BearLibTerminal, uPlayer, uGame;
+uses SysUtils,
+  Math,
+  Trollhunter.Terminal,
+  BearLibTerminal,
+  Trollhunter.Player,
+  uGame;
 
 { TMsgLog }
 
@@ -131,4 +137,3 @@ finalization
 FreeAndNil(MsgLog);
 
 end.
-

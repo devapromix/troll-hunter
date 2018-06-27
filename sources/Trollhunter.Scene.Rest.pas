@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Rest;
 
 interface
 
-uses uScenes, Trollhunter.Types;
+uses uScenes,
+  Trollhunter.Types;
 
 type
   TSceneRest = class(TScene)
@@ -15,8 +16,13 @@ implementation
 
 { TSceneRest }
 
-uses SysUtils, Trollhunter.UI, Trollhunter.Terminal, BearLibTerminal, uLanguage,
-  Trollhunter.UI.Log, uPlayer;
+uses SysUtils,
+  Trollhunter.UI,
+  Trollhunter.Terminal,
+  BearLibTerminal,
+  uLanguage,
+  Trollhunter.UI.Log,
+  Trollhunter.Player;
 
 procedure TSceneRest.Render;
 begin

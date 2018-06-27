@@ -13,7 +13,7 @@ uses
   uLanguage in 'Sources\uLanguage.pas',
   Trollhunter.Terminal in 'Sources\Trollhunter.Terminal.pas',
   uScenes in 'Sources\uScenes.pas',
-  uPlayer in 'Sources\uPlayer.pas',
+  Trollhunter.Player in 'Sources\Trollhunter.Player.pas',
   uMap in 'Sources\uMap.pas',
   uItem in 'Sources\uItem.pas',
   uMob in 'Sources\uMob.pas',
@@ -52,7 +52,8 @@ uses
   Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas',
   Trollhunter.Player.Types in 'sources\Trollhunter.Player.Types.pas',
   Trollhunter.Scene.Statistics in 'sources\Trollhunter.Scene.Statistics.pas',
-  Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas';
+  Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas',
+  Trollhunter.Player.Helpers in 'sources\Trollhunter.Player.Helpers.pas';
 
 var
   Key: UInt = 0;

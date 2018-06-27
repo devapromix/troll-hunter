@@ -41,9 +41,16 @@ var
 
 implementation
 
-uses SysUtils, Math, uLanguage, uItem, Trollhunter.Item.Shop,
-  Trollhunter.UI.Log, uPlayer,
-  uCreature, uAttribute, uHelpers;
+uses SysUtils,
+  Math,
+  uLanguage,
+  uItem,
+  Trollhunter.Item.Shop,
+  Trollhunter.UI.Log,
+  Trollhunter.Player,
+  uCreature,
+  uAttribute,
+  uHelpers;
 
 { TCalendar }
 

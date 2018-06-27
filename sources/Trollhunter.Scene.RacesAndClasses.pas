@@ -2,7 +2,8 @@ unit Trollhunter.Scene.RacesAndClasses;
 
 interface
 
-uses Trollhunter.Types, uScenes;
+uses Trollhunter.Types,
+  uScenes;
 
 type
   TVScene = class(TScene)
@@ -33,9 +34,21 @@ type
 
 implementation
 
-uses Math, BearLibTerminal, uLanguage, Trollhunter.Terminal, uPlayer, uAttribute, uAbility,
-  uGame, uRace, uClass, Trollhunter.UI, Trollhunter.Statistic, uSkill,
-  Trollhunter.Player.Types;
+uses Math,
+  BearLibTerminal,
+  uLanguage,
+  Trollhunter.Terminal,
+  Trollhunter.Player,
+  uAttribute,
+  uAbility,
+  uGame,
+  uRace,
+  uClass,
+  Trollhunter.UI,
+  Trollhunter.Statistic,
+  uSkill,
+  Trollhunter.Player.Types,
+  Trollhunter.Player.Helpers;
 
 var
   PrmAt: array [atStr .. atMana] of UInt;
@@ -53,7 +66,7 @@ begin
   Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize
     (Player.Statictics.Get(stWeight), 'Lush'));
   Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize
-    (Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')), 'Lush'));
+    (Player.Gender, 'Lush'));
   Terminal.Print(DX, 7, _('Metabolism') + ': ' +
     Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 

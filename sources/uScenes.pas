@@ -3,7 +3,12 @@ unit uScenes;
 interface
 
 uses
-  Classes, Types, Trollhunter.Types, uBearLibItemsCommon, uMob, uGame,
+  Classes,
+  Types,
+  Trollhunter.Types,
+  uBearLibItemsCommon,
+  uMob,
+  uGame,
   uAttribute;
 
 type
@@ -237,18 +242,44 @@ var
 implementation
 
 uses
-  SysUtils, Math, Trollhunter.Terminal, uPlayer, BearLibTerminal,
-  uMap, Trollhunter.UI.Log, uItem, uLanguage, uCorpse, uCalendar,
+  SysUtils,
+  Math,
+  Trollhunter.Terminal,
+  Trollhunter.Player,
+  BearLibTerminal,
+  uMap,
+  Trollhunter.UI.Log,
+  uItem,
+  uLanguage,
+  uCorpse,
+  uCalendar,
   Trollhunter.Item.Shop,
-  uSpellbook, uTalent, uSkill, Trollhunter.UI.Logo, uEntity, uCreature,
+  uSpellbook,
+  uTalent,
+  uSkill,
+  Trollhunter.UI.Logo,
+  uEntity,
+  uCreature,
   Trollhunter.Statistic,
-  Trollhunter.UI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
-  Trollhunter.Item.Affixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
-  Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
-  Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest,
-  Trollhunter.Scene.Background, Trollhunter.Item.Types,
-  Trollhunter.Player.Types, Trollhunter.Scene.Statistics,
-  Trollhunter.Scene.Options;
+  Trollhunter.UI,
+  uBearLibItemsDungeon,
+  uBearLibItemsInventory,
+  uQuest,
+  Trollhunter.Item.Affixes,
+  uHelpers,
+  uRace,
+  uClass,
+  Trollhunter.Scene.Enchant,
+  Trollhunter.Scene.Name,
+  Trollhunter.Scene.Rest,
+  Trollhunter.Scene.RacesAndClasses,
+  Trollhunter.Scene.Quest,
+  Trollhunter.Scene.Background,
+  Trollhunter.Item.Types,
+  Trollhunter.Player.Types,
+  Trollhunter.Scene.Statistics,
+  Trollhunter.Scene.Options,
+  Trollhunter.Player.Helpers;
 
 { TScene }
 
@@ -1158,7 +1189,7 @@ begin
   Y := 0;
   X := Math.EnsureRange(Terminal.Window.Width div 4, 10, UIntMax);
 
-  UI.Title(Player.GetInfo);
+  UI.Title(Player.FullName);
 
   if FRenderInfo then
     RenderInfo()

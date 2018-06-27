@@ -2,7 +2,10 @@ unit uGame;
 
 interface
 
-uses Trollhunter.Types, uEntity, uMap, uLanguage;
+uses Trollhunter.Types,
+  uEntity,
+  uMap,
+  uLanguage;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
@@ -172,8 +175,18 @@ var
 
 implementation
 
-uses SysUtils, uPlayer, Trollhunter.UI.Log, uScenes, Math, Dialogs,
-  BearLibTerminal, uItem, uMob, Trollhunter.Terminal, Trollhunter.Item.Shop, uSpellbook,
+uses SysUtils,
+  Trollhunter.Player,
+  Trollhunter.UI.Log,
+  uScenes,
+  Math,
+  Dialogs,
+  BearLibTerminal,
+  uItem,
+  uMob,
+  Trollhunter.Terminal,
+  Trollhunter.Item.Shop,
+  uSpellbook,
   uHelpers;
 
 { TGame }

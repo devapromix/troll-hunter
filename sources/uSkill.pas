@@ -49,8 +49,16 @@ const
 
 implementation
 
-uses SysUtils, TypInfo, Math, uLanguage, Trollhunter.Terminal, uPlayer, uGame,
-  Trollhunter.UI.Log, Trollhunter.Statistic, uHelpers;
+uses SysUtils,
+  TypInfo,
+  Math,
+  uLanguage,
+  Trollhunter.Terminal,
+  Trollhunter.Player,
+  uGame,
+  Trollhunter.UI.Log,
+  Trollhunter.Statistic,
+  uHelpers;
 
 { TSkills }
 

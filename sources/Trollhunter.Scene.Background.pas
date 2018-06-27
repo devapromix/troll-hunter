@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Background;
 
 interface
 
-uses Trollhunter.Types, uScenes;
+uses Trollhunter.Types,
+  uScenes;
 
 type
   TSceneBackground = class(TScene)
@@ -15,7 +16,12 @@ implementation
 
 { TSceneBackground }
 
-uses Trollhunter.UI, BearLibTerminal, Trollhunter.Terminal, uPlayer, uLanguage, uGame,
+uses Trollhunter.UI,
+  BearLibTerminal,
+  Trollhunter.Terminal,
+  Trollhunter.Player,
+  uLanguage,
+  uGame,
   uMap;
 
 procedure TSceneBackground.Render;

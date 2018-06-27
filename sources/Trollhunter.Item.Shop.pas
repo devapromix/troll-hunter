@@ -3,11 +3,15 @@ unit Trollhunter.Item.Shop;
 interface
 
 uses
-  Trollhunter.Types, uBeaRLibItemsCommon, uPlayer, uItem;
+  Trollhunter.Types,
+  uBeaRLibItemsCommon,
+  Trollhunter.Player,
+  uItem;
 
 type
-  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors, shGloves, shFoods, shWeapons, shBoots,
-    shTavern, shShields, shHelms, shJewelry, shGem, shRunes);
+  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
+    shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
+    shJewelry, shGem, shRunes);
 
 type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
@@ -48,7 +52,13 @@ var
 implementation
 
 uses
-  SysUtils, Math, uMap, uCreature, uAttribute, uHelpers, Trollhunter.Item.Types;
+  SysUtils,
+  Math,
+  uMap,
+  uCreature,
+  uAttribute,
+  uHelpers,
+  Trollhunter.Item.Types;
 
 { TShop }
 
@@ -124,7 +134,8 @@ var
 
   function GetItemID(): TItemEnum;
   begin
-    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)), Ord(High(TItemEnum)) + 1));
+    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
+      Ord(High(TItemEnum)) + 1));
   end;
 
   function Check: Boolean;
@@ -197,7 +208,8 @@ var
 begin
   C := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True, True, ptBuy);
+    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True,
+      True, ptBuy);
 end;
 
 procedure TShops.SetShop(I: TShopEnum; const Value: TShop);

@@ -31,85 +31,89 @@ var
 
 implementation
 
-uses SysUtils, uPlayer, uMap, uGame, Trollhunter.Terminal;
+uses SysUtils,
+  Trollhunter.Player,
+  uMap,
+  uGame,
+  Trollhunter.Terminal;
 
 { TCorpses }
 
 procedure TCorpses.Save(Index, AX, AY, AZ: UInt);
 var
-//  F: TIniFile;
+  // F: TIniFile;
   S: string;
 begin
-{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
-  try
+  { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+    try
     S := IntToStr(Index);
     F.EraseSection(S);
     if ((AX > 0) and (AY > 0)) then
     begin
-      F.WriteInt(S, 'X', AX);
-      F.WriteInt(S, 'Y', AY);
-      F.WriteInt(S, 'Z', AZ);
+    F.WriteInt(S, 'X', AX);
+    F.WriteInt(S, 'Y', AY);
+    F.WriteInt(S, 'Z', AZ);
     end;
-  finally
+    finally
     F.Free;
-  end;}
+    end; }
 end;
 
 procedure TCorpses.Load(Index: UInt);
 var
-//  F: TIniFile;
+  // F: TIniFile;
   S: string;
 begin
-{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
-  try
+  { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+    try
     S := IntToStr(Index);
     FCorpse[Index].X := F.ReadInt(S, 'X', 0);
     FCorpse[Index].Y := F.ReadInt(S, 'Y', 0);
     FCorpse[Index].Z := F.ReadInt(S, 'Z', 0);
-  finally
+    finally
     F.Free;
-  end; }
+    end; }
 end;
 
 procedure TCorpses.Append;
 var
-//  F: TIniFile;
+  // F: TIniFile;
   I: UInt;
   S: string;
 begin
   if (Player.X = 0) or (Player.Y = 0) or (Player.X = UIntMax) or
     (Player.Y = UIntMax) then
     Exit;
-{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
-  try
+  { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+    try
     for I := 0 to CorpseMax - 1 do
     begin
-      S := IntToStr(I);
-      if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then
-        F.EraseSection(S);
-      if not F.SectionExists(S) then
-      begin
-        Save(I, Player.X, Player.Y, Ord(Map.Current));
-        Exit;
-      end;
+    S := IntToStr(I);
+    if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then
+    F.EraseSection(S);
+    if not F.SectionExists(S) then
+    begin
+    Save(I, Player.X, Player.Y, Ord(Map.Current));
+    Exit;
     end;
-  finally
+    end;
+    finally
     F.Free;
-  end;}
+    end; }
 end;
 
 constructor TCorpses.Create;
-//var
-//  F: TIniFile;
-//  I: UInt;
+// var
+// F: TIniFile;
+// I: UInt;
 begin
-{  F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
-  try
+  { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
+    try
     for I := 0 to CorpseMax - 1 do
-      Load(I);
-  finally
+    Load(I);
+    finally
     F.Free;
-  end;   }
+    end; }
 end;
 
 procedure TCorpses.DelCorpse(AX, AY: UInt);

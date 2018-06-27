@@ -16,7 +16,7 @@ implementation
 
 uses SysUtils,
   Trollhunter.UI,
-  uPlayer,
+  Trollhunter.Player,
   Trollhunter.Player.Types,
   uGame,
   uLanguage,
@@ -32,7 +32,7 @@ uses SysUtils,
   Trollhunter.Item.Affixes,
   Trollhunter.Item.Types,
   Trollhunter.Item.Shop,
-  uQuest;
+  uQuest, Trollhunter.Player.Helpers;
 
 var
   Wizard: Boolean = False;
@@ -60,7 +60,7 @@ begin
   end
   else
   begin
-    Title(Player.GetInfo);
+    Title(Player.FullName);
 
     Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
     Add(_('Scores'), Player.Statictics.Get(stScore));

@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Enchant;
 
 interface
 
-uses Trollhunter.Types, uScenes;
+uses Trollhunter.Types,
+  uScenes;
 
 type
   TSceneEnchant = class(TScene)
@@ -14,8 +15,14 @@ type
 
 implementation
 
-uses Trollhunter.UI, uLanguage, uItem, Trollhunter.UI.Log, Trollhunter.Terminal,
-  BearLibTerminal, uPlayer, uGame;
+uses Trollhunter.UI,
+  uLanguage,
+  uItem,
+  Trollhunter.UI.Log,
+  Trollhunter.Terminal,
+  BearLibTerminal,
+  Trollhunter.Player,
+  uGame;
 
 { TSceneEnchant }
 

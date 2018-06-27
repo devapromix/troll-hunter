@@ -4,9 +4,15 @@ interface
 
 { TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
 
-uses Trollhunter.Types, Trollhunter.Item.Types, Trollhunter.Player.Types,
-  uBearLibItemsCommon, uGame, uMap, uPlayer,
-  uEntity, uCreature;
+uses Trollhunter.Types,
+  Trollhunter.Item.Types,
+  Trollhunter.Player.Types,
+  uBearLibItemsCommon,
+  uGame,
+  uMap,
+  Trollhunter.Player,
+  uEntity,
+  uCreature;
 
 type
   TItemBase = record
@@ -1631,12 +1637,22 @@ var
 
 implementation
 
-uses Math, Classes, TypInfo, SysUtils, Trollhunter.Terminal, uLanguage,
+uses Math,
+  Classes,
+  TypInfo,
+  SysUtils,
+  Trollhunter.Terminal,
+  uLanguage,
   Trollhunter.UI.Log,
-  Trollhunter.Item.Shop, uTalent, Trollhunter.Item.Affixes, uAttribute,
+  Trollhunter.Item.Shop,
+  uTalent,
+  Trollhunter.Item.Affixes,
+  uAttribute,
   Trollhunter.UI,
   uBearLibItemsDungeon,
-  uBearLibItemsInventory, uHelpers, Trollhunter.Statistic;
+  uBearLibItemsInventory,
+  uHelpers,
+  Trollhunter.Statistic;
 
 { TItems }
 

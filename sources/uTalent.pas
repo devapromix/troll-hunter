@@ -2,17 +2,21 @@ unit uTalent;
 
 interface
 
-uses Trollhunter.Types, uCreature;
+uses Trollhunter.Types,
+  uCreature;
 
 const
   TalentMax = 10;
 
 type
-  TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } , tlMage { Маг } , tlTough { Тяжелый } ,
-    tlWealthy { Богатый } , tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
-    tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands, tlAffinity_with_Daggers, tlAffinity_with_Bows,
-    tlBodybuilding, tlMeditation, tlEnchant_Item, tlMiser { Скряга } , tlCareful { Осторожный } , tlIron_Skin { Железная Кожа } ,
-    tlHardy { Выносливый } , tlCharged { Энергичный } );
+  TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
+    tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
+    tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
+    tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
+    tlAffinity_with_Daggers, tlAffinity_with_Bows, tlBodybuilding, tlMeditation,
+    tlEnchant_Item, tlMiser { Скряга } , tlCareful { Осторожный } ,
+    tlIron_Skin { Железная Кожа } , tlHardy { Выносливый } ,
+    tlCharged { Энергичный } );
 
 type
   TTalentBonus = (tbNone, tbAttrib, tbSkill, tbTalent, tbGold);
@@ -104,11 +108,20 @@ type
 
 implementation
 
-uses SysUtils, TypInfo, uLanguage, uSkill, uScenes, uPlayer, uAttribute, uHelpers;
+uses SysUtils,
+  TypInfo,
+  uLanguage,
+  uSkill,
+  uScenes,
+  Trollhunter.Player,
+  uAttribute,
+  uHelpers;
 
 const
-  TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge', 'Concentration', 'Toughness', 'Gold', 'Blade',
-    'Axe', 'Spear', 'Mace', 'Staff', 'Wand', 'Dagger', 'Bow', 'Bodybuilding', 'Meditation', 'Enchant Item', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
+  TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',
+    'Concentration', 'Toughness', 'Gold', 'Blade', 'Axe', 'Spear', 'Mace',
+    'Staff', 'Wand', 'Dagger', 'Bow', 'Bodybuilding', 'Meditation',
+    'Enchant Item', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
 
   { TTalents }
 
@@ -167,7 +180,8 @@ var
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
-    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and (T <> tlNone)) then
+    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and
+      (T <> tlNone)) then
     begin
       if (Key = K) then
       begin
