@@ -32,7 +32,8 @@ uses SysUtils,
   Trollhunter.Item.Affixes,
   Trollhunter.Item.Types,
   Trollhunter.Item.Shop,
-  uQuest, Trollhunter.Player.Helpers;
+  uQuest,
+  Trollhunter.Player.Helpers;
 
 var
   Wizard: Boolean = False;

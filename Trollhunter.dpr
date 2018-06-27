@@ -53,7 +53,8 @@ uses
   Trollhunter.Player.Types in 'sources\Trollhunter.Player.Types.pas',
   Trollhunter.Scene.Statistics in 'sources\Trollhunter.Scene.Statistics.pas',
   Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas',
-  Trollhunter.Player.Helpers in 'sources\Trollhunter.Player.Helpers.pas';
+  Trollhunter.Player.Helpers in 'sources\Trollhunter.Player.Helpers.pas',
+  Trollhunter.Scene.Help in 'sources\Trollhunter.Scene.Help.pas';
 
 var
   Key: UInt = 0;
