@@ -16,7 +16,7 @@ implementation
 
 { TSceneOptions }
 
-uses uGame,
+uses Trollhunter.Game,
   Trollhunter.UI,
   Trollhunter.Language,
   BearLibTerminal,

@@ -142,7 +142,7 @@ implementation
 uses Classes,
   SysUtils,
   Math,
-  uGame,
+  Trollhunter.Game,
   uMap,
   uScenes,
   uItem,

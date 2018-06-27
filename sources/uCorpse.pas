@@ -34,7 +34,7 @@ implementation
 uses SysUtils,
   Trollhunter.Player,
   uMap,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.Terminal;
 
 { TCorpses }

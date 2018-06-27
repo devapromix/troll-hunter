@@ -8,7 +8,7 @@ uses
   Trollhunter.Types,
   uBearLibItemsCommon,
   uMob,
-  uGame,
+  Trollhunter.Game,
   uAttribute;
 
 type

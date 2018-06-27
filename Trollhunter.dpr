@@ -9,7 +9,7 @@ uses
   SysUtils,
   Dialogs,
   Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
-  uGame in 'Sources\uGame.pas',
+  Trollhunter.Game in 'Sources\Trollhunter.Game.pas',
   Trollhunter.Language in 'Sources\Trollhunter.Language.pas',
   Trollhunter.Terminal in 'Sources\Trollhunter.Terminal.pas',
   uScenes in 'Sources\uScenes.pas',

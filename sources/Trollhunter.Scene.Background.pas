@@ -21,7 +21,7 @@ uses Trollhunter.UI,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Language,
-  uGame,
+  Trollhunter.Game,
   uMap;
 
 procedure TSceneBackground.Render;

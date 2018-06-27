@@ -22,7 +22,7 @@ uses BearLibTerminal,
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uGame;
+  Trollhunter.Game;
 
 { TSceneEnchant }
 

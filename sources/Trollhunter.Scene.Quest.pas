@@ -20,7 +20,7 @@ uses BearLibTerminal,
   Trollhunter.UI,
   uQuest,
   Trollhunter.Language,
-  uGame;
+  Trollhunter.Game;
 
 procedure TSceneQuest.Render;
 begin

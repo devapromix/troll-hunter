@@ -18,7 +18,7 @@ uses BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.UI,
   Trollhunter.Player,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.Language;
 
 { TSceneName }

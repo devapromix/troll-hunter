@@ -31,7 +31,7 @@ uses
   SysUtils,
   BearLibTerminal,
   Trollhunter.Terminal,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.Language;
 
 const

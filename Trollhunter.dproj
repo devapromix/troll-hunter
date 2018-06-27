@@ -92,7 +92,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Sources\Trollhunter.Types.pas"/>
-        <DCCReference Include="Sources\uGame.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Game.pas"/>
         <DCCReference Include="Sources\Trollhunter.Language.pas"/>
         <DCCReference Include="Sources\Trollhunter.Terminal.pas"/>
         <DCCReference Include="Sources\uScenes.pas"/>

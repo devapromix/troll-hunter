@@ -55,7 +55,7 @@ uses SysUtils,
   Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
   uHelpers;

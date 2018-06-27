@@ -3,7 +3,7 @@ unit uMob;
 interface
 
 uses Trollhunter.Types,
-  uGame,
+  Trollhunter.Game,
   uMap,
   uEntity,
   uCreature,

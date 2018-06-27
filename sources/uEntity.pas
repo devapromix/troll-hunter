@@ -27,7 +27,7 @@ type
 implementation
 
 uses SysUtils,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.Language;
 
 { TEntity }

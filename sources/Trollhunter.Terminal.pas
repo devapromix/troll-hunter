@@ -2,7 +2,9 @@ unit Trollhunter.Terminal;
 
 interface
 
-uses Types, Trollhunter.Types, BearLibTerminal;
+uses Types,
+  Trollhunter.Types,
+  BearLibTerminal;
 
 type
   TGlyph = record
@@ -51,8 +53,7 @@ type
     function GetColorFromIni(AKey: string; ADefault: string): Cardinal;
       overload;
     function Colorize(const AStr, AColor: string): string; overload;
-    function Colorize(const ANum: Int; const AColor: string)
-      : string; overload;
+    function Colorize(const ANum: Int; const AColor: string): string; overload;
     function GetTextScreenshot: string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
     function GetColor(Color: Int): Cardinal;
@@ -63,7 +64,11 @@ var
 
 implementation
 
-uses SysUtils, Classes, Dialogs, Math, uGame;
+uses SysUtils,
+  Classes,
+  Dialogs,
+  Math,
+  Trollhunter.Game;
 
 { TTerminal }
 
