@@ -1,4 +1,4 @@
-unit uStatistic;
+unit Trollhunter.Statistic;
 
 interface
 
@@ -7,7 +7,7 @@ uses Trollhunter.Types;
 type
   TStatEnum = (stScore, stTurn, stKills, stSpCast, stFound, stPotDrunk,
     stScrRead, stItUsed, stItIdent, stItCrafted, stItRep, stFdEat, stAge,
-    stWeight, stHeight, stMetabolism);
+    stWeight, stHeight, stMetabolism, stCoinsLooted);
 
 type
   TStatistics = class(TObject)

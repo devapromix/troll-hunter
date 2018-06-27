@@ -14,6 +14,7 @@ type
 
 type
   TClassProp = record
+    Description: string;
     Strength: TMinMax;
     Dexterity: TMinMax;
     Willpower: TMinMax;
@@ -27,27 +28,27 @@ type
 const
   ClassProp: array [TClassEnum] of TClassProp = (
     // Warrior
-    (Strength: (Min: 1; Max: 4;); Dexterity: (Min: 1; Max: 2;);
+    (Description: 'Warrior'; Strength: (Min: 1; Max: 4;); Dexterity: (Min: 1; Max: 2;);
     Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
     Life: (Min: 10; Max: 15;); Mana: (Min: 0; Max: 0;);
     Skill: (skBlade, skAthletics, skBodybuilding);
     Item: (ivCap, ivQuilted_Armor, None, None, ivRusty_Sword, ivBuckler,
     None, None);),
     // Mage
-    (Strength: (Min: 0; Max: 0;); Dexterity: (Min: 0; Max: 0;);
+    (Description: 'Mage'; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 0; Max: 0;);
     Willpower: (Min: 1; Max: 4;); Perception: (Min: 1; Max: 2;);
     Life: (Min: 0; Max: 0;); Mana: (Min: 15; Max: 25;);
     Skill: (skStaff, skConcentration, skMeditation);
     Item: (ivHood, ivLight_Clothes, None, None, ivQuarterstaff, None,
     None, None);),
     // Ranger
-    (Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 4;);
+    (Description: 'Ranger'; Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 4;);
     Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
     Life: (Min: 5; Max: 10;); Mana: (Min: 1; Max: 5;);
     Skill: (skBow, skDodge, skDodge); Item: (ivCap, ivQuilted_Armor, None, None,
     ivBow1, None, None, None);),
     // Thief
-    (Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;);
+    (Description: 'Thief'; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;);
     Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
     Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;);
     Skill: (skDagger, skToughness, skStealth);
@@ -60,9 +61,6 @@ type
   private
     FSkills: TSkills;
     FClassName: array [TClassEnum] of string;
-  private const
-    FClassDescription: array [TClassEnum] of string = ('Warrior', 'Mage',
-      'Ranger', 'Thief');
   public
     constructor Create;
     destructor Destroy; override;
@@ -101,7 +99,7 @@ end;
 
 function TClasses.GetDescription(I: TClassEnum): string;
 begin
-  Result := FClassDescription[I]
+  Result := ClassProp[I].Description;
 end;
 
 function TClasses.GetItems(I: TClassEnum): string;

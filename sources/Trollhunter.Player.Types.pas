@@ -2,7 +2,7 @@ unit Trollhunter.Player.Types;
 
 interface
 
-uses System.Types;
+uses Types;
 
 type
   TDirectionEnum = (drEast, drWest, drSouth, drNorth, drSouthEast, drSouthWest,

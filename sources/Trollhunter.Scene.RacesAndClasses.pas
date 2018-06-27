@@ -34,7 +34,7 @@ type
 implementation
 
 uses Math, BearLibTerminal, uLanguage, Trollhunter.Terminal, uPlayer, uAttribute, uAbility,
-  uGame, uRace, uClass, Trollhunter.UI, uStatistic, uSkill,
+  uGame, uRace, uClass, Trollhunter.UI, Trollhunter.Statistic, uSkill,
   Trollhunter.Player.Types;
 
 var

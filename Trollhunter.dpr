@@ -27,7 +27,7 @@ uses
   uAbility in 'Sources\uAbility.pas',
   uSkill in 'Sources\uSkill.pas',
   Trollhunter.UI.Logo in 'Sources\Trollhunter.UI.Logo.pas',
-  uStatistic in 'Sources\uStatistic.pas',
+  Trollhunter.Statistic in 'sources\Trollhunter.Statistic.pas',
   Trollhunter.Item.Affixes in 'Sources\Trollhunter.Item.Affixes.pas',
   uCreature in 'Sources\uCreature.pas',
   uAttribute in 'Sources\uAttribute.pas',
@@ -50,7 +50,9 @@ uses
   Trollhunter.Utils in 'sources\Trollhunter.Utils.pas',
   Trollhunter.Scene.Background in 'sources\Trollhunter.Scene.Background.pas',
   Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas',
-  Trollhunter.Player.Types in 'sources\Trollhunter.Player.Types.pas';
+  Trollhunter.Player.Types in 'sources\Trollhunter.Player.Types.pas',
+  Trollhunter.Scene.Statistics in 'sources\Trollhunter.Scene.Statistics.pas',
+  Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas';
 
 var
   Key: UInt = 0;

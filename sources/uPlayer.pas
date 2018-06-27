@@ -3,7 +3,7 @@ unit uPlayer;
 interface
 
 uses Types, Trollhunter.Types, Trollhunter.Player.Types, uCreature, uMob,
-  uBearLibItemsCommon, uSkill, uStatistic, uTalent, uRace, uClass;
+  uBearLibItemsCommon, uSkill, Trollhunter.Statistic, uTalent, uRace, uClass;
 
 const
   // Player
@@ -84,6 +84,7 @@ type
     procedure Render(AX, AY: UInt);
     procedure Move(Dir: TDirectionEnum);
     procedure RenderInfo;
+    function GetInfo: string;
     procedure Calc;
     procedure Wait;
     procedure Clear();
@@ -566,6 +567,9 @@ begin
     UIntMax));
   for Attrib := AttrLow to AttrHigh do
     Attributes.SetValue(Attrib, FAttrib[Attrib]);
+  //
+  // if Abilities.IsAbility(abWeightless) then;
+  // Your pack seems featherweight! -- Your pack seems much heavier!
 end;
 
 procedure TPlayer.Clear();
@@ -672,6 +676,13 @@ begin
   Result := Game.EnsureRange((Attributes.Attrib[atVision].Value -
     Abilities.Ability[abBlinded]) + 3, VisionMax);
   Result := Math.IfThen(Calendar.IsDay, Result, Result div 2);
+end;
+
+function TPlayer.GetInfo: string;
+begin
+  Result := Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
+    Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')),
+    uClass.Classes.GetName(Player.HClass)])
 end;
 
 function TPlayer.GetSatiationStr: string;

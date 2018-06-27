@@ -50,7 +50,7 @@ const
 implementation
 
 uses SysUtils, TypInfo, Math, uLanguage, Trollhunter.Terminal, uPlayer, uGame,
-  Trollhunter.UI.Log, uStatistic, uHelpers;
+  Trollhunter.UI.Log, Trollhunter.Statistic, uHelpers;
 
 { TSkills }
 

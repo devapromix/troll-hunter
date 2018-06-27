@@ -488,7 +488,7 @@ var
 implementation
 
 uses Math, SysUtils, TypInfo, Trollhunter.Terminal, uPlayer, Trollhunter.UI.Log, uLanguage,
-  uItem, uSkill, uStatistic, uAttribute, uPathFind, uQuest, uHelpers,
+  uItem, uSkill, Trollhunter.Statistic, uAttribute, uPathFind, uQuest, uHelpers,
   Trollhunter.Item.Types;
 
 function MyCallback(X, Y: Int): Boolean; stdcall;

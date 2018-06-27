@@ -7,7 +7,7 @@ uses Trollhunter.Types;
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
     abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid,
-    abArmor_Reduction, abLight, abBerserk);
+    abArmor_Reduction, abLight, abBerserk, abWeightless);
 
 type
   TSetOfAbility = set of TAbilityEnum;
@@ -41,7 +41,7 @@ const
   AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green',
-    'Light Yellow', 'Lighter Yellow', 'Light Red');
+    'Light Yellow', 'Lighter Yellow', 'Light Red', 'Light Blue');
 
 procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin

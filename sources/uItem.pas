@@ -1636,7 +1636,7 @@ uses Math, Classes, TypInfo, SysUtils, Trollhunter.Terminal, uLanguage,
   Trollhunter.Item.Shop, uTalent, Trollhunter.Item.Affixes, uAttribute,
   Trollhunter.UI,
   uBearLibItemsDungeon,
-  uBearLibItemsInventory, uHelpers;
+  uBearLibItemsInventory, uHelpers, Trollhunter.Statistic;
 
 { TItems }
 
@@ -2451,6 +2451,11 @@ begin
     else
       MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem),
         FItem.Amount]));
+    // Statistics
+    case ItemBase[TItemEnum(FItem.ItemID)].ItemType of
+      itCoin:
+        Player.Statictics.Inc(stCoinsLooted, FItem.Amount);
+    end;
     Player.Wait;
     Player.Calc;
   end;

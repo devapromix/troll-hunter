@@ -110,7 +110,7 @@
         <DCCReference Include="Sources\uAbility.pas"/>
         <DCCReference Include="Sources\uSkill.pas"/>
         <DCCReference Include="Sources\Trollhunter.UI.Logo.pas"/>
-        <DCCReference Include="Sources\uStatistic.pas"/>
+        <DCCReference Include="sources\Trollhunter.Statistic.pas"/>
         <DCCReference Include="Sources\Trollhunter.Item.Affixes.pas"/>
         <DCCReference Include="Sources\uCreature.pas"/>
         <DCCReference Include="Sources\uAttribute.pas"/>
@@ -134,6 +134,8 @@
         <DCCReference Include="sources\Trollhunter.Scene.Background.pas"/>
         <DCCReference Include="sources\Trollhunter.Item.Types.pas"/>
         <DCCReference Include="sources\Trollhunter.Player.Types.pas"/>
+        <DCCReference Include="sources\Trollhunter.Scene.Statistics.pas"/>
+        <DCCReference Include="sources\Trollhunter.Scene.Options.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -214,13 +216,13 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>

@@ -1,4 +1,4 @@
-﻿"a credit to","a disgrace to","the black sheep of"=
+"a credit to","a disgrace to","the black sheep of"=
 "an average","a sallow","a fair","a dark","a light"=
 "an only child","one of two children","one of many children","the only surviving child","one of several children","the illegitimate but acknowledged child","the illegitimate and unacknowledged child"=
 "auburn","blonde","black","dark","red","ginger","grey","brown"=
@@ -43,6 +43,7 @@ Auto pick up scrolls=
 Back=
 BeaRLibItems=
 BeaRLibTerminal=
+Better luck next time!=
 Bosses=
 Buy an item=
 Buy items (amulets and rings)=
@@ -75,6 +76,7 @@ Choose a talent=
 Choose the item you wish to drop=
 Class=
 Close=
+Coins Looted=
 Concentration=
 Confirm=
 confrontation. Good luck! You will need it.=
@@ -284,3 +286,4 @@ You unequip %s.=
 You use %s.=
 You were slain by %s. Press %s=
 Your skill %s has raised to %d!=
+﻿

@@ -17,22 +17,23 @@ type
   TScene = class(TObject)
   private
     KStr: string;
-    procedure AddOption(AHotKey, AText: string; AOption: Boolean;
-      AColor: Cardinal = $FFAAAAAA); overload;
     procedure AddLine(AHotKey, AText: string);
-    procedure Add(); overload;
-    procedure Add(AText: string; AValue: Int); overload;
-    procedure Add(AText: string; AValue: string;
-      AColor: Cardinal = $FF00FF00); overload;
   public
     CX, CY: Int;
     X, Y: Int;
     constructor Create;
     procedure Render; virtual; abstract;
+    procedure AddOption(AHotKey, AText: string; AOption: Boolean;
+      AColor: Cardinal = $FFAAAAAA); overload;
+    procedure Add(); overload;
+    procedure Add(AText: string; AValue: Int); overload;
+    procedure Add(AText: string; AValue: string;
+      AColor: Cardinal = $FF00FF00); overload;
     procedure Update(var Key: UInt); virtual; abstract;
     procedure AddKey(AKey, AStr: string; IsRender: Boolean = False); overload;
     procedure AddKey(AKey, AStr, AAdvStr: string;
       IsRender: Boolean = False); overload;
+    procedure Title(S: string; F: Boolean = True);
   end;
 
 type
@@ -63,20 +64,6 @@ type
     procedure Render; override;
     procedure Update(var Key: UInt); override;
     procedure RenderHeroes();
-  end;
-
-type
-  TSceneStatistics = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneOptions = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
   end;
 
 type
@@ -254,13 +241,14 @@ uses
   uMap, Trollhunter.UI.Log, uItem, uLanguage, uCorpse, uCalendar,
   Trollhunter.Item.Shop,
   uSpellbook, uTalent, uSkill, Trollhunter.UI.Logo, uEntity, uCreature,
-  uStatistic,
+  Trollhunter.Statistic,
   Trollhunter.UI, uBearLibItemsDungeon, uBearLibItemsInventory, uQuest,
   Trollhunter.Item.Affixes, uHelpers, uRace, uClass, Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name, Trollhunter.Scene.Rest,
   Trollhunter.Scene.RacesAndClasses, Trollhunter.Scene.Quest,
   Trollhunter.Scene.Background, Trollhunter.Item.Types,
-  Trollhunter.Player.Types;
+  Trollhunter.Player.Types, Trollhunter.Scene.Statistics,
+  Trollhunter.Scene.Options;
 
 { TScene }
 
@@ -277,18 +265,27 @@ end;
 procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
   AColor: Cardinal);
 begin
+  Self.Add();
   Terminal.ForegroundColor(AColor);
   Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, UI.KeyToStr(AHotKey) + ' ' + AText
     + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clLightestBlue);
   Terminal.Print(Math.IfThen(X = 1, CX - 2, CX + (CX - 2)), Y,
     '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
-  Self.Add();
 end;
 
 constructor TScene.Create;
 begin
   KStr := '';
+end;
+
+procedure TScene.Title(S: string; F: Boolean);
+begin
+  X := 0;
+  if not F then
+    Inc(Y, 2);
+  UI.Title(S, Y);
+  Inc(Y, 2);
 end;
 
 procedure TScene.AddKey(AKey, AStr: string; IsRender: Boolean = False);
@@ -316,29 +313,29 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
+  Self.Add();
   Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, UI.KeyToStr(AHotKey, AText),
     TK_ALIGN_LEFT);
-  Self.Add();
 end;
 
 procedure TScene.Add(AText: string; AValue: Int);
 begin
+  Self.Add();
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clGreen);
   Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue.ToString(),
     TK_ALIGN_RIGHT);
-  Self.Add();
 end;
 
 procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
 begin
+  Self.Add();
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(AColor);
   Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue,
     TK_ALIGN_RIGHT);
-  Self.Add();
 end;
 
 { TScenes }
@@ -489,7 +486,7 @@ begin
   if Mode.Wizard then
   begin
     Self.AddKey('Space', _('Create a new hero'));
-    Self.AddKey('Z', _('Turn Wizard Mode Off'), True);
+    Self.AddKey('Z', Terminal.Colorize(_('Turn Wizard Mode Off'), 'Red'), True);
   end
   else
     Self.AddKey('Space', _('Create a new hero'), True);
@@ -1161,9 +1158,7 @@ begin
   Y := 0;
   X := Math.EnsureRange(Terminal.Window.Width div 4, 10, UIntMax);
 
-  UI.Title(Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
-    Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female')),
-    uClass.Classes.GetName(Player.HClass)]));
+  UI.Title(Player.GetInfo);
 
   if FRenderInfo then
     RenderInfo()
@@ -1431,87 +1426,6 @@ begin
 end;
 
 procedure TSceneMessages.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scGame);
-  end;
-end;
-
-{ TSceneStatistics }
-
-procedure TSceneStatistics.Render;
-begin
-  UI.Title(_('Statistics'));
-  X := 1;
-  Y := 3;
-
-  Add(_('Name'), Player.Name);
-  Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
-  Add(_('Race'), Format('%s (%s)', [Races.GetName(Player.HRace),
-    Game.IfThen(Player.Sex = sxMale, _('Male'), _('Female'))]));
-  Add(_('Class'), uClass.Classes.GetName(Player.HClass));
-  Add(_('Game Difficulty'), Game.GetStrDifficulty);
-  Add(_('Scores'), Player.Statictics.Get(stScore));
-  Add(_('Age'), Player.Statictics.Get(stAge));
-  Add(_('Weight'), Player.Statictics.Get(stWeight));
-  Add(_('Height'), Player.Statictics.Get(stHeight));
-  Add(_('Metabolism'), Player.Statictics.Get(stMetabolism));
-  // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
-  Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
-  Add(_('Monsters Killed'), Player.Statictics.Get(stKills));
-  Add(_('Items Found'), Player.Statictics.Get(stFound));
-  // Add(_('Chests Found'), );
-  // Add(_('Doors Opened'), );
-  Add(_('Potions Drunk'), Player.Statictics.Get(stPotDrunk));
-  Add(_('Scrolls Read'), Player.Statictics.Get(stScrRead));
-  Add(_('Spells Cast'), Player.Statictics.Get(stSpCast));
-  Add(_('Foods Eaten'), Player.Statictics.Get(stFdEat));
-  // Add(_('Melee Attack Performed'), );
-  // Add(_('Ranged Attack Performed'), );
-  // Add(_('Unarmed Attack Performed'), );
-  // Add(_('Times Fallen Into Pit'), );
-  // Add(_('Items Sold'), );
-  Add(_('Items Used'), Player.Statictics.Get(stItUsed));
-  Add(_('Items Repaired'), Player.Statictics.Get(stItRep));
-  Add(_('Items Identified'), Player.Statictics.Get(stItIdent));
-  Add(_('Items Crafted'), Player.Statictics.Get(stItCrafted));
-  // Add(_('Gold from Sales'), );
-  // Add(_(''), );
-
-  // Version
-  X := 1;
-  Y := Y + 2;
-  UI.Title(_('Version'), Y - 1);
-  Y := Y + 1;
-  Add(_('Game Version'), Game.GetVersion);
-  Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
-  Self.Add();
-  Add(_('BeaRLibItems'), Items_GetVersion);
-
-  if Mode.Wizard then
-  begin
-    X := 1;
-    Y := Y + 2;
-    UI.Title(_('Wizard Mode'), Y - 1);
-    Y := Y + 1;
-    Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
-    Add(_('Bosses'), 13);
-    Add(_('NPCs'), 7);
-    Add(_('Items'), Ord(Length(ItemBase)));
-    Add(_('Shops'), Shops.Count);
-    Add(_('Quests'), Quests.Amount);
-    Add(_('Talents'), Player.Talents.Amount);
-    Add(_('Affixes'), Affixes.Amount);
-    Add(_('Item Types'), Ord(High(TItemType)));
-    Add(_('Skills'), Ord(High(TSkillEnum)));
-  end;
-
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneStatistics.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
@@ -1862,117 +1776,6 @@ begin
     TK_ESCAPE:
       Scenes.SetScene(scTitle);
   end;
-end;
-
-{ TSceneOptions }
-
-procedure TSceneOptions.Render;
-begin
-  // Options
-  UI.Title(_('Options'));
-  X := 1;
-  Y := 3;
-  AddOption('C', _('Auto pick up coins'), Game.GetOption(apCoin));
-  AddOption('G', _('Auto pick up gems'), Game.GetOption(apGem));
-  AddOption('F', _('Auto pick up food'), Game.GetOption(apFood));
-  AddOption('Y', _('Auto pick up plants'), Game.GetOption(apPlant));
-  AddOption('P', _('Auto pick up potions and flasks'),
-    Game.GetOption(apPotion));
-  AddOption('U', _('Auto pick up flasks'), Game.GetOption(apFlask));
-  AddOption('O', _('Auto pick up magic items'), Game.GetOption(apMagic));
-  AddOption('S', _('Auto pick up scrolls'), Game.GetOption(apScroll));
-  AddOption('R', _('Auto pick up runes'), Game.GetOption(apRune));
-  AddOption('B', _('Auto pick up books'), Game.GetOption(apBook));
-  AddOption('K', _('Auto pick up keys'), Game.GetOption(apKey));
-  AddOption('D', _('Show items price in inventory'), Game.GetOption(apShPrice));
-
-  // Settings
-  X := 1;
-  Y := Y + 3;
-  UI.Title(_('Settings'), Y - 1);
-  Y := Y + 1;
-  AddOption('W', _('Fullscreen'), Game.GetOption(apFullscreen), clLightBlue);
-
-  // Wizard mode
-  if Mode.Wizard then
-  begin
-    X := 1;
-    Y := Y + 3;
-    UI.Title(_('Wizard Mode'), Y - 1);
-    Y := Y + 1;
-    AddOption('Z', _('Turn Wizard Mode Off'), Mode.Wizard, clRed);
-    AddOption('M', _('Show map'), Game.ShowMap);
-    AddOption('T', _('Reload all shops'), False);
-    // AddOption('J', _(''), False);
-    AddOption('L', _('Leave corpses'), Game.LCorpses);
-    AddOption('I', _('Show ID of items'), Game.ShowID);
-    AddOption('N', _('Hide level of an item'), Game.GetOption(apHdLevOfItem));
-  end;
-
-  AddKey('Esc', _('Back'), True);
-end;
-
-procedure TSceneOptions.Update(var Key: UInt);
-begin
-  case Key of
-    // Options
-    TK_C:
-      Game.ChOption(apCoin);
-    TK_G:
-      Game.ChOption(apGem);
-    TK_F:
-      Game.ChOption(apFood);
-    TK_Y:
-      Game.ChOption(apPlant);
-    TK_P:
-      Game.ChOption(apPotion);
-    TK_O:
-      Game.ChOption(apMagic);
-    TK_U:
-      Game.ChOption(apFlask);
-    TK_S:
-      Game.ChOption(apScroll);
-    TK_R:
-      Game.ChOption(apRune);
-    TK_K:
-      Game.ChOption(apKey);
-    TK_B:
-      Game.ChOption(apBook);
-    TK_D:
-      Game.ChOption(apShPrice);
-    // Settings
-    TK_W:
-      begin
-        Game.ChOption(apFullscreen);
-        Game.ChScreen;
-      end;
-    // Wizard mode
-    TK_Z:
-      Mode.Wizard := False;
-    TK_M:
-      if Mode.Wizard then
-        Game.ShowMap := not Game.ShowMap;
-    TK_L:
-      if Mode.Wizard then
-        Game.LCorpses := not Game.LCorpses;
-    TK_T:
-      if Mode.Wizard then
-      begin
-        Shops.New;
-        Scenes.SetScene(scGame);
-      end;
-    TK_I:
-      if Mode.Wizard then
-        Game.ShowID := not Game.ShowID;
-    TK_N:
-      if Mode.Wizard then
-        Game.ChOption(apHdLevOfItem);
-    // TK_J:
-    // if Mode.Wizard then
-    // ;
-    TK_ESCAPE:
-      Scenes.SetScene(scGame);
-  end
 end;
 
 { TSceneSpells }
