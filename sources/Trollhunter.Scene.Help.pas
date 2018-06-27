@@ -19,7 +19,7 @@ implementation
 { TSceneHelp }
 
 uses SysUtils,
-  uLanguage,
+  Trollhunter.Language,
   Trollhunter.UI,
   BearLibTerminal,
   Trollhunter.Terminal;

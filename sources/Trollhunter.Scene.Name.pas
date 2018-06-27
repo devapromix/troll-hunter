@@ -14,12 +14,12 @@ type
 
 implementation
 
-uses Trollhunter.Terminal,
+uses BearLibTerminal,
+  Trollhunter.Terminal,
   Trollhunter.UI,
   Trollhunter.Player,
   uGame,
-  uLanguage,
-  BearLibTerminal;
+  Trollhunter.Language;
 
 { TSceneName }
 

@@ -10,7 +10,7 @@ uses
   Dialogs,
   Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
   uGame in 'Sources\uGame.pas',
-  uLanguage in 'Sources\uLanguage.pas',
+  Trollhunter.Language in 'Sources\Trollhunter.Language.pas',
   Trollhunter.Terminal in 'Sources\Trollhunter.Terminal.pas',
   uScenes in 'Sources\uScenes.pas',
   Trollhunter.Player in 'Sources\Trollhunter.Player.pas',

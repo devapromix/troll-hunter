@@ -20,7 +20,7 @@ uses Trollhunter.UI,
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uLanguage,
+  Trollhunter.Language,
   uGame,
   uMap;
 

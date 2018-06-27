@@ -43,7 +43,7 @@ implementation
 
 uses SysUtils,
   Math,
-  uLanguage,
+  Trollhunter.Language,
   uItem,
   Trollhunter.Item.Shop,
   Trollhunter.UI.Log,

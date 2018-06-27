@@ -56,7 +56,7 @@ var
 implementation
 
 uses SysUtils,
-  uLanguage,
+  Trollhunter.Language,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,

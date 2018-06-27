@@ -16,7 +16,7 @@ uses SysUtils,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
-  uLanguage;
+  Trollhunter.Language;
 
 { TPlayerHelper }
 

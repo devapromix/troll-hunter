@@ -242,7 +242,7 @@ uses
   uMap,
   Trollhunter.UI.Log,
   uItem,
-  uLanguage,
+  Trollhunter.Language,
   uCorpse,
   uCalendar,
   Trollhunter.Item.Shop,

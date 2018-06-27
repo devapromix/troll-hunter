@@ -2,7 +2,8 @@ unit uEntity;
 
 interface
 
-uses Trollhunter.Types, uMap;
+uses Trollhunter.Types,
+  uMap;
 
 type
   TEntity = class(TObject)
@@ -25,7 +26,9 @@ type
 
 implementation
 
-uses SysUtils, uGame, uLanguage;
+uses SysUtils,
+  uGame,
+  Trollhunter.Language;
 
 { TEntity }
 
@@ -44,14 +47,16 @@ function TEntity.GetCapit(S: string): string;
 begin
   if (Trim(S) <> '') then
     Result := UpCase(S[1]) + Copy(S, 2, Length(S))
-      else Result := '(???)' + S;
+  else
+    Result := '(???)' + S;
 end;
 
 function TEntity.GetDescAn(S: string): string;
 begin
   if (Trim(S) <> '') then
     Result := LowerCase(S)
-      else Result := '(???)' + S;
+  else
+    Result := '(???)' + S;
   if (Language.Current <> 'english') then
     Exit;
   if (Result[1] in ['a', 'e', 'i', 'o', 'u']) then
@@ -64,7 +69,8 @@ function TEntity.GetDescThe(S: string): string;
 begin
   if (Trim(S) <> '') then
     Result := LowerCase(S)
-      else Result := '(???)' + S;
+  else
+    Result := '(???)' + S;
   if (Language.Current <> 'english') then
     Exit;
   Result := 'the ' + Result;

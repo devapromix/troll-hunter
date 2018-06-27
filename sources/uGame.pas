@@ -5,7 +5,7 @@ interface
 uses Trollhunter.Types,
   uEntity,
   uMap,
-  uLanguage;
+  Trollhunter.Language;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
@@ -176,12 +176,12 @@ var
 implementation
 
 uses SysUtils,
-  Trollhunter.Player,
-  Trollhunter.UI.Log,
-  uScenes,
   Math,
   Dialogs,
   BearLibTerminal,
+  Trollhunter.Player,
+  Trollhunter.UI.Log,
+  uScenes,
   uItem,
   uMob,
   Trollhunter.Terminal,
@@ -284,7 +284,7 @@ end;
 
 function TGame.GetVersion: string;
 begin
-  Result := '0.13.1';
+  Result := '0.14.1';
 end;
 
 procedure TGame.Log(S: string);

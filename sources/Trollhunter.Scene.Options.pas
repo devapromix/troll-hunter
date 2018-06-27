@@ -18,8 +18,9 @@ implementation
 
 uses uGame,
   Trollhunter.UI,
-  uLanguage,
-  BearLibTerminal, Trollhunter.Item.Shop;
+  Trollhunter.Language,
+  BearLibTerminal,
+  Trollhunter.Item.Shop;
 
 procedure TSceneOptions.Render;
 begin

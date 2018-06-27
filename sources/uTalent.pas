@@ -110,7 +110,7 @@ implementation
 
 uses SysUtils,
   TypInfo,
-  uLanguage,
+  Trollhunter.Language,
   uSkill,
   uScenes,
   Trollhunter.Player,

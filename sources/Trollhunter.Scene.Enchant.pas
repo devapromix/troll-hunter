@@ -15,12 +15,12 @@ type
 
 implementation
 
-uses Trollhunter.UI,
-  uLanguage,
+uses BearLibTerminal,
+  Trollhunter.UI,
+  Trollhunter.Language,
   uItem,
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
-  BearLibTerminal,
   Trollhunter.Player,
   uGame;
 

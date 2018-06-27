@@ -52,7 +52,7 @@ implementation
 uses SysUtils,
   TypInfo,
   Math,
-  uLanguage,
+  Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Player,
   uGame,

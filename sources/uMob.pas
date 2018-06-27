@@ -2,7 +2,12 @@ unit uMob;
 
 interface
 
-uses Trollhunter.Types, uGame, uMap, uEntity, uCreature, uAbility;
+uses Trollhunter.Types,
+  uGame,
+  uMap,
+  uEntity,
+  uCreature,
+  uAbility;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead,
@@ -493,7 +498,7 @@ uses Math,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
-  uLanguage,
+  Trollhunter.Language,
   uItem,
   uSkill,
   Trollhunter.Statistic,

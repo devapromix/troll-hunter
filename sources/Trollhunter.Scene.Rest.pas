@@ -17,10 +17,10 @@ implementation
 { TSceneRest }
 
 uses SysUtils,
+  BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.Terminal,
-  BearLibTerminal,
-  uLanguage,
+  Trollhunter.Language,
   Trollhunter.UI.Log,
   Trollhunter.Player;
 

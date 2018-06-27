@@ -36,7 +36,7 @@ implementation
 
 uses Math,
   BearLibTerminal,
-  uLanguage,
+  Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Player,
   uAttribute,
