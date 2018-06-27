@@ -123,8 +123,8 @@
         <DCCReference Include="Sources\uQuest.pas"/>
         <DCCReference Include="Sources\uHelpers.pas"/>
         <DCCReference Include="sources\uWeather.pas"/>
-        <DCCReference Include="sources\uRace.pas"/>
-        <DCCReference Include="sources\uClass.pas"/>
+        <DCCReference Include="sources\Trollhunter.Player.Races.pas"/>
+        <DCCReference Include="sources\Trollhunter.Player.Classes.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Enchant.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Name.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Rest.pas"/>

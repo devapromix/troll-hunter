@@ -2,8 +2,17 @@ unit Trollhunter.Player;
 
 interface
 
-uses Types, Trollhunter.Types, Trollhunter.Player.Types, uCreature, uMob,
-  uBearLibItemsCommon, uSkill, Trollhunter.Statistic, uTalent, uRace, uClass;
+uses Types,
+  Trollhunter.Types,
+  Trollhunter.Player.Types,
+  uCreature,
+  uMob,
+  uBearLibItemsCommon,
+  uSkill,
+  Trollhunter.Statistic,
+  uTalent,
+  Trollhunter.Player.Races,
+  Trollhunter.Player.Classes;
 
 const
   // Player
@@ -130,13 +139,31 @@ var
 
 implementation
 
-uses Classes, SysUtils, Math, uGame, uMap, uScenes, uItem, Dialogs,
-  Trollhunter.Terminal, Trollhunter.UI.Log, uLanguage, uCorpse, uCalendar,
-  Trollhunter.Item.Shop, BearLibTerminal, uAbility, Trollhunter.Item.Affixes,
+uses Classes,
+  SysUtils,
+  Math,
+  uGame,
+  uMap,
+  uScenes,
+  uItem,
+  Dialogs,
+  Trollhunter.Terminal,
+  Trollhunter.UI.Log,
+  uLanguage,
+  uCorpse,
+  uCalendar,
+  Trollhunter.Item.Shop,
+  BearLibTerminal,
+  uAbility,
+  Trollhunter.Item.Affixes,
   uAttribute,
-  uSpellbook, Trollhunter.UI,
-  uBearLibItemsDungeon, uBearLibItemsInventory, uHelpers,
-  Trollhunter.Item.Types, Trollhunter.Utils;
+  uSpellbook,
+  Trollhunter.UI,
+  uBearLibItemsDungeon,
+  uBearLibItemsInventory,
+  uHelpers,
+  Trollhunter.Item.Types,
+  Trollhunter.Utils;
 
 { TPlayer }
 
@@ -1578,7 +1605,7 @@ begin
   // Skills
   for I := Low(TClassSkillEnum) to High(TClassSkillEnum) do
     Skills.Modify(ClassProp[Player.HClass].Skill[I],
-      uClass.Classes.GetSkillBeginValue(I));
+      Trollhunter.Player.Classes.Classes.GetSkillBeginValue(I));
   // Calc
   Calc();
   Fill();

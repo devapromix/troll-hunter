@@ -42,8 +42,8 @@ uses Math,
   uAttribute,
   uAbility,
   uGame,
-  uRace,
-  uClass,
+  Trollhunter.Player.Races,
+  Trollhunter.Player.Classes,
   Trollhunter.UI,
   Trollhunter.Statistic,
   uSkill,
@@ -257,7 +257,7 @@ begin
   I := 0;
   Y := 2;
   for C := Low(TClassEnum) to High(TClassEnum) do
-    Add(uClass.Classes.GetName(C));
+    Add(Trollhunter.Player.Classes.Classes.GetName(C));
 
   inherited Render;
 

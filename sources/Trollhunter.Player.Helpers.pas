@@ -14,8 +14,8 @@ implementation
 
 uses SysUtils,
   Trollhunter.Player.Types,
-  uRace,
-  uClass,
+  Trollhunter.Player.Races,
+  Trollhunter.Player.Classes,
   uLanguage;
 
 { TPlayerHelper }
@@ -23,7 +23,7 @@ uses SysUtils,
 function TPlayerHelper.FullName: string;
 begin
   Result := Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
-    Gender, uClass.Classes.GetName(Player.HClass)])
+    Gender, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)])
 end;
 
 function TPlayerHelper.Gender: string;
