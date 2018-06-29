@@ -1,4 +1,4 @@
-unit Trollhunter.Language;
+﻿unit Trollhunter.Language;
 
 interface
 
@@ -89,7 +89,7 @@ begin
     Exit;
   SL := TStringList.Create;
   try
-    SL.LoadFromFile(AFileName);
+    SL.LoadFromFile(AFileName, TEncoding.UTF8);
     for I := 0 to SL.Count - 1 do
     begin
       S := SL[I];

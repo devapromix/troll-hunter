@@ -1,4 +1,4 @@
-unit uTalent;
+п»їunit uTalent;
 
 interface
 
@@ -9,14 +9,14 @@ const
   TalentMax = 10;
 
 type
-  TTalentEnum = (tlNone, tlStrong { Сильный } , tlDextrous { Ловкий } ,
-    tlMage { Маг } , tlTough { Тяжелый } , tlWealthy { Богатый } ,
+  TTalentEnum = (tlNone, tlStrong { РЎРёР»СЊРЅС‹Р№ } , tlDextrous { Р›РѕРІРєРёР№ } ,
+    tlMage { РњР°Рі } , tlTough { РўСЏР¶РµР»С‹Р№ } , tlWealthy { Р‘РѕРіР°С‚С‹Р№ } ,
     tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
     tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
     tlAffinity_with_Daggers, tlAffinity_with_Bows, tlBodybuilding, tlMeditation,
-    tlEnchant_Item, tlMiser { Скряга } , tlCareful { Осторожный } ,
-    tlIron_Skin { Железная Кожа } , tlHardy { Выносливый } ,
-    tlCharged { Энергичный } );
+    tlEnchant_Item, tlMiser { РЎРєСЂСЏРіР° } , tlCareful { РћСЃС‚РѕСЂРѕР¶РЅС‹Р№ } ,
+    tlIron_Skin { Р–РµР»РµР·РЅР°СЏ РљРѕР¶Р° } , tlHardy { Р’С‹РЅРѕСЃР»РёРІС‹Р№ } ,
+    tlCharged { Р­РЅРµСЂРіРёС‡РЅС‹Р№ } );
 
 type
   TTalentBonus = (tbNone, tbAttrib, tbSkill, tbTalent, tbGold);

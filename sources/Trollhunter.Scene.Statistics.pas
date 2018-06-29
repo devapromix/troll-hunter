@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Statistics;
+﻿unit Trollhunter.Scene.Statistics;
 
 interface
 
