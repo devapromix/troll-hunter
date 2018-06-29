@@ -238,7 +238,7 @@ uses
   uCalendar,
   uSpellbook,
   uTalent,
-  uSkill,
+  Trollhunter.Player.Skills,
   Trollhunter.UI,
   Trollhunter.UI.Log,
   Trollhunter.UI.Logo,

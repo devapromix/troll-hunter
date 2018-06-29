@@ -8,6 +8,7 @@ program Trollhunter;
 uses
   SysUtils,
   Dialogs,
+  BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
   Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
   Trollhunter.Game in 'Sources\Trollhunter.Game.pas',
   Trollhunter.Language in 'Sources\Trollhunter.Language.pas',
@@ -15,7 +16,7 @@ uses
   uScenes in 'Sources\uScenes.pas',
   Trollhunter.Player in 'Sources\Trollhunter.Player.pas',
   uMap in 'Sources\uMap.pas',
-  uItem in 'Sources\uItem.pas',
+  Trollhunter.Item in 'Sources\Trollhunter.Item.pas',
   uMob in 'Sources\uMob.pas',
   Trollhunter.UI.Log in 'Sources\Trollhunter.UI.Log.pas',
   uCorpse in 'Sources\uCorpse.pas',
@@ -25,20 +26,19 @@ uses
   uSpellbook in 'Sources\uSpellbook.pas',
   uTalent in 'Sources\uTalent.pas',
   uAbility in 'Sources\uAbility.pas',
-  uSkill in 'Sources\uSkill.pas',
+  Trollhunter.Player.Skills in 'Sources\Trollhunter.Player.Skills.pas',
   Trollhunter.UI.Logo in 'Sources\Trollhunter.UI.Logo.pas',
   Trollhunter.Statistic in 'sources\Trollhunter.Statistic.pas',
   Trollhunter.Item.Affixes in 'Sources\Trollhunter.Item.Affixes.pas',
   uCreature in 'Sources\uCreature.pas',
   uAttribute in 'Sources\uAttribute.pas',
   Trollhunter.UI in 'Sources\Trollhunter.UI.pas',
-  BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
   uPathFind in 'Sources\BearLibPathFind\uPathFind.pas',
   uBearLibItemsCommon in 'Sources\BearLibItems\uBearLibItemsCommon.pas',
   uBearLibItemsDungeon in 'Sources\BearLibItems\uBearLibItemsDungeon.pas',
   uBearLibItemsInventory in 'Sources\BearLibItems\uBearLibItemsInventory.pas',
   uQuest in 'Sources\uQuest.pas',
-  uHelpers in 'Sources\uHelpers.pas',
+  Trollhunter.Helpers in 'Sources\Trollhunter.Helpers.pas',
   uWeather in 'sources\uWeather.pas',
   Trollhunter.Player.Races in 'sources\Trollhunter.Player.Races.pas',
   Trollhunter.Player.Classes in 'sources\Trollhunter.Player.Classes.pas',
@@ -54,7 +54,8 @@ uses
   Trollhunter.Scene.Statistics in 'sources\Trollhunter.Scene.Statistics.pas',
   Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas',
   Trollhunter.Player.Helpers in 'sources\Trollhunter.Player.Helpers.pas',
-  Trollhunter.Scene.Help in 'sources\Trollhunter.Scene.Help.pas';
+  Trollhunter.Scene.Help in 'sources\Trollhunter.Scene.Help.pas',
+  Trollhunter.Scene.Title in 'sources\Trollhunter.Scene.Title.pas';
 
 var
   Key: UInt = 0;

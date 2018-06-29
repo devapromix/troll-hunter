@@ -1,4 +1,4 @@
-unit uSkill;
+unit Trollhunter.Player.Skills;
 
 interface
 

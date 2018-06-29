@@ -7,7 +7,7 @@ uses
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
   uCreature,
-  uSkill;
+  Trollhunter.Player.Skills;
 
 type
   TClassEnum = (clWarrior, clMage, clRanger, clThief);
