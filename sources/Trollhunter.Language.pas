@@ -65,7 +65,7 @@ begin
   FUseDefaultLanguage := AUseDefaultLanguage;
   F := GetPath('languages') + 'default.lng';
   if FileExists(F) then
-    FSL.LoadFromFile(F);
+    FSL.LoadFromFile(F{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
   FID := TStringList.Create;
   FValue := TStringList.Create;
   FCurrent := 'english';
@@ -89,7 +89,7 @@ begin
     Exit;
   SL := TStringList.Create;
   try
-    SL.LoadFromFile(AFileName, TEncoding.UTF8);
+    SL.LoadFromFile(AFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
     for I := 0 to SL.Count - 1 do
     begin
       S := SL[I];
