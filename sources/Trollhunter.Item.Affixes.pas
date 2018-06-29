@@ -580,8 +580,8 @@ uses SysUtils,
   Math,
   Trollhunter.Terminal,
   Trollhunter.Game,
-  uHelpers,
-  uItem;
+  Trollhunter.Helpers,
+  Trollhunter.Item;
 
 function TAffixes.Amount: UInt;
 begin
@@ -766,7 +766,7 @@ begin
   if (SB.PrmValue > 0) then
     AItem.Value := SB.PrmValue;
   // Price
-  uItem.TItems.CalcItem(AItem);
+  Trollhunter.Item.TItems.CalcItem(AItem);
 end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;

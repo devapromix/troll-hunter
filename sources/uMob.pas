@@ -499,13 +499,13 @@ uses Math,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   Trollhunter.Language,
-  uItem,
+  Trollhunter.Item,
   uSkill,
   Trollhunter.Statistic,
   uAttribute,
   uPathFind,
   uQuest,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Item.Types;
 
 function MyCallback(X, Y: Int): Boolean; stdcall;

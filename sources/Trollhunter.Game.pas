@@ -182,12 +182,12 @@ uses SysUtils,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   uScenes,
-  uItem,
+  Trollhunter.Item,
   uMob,
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
   uSpellbook,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TGame }
 

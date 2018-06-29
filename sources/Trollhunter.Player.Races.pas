@@ -77,7 +77,7 @@ implementation
 
 uses TypInfo,
   SysUtils,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TRaces }
 

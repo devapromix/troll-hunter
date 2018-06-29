@@ -2,7 +2,10 @@ unit uCreature;
 
 interface
 
-uses Trollhunter.Types, uEntity, uAbility, uAttribute;
+uses Trollhunter.Types,
+  uEntity,
+  uAbility,
+  uAttribute;
 
 { TODO -cNPC : Нужен кто-то, кто будет идентифицировать предметы за деньги. }
 
@@ -13,19 +16,23 @@ const
   ExtraGoldMax = 200;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efAllIdentification, efEnchantItem, efCraftStr,
-    efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak,
-    efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
-    efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
-    efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation,
-    efPrmEnchant_Item, efLight, efBerserk);
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
+    efAllIdentification, efEnchantItem, efCraftStr, efCraftDex, efCraftWil,
+    efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision,
+    efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
+    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, efPrmStaff,
+    efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife,
+    efPrmMana, efPrmDV, efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer,
+    efRepair, efPrmBodybuilding, efPrmMeditation, efPrmEnchant_Item, efLight,
+    efBerserk);
 
 const
   CraftEffLow = efCraftStr;
   CraftEffHigh = efCraftAtr;
 
 const
-  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength', 'Dexterity', 'Willpower', 'Perception');
+  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength',
+    'Dexterity', 'Willpower', 'Perception');
 
 type
   TEffects = set of TEffect;
@@ -65,7 +72,9 @@ type
 
 implementation
 
-uses SysUtils, Math, uHelpers;
+uses SysUtils,
+  Math,
+  Trollhunter.Helpers;
 
 { TCreature }
 

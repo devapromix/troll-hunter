@@ -1,4 +1,4 @@
-unit uItem;
+unit Trollhunter.Item;
 
 interface
 
@@ -1651,7 +1651,7 @@ uses Math,
   Trollhunter.UI,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Statistic;
 
 { TItems }

@@ -91,14 +91,14 @@ uses SysUtils,
   TypInfo,
   Trollhunter.Player,
   uMob,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Game,
   uCreature,
   uAttribute,
   uScenes,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TMap }
 

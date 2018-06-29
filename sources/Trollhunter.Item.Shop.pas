@@ -6,7 +6,7 @@ uses
   Trollhunter.Types,
   uBeaRLibItemsCommon,
   Trollhunter.Player,
-  uItem;
+  Trollhunter.Item;
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
@@ -57,7 +57,7 @@ uses
   uMap,
   uCreature,
   uAttribute,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Item.Types;
 
 { TShop }

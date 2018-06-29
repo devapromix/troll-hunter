@@ -115,7 +115,7 @@ uses SysUtils,
   uScenes,
   Trollhunter.Player,
   uAttribute,
-  uHelpers;
+  Trollhunter.Helpers;
 
 const
   TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',

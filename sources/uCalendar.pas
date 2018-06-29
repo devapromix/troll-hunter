@@ -44,13 +44,13 @@ implementation
 uses SysUtils,
   Math,
   Trollhunter.Language,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Item.Shop,
   Trollhunter.UI.Log,
   Trollhunter.Player,
   uCreature,
   uAttribute,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TCalendar }
 

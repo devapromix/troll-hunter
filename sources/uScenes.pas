@@ -65,14 +65,6 @@ var
   Scenes: TScenes = nil;
 
 type
-  TSceneTitle = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-    procedure RenderHeroes();
-  end;
-
-type
   TSceneSpellbook = class(TScene)
   public
     procedure Render; override;
@@ -236,42 +228,44 @@ implementation
 uses
   SysUtils,
   Math,
+  BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  BearLibTerminal,
   uMap,
-  Trollhunter.UI.Log,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Language,
   uCorpse,
   uCalendar,
-  Trollhunter.Item.Shop,
   uSpellbook,
   uTalent,
   uSkill,
+  Trollhunter.UI,
+  Trollhunter.UI.Log,
   Trollhunter.UI.Logo,
   uEntity,
   uCreature,
   Trollhunter.Statistic,
-  Trollhunter.UI,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
   uQuest,
+  Trollhunter.Item.Types,
   Trollhunter.Item.Affixes,
-  uHelpers,
+  Trollhunter.Item.Shop,
+  Trollhunter.Helpers,
+  Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
+  Trollhunter.Player.Helpers,
   Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
   Trollhunter.Scene.RacesAndClasses,
   Trollhunter.Scene.Quest,
   Trollhunter.Scene.Background,
-  Trollhunter.Item.Types,
-  Trollhunter.Player.Types,
   Trollhunter.Scene.Statistics,
   Trollhunter.Scene.Options,
-  Trollhunter.Player.Helpers, Trollhunter.Scene.Help;
+  Trollhunter.Scene.Help,
+  Trollhunter.Scene.Title;
 
 { TScene }
 
@@ -495,61 +489,6 @@ begin
           not Player.IsDead then
           SetScene(scQuit, SceneEnum);
       end;
-  end;
-end;
-
-{ TSceneTitle }
-
-procedure TSceneTitle.Render;
-begin
-  Logo.Render(True);
-  Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
-    14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
-  // RenderHeroes;
-  if Mode.Wizard then
-  begin
-    Self.AddKey('Space', _('Create a new hero'));
-    Self.AddKey('Z', Terminal.Colorize(_('Turn Wizard Mode Off'), 'Red'), True);
-  end
-  else
-    Self.AddKey('Space', _('Create a new hero'), True);
-end;
-
-type
-  TAJ = 'A' .. 'J';
-
-procedure TSceneTitle.RenderHeroes;
-const
-  L = 12;
-  T = 15;
-var
-  J: UInt;
-  V: TAJ;
-begin
-  Terminal.ForegroundColor(clWhite);
-  Terminal.Print(L + 4, T, _('Which hero shall you play?'));
-
-  for V := 'A' to 'J' do
-  begin
-    J := Ord(V) - 65;
-    Terminal.Print(L, T + J + 2, UI.KeyToStr(V, J.ToString));
-  end;
-end;
-
-procedure TSceneTitle.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      Game.CanClose := True;
-    TK_A .. TK_J:
-      ;
-    TK_SPACE:
-      Scenes.SetScene(scDifficulty);
-    TK_ENTER, TK_KP_ENTER:
-      if Mode.Wizard then
-        Scenes.SetScene(scDifficulty);
-    TK_Z:
-      Mode.Wizard := False;
   end;
 end;
 

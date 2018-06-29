@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses uHelpers, dialogs;
+uses Trollhunter.Helpers;
 
 { TAttributes }
 
