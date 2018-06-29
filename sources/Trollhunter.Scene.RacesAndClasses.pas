@@ -105,7 +105,7 @@ var
       Terminal.ForegroundColor(clYellow)
     else
       Terminal.ForegroundColor(clWhite);
-    Terminal.Print(5, Y, AName);
+    Terminal.Print(5, Y, _(AName));
     Inc(I);
     Inc(Y);
   end;
@@ -247,7 +247,7 @@ var
       Terminal.ForegroundColor(clYellow)
     else
       Terminal.ForegroundColor(clWhite);
-    Terminal.Print(5, Y, AName);
+    Terminal.Print(5, Y, _(AName));
     Inc(I);
     Inc(Y);
   end;
