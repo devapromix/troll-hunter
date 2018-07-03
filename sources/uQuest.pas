@@ -76,7 +76,7 @@ var
 implementation
 
 uses SysUtils,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.UI.Log,
   Trollhunter.Language;
 

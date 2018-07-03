@@ -1,5 +1,4 @@
-﻿﻿
-"a credit to","a disgrace to","the black sheep of"=
+﻿﻿"a credit to","a disgrace to","the black sheep of"=
 "an average","a sallow","a fair","a dark","a light"=
 "an only child","one of two children","one of many children","the only surviving child","one of several children","the illegitimate but acknowledged child","the illegitimate and unacknowledged child"=
 "auburn","blonde","black","dark","red","ginger","grey","brown"=
@@ -203,6 +202,7 @@ Selling items=
 Settings=
 Several items (%dx) are lying here (%s).=
 Sex=
+Shoot=
 Shops=
 Show Background=
 Show ID of items=

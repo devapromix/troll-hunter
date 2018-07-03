@@ -112,7 +112,7 @@ begin
         Terminal.Print(CX, 14, Format('%s: %s, %s, %s %s: %s, %s %s: %s',
           [_('Move'), UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'),
           UI.KeyToStr('QWEADZXC'), _('Wait'), UI.KeyToStr('5'),
-          UI.KeyToStr('S'), _('Effects'), UI.KeyToStr('TAB')]),
+          UI.KeyToStr('SPACE'), _('Effects'), UI.KeyToStr('TAB')]),
           TK_ALIGN_CENTER);
 
         X := 1;
@@ -131,6 +131,7 @@ begin
         AddLine('I', _('Show Inventory'));
         AddLine('P', _('Character Screen'));
         AddLine('K', _('Calendar'));
+        AddLine('S', _('Shoot'));
         AddLine('?', _('Show this Help Screen'));
 
         UI.Title(_('Character dump'), Terminal.Window.Height - 6);

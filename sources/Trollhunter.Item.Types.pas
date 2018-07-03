@@ -96,40 +96,49 @@ type
   TItemEnum = (
     // All maps
     None, ivCorpse, ivGold,
+
     // Flasks
     ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask,
     ivAquamarine_Flask, ivSapphire_Flask, ivQuicksilver_Flask, ivTopaz_Flask,
     ivSulphur_Flask, ivGranite_Flask, ivQuartz_Flask, ivSacred_Flask,
     ivJade_Flask, ivHallowed_Flask, ivCoruscating_Flask, ivSanctified_Flask,
     ivDivine_Flask, ivGold_Flask, ivDiamond_Flask, ivEternal_Flask,
+
     // Potions of Healing
     ivPotion_of_Minor_Healing, ivPotion_of_Lesser_Healing,
     ivPotion_of_Greater_Healing, ivPotion_of_Full_Healing,
     // Potions of Mana
     ivPotion_of_Minor_Mana, ivPotion_of_Lesser_Mana, ivPotion_of_Greater_Mana,
     ivPotion_of_Full_Mana,
+
     // Stones
     ivStone_of_Stamina, ivStone_of_Mana, ivStone_of_Recovery,
+
     // Scrolls
     ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
     ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
     ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
     ivScroll_of_Disappearing, ivScroll_of_Town_Portal, ivScroll_of_Bloodlust,
     ivScroll_of_Identify, ivScroll_of_Full_Identify, ivScroll_of_Enchant_Item,
+
     // Runes
     ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing,
     ivRune_of_Greater_Healing, ivRune_of_Full_Healing, ivRune_of_Teleportation,
     ivRune_of_Town_Portal,
+
     // Foods and Plants
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
+
     // Keys
     ivKey,
     // Torch
     ivTorch, ivOil_Lamp,
     // Orbs
     ivLight_Orb, ivLife_Orb, ivMana_Orb,
+
     // Foods and Plants
     ivHealing_Herb,
+
     // Ruby (Gems)
     ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby,
     ivImperial_Ruby, ivRoyal_Ruby,
@@ -145,27 +154,38 @@ type
     // Diamond (Gems)
     ivChipped_Diamond, ivFlawed_Diamond, ivDiamond, ivFlawless_Diamond,
     ivPerfect_Diamond, ivImperial_Diamond, ivRoyal_Diamond,
+
     // Rings
     ivMoonstone_Ring, ivValuable_Ring, ivPrecious_Ring, ivEthreal_Ring,
     ivExquisite_Ring, ivScarab_Ring, ivCrystal_Ring, ivPrismatic_Ring,
     ivCitrine_Ring, ivGold_Ring,
+
     // Amulets
     ivTurquoise_Amulet, ivOnyx_Amulet, ivViridian_Amulet, iv_Lunar_Amulet,
     ivJade_Amulet, ivClaw_Amulet, ivAgate_Amulet, ivGothic_Amulet,
     ivAncient_Amulet, ivAlmighty_Amulet,
+
     // Talismans
     ivLongtooth_Talisman, ivDark_Eye, ivBlack_Maw_Talisman, ivVoid_Eye,
     ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
+
     // Wands
     ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
     ivWand9, ivWand10,
+
+    // Staves
+    ivQuarterstaff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7,
+    ivStaff8, ivStaff9, ivStaff10,
+
     // Daggers
     ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
     ivDagger8, ivDagger9, ivDagger10,
+
     // Bows
     ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
     ivBow9, ivBow10,
+
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
@@ -177,7 +197,6 @@ type
     ivHatchet, ivBattle_Axe, // Axe
     ivShort_Spear, ivSpear, // Spear
     ivSlag_Hammer, ivSpiked_Cudgel, // Mace
-    ivQuarterstaff, ivStaff2, // Staff
     // Gray Cave
     ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
     ivHard_Leather_Armor, ivBattle_Armor, ivFancy_Clothes, ivRobe, // Body Armor
@@ -188,7 +207,6 @@ type
     ivMeat_Axe, ivFlesh_Tearer, // Axe
     ivJavelin, ivFuscina, // Spear
     ivWarhammer, ivWar_Mace, // Mace
-    ivStaff3, ivStaff4, // Staff
     // Deep Cave
     ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
     ivBrigantine_Armor, ivRing_Mail, ivLight_Furs, ivClean_Robe, // Body Armor
@@ -199,7 +217,6 @@ type
     ivWar_Axe, ivDark_Axe, // Axe
     ivWar_Spear, ivHarpoon, // Spear
     ivFlanged_Mace, ivWar_Gavel, // Mace
-    ivStaff5, ivStaff6, // Staff
     // Blood Cave
     ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
     ivChain_Mail, ivScale_Mail, ivThick_Furs, ivHard_Robe, // Body Armor
@@ -210,7 +227,6 @@ type
     ivBerserker_Axe, ivMarauder_Axe, // Axe
     ivSilvan_Whisper, ivImpaler, // Spear
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
-    ivStaff7, ivStaff8, // Staff
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
     ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
@@ -221,8 +237,7 @@ type
     ivRune_Sword, ivTroll_Slayer, // Blade
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
-    ivWar_Maul, ivDoom_Hammer, // Mace
-    ivStaff9, ivStaff10 // Staff
+    ivWar_Maul, ivDoom_Hammer // Mace
     );
 
 const

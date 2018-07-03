@@ -1,4 +1,4 @@
-unit uMap;
+unit Trollhunter.Map;
 
 interface
 

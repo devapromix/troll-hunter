@@ -4,7 +4,7 @@ interface
 
 uses Trollhunter.Types,
   uEntity,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Language;
 
 {

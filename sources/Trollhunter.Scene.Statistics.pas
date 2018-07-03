@@ -16,6 +16,7 @@ implementation
 
 uses SysUtils,
   BearLibTerminal,
+  uBearLibItemsCommon,
   Trollhunter.UI,
   Trollhunter.Player,
   Trollhunter.Player.Types,
@@ -25,7 +26,6 @@ uses SysUtils,
   Trollhunter.Player.Classes,
   Trollhunter.Statistic,
   uAttribute,
-  uBearLibItemsCommon,
   Trollhunter.Player.Skills,
   Trollhunter.Item,
   uMob,
@@ -33,7 +33,8 @@ uses SysUtils,
   Trollhunter.Item.Types,
   Trollhunter.Item.Shop,
   uQuest,
-  Trollhunter.Player.Helpers;
+  Trollhunter.Player.Helpers,
+  Trollhunter.Item.Base;
 
 var
   Wizard: Boolean = False;

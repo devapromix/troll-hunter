@@ -33,7 +33,7 @@ implementation
 
 uses SysUtils,
   Trollhunter.Player,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Game,
   Trollhunter.Terminal;
 

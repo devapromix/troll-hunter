@@ -15,7 +15,7 @@ uses
   Trollhunter.Terminal in 'Sources\Trollhunter.Terminal.pas',
   uScenes in 'Sources\uScenes.pas',
   Trollhunter.Player in 'Sources\Trollhunter.Player.pas',
-  uMap in 'Sources\uMap.pas',
+  Trollhunter.Map in 'Sources\Trollhunter.Map.pas',
   Trollhunter.Item in 'Sources\Trollhunter.Item.pas',
   uMob in 'Sources\uMob.pas',
   Trollhunter.UI.Log in 'Sources\Trollhunter.UI.Log.pas',
@@ -55,7 +55,8 @@ uses
   Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas',
   Trollhunter.Player.Helpers in 'sources\Trollhunter.Player.Helpers.pas',
   Trollhunter.Scene.Help in 'sources\Trollhunter.Scene.Help.pas',
-  Trollhunter.Scene.Title in 'sources\Trollhunter.Scene.Title.pas';
+  Trollhunter.Scene.Title in 'sources\Trollhunter.Scene.Title.pas',
+  Trollhunter.Item.Base in 'sources\Trollhunter.Item.Base.pas';
 
 var
   Key: UInt = 0;

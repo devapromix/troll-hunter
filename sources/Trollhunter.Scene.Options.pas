@@ -16,7 +16,8 @@ implementation
 
 { TSceneOptions }
 
-uses Trollhunter.Game,
+uses SysUtils,
+  Trollhunter.Game,
   Trollhunter.UI,
   Trollhunter.Language,
   BearLibTerminal,
@@ -44,17 +45,16 @@ begin
 
   // Settings
   Title(_('Settings'), False);
-  AddOption('W', _('Fullscreen'), Game.GetOption(apFullscreen), clLightBlue);
+  AddOption('W', UI.KeyToStr('ALT+ENTER') + ' ' + _('Fullscreen'),
+    Game.GetOption(apFullscreen), clLightBlue);
 
   // Wizard mode
   if Mode.Wizard then
   begin
     Title(_('Wizard Mode'), False);
-
     AddOption('Z', _('Turn Wizard Mode Off'), Mode.Wizard, clRed);
     AddOption('M', _('Show map'), Game.ShowMap);
     AddOption('T', _('Reload all shops'), False);
-    // AddOption('J', _(''), False);
     AddOption('L', _('Leave corpses'), Game.LCorpses);
     AddOption('I', _('Show ID of items'), Game.ShowID);
     AddOption('N', _('Hide level of an item'), Game.GetOption(apHdLevOfItem));

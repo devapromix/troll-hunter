@@ -22,7 +22,7 @@ uses Trollhunter.UI,
   Trollhunter.Player,
   Trollhunter.Language,
   Trollhunter.Game,
-  uMap;
+  Trollhunter.Map;
 
 procedure TSceneBackground.Render;
 begin

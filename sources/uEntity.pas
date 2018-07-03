@@ -3,7 +3,7 @@ unit uEntity;
 interface
 
 uses Trollhunter.Types,
-  uMap;
+  Trollhunter.Map;
 
 type
   TEntity = class(TObject)

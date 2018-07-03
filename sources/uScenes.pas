@@ -231,7 +231,7 @@ uses
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Item,
   Trollhunter.Language,
   uCorpse,
@@ -668,13 +668,21 @@ begin
       Player.Move(drSouthWest);
     TK_KP_3, TK_C:
       Player.Move(drSouthEast);
-    TK_KP_5, TK_S:
+    TK_KP_5:
       Player.Wait;
     TK_L: // Look
       begin
         Player.LX := Player.X;
         Player.LY := Player.Y;
         Player.Look := not Player.Look;
+        Player.Shoot := False;
+      end;
+    TK_S: // Shoot/Spell
+      begin
+        Player.LX := Player.X;
+        Player.LY := Player.Y;
+        Player.Look := not Player.Look;
+        Player.Shoot := Player.Look;
       end;
     TK_KP_PLUS:
       if Mode.Wizard then
@@ -705,6 +713,13 @@ begin
         end
         else
           MsgLog.Add(_('You cannot climb up here.'));
+      end;
+    TK_ENTER: // Shoot
+      begin
+        if Player.Shoot and not Mobs.GetFreeTile(Player.LX, Player.LY) then
+        begin
+          Player.DistAttack(Mobs.GetIndex(Player.LX, Player.LY));
+        end;
       end;
     TK_PERIOD:
       begin
@@ -760,12 +775,15 @@ begin
         end;
         Scenes.SetScene(scDef);
         Exit;
-      end;
+      end
+      else
+        Player.Wait;
     TK_ESCAPE:
       begin
         if Player.Look then
         begin
           Player.Look := False;
+          Player.Shoot := False;
           Exit;
         end;
         if Player.IsDead then

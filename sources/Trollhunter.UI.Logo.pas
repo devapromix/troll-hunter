@@ -33,7 +33,7 @@ const
     '      |::|\:::|/:::\ /::::::\ |::||::||::|/::::\\:::\  \:::|\:::|/::::\ |:::::| /::::::\\:::|/:::\',
     '      |xx| |xx|  \x||xx/  \xx||xx||xx||xx|   \xx\|xx|   |xx| |xx|   \xx\|xx|   |xx/__\xx||xx|  \x|',
     '      |xx| |xx|     |xx|  |xx||xx||xx||xx|   |xx||xx|   |xx| |xx|   |xx||xx|   |xx|xxxxx||xx|     ',
-    '      |XX| |XX|     |XX\__/XX||XX||XX||XX|   |XX||XX\___|XX| |XX|   |XX||XX\___|XX|_____ |XX|     ',
+    '      |XX| |XX|     |XX\__/XX||XX||XX||XX|   |XX||XX\___|XX| |XX|   |XX||XX\___|XX\_____ |XX|     ',
     '      |XX| \XX\      \XXXXXX/ \XX\\XX\\XX\   \XX\ \XXXX/|XX\ \XX\   \XX\ \XXXX/ \XXXXXX/ \XX\     ',
     '      |XX|                                                                                        ',
     '      |XX|                                                                                        ',

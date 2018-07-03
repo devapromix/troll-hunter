@@ -35,6 +35,7 @@ const
   // Inventory
   ItemMax = 26;
   StartGold = 250;
+  MaxManaPerShoot = 10;
   // Talents
   MinPrm = 1;
   TalentPrm = 3;
@@ -47,6 +48,7 @@ type
     FLY: UInt;
     FMaxMap: UInt;
     FLook: Boolean;
+    FShoot: Boolean;
     FGold: Int;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
@@ -74,6 +76,7 @@ type
     property Vision: UInt read GetVision;
     property MaxMap: UInt read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
+    property Shoot: Boolean read FShoot write FShoot;
     property Gold: Int read FGold write FGold;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
@@ -103,6 +106,7 @@ type
     function SaveCharacterDump(AReason: string): string;
     procedure Defeat(AKiller: string = '');
     procedure Attack(Index: Int);
+    procedure DistAttack(Index: Int);
     procedure ReceiveHealing;
     procedure Buy(Index: Int);
     procedure PickUp;
@@ -132,6 +136,7 @@ type
     procedure Turn;
     procedure StartEquip;
     procedure StartSkills;
+    function EqItem(ASlot: TSlotType; var AItem: Item): Boolean;
   end;
 
 var
@@ -143,7 +148,7 @@ uses Classes,
   SysUtils,
   Math,
   Trollhunter.Game,
-  uMap,
+  Trollhunter.Map,
   uScenes,
   Trollhunter.Item,
   Dialogs,
@@ -163,7 +168,8 @@ uses Classes,
   uBearLibItemsInventory,
   Trollhunter.Helpers,
   Trollhunter.Item.Types,
-  Trollhunter.Utils;
+  Trollhunter.Utils,
+  Trollhunter.Item.Base;
 
 { TPlayer }
 
@@ -315,6 +321,8 @@ var
   end;
 
 begin
+  if Self.IsDead then
+    Exit;
   if (Index < 0) then
     Exit;
   Mob := Mobs.Mob[Index];
@@ -760,6 +768,7 @@ begin
   begin
     if IsDead then
       Exit;
+    //
     FX := Map.EnsureRange(X + Direction[Dir].X);
     FY := Map.EnsureRange(Y + Direction[Dir].Y);
     if (Map.GetTileEnum(FX, FY, Map.Current) in StopTiles) and not Mode.Wizard
@@ -784,9 +793,9 @@ begin
       if ((Direction[Dir].X <> 0) or (Direction[Dir].Y <> 0)) then
       begin
         SatPerTurn := 2;
-        AutoPickup;
+        AutoPickup();
       end;
-      AddTurn;
+      AddTurn();
     end;
   end;
 end;
@@ -892,6 +901,28 @@ begin
   // MsgLog.Add(Format(_('You don''t know how to use %s.'), [The]));
 end;
 
+function TPlayer.EqItem(ASlot: TSlotType; var AItem: Item): Boolean;
+var
+  FCount, I: Int;
+  FI: TItemEnum;
+begin
+  Result := False;
+  FCount := Items_Inventory_GetCount().InRange(ItemMax);
+  for I := 0 to FCount - 1 do
+  begin
+    AItem := Items_Inventory_GetItem(I);
+    if (AItem.Equipment > 0) then
+    begin
+      FI := TItemEnum(AItem.ItemID);
+      if (ItemBase[FI].SlotType = ASlot) then
+      begin
+        Result := True;
+        Exit;
+      end;
+    end;
+  end;
+end;
+
 procedure TPlayer.Equip(Index: Int);
 var
   FItem: Item;
@@ -989,6 +1020,36 @@ begin
   end
   else
     MsgLog.Add(_('You need more gold.'));
+end;
+
+procedure TPlayer.DistAttack(Index: Int);
+var
+  FItem: Item;
+  IT: TItemType;
+  ManaPerShoot: Int;
+begin
+  if Self.IsDead then
+    Exit;
+  if Self.EqItem(stMainHand, FItem) then
+  begin
+    IT := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
+    // Bows and Crossbows
+    if (IT in RangedWeaponItems) then
+      Self.Attack(Index);
+    // Staves and Wands
+    if (IT in MagicWeaponTypeItems) then
+    begin
+      ManaPerShoot := ItemBase[TItemEnum(FItem.ItemID)
+        ].ManaCost.InRange(MaxManaPerShoot);
+      if (Self.Attributes.Attrib[atMana].Value >= ManaPerShoot) then
+      begin
+        Self.Attributes.Modify(atMana, -ManaPerShoot);
+        Self.Attack(Index);
+      end
+      else
+        MsgLog.Add(_('You need more mana!'));
+    end;
+  end;
 end;
 
 procedure TPlayer.ReceiveHealing;
@@ -1338,6 +1399,7 @@ procedure TPlayer.Empty;
 begin
   Killer := '';
   Look := False;
+  Shoot := False;
   IsRest := False;
   SatPerTurn := 2;
 end;
@@ -1867,25 +1929,25 @@ begin
   if (efPrmStr in Effects) then
   begin
     PrmValue(efPrmStr, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(Format(_('Strength +%d'), [Value]));
+    MsgLog.Add(Format('%s +%d', [_('Strength'), Value]));
   end;
   // Dexterity
   if (efPrmDex in Effects) then
   begin
     PrmValue(efPrmDex, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(Format(_('Dexterity +%d'), [Value]));
+    MsgLog.Add(Format('%s +%d', [_('Dexterity'), Value]));
   end;
   // Willpower
   if (efPrmWil in Effects) then
   begin
     PrmValue(efPrmWil, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(Format(_('Willpower +%d'), [Value]));
+    MsgLog.Add(Format('%s +%d', [_('Willpower'), Value]));
   end;
   // Perception
   if (efPrmPer in Effects) then
   begin
     PrmValue(efPrmPer, IfThen(Value = 0, MinPrm, Value));
-    MsgLog.Add(Format(_('Perception +%d'), [Value]));
+    MsgLog.Add(Format('%s +%d', [_('Perception'), Value]));
   end;
 end;
 
