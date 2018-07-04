@@ -11,8 +11,8 @@ uses Trollhunter.Types,
   Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Player,
-  uEntity,
-  uCreature;
+  Trollhunter.Entity,
+  Trollhunter.Creature;
 
 type
   TItems = class(TEntity)
@@ -77,9 +77,9 @@ uses Math,
   Trollhunter.Language,
   Trollhunter.UI.Log,
   Trollhunter.Item.Shop,
-  uTalent,
+  Trollhunter.Talent,
   Trollhunter.Item.Affixes,
-  uAttribute,
+  Trollhunter.Attribute,
   Trollhunter.UI,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,

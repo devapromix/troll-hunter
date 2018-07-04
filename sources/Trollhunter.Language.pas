@@ -60,8 +60,8 @@ var
   F: string;
 begin
   FSL := TStringList.Create;
-  FSL.Sorted := True;
   FSL.Duplicates := dupIgnore;
+  FSL.Sorted := True;
   FUseDefaultLanguage := AUseDefaultLanguage;
   F := GetPath('languages') + 'default.lng';
   if FileExists(F) then
@@ -111,6 +111,7 @@ end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
 begin
+  FSL.Sort;
   FSL.SaveToFile(AFileName);
 end;
 

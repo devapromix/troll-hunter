@@ -7,9 +7,9 @@ uses
   Types,
   Trollhunter.Types,
   uBearLibItemsCommon,
-  uMob,
+  Trollhunter.Mob,
   Trollhunter.Game,
-  uAttribute;
+  Trollhunter.Attribute;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
@@ -235,15 +235,15 @@ uses
   Trollhunter.Item,
   Trollhunter.Language,
   uCorpse,
-  uCalendar,
+  Trollhunter.Calendar,
   uSpellbook,
-  uTalent,
+  Trollhunter.Talent,
   Trollhunter.Player.Skills,
   Trollhunter.UI,
   Trollhunter.UI.Log,
   Trollhunter.UI.Logo,
-  uEntity,
-  uCreature,
+  Trollhunter.Entity,
+  Trollhunter.Creature,
   Trollhunter.Statistic,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
@@ -931,6 +931,8 @@ begin
 end;
 
 { TSceneInv }
+
+{ TODO -cПредметы: Нажатие в инвентаре кнопки не сущ. предмета вызывает сообщение, что предмет не идентифицирован}
 
 procedure TSceneInv.Render;
 begin

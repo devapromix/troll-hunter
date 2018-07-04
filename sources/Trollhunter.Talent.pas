@@ -1,9 +1,9 @@
-﻿unit uTalent;
+﻿unit Trollhunter.Talent;
 
 interface
 
 uses Trollhunter.Types,
-  uCreature;
+  Trollhunter.Creature;
 
 const
   TalentMax = 10;
@@ -114,7 +114,7 @@ uses SysUtils,
   Trollhunter.Player.Skills,
   uScenes,
   Trollhunter.Player,
-  uAttribute,
+  Trollhunter.Attribute,
   Trollhunter.Helpers;
 
 const
@@ -231,10 +231,7 @@ begin
   Result := False;
   for I := 0 to TalentMax - 1 do
     if (FTalent[I].Enum = ATalent) then
-    begin
-      Result := True;
-      Exit;
-    end;
+      Exit(True);
 end;
 
 procedure TTalents.SetTalent(I: UInt; const Value: TTalent);

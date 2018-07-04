@@ -1,4 +1,4 @@
-unit uWeather;
+unit Trollhunter.Weather;
 
 interface
 

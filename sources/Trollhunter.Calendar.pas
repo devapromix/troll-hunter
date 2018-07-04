@@ -1,4 +1,4 @@
-unit uCalendar;
+unit Trollhunter.Calendar;
 
 interface
 
@@ -48,8 +48,8 @@ uses SysUtils,
   Trollhunter.Item.Shop,
   Trollhunter.UI.Log,
   Trollhunter.Player,
-  uCreature,
-  uAttribute,
+  Trollhunter.Creature,
+  Trollhunter.Attribute,
   Trollhunter.Helpers;
 
 { TCalendar }

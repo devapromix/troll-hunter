@@ -149,10 +149,7 @@ begin
     if (UInt(Ord(Map.Current)) <> FCorpse[I].Z) then
       Continue;
     if ((FCorpse[I].X = AX) and (FCorpse[I].Y = AY)) then
-    begin
-      Result := True;
-      Exit;
-    end;
+      Exit(True);
   end;
 end;
 

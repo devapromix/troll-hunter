@@ -1,4 +1,4 @@
-unit uAttribute;
+unit Trollhunter.Attribute;
 
 interface
 
@@ -43,7 +43,8 @@ type
 
 implementation
 
-uses Trollhunter.Helpers;
+uses Math,
+  Trollhunter.Helpers;
 
 { TAttributes }
 

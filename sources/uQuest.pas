@@ -3,8 +3,8 @@
 interface
 
 uses Trollhunter.Types,
-  uCreature,
-  uMob;
+  Trollhunter.Creature,
+  Trollhunter.Mob;
 
 { TODO -cУбить существо : Убить уникального босса на локации (от первой до предпоследней). }
 { TODO -cУбить существо : Убить N существ на локации (от первой до последней). }

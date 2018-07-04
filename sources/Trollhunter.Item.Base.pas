@@ -7,7 +7,7 @@ uses Trollhunter.Types,
   Trollhunter.Player.Types,
   Trollhunter.Game,
   Trollhunter.Map,
-  uCreature;
+  Trollhunter.Creature;
 
 type
   TItemBase = record

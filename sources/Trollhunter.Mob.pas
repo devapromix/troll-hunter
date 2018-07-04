@@ -1,13 +1,13 @@
-﻿unit uMob;
+﻿unit Trollhunter.Mob;
 
 interface
 
 uses Trollhunter.Types,
   Trollhunter.Game,
   Trollhunter.Map,
-  uEntity,
-  uCreature,
-  uAbility;
+  Trollhunter.Entity,
+  Trollhunter.Creature,
+  Trollhunter.Ability;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead,
@@ -502,8 +502,8 @@ uses Math,
   Trollhunter.Item,
   Trollhunter.Player.Skills,
   Trollhunter.Statistic,
-  uAttribute,
-  uPathFind,
+  Trollhunter.Attribute,
+  Trollhunter.PathFind,
   uQuest,
   Trollhunter.Helpers,
   Trollhunter.Item.Types;
@@ -1170,10 +1170,7 @@ begin
   Result := True;
   for I := 0 to Count - 1 do
     if ChMob(I, AX, AY) then
-    begin
-      Result := False;
-      Exit;
-    end;
+      Exit(False);
 end;
 
 function TMobs.GetIndex(AX, AY: UInt): Int;

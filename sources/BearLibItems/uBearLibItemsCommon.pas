@@ -2,7 +2,8 @@ unit uBearLibItemsCommon;
 
 interface
 
-uses Trollhunter.Types, uCreature;
+uses Trollhunter.Types,
+  Trollhunter.Creature;
 
 const
   BonusCount = 3;
@@ -61,7 +62,8 @@ function GlobalIndex(AItems: TItems; MapID, Index: Int; AX: Int = -1;
 
 implementation
 
-uses uBearLibItemsDungeon, uBearLibItemsInventory;
+uses uBearLibItemsDungeon,
+  uBearLibItemsInventory;
 
 const
   LibVersion = '0.4.0';
@@ -126,8 +128,7 @@ begin
   Result := (AItems[Index].MapID = AMapID);
 end;
 
-function HasItem(AItems: TItems; Index, AMapID: Int;
-  AX, AY: Int): Boolean;
+function HasItem(AItems: TItems; Index, AMapID: Int; AX, AY: Int): Boolean;
 begin
   if (AX = -1) and (AY = -1) then
     Result := HasItem(AItems, Index, AMapID)

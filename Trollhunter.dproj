@@ -104,29 +104,29 @@
         <DCCReference Include="Sources\Trollhunter.Player.pas"/>
         <DCCReference Include="Sources\Trollhunter.Map.pas"/>
         <DCCReference Include="Sources\Trollhunter.Item.pas"/>
-        <DCCReference Include="Sources\uMob.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Mob.pas"/>
         <DCCReference Include="Sources\Trollhunter.UI.Log.pas"/>
         <DCCReference Include="Sources\uCorpse.pas"/>
-        <DCCReference Include="Sources\uEntity.pas"/>
-        <DCCReference Include="Sources\uCalendar.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Entity.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Calendar.pas"/>
         <DCCReference Include="Sources\Trollhunter.Item.Shop.pas"/>
         <DCCReference Include="Sources\uSpellbook.pas"/>
-        <DCCReference Include="Sources\uTalent.pas"/>
-        <DCCReference Include="Sources\uAbility.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Talent.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Ability.pas"/>
         <DCCReference Include="Sources\Trollhunter.Player.Skills.pas"/>
         <DCCReference Include="Sources\Trollhunter.UI.Logo.pas"/>
         <DCCReference Include="sources\Trollhunter.Statistic.pas"/>
         <DCCReference Include="Sources\Trollhunter.Item.Affixes.pas"/>
-        <DCCReference Include="Sources\uCreature.pas"/>
-        <DCCReference Include="Sources\uAttribute.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Creature.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Attribute.pas"/>
         <DCCReference Include="Sources\Trollhunter.UI.pas"/>
-        <DCCReference Include="Sources\BearLibPathFind\uPathFind.pas"/>
+        <DCCReference Include="Sources\Trollhunter.PathFind.pas"/>
         <DCCReference Include="Sources\BearLibItems\uBearLibItemsCommon.pas"/>
         <DCCReference Include="Sources\BearLibItems\uBearLibItemsDungeon.pas"/>
         <DCCReference Include="Sources\BearLibItems\uBearLibItemsInventory.pas"/>
         <DCCReference Include="Sources\uQuest.pas"/>
         <DCCReference Include="Sources\Trollhunter.Helpers.pas"/>
-        <DCCReference Include="sources\uWeather.pas"/>
+        <DCCReference Include="sources\Trollhunter.Weather.pas"/>
         <DCCReference Include="sources\Trollhunter.Player.Races.pas"/>
         <DCCReference Include="sources\Trollhunter.Player.Classes.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Enchant.pas"/>
@@ -224,13 +224,13 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>

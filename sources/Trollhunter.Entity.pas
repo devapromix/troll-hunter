@@ -1,4 +1,4 @@
-unit uEntity;
+unit Trollhunter.Entity;
 
 interface
 

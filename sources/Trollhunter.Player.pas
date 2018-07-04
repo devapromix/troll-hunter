@@ -2,15 +2,15 @@ unit Trollhunter.Player;
 
 interface
 
-uses Types,
+uses
   Trollhunter.Types,
   Trollhunter.Player.Types,
   Trollhunter.Player.Skills,
-  uCreature,
-  uMob,
+  Trollhunter.Creature,
+  Trollhunter.Mob,
   uBearLibItemsCommon,
   Trollhunter.Statistic,
-  uTalent,
+  Trollhunter.Talent,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
 
@@ -156,12 +156,12 @@ uses Classes,
   Trollhunter.UI.Log,
   Trollhunter.Language,
   uCorpse,
-  uCalendar,
+  Trollhunter.Calendar,
   Trollhunter.Item.Shop,
   BearLibTerminal,
-  uAbility,
+  Trollhunter.Ability,
   Trollhunter.Item.Affixes,
-  uAttribute,
+  Trollhunter.Attribute,
   uSpellbook,
   Trollhunter.UI,
   uBearLibItemsDungeon,
@@ -915,10 +915,7 @@ begin
     begin
       FI := TItemEnum(AItem.ItemID);
       if (ItemBase[FI].SlotType = ASlot) then
-      begin
-        Result := True;
-        Exit;
-      end;
+        Exit(True);
     end;
   end;
 end;

@@ -6,7 +6,7 @@ uses
   Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
-  uCreature,
+  Trollhunter.Creature,
   Trollhunter.Player.Skills;
 
 type

@@ -3,7 +3,7 @@ unit Trollhunter.Item.Affixes;
 interface
 
 uses Trollhunter.Types,
-  uCreature,
+  Trollhunter.Creature,
   Trollhunter.Item.Types,
   uBeaRLibItemsCommon;
 

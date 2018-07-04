@@ -3,7 +3,7 @@ unit Trollhunter.Game;
 interface
 
 uses Trollhunter.Types,
-  uEntity,
+  Trollhunter.Entity,
   Trollhunter.Map,
   Trollhunter.Language;
 
@@ -183,7 +183,7 @@ uses SysUtils,
   Trollhunter.UI.Log,
   uScenes,
   Trollhunter.Item,
-  uMob,
+  Trollhunter.Mob,
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
   uSpellbook,

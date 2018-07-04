@@ -1,4 +1,4 @@
-unit uPathFind; // By KIPAR
+﻿unit Trollhunter.PathFind; // By KIPAR
 
 interface
 
@@ -7,8 +7,8 @@ uses Trollhunter.Types;
 type
   TGetXYVal = function(X, Y: Int): Boolean; stdcall;
 
-function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int;
-  Callback: TGetXYVal; var TargetX, TargetY: Int): Boolean;
+function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal;
+  var TargetX, TargetY: Int): Boolean;
 
 implementation
 
@@ -41,7 +41,7 @@ type
 
 var
   Cells: TPathFindMap;
-  FAULT: Int;
+  Fault: Int;
   SavedMapX, SavedMapY: Int;
   Open: array [0 .. MAXLEN] of POpenBlock;
   OpenRaw: array [0 .. MAXLEN] of TOpenBlock;
@@ -54,24 +54,24 @@ begin
     Open[I] := @OpenRaw[I];
 end;
 
-function Heuristic(dx, dy: Int): Int;
+function Heuristic(DX, DY: Int): Int;
 begin
-  Result := KNORM * Max(dx, dy) + (KDIAG - KNORM) * Min(dx, dy);
+  Result := KNORM * Max(DX, DY) + (KDIAG - KNORM) * Min(DX, DY);
 end;
 
 var
   NOpen: Int = 0;
 
-function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int;
-  Callback: TGetXYVal; var TargetX, TargetY: Int): Boolean;
+function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal;
+  var TargetX, TargetY: Int): Boolean;
 
-  procedure HeapSwap(I, j: Int);
+  procedure HeapSwap(I, J: Int);
   var
-    tmp: POpenBlock;
+    Tmp: POpenBlock;
   begin
-    tmp := Open[I];
-    Open[I] := Open[j];
-    Open[j] := tmp;
+    Tmp := Open[I];
+    Open[I] := Open[J];
+    Open[J] := Tmp;
   end;
 
   procedure HeapAdd;
@@ -90,43 +90,41 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int;
 
   procedure Heapify(I: Int);
   var
-    leftChild, rightChild, largestChild: Int;
+    LeftChild, RightChild, LargestChild: Int;
   begin
     repeat
-      leftChild := 2 * I + 1;
-      if leftChild >= NOpen then
-        exit;
-      rightChild := leftChild + 1;
-      largestChild := I;
-      if Open[leftChild].Cost < Open[largestChild].Cost then
-        largestChild := leftChild;
-      if (rightChild < NOpen) and
-        (Open[rightChild].Cost < Open[largestChild].Cost) then
-        largestChild := rightChild;
-      if largestChild = I then
-        exit;
-      HeapSwap(I, largestChild);
-      I := largestChild;
-    until false;
+      LeftChild := 2 * I + 1;
+      if LeftChild >= NOpen then
+        Exit;
+      RightChild := LeftChild + 1;
+      LargestChild := I;
+      if Open[LeftChild].Cost < Open[LargestChild].Cost then
+        LargestChild := LeftChild;
+      if (RightChild < NOpen) and
+        (Open[RightChild].Cost < Open[LargestChild].Cost) then
+        LargestChild := RightChild;
+      if LargestChild = I then
+        Exit;
+      HeapSwap(I, LargestChild);
+      I := LargestChild;
+    until False;
   end;
 
   procedure AddToOpen(X, Y, FrX, FrY, NewCost: Int);
   begin
-    if not InRange(X, 0, MapX - 1) then
-      exit;
-    if not InRange(Y, 0, MapY - 1) then
-      exit;
+    if not InRange(X, 0, MapX - 1) or not InRange(Y, 0, MapY - 1) then
+      Exit;
     with Cells[X * MapY + Y] do
     begin
       if CostWay > 0 then // if OpenID > 0 then
       begin
         // if CostWay <= NewCost then
-        exit;
+        Exit;
       end;
       if not Callback(X, Y) then
-        exit;
+        Exit;
       if NOpen >= MAXLEN then
-        exit;
+        Exit;
       Open[NOpen].X := X;
       Open[NOpen].Y := Y;
       // TODO??
@@ -142,20 +140,18 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int;
 var
   CurX, CurY: Int;
 begin
-  Result := false;
-  if not InRange(ToX, 0, MapX - 1) then
-    exit;
-  if not InRange(ToY, 0, MapY - 1) then
-    exit;
+  Result := False;
+  if not InRange(ToX, 0, MapX - 1) or not InRange(ToY, 0, MapY - 1) then
+    Exit;
   if not Callback(ToX, ToY) then
-    exit;
+    Exit;
   // if not Callback(FromX, FromY) then exit;
   if (FromX = ToX) and (FromY = ToY) then
   begin
     Result := True;
     TargetX := ToX;
     TargetY := ToY;
-    exit;
+    Exit;
   end;
 
   if (SavedMapX <> MapX) or (SavedMapY <> MapY) then
@@ -186,7 +182,7 @@ begin
         TargetX := Parent.X;
         TargetY := Parent.Y;
       end;
-      exit;
+      Exit;
     end;
     with Cells[CurX * MapY + CurY] do
     begin
@@ -204,11 +200,11 @@ begin
       AddToOpen(CurX - 1, CurY + 1, CurX, CurY, CostWay + KDIAG);
       AddToOpen(CurX + 1, CurY - 1, CurX, CurY, CostWay + KDIAG);
       AddToOpen(CurX + 1, CurY + 1, CurX, CurY, CostWay + KDIAG);
-      if NOpen > FAULT then
-        FAULT := NOpen;
+      if NOpen > Fault then
+        Fault := NOpen;
     end;
   until NOpen <= 0;
-  Result := false;
+  Result := False;
 end;
 
 initialization

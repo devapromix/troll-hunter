@@ -55,10 +55,11 @@ uses
   SysUtils,
   Math,
   Trollhunter.Map,
-  uCreature,
-  uAttribute,
+  Trollhunter.Creature,
+  Trollhunter.Attribute,
   Trollhunter.Helpers,
-  Trollhunter.Item.Types, Trollhunter.Item.Base;
+  Trollhunter.Item.Types,
+  Trollhunter.Item.Base;
 
 { TShop }
 
