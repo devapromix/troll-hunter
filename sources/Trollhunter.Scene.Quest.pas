@@ -18,7 +18,7 @@ implementation
 
 uses BearLibTerminal,
   Trollhunter.UI,
-  uQuest,
+  Trollhunter.Player.Quest,
   Trollhunter.Language,
   Trollhunter.Game;
 

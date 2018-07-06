@@ -32,7 +32,7 @@ uses SysUtils,
   Trollhunter.Item.Affixes,
   Trollhunter.Item.Types,
   Trollhunter.Item.Shop,
-  uQuest,
+  Trollhunter.Player.Quest,
   Trollhunter.Player.Helpers,
   Trollhunter.Item.Base;
 

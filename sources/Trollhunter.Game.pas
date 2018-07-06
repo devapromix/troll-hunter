@@ -186,7 +186,7 @@ uses SysUtils,
   Trollhunter.Mob,
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
-  uSpellbook,
+  Trollhunter.Player.Spellbook,
   Trollhunter.Helpers;
 
 { TGame }

@@ -504,7 +504,7 @@ uses Math,
   Trollhunter.Statistic,
   Trollhunter.Attribute,
   Trollhunter.PathFind,
-  uQuest,
+  Trollhunter.Player.Quest,
   Trollhunter.Helpers,
   Trollhunter.Item.Types;
 
