@@ -1,4 +1,4 @@
-unit uSpellbook;
+unit Trollhunter.Player.Spellbook;
 
 interface
 
