@@ -112,7 +112,7 @@ uses SysUtils,
   TypInfo,
   Trollhunter.Language,
   Trollhunter.Player.Skills,
-  uScenes,
+  Trollhunter.Scenes,
   Trollhunter.Player,
   Trollhunter.Attribute,
   Trollhunter.Helpers;

@@ -4,10 +4,10 @@ interface
 
 { TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
 
-uses Trollhunter.Types,
+uses uBearLibItemsCommon,
+  Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
-  uBearLibItemsCommon,
   Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Player,
@@ -34,14 +34,11 @@ type
     function RenderInvItem(const AX, AY, I: Int; AItem: Item;
       IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
-    function GetSlotName(const SlotType: TSlotType): string;
     procedure AddItemToInv(Index: Int = 0; AFlag: Boolean = False); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1;
       EqFlag: Boolean = False; IdFlag: Boolean = False;
       SufID: UInt = 0); overload;
     function GetInventory: string;
-    function GetPrice(Price: UInt; F: Boolean = False): string;
-    function GetLevel(L: UInt): string;
     function GetInfo(Sign: string; Value: UInt; Color: string;
       RareColor: string = ''): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
@@ -73,6 +70,8 @@ uses Math,
   Classes,
   TypInfo,
   SysUtils,
+  uBearLibItemsDungeon,
+  uBearLibItemsInventory,
   Trollhunter.Terminal,
   Trollhunter.Language,
   Trollhunter.UI.Log,
@@ -81,11 +80,9 @@ uses Math,
   Trollhunter.Item.Affixes,
   Trollhunter.Attribute,
   Trollhunter.UI,
-  uBearLibItemsDungeon,
-  uBearLibItemsInventory,
   Trollhunter.Helpers,
   Trollhunter.Statistic,
-  Trollhunter.Item.Base;
+  Trollhunter.Item.Base, Trollhunter.Item.Helpers;
 
 { TItems }
 
@@ -186,7 +183,7 @@ begin
   // Level
   if (AItem.Level > Player.Attributes.Attrib[atLev].Value) or
     not Game.GetOption(apHdLevOfItem) then
-    Level := GetLevel(AItem.Level);
+    Level := GetItemLevel(AItem.Level);
   // Info
   if not IsManyItems then
   begin
@@ -565,37 +562,6 @@ begin
   Result := FItemName[I];
 end;
 
-function TItems.GetSlotName(const SlotType: TSlotType): string;
-const
-  SlotName: array [TSlotType] of string = ('', 'Head', 'Torso', 'Hands', 'Feet',
-    'Main Hand', 'Off-Hand', 'Neck', 'Finger', 'In Hands');
-begin
-  Result := Terminal.Colorize(Format('{%s}', [SlotName[SlotType]]),
-    Terminal.GetColorFromIni('Equip'));
-end;
-
-function TItems.GetPrice(Price: UInt; F: Boolean = False): string;
-var
-  Color: string;
-begin
-  if (F or (Player.Gold >= Price)) then
-    Color := 'lighter yellow'
-  else
-    Color := 'light red';
-  Result := Terminal.Colorize(UI.Icon(icGold) + Price.ToString, Color);
-end;
-
-function TItems.GetLevel(L: UInt): string;
-var
-  Color: string;
-begin
-  if (L > Player.Attributes.Attrib[atLev].Value) then
-    Color := 'Light Red'
-  else
-    Color := 'Gray';
-  Result := Terminal.Colorize(Format('%s%d', [UI.Icon(icElixir), L]), Color);
-end;
-
 function TItems.GetInfo(Sign: string; Value: UInt; Color: string;
   RareColor: string = ''): string;
 var
@@ -697,7 +663,7 @@ begin
   begin
     S := '';
     if (D.SlotType <> stNone) and (AItem.Equipment > 0) then
-      S := GetSlotName(D.SlotType);
+      S := GetItemSlotName(D.SlotType);
   end;
   if (S <> '') then
     S := Items.GetItemInfo(AItem, False, 0, True) + ' ' + S
@@ -714,14 +680,14 @@ begin
           S := T;
           if ((AItem.Price > 1) and not ChItem(AItem)) then
           begin
-            S := GetPrice(AItem.Price div 4, True);
+            S := GetItemPrice(AItem.Price div 4, True);
             if (AItem.Equipment > 0) then
               S := GetRedPrice(AItem.Price div 4);
           end;
         end;
       ptBuy:
         begin
-          S := GetPrice(AItem.Price);
+          S := GetItemPrice(AItem.Price);
         end;
       ptRepair:
         begin
@@ -731,12 +697,12 @@ begin
           begin
             RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
             if (RepairCost > 0) then
-              S := GetPrice(RepairCost);
+              S := GetItemPrice(RepairCost);
           end;
         end;
     else
       if ((AItem.Price > 0) and Game.GetOption(apShPrice)) then
-        S := GetPrice(AItem.Price, True);
+        S := GetItemPrice(AItem.Price, True);
     end;
     if Game.Timer > 0 then
       Terminal.Print(Status.Left - L, AY + I, S)

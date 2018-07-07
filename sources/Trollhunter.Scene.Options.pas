@@ -2,7 +2,7 @@ unit Trollhunter.Scene.Options;
 
 interface
 
-uses uScenes,
+uses Trollhunter.Scenes,
   Trollhunter.Types;
 
 type
@@ -17,10 +17,10 @@ implementation
 { TSceneOptions }
 
 uses SysUtils,
+  BearLibTerminal,
   Trollhunter.Game,
   Trollhunter.UI,
   Trollhunter.Language,
-  BearLibTerminal,
   Trollhunter.Item.Shop;
 
 procedure TSceneOptions.Render;

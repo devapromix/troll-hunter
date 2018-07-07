@@ -1,29 +1,21 @@
-unit Trollhunter.Scene.RacesAndClasses;
+unit Trollhunter.Scene.Races;
 
 interface
 
 uses Trollhunter.Types,
-  uScenes;
+  Trollhunter.Attribute,
+  Trollhunter.Scenes;
 
 type
   TSceneRace = class(TScene)
-  private
-    DX: UInt;
   public
+    DX: UInt;
+    PrmAt: array [atStr .. atMana] of UInt;
     procedure ReRoll;
     procedure SelRand;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
     procedure RenderInfo;
-  end;
-
-type
-  TSceneClass = class(TSceneRace)
-  public
-    procedure ReRoll;
-    procedure SelRand;
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
   end;
 
 implementation
@@ -33,7 +25,6 @@ uses Math,
   Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  Trollhunter.Attribute,
   Trollhunter.Ability,
   Trollhunter.Game,
   Trollhunter.Player.Races,
@@ -42,10 +33,7 @@ uses Math,
   Trollhunter.Statistic,
   Trollhunter.Player.Skills,
   Trollhunter.Player.Types,
-  Trollhunter.Player.Helpers;
-
-var
-  PrmAt: array [atStr .. atMana] of UInt;
+  Trollhunter.Player.Helpers, Trollhunter.Scene.Classes;
 
 { TSceneRace }
 
@@ -211,120 +199,6 @@ begin
       end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scRace);
-    TK_SPACE:
-      ReRoll;
-  end;
-end;
-
-{ TSceneClass }
-
-procedure TSceneClass.Render;
-var
-  I: UInt;
-  C: TClassEnum;
-
-  procedure Add(const AName: string);
-  var
-    L: Char;
-  begin
-    L := Chr(I + Ord('A'));
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(1, Y, UI.KeyToStr(L));
-    if (C = Player.HClass) then
-      Terminal.ForegroundColor(clYellow)
-    else
-      Terminal.ForegroundColor(clWhite);
-    Terminal.Print(5, Y, _(AName));
-    Inc(I);
-    Inc(Y);
-  end;
-
-begin
-  UI.Title(_('Choose a class'));
-  I := 0;
-  Y := 2;
-  for C := Low(TClassEnum) to High(TClassEnum) do
-    Add(Trollhunter.Player.Classes.Classes.GetName(C));
-
-  RenderInfo;
-
-  Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize
-    (Classes.GetItems(Player.HClass), 'Lush'));
-
-  Terminal.Print(DX, 19, _('Skills') + ': ' + Terminal.Colorize
-    (Classes.GetSkills(Player.HClass), 'Lush'));
-
-  Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY,
-    _(Classes.GetDescription(Player.HClass)), TK_ALIGN_BOTTOM);
-
-  AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'));
-  AddKey('?', _('Help'), True);
-end;
-
-procedure TSceneClass.ReRoll;
-var
-  V: TClassProp;
-begin
-  V := ClassProp[Player.HClass];
-
-  // Attributes
-  Player.Attributes.SetPrm(atStr, Math.RandomRange(V.Strength.Min,
-    V.Strength.Max + 1) + PrmAt[atStr]);
-  Player.Attributes.SetPrm(atDex, Math.RandomRange(V.Dexterity.Min,
-    V.Dexterity.Max + 1) + PrmAt[atDex]);
-  Player.Attributes.SetPrm(atWil, Math.RandomRange(V.Willpower.Min,
-    V.Willpower.Max + 1) + PrmAt[atWil]);
-  Player.Attributes.SetPrm(atPer, Math.RandomRange(V.Perception.Min,
-    V.Perception.Max + 1) + PrmAt[atPer]);
-
-  // Life and Mana
-  Player.Attributes.SetPrm(atLife, Math.RandomRange(V.Life.Min, V.Life.Max + 1)
-    + PrmAt[atLife]);
-  Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min, V.Mana.Max + 1)
-    + PrmAt[atMana]);
-end;
-
-procedure TSceneClass.SelRand;
-var
-  C: TClassEnum;
-begin
-  C := Player.HClass;
-  repeat
-    Player.HClass := TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1));
-  until (C <> Player.HClass);
-end;
-
-procedure TSceneClass.Update(var Key: UInt);
-var
-  I: Int;
-begin
-  case Key of
-    TK_A .. TK_Z:
-      begin
-        I := Ord(Key) - Ord(TK_A);
-        if (I > Ord(High(TClassEnum))) then
-          Exit;
-        Player.HClass :=
-          TClassEnum(Math.EnsureRange(I, 0, Ord(High(TClassEnum))));
-        ReRoll;
-      end;
-    TK_ENTER, TK_KP_ENTER:
-      begin
-        Scenes.SetScene(scTalents, scClass);
-      end;
-    TK_ESCAPE:
-      begin
-        Scenes.SetScene(scRace);
-      end;
-    TK_BACKSPACE:
-      begin
-        SelRand;
-        ReRoll;
-      end;
-    TK_SLASH:
-      Scenes.SetScene(scHelp, scClass);
     TK_SPACE:
       ReRoll;
   end;

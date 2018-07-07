@@ -3,7 +3,7 @@ unit Trollhunter.Scene.Help;
 interface
 
 uses Trollhunter.Types,
-  uScenes;
+  Trollhunter.Scenes;
 
 type
   TSceneHelp = class(TScene)
@@ -19,9 +19,9 @@ implementation
 { TSceneHelp }
 
 uses SysUtils,
+  BearLibTerminal,
   Trollhunter.Language,
   Trollhunter.UI,
-  BearLibTerminal,
   Trollhunter.Terminal;
 
 constructor TSceneHelp.Create;

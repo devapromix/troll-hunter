@@ -3,7 +3,7 @@ unit Trollhunter.Scene.Quest;
 interface
 
 uses Trollhunter.Types,
-  uScenes;
+  Trollhunter.Scenes;
 
 type
   TSceneQuest = class(TScene)

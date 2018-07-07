@@ -2,7 +2,7 @@ unit Trollhunter.Scene.Rest;
 
 interface
 
-uses uScenes,
+uses Trollhunter.Scenes,
   Trollhunter.Types;
 
 type

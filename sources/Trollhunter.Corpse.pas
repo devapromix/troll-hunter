@@ -1,4 +1,4 @@
-unit uCorpse;
+unit Trollhunter.Corpse;
 
 interface
 

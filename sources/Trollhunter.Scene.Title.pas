@@ -3,7 +3,7 @@ unit Trollhunter.Scene.Title;
 interface
 
 uses Trollhunter.Types,
-  uScenes;
+  Trollhunter.Scenes;
 
 type
   TSceneTitle = class(TScene)

@@ -2,7 +2,7 @@
 
 interface
 
-uses uScenes,
+uses Trollhunter.Scenes,
   Trollhunter.Types;
 
 type

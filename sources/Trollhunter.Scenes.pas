@@ -1,12 +1,12 @@
-unit uScenes;
+unit Trollhunter.Scenes;
 
 interface
 
 uses
   Classes,
   Types,
-  Trollhunter.Types,
   uBearLibItemsCommon,
+  Trollhunter.Types,
   Trollhunter.Mob,
   Trollhunter.Game,
   Trollhunter.Attribute;
@@ -229,12 +229,14 @@ uses
   SysUtils,
   Math,
   BearLibTerminal,
+  uBearLibItemsDungeon,
+  uBearLibItemsInventory,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Map,
   Trollhunter.Item,
   Trollhunter.Language,
-  uCorpse,
+  Trollhunter.Corpse,
   Trollhunter.Calendar,
   Trollhunter.Player.Spellbook,
   Trollhunter.Talent,
@@ -245,8 +247,6 @@ uses
   Trollhunter.Entity,
   Trollhunter.Creature,
   Trollhunter.Statistic,
-  uBearLibItemsDungeon,
-  uBearLibItemsInventory,
   Trollhunter.Player.Quest,
   Trollhunter.Item.Types,
   Trollhunter.Item.Affixes,
@@ -259,13 +259,14 @@ uses
   Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
-  Trollhunter.Scene.RacesAndClasses,
+  Trollhunter.Scene.Races,
+  Trollhunter.Scene.Classes,
   Trollhunter.Scene.Quest,
   Trollhunter.Scene.Background,
   Trollhunter.Scene.Statistics,
   Trollhunter.Scene.Options,
   Trollhunter.Scene.Help,
-  Trollhunter.Scene.Title;
+  Trollhunter.Scene.Title, Trollhunter.Item.Helpers;
 
 { TScene }
 
@@ -1313,7 +1314,7 @@ begin
       [atLife].Value;
     if (V > 0) then
       S := ' (' + Items.GetInfo('+', V, 'Life') + ' ' +
-        Items.GetPrice(Round(V * 1.6)) + ')'
+        Items.GetItemPrice(Round(V * 1.6)) + ')'
     else
       S := '';
     Add(_('Receive healing') + S);
@@ -1657,7 +1658,7 @@ begin
       Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
       Terminal.ForegroundColor(clGray);
       Terminal.Print(5, Y, Format('(%s) %s %s',
-        [Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
+        [Items.GetItemLevel(Spellbook.GetSpell(I).Spell.Level),
         Spellbook.GetSpellName(I), Items.GetInfo('-',
         Spellbook.GetSpell(I).Spell.ManaCost, 'Mana')]));
       Inc(Y);

@@ -96,17 +96,20 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Sources\BearLibTerminal\BearLibTerminal.pas"/>
+        <DCCReference Include="Sources\BearLibItems\uBearLibItemsCommon.pas"/>
+        <DCCReference Include="Sources\BearLibItems\uBearLibItemsDungeon.pas"/>
+        <DCCReference Include="Sources\BearLibItems\uBearLibItemsInventory.pas"/>
         <DCCReference Include="Sources\Trollhunter.Types.pas"/>
         <DCCReference Include="Sources\Trollhunter.Game.pas"/>
         <DCCReference Include="Sources\Trollhunter.Language.pas"/>
         <DCCReference Include="Sources\Trollhunter.Terminal.pas"/>
-        <DCCReference Include="Sources\uScenes.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Scenes.pas"/>
         <DCCReference Include="Sources\Trollhunter.Player.pas"/>
         <DCCReference Include="Sources\Trollhunter.Map.pas"/>
         <DCCReference Include="Sources\Trollhunter.Item.pas"/>
         <DCCReference Include="Sources\Trollhunter.Mob.pas"/>
         <DCCReference Include="Sources\Trollhunter.UI.Log.pas"/>
-        <DCCReference Include="Sources\uCorpse.pas"/>
+        <DCCReference Include="Sources\Trollhunter.Corpse.pas"/>
         <DCCReference Include="Sources\Trollhunter.Entity.pas"/>
         <DCCReference Include="Sources\Trollhunter.Calendar.pas"/>
         <DCCReference Include="Sources\Trollhunter.Item.Shop.pas"/>
@@ -121,9 +124,6 @@
         <DCCReference Include="Sources\Trollhunter.Attribute.pas"/>
         <DCCReference Include="Sources\Trollhunter.UI.pas"/>
         <DCCReference Include="Sources\Trollhunter.PathFind.pas"/>
-        <DCCReference Include="Sources\BearLibItems\uBearLibItemsCommon.pas"/>
-        <DCCReference Include="Sources\BearLibItems\uBearLibItemsDungeon.pas"/>
-        <DCCReference Include="Sources\BearLibItems\uBearLibItemsInventory.pas"/>
         <DCCReference Include="Sources\Trollhunter.Player.Quest.pas"/>
         <DCCReference Include="Sources\Trollhunter.Helpers.pas"/>
         <DCCReference Include="sources\Trollhunter.Weather.pas"/>
@@ -132,7 +132,7 @@
         <DCCReference Include="sources\Trollhunter.Scene.Enchant.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Name.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Rest.pas"/>
-        <DCCReference Include="sources\Trollhunter.Scene.RacesAndClasses.pas"/>
+        <DCCReference Include="sources\Trollhunter.Scene.Races.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Quest.pas"/>
         <DCCReference Include="sources\Trollhunter.Utils.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Background.pas"/>
@@ -144,6 +144,8 @@
         <DCCReference Include="sources\Trollhunter.Scene.Help.pas"/>
         <DCCReference Include="sources\Trollhunter.Scene.Title.pas"/>
         <DCCReference Include="sources\Trollhunter.Item.Base.pas"/>
+        <DCCReference Include="sources\Trollhunter.Scene.Classes.pas"/>
+        <DCCReference Include="sources\Trollhunter.Item.Helpers.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -224,13 +226,13 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>

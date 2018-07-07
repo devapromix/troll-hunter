@@ -97,7 +97,7 @@ uses SysUtils,
   Trollhunter.Game,
   Trollhunter.Creature,
   Trollhunter.Attribute,
-  uScenes,
+  Trollhunter.Scenes,
   Trollhunter.Helpers;
 
 { TMap }
