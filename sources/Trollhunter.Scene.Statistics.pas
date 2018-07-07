@@ -102,9 +102,9 @@ begin
     Title(_('Version'), False);
 
     Add(_('Game Version'), Game.GetVersion);
-    Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
+    Add('BeaRLibTerminal', BearLibTerminal.terminal_get('version'));
     Self.Add();
-    Add(_('BeaRLibItems'), Items_GetVersion);
+    Add('BeaRLibItems', Items_GetVersion);
   end;
 
   AddKey('Esc', _('Close'), not Mode.Wizard);

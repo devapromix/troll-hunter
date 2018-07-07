@@ -6,25 +6,19 @@ uses Trollhunter.Types,
   uScenes;
 
 type
-  TVScene = class(TScene)
+  TSceneRace = class(TScene)
   private
     DX: UInt;
-  public
-    procedure Render; override;
-  end;
-
-type
-  TSceneRace = class(TVScene)
   public
     procedure ReRoll;
     procedure SelRand;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
-    class procedure RenderInfo;
+    procedure RenderInfo;
   end;
 
 type
-  TSceneClass = class(TVScene)
+  TSceneClass = class(TSceneRace)
   public
     procedure ReRoll;
     procedure SelRand;
@@ -52,40 +46,6 @@ uses Math,
 
 var
   PrmAt: array [atStr .. atMana] of UInt;
-
-  { TVScene }
-
-procedure TVScene.Render;
-begin
-  DX := CX - (CX div 2);
-  Terminal.ForegroundColor(clWhite);
-  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize
-    (Player.Gender, 'Lush'));
-  Terminal.Print(DX, 7, _('Metabolism') + ': ' +
-    Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
-
-  // Attributes
-  Terminal.Print(DX, 9, _('Strength') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(DX, 10, _('Dexterity') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(DX, 11, _('Willpower') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
-
-  // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize
-    (Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize
-    (Player.Attributes.Attrib[atMana].Prm, 'Lush'));
-end;
 
 { TSceneRace }
 
@@ -117,7 +77,7 @@ begin
   for R := Low(TRaceEnum) to High(TRaceEnum) do
     Add(Races.GetName(R));
 
-  inherited Render;
+  RenderInfo;
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(DX, CY - (CY div 2), CX, CY,
@@ -128,9 +88,36 @@ begin
   AddKey('?', _('Help'), True);
 end;
 
-class procedure TSceneRace.RenderInfo;
+procedure TSceneRace.RenderInfo;
 begin
+  DX := CX - (CX div 2);
+  Terminal.ForegroundColor(clWhite);
+  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize
+    (Player.Statictics.Get(stAge), 'Lush'));
+  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize
+    (Player.Statictics.Get(stHeight), 'Lush'));
+  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize
+    (Player.Statictics.Get(stWeight), 'Lush'));
+  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize
+    (Player.Gender, 'Lush'));
+  Terminal.Print(DX, 7, _('Metabolism') + ': ' +
+    Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 
+  // Attributes
+  Terminal.Print(DX, 9, _('Strength') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
+  Terminal.Print(DX, 10, _('Dexterity') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
+  Terminal.Print(DX, 11, _('Willpower') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
+  Terminal.Print(DX, 12, _('Perception') + ': ' +
+    Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
+
+  // Life and Mana
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize
+    (Player.Attributes.Attrib[atLife].Prm, 'Lush'));
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize
+    (Player.Attributes.Attrib[atMana].Prm, 'Lush'));
 end;
 
 procedure TSceneRace.ReRoll;
@@ -259,7 +246,7 @@ begin
   for C := Low(TClassEnum) to High(TClassEnum) do
     Add(Trollhunter.Player.Classes.Classes.GetName(C));
 
-  inherited Render;
+  RenderInfo;
 
   Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize
     (Classes.GetItems(Player.HClass), 'Lush'));
