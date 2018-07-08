@@ -231,7 +231,6 @@ begin
       IsUseLang := True;
   end;
   Language := TLanguage.Create(IsUseLang);
-  Language.UseLanguage('russian');
 end;
 
 destructor TGame.Destroy;

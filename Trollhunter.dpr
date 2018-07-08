@@ -58,7 +58,9 @@ uses
   Trollhunter.Scene.Title in 'sources\Trollhunter.Scene.Title.pas',
   Trollhunter.Item.Base in 'sources\Trollhunter.Item.Base.pas',
   Trollhunter.Scene.Classes in 'sources\Trollhunter.Scene.Classes.pas',
-  Trollhunter.Item.Helpers in 'sources\Trollhunter.Item.Helpers.pas';
+  Trollhunter.Item.Helpers in 'sources\Trollhunter.Item.Helpers.pas',
+  Trollhunter.Scene.Difficulty in 'sources\Trollhunter.Scene.Difficulty.pas',
+  Trollhunter.Scene.Load in 'sources\Trollhunter.Scene.Load.pas';
 
 var
   Key: UInt = 0;

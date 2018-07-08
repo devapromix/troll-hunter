@@ -12,7 +12,8 @@ type
     FValue: TStringList;
     FCurrent: string;
     FUseDefaultLanguage: Boolean;
-    function GetPath(SubDir: string): string;
+  public const
+    DefaultLanguage = 'default.lng';
   public
     function Get(const AValue: string): string;
     constructor Create(const AUseDefaultLanguage: Boolean = False);
@@ -24,6 +25,7 @@ type
     procedure UseLanguage(ACurrentLanguage: string);
     property Current: string read FCurrent write FCurrent;
     property UseDefaultLanguage: Boolean read FUseDefaultLanguage;
+    class function GetPath(SubDir: string): string;
   end;
 
 function _(const AValue: string): string;
@@ -63,12 +65,12 @@ begin
   FSL.Duplicates := dupIgnore;
   FSL.Sorted := True;
   FUseDefaultLanguage := AUseDefaultLanguage;
-  F := GetPath('languages') + 'default.lng';
+  F := GetPath('languages') + DefaultLanguage;
   if FileExists(F) then
     FSL.LoadFromFile(F{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
   FID := TStringList.Create;
   FValue := TStringList.Create;
-  FCurrent := 'english';
+//  FCurrent := 'english';
 end;
 
 destructor TLanguage.Destroy;
@@ -106,7 +108,7 @@ end;
 procedure TLanguage.SaveDefault;
 begin
   if Language.UseDefaultLanguage then
-    SaveToFile(GetPath('languages') + 'default.lng');
+    SaveToFile(GetPath('languages') + DefaultLanguage);
 end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
@@ -133,7 +135,7 @@ begin
     Result := FValue[I];
 end;
 
-function TLanguage.GetPath(SubDir: string): string;
+class function TLanguage.GetPath(SubDir: string): string;
 begin
   Result := ExtractFilePath(ParamStr(0));
   Result := IncludeTrailingPathDelimiter(Result + SubDir);
