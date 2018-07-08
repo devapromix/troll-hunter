@@ -36,11 +36,6 @@ type
       : TStringList;
   end;
 
-type
-  TItemHelper = record helper for Item
-    function DoIt: string;
-  end;
-
 implementation
 
 uses SysUtils, Math;
@@ -77,13 +72,6 @@ end;
 function TUIntHelper.ToString: string;
 begin
   Result := IntToStr(Self);
-end;
-
-{ TItemHelper }
-
-function TItemHelper.DoIt: string;
-begin
-
 end;
 
 { TStringHelper }
