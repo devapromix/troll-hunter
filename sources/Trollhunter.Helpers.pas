@@ -3,9 +3,7 @@ unit Trollhunter.Helpers;
 interface
 
 uses Classes,
-  Trollhunter.Types,
-  uBearLibItemsCommon,
-  Trollhunter.Player;
+  Trollhunter.Types;
 
 type
   TIntHelper = record helper for Int

@@ -39,6 +39,7 @@ type
       EqFlag: Boolean = False; IdFlag: Boolean = False;
       SufID: UInt = 0); overload;
     function GetInventory: string;
+    function InvCount: Integer;
     function GetInfo(Sign: string; Value: UInt; Color: string;
       RareColor: string = ''): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
@@ -973,6 +974,11 @@ begin
     until (AItem.Identify > 0);
     Result := True;
   end;
+end;
+
+function TItems.InvCount: Integer;
+begin
+  Result := Items_Inventory_GetCount();
 end;
 
 function TItems.GetName(AItem: Item; IsShort: Boolean = False): string;

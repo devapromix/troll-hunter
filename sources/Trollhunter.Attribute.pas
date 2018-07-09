@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses Math,
+uses
   Trollhunter.Helpers;
 
 { TAttributes }

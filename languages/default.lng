@@ -1,4 +1,5 @@
-﻿"a credit to","a disgrace to","the black sheep of"=
+﻿﻿"a credit to","a disgrace to","the black sheep of"=
+"a credit to","a disgrace to","the black sheep of"=
 "an average","a sallow","a fair","a dark","a light"=
 "an only child","one of two children","one of many children","the only surviving child","one of several children","the illegitimate but acknowledged child","the illegitimate and unacknowledged child"=
 "auburn","blonde","black","dark","red","ginger","grey","brown"=
@@ -23,6 +24,7 @@
 %s notices you!=
 %s says: "%s"=
 %s scared you (%d).=
+[color=red]Hell[/color]=
 Accept=
 Affixes=
 Age=
@@ -195,6 +197,7 @@ Screenshot=
 Scroll skills=
 Scrolls Read=
 Select a class=
+Select a difficulty=
 Select a race=
 Select a talent=
 Select an item=

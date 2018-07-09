@@ -23,15 +23,10 @@ uses Math,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Attribute,
-  Trollhunter.Ability,
   Trollhunter.Game,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
-  Trollhunter.UI,
-  Trollhunter.Statistic,
-  Trollhunter.Player.Skills,
-  Trollhunter.Player.Types,
-  Trollhunter.Player.Helpers;
+  Trollhunter.UI;
 
 { TSceneClass }
 

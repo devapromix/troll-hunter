@@ -113,7 +113,7 @@ var
   Mode: TMode;
 
 type
-  TDifficulty = (dfEasy, dfNormal, dfHard, dfHell);
+  TDifficultyEnum = (dfEasy, dfNormal, dfHard, dfHell);
 
 type
   TSpawn = class(TEntity);
@@ -125,7 +125,7 @@ type
 type
   TGame = class(TObject)
   private
-    FDifficulty: TDifficulty;
+    FDifficulty: TDifficultyEnum;
     FTimer: UInt;
     FWon: Boolean;
     FCanClose: Boolean;
@@ -142,7 +142,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property Difficulty: TDifficulty read FDifficulty write FDifficulty;
+    property Difficulty: TDifficultyEnum read FDifficulty write FDifficulty;
     property Timer: UInt read FTimer write FTimer;
     property Won: Boolean read FWon write FWon;
     property CanClose: Boolean read FCanClose write FCanClose;
@@ -152,11 +152,12 @@ type
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
     property Portal: TSpawn read FPortal write FPortal;
-    function GetStrDifficulty: string;
     function GetVersion: string;
     property PortalMap: TMapEnum read FPortalMap write FPortalMap;
     property PortalTile: TTileEnum read FPortalTile write FPortalTile;
     property ShowEffects: Boolean read FShowEffects write FShowEffects;
+    function GetDifficultyName(ADifficulty: TDifficultyEnum): string; overload;
+    function GetDifficultyName: string; overload;
     function GetTitle: string;
     procedure LoadConfig;
     procedure Start;
@@ -176,8 +177,6 @@ var
 implementation
 
 uses SysUtils,
-  Math,
-  Dialogs,
   BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
@@ -261,14 +260,14 @@ begin
   Result := '_';
 end;
 
-function TGame.GetOption(I: TAPOptionEnum): Boolean;
+function TGame.GetDifficultyName: string;
 begin
-  Result := FAPOption[I]
+  Result := GetDifficultyName(Difficulty);
 end;
 
-function TGame.GetStrDifficulty: string;
+function TGame.GetDifficultyName(ADifficulty: TDifficultyEnum): string;
 begin
-  case Difficulty of
+  case ADifficulty of
     dfEasy:
       Result := _('Easy');
     dfNormal:
@@ -276,9 +275,13 @@ begin
     dfHard:
       Result := _('Hard');
   else
-    Result := Terminal.Colorize(_('Hell'), 'Red');
+    Result := _('Hell');
   end;
+end;
 
+function TGame.GetOption(I: TAPOptionEnum): Boolean;
+begin
+  Result := FAPOption[I]
 end;
 
 function TGame.GetVersion: string;

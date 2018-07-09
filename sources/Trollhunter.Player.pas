@@ -147,7 +147,6 @@ implementation
 uses Classes,
   SysUtils,
   Math,
-  Dialogs,
   BearLibTerminal,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
@@ -1423,7 +1422,7 @@ begin
     SL.Append('');
     SL.Append(GetDateTime);
     SL.Append(Format('%s: %s.', [_('Difficulty'),
-      GetPureText(Game.GetStrDifficulty)]));
+      GetPureText(Game.GetDifficultyName)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
