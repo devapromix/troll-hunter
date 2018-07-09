@@ -10,11 +10,14 @@ type
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
+    procedure SelRand;
   end;
 
 implementation
 
-uses SysUtils,
+uses
+  Math,
+  SysUtils,
   BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.UI.Log,
@@ -29,41 +32,69 @@ uses SysUtils,
 { TSceneDifficulty }
 
 procedure TSceneDifficulty.Render;
+var
+  I: UInt;
+  Difficulty: TDifficultyEnum;
+
+  procedure Add(const AName: string);
+  var
+    C: Char;
+  begin
+    C := Chr(I + Ord('A'));
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(1, Y, UI.KeyToStr(C));
+    if (Difficulty = Game.Difficulty) then
+      Terminal.ForegroundColor(clYellow)
+    else
+      Terminal.ForegroundColor(clWhite);
+    Terminal.Print(5, Y, _(AName));
+    Inc(I);
+    Inc(Y);
+  end;
+
 begin
   UI.Title(_('Choose a difficulty'));
+  I := 0;
+  Y := 2;
 
-  Terminal.Print(CX - 5, CY - 3, Format('%s %s', [UI.KeyToStr('A'), _('Easy')]),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), _('Normal')]
-    ), TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 1, Format('%s %s', [UI.KeyToStr('C'), _('Hard')]),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 3, Format('%s %s', [UI.KeyToStr('D'), _('Hell')]),
-    TK_ALIGN_LEFT);
+  for Difficulty := Low(TDifficultyEnum) to High(TDifficultyEnum) do
+    Add(Game.GetDifficultyName(Difficulty));
 
-  AddKey('Esc', _('Back'), True);
+  AddKey('Enter', _('Confirm'));
+  AddKey('Esc', _('Back'));
+  AddKey('?', _('Help'), True);
+end;
+
+procedure TSceneDifficulty.SelRand;
+var
+  Difficulty: TDifficultyEnum;
+begin
+  Difficulty := Game.Difficulty;
+  repeat
+    Game.Difficulty := TDifficultyEnum(Math.RandomRange(0,
+      Ord(High(TDifficultyEnum)) + 1));
+  until (Difficulty <> Game.Difficulty);
 end;
 
 procedure TSceneDifficulty.Update(var Key: UInt);
+var
+  I: Int;
 begin
   case Key of
-    TK_A .. TK_D, TK_ENTER, TK_KP_ENTER:
+    TK_A .. TK_Z:
       begin
-        case Key of
-          TK_A:
-            Game.Difficulty := dfEasy;
-          TK_B:
-            Game.Difficulty := dfNormal;
-          TK_C:
-            Game.Difficulty := dfHard;
-          TK_D:
-            Game.Difficulty := dfHell;
-          TK_ENTER, TK_KP_ENTER:
-            if Mode.Wizard then
-              Game.Difficulty := dfNormal
-            else
-              Exit;
-        end;
+        I := Ord(Key) - Ord(TK_A);
+        if (I > Ord(High(TDifficultyEnum))) then
+          Exit;
+        Game.Difficulty := TDifficultyEnum(Math.EnsureRange(I, 0,
+          Ord(High(TDifficultyEnum))));
+      end;
+    TK_SPACE:
+      SelRand;
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scDifficulty);
+    TK_ENTER, TK_KP_ENTER:
+      begin
         Game.Start();
         Scenes.SetScene(scRace, scDifficulty);
         (Scenes.GetScene(scRace) as TSceneRace).SelRand;

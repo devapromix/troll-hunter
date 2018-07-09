@@ -4,7 +4,6 @@ interface
 
 uses
   Classes,
-  Types,
   uBearLibItemsCommon,
   Trollhunter.Types,
   Trollhunter.Mob,
@@ -63,13 +62,6 @@ type
 
 var
   Scenes: TScenes = nil;
-
-type
-  TSceneSpellbook = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
 
 type
   TSceneCalendar = class(TScene)
@@ -138,13 +130,6 @@ type
   end;
 
 type
-  TSceneInv = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneDrop = class(TScene)
   public
     procedure Render; override;
@@ -194,7 +179,6 @@ uses
   Trollhunter.Calendar,
   Trollhunter.Player.Spellbook,
   Trollhunter.Talent,
-  Trollhunter.Player.Skills,
   Trollhunter.UI,
   Trollhunter.UI.Log,
   Trollhunter.UI.Logo,
@@ -206,10 +190,8 @@ uses
   Trollhunter.Item.Affixes,
   Trollhunter.Item.Shop,
   Trollhunter.Helpers,
-  Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
-  Trollhunter.Player.Helpers,
   Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
@@ -226,7 +208,8 @@ uses
   Trollhunter.Scene.Load,
   Trollhunter.Scene.Player,
   Trollhunter.Scene.Game,
-  Trollhunter.Scene.Identification;
+  Trollhunter.Scene.Identification, Trollhunter.Scene.Spellbook,
+  Trollhunter.Scene.Inventory;
 
 { TScene }
 
@@ -530,46 +513,6 @@ begin
         Player.SaveCharacterDump(_('Won the game'));
         Game.CanClose := True;
       end;
-  end;
-end;
-
-{ TSceneInv }
-
-{ TODO -cПредметы: Нажатие в инвентаре кнопки не сущ. предмета вызывает сообщение, что предмет не идентифицирован }
-
-procedure TSceneInv.Render;
-begin
-  UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'), UI.Icon(icGold),
-    Player.Gold, UI.Icon(icFlag), Items_Inventory_GetCount(), ItemMax]));
-
-  UI.FromAToZ(ItemMax);
-  Items.RenderInventory;
-  MsgLog.Render(2, True);
-
-  AddKey('Esc', _('Close'));
-  AddKey('?', _('Help'), True);
-
-end;
-
-procedure TSceneInv.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE: // Close
-      Scenes.SetScene(scGame);
-    TK_TAB: // Drop
-      Scenes.SetScene(scDrop, scInv);
-    TK_ENTER, TK_KP_ENTER:
-      begin
-
-      end;
-    TK_SLASH:
-      Scenes.SetScene(scHelp, scInv);
-    TK_SPACE: // Player
-      Scenes.SetScene(scPlayer);
-    TK_A .. TK_Z: // Use an item
-      Player.Use(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
   end;
 end;
 
@@ -1012,54 +955,6 @@ begin
       // Close
       Scenes.SetScene(scGame);
   end;
-end;
-
-{ TSceneSpells }
-
-procedure TSceneSpellbook.Render;
-var
-  I: TSpellEnum;
-  V: UInt;
-
-  function IsSpell(I: TSpellEnum): Boolean;
-  begin
-    Result := Spellbook.GetSpell(I).Enable;
-    if Mode.Wizard then
-      Result := True;
-  end;
-
-begin
-  UI.Title(_('Spellbook'));
-
-  V := 0;
-  Y := 2;
-  UI.FromAToZ;
-  for I := Low(TSpellEnum) to High(TSpellEnum) do
-    if IsSpell(I) then
-    begin
-      Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(5, Y, Format('(%s) %s %s',
-        [Items.GetItemLevel(Spellbook.GetSpell(I).Spell.Level),
-        Spellbook.GetSpellName(I), Items.GetInfo('-',
-        Spellbook.GetSpell(I).Spell.ManaCost, 'Mana')]));
-      Inc(Y);
-      Inc(V);
-    end;
-  MsgLog.Render(2, True);
-
-  AddKey('A-Z', _('Cast spell'));
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneSpellbook.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      Scenes.SetScene(scGame);
-    TK_A .. TK_Z:
-      Spellbook.DoSpell(Key - TK_A);
-  end
 end;
 
 { TSceneTalents }

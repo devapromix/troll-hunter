@@ -19,7 +19,6 @@ uses SysUtils,
   uBearLibItemsCommon,
   Trollhunter.UI,
   Trollhunter.Player,
-  Trollhunter.Player.Types,
   Trollhunter.Game,
   Trollhunter.Language,
   Trollhunter.Player.Races,
@@ -48,7 +47,7 @@ begin
   begin
     Title(_('Wizard Mode'));
 
-    Add(_('Game Difficulty'), Game.GetStrDifficulty);
+    Add(_('Game Difficulty'), Game.GetDifficultyName);
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
     Add(_('NPCs'), 7);

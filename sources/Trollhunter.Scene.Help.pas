@@ -40,6 +40,14 @@ begin
   UI.Title(_('Help'));
 
   case Scenes.PrevSceneEnum of
+    scDifficulty:
+      begin
+        UI.Title(_('Keybindings'), 5);
+        X := 1;
+        Y := 7;
+        AddLine('Space', _('Random'));
+        AddLine('A-Z', _('Select a difficulty'));
+      end;
     scClass:
       begin
         UI.Title(_('Keybindings'), 5);

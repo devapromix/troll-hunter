@@ -20,7 +20,6 @@ uses BearLibTerminal,
   Trollhunter.Language,
   Trollhunter.Item,
   Trollhunter.UI.Log,
-  Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Game;
 
