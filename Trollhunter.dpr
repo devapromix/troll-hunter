@@ -61,7 +61,8 @@ uses
   Trollhunter.Item.Helpers in 'sources\Trollhunter.Item.Helpers.pas',
   Trollhunter.Scene.Difficulty in 'sources\Trollhunter.Scene.Difficulty.pas',
   Trollhunter.Scene.Load in 'sources\Trollhunter.Scene.Load.pas',
-  Trollhunter.Scene.Player in 'sources\Trollhunter.Scene.Player.pas';
+  Trollhunter.Scene.Player in 'sources\Trollhunter.Scene.Player.pas',
+  Trollhunter.Scene.Game in 'sources\Trollhunter.Scene.Game.pas';
 
 var
   Key: UInt = 0;
