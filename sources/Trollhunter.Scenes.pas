@@ -173,13 +173,6 @@ type
     procedure Update(var Key: UInt); override;
   end;
 
-type
-  TSceneIdentification = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
 var
   NPCName: string = '';
   NPCType: set of TNPCType = [];
@@ -231,7 +224,9 @@ uses
   Trollhunter.Item.Helpers,
   Trollhunter.Scene.Difficulty,
   Trollhunter.Scene.Load,
-  Trollhunter.Scene.Player, Trollhunter.Scene.Game;
+  Trollhunter.Scene.Player,
+  Trollhunter.Scene.Game,
+  Trollhunter.Scene.Identification;
 
 { TScene }
 
@@ -1172,32 +1167,6 @@ begin
           end;
         end;
       end;
-  end
-end;
-
-{ TSceneIdentification }
-
-procedure TSceneIdentification.Render;
-begin
-  UI.Title(_('Identification'), 1, clDarkestRed);
-
-  UI.FromAToZ();
-  Items.RenderInventory();
-  MsgLog.Render(2, True);
-
-  AddKey('A-Z', _('Select an item'));
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneIdentification.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      Scenes.SetScene(scInv);
-    TK_A .. TK_Z:
-      Player.IdentItem(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
   end
 end;
 
