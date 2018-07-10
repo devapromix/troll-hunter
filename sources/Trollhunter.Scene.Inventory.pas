@@ -58,6 +58,9 @@ begin
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z: // Use an item
       begin
+        if (Items.InvCount = 0) or ((Ord(Key) - Ord(TK_A)) > Items.InvCount - 1)
+        then
+          Exit;
         Player.Use(Key - TK_A);
       end
   else
