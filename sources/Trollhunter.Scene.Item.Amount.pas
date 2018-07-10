@@ -58,7 +58,7 @@ procedure TSceneAmount.Update(var Key: UInt);
 
   procedure ChAmount(Value: Int);
   begin
-    Player.ItemAmount := EnsureRange(Value, 1, MaxAmount);
+    Player.ItemAmount := EnsureRange(Value, MinAmount, MaxAmount);
     Render;
   end;
 
