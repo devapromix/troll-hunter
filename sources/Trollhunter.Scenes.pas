@@ -5,9 +5,9 @@ interface
 uses
   Classes,
   uBearLibItemsCommon,
-  Trollhunter.Types,
   Trollhunter.Mob,
   Trollhunter.Game,
+  Trollhunter.Types,
   Trollhunter.Attribute;
 
 type
@@ -130,14 +130,6 @@ type
   end;
 
 type
-  TSceneAmount = class(TScene)
-  public
-    MaxAmount: Int;
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneItems = class(TScene)
   public
     procedure Render; override;
@@ -197,7 +189,8 @@ uses
   Trollhunter.Scene.Identification,
   Trollhunter.Scene.Spellbook,
   Trollhunter.Scene.Inventory,
-  Trollhunter.Scene.Messages, Trollhunter.Scene.Calendar;
+  Trollhunter.Scene.Messages,
+  Trollhunter.Scene.Calendar, Trollhunter.Scene.Item.Amount;
 
 { TScene }
 
@@ -528,57 +521,6 @@ begin
       Player.Drop(Key - TK_A);
   else
     Game.Timer := UIntMax;
-  end;
-end;
-
-{ TSceneAmount }
-
-procedure TSceneAmount.Render;
-var
-  FItem: Item;
-begin
-  UI.Title(_('Enter amount'));
-
-  if Player.ItemIsDrop then
-    FItem := Items_Inventory_GetItem(Player.ItemIndex)
-  else
-    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Player.ItemIndex,
-      Player.X, Player.Y);
-
-  MaxAmount := FItem.Amount;
-
-  Terminal.Print(CX, CY, Format('%d/%dx', [Player.ItemAmount, FItem.Amount]),
-    TK_ALIGN_LEFT);
-
-  AddKey('Esc', _('Close'));
-  AddKey('UP/W', _('More'));
-  AddKey('DOWN/X', _('Less'));
-  AddKey('Enter', _('Apply'), True);
-end;
-
-procedure TSceneAmount.Update(var Key: UInt);
-
-  procedure ChAmount(Value: Int);
-  begin
-    Player.ItemAmount := EnsureRange(Value, 1, MaxAmount);
-    Render;
-  end;
-
-begin
-  case Key of
-    TK_ESCAPE: // Close
-      Scenes.SetScene(scGame);
-    TK_ENTER, TK_KP_ENTER:
-      begin
-        if Player.ItemIsDrop then
-          Player.DropAmount(Player.ItemIndex)
-        else
-          Player.PickUpAmount(Player.ItemIndex);
-      end;
-    TK_UP, TK_KP_8, TK_W:
-      ChAmount(Player.ItemAmount + 1);
-    TK_DOWN, TK_KP_2, TK_X:
-      ChAmount(Player.ItemAmount - 1);
   end;
 end;
 

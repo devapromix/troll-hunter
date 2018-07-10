@@ -91,6 +91,17 @@ begin
         AddLine('Tab', _('Show Background'));
         AddLine('Space', _('Show Inventory'));
       end;
+    scAmount:
+      begin
+        UI.Title(_('Keybindings'), 5);
+
+        X := 1;
+        Y := 8;
+        AddLine('UP/W', _('More'));
+        AddLine('DOWN/X', _('Less'));
+        AddLine('Left/A', _('Min'));
+        AddLine('Right/D', _('Max'));
+      end;
     scGame:
       begin
         Terminal.Print(CX, 3,

@@ -28,7 +28,6 @@
 Accept=
 Affixes=
 Age=
-Apply=
 Athletics=
 Attributes=
 Auto pick up books=
@@ -158,7 +157,9 @@ Main Hand=
 Male=
 Mana=
 Map=
+Max=
 Metabolism=
+Min=
 Monsters Killed=
 Monsters=
 Month=
