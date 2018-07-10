@@ -65,7 +65,9 @@ uses
   Trollhunter.Scene.Game in 'sources\Trollhunter.Scene.Game.pas',
   Trollhunter.Scene.Identification in 'sources\Trollhunter.Scene.Identification.pas',
   Trollhunter.Scene.Spellbook in 'sources\Trollhunter.Scene.Spellbook.pas',
-  Trollhunter.Scene.Inventory in 'sources\Trollhunter.Scene.Inventory.pas';
+  Trollhunter.Scene.Inventory in 'sources\Trollhunter.Scene.Inventory.pas',
+  Trollhunter.Scene.Messages in 'sources\Trollhunter.Scene.Messages.pas',
+  Trollhunter.Scene.Calendar in 'sources\Trollhunter.Scene.Calendar.pas';
 
 var
   Key: UInt = 0;

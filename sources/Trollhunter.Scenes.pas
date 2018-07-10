@@ -64,13 +64,6 @@ var
   Scenes: TScenes = nil;
 
 type
-  TSceneCalendar = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneDialog = class(TScene)
   public
     procedure Render; override;
@@ -151,13 +144,6 @@ type
     procedure Update(var Key: UInt); override;
   end;
 
-type
-  TSceneMessages = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
 var
   NPCName: string = '';
   NPCType: set of TNPCType = [];
@@ -165,8 +151,8 @@ var
 implementation
 
 uses
-  SysUtils,
   Math,
+  SysUtils,
   BearLibTerminal,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
@@ -174,10 +160,14 @@ uses
   Trollhunter.Player,
   Trollhunter.Map,
   Trollhunter.Item,
+  Trollhunter.Item.Helpers,
+  Trollhunter.Item.Types,
+  Trollhunter.Item.Affixes,
+  Trollhunter.Item.Shop,
   Trollhunter.Language,
   Trollhunter.Corpse,
   Trollhunter.Calendar,
-  Trollhunter.Player.Spellbook,
+  Trollhunter.Helpers,
   Trollhunter.Talent,
   Trollhunter.UI,
   Trollhunter.UI.Log,
@@ -186,12 +176,9 @@ uses
   Trollhunter.Creature,
   Trollhunter.Statistic,
   Trollhunter.Player.Quest,
-  Trollhunter.Item.Types,
-  Trollhunter.Item.Affixes,
-  Trollhunter.Item.Shop,
-  Trollhunter.Helpers,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
+  Trollhunter.Player.Spellbook,
   Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
@@ -203,13 +190,14 @@ uses
   Trollhunter.Scene.Options,
   Trollhunter.Scene.Help,
   Trollhunter.Scene.Title,
-  Trollhunter.Item.Helpers,
   Trollhunter.Scene.Difficulty,
   Trollhunter.Scene.Load,
   Trollhunter.Scene.Player,
   Trollhunter.Scene.Game,
-  Trollhunter.Scene.Identification, Trollhunter.Scene.Spellbook,
-  Trollhunter.Scene.Inventory;
+  Trollhunter.Scene.Identification,
+  Trollhunter.Scene.Spellbook,
+  Trollhunter.Scene.Inventory,
+  Trollhunter.Scene.Messages, Trollhunter.Scene.Calendar;
 
 { TScene }
 
@@ -645,24 +633,6 @@ begin
   end;
 end;
 
-{ TSceneMessages }
-
-procedure TSceneMessages.Render;
-begin
-  UI.Title(_('Last messages'));
-  MsgLog.RenderAllMessages;
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneMessages.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scGame);
-  end;
-end;
-
 { TSceneDialog }
 
 procedure TSceneDialog.Render;
@@ -896,64 +866,6 @@ begin
       Player.RepairItem(Key - TK_A);
   else
     Game.Timer := UIntMax;
-  end;
-end;
-
-{ TSceneCalendar }
-
-procedure TSceneCalendar.Render;
-
-  procedure Add(const AText: string; AValue: string;
-    AAdvValue: string = ''); overload;
-  var
-    S: string;
-    X: UInt;
-  begin
-    X := Screen.Width div 3;
-    S := '';
-    if (AAdvValue <> '') then
-      S := AAdvValue;
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(X, Y, AText, TK_ALIGN_LEFT);
-    Terminal.ForegroundColor(clGreen);
-    Terminal.Print(X + 10, Y, AValue, TK_ALIGN_LEFT);
-    if (S <> '') then
-    begin
-      Terminal.ForegroundColor(clLightBlue);
-      Terminal.Print(X + 20, Y, AAdvValue, TK_ALIGN_LEFT);
-    end;
-    Inc(Y);
-  end;
-
-  procedure Add(const AText: string; AValue: Int;
-    AAdvValue: string = ''); overload;
-  begin
-    Add(AText, AValue.ToString(), AAdvValue);
-  end;
-
-begin
-  UI.Title(_('Calendar'));
-
-  Y := 10;
-  Player.RenderWeather(CX, Y - 6, CX);
-  Add(_('Turn'), Player.Statictics.Get(stTurn));
-  Add(_('Time'), Calendar.GetTime, Calendar.GetTimeStr);
-  Add(_('Day'), Calendar.Day, Calendar.GetDayName);
-  Add(_('Month'), Calendar.Month, Calendar.GetMonthName);
-  Add(_('Year'), Calendar.Year);
-  Add(_('Map'), Map.Name);
-  Add(_('Wind'), '');
-  Add(_('Weather'), '');
-
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneCalendar.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scGame);
   end;
 end;
 
