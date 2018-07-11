@@ -24,7 +24,6 @@
 %s notices you!=
 %s says: "%s"=
 %s scared you (%d).=
-[color=red]Hell[/color]=
 Accept=
 Affixes=
 Age=
@@ -216,6 +215,7 @@ Shoot=
 Shops=
 Show Background=
 Show ID of items=
+Show information about item=
 Show Inventory=
 Show items price in inventory=
 Show map=
@@ -304,3 +304,6 @@ You unequip %s.=
 You use %s.=
 You were slain by %s. Press %s=
 Your skill %s has raised to %d!=
+Вся информация о выбранном предмете=
+Выберите предмет, о котором вы хотите узнать больше=
+Информация о предмете=

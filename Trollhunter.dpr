@@ -7,7 +7,6 @@ program Trollhunter;
 
 uses
   SysUtils,
-  Dialogs,
   BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
   uBearLibItemsCommon in 'Sources\BearLibItems\uBearLibItemsCommon.pas',
   uBearLibItemsDungeon in 'Sources\BearLibItems\uBearLibItemsDungeon.pas',
@@ -69,7 +68,11 @@ uses
   Trollhunter.Scene.Messages in 'sources\Trollhunter.Scene.Messages.pas',
   Trollhunter.Scene.Calendar in 'sources\Trollhunter.Scene.Calendar.pas',
   Trollhunter.Scene.Item.Amount in 'sources\Trollhunter.Scene.Item.Amount.pas',
-  Trollhunter.Scene.Items in 'sources\Trollhunter.Scene.Items.pas';
+  Trollhunter.Scene.Items in 'sources\Trollhunter.Scene.Items.pas',
+  Trollhunter.Scene.Item.Drop in 'sources\Trollhunter.Scene.Item.Drop.pas',
+  Trollhunter.Scene.Item.Repair in 'sources\Trollhunter.Scene.Item.Repair.pas',
+  Trollhunter.Dialog in 'sources\Trollhunter.Dialog.pas',
+  Trollhunter.Scene.Item.Information in 'sources\Trollhunter.Scene.Item.Information.pas';
 
 var
   Key: UInt = 0;

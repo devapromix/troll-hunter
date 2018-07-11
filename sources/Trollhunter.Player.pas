@@ -805,7 +805,7 @@ var
   I: TItemEnum;
   T: TItemType;
 begin
-  if IsDead then
+  if IsDead or (Items.InvCount = 0) or (Index > Items.InvCount - 1) then
     Exit;
   FItem := Items_Inventory_GetItem(Index);
   // Unidentified
@@ -1112,7 +1112,8 @@ var
   FItem: Item;
 begin
   FItem := Items_Inventory_GetItem(Index);
-  if ((FItem.Stack > 1) or (FItem.Identify = 0) or (FItem.Amount > 1)) then
+  if ((Player.IsDead) or (FItem.Identify = 0) or (FItem.Stack > 1) or
+    (FItem.Amount > 1)) then
     Exit;
   // Oil
   if (Items.Index > 0) then

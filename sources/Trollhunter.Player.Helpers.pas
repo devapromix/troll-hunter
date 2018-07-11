@@ -23,7 +23,7 @@ uses SysUtils,
 function TPlayerHelper.FullName: string;
 begin
   Result := Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
-    Gender, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)])
+    Gender, Classes.GetName(Player.HClass)])
 end;
 
 function TPlayerHelper.Gender: string;

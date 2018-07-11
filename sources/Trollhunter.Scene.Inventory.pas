@@ -25,8 +25,6 @@ uses SysUtils,
   Trollhunter.Language,
   Trollhunter.Game;
 
-{ TODO -cПредметы: Нажатие в инвентаре кнопки не сущ. предмета вызывает сообщение, что предмет не идентифицирован }
-
 procedure TSceneInv.Render;
 begin
   UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'), UI.Icon(icGold),
@@ -49,20 +47,15 @@ begin
     TK_TAB: // Drop
       Scenes.SetScene(scDrop, scInv);
     TK_ENTER, TK_KP_ENTER:
-      begin
-
-      end;
+      ;
     TK_SLASH:
       Scenes.SetScene(scHelp, scInv);
     TK_SPACE: // Player
       Scenes.SetScene(scPlayer);
+    TK_BACKSPACE: // Info about item
+      Scenes.SetScene(scItemInfo, scInv);
     TK_A .. TK_Z: // Use an item
-      begin
-        if (Items.InvCount = 0) or ((Ord(Key) - Ord(TK_A)) > Items.InvCount - 1)
-        then
-          Exit;
-        Player.Use(Key - TK_A);
-      end
+      Player.Use(Key - TK_A);
   else
     Game.Timer := UIntMax;
   end;

@@ -77,6 +77,7 @@ begin
         X := 1;
         Y := 7;
         AddLine('Tab', _('Drop an item to the floor'));
+        AddLine('Backspace', _('Show information about item'));
         AddLine('Space', _('Character Screen'));
         AddLine('A-Z', _('Use an item'));
       end;
@@ -85,7 +86,7 @@ begin
         UI.Title(_('Keybindings'), 5);
 
         X := 1;
-        Y := 8;
+        Y := 7;
         AddLine('Right/Left', _('Change tab'));
         AddLine('Up/Down', _('Scroll skills'));
         AddLine('Tab', _('Show Background'));
@@ -96,7 +97,7 @@ begin
         UI.Title(_('Keybindings'), 5);
 
         X := 1;
-        Y := 8;
+        Y := 7;
         AddLine('UP/W', _('More'));
         AddLine('DOWN/X', _('Less'));
         AddLine('Left/A', _('Min'));
