@@ -46,7 +46,7 @@ begin
         X := 1;
         Y := 7;
         AddLine('Space', _('Random'));
-        AddLine('A-Z', _('Select a difficulty'));
+        AddLine('A-Z, Up/Down', _('Select a difficulty'));
       end;
     scClass:
       begin
@@ -55,7 +55,7 @@ begin
         Y := 7;
         AddLine('Space', _('Re-roll'));
         AddLine('Backspace', _('Random'));
-        AddLine('A-Z', _('Select a class'));
+        AddLine('A-Z, Up/Down', _('Select a class'));
       end;
     scRace:
       begin
@@ -65,7 +65,7 @@ begin
         AddLine('Tab', _('Choose a sex'));
         AddLine('Space', _('Re-roll'));
         AddLine('Backspace', _('Random'));
-        AddLine('A-Z', _('Select a race'));
+        AddLine('A-Z, Up/Down', _('Select a race'));
       end;
     scInv:
       begin

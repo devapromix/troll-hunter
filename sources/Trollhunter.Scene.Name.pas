@@ -18,6 +18,7 @@ uses BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.UI,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
   Trollhunter.Game,
   Trollhunter.Language;
 
@@ -27,8 +28,10 @@ procedure TSceneName.Render;
 begin
   UI.Title(_('Choose a name'));
 
-  Terminal.Print(CX - 14, CY, _('Enter your player''s name') + ': ' +
+  Terminal.Print(CX - 14, CY - 1, _('Enter your player''s name') + ': ' +
     Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
+  Terminal.ForegroundColor(clGray);
+  Terminal.Print(CX, CY + 1, Player.FullName, TK_ALIGN_CENTER);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'), True);

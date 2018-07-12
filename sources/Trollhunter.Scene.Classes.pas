@@ -113,6 +113,12 @@ var
   I: Int;
 begin
   case Key of
+    TK_UP, TK_KP_8:
+      if Player.HClass > Low(TClassEnum) then
+        Player.HClass := Pred(Player.HClass);
+    TK_DOWN, TK_KP_2:
+      if Player.HClass < High(TClassEnum) then
+        Player.HClass := Succ(Player.HClass);
     TK_A .. TK_Z:
       begin
         I := Ord(Key) - Ord(TK_A);

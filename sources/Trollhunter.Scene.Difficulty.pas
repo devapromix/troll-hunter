@@ -81,6 +81,12 @@ var
   I: Int;
 begin
   case Key of
+    TK_UP, TK_KP_8:
+      if Game.Difficulty > Low(TDifficultyEnum) then
+        Game.Difficulty := Pred(Game.Difficulty);
+    TK_DOWN, TK_KP_2:
+      if Game.Difficulty < High(TDifficultyEnum) then
+        Game.Difficulty := Succ(Game.Difficulty);
     TK_A .. TK_Z:
       begin
         I := Ord(Key) - Ord(TK_A);

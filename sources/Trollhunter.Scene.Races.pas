@@ -165,6 +165,12 @@ var
   I: Int;
 begin
   case Key of
+    TK_UP, TK_KP_8:
+      if Player.HRace > Low(TRaceEnum) then
+        Player.HRace := Pred(Player.HRace);
+    TK_DOWN, TK_KP_2:
+      if Player.HRace < High(TRaceEnum) then
+        Player.HRace := Succ(Player.HRace);
     TK_TAB:
       begin
         if (Player.Sex = sxMale) then
