@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Title;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -24,14 +25,15 @@ implementation
 
 uses
   Math,
-  BearLibTerminal,
   SysUtils,
+  BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Game,
   Trollhunter.UI,
-  Trollhunter.Helpers,
   Trollhunter.UI.Logo,
-  Trollhunter.Language;
+  Trollhunter.Helpers,
+  Trollhunter.Language,
+  Trollhunter.Scene.Load;
 
 constructor TSceneTitle.Create;
 begin
@@ -41,7 +43,11 @@ end;
 
 procedure TSceneTitle.Load;
 begin
-  Scenes.SetScene(scDifficulty);
+  (Scenes.GetScene(scLoad) as TSceneLoad).IsLoad := True;
+  Scenes.SetScene(scLoad);
+  Terminal.Refresh;
+  Terminal_Delay(1000);
+  Scenes.SetScene(scTitle); // עטלקאסמגמ
 end;
 
 procedure TSceneTitle.Render;
@@ -69,6 +75,7 @@ begin
   FCount := 5;
   if (FCount = 0) then
     Exit;
+
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(L + 4, T, _('Which hero shall you play?'));
 

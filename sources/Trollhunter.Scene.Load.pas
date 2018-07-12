@@ -6,11 +6,9 @@ uses Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
-
-  { TSceneLoad }
-
   TSceneLoad = class(TScene)
   public
+    IsLoad: Boolean;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -25,8 +23,11 @@ uses BearLibTerminal,
 
 procedure TSceneLoad.Render;
 begin
-  Terminal.Print(CX, CY, _('Creating the world, please wait...'),
-    TK_ALIGN_CENTER);
+  if IsLoad then
+    Terminal.Print(CX, CY, _('Loading...'), TK_ALIGN_CENTER)
+  else
+    Terminal.Print(CX, CY, _('Creating the world, please wait...'),
+      TK_ALIGN_CENTER);
 end;
 
 procedure TSceneLoad.Update(var Key: UInt);

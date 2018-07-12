@@ -16,13 +16,15 @@ implementation
 
 { TSceneBackground }
 
-uses Trollhunter.UI,
+uses
+  Trollhunter.UI,
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Language,
   Trollhunter.Game,
-  Trollhunter.Map;
+  Trollhunter.Map,
+  Trollhunter.Scene.Load;
 
 procedure TSceneBackground.Render;
 begin
@@ -46,6 +48,7 @@ begin
     TK_ENTER, TK_KP_ENTER:
       if not Mode.Game then
       begin
+        (Scenes.GetScene(scLoad) as TSceneLoad).IsLoad := False;
         Scenes.SetScene(scLoad);
         Terminal.Refresh;
         Terminal_Delay(1000);
