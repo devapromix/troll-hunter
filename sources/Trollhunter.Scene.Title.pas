@@ -7,7 +7,12 @@ uses Trollhunter.Types,
 
 type
   TSceneTitle = class(TScene)
+  private
+    FCur: UInt;
+    FCount: UInt;
+    procedure Load;
   public
+    constructor Create;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
     procedure RenderHeroes();
@@ -17,7 +22,9 @@ implementation
 
 { TSceneTitle }
 
-uses BearLibTerminal,
+uses
+  Math,
+  BearLibTerminal,
   SysUtils,
   Trollhunter.Terminal,
   Trollhunter.Game,
@@ -26,15 +33,23 @@ uses BearLibTerminal,
   Trollhunter.UI.Logo,
   Trollhunter.Language;
 
-type
-  TAJ = 'A' .. 'J';
+constructor TSceneTitle.Create;
+begin
+  FCur := 0;
+  FCount := 0;
+end;
+
+procedure TSceneTitle.Load;
+begin
+  Scenes.SetScene(scDifficulty);
+end;
 
 procedure TSceneTitle.Render;
 begin
   Logo.Render(True);
   Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
     14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
-  // RenderHeroes;
+  RenderHeroes;
   if Mode.Wizard then
   begin
     Self.AddKey('Space', _('Create a new hero'));
@@ -49,31 +64,51 @@ const
   L = 12;
   T = 15;
 var
-  J: UInt;
-  V: TAJ;
+  I: UInt;
 begin
+  FCount := 5;
+  if (FCount = 0) then
+    Exit;
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(L + 4, T, _('Which hero shall you play?'));
 
-  for V := 'A' to 'J' do
+  for I := 0 to FCount - 1 do
   begin
-    J := Ord(V) - 65;
-    Terminal.Print(L, T + J + 2, UI.KeyToStr(V, J.ToString));
+    Terminal.Print(L, T + I + 2, UI.MenuItem(Chr(I + 65), '==========',
+      FCur = I));
   end;
 end;
 
 procedure TSceneTitle.Update(var Key: UInt);
 begin
   case Key of
+    TK_UP, TK_KP_8:
+      begin
+        if (FCount = 0) then
+          Exit;
+        if FCur > 0 then
+          FCur := Pred(FCur);
+      end;
+    TK_DOWN, TK_KP_2:
+      begin
+        if (FCount = 0) then
+          Exit;
+        if FCur < FCount - 1 then
+          FCur := Succ(FCur);
+      end;
     TK_ESCAPE:
       Game.CanClose := True;
     TK_A .. TK_J:
-      ;
+      begin
+        if (Key - (TK_A) > FCount - 1) then
+          Exit;
+        FCur := Key - (TK_A);
+        Load;
+      end;
     TK_SPACE:
       Scenes.SetScene(scDifficulty);
     TK_ENTER, TK_KP_ENTER:
-      if Mode.Wizard then
-        Scenes.SetScene(scDifficulty);
+      Load;
     TK_Z:
       Mode.Wizard := False;
   end;

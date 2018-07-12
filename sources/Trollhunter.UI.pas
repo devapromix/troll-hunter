@@ -23,6 +23,8 @@ type
     class function GoldLeft(const Value: Cardinal): string;
     class function Icon(const AIcon: TIconEnum;
       const AColor: string = ''): string;
+    class function MenuItem(AKey, AStr: string;
+      IsItem: Boolean = False): string;
   end;
 
 implementation
@@ -94,6 +96,14 @@ class function UI.KeyToStr(AKey, AStr, AColor: string): string;
 begin
   Result := Trim(Terminal.Colorize(Format(F, [UpperCase(AKey)]),
     Terminal.GetColorFromIni(AColor)) + ' ' + AStr);
+end;
+
+class function UI.MenuItem(AKey, AStr: string; IsItem: Boolean): string;
+begin
+  Result := Game.IfThen(IsItem, UI.KeyToStr(AKey, '', 'Equip'),
+    UI.KeyToStr(AKey)) + ' ' + Terminal.Colorize(AStr,
+    Game.IfThen(IsItem, Terminal.GetColorFromIni('Equip'),
+    'vision'));
 end;
 
 class procedure UI.RenderTile(const S: string);
