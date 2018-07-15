@@ -79,7 +79,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   Trollhunter.Helpers,
   Trollhunter.Utils,

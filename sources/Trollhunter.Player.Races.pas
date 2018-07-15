@@ -8,6 +8,9 @@ uses
 type
   TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);
 
+  // TRaceEnumHelper = record helper for TRaceEnum
+  // end;
+
 type
   TRaceProp = record
     Description: string;
@@ -74,7 +77,8 @@ var
 
 implementation
 
-uses TypInfo,
+uses
+  TypInfo,
   SysUtils,
   Trollhunter.Helpers;
 
