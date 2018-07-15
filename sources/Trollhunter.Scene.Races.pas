@@ -2,12 +2,16 @@ unit Trollhunter.Scene.Races;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Attribute,
   Trollhunter.Scenes;
 
 type
   TSceneRace = class(TScene)
+  private
+    procedure PrevScene;
+    procedure NextScene;
   public
     DX: UInt;
     PrmAt: array [atStr .. atMana] of UInt;
@@ -20,7 +24,8 @@ type
 
 implementation
 
-uses Math,
+uses
+  Math,
   BearLibTerminal,
   Trollhunter.Language,
   Trollhunter.Terminal,
@@ -34,6 +39,17 @@ uses Math,
   Trollhunter.Player.Helpers, Trollhunter.Scene.Classes;
 
 { TSceneRace }
+
+procedure TSceneRace.NextScene;
+begin
+  (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
+  Scenes.SetScene(scClass, scRace);
+end;
+
+procedure TSceneRace.PrevScene;
+begin
+  Scenes.SetScene(scDifficulty);
+end;
 
 procedure TSceneRace.Render;
 var
@@ -186,16 +202,12 @@ begin
           Exit;
         Player.HRace := TRaceEnum(Math.EnsureRange(I, 0, Ord(High(TRaceEnum))));
         ReRoll;
+        NextScene;
       end;
     TK_ENTER, TK_KP_ENTER:
-      begin
-        (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
-        Scenes.SetScene(scClass, scRace);
-      end;
+      NextScene;
     TK_ESCAPE:
-      begin
-        Scenes.SetScene(scDifficulty);
-      end;
+      PrevScene;
     TK_BACKSPACE:
       begin
         SelRand;

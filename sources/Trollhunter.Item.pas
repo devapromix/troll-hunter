@@ -4,7 +4,8 @@ interface
 
 { TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
 
-uses uBearLibItemsCommon,
+uses
+  uBearLibItemsCommon,
   Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
@@ -67,7 +68,8 @@ var
 
 implementation
 
-uses Math,
+uses
+  Math,
   Classes,
   TypInfo,
   SysUtils,
@@ -83,7 +85,8 @@ uses Math,
   Trollhunter.UI,
   Trollhunter.Helpers,
   Trollhunter.Statistic,
-  Trollhunter.Item.Base, Trollhunter.Item.Helpers;
+  Trollhunter.Item.Base,
+  Trollhunter.Item.Helpers;
 
 { TItems }
 

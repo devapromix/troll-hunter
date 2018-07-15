@@ -2,11 +2,15 @@ unit Trollhunter.Scene.Difficulty;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
   TSceneDifficulty = class(TScene)
+  private
+    procedure PrevScene;
+    procedure NextScene;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -30,6 +34,21 @@ uses
   Trollhunter.Scene.Classes;
 
 { TSceneDifficulty }
+
+procedure TSceneDifficulty.NextScene;
+begin
+  Game.Start();
+  Scenes.SetScene(scRace, scDifficulty);
+  (Scenes.GetScene(scRace) as TSceneRace).SelRand;
+  (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
+  (Scenes.GetScene(scClass) as TSceneClass).SelRand;
+  (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
+end;
+
+procedure TSceneDifficulty.PrevScene;
+begin
+  Scenes.SetScene(scTitle);
+end;
 
 procedure TSceneDifficulty.Render;
 var
@@ -94,22 +113,16 @@ begin
           Exit;
         Game.Difficulty := TDifficultyEnum(Math.EnsureRange(I, 0,
           Ord(High(TDifficultyEnum))));
+        NextScene;
       end;
     TK_SPACE:
       SelRand;
     TK_SLASH:
       Scenes.SetScene(scHelp, scDifficulty);
     TK_ENTER, TK_KP_ENTER:
-      begin
-        Game.Start();
-        Scenes.SetScene(scRace, scDifficulty);
-        (Scenes.GetScene(scRace) as TSceneRace).SelRand;
-        (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
-        (Scenes.GetScene(scClass) as TSceneClass).SelRand;
-        (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
-      end;
+      NextScene;
     TK_ESCAPE:
-      Scenes.SetScene(scTitle);
+      PrevScene;
   end;
 end;
 

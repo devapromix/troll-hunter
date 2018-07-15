@@ -2,9 +2,10 @@ unit Trollhunter.Terminal;
 
 interface
 
-uses Types,
-  Trollhunter.Types,
-  BearLibTerminal;
+uses
+  Types,
+  BearLibTerminal,
+  Trollhunter.Types;
 
 type
   TGlyph = record
@@ -64,7 +65,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Classes,
   Math,
   Trollhunter.Game;

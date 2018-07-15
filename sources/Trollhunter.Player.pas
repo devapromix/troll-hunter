@@ -3,14 +3,14 @@ unit Trollhunter.Player;
 interface
 
 uses
+  uBearLibItemsCommon,
   Trollhunter.Types,
-  Trollhunter.Player.Types,
-  Trollhunter.Player.Skills,
   Trollhunter.Creature,
   Trollhunter.Mob,
-  uBearLibItemsCommon,
   Trollhunter.Statistic,
   Trollhunter.Talent,
+  Trollhunter.Player.Types,
+  Trollhunter.Player.Skills,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
 
@@ -144,7 +144,8 @@ var
 
 implementation
 
-uses Classes,
+uses
+  Classes,
   SysUtils,
   Math,
   BearLibTerminal,
@@ -320,9 +321,7 @@ var
   end;
 
 begin
-  if Self.IsDead then
-    Exit;
-  if (Index < 0) then
+  if Self.IsDead or (Index < 0) then
     Exit;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then

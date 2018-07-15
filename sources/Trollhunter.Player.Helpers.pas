@@ -2,7 +2,8 @@ unit Trollhunter.Player.Helpers;
 
 interface
 
-uses Trollhunter.Player;
+uses
+  Trollhunter.Player;
 
 type
   TPlayerHelper = class helper for TPlayer
@@ -12,7 +13,8 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.Game,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
