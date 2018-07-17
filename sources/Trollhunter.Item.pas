@@ -100,9 +100,9 @@ begin
   if (AItem.MinDamage > 0) and (AItem.MinDamage >= AItem.MaxDamage) then
     AItem.MinDamage := AItem.MaxDamage - 1;
   // Flask
-  if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in FlaskTypeItems) then
+  if (ItemBase.GetItem(AItem).ItemType in FlaskTypeItems) then
   begin
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price;
+    AItem.Price := ItemBase.GetItem(AItem).Price + SB.Price;
     if not SB.Rare then
       AItem.Price := AItem.Price + AItem.Value;
     Exit;
@@ -121,20 +121,19 @@ begin
     Exit;
     end; }
   // Price
-  if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in IdentTypeItems) then
+  if (ItemBase.GetItem(AItem).ItemType in IdentTypeItems) then
   begin
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price;// +
-      //Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
-      //Round(AItem.MaxDamage * 5.6);
+    AItem.Price := ItemBase.GetItem(AItem).Price + SB.Price +
+      Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
+      Round(AItem.MaxDamage * 5.6);
   end
   else
-    AItem.Price := GetItemBase(AItem);
-    //ItemBase[TItemEnum(AItem.ItemID)].Price;
+    AItem.Price := ItemBase.GetItem(AItem).Price;
 end;
 
 function TItems.ChItem(AItem: Item): Boolean;
 begin
-  Result := (ItemBase[TItemEnum(AItem.ItemID)].ItemType in CorpseTypeItems) or
+  Result := (ItemBase.GetItem(AItem).ItemType in CorpseTypeItems) or
     (AItem.Stack > 1) or (AItem.Amount > 1) or (AItem.Identify = 0);
 end;
 
@@ -184,7 +183,7 @@ begin
   Level := '';
   Result := '';
   ID := AItem.ItemID;
-  IT := ItemBase[TItemEnum(ID)].ItemType;
+  IT := ItemBase.GetItem(ID).ItemType;
   // Level
   if (AItem.Level > Player.Attributes.Attrib[atLev].Value) or
     not Game.GetOption(apHdLevOfItem) then
@@ -194,7 +193,7 @@ begin
   begin
     if (IT in RuneTypeItems + ScrollTypeItems) then
     begin
-      V := ItemBase[TItemEnum(ID)].ManaCost;
+      V := ItemBase.GetItem(ID).ManaCost;
       if (V > 0) then
         S := S + Items.GetInfo('-', V, 'Mana') + ' ';
     end;
@@ -231,7 +230,7 @@ begin
     // Light (Torch)
   else if (IT = itTorch) then
     S := S + Format('(%s%d/%d)', [UI.Icon(icFlag), AItem.Value,
-      ItemBase[TItemEnum(ID)].Value])
+      ItemBase.GetItem(ID).Value])
   else
   begin
     if (AItem.SlotID = 0) then
@@ -346,51 +345,51 @@ var
   function IsIdentify(): Boolean;
   begin
     Result := False;
-    if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
+    if (ItemBase.GetItem(ID).ItemType in IdentTypeItems) then
       Result := (Math.RandomRange(0, 4) = 0) or
-        (ItemBase[TItemEnum(ID)].ItemType in AllwaysIdentTypeItems)
+        (ItemBase.GetItem(ID).ItemType in AllwaysIdentTypeItems)
   end;
 
 begin
   Items_Clear_Item(AItem);
   AItem.ItemID := ID;
-  AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
-  AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
-  AItem.Level := ItemBase[TItemEnum(ID)].Level;
+  AItem.SlotID := Ord(ItemBase.GetItem(ID).SlotType);
+  AItem.Stack := ItemBase.GetItem(ID).MaxStack;
+  AItem.Level := ItemBase.GetItem(ID).Level;
   // Color
-  AItem.Color := ItemBase[TItemEnum(ID)].Color;
+  AItem.Color := ItemBase.GetItem(ID).Color;
   // AItem.Color := Math.RandomRange($FF888888, $FFFFFFFF);
   // Effects
-  AItem.Effects := ItemBase[TItemEnum(ID)].Effects;
+  AItem.Effects := ItemBase.GetItem(ID).Effects;
   // Value
-  AItem.Value := ItemBase[TItemEnum(ID)].Value;
+  AItem.Value := ItemBase.GetItem(ID).Value;
   // Defense
-  if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Defense.Min > 0) then
+  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Defense.Min > 0) then
     AItem.Defense := Math.EnsureRange
-      (Math.RandomRange(ItemBase[TItemEnum(ID)].Defense.Min,
-      ItemBase[TItemEnum(ID)].Defense.Max + 1), 1, UIntMax)
+      (Math.RandomRange(ItemBase.GetItem(ID).Defense.Min,
+      ItemBase.GetItem(ID).Defense.Max + 1), 1, UIntMax)
   else
     AItem.Defense := 0;
   // Damage
-  if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Damage.MinDamage.Min > 0)
+  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MinDamage.Min > 0)
   then
     AItem.MinDamage := Math.EnsureRange
-      (Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MinDamage.Min,
-      ItemBase[TItemEnum(ID)].Damage.MinDamage.Max + 1), 1, UIntMax - 1)
+      (Math.RandomRange(ItemBase.GetItem(ID).Damage.MinDamage.Min,
+      ItemBase.GetItem(ID).Damage.MinDamage.Max + 1), 1, UIntMax - 1)
   else
     AItem.MinDamage := 0;
-  if (AItem.Stack = 1) and (ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min > 0)
+  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MaxDamage.Min > 0)
   then
     AItem.MaxDamage := Math.EnsureRange
-      (Math.RandomRange(ItemBase[TItemEnum(ID)].Damage.MaxDamage.Min,
-      ItemBase[TItemEnum(ID)].Damage.MaxDamage.Max + 1), 2, UIntMax)
+      (Math.RandomRange(ItemBase.GetItem(ID).Damage.MaxDamage.Min,
+      ItemBase.GetItem(ID).Damage.MaxDamage.Max + 1), 2, UIntMax)
   else
     AItem.MaxDamage := 0;
   // Durability
   if (AItem.Stack = 1) then
     AItem.MaxDurability := Math.EnsureRange
-      (Math.RandomRange(ItemBase[TItemEnum(ID)].MaxDurability - 5,
-      ItemBase[TItemEnum(ID)].MaxDurability + 6), 10, UIntMax)
+      (Math.RandomRange(ItemBase.GetItem(ID).MaxDurability - 5,
+      ItemBase.GetItem(ID).MaxDurability + 6), 10, UIntMax)
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
@@ -432,12 +431,12 @@ begin
     end;
     Inc(I);
   until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and
-    (AZ in ItemBase[TItemEnum(ID)].Deep);
-  IT := ItemBase[TItemEnum(ID)].ItemType;
+    (AZ in ItemBase.GetItem(ID).Deep);
+  IT := ItemBase.GetItem(ID).ItemType;
   if ((AID < 0) and (IT in NotDropTypeItems)) then
     Exit;
   // Rare
-  if not IsRare and ItemBase[TItemEnum(ID)].Rare then
+  if not IsRare and ItemBase.GetItem(ID).Rare then
   begin
     Add(AZ, AX, AY, AID, Math.RandomRange(0, Math.IfThen(Mode.Wizard,
       1, 9)) = 0);
@@ -531,7 +530,7 @@ begin
     else
     begin
       FColor := FItem.Color; // ItemBase[TItemEnum(FItem.ItemID)].Color;
-      FSymbol := ItemBase[TItemEnum(FItem.ItemID)].Symbol;
+      FSymbol := ItemBase.GetItem(FItem).Symbol;
     end;
     Terminal.Print(X, Y, FSymbol, FColor, 0);
   end;
@@ -644,14 +643,14 @@ const
   T = '------';
   L = Length(T) + 1;
 
-  function GetRedPrice(Price: Int): string;
+  function GetRedPrice(Price: UInt): string;
   begin
     Result := Terminal.Colorize(UI.Icon(icGold) + Price.ToString, 'Light Red');
   end;
 
 begin
   Result := '';
-  D := ItemBase[TItemEnum(AItem.ItemID)];
+  D := ItemBase.GetItem(AItem);
   Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
     Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
@@ -828,7 +827,7 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(AItem.MapID, I, AItem.X, AItem.Y);
-    if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems) then
+    if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems) then
       if (Items_Dungeon_DeleteMapItemXY(AItem.MapID, I, AItem.X, AItem.Y,
         FItem) > 0) then
         Items_Dungeon_AppendItem(FItem);
@@ -872,7 +871,7 @@ begin
       MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem),
         FItem.Amount]));
     // Statistics
-    case ItemBase[TItemEnum(FItem.ItemID)].ItemType of
+    case ItemBase.GetItem(FItem).ItemType of
       itCoin:
         Player.Statictics.Inc(stCoinsLooted, FItem.Amount);
     end;
@@ -958,7 +957,7 @@ begin
       if ((AItem.Level < SB.Level.Min) or (AItem.Level > SB.Level.Max)) then
         Continue;
       //
-      if not(ItemBase[TItemEnum(AItem.ItemID)].ItemType in SB.Occurence) then
+      if not(ItemBase.GetItem(AItem).ItemType in SB.Occurence) then
         Continue;
       // Rare
       if not IsRare and SB.Rare then
@@ -1039,7 +1038,7 @@ begin
     for I := Items_Dungeon_GetMapCount(Ord(M)) - 1 downto 0 do
     begin
       FItem := Items_Dungeon_GetMapItem(Ord(M), I);
-      if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in CorpseTypeItems +
+      if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems +
         FoodTypeItems) then
         if (Items_Dungeon_DeleteMapItem(Ord(M), I, FItem) > 0) then
           Continue;
@@ -1059,12 +1058,12 @@ begin
     for I := 0 to FCount - 1 do
     begin
       FItem := Items_Dungeon_GetMapItem(Ord(M), I);
-      if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in PlantTypeItems) then
+      if (ItemBase.GetItem(FItem).ItemType in PlantTypeItems) then
       begin
         X := FItem.X + Math.RandomRange(0, 2);
         Y := FItem.Y + Math.RandomRange(0, 2);
         if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, M) in SpawnTiles) and
-          (M in ItemBase[TItemEnum(FItem.ItemID)].Deep)) then
+          (M in ItemBase.GetItem(FItem).Deep)) then
           Loot(X, Y, TItemEnum(FItem.ItemID));
       end;
     end;

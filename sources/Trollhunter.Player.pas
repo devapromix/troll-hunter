@@ -401,7 +401,7 @@ begin
   for Index := FCount - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
-    ItemType := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
+    ItemType := ItemBase.GetItem(FItem).ItemType;
     if (ItemType in AutoPickupItems) then
     begin
       if ((ItemType in CoinTypeItems) and not Game.GetOption(apCoin)) then
@@ -523,9 +523,9 @@ begin
         AddAttrib(atLifeAfEachKill, Items.GetBonus(FItem, btLifeAfEachKill));
         AddAttrib(atManaAfEachKill, Items.GetBonus(FItem, btManaAfEachKill));
       end;
-      if (ItemBase[ID].SlotType = stMainHand) then
-        FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
-      if (ItemBase[ID].SlotType = stTorch) then
+      if (ItemBase.GetItem(ID).SlotType = stMainHand) then
+        FWeaponSkill := GetSkill(ItemBase.GetItem(ID).ItemType);
+      if (ItemBase.GetItem(ID).SlotType = stTorch) then
       begin
         Light := Light + FItem.Value;
         FItem.Value := FItem.Value - 1;
@@ -635,7 +635,7 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > -1)) then
     Exit;
-  if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
+  if (ItemBase.GetItem(FItem).ItemType in SmithTypeItems) then
   begin
     FItem.Identify := Items.Index;
     Affixes.DoSuffix(FItem);
@@ -823,9 +823,10 @@ begin
     Exit;
   end;
   I := TItemEnum(FItem.ItemID);
-  T := ItemBase[I].ItemType;
+  T := ItemBase.GetItem(I).ItemType;
   // No mana
-  if (Player.Attributes.Attrib[atMana].Value < ItemBase[I].ManaCost) then
+  if (Player.Attributes.Attrib[atMana].Value < ItemBase.GetItem(I).ManaCost)
+  then
   begin
     MsgLog.Add(Format(_('You need more mana!'), [FItem.Level]));
     Self.Calc;
@@ -867,10 +868,11 @@ begin
       end;
       if (T in ScrollTypeItems + RuneTypeItems) then
       begin
-        if (Attributes.Attrib[atMana].Value >= ItemBase[I].ManaCost) then
+        if (Attributes.Attrib[atMana].Value >= ItemBase.GetItem(I).ManaCost)
+        then
         begin
           Skills.DoSkill(skConcentration);
-          Attributes.Modify(atMana, -ItemBase[I].ManaCost);
+          Attributes.Modify(atMana, -ItemBase.GetItem(I).ManaCost);
           Statictics.Inc(stSpCast);
         end
         else
@@ -912,7 +914,7 @@ begin
     if (AItem.Equipment > 0) then
     begin
       FI := TItemEnum(AItem.ItemID);
-      if (ItemBase[FI].SlotType = ASlot) then
+      if (ItemBase.GetItem(FI).SlotType = ASlot) then
         Exit(True);
     end;
   end;
@@ -1027,15 +1029,14 @@ begin
     Exit;
   if Self.EqItem(stMainHand, FItem) then
   begin
-    IT := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
+    IT := ItemBase.GetItem(FItem).ItemType;
     // Bows and Crossbows
     if (IT in RangedWeaponItems) then
       Self.Attack(Index);
     // Staves and Wands
     if (IT in MagicWeaponTypeItems) then
     begin
-      ManaPerShoot := ItemBase[TItemEnum(FItem.ItemID)
-        ].ManaCost.InRange(MaxManaPerShoot);
+      ManaPerShoot := ItemBase.GetItem(FItem).ManaCost.InRange(MaxManaPerShoot);
       if (Self.Attributes.Attrib[atMana].Value >= ManaPerShoot) then
       begin
         Self.Attributes.Modify(atMana, -ManaPerShoot);
@@ -1199,7 +1200,7 @@ begin
     if (FItem.Equipment > 0) then
     begin
       FI := TItemEnum(FItem.ItemID);
-      if (ItemBase[FI].SlotType = ASlot) then
+      if (ItemBase.GetItem(FI).SlotType = ASlot) then
       begin
         BreakItem(I, Value);
         Exit;

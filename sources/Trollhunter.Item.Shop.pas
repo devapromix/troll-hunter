@@ -144,7 +144,7 @@ var
     Effects: TEffects;
   begin
     ID := GetItemID();
-    Effects := ItemBase[ID].Effects;
+    Effects := ItemBase.GetItem(ID).Effects;
     case S of
       shTavern:
         Result := ID in TavernItems;
@@ -153,31 +153,31 @@ var
       shMana:
         Result := (efMana in Effects) and not(efLife in Effects);
       shPotions:
-        Result := ItemBase[ID].ItemType in PotionTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in PotionTypeItems;
       shScrolls:
-        Result := ItemBase[ID].ItemType in ScrollTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in ScrollTypeItems;
       shArmors:
-        Result := ItemBase[ID].ItemType in ArmorTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in ArmorTypeItems;
       shGloves:
-        Result := ItemBase[ID].ItemType in GlovesTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in GlovesTypeItems;
       shBoots:
-        Result := ItemBase[ID].ItemType in BootsTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in BootsTypeItems;
       shHelms:
-        Result := ItemBase[ID].ItemType in HelmTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in HelmTypeItems;
       shShields:
-        Result := ItemBase[ID].ItemType in ShieldTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in ShieldTypeItems;
       shWeapons:
-        Result := ItemBase[ID].ItemType in WeaponTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in WeaponTypeItems;
       shSmith:
-        Result := ItemBase[ID].ItemType in SmithTypeItems + RepairTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in SmithTypeItems + RepairTypeItems;
       shFoods:
-        Result := ItemBase[ID].ItemType in FoodTypeItems + PlantTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in FoodTypeItems + PlantTypeItems;
       shGem:
-        Result := ItemBase[ID].ItemType in GemTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in GemTypeItems;
       shJewelry:
-        Result := ItemBase[ID].ItemType in JewelryTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in JewelryTypeItems;
       shRunes:
-        Result := ItemBase[ID].ItemType in RuneTypeItems;
+        Result := ItemBase.GetItem(ID).ItemType in RuneTypeItems;
     else
       Result := False;
     end;
@@ -195,7 +195,7 @@ begin
       repeat
         repeat
         until Check;
-      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+      until (TMapEnum(Player.MaxMap) in ItemBase.GetItem(ID).Deep);
       Items.Make(Ord(ID), FItem);
       Items.Identify(FItem, True);
       Shops.Shop[S].Add(FItem);

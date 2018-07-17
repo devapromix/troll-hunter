@@ -51,7 +51,7 @@ begin
     Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
     Add(_('Bosses'), 13);
     Add(_('NPCs'), 7);
-    Add(_('Items'), Ord(Length(ItemBase)));
+    Add(_('Items'), ItemBase.Count);
     Add(_('Shops'), Shops.Count);
     Add(_('Quests'), Quests.Amount);
     Add(_('Talents'), Player.Talents.Amount);

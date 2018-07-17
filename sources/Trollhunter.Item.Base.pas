@@ -30,10 +30,19 @@ type
     Rare: Boolean;
   end;
 
-function GetItemBase(const AItem: Item): TItemBase; overload;
+type
+  ItemBase = class(TObject)
+  public
+    class function GetItem(const Value: Int): TItemBase; overload;
+    class function GetItem(const Value: Item): TItemBase; overload;
+    class function GetItem(const Value: TItemEnum): TItemBase; overload;
+    class function Count: UInt;
+  end;
+
+implementation
 
 const
-  ItemBase: array [TItemEnum] of TItemBase = (
+  Base: array [TItemEnum] of TItemBase = (
     /// / == All maps == ////
 
     // None
@@ -1582,11 +1591,24 @@ const
 
     );
 
-implementation
-
-function GetItemBase(const AItem: Item): TItemBase;
+class function ItemBase.GetItem(const Value: Int): TItemBase;
 begin
-  Result := ItemBase[TItemEnum(AItem.ItemID)];
+  Result := Base[TItemEnum(Value)];
+end;
+
+class function ItemBase.GetItem(const Value: Item): TItemBase;
+begin
+  Result := Base[TItemEnum(Value.ItemID)];
+end;
+
+class function ItemBase.GetItem(const Value: TItemEnum): TItemBase;
+begin
+  Result := Base[Value];
+end;
+
+class function ItemBase.Count: UInt;
+begin
+  Result := Ord(Length(Base));
 end;
 
 end.

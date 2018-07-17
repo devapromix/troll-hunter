@@ -71,7 +71,7 @@ procedure TSceneItemInfo.RenderInformation;
 var
   IT: TItemType;
 begin
-  IT := ItemBase[TItemEnum(CurItem.ItemID)].ItemType;
+  IT := ItemBase.GetItem(CurItem).ItemType;
   if (IT in CoinTypeItems) then
     Self.Add('Type', 'Coins');
   if (CurItem.Amount > 1) then
