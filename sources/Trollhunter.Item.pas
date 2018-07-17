@@ -123,12 +123,13 @@ begin
   // Price
   if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in IdentTypeItems) then
   begin
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price +
-      Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
-      Round(AItem.MaxDamage * 5.6);
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price;// +
+      //Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
+      //Round(AItem.MaxDamage * 5.6);
   end
   else
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price;
+    AItem.Price := GetItemBase(AItem);
+    //ItemBase[TItemEnum(AItem.ItemID)].Price;
 end;
 
 function TItems.ChItem(AItem: Item): Boolean;
@@ -643,7 +644,7 @@ const
   T = '------';
   L = Length(T) + 1;
 
-  function GetRedPrice(Price: UInt): string;
+  function GetRedPrice(Price: Int): string;
   begin
     Result := Terminal.Colorize(UI.Icon(icGold) + Price.ToString, 'Light Red');
   end;

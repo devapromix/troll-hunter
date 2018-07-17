@@ -2,7 +2,9 @@ unit Trollhunter.Item.Base;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  uBearLibItemsCommon,
+  Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
   Trollhunter.Game,
@@ -27,6 +29,8 @@ type
     ManaCost: UInt;
     Rare: Boolean;
   end;
+
+function GetItemBase(const AItem: Item): TItemBase; overload;
 
 const
   ItemBase: array [TItemEnum] of TItemBase = (
@@ -1579,5 +1583,10 @@ const
     );
 
 implementation
+
+function GetItemBase(const AItem: Item): TItemBase;
+begin
+  Result := ItemBase[TItemEnum(AItem.ItemID)];
+end;
 
 end.
