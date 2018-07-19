@@ -1,5 +1,7 @@
 ![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/logo.png)
 
+[![version][version-badge]][CHANGELOG] [![license][license-badge]][LICENSE]
+
 ## Introduction
 Trollhunter is a single-player roguelike game.
 
