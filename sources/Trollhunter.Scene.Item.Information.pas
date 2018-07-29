@@ -73,13 +73,13 @@ var
 begin
   IT := ItemBase.GetItem(CurItem).ItemType;
   if (IT in CoinTypeItems) then
-    Self.Add('Type', 'Coins');
+    Self.Add(_('Type'), _('Coins'));
   if (IT in TorchTypeItems) then
-    Self.Add('Type', 'Light source');
+    Self.Add(_('Type'), _('Light sources'));
   if (IT in FoodTypeItems) then
-    Self.Add('Type', 'Food');
+    Self.Add(_('Type'), _('Foods'));
   if (CurItem.Amount > 1) then
-    Add('Amount', Format('%dx', [CurItem.Amount]));
+    Add(_('Amount'), Format('%dx', [CurItem.Amount]));
 end;
 
 procedure TSceneItemInfo.Update(var Key: UInt);
