@@ -24,10 +24,13 @@ type
   end;
 
 type
+  TSkillArray<T> = array [TSkillEnum] of T;
+
+type
   TSkills = class(TObject)
   private
-    FSkillName: array [TSkillEnum] of string;
-    FSkill: array [TSkillEnum] of TSkill;
+    FSkillName: TSkillArray<string>;
+    FSkill: TSkillArray<TSkill>;
     function GetSkill(I: TSkillEnum): TSkill;
     procedure SetSkill(I: TSkillEnum; const Value: TSkill);
   public

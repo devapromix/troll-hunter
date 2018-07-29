@@ -33,7 +33,7 @@ function Items_Inventory_GetSlotCount: Int; stdcall;
 implementation
 
 var
-  InvItems: TItems;
+  InvItems: TArray<Item>;
   SlotMax: Int = 26;
 
 procedure Items_Inventory_Clear(); stdcall;

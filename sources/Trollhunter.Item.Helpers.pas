@@ -20,7 +20,8 @@ uses SysUtils,
   Trollhunter.Language,
   Trollhunter.UI,
   Trollhunter.Player,
-  Trollhunter.Helpers, Trollhunter.Attribute;
+  Trollhunter.Helpers,
+  Trollhunter.Attribute;
 
 { TItemHelper }
 

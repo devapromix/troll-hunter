@@ -1,4 +1,4 @@
-unit Trollhunter.Attribute;
+﻿unit Trollhunter.Attribute;
 
 interface
 
@@ -24,9 +24,12 @@ type
   end;
 
 type
+  TAttribArray<T> = array [TAttribEnum] of T;
+
+type
   TAttributes = class(TObject)
   private
-    FAttrib: array [TAttribEnum] of TAttrib;
+    FAttrib: TAttribArray<TAttrib>;
     function GetAttrib(I: TAttribEnum): TAttrib;
     procedure SetAttrib(I: TAttribEnum; const Value: TAttrib);
   public

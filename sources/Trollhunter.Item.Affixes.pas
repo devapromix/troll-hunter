@@ -94,8 +94,11 @@ const
   DamageSuffixes = [of_Damage1 .. of_Damage7];
   DurabilitySuffixes = [of_Craftmanship .. of_Permanance];
 
+type
+  TSuffixArray<T> = array [TSuffixEnum] of T;
+
 const
-  SuffixBase: array [TSuffixEnum] of TSuffixBase = (
+  SuffixBase: TSuffixArray<TSuffixBase> = (
     // None
     (),
     // of Radiance (Vision I)
@@ -562,7 +565,7 @@ const
 type
   TAffixes = class(TObject)
   private
-    FSuffixName: array [TSuffixEnum] of string;
+    FSuffixName: TSuffixArray<string>;
   public
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;

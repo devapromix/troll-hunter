@@ -462,7 +462,7 @@ type
   TMobs = class(TEntity)
   private
     FMobName: array [TMobEnum] of string;
-    FMob: array of TMob;
+    FMob: TArray<TMob>;
     function GetMob(I: Int): TMob;
     procedure SetMob(I: Int; const Value: TMob);
     function GetName(I: TMobEnum): string;

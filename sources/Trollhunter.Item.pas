@@ -54,7 +54,7 @@ type
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
-    function AddItemInfo(V: array of string): string;
+    function AddItemInfo(V: TArray<string>): string;
     function StrToItemEnum(const S: string): TItemEnum;
     procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
       const Value: UInt8);
@@ -142,7 +142,7 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
 var
   ID: Int;
   S, T, Level, D: string;
-  IT: TItemType;
+  ItemType: TItemType;
   V: UInt;
 
   function GetAmount(): string;
@@ -183,7 +183,7 @@ begin
   Level := '';
   Result := '';
   ID := AItem.ItemID;
-  IT := ItemBase.GetItem(ID).ItemType;
+  ItemType := ItemBase.GetItem(ID).ItemType;
   // Level
   if (AItem.Level > Player.Attributes.Attrib[atLev].Value) or
     not Game.GetOption(apHdLevOfItem) then
@@ -191,7 +191,7 @@ begin
   // Info
   if not IsManyItems then
   begin
-    if (IT in RuneTypeItems + ScrollTypeItems) then
+    if (ItemType in RuneTypeItems + ScrollTypeItems) then
     begin
       V := ItemBase.GetItem(ID).ManaCost;
       if (V > 0) then
@@ -219,7 +219,7 @@ begin
   // Amount
   if (AItem.Stack > 1) then
   begin
-    if not(IT in NotInfoTypeItems) then
+    if not(ItemType in NotInfoTypeItems) then
       S := AddItemInfo([Level, S]);
     if (AItem.Amount > 1) then
       S := S + GetAmount();
@@ -228,7 +228,7 @@ begin
   else if (TItemEnum(ID) = ivCorpse) then
     S := ''
     // Light (Torch)
-  else if (IT = itTorch) then
+  else if (ItemType = itTorch) then
     S := S + Format('(%s%d/%d)', [UI.Icon(icFlag), AItem.Value,
       ItemBase.GetItem(ID).Value])
   else
@@ -239,7 +239,7 @@ begin
       S := '';
     end;
     // Defense
-    if (IT in ArmorTypeItems + JewelryTypeItems) then
+    if (ItemType in ArmorTypeItems + JewelryTypeItems) then
     begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
@@ -248,7 +248,7 @@ begin
         T := Terminal.Colorize(T, 'Rare');
     end;
     // Damage
-    if (IT in WeaponTypeItems + JewelryTypeItems) then
+    if (ItemType in WeaponTypeItems + JewelryTypeItems) then
     begin
       if (AItem.MinDamage > 0) then
         T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage,
@@ -305,7 +305,7 @@ begin
     end;
     // Durability
     D := '';
-    if IT in SmithTypeItems then
+    if ItemType in SmithTypeItems then
     begin
       D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
         AItem.MaxDurability]);
@@ -406,7 +406,7 @@ var
   I, ID, FX, FY: UInt;
   FItem: Item;
   Value: Int;
-  IT: TItemType;
+  ItemType: TItemType;
 begin
   I := 0;
   repeat
@@ -430,8 +430,8 @@ begin
     Inc(I);
   until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and
     (AZ in ItemBase.GetItem(ID).Deep);
-  IT := ItemBase.GetItem(ID).ItemType;
-  if ((AID < 0) and (IT in NotDropTypeItems)) then
+  ItemType := ItemBase.GetItem(ID).ItemType;
+  if ((AID < 0) and (ItemType in NotDropTypeItems)) then
     Exit;
   // Rare
   if not IsRare and ItemBase.GetItem(ID).Rare then
@@ -445,7 +445,7 @@ begin
   Make(ID, FItem);
   FItem.Amount := 1;
   FItem.MapID := Ord(AZ);
-  case IT of
+  case ItemType of
     itCoin:
       begin
         Value := Ord(AZ) + 1;
@@ -461,7 +461,7 @@ begin
         end;
       end;
   end;
-  if ((FItem.Stack = 1) and (IT in WeaponTypeItems + ArmorTypeItems)) then
+  if ((FItem.Stack = 1) and (ItemType in WeaponTypeItems + ArmorTypeItems)) then
     FItem.Durability := Math.RandomRange(FItem.MaxDurability div 4,
       FItem.MaxDurability) + 1;
   FItem.X := FX;
@@ -798,13 +798,14 @@ begin
   end;
 end;
 
-function TItems.AddItemInfo(V: array of string): string;
+function TItems.AddItemInfo(V: TArray<string>): string;
 var
   I: UInt;
+  R: string;
 begin
   Result := '';
-  for I := 0 to Length(V) - 1 do
-    Result := Result + Trim(V[I]) + ' ';
+  for R in V do
+    Result := Result + Trim(R) + ' ';
   Result := Trim(Result);
   if (Result <> '') then
     Result := '[[' + Result + ']]';

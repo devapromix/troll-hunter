@@ -434,7 +434,7 @@ end;
 
 procedure TPlayer.Calc;
 var
-  FAttrib: array [TAttribEnum] of UInt;
+  FAttrib: TAttribArray<UInt>;
   Attrib: TAttribEnum;
   I, FCount: Int;
   ID: TItemEnum;
@@ -802,7 +802,7 @@ procedure TPlayer.Use(Index: Int);
 var
   FItem: Item;
   I: TItemEnum;
-  T: TItemType;
+  ItemType: TItemType;
 begin
   if IsDead or (Items.InvCount = 0) or (Index > Items.InvCount - 1) then
     Exit;
@@ -823,7 +823,7 @@ begin
     Exit;
   end;
   I := TItemEnum(FItem.ItemID);
-  T := ItemBase.GetItem(I).ItemType;
+  ItemType := ItemBase.GetItem(I).ItemType;
   // No mana
   if (Player.Attributes.Attrib[atMana].Value < ItemBase.GetItem(I).ManaCost)
   then
@@ -832,41 +832,41 @@ begin
     Self.Calc;
     Exit;
   end;
-  if (T in NotEquipTypeItems) then
+  if (ItemType in NotEquipTypeItems) then
   begin
-    if (T in UseTypeItems) then
+    if (ItemType in UseTypeItems) then
     begin
-      if not(T in RuneTypeItems) then
+      if not(ItemType in RuneTypeItems) then
         FItem.Amount := FItem.Amount - 1;
-      if (T in PotionTypeItems) then
+      if (ItemType in PotionTypeItems) then
       begin
         MsgLog.Add(Format(_('You drink %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stPotDrunk);
       end;
-      if (T in RuneTypeItems + BookTypeItems + ScrollTypeItems) then
+      if (ItemType in RuneTypeItems + BookTypeItems + ScrollTypeItems) then
       begin
         MsgLog.Add(Format(_('You read %s.'), [Items.GetNameThe(FItem)]));
       end;
-      if (T in FoodTypeItems + PlantTypeItems) then
+      if (ItemType in FoodTypeItems + PlantTypeItems) then
       begin
         MsgLog.Add(Format(_('You ate %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stFdEat);
       end;
-      if (T in MagicTypeItems + FlaskTypeItems) then
+      if (ItemType in MagicTypeItems + FlaskTypeItems) then
       begin
         MsgLog.Add(Format(_('You use %s.'), [Items.GetNameThe(FItem)]));
         Statictics.Inc(stItUsed);
       end;
       //
-      if (T in ScrollTypeItems) then
+      if (ItemType in ScrollTypeItems) then
       begin
         Statictics.Inc(stScrRead);
       end;
-      if not(T in RuneTypeItems) then
+      if not(ItemType in RuneTypeItems) then
       begin
         Items_Inventory_SetItem(Index, FItem);
       end;
-      if (T in ScrollTypeItems + RuneTypeItems) then
+      if (ItemType in ScrollTypeItems + RuneTypeItems) then
       begin
         if (Attributes.Attrib[atMana].Value >= ItemBase.GetItem(I).ManaCost)
         then
@@ -1022,19 +1022,19 @@ end;
 procedure TPlayer.DistAttack(Index: Int);
 var
   FItem: Item;
-  IT: TItemType;
+  ItemType: TItemType;
   ManaPerShoot: Int;
 begin
   if Self.IsDead then
     Exit;
   if Self.EqItem(stMainHand, FItem) then
   begin
-    IT := ItemBase.GetItem(FItem).ItemType;
+    ItemType := ItemBase.GetItem(FItem).ItemType;
     // Bows and Crossbows
-    if (IT in RangedWeaponItems) then
+    if (ItemType in RangedWeaponItems) then
       Self.Attack(Index);
     // Staves and Wands
-    if (IT in MagicWeaponTypeItems) then
+    if (ItemType in MagicWeaponTypeItems) then
     begin
       ManaPerShoot := ItemBase.GetItem(FItem).ManaCost.InRange(MaxManaPerShoot);
       if (Self.Attributes.Attrib[atMana].Value >= ManaPerShoot) then

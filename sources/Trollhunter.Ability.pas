@@ -13,10 +13,13 @@ type
   TSetOfAbility = set of TAbilityEnum;
 
 type
+  TAbility<T> = array [TAbilityEnum] of T;
+
+type
   TAbilities = class(TObject)
   private
-    FAbilityName: array [TAbilityEnum] of string;
-    FAbility: array [TAbilityEnum] of UInt;
+    FAbilityName: TAbility<string>;
+    FAbility: TAbility<UInt>;
     function GetAbility(const I: TAbilityEnum): UInt;
     procedure SetAbility(const I: TAbilityEnum; const Value: UInt);
   public
@@ -40,7 +43,7 @@ uses SysUtils,
 { TAbility }
 
 const
-  AbilityColor: array [TAbilityEnum] of string = ('Lighter Green', 'White',
+  AbilityColor: TAbility<string> = ('Lighter Green', 'White',
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green',
     'Light Yellow', 'Lighter Yellow', 'Light Red', 'Light Blue');

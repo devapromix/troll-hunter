@@ -16,6 +16,9 @@ type
   TClassSkillEnum = (skWeapon, skMain, skAdd);
 
 type
+  TClassArray<T> = array [TClassEnum] of T;
+
+type
   TClassProp = record
     Description: string;
     Strength: TMinMax;
@@ -29,7 +32,7 @@ type
   end;
 
 const
-  ClassProp: array [TClassEnum] of TClassProp = (
+  ClassProp: TClassArray<TClassProp> = (
     // Warrior
     (Description: 'Warrior'; Strength: (Min: 1; Max: 4;); Dexterity: (Min: 1;
     Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
@@ -63,7 +66,7 @@ type
   TClasses = class(TObject)
   private
     FSkills: TSkills;
-    FClassName: array [TClassEnum] of string;
+    FClassName: TClassArray<string>;
   public
     constructor Create;
     destructor Destroy; override;

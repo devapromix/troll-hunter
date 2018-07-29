@@ -5,10 +5,13 @@ interface
 uses Trollhunter.Types;
 
 type
+  TLogoArray<T> = array [0 .. 17] of T;
+
+type
   TLogo = class(TObject)
   private
     FX: UInt;
-    FL: array [0 .. 17] of string;
+    FL: TLogoArray<string>;
   public
     constructor Create;
     destructor Destroy; override;
@@ -24,7 +27,7 @@ implementation
 uses SysUtils, BearLibTerminal, Trollhunter.Terminal;
 
 const
-  T: array [0 .. 17] of string =
+  T: TLogoArray<string> =
     (' ______________                                                                                   ',
     '| ____  . ____ |              ___ ___ ___                               ___                       ',
     '|/    |. |    \|              \ .\\ .\\. \                              \ .\                      ',

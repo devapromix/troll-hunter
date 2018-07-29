@@ -85,18 +85,19 @@ function TEntity.GetPureText(S: string): string;
 var
   I: Int;
   B: Boolean;
+  R: string;
 begin
   B := True;
   Result := '';
   S := StringReplace(S, '[[', '[', [rfReplaceAll]);
   S := StringReplace(S, ']]', ']', [rfReplaceAll]);
-  for I := 1 to Length(S) do
+  for R in S do
   begin
-    if (S[I] = '[') then
+    if (R = '[') then
       B := False;
     if B then
-      Result := Result + S[I];
-    if (S[I] = ']') then
+      Result := Result + R;
+    if (R = ']') then
       B := True;
   end;
 end;

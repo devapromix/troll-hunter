@@ -33,9 +33,6 @@ type
     Value: Int;
   end;
 
-type
-  TItems = array of Item;
-
 const
   IntFalse = 0;
   IntTrue = 1;
@@ -49,15 +46,15 @@ function Items_GetVersion(): PWideChar; stdcall;
 procedure Items_Clear_Item(var AItem: Item);
 
 // Common
-function HasItem(AItems: TItems; Index, AMapID: Int): Boolean; overload;
-function HasItem(AItems: TItems; Index, AMapID: Int; AX, AY: Int)
+function HasItem(AItems: TArray<Item>; Index, AMapID: Int): Boolean; overload;
+function HasItem(AItems: TArray<Item>; Index, AMapID: Int; AX, AY: Int)
   : Boolean; overload;
-function IndexInRange(AItems: TItems; Index: Int): Boolean;
-procedure AddItem(var AItems: TItems; AItem: Item);
-function DelItem(var AItems: TItems; Index: Int): Item;
-function HasEmpty(AItems: TItems): Boolean;
-procedure Empty(var AItems: TItems);
-function GlobalIndex(AItems: TItems; MapID, Index: Int; AX: Int = -1;
+function IndexInRange(AItems: TArray<Item>; Index: Int): Boolean;
+procedure AddItem(var AItems: TArray<Item>; AItem: Item);
+function DelItem(var AItems: TArray<Item>; Index: Int): Item;
+function HasEmpty(AItems: TArray<Item>): Boolean;
+procedure Empty(var AItems: TArray<Item>);
+function GlobalIndex(AItems: TArray<Item>; MapID, Index: Int; AX: Int = -1;
   AY: Int = -1): Int;
 
 implementation
@@ -123,12 +120,13 @@ end;
 
 // Common
 
-function HasItem(AItems: TItems; Index, AMapID: Int): Boolean;
+function HasItem(AItems: TArray<Item>; Index, AMapID: Int): Boolean;
 begin
   Result := (AItems[Index].MapID = AMapID);
 end;
 
-function HasItem(AItems: TItems; Index, AMapID: Int; AX, AY: Int): Boolean;
+function HasItem(AItems: TArray<Item>; Index, AMapID: Int; AX, AY: Int)
+  : Boolean;
 begin
   if (AX = -1) and (AY = -1) then
     Result := HasItem(AItems, Index, AMapID)
@@ -137,12 +135,12 @@ begin
       (AItems[Index].Y = AY);
 end;
 
-function IndexInRange(AItems: TItems; Index: Int): Boolean;
+function IndexInRange(AItems: TArray<Item>; Index: Int): Boolean;
 begin
   Result := (Index >= 0) and (Index < Length(AItems));
 end;
 
-procedure AddItem(var AItems: TItems; AItem: Item);
+procedure AddItem(var AItems: TArray<Item>; AItem: Item);
 begin
   // if (Length(AItems) <= Items_Inventory_GetSlotCount) then
   // begin
@@ -154,7 +152,7 @@ begin
   // end;
 end;
 
-function DelItem(var AItems: TItems; Index: Int): Item;
+function DelItem(var AItems: TArray<Item>; Index: Int): Item;
 var
   I: Int;
 begin
@@ -165,17 +163,17 @@ begin
   SetLength(AItems, Length(AItems) - 1);
 end;
 
-function HasEmpty(AItems: TItems): Boolean;
+function HasEmpty(AItems: TArray<Item>): Boolean;
 begin
   Result := (Length(AItems) = 0);
 end;
 
-procedure Empty(var AItems: TItems);
+procedure Empty(var AItems: TArray<Item>);
 begin
   SetLength(AItems, 0);
 end;
 
-function GlobalIndex(AItems: TItems; MapID, Index: Int; AX: Int = -1;
+function GlobalIndex(AItems: TArray<Item>; MapID, Index: Int; AX: Int = -1;
   AY: Int = -1): Int;
 var
   I, P: Int;

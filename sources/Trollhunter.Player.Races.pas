@@ -8,6 +8,9 @@ uses
 type
   TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);
 
+type
+  TRaceArray<T> = array [TRaceEnum] of T;
+
   // TRaceEnumHelper = record helper for TRaceEnum
   // end;
 
@@ -27,7 +30,7 @@ type
   end;
 
 const
-  RaceProp: array [TRaceEnum] of TRaceProp = (
+  RaceProp: TRaceArray<TRaceProp> = (
     // Human
     (Description: 'Humans are the most common of races.';
     Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;);
@@ -64,7 +67,7 @@ type
 type
   TRaces = class(TObject)
   private
-    FRaceName: array [TRaceEnum] of string;
+    FRaceName: TRaceArray<string>;
   public
     constructor Create;
     destructor Destroy; override;

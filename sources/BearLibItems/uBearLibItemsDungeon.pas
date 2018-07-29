@@ -36,7 +36,7 @@ function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Int): Int; stdc
 implementation
 
 var
-  MapItems: TItems;
+  MapItems: TArray<Item>;
 
 procedure Items_Dungeon_Clear(); stdcall;
 begin

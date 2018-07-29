@@ -37,14 +37,15 @@ type
 
   POpenBlock = ^TOpenBlock;
 
-  TPathFindMap = array of TPathFindBlock;
+  TPathFindMapArray = TArray<TPathFindBlock>;
+  TOpenBlockArray<T> = array [0 .. MAXLEN] of T;
 
 var
-  Cells: TPathFindMap;
+  Cells: TPathFindMapArray;
   Fault: Int;
   SavedMapX, SavedMapY: Int;
-  Open: array [0 .. MAXLEN] of POpenBlock;
-  OpenRaw: array [0 .. MAXLEN] of TOpenBlock;
+  Open: TOpenBlockArray<POpenBlock>;
+  OpenRaw: TOpenBlockArray<TOpenBlock>;
 
 procedure InitCrap;
 var

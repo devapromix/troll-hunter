@@ -55,7 +55,7 @@ type
   TQuests = class(TObject)
   private
     FCurrent: TQuestEnum;
-    FQuest: array of TQuest;
+    FQuest: TArray<TQuest>;
     function GetQuest(I: Int): TQuest;
     procedure SetQuest(I: Int; const Value: TQuest);
   public
@@ -76,6 +76,7 @@ var
 implementation
 
 uses SysUtils,
+  System.Generics.Collections,
   Trollhunter.Map,
   Trollhunter.UI.Log,
   Trollhunter.Language;

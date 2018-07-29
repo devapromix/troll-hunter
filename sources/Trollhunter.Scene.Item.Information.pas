@@ -69,14 +69,14 @@ end;
 
 procedure TSceneItemInfo.RenderInformation;
 var
-  IT: TItemType;
+  ItemType: TItemType;
 begin
-  IT := ItemBase.GetItem(CurItem).ItemType;
-  if (IT in CoinTypeItems) then
+  ItemType := ItemBase.GetItem(CurItem).ItemType;
+  if (ItemType in CoinTypeItems) then
     Self.Add(_('Type'), _('Coins'));
-  if (IT in TorchTypeItems) then
+  if (ItemType in TorchTypeItems) then
     Self.Add(_('Type'), _('Light sources'));
-  if (IT in FoodTypeItems) then
+  if (ItemType in FoodTypeItems) then
     Self.Add(_('Type'), _('Foods'));
   if (CurItem.Amount > 1) then
     Add(_('Amount'), Format('%dx', [CurItem.Amount]));
