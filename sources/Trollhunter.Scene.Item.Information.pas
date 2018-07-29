@@ -74,6 +74,10 @@ begin
   IT := ItemBase.GetItem(CurItem).ItemType;
   if (IT in CoinTypeItems) then
     Self.Add('Type', 'Coins');
+  if (IT in TorchTypeItems) then
+    Self.Add('Type', 'Light source');
+  if (IT in FoodTypeItems) then
+    Self.Add('Type', 'Food');
   if (CurItem.Amount > 1) then
     Add('Amount', Format('%dx', [CurItem.Amount]));
 end;

@@ -371,15 +371,13 @@ begin
   else
     AItem.Defense := 0;
   // Damage
-  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MinDamage.Min > 0)
-  then
+  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MinDamage.Min > 0) then
     AItem.MinDamage := Math.EnsureRange
       (Math.RandomRange(ItemBase.GetItem(ID).Damage.MinDamage.Min,
       ItemBase.GetItem(ID).Damage.MinDamage.Max + 1), 1, UIntMax - 1)
   else
     AItem.MinDamage := 0;
-  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MaxDamage.Min > 0)
-  then
+  if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MaxDamage.Min > 0) then
     AItem.MaxDamage := Math.EnsureRange
       (Math.RandomRange(ItemBase.GetItem(ID).Damage.MaxDamage.Min,
       ItemBase.GetItem(ID).Damage.MaxDamage.Max + 1), 2, UIntMax)
@@ -842,6 +840,12 @@ begin
   if (AAmount = 0) then
     Exit;
   Make(Ord(AItemEnum), FItem);
+  if AAmount > ItemBase.GetItem(AItemEnum).MaxStack then
+  begin
+    FItem.Amount := ItemBase.GetItem(AItemEnum).MaxStack;
+    AddItemToInv(AItemEnum, AAmount - ItemBase.GetItem(AItemEnum).MaxStack,
+      EqFlag, IdFlag, SufID);
+  end else
   FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
   if IdFlag and (FItem.Identify = 0) then
@@ -1038,8 +1042,8 @@ begin
     for I := Items_Dungeon_GetMapCount(Ord(M)) - 1 downto 0 do
     begin
       FItem := Items_Dungeon_GetMapItem(Ord(M), I);
-      if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems +
-        FoodTypeItems) then
+      if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems + FoodTypeItems)
+      then
         if (Items_Dungeon_DeleteMapItem(Ord(M), I, FItem) > 0) then
           Continue;
     end;
