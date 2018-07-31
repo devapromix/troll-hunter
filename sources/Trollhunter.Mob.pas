@@ -489,6 +489,9 @@ type
 
 var
   Mobs: TMobs = nil;
+  IsBoss: Boolean;
+  NPCName: string = '';
+  NPCType: set of TNPCType = [];
 
 implementation
 

@@ -72,6 +72,7 @@ uses
   Math,
   Classes,
   TypInfo,
+  StrUtils,
   SysUtils,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
@@ -324,7 +325,7 @@ begin
   begin
     if Player.Look or IsShort then
       S := '';
-    S := Game.IfThen(AItem.Amount > 1, GetAmount(), '');
+    S := IfThen(AItem.Amount > 1, GetAmount(), '');
     S := GetCapit(GetDescAn(Trim(Items.GetName(AItem, IsShort) + ' ' + S)));
     if IsManyItems then
     begin
@@ -650,7 +651,7 @@ begin
   Result := '';
   D := ItemBase.GetItem(AItem);
   Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
-    Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
+    IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
   if IsRender then
   begin
@@ -899,7 +900,7 @@ begin
     for I := 0 to FCount - 1 do
     begin
       FItem := Items_Inventory_GetItem(I);
-      S := Game.IfThen(FItem.Amount > 1, Format(' (%dx)', [FItem.Amount]), '');
+      S := IfThen(FItem.Amount > 1, Format(' (%dx)', [FItem.Amount]), '');
       S := GetCapit(GetDescAn(Trim(Items.GetName(FItem, True) + S)));
       SL.Append(S);
     end;

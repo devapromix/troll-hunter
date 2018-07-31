@@ -164,8 +164,6 @@ type
     procedure Start;
     procedure Log(S: string);
     function GetCursor: string;
-    function IfThen(AValue: Boolean; const ATrue: string;
-      const AFalse: string): string;
     function EnsureRange(const AValue, AMax: Int): Int;
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
@@ -245,15 +243,6 @@ end;
 function TGame.EnsureRange(const AValue, AMax: Int): Int;
 begin
   Result := AValue.InRange(AMax);
-end;
-
-function TGame.IfThen(AValue: Boolean; const ATrue: string;
-  const AFalse: string): string;
-begin
-  if AValue then
-    Result := ATrue
-  else
-    Result := AFalse;
 end;
 
 function TGame.GetCursor: string;
