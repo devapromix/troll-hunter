@@ -15,6 +15,7 @@ implementation
 
 uses
   SysUtils,
+  StrUtils,
   Trollhunter.Game,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
@@ -25,7 +26,7 @@ uses
 
 function TPlayerHelper.FullName: string;
 begin
-  Result := Format('%s, %s (%s), %s', [Game.IfThen(Trim(Player.Name) = '',
+  Result := Format('%s, %s (%s), %s', [IfThen(Trim(Player.Name) = '',
     _('PLAYER'), Player.Name), Races.GetName(Player.HRace), Gender,
     Classes.GetName(Player.HClass)])
 end;

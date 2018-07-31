@@ -31,6 +31,7 @@ implementation
 
 uses
   SysUtils,
+  StrUtils,
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Game,
@@ -100,9 +101,9 @@ end;
 
 class function UI.MenuItem(AKey, AStr: string; IsItem: Boolean): string;
 begin
-  Result := Game.IfThen(IsItem, UI.KeyToStr(AKey, '', 'Equip'),
+  Result := IfThen(IsItem, UI.KeyToStr(AKey, '', 'Equip'),
     UI.KeyToStr(AKey)) + ' ' + Terminal.Colorize(AStr,
-    Game.IfThen(IsItem, Terminal.GetColorFromIni('Equip'),
+    IfThen(IsItem, Terminal.GetColorFromIni('Equip'),
     'vision'));
 end;
 
