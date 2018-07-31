@@ -1,4 +1,4 @@
-unit Trollhunter.Scenes;
+﻿unit Trollhunter.Scenes;
 
 interface
 
@@ -22,8 +22,8 @@ type
   private
     KStr: string;
   public
-    CX, CY: Int;
     X, Y: Int;
+    CX, CY: Int;
     constructor Create;
     procedure Render; virtual; abstract;
     procedure AddLine(AHotKey, AText: string);
@@ -108,15 +108,12 @@ type
     procedure Update(var Key: UInt); override;
   end;
 
-var
-  NPCName: string = '';
-  NPCType: set of TNPCType = [];
-
 implementation
 
 uses
   Math,
   SysUtils,
+  StrUtils,
   BearLibTerminal,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
@@ -191,7 +188,7 @@ begin
     + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clLightestBlue);
   Terminal.Print(Math.IfThen(X = 1, CX - 2, CX + (CX - 2)), Y,
-    '[[' + Game.IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
+    '[[' + IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
 end;
 
 constructor TScene.Create;
@@ -233,8 +230,8 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
-  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, '+++'+UI.KeyToStr(AHotKey, AText),
-    TK_ALIGN_LEFT);
+  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, '+++' + UI.KeyToStr(AHotKey,
+    AText), TK_ALIGN_LEFT);
   Self.Add();
 end;
 
