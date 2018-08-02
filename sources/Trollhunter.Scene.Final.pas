@@ -2,11 +2,9 @@
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
-
-type
-  FinalEnum = (feQuit, feWin, feDefeat);
 
 type
   TSceneFinal = class(TScene)

@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Game;
+﻿unit Trollhunter.Scene.Game;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -34,7 +35,8 @@ uses Math,
   Trollhunter.Language,
   Trollhunter.Player,
   Trollhunter.Player.Quest,
-  Trollhunter.Player.Types;
+  Trollhunter.Player.Types,
+  Trollhunter.Scene.Final;
 
 procedure TSceneGame.Render;
 var
@@ -190,7 +192,7 @@ begin
   MsgLog.Msg := '';
   if Game.Won then
   begin
-    Scenes.SetScene(scWin);
+    Scenes.SetScene(scFinal, feWon);
     Exit;
   end;
   case Key of
@@ -315,7 +317,7 @@ begin
           Player.Fill;
           Exit;
         end;
-        Scenes.SetScene(scDef);
+        Scenes.SetScene(scFinal, feDefeat);
         Exit;
       end
       else
@@ -331,7 +333,7 @@ begin
         if Player.IsDead then
           Exit;
         Game.Screenshot := Terminal.GetTextScreenshot();
-        Scenes.SetScene(scQuit, Scenes.SceneEnum);
+        Scenes.SetScene(scFinal, Scenes.SceneEnum, feQuit);
       end;
     TK_TAB:
       Game.ShowEffects := not Game.ShowEffects;

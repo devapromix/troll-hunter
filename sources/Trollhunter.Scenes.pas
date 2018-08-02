@@ -11,11 +11,14 @@ uses
   Trollhunter.Attribute;
 
 type
-  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scIdentification, scBackground, scEnchant, scClass,
-    scRace, scItemInfo, scFinal);
+  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scInv, scDrop, scItems,
+    scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest, scSell,
+    scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook,
+    scOptions, scIdentification, scBackground, scEnchant, scClass, scRace,
+    scItemInfo, scFinal);
+
+type
+  TFinalEnum = (feNone, feQuit, feWon, feDefeat);
 
 type
   TScene = class(TObject)
@@ -46,6 +49,7 @@ type
     FSceneEnum: TSceneEnum;
     FScene: array [TSceneEnum] of TScene;
     FPrevSceneEnum: TSceneEnum;
+    FFinalEnum: TFinalEnum;
   public
     constructor Create;
     destructor Destroy; override;
@@ -54,8 +58,10 @@ type
     property SceneEnum: TSceneEnum read FSceneEnum write FSceneEnum;
     property PrevSceneEnum: TSceneEnum read FPrevSceneEnum;
     function GetScene(I: TSceneEnum): TScene;
-    procedure SetScene(ASceneEnum: TSceneEnum); overload;
-    procedure SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum); overload;
+    procedure SetScene(ASceneEnum: TSceneEnum;
+      AFinalEnum: TFinalEnum = feNone); overload;
+    procedure SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum;
+      AFinalEnum: TFinalEnum = feNone); overload;
     property PrevScene: TSceneEnum read FPrevSceneEnum write FPrevSceneEnum;
     procedure GoBack;
   end;
@@ -249,12 +255,6 @@ begin
         FScene[I] := TSceneHelp.Create;
       scGame:
         FScene[I] := TSceneGame.Create;
-      scQuit:
-        FScene[I] := TSceneQuit.Create;
-      scWin:
-        FScene[I] := TSceneWin.Create;
-      scDef:
-        FScene[I] := TSceneDef.Create;
       scInv:
         FScene[I] := TSceneInv.Create;
       scDrop:
@@ -340,7 +340,8 @@ begin
   end;
 end;
 
-procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
+procedure TScenes.SetScene(ASceneEnum: TSceneEnum;
+  AFinalEnum: TFinalEnum = feNone);
 begin
   Game.Timer := UIntMax;
   Game.ShowEffects := False;
@@ -348,10 +349,11 @@ begin
   Render;
 end;
 
-procedure TScenes.SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum);
+procedure TScenes.SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum;
+  AFinalEnum: TFinalEnum = feNone);
 begin
   FPrevSceneEnum := CurrSceneEnum;
-  SetScene(ASceneEnum);
+  SetScene(ASceneEnum, AFinalEnum);
 end;
 
 procedure TScenes.Update(var Key: UInt);
@@ -365,9 +367,9 @@ begin
       begin
         if (SceneEnum = scTitle) then
           Game.CanClose := True;
-        if Mode.Game and not(SceneEnum in [scWin, scDef, scQuit]) and
+        if Mode.Game and not(SceneEnum = scFinal) and
           not Player.IsDead then
-          SetScene(scQuit, SceneEnum);
+          SetScene(scFinal, SceneEnum, feQuit);
       end;
   end;
 end;
