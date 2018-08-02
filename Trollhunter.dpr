@@ -72,7 +72,9 @@ uses
   Trollhunter.Scene.Item.Repair in 'sources\Trollhunter.Scene.Item.Repair.pas',
   Trollhunter.Dialog in 'sources\Trollhunter.Dialog.pas',
   Trollhunter.Scene.Item.Information in 'sources\Trollhunter.Scene.Item.Information.pas',
-  Trollhunter.Scene.Final in 'sources\Trollhunter.Scene.Final.pas';
+  Trollhunter.Scene.Final in 'sources\Trollhunter.Scene.Final.pas',
+  Trollhunter.Scene.Buy in 'sources\Trollhunter.Scene.Buy.pas',
+  Trollhunter.Scene.Sell in 'sources\Trollhunter.Scene.Sell.pas';
 
 var
   Key: UInt = 0;

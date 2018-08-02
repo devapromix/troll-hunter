@@ -64,20 +64,6 @@ var
   Scenes: TScenes = nil;
 
 type
-  TSceneBuy = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneSell = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneQuit = class(TScene)
   public
     procedure Render; override;
@@ -155,7 +141,9 @@ uses
   Trollhunter.Scene.Item.Repair,
   Trollhunter.Dialog,
   Trollhunter.Scene.Item.Information,
-  Trollhunter.Scene.Final;
+  Trollhunter.Scene.Final,
+  Trollhunter.Scene.Buy,
+  Trollhunter.Scene.Sell;
 
 { TScene }
 
@@ -463,61 +451,6 @@ begin
         Player.SaveCharacterDump(_('Won the game'));
         Game.CanClose := True;
       end;
-  end;
-end;
-
-{ TSceneSell }
-
-procedure TSceneSell.Render;
-begin
-  UI.Title(_('Selling items') + ' ' + UI.GoldLeft(Player.Gold));
-
-  UI.FromAToZ;
-  Items.RenderInventory(ptSell);
-  MsgLog.Render(2, True);
-
-  AddKey('A-Z', _('Selling an item'));
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneSell.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scDialog);
-    TK_A .. TK_Z: // Selling an item
-      Player.Sell(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
-  end;
-end;
-
-{ TSceneBuy }
-
-procedure TSceneBuy.Render;
-begin
-  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' +
-    UI.GoldLeft(Player.Gold));
-
-  UI.FromAToZ;
-  Shops.Render;
-  MsgLog.Render(2, True);
-
-  AddKey('A-Z', _('Buy an item'));
-  AddKey('Esc', _('Close'), True);
-end;
-
-procedure TSceneBuy.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scDialog);
-    TK_A .. TK_Z: // Buy items
-      Player.Buy(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
   end;
 end;
 
