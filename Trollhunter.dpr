@@ -26,7 +26,6 @@ uses
   Trollhunter.Calendar in 'Sources\Trollhunter.Calendar.pas',
   Trollhunter.Item.Shop in 'Sources\Trollhunter.Item.Shop.pas',
   Trollhunter.Player.Spellbook in 'Sources\Trollhunter.Player.Spellbook.pas',
-  Trollhunter.Talent in 'Sources\Trollhunter.Talent.pas',
   Trollhunter.Ability in 'Sources\Trollhunter.Ability.pas',
   Trollhunter.Player.Skills in 'Sources\Trollhunter.Player.Skills.pas',
   Trollhunter.UI.Logo in 'Sources\Trollhunter.UI.Logo.pas',

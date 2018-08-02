@@ -1,4 +1,4 @@
-unit Trollhunter.Player;
+﻿unit Trollhunter.Player;
 
 interface
 
@@ -8,7 +8,6 @@ uses
   Trollhunter.Creature,
   Trollhunter.Mob,
   Trollhunter.Statistic,
-  Trollhunter.Talent,
   Trollhunter.Player.Types,
   Trollhunter.Player.Skills,
   Trollhunter.Player.Races,
@@ -63,7 +62,6 @@ type
     FName: string;
     FStatistics: TStatistics;
     FSex: TSexEnum;
-    FTalents: TTalents;
     FSkills: TSkills;
     procedure GenNPCText;
     function GetVision: UInt;
@@ -90,7 +88,6 @@ type
     property Skills: TSkills read FSkills write FSkills;
     property HRace: TRaceEnum read FRace write FRace;
     property HClass: TClassEnum read FClass write FClass;
-    property Talents: TTalents read FTalents write FTalents;
     procedure SetAmountScene(IsDrop: Boolean; Index, Amount: Int);
     property Sex: TSexEnum read FSex write FSex;
     procedure Render(AX, AY: UInt);
@@ -654,7 +651,6 @@ constructor TPlayer.Create;
 begin
   inherited;
   FStatistics := TStatistics.Create;
-  Talents := TTalents.Create;
   Skills := TSkills.Create;
   Self.Clear;
 end;
@@ -675,7 +671,6 @@ end;
 destructor TPlayer.Destroy;
 begin
   FreeAndNil(FSkills);
-  FreeAndNil(FTalents);
   FreeAndNil(FStatistics);
   inherited;
 end;
@@ -1489,14 +1484,6 @@ begin
     // You leveled up! You are now level %d!
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
       [Attributes.Attrib[atLev].Value]), clAlarm));
-    if (Attributes.Attrib[atLev].Value mod 2 = 1) then
-    begin
-      Talents.IsPoint := True;
-      MsgLog.Add(Terminal.Colorize(_('You gained 1 talent point.'), clAlarm));
-      Statictics.Inc(stScore)
-    end
-    else
-      Talents.IsPoint := False;
     Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib
       [atLev].Value);
   end;

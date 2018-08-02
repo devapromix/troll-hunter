@@ -145,7 +145,6 @@ begin
         AddLine('R', _('Rest'));
         AddLine('M', _('View messages'));
         // AddLine('B', _('Spellbook'));
-        AddLine('T', _('Talents'));
         AddLine('N', _('Show Statistics'));
         AddLine('O', _('Options'));
         AddLine('I', _('Show Inventory'));

@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Name;
+﻿unit Trollhunter.Scene.Name;
 
 interface
 
@@ -58,8 +58,7 @@ begin
       end;
     TK_ESCAPE:
       begin
-        Player.Talents.Clear;
-        Scenes.SetScene(scTalents, scClass);
+        Scenes.SetScene(scClass, scName);
       end;
   end;
 end;

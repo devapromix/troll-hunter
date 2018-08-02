@@ -378,7 +378,7 @@ begin
     // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
     // if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
-      Scenes.SetScene(scTalents, scGame);
+      ;
     TK_SLASH:
       Scenes.SetScene(scHelp, scGame);
   end;

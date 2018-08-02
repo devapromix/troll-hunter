@@ -54,8 +54,6 @@ begin
         Terminal_Delay(1000);
         Map.Gen;
         Mode.Game := True;
-        Player.Talents.DoTalent
-          (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
         Player.StartEquip;
         Player.StartSkills;
         Scenes.SetScene(scGame);

@@ -54,7 +54,6 @@ begin
     Add(_('Items'), ItemBase.Count);
     Add(_('Shops'), Shops.Count);
     Add(_('Quests'), Quests.Amount);
-    Add(_('Talents'), Player.Talents.Amount);
     Add(_('Affixes'), Affixes.Amount);
     Add(_('Item Types'), Ord(High(TItemType)));
     Add(_('Skills'), Ord(High(TSkillEnum)));

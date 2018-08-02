@@ -37,7 +37,7 @@ uses
 
 procedure TSceneClass.NextScene;
 begin
-  Scenes.SetScene(scTalents, scClass);
+  Scenes.SetScene(scName, scClass);
 end;
 
 procedure TSceneClass.PrevScene;
