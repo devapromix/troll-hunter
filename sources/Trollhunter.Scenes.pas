@@ -56,6 +56,7 @@ type
     procedure Render; override;
     procedure Update(var Key: UInt); override;
     property SceneEnum: TSceneEnum read FSceneEnum write FSceneEnum;
+    property FinalEnum: TFinalEnum read FFinalEnum;
     property PrevSceneEnum: TSceneEnum read FPrevSceneEnum;
     function GetScene(I: TSceneEnum): TScene;
     procedure SetScene(ASceneEnum: TSceneEnum;
@@ -68,27 +69,6 @@ type
 
 var
   Scenes: TScenes = nil;
-
-type
-  TSceneQuit = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneDef = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneWin = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
 
 implementation
 
@@ -346,6 +326,7 @@ begin
   Game.Timer := UIntMax;
   Game.ShowEffects := False;
   Self.SceneEnum := ASceneEnum;
+  FFinalEnum := AFinalEnum;
   Render;
 end;
 
@@ -370,88 +351,6 @@ begin
         if Mode.Game and not(SceneEnum = scFinal) and
           not Player.IsDead then
           SetScene(scFinal, SceneEnum, feQuit);
-      end;
-  end;
-end;
-
-{ TSceneQuit }
-
-procedure TSceneQuit.Render;
-begin
-  Logo.Render(False);
-  Terminal.Print(CX, CY + 3, Format(_('Do you wish to quit? %s/%s'),
-    [UI.KeyToStr('Y'), UI.KeyToStr('N')]), TK_ALIGN_CENTER);
-end;
-
-procedure TSceneQuit.Update(var Key: UInt);
-begin
-  case Key of
-    TK_Y:
-      begin
-        Player.SaveCharacterDump(_('Quit the game'));
-        Game.CanClose := True;
-      end;
-    TK_ESCAPE, TK_N:
-      Scenes.GoBack;
-  end;
-end;
-
-{ TSceneDef }
-
-procedure TSceneDef.Render;
-begin
-  Logo.Render(False);
-  Terminal.Print(CX, CY + 1, UpperCase(_('Game over!!!')), TK_ALIGN_CENTER);
-  if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format(_('You dead. Press %s'),
-      [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER)
-  else
-    Terminal.Print(CX, CY + 3, Format(_('You were slain by %s. Press %s'),
-      [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
-      TK_ALIGN_CENTER);
-  if Mode.Wizard then
-  begin
-    Terminal.Print(CX, CY + 5, Terminal.Colorize(_('Wizard Mode'), 'Red') + ' '
-      + Format(_('Press %s to continue...'), [UI.KeyToStr('SPACE')]),
-      TK_ALIGN_CENTER);
-  end;
-end;
-
-procedure TSceneDef.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ENTER, TK_KP_ENTER:
-      begin
-        Player.SaveCharacterDump(Format(_('Killed by %s'), [Player.Killer]));
-        Game.CanClose := True;
-      end;
-    TK_SPACE:
-      if Mode.Wizard then
-      begin
-        Player.Fill;
-        Scenes.SetScene(scGame);
-      end;
-  end;
-end;
-
-{ TSceneWin }
-
-procedure TSceneWin.Render;
-begin
-  Logo.Render(False);
-  Terminal.Print(CX, CY + 1, UpperCase(_('Congratulations!!!')),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 3, Format(_('You have won. Press %s'),
-    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
-end;
-
-procedure TSceneWin.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ENTER, TK_KP_ENTER:
-      begin
-        Player.SaveCharacterDump(_('Won the game'));
-        Game.CanClose := True;
       end;
   end;
 end;
