@@ -71,7 +71,8 @@ uses
   Trollhunter.Scene.Item.Drop in 'sources\Trollhunter.Scene.Item.Drop.pas',
   Trollhunter.Scene.Item.Repair in 'sources\Trollhunter.Scene.Item.Repair.pas',
   Trollhunter.Dialog in 'sources\Trollhunter.Dialog.pas',
-  Trollhunter.Scene.Item.Information in 'sources\Trollhunter.Scene.Item.Information.pas';
+  Trollhunter.Scene.Item.Information in 'sources\Trollhunter.Scene.Item.Information.pas',
+  Trollhunter.Scene.Final in 'sources\Trollhunter.Scene.Final.pas';
 
 var
   Key: UInt = 0;

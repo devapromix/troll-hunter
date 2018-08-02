@@ -15,7 +15,7 @@ type
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scIdentification, scBackground, scEnchant, scClass,
-    scRace, scItemInfo);
+    scRace, scItemInfo, scFinal);
 
 type
   TScene = class(TObject)
@@ -154,7 +154,8 @@ uses
   Trollhunter.Scene.Items,
   Trollhunter.Scene.Item.Repair,
   Trollhunter.Dialog,
-  Trollhunter.Scene.Item.Information;
+  Trollhunter.Scene.Item.Information,
+  Trollhunter.Scene.Final;
 
 { TScene }
 
@@ -314,6 +315,8 @@ begin
         FScene[I] := TSceneClass.Create;
       scItemInfo:
         FScene[I] := TSceneItemInfo.Create;
+      scFinal:
+        FScene[I] := TSceneFinal.Create;
     end;
 end;
 
