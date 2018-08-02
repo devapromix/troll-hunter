@@ -2,7 +2,8 @@
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Creature,
   Trollhunter.Mob;
 
@@ -75,7 +76,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   System.Generics.Collections,
   Trollhunter.Map,
   Trollhunter.UI.Log,

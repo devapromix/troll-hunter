@@ -208,8 +208,8 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
-  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, '+++' + UI.KeyToStr(AHotKey,
-    AText), TK_ALIGN_LEFT);
+  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, UI.KeyToStr(AHotKey, AText),
+    TK_ALIGN_LEFT);
   Self.Add();
 end;
 

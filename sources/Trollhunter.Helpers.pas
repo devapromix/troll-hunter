@@ -2,7 +2,8 @@ unit Trollhunter.Helpers;
 
 interface
 
-uses Classes,
+uses
+  Classes,
   Trollhunter.Types;
 
 type
@@ -27,16 +28,11 @@ type
     function GetName(const Pref: string): string;
   end;
 
-type
-  TStringListHelper = class helper for TStringList
-    function Join(const CharSeparator: Char): string;
-    function Explode(const CharSeparator: Char; const Source: string)
-      : TStringList;
-  end;
-
 implementation
 
-uses SysUtils, Math;
+uses
+  SysUtils,
+  Math;
 
 { IntHelper }
 
@@ -78,35 +74,6 @@ function TStringHelper.GetName(const Pref: string): string;
 begin
   Result := StringReplace(Self, Pref, '', [rfReplaceAll]);
   Result := StringReplace(Result, '_', ' ', [rfReplaceAll]);
-end;
-
-{ TStringListHelper }
-
-function TStringListHelper.Join(const CharSeparator: Char): string;
-var
-  I: Integer;
-begin
-  Result := '';
-  for I := 0 to Self.Count - 1 do
-    if (I < Self.Count - 1) then
-      Result := Result + Self[I] + CharSeparator
-    else
-      Result := Result + Self[I];
-end;
-
-function TStringListHelper.Explode(const CharSeparator: Char;
-  const Source: string): TStringList;
-var
-  I: Integer;
-  Strings: TStringList;
-begin
-  Strings := TStringList.Create;
-  Strings.Delimiter := CharSeparator;
-  Strings.DelimitedText := Source;
-  for I := Strings.Count - 1 downto 0 do
-    if (Strings[I] = '') then
-      Strings.Delete(I);
-  Result := Strings;
 end;
 
 end.
