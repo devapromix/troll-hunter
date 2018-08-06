@@ -78,19 +78,19 @@ begin
   RenderInfo;
 
   // Attributes
-  Terminal.Print(DX, 9, _('Strength') + ': ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atStr], 'NoMana') + '  ' + UI.Icon(icPlus,
-    'Lush') + Terminal.Colorize(Classes.Attrib[atStr], 'Lush'));
-  Terminal.Print(DX, 10, _('Dexterity') + ': ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atDex], 'NoMana') + '  ' + UI.Icon(icPlus,
-    'Lush') + Terminal.Colorize(Classes.Attrib[atDex], 'Lush'));
-  Terminal.Print(DX, 11, _('Willpower') + ': ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atWil], 'NoMana') + '  ' + UI.Icon(icPlus,
-    'Lush') + Terminal.Colorize(Classes.Attrib[atWil], 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atPer], 'NoMana') + '  ' +
-    UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atPer], 'Lush'));
+  Terminal.Print(DX, 9, _('Strength') + ': ' + Terminal.Colorize(UI.Icon(icStr) + '7', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
+    Terminal.Colorize(Races.Attrib[atStr], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atStr], 'Lush'));
+  Terminal.Print(DX, 10, _('Dexterity') + ': ' + Terminal.Colorize(UI.Icon(icDex) + '7', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
+    Terminal.Colorize(Races.Attrib[atDex], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atDex], 'Lush'));
+  Terminal.Print(DX, 11, _('Willpower') + ': ' + Terminal.Colorize(UI.Icon(icBook) + '7', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
+    Terminal.Colorize(Races.Attrib[atWil], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atWil], 'Lush'));
+  Terminal.Print(DX, 12, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + '7', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
+    Terminal.Colorize(Races.Attrib[atPer], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atPer], 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atLife], 'NoMana') + '  ' + UI.Icon(icPlus,
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + '40', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atLife], 'NoMana') + '  ' + UI.Icon(icPlus,
     'Lush') + Terminal.Colorize(Classes.Attrib[atLife], 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atMana], 'NoMana') + '  ' + UI.Icon(icPlus,
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + '30', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atMana], 'NoMana') + '  ' + UI.Icon(icPlus,
     'Lush') + Terminal.Colorize(Classes.Attrib[atMana], 'Lush'));
 
   Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize(Classes.GetItems(Player.HClass), 'Lush'));
