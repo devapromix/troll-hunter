@@ -5,6 +5,7 @@ interface
 uses
   Trollhunter.Types,
   Trollhunter.Attribute,
+  Trollhunter.Player.Races,
   Trollhunter.Scenes;
 
 type
@@ -12,6 +13,7 @@ type
   private
     procedure PrevScene;
     procedure NextScene;
+    procedure SetRace(ARaceEnum: TRaceEnum);
   public
     DX: UInt;
     PrmAt: array [atStr .. atMana] of UInt;
@@ -29,14 +31,14 @@ uses
   BearLibTerminal,
   Trollhunter.Language,
   Trollhunter.Terminal,
-  Trollhunter.Player,
   Trollhunter.Game,
-  Trollhunter.Player.Races,
+  Trollhunter.Player,
   Trollhunter.Player.Classes,
+  Trollhunter.Player.Types,
+  Trollhunter.Player.Helpers,
   Trollhunter.UI,
   Trollhunter.Statistic,
-  Trollhunter.Player.Types,
-  Trollhunter.Player.Helpers, Trollhunter.Scene.Classes;
+  Trollhunter.Scene.Classes;
 
 { TSceneRace }
 
@@ -73,7 +75,7 @@ var
   end;
 
 var
-  F:TRaceEnum;
+  F: TRaceEnum;
 
 begin
   UI.Title(_('Choose a race'));
@@ -175,8 +177,14 @@ var
 begin
   R := Player.HRace;
   repeat
-    Player.HRace := TRaceEnum(Math.RandomRange(0, Ord(High(TRaceEnum)) + 1));
+    SetRace(TRaceEnum(Math.RandomRange(0, Ord(High(TRaceEnum)) + 1)));
   until (R <> Player.HRace);
+end;
+
+procedure TSceneRace.SetRace(ARaceEnum: TRaceEnum);
+begin
+  Player.HRace := ARaceEnum;
+  ReRoll;
 end;
 
 procedure TSceneRace.Update(var Key: UInt);
@@ -186,10 +194,10 @@ begin
   case Key of
     TK_UP, TK_KP_8:
       if Player.HRace > Low(TRaceEnum) then
-        Player.HRace := Pred(Player.HRace);
+        SetRace(Pred(Player.HRace));
     TK_DOWN, TK_KP_2:
       if Player.HRace < High(TRaceEnum) then
-        Player.HRace := Succ(Player.HRace);
+        SetRace(Succ(Player.HRace));
     TK_TAB:
       begin
         if (Player.Sex = sxMale) then
@@ -203,8 +211,7 @@ begin
         I := Ord(Key) - Ord(TK_A);
         if (I > Ord(High(TRaceEnum))) then
           Exit;
-        Player.HRace := TRaceEnum(Math.EnsureRange(I, 0, Ord(High(TRaceEnum))));
-        ReRoll;
+        SetRace(TRaceEnum(Math.EnsureRange(I, 0, Ord(High(TRaceEnum)))));
         NextScene;
       end;
     TK_ENTER, TK_KP_ENTER:

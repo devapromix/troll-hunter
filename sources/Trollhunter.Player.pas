@@ -619,6 +619,7 @@ begin
     Name := _('PLAYER')
   else
     Name := PlayerName;
+
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
   CalcMaxExp;
