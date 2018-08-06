@@ -3,7 +3,9 @@
 interface
 
 uses
-  Trollhunter.Creature;
+  Trollhunter.Types,
+  Trollhunter.Creature,
+  Trollhunter.Attribute;
 
 type
   TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);
@@ -69,6 +71,7 @@ type
   private
     FRaceName: TRaceArray<string>;
   public
+    Attrib: TBaseAttribArray<UInt>;
     constructor Create;
     destructor Destroy; override;
     function GetName(I: TRaceEnum): string;

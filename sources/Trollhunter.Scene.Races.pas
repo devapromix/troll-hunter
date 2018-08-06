@@ -16,7 +16,6 @@ type
     procedure SetRace(ARaceEnum: TRaceEnum);
   public
     DX: UInt;
-    PrmAt: array [atStr .. atMana] of UInt;
     procedure ReRoll;
     procedure SelRand;
     procedure Render; override;
@@ -85,9 +84,18 @@ begin
 
   RenderInfo;
 
+  // Attributes
+  Terminal.Print(DX, 9, _('Strength') + ': ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atStr], 'Lush'));
+  Terminal.Print(DX, 10, _('Dexterity') + ': ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atDex], 'Lush'));
+  Terminal.Print(DX, 11, _('Willpower') + ': ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atWil], 'Lush'));
+  Terminal.Print(DX, 12, _('Perception') + ': ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atPer], 'Lush'));
+
+  // Life and Mana
+  Terminal.Print(DX, 14, _('Life') + ': ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atLife], 'Lush'));
+  Terminal.Print(DX, 15, _('Mana') + ': ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atMana], 'Lush'));
+
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY,
-    _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);
+  Terminal.Print(DX, CY - (CY div 2), CX, CY, _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
@@ -98,76 +106,42 @@ procedure TSceneRace.RenderInfo;
 begin
   DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize
-    (Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize
-    (Player.Gender, 'Lush'));
-  Terminal.Print(DX, 7, _('Metabolism') + ': ' +
-    Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
-
-  // Attributes
-  Terminal.Print(DX, 9, _('Strength') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(DX, 10, _('Dexterity') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(DX, 11, _('Willpower') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
-
-  // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize
-    (Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize
-    (Player.Attributes.Attrib[atMana].Prm, 'Lush'));
+  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize(Player.Statictics.Get(stAge), 'Lush'));
+  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize(Player.Statictics.Get(stHeight), 'Lush'));
+  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize(Player.Statictics.Get(stWeight), 'Lush'));
+  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize(Player.Gender, 'Lush'));
+  Terminal.Print(DX, 7, _('Metabolism') + ': ' + Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 end;
 
 procedure TSceneRace.ReRoll;
 var
-  V: TRaceProp;
+  Prop: TRaceProp;
   Age, Height, Weight, Metabolism: Integer;
 begin
-  V := RaceProp[Player.HRace];
+  Prop := RaceProp[Player.HRace];
 
-  Age := Math.RandomRange(V.Age.Min, V.Age.Max + 1);
+  Age := Math.RandomRange(Prop.Age.Min, Prop.Age.Max + 1);
   Player.Statictics.SetValue(stAge, Age);
 
-  Height := Math.RandomRange(V.Height.Min, V.Height.Max + 1);
+  Height := Math.RandomRange(Prop.Height.Min, Prop.Height.Max + 1);
   Player.Statictics.SetValue(stHeight, Height);
 
-  Weight := Math.RandomRange(V.Weight.Min, V.Weight.Max + 1);
+  Weight := Math.RandomRange(Prop.Weight.Min, Prop.Weight.Max + 1);
   Player.Statictics.SetValue(stWeight, Weight);
 
-  Metabolism := Math.EnsureRange(Math.RandomRange(V.Metabolism.Min,
-    V.Metabolism.Max + 1) + Round(Height div 50) + Round(Weight div 15),
+  Metabolism := Math.EnsureRange(Math.RandomRange(Prop.Metabolism.Min, Prop.Metabolism.Max + 1) + Round(Height div 50) + Round(Weight div 15),
     MetabolismMin, MetabolismMax);
   Player.Statictics.SetValue(stMetabolism, Metabolism);
 
   // Attributes
-  Player.Attributes.SetPrm(atStr, Math.RandomRange(V.Strength.Min,
-    V.Strength.Max + 1));
-  PrmAt[atStr] := Player.Attributes.Attrib[atStr].Prm;
-  Player.Attributes.SetPrm(atDex, Math.RandomRange(V.Dexterity.Min,
-    V.Dexterity.Max + 1));
-  PrmAt[atDex] := Player.Attributes.Attrib[atDex].Prm;
-  Player.Attributes.SetPrm(atWil, Math.RandomRange(V.Willpower.Min,
-    V.Willpower.Max + 1));
-  PrmAt[atWil] := Player.Attributes.Attrib[atWil].Prm;
-  Player.Attributes.SetPrm(atPer, Math.RandomRange(V.Perception.Min,
-    V.Perception.Max + 1));
-  PrmAt[atPer] := Player.Attributes.Attrib[atPer].Prm;
+  Races.Attrib[atStr] := Math.RandomRange(Prop.Strength.Min, Prop.Strength.Max + 1);
+  Races.Attrib[atDex] := Math.RandomRange(Prop.Dexterity.Min, Prop.Dexterity.Max + 1);
+  Races.Attrib[atWil] := Math.RandomRange(Prop.Willpower.Min, Prop.Willpower.Max + 1);
+  Races.Attrib[atPer] := Math.RandomRange(Prop.Perception.Min, Prop.Perception.Max + 1);
 
   // Life and Mana
-  Player.Attributes.SetPrm(atLife, Math.RandomRange(V.Life.Min,
-    V.Life.Max + 1));
-  PrmAt[atLife] := Player.Attributes.Attrib[atLife].Prm;
-  Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min,
-    V.Mana.Max + 1));
-  PrmAt[atMana] := Player.Attributes.Attrib[atMana].Prm;
+  Races.Attrib[atLife] := Math.RandomRange(Prop.Life.Min, Prop.Life.Max + 1);
+  Races.Attrib[atMana] := Math.RandomRange(Prop.Mana.Min, Prop.Mana.Max + 1);
 end;
 
 procedure TSceneRace.SelRand;

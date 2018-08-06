@@ -1,4 +1,4 @@
-unit Trollhunter.Player.Classes;
+﻿unit Trollhunter.Player.Classes;
 
 interface
 
@@ -6,8 +6,9 @@ uses
   Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
+  Trollhunter.Player.Skills,
   Trollhunter.Creature,
-  Trollhunter.Player.Skills;
+  Trollhunter.Attribute;
 
 type
   TClassEnum = (clWarrior, clMage, clRanger, clThief);
@@ -68,6 +69,7 @@ type
     FSkills: TSkills;
     FClassName: TClassArray<string>;
   public
+    Attrib: TBaseAttribArray<UInt>;
     constructor Create;
     destructor Destroy; override;
     function GetName(I: TClassEnum): string;
@@ -83,8 +85,8 @@ var
 implementation
 
 uses
-  SysUtils,
   TypInfo,
+  SysUtils,
   Trollhunter.Helpers,
   Trollhunter.Utils,
   Trollhunter.Item;

@@ -27,6 +27,9 @@ type
   TAttribArray<T> = array [TAttribEnum] of T;
 
 type
+  TBaseAttribArray<T> = array [atStr .. atMana] of T;
+
+type
   TAttributes = class(TObject)
   private
     FAttrib: TAttribArray<TAttrib>;
