@@ -17,7 +17,6 @@ const
   // Player
   VisionMax = 15;
   DVMax = 80;
-  LevelExpMax = 9;
   ReLifeMax = 10;
   ReManaMax = 20;
   LifeAEKMax = 8;
@@ -63,9 +62,11 @@ type
     FStatistics: TStatistics;
     FSex: TSexEnum;
     FSkills: TSkills;
+    FExp: Int;
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
+    procedure CalcMaxExp;
   public
     constructor Create;
     destructor Destroy; override;
@@ -620,6 +621,7 @@ begin
     Name := PlayerName;
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
+  CalcMaxExp;
   GenerateBackground();
   Calc();
   Fill();
@@ -913,6 +915,11 @@ begin
         Exit(True);
     end;
   end;
+end;
+
+procedure TPlayer.CalcMaxExp;
+begin
+  Attributes.SetValue(atMaxExp, Attributes.Attrib[atLev].Value * 100);
 end;
 
 procedure TPlayer.Equip(Index: Int);
@@ -1477,10 +1484,11 @@ end;
 procedure TPlayer.AddExp(Value: UInt = 1);
 begin
   Attributes.Modify(atExp, Value);
-  if (Attributes.Attrib[atExp].Value >= LevelExpMax) then
+  if (Attributes.Attrib[atExp].Value >= Attributes.Attrib[atMaxExp].Value) then
   begin
-    Attributes.Modify(atExp, -LevelExpMax);
+    Attributes.Modify(atExp, -Attributes.Attrib[atMaxExp].Value);
     Attributes.Modify(atLev, 1);
+    CalcMaxExp;
     // You leveled up! You are now level %d!
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'),
       [Attributes.Attrib[atLev].Value]), clAlarm));

@@ -96,7 +96,7 @@ begin
   // Level
   Add(Format('%s %d', [_('Level'), Player.Attributes.Attrib[atLev].Value]),
     UI.Icon(icElixir), 'Gold', Player.Attributes.Attrib[atExp].Value,
-    LevelExpMax);
+    Player.Attributes.Attrib[atMaxExp].Value);
   // Attributes
   Add('Strength', UI.Icon(icStr), 'Strength', Player.Attributes.Attrib[atStr],
     AttribMax);
