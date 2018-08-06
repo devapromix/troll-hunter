@@ -28,6 +28,7 @@ implementation
 uses
   Math,
   BearLibTerminal,
+  Trollhunter.Helpers,
   Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Game,
@@ -95,8 +96,8 @@ begin
     Terminal.Colorize(Races.Attrib[atPer], 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + '40', 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atLife], 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + '30', 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atMana], 'Lush'));
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atLife], 'Lush'));
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atMana], 'Lush'));
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(DX, CY - (CY div 2), CX, CY, _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);

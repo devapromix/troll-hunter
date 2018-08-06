@@ -26,6 +26,7 @@ implementation
 uses
   Math,
   BearLibTerminal,
+  Trollhunter.Helpers,
   Trollhunter.Language,
   Trollhunter.Terminal,
   Trollhunter.Player,
@@ -88,9 +89,9 @@ begin
     Terminal.Colorize(Races.Attrib[atPer], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atPer], 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + '40', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atLife], 'NoMana') + '  ' + UI.Icon(icPlus,
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atLife], 'NoMana') + '  ' + UI.Icon(icPlus,
     'Lush') + Terminal.Colorize(Classes.Attrib[atLife], 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + '30', 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atMana], 'NoMana') + '  ' + UI.Icon(icPlus,
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atMana], 'NoMana') + '  ' + UI.Icon(icPlus,
     'Lush') + Terminal.Colorize(Classes.Attrib[atMana], 'Lush'));
 
   Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize(Classes.GetItems(Player.HClass), 'Lush'));
