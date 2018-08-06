@@ -4,6 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
+  Trollhunter.Player.Classes,
   Trollhunter.Scenes,
   Trollhunter.Scene.Races;
 
@@ -12,6 +13,7 @@ type
   private
     procedure PrevScene;
     procedure NextScene;
+    procedure SetClass(const AClassEnum: TClassEnum);
   public
     procedure ReRoll;
     procedure SelRand;
@@ -30,7 +32,6 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Game,
   Trollhunter.Player.Races,
-  Trollhunter.Player.Classes,
   Trollhunter.UI;
 
 { TSceneClass }
@@ -119,8 +120,14 @@ var
 begin
   C := Player.HClass;
   repeat
-    Player.HClass := TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1));
+    SetClass(TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1)));
   until (C <> Player.HClass);
+end;
+
+procedure TSceneClass.SetClass(const AClassEnum: TClassEnum);
+begin
+  Player.HClass := AClassEnum;
+  ReRoll;
 end;
 
 procedure TSceneClass.Update(var Key: UInt);
@@ -130,18 +137,16 @@ begin
   case Key of
     TK_UP, TK_KP_8:
       if Player.HClass > Low(TClassEnum) then
-        Player.HClass := Pred(Player.HClass);
+        SetClass(Pred(Player.HClass));
     TK_DOWN, TK_KP_2:
       if Player.HClass < High(TClassEnum) then
-        Player.HClass := Succ(Player.HClass);
+        SetClass(Succ(Player.HClass));
     TK_A .. TK_Z:
       begin
         I := Ord(Key) - Ord(TK_A);
         if (I > Ord(High(TClassEnum))) then
           Exit;
-        Player.HClass :=
-          TClassEnum(Math.EnsureRange(I, 0, Ord(High(TClassEnum))));
-        ReRoll;
+        SetClass(TClassEnum(Math.EnsureRange(I, 0, Ord(High(TClassEnum)))));
         NextScene;
       end;
     TK_ENTER, TK_KP_ENTER:
