@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Difficulty;
+﻿unit Trollhunter.Scene.Difficulty;
 
 interface
 
@@ -40,9 +40,7 @@ begin
   Game.Start();
   Scenes.SetScene(scRace, scDifficulty);
   (Scenes.GetScene(scRace) as TSceneRace).SelRand;
-  (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
   (Scenes.GetScene(scClass) as TSceneClass).SelRand;
-  (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
 end;
 
 procedure TSceneDifficulty.PrevScene;

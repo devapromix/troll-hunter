@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Races;
+﻿unit Trollhunter.Scene.Races;
 
 interface
 
@@ -44,7 +44,6 @@ uses
 
 procedure TSceneRace.NextScene;
 begin
-  (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
   Scenes.SetScene(scClass, scRace);
 end;
 

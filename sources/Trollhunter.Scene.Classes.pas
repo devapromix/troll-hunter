@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Classes;
+﻿unit Trollhunter.Scene.Classes;
 
 interface
 
@@ -38,6 +38,7 @@ uses
 
 procedure TSceneClass.NextScene;
 begin
+
   Scenes.SetScene(scName, scClass);
 end;
 
@@ -93,24 +94,24 @@ end;
 
 procedure TSceneClass.ReRoll;
 var
-  V: TClassProp;
+  Prop: TClassProp;
 begin
-  V := ClassProp[Player.HClass];
+  Prop := ClassProp[Player.HClass];
 
   // Attributes
-  Player.Attributes.SetPrm(atStr, Math.RandomRange(V.Strength.Min,
-    V.Strength.Max + 1) + PrmAt[atStr]);
-  Player.Attributes.SetPrm(atDex, Math.RandomRange(V.Dexterity.Min,
-    V.Dexterity.Max + 1) + PrmAt[atDex]);
-  Player.Attributes.SetPrm(atWil, Math.RandomRange(V.Willpower.Min,
-    V.Willpower.Max + 1) + PrmAt[atWil]);
-  Player.Attributes.SetPrm(atPer, Math.RandomRange(V.Perception.Min,
-    V.Perception.Max + 1) + PrmAt[atPer]);
+  Player.Attributes.SetPrm(atStr, Math.RandomRange(Prop.Strength.Min,
+    Prop.Strength.Max + 1) + PrmAt[atStr]);
+  Player.Attributes.SetPrm(atDex, Math.RandomRange(Prop.Dexterity.Min,
+    Prop.Dexterity.Max + 1) + PrmAt[atDex]);
+  Player.Attributes.SetPrm(atWil, Math.RandomRange(Prop.Willpower.Min,
+    Prop.Willpower.Max + 1) + PrmAt[atWil]);
+  Player.Attributes.SetPrm(atPer, Math.RandomRange(Prop.Perception.Min,
+    Prop.Perception.Max + 1) + PrmAt[atPer]);
 
   // Life and Mana
-  Player.Attributes.SetPrm(atLife, Math.RandomRange(V.Life.Min, V.Life.Max + 1)
+  Player.Attributes.SetPrm(atLife, Math.RandomRange(Prop.Life.Min, Prop.Life.Max + 1)
     + PrmAt[atLife]);
-  Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min, V.Mana.Max + 1)
+  Player.Attributes.SetPrm(atMana, Math.RandomRange(Prop.Mana.Min, Prop.Mana.Max + 1)
     + PrmAt[atMana]);
 end;
 
