@@ -90,7 +90,7 @@ uses
   Trollhunter.Helpers,
   Trollhunter.Utils,
   Trollhunter.Item,
-  Trollhunter.Player;
+  Trollhunter.Player, Trollhunter.UI;
 
 { TClasses }
 
@@ -144,7 +144,7 @@ begin
     skWeapon, skMain:
       Result := BeginSkill;
   else
-    Result := SkillMin;
+    Result := StartSkill;
   end;
 end;
 
@@ -158,8 +158,8 @@ begin
   Result := '';
   for J := Low(TClassSkillEnum) to High(TClassSkillEnum) do
   begin
-    S := Format('%s +%d', [FSkills.GetName(ClassProp[I].Skill[J]),
-      GetSkillBeginValue(J)]);
+    S := Format('%s %s%d', [FSkills.GetName(ClassProp[I].Skill[J]),
+      UI.Icon(icPlus), GetSkillBeginValue(J)]);
     Utils.AppStr(Result, S, F);
     F := True;
   end;

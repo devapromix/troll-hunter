@@ -46,6 +46,7 @@ const
   SkillMax = 75;
   SkillExpMax = 50;
   BeginSkill = 5;
+  StartSkill = 3;
 
 type
   TPlayer = class(TCreature)
