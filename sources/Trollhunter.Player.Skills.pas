@@ -39,16 +39,9 @@ type
     procedure Clear;
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
-    procedure Modify(I: TSkillEnum; Value: Int);
+    procedure Modify(I: TSkillEnum; Value: Int = 1);
     function GetName(I: TSkillEnum): string;
   end;
-
-const
-  SkillMin = 5;
-  SkillMax = 75;
-  SkillExpMax = 50;
-  BeginSkill = 10;
-  StartSkill = 5;
 
 implementation
 

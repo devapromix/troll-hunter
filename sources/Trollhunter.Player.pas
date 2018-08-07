@@ -41,6 +41,12 @@ const
   TalentPrm = 3;
   AttribPrm = 7;
 
+  // Skills
+  SkillMin = 3;
+  SkillMax = 75;
+  SkillExpMax = 50;
+  BeginSkill = 5;
+
 type
   TPlayer = class(TCreature)
   private
@@ -1605,7 +1611,7 @@ const
 
   procedure PrmSkill(ASkill: TSkillEnum);
   begin
-    Skills.Modify(ASkill, StartSkill);
+    Skills.Modify(ASkill);
     Calc();
     Fill();
   end;

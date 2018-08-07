@@ -89,7 +89,8 @@ uses
   SysUtils,
   Trollhunter.Helpers,
   Trollhunter.Utils,
-  Trollhunter.Item;
+  Trollhunter.Item,
+  Trollhunter.Player;
 
 { TClasses }
 
@@ -143,7 +144,7 @@ begin
     skWeapon, skMain:
       Result := BeginSkill;
   else
-    Result := StartSkill;
+    Result := SkillMin;
   end;
 end;
 

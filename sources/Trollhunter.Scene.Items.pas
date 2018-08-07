@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Items;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
