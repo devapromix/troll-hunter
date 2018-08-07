@@ -1,4 +1,4 @@
-unit Trollhunter.Item.Shop;
+﻿unit Trollhunter.Item.Shop;
 
 interface
 
@@ -9,8 +9,7 @@ uses
   Trollhunter.Item;
 
 type
-  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
-    shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
+  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors, shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
     shJewelry, shGem, shRunes);
 
 type
@@ -135,8 +134,7 @@ var
 
   function GetItemID(): TItemEnum;
   begin
-    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
-      Ord(High(TItemEnum)) + 1));
+    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)), Ord(High(TItemEnum)) + 1));
   end;
 
   function Check: Boolean;
@@ -209,8 +207,7 @@ var
 begin
   C := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
   for I := 0 to C - 1 do
-    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True,
-      True, ptBuy);
+    Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True, True, ptBuy);
 end;
 
 procedure TShops.SetShop(I: TShopEnum; const Value: TShop);

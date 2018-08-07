@@ -1,18 +1,15 @@
-unit Trollhunter.Item.Types;
+п»їunit Trollhunter.Item.Types;
 
 interface
 
 type
-  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion,
-    itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant, itBlade,
-    itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield,
-    itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman,
-    itArrow, itTorch);
+  TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant,
+    itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet,
+    itTalisman, itArrow, itTorch);
 
 const
-  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
-    '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '-',
-    ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
+  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-',
+    '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -46,29 +43,25 @@ const
   FlaskTypeItems = [itFlask];
   MagicTypeItems = [itOrb, itStone];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
-  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow,
-    itDagger];
+  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow, itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow];
   TorchTypeItems = [itTorch];
 
-  IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
-    FlaskTypeItems;
+  IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems + FlaskTypeItems;
   AllwaysIdentTypeItems = JewelryTypeItems + FlaskTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   RepairTypeItems = FlaskTypeItems;
   SmithTypeItems = DefenseTypeItems + DamageTypeItems;
-  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
-    PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
-    RepairTypeItems + MagicTypeItems;
+  UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems + PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + RepairTypeItems +
+    MagicTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
-  AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
-    FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems
-    + PlantTypeItems + FlaskTypeItems + MagicTypeItems;
+  AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems + FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems +
+    PlantTypeItems + FlaskTypeItems + MagicTypeItems;
 
   // Silver Sword , Forsworn Sword , Hero Sword
   // Skyforge War Axe , Dragonbone War Axe
@@ -82,13 +75,13 @@ const
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
-  { rough / необроблений
-    imperfect / недосконалий
-    common / типовий
-    precious / дорогоцінний
-    flawless / без недоліків
-    perfect / досконалий
-    outworldly / неземний }
+  { rough / РЅРµРѕР±СЂРѕР±Р»РµРЅРёР№
+    imperfect / РЅРµРґРѕСЃРєРѕРЅР°Р»РёР№
+    common / С‚РёРїРѕРІРёР№
+    precious / РґРѕСЂРѕРіРѕС†С–РЅРЅРёР№
+    flawless / Р±РµР· РЅРµРґРѕР»С–РєС–РІ
+    perfect / РґРѕСЃРєРѕРЅР°Р»РёР№
+    outworldly / РЅРµР·РµРјРЅРёР№ }
 
   { Potion, Flask, Extract, Essence, Elixir }
 
@@ -98,32 +91,25 @@ type
     None, ivCorpse, ivGold,
 
     // Flasks
-    ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask,
-    ivAquamarine_Flask, ivSapphire_Flask, ivQuicksilver_Flask, ivTopaz_Flask,
-    ivSulphur_Flask, ivGranite_Flask, ivQuartz_Flask, ivSacred_Flask,
-    ivJade_Flask, ivHallowed_Flask, ivCoruscating_Flask, ivSanctified_Flask,
+    ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask, ivAquamarine_Flask, ivSapphire_Flask, ivQuicksilver_Flask, ivTopaz_Flask,
+    ivSulphur_Flask, ivGranite_Flask, ivQuartz_Flask, ivSacred_Flask, ivJade_Flask, ivHallowed_Flask, ivCoruscating_Flask, ivSanctified_Flask,
     ivDivine_Flask, ivGold_Flask, ivDiamond_Flask, ivEternal_Flask,
 
     // Potions of Healing
-    ivPotion_of_Minor_Healing, ivPotion_of_Lesser_Healing,
-    ivPotion_of_Greater_Healing, ivPotion_of_Full_Healing,
+    ivPotion_of_Minor_Healing, ivPotion_of_Lesser_Healing, ivPotion_of_Greater_Healing, ivPotion_of_Full_Healing,
     // Potions of Mana
-    ivPotion_of_Minor_Mana, ivPotion_of_Lesser_Mana, ivPotion_of_Greater_Mana,
-    ivPotion_of_Full_Mana,
+    ivPotion_of_Minor_Mana, ivPotion_of_Lesser_Mana, ivPotion_of_Greater_Mana, ivPotion_of_Full_Mana,
 
     // Stones
     ivStone_of_Stamina, ivStone_of_Mana, ivStone_of_Recovery,
 
     // Scrolls
-    ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
-    ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
-    ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
-    ivScroll_of_Disappearing, ivScroll_of_Town_Portal, ivScroll_of_Bloodlust,
-    ivScroll_of_Identify, ivScroll_of_Full_Identify, ivScroll_of_Enchant_Item,
+    ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing, ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
+    ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation, ivScroll_of_Disappearing, ivScroll_of_Town_Portal,
+    ivScroll_of_Bloodlust, ivScroll_of_Identify, ivScroll_of_Full_Identify, ivScroll_of_Enchant_Item,
 
     // Runes
-    ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing,
-    ivRune_of_Greater_Healing, ivRune_of_Full_Healing, ivRune_of_Teleportation,
+    ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing, ivRune_of_Full_Healing, ivRune_of_Teleportation,
     ivRune_of_Town_Portal,
 
     // Foods and Plants
@@ -140,51 +126,39 @@ type
     ivHealing_Herb,
 
     // Ruby (Gems)
-    ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby,
-    ivImperial_Ruby, ivRoyal_Ruby,
+    ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby, ivImperial_Ruby, ivRoyal_Ruby,
     // Topaz (Gems)
-    ivChipped_Topaz, ivFlawed_Topaz, ivTopaz, ivFlawless_Topaz, ivPerfect_Topaz,
-    ivImperial_Topaz, ivRoyal_Topaz,
+    ivChipped_Topaz, ivFlawed_Topaz, ivTopaz, ivFlawless_Topaz, ivPerfect_Topaz, ivImperial_Topaz, ivRoyal_Topaz,
     // Sapphire (Gems)
-    ivChipped_Sapphire, ivFlawed_Sapphire, ivSapphire, ivFlawless_Sapphire,
-    ivPerfect_Sapphire, ivImperial_Sapphire, ivRoyal_Sapphire,
+    ivChipped_Sapphire, ivFlawed_Sapphire, ivSapphire, ivFlawless_Sapphire, ivPerfect_Sapphire, ivImperial_Sapphire, ivRoyal_Sapphire,
     // Emerald (Gems)
-    ivChipped_Emerald, ivFlawed_Emerald, ivEmerald, ivFlawless_Emerald,
-    ivPerfect_Emerald, ivImperial_Emerald, ivRoyal_Emerald,
+    ivChipped_Emerald, ivFlawed_Emerald, ivEmerald, ivFlawless_Emerald, ivPerfect_Emerald, ivImperial_Emerald, ivRoyal_Emerald,
     // Diamond (Gems)
-    ivChipped_Diamond, ivFlawed_Diamond, ivDiamond, ivFlawless_Diamond,
-    ivPerfect_Diamond, ivImperial_Diamond, ivRoyal_Diamond,
+    ivChipped_Diamond, ivFlawed_Diamond, ivDiamond, ivFlawless_Diamond, ivPerfect_Diamond, ivImperial_Diamond, ivRoyal_Diamond,
 
     // Rings
-    ivMoonstone_Ring, ivValuable_Ring, ivPrecious_Ring, ivEthreal_Ring,
-    ivExquisite_Ring, ivScarab_Ring, ivCrystal_Ring, ivPrismatic_Ring,
+    ivMoonstone_Ring, ivValuable_Ring, ivPrecious_Ring, ivEthreal_Ring, ivExquisite_Ring, ivScarab_Ring, ivCrystal_Ring, ivPrismatic_Ring,
     ivCitrine_Ring, ivGold_Ring,
 
     // Amulets
-    ivTurquoise_Amulet, ivOnyx_Amulet, ivViridian_Amulet, iv_Lunar_Amulet,
-    ivJade_Amulet, ivClaw_Amulet, ivAgate_Amulet, ivGothic_Amulet,
+    ivTurquoise_Amulet, ivOnyx_Amulet, ivViridian_Amulet, iv_Lunar_Amulet, ivJade_Amulet, ivClaw_Amulet, ivAgate_Amulet, ivGothic_Amulet,
     ivAncient_Amulet, ivAlmighty_Amulet,
 
     // Talismans
-    ivLongtooth_Talisman, ivDark_Eye, ivBlack_Maw_Talisman, ivVoid_Eye,
-    ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
+    ivLongtooth_Talisman, ivDark_Eye, ivBlack_Maw_Talisman, ivVoid_Eye, ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
 
     // Wands
-    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
-    ivWand9, ivWand10,
+    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8, ivWand9, ivWand10,
 
     // Staves
-    ivQuarterstaff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7,
-    ivStaff8, ivStaff9, ivStaff10,
+    ivQuarterstaff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
 
     // Daggers
-    ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
-    ivDagger8, ivDagger9, ivDagger10,
+    ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
 
     // Bows
-    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
-    ivBow9, ivBow10,
+    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8, ivBow9, ivBow10,
 
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
@@ -251,8 +225,7 @@ type
   TPriceType = (ptNone, ptSell, ptBuy, ptRepair);
 
 type
-  TBonusType = (btLife, btMana, btVis, btExtraGold, btStr, btDex, btWil, btPer,
-    btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill);
+  TBonusType = (btLife, btMana, btVis, btExtraGold, btStr, btDex, btWil, btPer, btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill);
 
 type
   TSetOfItem = set of TItemType;

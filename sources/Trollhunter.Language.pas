@@ -70,7 +70,7 @@ begin
     FSL.LoadFromFile(F{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
   FID := TStringList.Create;
   FValue := TStringList.Create;
-//  FCurrent := 'english';
+  // FCurrent := 'english';
 end;
 
 destructor TLanguage.Destroy;

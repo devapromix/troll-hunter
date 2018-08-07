@@ -1,8 +1,8 @@
-unit Trollhunter.Item;
+п»їunit Trollhunter.Item;
 
 interface
 
-{ TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
+{ TODO -cРџСЂРµРґРјРµС‚С‹ : РЎРІРµС‚ РѕС‚ Р»Р°РјРїС‹ РґРЅРµРј РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅР° 1 РїСѓРЅРєС‚ Р±РѕР»СЊС€Рµ РјР°РєСЃ. РґР»СЏ РіРµСЂРѕСЏ, Р° РЅРµ РјР°РєСЃ. РєР°Рє СЃРµР№С‡Р°СЃ. }
 
 uses
   uBearLibItemsCommon,
@@ -27,37 +27,29 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Render(AX, AY: UInt);
-    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1;
-      IsRare: Boolean = False);
+    procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1; IsRare: Boolean = False);
     function GetItemEnum(AItemID: Int): TItemEnum;
-    function GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
-      ACount: UInt = 0; IsShort: Boolean = False): string;
-    function RenderInvItem(const AX, AY, I: Int; AItem: Item;
-      IsAdvInfo: Boolean = False; IsRender: Boolean = True;
+    function GetItemInfo(AItem: Item; IsManyItems: Boolean = False; ACount: UInt = 0; IsShort: Boolean = False): string;
+    function RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
     procedure AddItemToInv(Index: Int = 0; AFlag: Boolean = False); overload;
-    procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1;
-      EqFlag: Boolean = False; IdFlag: Boolean = False;
-      SufID: UInt = 0); overload;
+    procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1; EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: UInt = 0); overload;
     function GetInventory: string;
     function InvCount: Integer;
-    function GetInfo(Sign: string; Value: UInt; Color: string;
-      RareColor: string = ''): string;
+    function GetInfo(Sign: string; Value: UInt; Color: string; RareColor: string = ''): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: UInt);
     procedure Loot(const AX, AY: UInt; AItemEnum: TItemEnum); overload;
     procedure Loot(const AX, AY: UInt; AIsBoss: Boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
     function ChItem(AItem: Item): Boolean;
-    function Identify(var AItem: Item; IsNew: Boolean = False;
-      IsRare: Boolean = False; Index: UInt = 0): Boolean;
+    function Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False; Index: UInt = 0): Boolean;
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: TArray<string>): string;
     function StrToItemEnum(const S: string): TItemEnum;
-    procedure SetBonus(var AItem: Item; const BonusType: TBonusType;
-      const Value: UInt8);
+    procedure SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: UInt8);
     function GetBonus(const AItem: Item; const BonusType: TBonusType): UInt8;
     procedure DelCorpses();
     procedure AddPlants;
@@ -123,8 +115,7 @@ begin
   // Price
   if (ItemBase.GetItem(AItem).ItemType in IdentTypeItems) then
   begin
-    AItem.Price := ItemBase.GetItem(AItem).Price + SB.Price +
-      Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
+    AItem.Price := ItemBase.GetItem(AItem).Price + SB.Price + Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
       Round(AItem.MaxDamage * 5.6);
   end
   else
@@ -133,12 +124,10 @@ end;
 
 function TItems.ChItem(AItem: Item): Boolean;
 begin
-  Result := (ItemBase.GetItem(AItem).ItemType in CorpseTypeItems) or
-    (AItem.Stack > 1) or (AItem.Amount > 1) or (AItem.Identify = 0);
+  Result := (ItemBase.GetItem(AItem).ItemType in CorpseTypeItems) or (AItem.Stack > 1) or (AItem.Amount > 1) or (AItem.Identify = 0);
 end;
 
-function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False;
-  ACount: UInt = 0; IsShort: Boolean = False): string;
+function TItems.GetItemInfo(AItem: Item; IsManyItems: Boolean = False; ACount: UInt = 0; IsShort: Boolean = False): string;
 var
   ID: Int;
   S, T, Level, D: string;
@@ -150,8 +139,7 @@ var
     Result := Format('(%dx)', [AItem.Amount])
   end;
 
-  procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
-    const RareColor: string = '');
+  procedure AddEffect(const AEffect: TEffect; const Sign, Color: string; const RareColor: string = '');
   var
     Ef: TEffect;
 
@@ -185,8 +173,7 @@ begin
   ID := AItem.ItemID;
   ItemType := ItemBase.GetItem(ID).ItemType;
   // Level
-  if (AItem.Level > Player.Attributes.Attrib[atLev].Value) or
-    not Game.GetOption(apHdLevOfItem) then
+  if (AItem.Level > Player.Attributes.Attrib[atLev].Value) or not Game.GetOption(apHdLevOfItem) then
     Level := GetItemLevel(AItem.Level);
   // Info
   if not IsManyItems then
@@ -229,8 +216,7 @@ begin
     S := ''
     // Light (Torch)
   else if (ItemType = itTorch) then
-    S := S + Format('(%s%d/%d)', [UI.Icon(icFlag), AItem.Value,
-      ItemBase.GetItem(ID).Value])
+    S := S + Format('(%s%d/%d)', [UI.Icon(icFlag), AItem.Value, ItemBase.GetItem(ID).Value])
   else
   begin
     if (AItem.SlotID = 0) then
@@ -243,74 +229,57 @@ begin
     begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
-      if (AItem.Identify > 0) and
-        (TSuffixEnum(AItem.Identify) in DefenseSuffixes) then
+      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DefenseSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
     // Damage
     if (ItemType in WeaponTypeItems + JewelryTypeItems) then
     begin
       if (AItem.MinDamage > 0) then
-        T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage,
-          AItem.MaxDamage]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes)
-      then
+        T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage, AItem.MaxDamage]);
+      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
 
     if (AItem.Bonus[0] > 0) then
     begin
       if (Items.GetBonus(AItem, btVis) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btVis),
-          'Vision', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btVis), 'Vision', 'Rare');
       if (Items.GetBonus(AItem, btLife) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife),
-          'Life', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btMana) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana),
-          'Mana', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana), 'Mana', 'Rare');
       if (Items.GetBonus(AItem, btExtraGold) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x',
-          Items.GetBonus(AItem, btExtraGold), 'Gold', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btExtraGold), 'Gold', 'Rare');
     end;
     if (AItem.Bonus[1] > 0) then
     begin
       if (Items.GetBonus(AItem, btStr) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btStr),
-          'Strength', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btStr), 'Strength', 'Rare');
       if (Items.GetBonus(AItem, btDex) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btDex),
-          'Dexterity', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btDex), 'Dexterity', 'Rare');
       if (Items.GetBonus(AItem, btWil) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btWil),
-          'Willpower', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btWil), 'Willpower', 'Rare');
       if (Items.GetBonus(AItem, btPer) > 0) then
-        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer),
-          'Perception', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer), 'Perception', 'Rare');
     end;
     if (AItem.Bonus[2] > 0) then
     begin
       if (Items.GetBonus(AItem, btReLife) > 0) then
-        Level := Level + ' ' + Items.GetInfo('@',
-          Items.GetBonus(AItem, btReLife), 'Life', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('@', Items.GetBonus(AItem, btReLife), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btReMana) > 0) then
-        Level := Level + ' ' + Items.GetInfo('@',
-          Items.GetBonus(AItem, btReMana), 'Mana', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('@', Items.GetBonus(AItem, btReMana), 'Mana', 'Rare');
       if (Items.GetBonus(AItem, btLifeAfEachKill) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x',
-          Items.GetBonus(AItem, btLifeAfEachKill), 'Life', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btLifeAfEachKill), 'Life', 'Rare');
       if (Items.GetBonus(AItem, btManaAfEachKill) > 0) then
-        Level := Level + ' ' + Items.GetInfo('x',
-          Items.GetBonus(AItem, btManaAfEachKill), 'Mana', 'Rare');
+        Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btManaAfEachKill), 'Mana', 'Rare');
     end;
     // Durability
     D := '';
     if ItemType in SmithTypeItems then
     begin
-      D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
-        AItem.MaxDurability]);
-      if (AItem.Identify > 0) and
-        (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
+      D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability, AItem.MaxDurability]);
+      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
         D := Terminal.Colorize(D, 'Rare');
     end;
     S := S + AddItemInfo([Level, T, D]);
@@ -328,8 +297,7 @@ begin
     S := GetCapit(GetDescAn(Trim(Items.GetName(AItem, IsShort) + ' ' + S)));
     if IsManyItems then
     begin
-      Result := Format(_('Several items (%dx) are lying here (%s).'),
-        [ACount, S]);
+      Result := Format(_('Several items (%dx) are lying here (%s).'), [ACount, S]);
     end
     else
       Result := Format(_('%s is lying here.'), [S]);
@@ -346,8 +314,7 @@ var
   begin
     Result := False;
     if (ItemBase.GetItem(ID).ItemType in IdentTypeItems) then
-      Result := (Math.RandomRange(0, 4) = 0) or
-        (ItemBase.GetItem(ID).ItemType in AllwaysIdentTypeItems)
+      Result := (Math.RandomRange(0, 4) = 0) or (ItemBase.GetItem(ID).ItemType in AllwaysIdentTypeItems)
   end;
 
 begin
@@ -365,29 +332,24 @@ begin
   AItem.Value := ItemBase.GetItem(ID).Value;
   // Defense
   if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Defense.Min > 0) then
-    AItem.Defense := Math.EnsureRange
-      (Math.RandomRange(ItemBase.GetItem(ID).Defense.Min,
-      ItemBase.GetItem(ID).Defense.Max + 1), 1, UIntMax)
+    AItem.Defense := Math.EnsureRange(Math.RandomRange(ItemBase.GetItem(ID).Defense.Min, ItemBase.GetItem(ID).Defense.Max + 1), 1, UIntMax)
   else
     AItem.Defense := 0;
   // Damage
   if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MinDamage.Min > 0) then
-    AItem.MinDamage := Math.EnsureRange
-      (Math.RandomRange(ItemBase.GetItem(ID).Damage.MinDamage.Min,
-      ItemBase.GetItem(ID).Damage.MinDamage.Max + 1), 1, UIntMax - 1)
+    AItem.MinDamage := Math.EnsureRange(Math.RandomRange(ItemBase.GetItem(ID).Damage.MinDamage.Min, ItemBase.GetItem(ID).Damage.MinDamage.Max + 1), 1,
+      UIntMax - 1)
   else
     AItem.MinDamage := 0;
   if (AItem.Stack = 1) and (ItemBase.GetItem(ID).Damage.MaxDamage.Min > 0) then
-    AItem.MaxDamage := Math.EnsureRange
-      (Math.RandomRange(ItemBase.GetItem(ID).Damage.MaxDamage.Min,
-      ItemBase.GetItem(ID).Damage.MaxDamage.Max + 1), 2, UIntMax)
+    AItem.MaxDamage := Math.EnsureRange(Math.RandomRange(ItemBase.GetItem(ID).Damage.MaxDamage.Min, ItemBase.GetItem(ID).Damage.MaxDamage.Max + 1),
+      2, UIntMax)
   else
     AItem.MaxDamage := 0;
   // Durability
   if (AItem.Stack = 1) then
-    AItem.MaxDurability := Math.EnsureRange
-      (Math.RandomRange(ItemBase.GetItem(ID).MaxDurability - 5,
-      ItemBase.GetItem(ID).MaxDurability + 6), 10, UIntMax)
+    AItem.MaxDurability := Math.EnsureRange(Math.RandomRange(ItemBase.GetItem(ID).MaxDurability - 5, ItemBase.GetItem(ID).MaxDurability + 6),
+      10, UIntMax)
   else
     AItem.MaxDurability := 0;
   AItem.Durability := AItem.MaxDurability;
@@ -400,8 +362,7 @@ begin
   AItem.Identify := Math.IfThen(IsIdentify(), 0, -1);
 end;
 
-procedure TItems.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1;
-  IsRare: Boolean = False);
+procedure TItems.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1; IsRare: Boolean = False);
 var
   I, ID, FX, FY: UInt;
   FItem: Item;
@@ -428,16 +389,14 @@ begin
       Break;
     end;
     Inc(I);
-  until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and
-    (AZ in ItemBase.GetItem(ID).Deep);
+  until (Map.GetTileEnum(FX, FY, AZ) in SpawnTiles) and (AZ in ItemBase.GetItem(ID).Deep);
   ItemType := ItemBase.GetItem(ID).ItemType;
   if ((AID < 0) and (ItemType in NotDropTypeItems)) then
     Exit;
   // Rare
   if not IsRare and ItemBase.GetItem(ID).Rare then
   begin
-    Add(AZ, AX, AY, AID, Math.RandomRange(0, Math.IfThen(Mode.Wizard,
-      1, 9)) = 0);
+    Add(AZ, AX, AY, AID, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1, 9)) = 0);
     if not Mode.Wizard then
       Exit;
   end;
@@ -449,8 +408,7 @@ begin
     itCoin:
       begin
         Value := Ord(AZ) + 1;
-        FItem.Amount := Math.RandomRange(Value * Value,
-          Value * Value * (5 - Ord(Game.Difficulty))) + 1;
+        FItem.Amount := Math.RandomRange(Value * Value, Value * Value * (5 - Ord(Game.Difficulty))) + 1;
         // Extra Gold from Monsters
         if (Player.Attributes.Attrib[atExtraGold].Value > 0) then
         begin
@@ -460,8 +418,7 @@ begin
       end;
   end;
   if ((FItem.Stack = 1) and (ItemType in WeaponTypeItems + ArmorTypeItems)) then
-    FItem.Durability := Math.RandomRange(FItem.MaxDurability div 4,
-      FItem.MaxDurability) + 1;
+    FItem.Durability := Math.RandomRange(FItem.MaxDurability div 4, FItem.MaxDurability) + 1;
   FItem.X := FX;
   FItem.Y := FY;
   FItem.Equipment := 0;
@@ -491,8 +448,7 @@ begin
       Ord(ivPotion_of_Full_Mana) + 1))); }
     // Scroll
     if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivScroll_of_Minor_Healing),
-        Ord(ivScroll_of_Town_Portal) + 1)));
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivScroll_of_Minor_Healing), Ord(ivScroll_of_Town_Portal) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then
       Add(Map.Current, AX, AY, -1, AIsBoss);
@@ -512,13 +468,11 @@ begin
   for I := Count - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
-    if not Map.InView(FItem.X, FItem.Y) or
-      (not Mode.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
+    if not Map.InView(FItem.X, FItem.Y) or (not Mode.Wizard and not Map.GetFOV(FItem.X, FItem.Y)) then
       Continue;
     X := FItem.X - Player.X + AX + View.Left;
     Y := FItem.Y - Player.Y + AY + View.Top;
-    if not Mode.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Vision)
-    then
+    if not Mode.Wizard and (Player.GetDist(FItem.X, FItem.Y) > Player.Vision) then
     begin
       FColor := clFog;
       FSymbol := '?';
@@ -562,8 +516,7 @@ begin
   Result := FItemName[I];
 end;
 
-function TItems.GetInfo(Sign: string; Value: UInt; Color: string;
-  RareColor: string = ''): string;
+function TItems.GetInfo(Sign: string; Value: UInt; Color: string; RareColor: string = ''): string;
 var
   S, P: string;
 begin
@@ -623,12 +576,10 @@ begin
     Exit;
   end;
   if (Value > 0) then
-    Result := Trim(Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]
-      ), Color));
+    Result := Trim(Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]), Color));
 end;
 
-function TItems.RenderInvItem(const AX, AY, I: Int; AItem: Item;
-  IsAdvInfo: Boolean = False; IsRender: Boolean = True;
+function TItems.RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True;
   PriceType: TPriceType = ptNone): string;
 var
   S: string;
@@ -647,8 +598,7 @@ const
 begin
   Result := '';
   D := ItemBase.GetItem(AItem);
-  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
-    IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
+  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '', IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
 
   if IsRender then
   begin
@@ -692,8 +642,7 @@ begin
       ptRepair:
         begin
           S := T;
-          if ((AItem.Stack = 1) and (AItem.Amount = 1) and (Items.Index = 0))
-          then
+          if ((AItem.Stack = 1) and (AItem.Amount = 1) and (Items.Index = 0)) then
           begin
             RepairCost := (AItem.MaxDurability - AItem.Durability) * 10;
             if (RepairCost > 0) then
@@ -745,8 +694,7 @@ begin
   end;
 end;
 
-procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType;
-  const Value: UInt8);
+procedure TItems.SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: UInt8);
 var
   V: array [0 .. 3] of UInt8;
   I: Cardinal;
@@ -825,14 +773,12 @@ begin
   begin
     FItem := Items_Dungeon_GetMapItemXY(AItem.MapID, I, AItem.X, AItem.Y);
     if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems) then
-      if (Items_Dungeon_DeleteMapItemXY(AItem.MapID, I, AItem.X, AItem.Y,
-        FItem) > 0) then
+      if (Items_Dungeon_DeleteMapItemXY(AItem.MapID, I, AItem.X, AItem.Y, FItem) > 0) then
         Items_Dungeon_AppendItem(FItem);
   end;
 end;
 
-procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1;
-  EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: UInt = 0);
+procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1; EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: UInt = 0);
 var
   FItem: Item;
 begin
@@ -842,10 +788,10 @@ begin
   if AAmount > ItemBase.GetItem(AItemEnum).MaxStack then
   begin
     FItem.Amount := ItemBase.GetItem(AItemEnum).MaxStack;
-    AddItemToInv(AItemEnum, AAmount - ItemBase.GetItem(AItemEnum).MaxStack,
-      EqFlag, IdFlag, SufID);
-  end else
-  FItem.Amount := AAmount;
+    AddItemToInv(AItemEnum, AAmount - ItemBase.GetItem(AItemEnum).MaxStack, EqFlag, IdFlag, SufID);
+  end
+  else
+    FItem.Amount := AAmount;
   FItem.Equipment := IfThen(EqFlag, 1, 0);
   if IdFlag and (FItem.Identify = 0) then
     Items.Identify(FItem, True, False, SufID);
@@ -864,15 +810,13 @@ begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteMapItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0)
-  then
+  if (Items_Dungeon_DeleteMapItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
     Items_Inventory_AppendItem(FItem);
     if (FItem.Amount = 1) then
       MsgLog.Add(Format(_('You picked up %s.'), [Items.GetNameThe(FItem)]))
     else
-      MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem),
-        FItem.Amount]));
+      MsgLog.Add(Format(_('You picked up %s (%dx).'), [Items.GetNameThe(FItem), FItem.Amount]));
     // Statistics
     case ItemBase.GetItem(FItem).ItemType of
       itCoin:
@@ -930,12 +874,10 @@ var
 begin
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
-    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True,
-      PriceType);
+    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, PriceType);
 end;
 
-function TItems.Identify(var AItem: Item; IsNew: Boolean = False;
-  IsRare: Boolean = False; Index: UInt = 0): Boolean;
+function TItems.Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False; Index: UInt = 0): Boolean;
 var
   I: UInt;
   SB: TSuffixBase;
@@ -965,8 +907,7 @@ begin
       // Rare
       if not IsRare and SB.Rare then
       begin
-        Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1,
-          9)) = 0, Index);
+        Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
         if not Mode.Wizard then
           Exit;
       end;
@@ -1041,8 +982,7 @@ begin
     for I := Items_Dungeon_GetMapCount(Ord(M)) - 1 downto 0 do
     begin
       FItem := Items_Dungeon_GetMapItem(Ord(M), I);
-      if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems + FoodTypeItems)
-      then
+      if (ItemBase.GetItem(FItem).ItemType in CorpseTypeItems + FoodTypeItems) then
         if (Items_Dungeon_DeleteMapItem(Ord(M), I, FItem) > 0) then
           Continue;
     end;
@@ -1065,8 +1005,7 @@ begin
       begin
         X := FItem.X + Math.RandomRange(0, 2);
         Y := FItem.Y + Math.RandomRange(0, 2);
-        if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, M) in SpawnTiles) and
-          (M in ItemBase.GetItem(FItem).Deep)) then
+        if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, M) in SpawnTiles) and (M in ItemBase.GetItem(FItem).Deep)) then
           Loot(X, Y, TItemEnum(FItem.ItemID));
       end;
     end;
