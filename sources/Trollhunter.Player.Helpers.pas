@@ -28,7 +28,7 @@ function TPlayerHelper.FullName: string;
 begin
   Result := Format('%s, %s (%s), %s', [IfThen(Trim(Player.Name) = '',
     _('PLAYER'), Player.Name), Races.GetName(Player.HRace), Gender,
-    Classes.GetName(Player.HClass)])
+    PCClasses.GetName(Player.HClass)])
 end;
 
 function TPlayerHelper.Gender: string;

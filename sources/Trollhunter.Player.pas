@@ -525,19 +525,19 @@ begin
   Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
   // Strength
   Str := BaseAttrib + Round(Skills.Skill[skAthletics].Value * 1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] +
-    Attributes.Attrib[atStr].Prm + Races.Attrib[atStr] + Trollhunter.Player.Classes.Classes.Attrib[atStr];
+    Attributes.Attrib[atStr].Prm + Races.Attrib[atStr] + PCClasses.Attrib[atStr];
   Attributes.SetValue(atStr, EnsureRange(Str, 1, AttribMax));
   // Dexterity
   Dex := BaseAttrib + Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] + Attributes.Attrib[atDex].Prm + Races.Attrib[atDex] +
-    Trollhunter.Player.Classes.Classes.Attrib[atDex];
+    PCClasses.Attrib[atDex];
   Attributes.SetValue(atDex, EnsureRange(Dex, 1, AttribMax));
   // Willpower
   Wil := BaseAttrib + Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil] + Attributes.Attrib[atWil].Prm + Races.Attrib[atWil] +
-    Trollhunter.Player.Classes.Classes.Attrib[atWil];
+    PCClasses.Attrib[atWil];
   Attributes.SetValue(atWil, EnsureRange(Wil, 1, AttribMax));
   // Perception
   Per := BaseAttrib + Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm + Races.Attrib[atPer] +
-    Trollhunter.Player.Classes.Classes.Attrib[atPer];
+    PCClasses.Attrib[atPer];
   Attributes.SetValue(atPer, EnsureRange(Per, 1, AttribMax));
   //
   if (Abilities.IsAbility(abBerserk)) then
@@ -562,11 +562,11 @@ begin
     LoAttrib(atPV);
   // Life
   Life := BaseLife + Round(Attributes.Attrib[atStr].Value * 3.6) + Round(Attributes.Attrib[atDex].Value * 2.3) + FAttrib[atMaxLife] +
-    Attributes.Attrib[atMaxLife].Prm + Races.Attrib[atLife] + Trollhunter.Player.Classes.Classes.Attrib[atLife];
+    Attributes.Attrib[atMaxLife].Prm + Races.Attrib[atLife] + PCClasses.Attrib[atLife];
   Attributes.SetValue(atMaxLife, Life);
   // Mana
   Mana := BaseMana + Round(Attributes.Attrib[atWil].Value * 4.2) + Round(Attributes.Attrib[atDex].Value * 0.4) + FAttrib[atMaxMana] +
-    Attributes.Attrib[atMaxMana].Prm + Races.Attrib[atMana] + Trollhunter.Player.Classes.Classes.Attrib[atMana];
+    Attributes.Attrib[atMaxMana].Prm + Races.Attrib[atMana] + PCClasses.Attrib[atMana];
   Attributes.SetValue(atMaxMana, Mana);
   // Light
   if Abilities.IsAbility(abLight) then
@@ -1597,7 +1597,7 @@ var
 begin
   // Skills
   for I := Low(TClassSkillEnum) to High(TClassSkillEnum) do
-    Skills.Modify(ClassProp[Player.HClass].Skill[I], Trollhunter.Player.Classes.Classes.GetSkillBeginValue(I));
+    Skills.Modify(ClassProp[Player.HClass].Skill[I], PCClasses.GetSkillBeginValue(I));
   // Calc
   Calc();
   Fill();

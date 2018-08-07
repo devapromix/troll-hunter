@@ -74,32 +74,33 @@ begin
   I := 0;
   Y := 2;
   for C := Low(TClassEnum) to High(TClassEnum) do
-    Add(Trollhunter.Player.Classes.Classes.GetName(C));
+    Add(PCClasses.GetName(C));
 
   RenderInfo;
 
   // Attributes
   Terminal.Print(DX, 9, _('Strength') + ': ' + Terminal.Colorize(UI.Icon(icStr) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
-    Terminal.Colorize(Races.Attrib[atStr], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atStr], 'Lush'));
-  Terminal.Print(DX, 10, _('Dexterity') + ': ' + Terminal.Colorize(UI.Icon(icDex) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
-    Terminal.Colorize(Races.Attrib[atDex], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atDex], 'Lush'));
-  Terminal.Print(DX, 11, _('Willpower') + ': ' + Terminal.Colorize(UI.Icon(icBook) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
-    Terminal.Colorize(Races.Attrib[atWil], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atWil], 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
-    Terminal.Colorize(Races.Attrib[atPer], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Classes.Attrib[atPer], 'Lush'));
+    Terminal.Colorize(Races.Attrib[atStr], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(PCClasses.Attrib[atStr], 'Lush'));
+  Terminal.Print(DX, 10, _('Dexterity') + ': ' + Terminal.Colorize(UI.Icon(icDex) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana')
+    + Terminal.Colorize(Races.Attrib[atDex], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(PCClasses.Attrib[atDex], 'Lush'));
+  Terminal.Print(DX, 11, _('Willpower') + ': ' + Terminal.Colorize(UI.Icon(icBook) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana')
+    + Terminal.Colorize(Races.Attrib[atWil], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(PCClasses.Attrib[atWil], 'Lush'));
+  Terminal.Print(DX, 12, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus,
+    'NoMana') + Terminal.Colorize(Races.Attrib[atPer], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+    Terminal.Colorize(PCClasses.Attrib[atPer], 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atLife], 'NoMana') + '  ' + UI.Icon(icPlus,
-    'Lush') + Terminal.Colorize(Classes.Attrib[atLife], 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') + Terminal.Colorize(Races.Attrib[atMana], 'NoMana') + '  ' + UI.Icon(icPlus,
-    'Lush') + Terminal.Colorize(Classes.Attrib[atMana], 'Lush'));
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
+    Terminal.Colorize(Races.Attrib[atLife], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(PCClasses.Attrib[atLife], 'Lush'));
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'NoMana') +
+    Terminal.Colorize(Races.Attrib[atMana], 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(PCClasses.Attrib[atMana], 'Lush'));
 
-  Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize(Classes.GetItems(Player.HClass), 'Lush'));
+  Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize(PCClasses.GetItems(Player.HClass), 'Lush'));
 
-  Terminal.Print(DX, 19, _('Skills') + ': ' + Terminal.Colorize(Classes.GetSkills(Player.HClass), 'Lush'));
+  Terminal.Print(DX, 19, _('Skills') + ': ' + Terminal.Colorize(PCClasses.GetSkills(Player.HClass), 'Lush'));
 
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY, _(Classes.GetDescription(Player.HClass)), TK_ALIGN_BOTTOM);
+  Terminal.Print(DX, CY - (CY div 2), CX, CY, _(PCClasses.GetDescription(Player.HClass)), TK_ALIGN_BOTTOM);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
@@ -113,14 +114,14 @@ begin
   Prop := ClassProp[Player.HClass];
 
   // Attributes
-  Classes.Attrib[atStr] := Math.RandomRange(Prop.Strength.Min, Prop.Strength.Max + 1);
-  Classes.Attrib[atDex] := Math.RandomRange(Prop.Dexterity.Min, Prop.Dexterity.Max + 1);
-  Classes.Attrib[atWil] := Math.RandomRange(Prop.Willpower.Min, Prop.Willpower.Max + 1);
-  Classes.Attrib[atPer] := Math.RandomRange(Prop.Perception.Min, Prop.Perception.Max + 1);
+  PCClasses.Attrib[atStr] := Math.RandomRange(Prop.Strength.Min, Prop.Strength.Max + 1);
+  PCClasses.Attrib[atDex] := Math.RandomRange(Prop.Dexterity.Min, Prop.Dexterity.Max + 1);
+  PCClasses.Attrib[atWil] := Math.RandomRange(Prop.Willpower.Min, Prop.Willpower.Max + 1);
+  PCClasses.Attrib[atPer] := Math.RandomRange(Prop.Perception.Min, Prop.Perception.Max + 1);
 
   // Life and Mana
-  Classes.Attrib[atLife] := Math.RandomRange(Prop.Life.Min, Prop.Life.Max + 1);
-  Classes.Attrib[atMana] := Math.RandomRange(Prop.Mana.Min, Prop.Mana.Max + 1);
+  PCClasses.Attrib[atLife] := Math.RandomRange(Prop.Life.Min, Prop.Life.Max + 1);
+  PCClasses.Attrib[atMana] := Math.RandomRange(Prop.Mana.Min, Prop.Mana.Max + 1);
 end;
 
 procedure TSceneClass.SelRand;
