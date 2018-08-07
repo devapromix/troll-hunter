@@ -25,6 +25,7 @@ const
   ManaTurnMax = 90;
   BaseLife: UInt = 20;
   BaseMana: UInt = 10;
+  BaseAttrib: UInt = 5;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
@@ -40,9 +41,8 @@ const
   MinPrm = 1;
   TalentPrm = 3;
   AttribPrm = 7;
-
   // Skills
-  SkillMin = 3;
+  SkillMin = 0;
   SkillMax = 75;
   SkillExpMax = 50;
   BeginSkill = 5;
@@ -523,19 +523,19 @@ begin
   //
   Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
   // Strength
-  Str := Round(Skills.Skill[skAthletics].Value * 1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] + Attributes.Attrib[atStr].Prm +
-    Races.Attrib[atStr] + Trollhunter.Player.Classes.Classes.Attrib[atStr];
+  Str := BaseAttrib + Round(Skills.Skill[skAthletics].Value * 1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] +
+    Attributes.Attrib[atStr].Prm + Races.Attrib[atStr] + Trollhunter.Player.Classes.Classes.Attrib[atStr];
   Attributes.SetValue(atStr, EnsureRange(Str, 1, AttribMax));
   // Dexterity
-  Dex := Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] + Attributes.Attrib[atDex].Prm + Races.Attrib[atDex] +
+  Dex := BaseAttrib + Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] + Attributes.Attrib[atDex].Prm + Races.Attrib[atDex] +
     Trollhunter.Player.Classes.Classes.Attrib[atDex];
   Attributes.SetValue(atDex, EnsureRange(Dex, 1, AttribMax));
   // Willpower
-  Wil := Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil] + Attributes.Attrib[atWil].Prm + Races.Attrib[atWil] +
+  Wil := BaseAttrib + Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil] + Attributes.Attrib[atWil].Prm + Races.Attrib[atWil] +
     Trollhunter.Player.Classes.Classes.Attrib[atWil];
   Attributes.SetValue(atWil, EnsureRange(Wil, 1, AttribMax));
   // Perception
-  Per := Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm + Races.Attrib[atPer] +
+  Per := BaseAttrib + Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm + Races.Attrib[atPer] +
     Trollhunter.Player.Classes.Classes.Attrib[atPer];
   Attributes.SetValue(atPer, EnsureRange(Per, 1, AttribMax));
   //
