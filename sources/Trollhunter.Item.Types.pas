@@ -152,7 +152,7 @@ type
     ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8, ivWand9, ivWand10,
 
     // Staves
-    ivQuarterstaff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
+    ivQuarterstaff, ivShort_Staff, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
 
     // Daggers
     ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
