@@ -64,7 +64,7 @@ type
     // Deep Cave (Bosses)
     mbCentaur, mbSatyr, mbTitan,
     // Blood Cave (Bosses)
-    mbHill_Giant, mbStone_Giant, mbTwo1Headed_Ogre,
+    mbHill_Giant, mbStone_Giant, mbTwo4Headed_Ogre,
     // Drom (Bosses)
     mbTroll_King,
 
@@ -1144,9 +1144,6 @@ begin
   for I := Low(TMobEnum) to High(TMobEnum) do
   begin
     S := GetEnumName(P, Ord(I)).GetName('mb');
-    S := StringReplace(S, '1', '-', [rfReplaceAll]);
-    S := StringReplace(S, '2', '(', [rfReplaceAll]);
-    S := StringReplace(S, '3', ')', [rfReplaceAll]);
     FMobName[I] := S;
   end;
 end;

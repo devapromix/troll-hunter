@@ -75,6 +75,9 @@ begin
   Result := StringReplace(Self, Pref, '', [rfReplaceAll]);
   Result := StringReplace(Result, '_', ' ', [rfReplaceAll]);
   Result := StringReplace(Result, '1', '''', [rfReplaceAll]);
+  Result := StringReplace(Result, '2', '(', [rfReplaceAll]);
+  Result := StringReplace(Result, '3', ')', [rfReplaceAll]);
+  Result := StringReplace(Result, '4', '-', [rfReplaceAll]);
 end;
 
 end.
