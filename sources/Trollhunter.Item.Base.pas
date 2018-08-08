@@ -603,10 +603,10 @@ const
     // Dagger (Dagger #1)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;)); Price: 125; Color: clDarkBlue; Deep: [deDark_Wood];),
-    // Dagger #2
+    // Kris (Dagger #2)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 16; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;)); Price: 150; Color: clDarkBlue; Deep: [deDark_Wood];),
-    // Dagger #3
+    // Sacrificial Kris (Dagger #3)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 19; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 175; Color: clDarkBlue; Deep: [deGray_Cave];),
     // Dagger #4

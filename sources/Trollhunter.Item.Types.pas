@@ -155,7 +155,7 @@ type
     ivQuarterstaff, ivShort_Staff, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
 
     // Daggers
-    ivDagger, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
+    ivDagger, ivKris, ivSacrificial_Kris, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
 
     // Bows
     ivHunter1s_Bow, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8, ivBow9, ivBow10,
