@@ -631,7 +631,7 @@ const
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 350; Color: clDarkBlue; Deep: [deDrom];),
 
-    // Bow #1
+    // Hunter's Bow (Bow #1)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;)); Price: 200; Color: clDarkBlue; Deep: [deDark_Wood];),
     // Bow #2

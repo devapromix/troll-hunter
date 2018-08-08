@@ -45,7 +45,7 @@ const
     // Ranger
     (Description: 'Ranger'; Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 4;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
     Life: (Min: 5; Max: 10;); Mana: (Min: 1; Max: 5;); Skill: (skBow, skDodge, skDodge);
-    Item: (ivCap, ivQuilted_Armor, None, None, ivBow1, None, None, None);),
+    Item: (ivCap, ivQuilted_Armor, None, None, ivHunter1s_Bow, None, None, None);),
     // Thief
     (Description: 'Thief'; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
     Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;); Skill: (skDagger, skToughness, skStealth);

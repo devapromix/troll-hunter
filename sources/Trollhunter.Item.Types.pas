@@ -71,7 +71,7 @@ const
   // Hide Shield , Iron Shield , Steel Shield , Dragonscale Shield , Dragonplate Shield
   // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
   // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
-  // Long Bow , Hunting Bow , Imperial Bow , Ancient Bow , Hero Bow , Dragonbone Bow
+  // Hunter's Bow, Long Bow , Imperial Bow , Ancient Bow , Hero Bow , Dragonbone Bow
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
@@ -158,7 +158,7 @@ type
     ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
 
     // Bows
-    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8, ivBow9, ivBow10,
+    ivHunter1s_Bow, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8, ivBow9, ivBow10,
 
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear

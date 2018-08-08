@@ -74,6 +74,7 @@ function TStringHelper.GetName(const Pref: string): string;
 begin
   Result := StringReplace(Self, Pref, '', [rfReplaceAll]);
   Result := StringReplace(Result, '_', ' ', [rfReplaceAll]);
+  Result := StringReplace(Result, '1', '''', [rfReplaceAll]);
 end;
 
 end.
