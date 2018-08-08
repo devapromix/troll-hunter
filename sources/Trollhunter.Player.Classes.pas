@@ -150,7 +150,7 @@ begin
   Result := '';
   for J := Low(TClassSkillEnum) to High(TClassSkillEnum) do
   begin
-    S := Format('%s %s%d', [FSkills.GetName(ClassProp[I].Skill[J]), UI.Icon(icPlus), GetSkillBeginValue(J)]);
+    S := Format('%s %s%d', [_(FSkills.GetName(ClassProp[I].Skill[J])), UI.Icon(icPlus), GetSkillBeginValue(J)]);
     Utils.AppStr(Result, S, F);
     F := True;
   end;
