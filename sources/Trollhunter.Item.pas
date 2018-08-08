@@ -932,7 +932,7 @@ function TItems.GetName(AItem: Item; IsShort: Boolean = False): string;
 var
   N, S: string;
 begin
-  N := GetName(TItemEnum(AItem.ItemID));
+  N := Trim(GetName(TItemEnum(AItem.ItemID)));
   case AItem.Identify of
     0:
       begin
@@ -944,7 +944,7 @@ begin
       end;
     1 .. UIntMax:
       begin
-        Result := N + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify));
+        Result := _(N) + ' ' + _(Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)));
         if (AItem.SlotID > 0) then
           Result := Terminal.Colorize(Result, 'Rare')
         else

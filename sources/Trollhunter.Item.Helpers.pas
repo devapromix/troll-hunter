@@ -1,8 +1,9 @@
-unit Trollhunter.Item.Helpers;
+﻿unit Trollhunter.Item.Helpers;
 
 interface
 
-uses Trollhunter.Item,
+uses
+  Trollhunter.Item,
   Trollhunter.Types,
   Trollhunter.Player.Types;
 
@@ -15,7 +16,8 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.Terminal,
   Trollhunter.Language,
   Trollhunter.UI,
