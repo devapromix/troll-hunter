@@ -80,7 +80,9 @@ uses
   Trollhunter.Helpers,
   Trollhunter.Utils,
   Trollhunter.Item,
-  Trollhunter.Player, Trollhunter.UI;
+  Trollhunter.Player,
+  Trollhunter.UI,
+  Trollhunter.Language;
 
 { TClasses }
 
@@ -110,15 +112,15 @@ function TClasses.GetItems(I: TClassEnum): string;
 var
   J: TSlotType;
   F: Boolean;
-  S: string;
+  ItemName: string;
 begin
   F := False;
   Result := '';
   for J := Low(ClassProp[I].Item) to High(ClassProp[I].Item) do
     if (ClassProp[I].Item[J] <> TItemEnum.None) then
     begin
-      S := Items.Name[ClassProp[I].Item[J]];
-      Utils.AppStr(Result, S, F);
+      ItemName := Items.Name[ClassProp[I].Item[J]];
+      Utils.AppStr(Result, _(ItemName), F);
       F := True;
     end;
 end;
