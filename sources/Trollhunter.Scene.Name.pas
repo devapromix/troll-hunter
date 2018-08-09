@@ -31,7 +31,7 @@ begin
   UI.Title(_('Choose a name'));
 
   Terminal.Print(CX - 14, CY - 1, _('Enter your player''s name') + ': ' +
-    Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
+    Player.Name + '_', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX, CY + 1, Player.FullName, TK_ALIGN_CENTER);
 

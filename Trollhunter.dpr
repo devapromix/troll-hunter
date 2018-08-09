@@ -3,6 +3,7 @@
 {$APPTYPE GUI}
 {$ENDIF}
 {$ENDIF}
+
 program Trollhunter;
 
 uses

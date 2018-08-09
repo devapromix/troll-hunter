@@ -243,13 +243,13 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>

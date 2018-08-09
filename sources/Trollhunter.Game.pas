@@ -2,7 +2,8 @@ unit Trollhunter.Game;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Entity,
   Trollhunter.Map,
   Trollhunter.Language;
@@ -163,7 +164,6 @@ type
     procedure LoadConfig;
     procedure Start;
     procedure Log(S: string);
-    function GetCursor: string;
     function EnsureRange(const AValue, AMax: Int): Int;
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
@@ -175,7 +175,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
@@ -243,11 +244,6 @@ end;
 function TGame.EnsureRange(const AValue, AMax: Int): Int;
 begin
   Result := AValue.InRange(AMax);
-end;
-
-function TGame.GetCursor: string;
-begin
-  Result := '_';
 end;
 
 function TGame.GetDifficultyName: string;
