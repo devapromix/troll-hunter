@@ -2,7 +2,8 @@
 
 interface
 
-uses Trollhunter.Scenes,
+uses
+  Trollhunter.Scenes,
   Trollhunter.Types;
 
 type
@@ -14,7 +15,8 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   BearLibTerminal,
   uBearLibItemsCommon,
   Trollhunter.UI,

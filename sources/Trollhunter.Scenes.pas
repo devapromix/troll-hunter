@@ -44,6 +44,16 @@ type
   end;
 
 type
+  TMenuScene = class(TScene)
+  private
+    procedure PrevScene; abstract;
+    procedure NextScene; abstract;
+    procedure Add(const AName: string);
+  public
+
+  end;
+
+type
   TScenes = class(TScene)
   private
     FSceneEnum: TSceneEnum;
