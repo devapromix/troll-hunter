@@ -575,28 +575,28 @@ const
     // Short Staff (Staff #2)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;)); Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ManaCost: 2;),
-    // (Staff #3)
+    //  (Staff #3)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 4;); MaxDamage: (Min: 4; Max: 5;)); Price: 500; Color: clDarkGreen; Deep: [deGray_Cave]; ManaCost: 3;),
-    // (Staff #4)
+    //  (Staff #4)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 4; Max: 5;); MaxDamage: (Min: 6; Max: 7;)); Price: 600; Color: clDarkGreen; Deep: [deGray_Cave]; ManaCost: 3;),
-    // (Staff #5)
+    //  (Staff #5)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 6; Max: 7;)); Price: 700; Color: clDarkGreen; Deep: [deDeep_Cave]; ManaCost: 4;),
-    // (Staff #6)
+    //  (Staff #6)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 6; Max: 7;); MaxDamage: (Min: 8; Max: 9;)); Price: 800; Color: clDarkGreen; Deep: [deDeep_Cave]; ManaCost: 4;),
-    // (Staff #7)
+    //  (Staff #7)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 7; Max: 8;); MaxDamage: (Min: 8; Max: 9;)); Price: 900; Color: clDarkGreen; Deep: [deBlood_Cave]; ManaCost: 5;),
-    // (Staff #8)
+    //  (Staff #8)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 9;); MaxDamage: (Min: 10; Max: 11;)); Price: 1000; Color: clDarkGreen; Deep: [deBlood_Cave]; ManaCost: 6;),
-    // (Staff #9)
+    //  (Staff #9)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 9; Max: 10;); MaxDamage: (Min: 11; Max: 12;)); Price: 1100; Color: clDarkGreen; Deep: [deDrom]; ManaCost: 7;),
-    // (Staff #10)
+    //  (Staff #10)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ManaCost: 8;),
 
@@ -609,56 +609,56 @@ const
     // Sacrificial Kris (Dagger #3)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 19; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 175; Color: clDarkBlue; Deep: [deGray_Cave];),
-    // Dagger #4
+    //  (Dagger #4)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 22; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;)); Price: 200; Color: clDarkBlue; Deep: [deGray_Cave];),
-    // Dagger #5
+    //  (Dagger #5)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 25; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;)); Price: 225; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    // Dagger #6
+    //  (Dagger #6)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 28; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;)); Price: 250; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    // Dagger #7
+    //  (Dagger #7)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 31; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;)); Price: 275; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    // Dagger #8
+    //  (Dagger #8)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 34; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;)); Price: 300; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    // Dagger #9
+    //  (Dagger #9)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 37; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;)); Price: 325; Color: clDarkBlue; Deep: [deDrom];),
-    // Dagger #10
+    //  (Dagger #10)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 350; Color: clDarkBlue; Deep: [deDrom];),
 
-    // Hunter's Bow (Bow #1)
+    // Short Bow (Bow #1)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;)); Price: 200; Color: clDarkBlue; Deep: [deDark_Wood];),
-    // Bow #2
+    // Hunter's Bow (Bow #2)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;)); Price: 250; Color: clDarkBlue; Deep: [deDark_Wood];),
-    // Bow #3
+    //  (Bow #3)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 300; Color: clDarkBlue; Deep: [deGray_Cave];),
-    // Bow #4
+    //  (Bow #4)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;)); Price: 350; Color: clDarkBlue; Deep: [deGray_Cave];),
-    // Bow #5
+    //  (Bow #5)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;)); Price: 400; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    // Bow #6
+    //  (Bow #6)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;)); Price: 450; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    // Bow #7
+    //  (Bow #7)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;)); Price: 500; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    // Bow #8
+    //  (Bow #8)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;)); Price: 550; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    // Bow #9
+    //  (Bow #9)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;)); Price: 600; Color: clDarkBlue; Deep: [deDrom];),
-    // Bow #10
+    //  (Bow #10)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 80; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 700; Color: clDarkBlue; Deep: [deDrom];),
 

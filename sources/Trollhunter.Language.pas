@@ -49,6 +49,7 @@ begin
   end
   else
     Result := AValue;
+  Result := '+' + Result;
 end;
 
 procedure TLanguage.Clear;

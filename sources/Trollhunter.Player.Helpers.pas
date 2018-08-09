@@ -26,8 +26,8 @@ uses
 
 function TPlayerHelper.FullName: string;
 begin
-  Result := Format('%s, %s (%s), %s', [IfThen(Trim(Player.Name) = '', _('PLAYER'), Player.Name), Races.GetName(Player.HRace), Gender,
-    PCClasses.GetName(Player.HClass)])
+  Result := Format('%s, %s (%s), %s', [IfThen(Trim(Player.Name) = '', _('PLAYER'), Player.Name), _(Races.GetName(Player.HRace)), Gender,
+    _(PCClasses.GetName(Player.HClass))]);
 end;
 
 function TPlayerHelper.Gender: string;
