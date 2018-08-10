@@ -1,10 +1,4 @@
-﻿{$IFDEF FPC}
-{$IFDEF Windows}
-{$APPTYPE GUI}
-{$ENDIF}
-{$ENDIF}
-
-program Trollhunter;
+﻿program Trollhunter;
 
 uses
   SysUtils,
@@ -83,10 +77,25 @@ var
 
 begin
   Randomize();
-{$IFNDEF FPC}
+{$IFDEF FPC}
+{$IFDEF Windows}
+{$IFDEF DEBUG}
+{$APPTYPE CONSOLE}
+  Mode.Wizard := True;
+  WriteLn('TROLLHUNTER [WIZARD MODE]');
+{$ELSE}
+{$APPTYPE GUI}
+{$ENDIF}
+{$ENDIF}
+{$ELSE}
 {$IF COMPILERVERSION >= 18}
   ReportMemoryLeaksOnShutdown := True;
 {$IFEND}
+{$IFDEF DEBUG}
+{$APPTYPE CONSOLE}
+  Mode.Wizard := True;
+  WriteLn('TROLLHUNTER [WIZARD MODE]');
+{$ENDIF}
 {$ENDIF}
   Game.LoadConfig();
   repeat

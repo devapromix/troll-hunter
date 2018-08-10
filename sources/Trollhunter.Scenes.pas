@@ -46,9 +46,9 @@ type
 type
   TMenuScene = class(TScene)
   private
-    procedure PrevScene; abstract;
-    procedure NextScene; abstract;
-    procedure Add(const AName: string);
+    //procedure PrevScene; abstract;
+    //procedure NextScene; abstract;
+    //procedure Add(const AName: string);
   public
 
   end;

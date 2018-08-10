@@ -1,4 +1,4 @@
-unit Trollhunter.Game;
+﻿unit Trollhunter.Game;
 
 interface
 
@@ -121,8 +121,8 @@ type
   TSpawn = class(TEntity);
 
 type
-  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apFlask,
-    apScroll, apKey, apPlant, apFullscreen, apHdLevOfItem, apShPrice, apMagic);
+  TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apFlask, apScroll, apKey, apPlant, apFullscreen, apHdLevOfItem,
+    apShPrice, apMagic);
 
 type
   TGame = class(TObject)
@@ -177,6 +177,7 @@ implementation
 
 uses
   SysUtils,
+  Vcl.Dialogs,
   BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
@@ -202,14 +203,12 @@ constructor TGame.Create;
 var
   I: UInt;
   J: TAPOptionEnum;
-  IsUseLang: Boolean;
 begin
   Randomize;
   Timer := 0;
   Won := False;
   Mode.Game := False;
-  Mode.Wizard := False;
-  IsUseLang := False;
+//  Mode.Wizard := False;
   for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
     FAPOption[J] := True;
   CanClose := False;
@@ -223,13 +222,9 @@ begin
   PortalMap := deDark_Wood;
   PortalTile := teStoneFloor;
   for I := 1 to ParamCount do
-  begin
     if (LowerCase(ParamStr(I)) = '-w') then
       Mode.Wizard := True;
-    if (LowerCase(ParamStr(I)) = '-l') then
-      IsUseLang := True;
-  end;
-  Language := TLanguage.Create(IsUseLang);
+  Language := TLanguage.Create;
 end;
 
 destructor TGame.Destroy;
@@ -314,8 +309,7 @@ begin
   Shops.New;
   // Intro
   MsgLog.Clear;
-  MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'),
-    _('You need to find and kill The King Troll!'), _('Press ? for help.')]),
+  MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'), _('You need to find and kill The King Troll!'), _('Press ? for help.')]),
     clAlarm));
 end;
 

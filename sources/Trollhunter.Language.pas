@@ -2,7 +2,8 @@
 
 interface
 
-uses Classes;
+uses
+  Classes;
 
 type
   TLanguage = class(TObject)
@@ -11,12 +12,11 @@ type
     FSL: TStringList;
     FValue: TStringList;
     FCurrent: string;
-    FUseDefaultLanguage: Boolean;
   public const
     DefaultLanguage = 'default.lng';
   public
     function Get(const AValue: string): string;
-    constructor Create(const AUseDefaultLanguage: Boolean = False);
+    constructor Create;
     destructor Destroy; override;
     procedure Clear;
     procedure SaveDefault;
@@ -24,7 +24,6 @@ type
     procedure SaveToFile(AFileName: string);
     procedure UseLanguage(ACurrentLanguage: string);
     property Current: string read FCurrent write FCurrent;
-    property UseDefaultLanguage: Boolean read FUseDefaultLanguage;
     class function GetPath(SubDir: string): string;
   end;
 
@@ -35,7 +34,9 @@ var
 
 implementation
 
-uses SysUtils;
+uses
+  SysUtils,
+  Trollhunter.Game;
 
 { TLanguage }
 
@@ -43,13 +44,14 @@ function _(const AValue: string): string;
 begin
   if Assigned(Language) then
   begin
-    if Language.UseDefaultLanguage then
+    if Mode.Wizard then
       Language.FSL.Append(AValue + '=');
     Result := Language.Get(AValue);
   end
   else
     Result := AValue;
-  Result := '+' + Result;
+  if Mode.Wizard and (Result <> '') then
+    Result := '+' + Result;
 end;
 
 procedure TLanguage.Clear;
@@ -58,14 +60,13 @@ begin
   FValue.Clear;
 end;
 
-constructor TLanguage.Create(const AUseDefaultLanguage: Boolean = False);
+constructor TLanguage.Create;
 var
   F: string;
 begin
   FSL := TStringList.Create;
   FSL.Duplicates := dupIgnore;
   FSL.Sorted := True;
-  FUseDefaultLanguage := AUseDefaultLanguage;
   F := GetPath('languages') + DefaultLanguage;
   if FileExists(F) then
     FSL.LoadFromFile(F{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
@@ -108,7 +109,7 @@ end;
 
 procedure TLanguage.SaveDefault;
 begin
-  if Language.UseDefaultLanguage then
+  if Mode.Wizard then
     SaveToFile(GetPath('languages') + DefaultLanguage);
 end;
 
