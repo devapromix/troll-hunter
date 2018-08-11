@@ -637,7 +637,7 @@ const
     // Hunter's Bow (Bow #2)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;)); Price: 250; Color: clDarkBlue; Deep: [deDark_Wood];),
-    //  (Bow #3)
+    // Long Bow (Bow #3)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 300; Color: clDarkBlue; Deep: [deGray_Cave];),
     //  (Bow #4)
