@@ -697,6 +697,38 @@ const
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 250; Level: 10; Defense: (Min: 46; Max: 50);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2500; Color: clWhite; Deep: [deDrom];),
 
+    // Light Clothes
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 20; Level: 1; Defense: (Min: 1; Max: 2);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 600; Color: clLightestBlue; Deep: [deDark_Wood];),
+    // Leather Apron
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 40; Level: 2; Defense: (Min: 3; Max: 4);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 800; Color: clLightestBlue; Deep: [deDark_Wood];),
+    // Fancy Clothes
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 60; Level: 3; Defense: (Min: 5; Max: 6);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clLightestBlue; Deep: [deGray_Cave];),
+    // Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 75; Level: 4; Defense: (Min: 7; Max: 8);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1300; Color: clLightestBlue; Deep: [deGray_Cave];),
+    // Light Furs
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 85; Level: 5; Defense: (Min: 9; Max: 10);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1500; Color: clLightestBlue; Deep: [deDeep_Cave];),
+    // Clean Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 100; Level: 6; Defense: (Min: 11; Max: 12);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1700; Color: clLightestBlue; Deep: [deDeep_Cave];),
+    // Thick Furs
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 120; Level: 7; Defense: (Min: 13; Max: 14);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1900; Color: clLightestBlue; Deep: [deBlood_Cave];),
+    // Hard Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 150; Level: 8; Defense: (Min: 15; Max: 16);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2100; Color: clLightestBlue; Deep: [deBlood_Cave];),
+    // Moloch Robe
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 180; Level: 9; Defense: (Min: 17; Max: 18);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2600; Color: clLightestBlue; Deep: [deDrom];),
+    // Boneweave Hauberk
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 200; Level: 10; Defense: (Min: 19; Max: 20);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 3000; Color: clLightestBlue; Deep: [deDrom];),
+
+
     /// / == Dark _Wood == ////
 
     // Cap
@@ -711,12 +743,6 @@ const
     // Red Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 12; Level: 2; Defense: (Min: 2; Max: 3);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clLightRed; Deep: [deDark_Wood];),
-    // Light Clothes
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 20; Level: 1; Defense: (Min: 1; Max: 2);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 600; Color: clLightestBlue; Deep: [deDark_Wood];),
-    // Leather Apron
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 40; Level: 2; Defense: (Min: 3; Max: 4);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 800; Color: clLightestBlue; Deep: [deDark_Wood];),
 
     // Leather Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1; MaxDurability: 10; Level: 1; Defense: (Min: 1; Max: 2);
@@ -778,12 +804,6 @@ const
     // Mask
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 18; Level: 4; Defense: (Min: 3; Max: 4);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 700; Color: clLightestBlue; Deep: [deGray_Cave];),
-    // Fancy Clothes
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 60; Level: 3; Defense: (Min: 5; Max: 6);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clLightestBlue; Deep: [deGray_Cave];),
-    // Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 75; Level: 4; Defense: (Min: 7; Max: 8);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1300; Color: clLightestBlue; Deep: [deGray_Cave];),
 
     // Kobold Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1; MaxDurability: 22; Level: 3; Defense: (Min: 5; Max: 6);
@@ -845,12 +865,6 @@ const
     // Wizard Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 25; Level: 6; Defense: (Min: 5; Max: 6);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1200; Color: clLightestBlue; Deep: [deDeep_Cave];),
-    // Light Furs
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 85; Level: 5; Defense: (Min: 9; Max: 10);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1500; Color: clLightestBlue; Deep: [deDeep_Cave];),
-    // Clean Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 100; Level: 6; Defense: (Min: 11; Max: 12);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1700; Color: clLightestBlue; Deep: [deDeep_Cave];),
 
     // Etched Gloves
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1; MaxDurability: 35; Level: 5; Defense: (Min: 9; Max: 10);
@@ -912,12 +926,6 @@ const
     // Tiara
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 35; Level: 8; Defense: (Min: 7; Max: 8);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1700; Color: clLightestBlue; Deep: [deBlood_Cave];),
-    // Thick Furs
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 120; Level: 7; Defense: (Min: 13; Max: 14);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1900; Color: clLightestBlue; Deep: [deBlood_Cave];),
-    // Hard Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 150; Level: 8; Defense: (Min: 15; Max: 16);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2100; Color: clLightestBlue; Deep: [deBlood_Cave];),
 
     // Battle Gauntlets
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1; MaxDurability: 45; Level: 7; Defense: (Min: 13; Max: 14);
@@ -979,12 +987,6 @@ const
     // Crown
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 50; Level: 10; Defense: (Min: 10; Max: 12);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2800; Color: clLightestBlue; Deep: [deDrom];),
-    // Moloch Robe
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 180; Level: 9; Defense: (Min: 17; Max: 18);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2600; Color: clLightestBlue; Deep: [deDrom];),
-    // Boneweave Hauberk
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 200; Level: 10; Defense: (Min: 19; Max: 20);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 3000; Color: clLightestBlue; Deep: [deDrom];),
 
     // Troll Gauntlets
     (Symbol: '%'; ItemType: itHands; SlotType: stHands; MaxStack: 1; MaxDurability: 55; Level: 9; Defense: (Min: 17; Max: 18);

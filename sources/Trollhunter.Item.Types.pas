@@ -176,10 +176,12 @@ type
     // Body Armors
     ivQuilted_Armor, ivLeather_Armor, ivHard_Leather_Armor, ivBattle_Armor, ivBrigantine_Armor, ivRing_Mail, ivChain_Mail, ivScale_Mail,
     ivSplint_Mail, ivPlate_Mail,
+    // Magic Armors
+    ivLight_Clothes, ivLeather_Apron, ivFancy_Clothes, ivRobe, ivLight_Furs, ivClean_Robe, ivThick_Furs, ivHard_Robe, ivMoloch_Robe,
+    ivBoneweave_Hauberk,
 
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
-    ivLight_Clothes, ivLeather_Apron, // Body Armor
     ivLeather_Gloves, ivHide_Gloves, // Gloves
     ivShoes, ivLeather_Boots, // Boots
     ivBuckler, ivTarge_Shield, // Shield
@@ -189,7 +191,6 @@ type
     ivSlag_Hammer, ivSpiked_Cudgel, // Mace
     // Gray Cave
     ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
-    ivFancy_Clothes, ivRobe, // Body Armor
     ivKobold_Gloves, ivChain_Gloves, // Gloves
     ivMesh_Boots, ivHeavy_Boots, // Boots
     ivSmall_Shield, ivKite_Shield, // Shield
@@ -199,7 +200,6 @@ type
     ivWarhammer, ivWar_Mace, // Mace
     // Deep Cave
     ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
-    ivLight_Furs, ivClean_Robe, // Body Armor
     ivEtched_Gloves, ivHeavy_Gloves, // Gloves
     ivGreaves, ivBoneweave_Boots, // Boots
     ivBone_Shield, ivHeater_Shield, // Shield
@@ -209,7 +209,6 @@ type
     ivFlanged_Mace, ivWar_Gavel, // Mace
     // Blood Cave
     ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
-    ivThick_Furs, ivHard_Robe, // Body Armor
     ivBattle_Gauntlets, ivWar_Gauntlets, // Gloves
     ivChain_Boots, ivWar_Boots, // Boots
     ivHeavy_Shield, ivLarge_Shield, // Shield
@@ -219,7 +218,6 @@ type
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
-    ivMoloch_Robe, ivBoneweave_Hauberk, // Body Armor
     ivTroll_Gauntlets, ivPlated_Gauntlets, // Gloves
     ivBattle_Boots, ivPlate_Boots, // Boots
     ivTower_Shield, ivGothic_Shield, // Shield
