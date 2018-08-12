@@ -613,25 +613,25 @@ const
     // Sacrificial Kris (Dagger #3)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 19; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 175; Color: clDarkBlue; Deep: [deGray_Cave];),
-    //  (Dagger #4)
+    // Leafblade (Dagger #4)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 22; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;)); Price: 200; Color: clDarkBlue; Deep: [deGray_Cave];),
-    //  (Dagger #5)
+    // Long Dagger (Dagger #5)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 25; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;)); Price: 225; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    //  (Dagger #6)
+    // Jagged Dagger (Dagger #6)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 28; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;)); Price: 250; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    //  (Dagger #7)
+    // Trident Dagger (Dagger #7)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 31; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;)); Price: 275; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    //  (Dagger #8)
+    // Divine Dagger (Dagger #8)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 34; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;)); Price: 300; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    //  (Dagger #9)
+    // Blood Dagger (Dagger #9)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 37; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;)); Price: 325; Color: clDarkBlue; Deep: [deDrom];),
-    //  (Dagger #10)
+    // Shadow Dagger (Dagger #10)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 350; Color: clDarkBlue; Deep: [deDrom];),
 

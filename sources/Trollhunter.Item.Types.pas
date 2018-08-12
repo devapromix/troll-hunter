@@ -73,8 +73,13 @@ const
   // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
   // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
 
-  // Light Crossbow , Crossbow , Heavy Crossbow , Siege Crossbow , Demon Crossbow,
+  // Wooden Wand , Mystery Wand , Bonetooth Wand , Sanctified Wand ,
+
+  // Light Crossbow , Crossbow , Heavy Crossbow , Siege Crossbow , Demon Crossbow
   // Heavy Siege Crossbow , War Crossbow , Phantom Crossbow , Runic Crossbow , Ancient Crossbow
+
+  // Dagger , Kris , Sacrificial Kris , Leafblade , Long Dagger
+  // Jagged Dagger , Trident Dagger , Divine Dagger , Blood Dagger , Shadow Dagger
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
@@ -161,9 +166,8 @@ type
     ivShort_Staff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
 
     // Daggers
-    ivDagger, ivKris, ivSacrificial_Kris, ivDagger4, ivDagger5,
-    ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
-
+    ivDagger, ivKris, ivSacrificial_Kris, ivLeafblade, ivLong_Dagger, ivJagged_Dagger, ivTrident_Dagger, ivDivine_Dagger, ivBlood_Dagger,
+    ivShadow_Dagger,
     // Bows
     ivShort_Bow, ivHunter1s_Bow, ivLong_Bow, ivHero_Bow, ivBattle_Bow, ivComposite_Bow, ivImperial_Bow, ivRevenant_Bow, ivAncient_Bow,
     ivDragonbone_Bow,
