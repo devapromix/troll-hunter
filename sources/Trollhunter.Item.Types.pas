@@ -179,48 +179,39 @@ type
     // Magic Armors
     ivLight_Clothes, ivLeather_Apron, ivFancy_Clothes, ivRobe, ivLight_Furs, ivClean_Robe, ivThick_Furs, ivHard_Robe, ivMoloch_Robe,
     ivBoneweave_Hauberk,
+    // Headgear
+    ivCap, ivWar_Cap, ivHelm, ivGrand_Helm, ivGreat_Helm, ivFull_Helm, ivHorned_Helmet, ivSpired_Helm, ivCasque, ivWinged_Helm,
+    //
+    ivHood, ivRed_Hat, ivLeather_Cap, ivMask, ivBone_Helmet, ivWizard_Hat, ivDiadem, ivTiara, ivMagic_Helmet, ivCrown,
+    // Gloves
+    ivLeather_Gloves, ivHide_Gloves, ivKobold_Gloves, ivChain_Gloves, ivEtched_Gloves, ivHeavy_Gloves, ivBattle_Gauntlets, ivWar_Gauntlets,
+    ivTroll_Gauntlets, ivPlated_Gauntlets,
+    // Boots
+    ivShoes, ivLeather_Boots, ivMesh_Boots, ivHeavy_Boots, ivGreaves, ivBoneweave_Boots, ivChain_Boots, ivWar_Boots, ivBattle_Boots, ivPlate_Boots,
+    // Shield
+    ivBuckler, ivTarge_Shield, ivSmall_Shield, ivKite_Shield, ivBone_Shield, ivHeater_Shield, ivHeavy_Shield, ivLarge_Shield, ivTower_Shield,
+    ivGothic_Shield,
 
-    // Dark Wood
-    ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
-    ivLeather_Gloves, ivHide_Gloves, // Gloves
-    ivShoes, ivLeather_Boots, // Boots
-    ivBuckler, ivTarge_Shield, // Shield
     ivRusty_Sword, ivShort_Sword, // Blade
     ivHatchet, ivBattle_Axe, // Axe
     ivShort_Spear, ivSpear, // Spear
     ivSlag_Hammer, ivSpiked_Cudgel, // Mace
     // Gray Cave
-    ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
-    ivKobold_Gloves, ivChain_Gloves, // Gloves
-    ivMesh_Boots, ivHeavy_Boots, // Boots
-    ivSmall_Shield, ivKite_Shield, // Shield
     ivBroad_Sword, ivLong_Sword, // Blade
     ivMeat_Axe, ivFlesh_Tearer, // Axe
     ivJavelin, ivFuscina, // Spear
     ivWarhammer, ivWar_Mace, // Mace
     // Deep Cave
-    ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
-    ivEtched_Gloves, ivHeavy_Gloves, // Gloves
-    ivGreaves, ivBoneweave_Boots, // Boots
-    ivBone_Shield, ivHeater_Shield, // Shield
     ivMoon_Blade, ivScimitar, // Blade
     ivWar_Axe, ivDark_Axe, // Axe
     ivWar_Spear, ivHarpoon, // Spear
     ivFlanged_Mace, ivWar_Gavel, // Mace
     // Blood Cave
-    ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
-    ivBattle_Gauntlets, ivWar_Gauntlets, // Gloves
-    ivChain_Boots, ivWar_Boots, // Boots
-    ivHeavy_Shield, ivLarge_Shield, // Shield
     ivBastard_Sword, ivGreat_Sword, // Blade
     ivBerserker_Axe, ivMarauder_Axe, // Axe
     ivSilvan_Whisper, ivImpaler, // Spear
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
     // Drom
-    ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
-    ivTroll_Gauntlets, ivPlated_Gauntlets, // Gloves
-    ivBattle_Boots, ivPlate_Boots, // Boots
-    ivTower_Shield, ivGothic_Shield, // Shield
     ivRune_Sword, ivTroll_Slayer, // Blade
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
