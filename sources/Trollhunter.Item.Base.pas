@@ -666,6 +666,37 @@ const
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 80; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 700; Color: clDarkBlue; Deep: [deDrom];),
 
+    // Quilted Armor (Body Armor #1)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clWhite; Deep: [deDark_Wood];),
+    // Leather Armor (Body Armor #2)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 50; Level: 2; Defense: (Min: 8; Max: 11);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500; Color: clWhite; Deep: [deDark_Wood];),
+    // HardLeather Armor (Body Armor #3)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 75; Level: 3; Defense: (Min: 12; Max: 15);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 700; Color: clWhite; Deep: [deGray_Cave];),
+    // Battle Armor (Body Armor #4)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 100; Level: 4; Defense: (Min: 17; Max: 20);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 900; Color: clWhite; Deep: [deGray_Cave];),
+    // Brigantine Armor (Body Armor #5)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 125; Level: 5; Defense: (Min: 21; Max: 25);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clWhite; Deep: [deDeep_Cave];),
+    // Ring Mail (Body Armor #6)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 150; Level: 6; Defense: (Min: 26; Max: 30);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1200; Color: clWhite; Deep: [deDeep_Cave];),
+    // Chain Mail (Body Armor #7)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 175; Level: 7; Defense: (Min: 31; Max: 35);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1300; Color: clWhite; Deep: [deBlood_Cave];),
+    // Scale Mail (Body Armor #8)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 200; Level: 8; Defense: (Min: 36; Max: 40);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1600; Color: clWhite; Deep: [deBlood_Cave];),
+    // Splint Mail (Body Armor #9)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 225; Level: 9; Defense: (Min: 41; Max: 45);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1900; Color: clWhite; Deep: [deDrom];),
+    // Plate Mail (Body Armor #10)
+    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 250; Level: 10; Defense: (Min: 46; Max: 50);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2500; Color: clWhite; Deep: [deDrom];),
+
     /// / == Dark _Wood == ////
 
     // Cap
@@ -680,12 +711,6 @@ const
     // Red Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 12; Level: 2; Defense: (Min: 2; Max: 3);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clLightRed; Deep: [deDark_Wood];),
-    // Quilted Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 25; Level: 1; Defense: (Min: 3; Max: 6);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clWhite; Deep: [deDark_Wood];),
-    // Leather Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 50; Level: 2; Defense: (Min: 8; Max: 11);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 500; Color: clWhite; Deep: [deDark_Wood];),
     // Light Clothes
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 20; Level: 1; Defense: (Min: 1; Max: 2);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 600; Color: clLightestBlue; Deep: [deDark_Wood];),
@@ -753,12 +778,6 @@ const
     // Mask
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 18; Level: 4; Defense: (Min: 3; Max: 4);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 700; Color: clLightestBlue; Deep: [deGray_Cave];),
-    // HardLeather Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 75; Level: 3; Defense: (Min: 12; Max: 15);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 700; Color: clWhite; Deep: [deGray_Cave];),
-    // Battle Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 100; Level: 4; Defense: (Min: 17; Max: 20);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 900; Color: clWhite; Deep: [deGray_Cave];),
     // Fancy Clothes
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 60; Level: 3; Defense: (Min: 5; Max: 6);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clLightestBlue; Deep: [deGray_Cave];),
@@ -826,12 +845,6 @@ const
     // Wizard Hat
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 25; Level: 6; Defense: (Min: 5; Max: 6);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1200; Color: clLightestBlue; Deep: [deDeep_Cave];),
-    // Brigantine Armor
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 125; Level: 5; Defense: (Min: 21; Max: 25);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1000; Color: clWhite; Deep: [deDeep_Cave];),
-    // Ring Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 150; Level: 6; Defense: (Min: 26; Max: 30);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1200; Color: clWhite; Deep: [deDeep_Cave];),
     // Light Furs
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 85; Level: 5; Defense: (Min: 9; Max: 10);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1500; Color: clLightestBlue; Deep: [deDeep_Cave];),
@@ -899,12 +912,6 @@ const
     // Tiara
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 35; Level: 8; Defense: (Min: 7; Max: 8);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1700; Color: clLightestBlue; Deep: [deBlood_Cave];),
-    // Chain Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 175; Level: 7; Defense: (Min: 31; Max: 35);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1300; Color: clWhite; Deep: [deBlood_Cave];),
-    // Scale Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 200; Level: 8; Defense: (Min: 36; Max: 40);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1600; Color: clWhite; Deep: [deBlood_Cave];),
     // Thick Furs
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 120; Level: 7; Defense: (Min: 13; Max: 14);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1900; Color: clLightestBlue; Deep: [deBlood_Cave];),
@@ -972,12 +979,6 @@ const
     // Crown
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1; MaxDurability: 50; Level: 10; Defense: (Min: 10; Max: 12);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2800; Color: clLightestBlue; Deep: [deDrom];),
-    // Splint Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 225; Level: 9; Defense: (Min: 41; Max: 45);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 1900; Color: clWhite; Deep: [deDrom];),
-    // Plate Mail
-    (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 250; Level: 10; Defense: (Min: 46; Max: 50);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2500; Color: clWhite; Deep: [deDrom];),
     // Moloch Robe
     (Symbol: '&'; ItemType: itBodyArmor; SlotType: stTorso; MaxStack: 1; MaxDurability: 180; Level: 9; Defense: (Min: 17; Max: 18);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 2600; Color: clLightestBlue; Deep: [deDrom];),
