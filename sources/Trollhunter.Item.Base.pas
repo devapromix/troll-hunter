@@ -644,7 +644,7 @@ const
     // Long Bow (Bow #3)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 300; Color: clDarkBlue; Deep: [deGray_Cave];),
-    //  (Bow #4)
+    // Hero Bow (Bow #4)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;)); Price: 350; Color: clDarkBlue; Deep: [deGray_Cave];),
     //  (Bow #5)
