@@ -4,12 +4,12 @@ interface
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant,
-    itBlade, itAxe, itSpear, itMace, itBattleStaff, itStaff, itWand, itDagger, itBow, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing,
-    itAmulet, itTalisman, itArrow, itTorch);
+    itBlade, itAxe, itSpear, itMace, itBattleStaff, itStaff, itWand, itDagger, itBow, itCrossbow, itShield, itHeadgear, itBodyArmor, itHands, itFeet,
+    itRing, itAmulet, itTalisman, itArrow, itTorch);
 
 const
   ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '~',
-    '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
+    '-', '-', ')', '}', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -46,7 +46,7 @@ const
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itBattleStaff, itWand, itBow, itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   MagicWeaponTypeItems = [itStaff, itWand];
-  RangedWeaponItems = [itBow];
+  RangedWeaponItems = [itBow, itCrossbow];
   TorchTypeItems = [itTorch];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems + FlaskTypeItems;
@@ -72,7 +72,9 @@ const
   // Hide Shield , Iron Shield , Steel Shield , Dragonscale Shield , Dragonplate Shield
   // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
   // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
-  // Composite Bow, Imperial Bow , Ancient Bow , Dragonbone Bow
+
+  // Light Crossbow , Crossbow , Heavy Crossbow , Siege Crossbow , Demon Crossbow,
+  // Heavy Siege Crossbow , War Crossbow , Phantom Crossbow , Runic Crossbow , Ancient Crossbow
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
@@ -159,10 +161,12 @@ type
     ivShort_Staff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
 
     // Daggers
-    ivDagger, ivKris, ivSacrificial_Kris, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
+    ivDagger, ivKris, ivSacrificial_Kris, ivDagger4, ivDagger5,
+    ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,
 
     // Bows
-    ivShort_Bow, ivHunter1s_Bow, ivLong_Bow, ivHero_Bow, ivBattle_Bow, ivBow6, ivBow7, ivBow8, ivBow9, ivBow10,
+    ivShort_Bow, ivHunter1s_Bow, ivLong_Bow, ivHero_Bow, ivBattle_Bow, ivComposite_Bow, ivImperial_Bow, ivRevenant_Bow, ivAncient_Bow,
+    ivDragonbone_Bow,
 
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear

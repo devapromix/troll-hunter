@@ -650,19 +650,19 @@ const
     // Battle Bow (Bow #5)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;)); Price: 400; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    //  (Bow #6)
+    // Composite Bow (Bow #6)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;)); Price: 450; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    //  (Bow #7)
+    // Imperial Bow (Bow #7)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;)); Price: 500; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    //  (Bow #8)
+    // Revenant Bow (Bow #8)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;)); Price: 550; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    //  (Bow #9)
+    // Ancient Bow (Bow #9)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;)); Price: 600; Color: clDarkBlue; Deep: [deDrom];),
-    //  (Bow #10)
+    // Dragonbone Bow (Bow #10)
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1; MaxDurability: 80; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 700; Color: clDarkBlue; Deep: [deDrom];),
 
