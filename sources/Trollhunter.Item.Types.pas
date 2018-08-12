@@ -4,12 +4,12 @@ interface
 
 type
   TItemType = (itNone, itUnavailable, itCorpse, itKey, itCoin, itGem, itPotion, itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant,
-    itBlade, itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet,
-    itTalisman, itArrow, itTorch);
+    itBlade, itAxe, itSpear, itMace, itBattleStaff, itStaff, itWand, itDagger, itBow, itShield, itHeadgear, itBodyArmor, itHands, itFeet, itRing,
+    itAmulet, itTalisman, itArrow, itTorch);
 
 const
-  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-',
-    '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
+  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!', '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '~',
+    '-', '-', ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -43,7 +43,7 @@ const
   FlaskTypeItems = [itFlask];
   MagicTypeItems = [itOrb, itStone];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
-  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow, itDagger];
+  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itBattleStaff, itWand, itBow, itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow];
@@ -151,8 +151,11 @@ type
     // Wands
     ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8, ivWand9, ivWand10,
 
-    // Staves
-    ivQuarterstaff, ivShort_Staff, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
+    // Battle Staves
+    ivQuarterstaff,
+
+    // Magic Staves
+    ivShort_Staff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
 
     // Daggers
     ivDagger, ivKris, ivSacrificial_Kris, ivDagger4, ivDagger5, ivDagger6, ivDagger7, ivDagger8, ivDagger9, ivDagger10,

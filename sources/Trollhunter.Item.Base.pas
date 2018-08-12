@@ -569,10 +569,14 @@ const
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 1000; Color: clDarkBlue; Deep: [deDrom]; ManaCost: 5;),
 
-    // Quarterstaff (Staff #1)
+    // Quarterstaff (Battle Staff #1)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 20; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 170; Color: clDarkGreen; Deep: [deDark_Wood];),
+
+    // Short Staff (Staff #1)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 2; Max: 3;)); Price: 300; Color: clDarkGreen; Deep: [deDark_Wood]; ManaCost: 12;),
-    // Short Staff (Staff #2)
+    //  (Staff #2)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;)); Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ManaCost: 2;),
     //  (Staff #3)
