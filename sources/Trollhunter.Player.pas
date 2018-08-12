@@ -144,6 +144,8 @@ type
     procedure StartEquip;
     procedure StartSkills;
     function EqItem(ASlot: TSlotType; var AItem: Item): Boolean;
+    function CanShootOrCastSpell(var AItem: Item): Boolean; overload;
+    function CanShootOrCastSpell: Boolean; overload;
   end;
 
 var
@@ -875,7 +877,6 @@ end;
 function TPlayer.EqItem(ASlot: TSlotType; var AItem: Item): Boolean;
 var
   FCount, I: Int;
-  FI: TItemEnum;
 begin
   Result := False;
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
@@ -883,17 +884,29 @@ begin
   begin
     AItem := Items_Inventory_GetItem(I);
     if (AItem.Equipment > 0) then
-    begin
-      FI := TItemEnum(AItem.ItemID);
-      if (ItemBase.GetItem(FI).SlotType = ASlot) then
+      if (ItemBase.GetItem(TItemEnum(AItem.ItemID)).SlotType = ASlot) then
         Exit(True);
-    end;
   end;
 end;
 
 procedure TPlayer.CalcMaxExp;
 begin
   Attributes.SetValue(atMaxExp, Attributes.Attrib[atLev].Value * 100);
+end;
+
+function TPlayer.CanShootOrCastSpell: Boolean;
+var
+  I: Item;
+begin
+  Result := CanShootOrCastSpell(I);
+end;
+
+function TPlayer.CanShootOrCastSpell(var AItem: Item): Boolean;
+begin
+  Result := False;
+  if not IsDead and Self.EqItem(stMainHand, AItem) then
+    if (ItemBase.GetItem(AItem).ItemType in ShootOrCastSpellWeaponTypeItems) then
+      Result := True;
 end;
 
 procedure TPlayer.Equip(Index: Int);
@@ -1000,7 +1013,7 @@ var
 begin
   if Self.IsDead then
     Exit;
-  if Self.EqItem(stMainHand, FItem) then
+  if Self.CanShootOrCastSpell(FItem) then
   begin
     ItemType := ItemBase.GetItem(FItem).ItemType;
     // Bows and Crossbows

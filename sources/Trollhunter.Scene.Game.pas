@@ -222,6 +222,7 @@ begin
         Player.Shoot := False;
       end;
     TK_S: // Shoot/Spell
+    if Player.CanShootOrCastSpell then
       begin
         Player.LX := Player.X;
         Player.LY := Player.Y;
@@ -260,7 +261,7 @@ begin
       end;
     TK_ENTER: // Shoot
       begin
-        if Player.Shoot and not Mobs.GetFreeTile(Player.LX, Player.LY) then
+        if Player.Shoot and Player.CanShootOrCastSpell and not Mobs.GetFreeTile(Player.LX, Player.LY) then
         begin
           Player.DistAttack(Mobs.GetIndex(Player.LX, Player.LY));
         end;

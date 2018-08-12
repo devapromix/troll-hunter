@@ -57,6 +57,7 @@ const
   SmithTypeItems = DefenseTypeItems + DamageTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems + PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + RepairTypeItems +
     MagicTypeItems;
+  ShootOrCastSpellWeaponTypeItems = RangedWeaponItems + MagicWeaponTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
