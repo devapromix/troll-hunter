@@ -176,46 +176,41 @@ type
     // Body Armors
     ivQuilted_Armor, ivLeather_Armor, ivHard_Leather_Armor, ivBattle_Armor, ivBrigantine_Armor, ivRing_Mail, ivChain_Mail, ivScale_Mail,
     ivSplint_Mail, ivPlate_Mail,
+
     // Magic Armors
     ivLight_Clothes, ivLeather_Apron, ivFancy_Clothes, ivRobe, ivLight_Furs, ivClean_Robe, ivThick_Furs, ivHard_Robe, ivMoloch_Robe,
     ivBoneweave_Hauberk,
+
     // Headgear
     ivCap, ivWar_Cap, ivHelm, ivGrand_Helm, ivGreat_Helm, ivFull_Helm, ivHorned_Helmet, ivSpired_Helm, ivCasque, ivWinged_Helm,
+
     //
     ivHood, ivRed_Hat, ivLeather_Cap, ivMask, ivBone_Helmet, ivWizard_Hat, ivDiadem, ivTiara, ivMagic_Helmet, ivCrown,
+
     // Gloves
     ivLeather_Gloves, ivHide_Gloves, ivKobold_Gloves, ivChain_Gloves, ivEtched_Gloves, ivHeavy_Gloves, ivBattle_Gauntlets, ivWar_Gauntlets,
     ivTroll_Gauntlets, ivPlated_Gauntlets,
+
     // Boots
     ivShoes, ivLeather_Boots, ivMesh_Boots, ivHeavy_Boots, ivGreaves, ivBoneweave_Boots, ivChain_Boots, ivWar_Boots, ivBattle_Boots, ivPlate_Boots,
+
     // Shield
     ivBuckler, ivTarge_Shield, ivSmall_Shield, ivKite_Shield, ivBone_Shield, ivHeater_Shield, ivHeavy_Shield, ivLarge_Shield, ivTower_Shield,
     ivGothic_Shield,
 
-    ivRusty_Sword, ivShort_Sword, // Blade
-    ivHatchet, ivBattle_Axe, // Axe
-    ivShort_Spear, ivSpear, // Spear
-    ivSlag_Hammer, ivSpiked_Cudgel, // Mace
-    // Gray Cave
-    ivBroad_Sword, ivLong_Sword, // Blade
-    ivMeat_Axe, ivFlesh_Tearer, // Axe
-    ivJavelin, ivFuscina, // Spear
-    ivWarhammer, ivWar_Mace, // Mace
-    // Deep Cave
-    ivMoon_Blade, ivScimitar, // Blade
-    ivWar_Axe, ivDark_Axe, // Axe
-    ivWar_Spear, ivHarpoon, // Spear
-    ivFlanged_Mace, ivWar_Gavel, // Mace
-    // Blood Cave
-    ivBastard_Sword, ivGreat_Sword, // Blade
-    ivBerserker_Axe, ivMarauder_Axe, // Axe
-    ivSilvan_Whisper, ivImpaler, // Spear
-    ivBarbarous_Mace, ivAdept_Hammer, // Mace
-    // Drom
-    ivRune_Sword, ivTroll_Slayer, // Blade
-    ivChopper, ivDemon_Axe, // Axe
-    ivSoul_Reaver, ivHoned_Spear, // Spear
-    ivWar_Maul, ivDoom_Hammer // Mace
+    // Swords
+    ivRusty_Sword, ivShort_Sword, ivBroad_Sword, ivLong_Sword, ivMoon_Blade, ivScimitar, ivBastard_Sword, ivGreat_Sword, ivRune_Sword, ivTroll_Slayer,
+
+    // Axes
+    ivHatchet, ivBattle_Axe, ivMeat_Axe, ivFlesh_Tearer, ivWar_Axe, ivDark_Axe, ivBerserker_Axe, ivMarauder_Axe, ivChopper, ivDemon_Axe,
+
+    // Spears
+    ivShort_Spear, ivSpear, ivJavelin, ivFuscina, ivWar_Spear, ivHarpoon, ivSilvan_Whisper, ivImpaler, ivSoul_Reaver, ivHoned_Spear,
+
+    // Maces
+    ivSlag_Hammer, ivSpiked_Cudgel, ivWarhammer, ivWar_Mace, ivFlanged_Mace, ivWar_Gavel, ivBarbarous_Mace, ivAdept_Hammer, ivWar_Maul, ivDoom_Hammer
+
+    //
     );
 
 const

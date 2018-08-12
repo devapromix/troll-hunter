@@ -889,126 +889,117 @@ const
     // Short Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 7;); MaxDamage: (Min: 10; Max: 12;)); Price: 210; Color: clWhite; Deep: [deDark_Wood];),
-    // Hatchet
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 6; Max: 8;)); Price: 165; Color: clDarkRed; Deep: [deDark_Wood];),
-    // Battle Axe
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 7; Max: 9;); MaxDamage: (Min: 11; Max: 12;)); Price: 195; Color: clDarkRed; Deep: [deDark_Wood];),
-    // Short Spear
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 1; Max: 3;); MaxDamage: (Min: 4; Max: 5;)); Price: 150; Color: clDarkRed; Deep: [deDark_Wood];),
-    // Spear
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 2; Max: 4;); MaxDamage: (Min: 5; Max: 7;)); Price: 180; Color: clDarkRed; Deep: [deDark_Wood];),
-    // Slag Hammer
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 2; Max: 4;); MaxDamage: (Min: 5; Max: 6;)); Price: 175; Color: clDarkRed; Deep: [deDark_Wood];),
-    // Spiked Cudgel
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 7; Max: 9;)); Price: 220; Color: clDarkRed; Deep: [deDark_Wood];),
-
-    /// / == Gray Cave == ////
-
     // Broad Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 14;); MaxDamage: (Min: 19; Max: 21;)); Price: 345; Color: clDarkRed; Deep: [deGray_Cave];),
     // Long Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 14; Max: 18;); MaxDamage: (Min: 23; Max: 26;)); Price: 385; Color: clDarkRed; Deep: [deGray_Cave];),
-    // Meat Axe
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 12; Max: 14;); MaxDamage: (Min: 16; Max: 19;)); Price: 330; Color: clDarkRed; Deep: [deGray_Cave];),
-    // Flesh Tearer
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 16; Max: 18;); MaxDamage: (Min: 21; Max: 24;)); Price: 355; Color: clDarkRed; Deep: [deGray_Cave];),
-    // Javelin
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 4; Max: 6;); MaxDamage: (Min: 10; Max: 12;)); Price: 320; Color: clDarkRed; Deep: [deGray_Cave];),
-    // Fuscina
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 5; Max: 7;); MaxDamage: (Min: 16; Max: 19;)); Price: 360; Color: clDarkRed; Deep: [deGray_Cave];),
-    // Warhammer
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 6; Max: 9;); MaxDamage: (Min: 11; Max: 13;)); Price: 345; Color: clDarkRed; Deep: [deGray_Cave];),
-    // War Mace
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 8; Max: 10;); MaxDamage: (Min: 17; Max: 19;)); Price: 410; Color: clDarkRed; Deep: [deGray_Cave];),
-
-    /// / == Deep Cave == ////
-
     // Moon Blade
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 17; Max: 20;); MaxDamage: (Min: 27; Max: 31;)); Price: 570; Color: clDarkRed; Deep: [deDeep_Cave];),
     // Scimitar
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 25;); MaxDamage: (Min: 35; Max: 38;)); Price: 600; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // War Axe
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 21; Max: 24;); MaxDamage: (Min: 26; Max: 30;)); Price: 560; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // Dark Axe
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 30; Max: 33;)); Price: 585; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // War Spear
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 6; Max: 10;); MaxDamage: (Min: 25; Max: 28;)); Price: 540; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // Harpoon
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 7; Max: 11;); MaxDamage: (Min: 35; Max: 39;)); Price: 575; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // Flanged Mace
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 11; Max: 14;); MaxDamage: (Min: 22; Max: 25;)); Price: 590; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // War Gavel
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 15; Max: 18;); MaxDamage: (Min: 30; Max: 33;)); Price: 650; Color: clDarkRed; Deep: [deDeep_Cave];),
-
-    /// / == Blood Cave == ////
-
     // Bastard Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 39; Max: 43;)); Price: 770; Color: clDarkRed; Deep: [deBlood_Cave];),
     // Great Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 27; Max: 30;); MaxDamage: (Min: 44; Max: 48;)); Price: 820; Color: clDarkRed; Deep: [deBlood_Cave];),
-    // Berserker Axe
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 28; Max: 32;); MaxDamage: (Min: 36; Max: 38;)); Price: 750; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // Marauder Axe
-    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 32; Max: 35;); MaxDamage: (Min: 41; Max: 45;)); Price: 885; Color: clDarkRed; Deep: [deBlood_Cave];),
-    // Silvan Whisper
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 8; Max: 11;); MaxDamage: (Min: 50; Max: 52;)); Price: 720; Color: clDarkRed; Deep: [deBlood_Cave];),
-    // Impaler
-    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 9; Max: 11;); MaxDamage: (Min: 65; Max: 67;)); Price: 790; Color: clDarkRed; Deep: [deBlood_Cave];),
-    // Barbarous Mace
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 19; Max: 22;); MaxDamage: (Min: 38; Max: 41;)); Price: 780; Color: clDarkRed; Deep: [deBlood_Cave];),
-    // Adept Hammer
-    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 48; Max: 51;)); Price: 850; Color: clDarkRed; Deep: [deBlood_Cave];),
-
-    /// / == Drom == ////
-
     // Rune Sword
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 30; Max: 33;); MaxDamage: (Min: 50; Max: 54;)); Price: 930; Color: clDarkRed; Deep: [deDrom];),
     // Troll Slayer,
     (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 33; Max: 37;); MaxDamage: (Min: 55; Max: 60;)); Price: 990; Color: clDarkRed; Deep: [deDrom];),
+
+    // Hatchet
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 6; Max: 8;)); Price: 165; Color: clDarkRed; Deep: [deDark_Wood];),
+    // Battle Axe
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 7; Max: 9;); MaxDamage: (Min: 11; Max: 12;)); Price: 195; Color: clDarkRed; Deep: [deDark_Wood];),
+    // Meat Axe
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 12; Max: 14;); MaxDamage: (Min: 16; Max: 19;)); Price: 330; Color: clDarkRed; Deep: [deGray_Cave];),
+    // Flesh Tearer
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 16; Max: 18;); MaxDamage: (Min: 21; Max: 24;)); Price: 355; Color: clDarkRed; Deep: [deGray_Cave];),
+     // War Axe
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 21; Max: 24;); MaxDamage: (Min: 26; Max: 30;)); Price: 560; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // Dark Axe
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 30; Max: 33;)); Price: 585; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // Berserker Axe
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 28; Max: 32;); MaxDamage: (Min: 36; Max: 38;)); Price: 750; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // Marauder Axe
+    (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 32; Max: 35;); MaxDamage: (Min: 41; Max: 45;)); Price: 885; Color: clDarkRed; Deep: [deBlood_Cave];),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 36; Max: 39;); MaxDamage: (Min: 45; Max: 49;)); Price: 940; Color: clDarkRed; Deep: [deDrom];),
     // Demon Axe,
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 40; Max: 45;); MaxDamage: (Min: 50; Max: 55;)); Price: 980; Color: clDarkRed; Deep: [deDrom];),
+
+    // Short Spear
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 3;); MaxDamage: (Min: 4; Max: 5;)); Price: 150; Color: clDarkRed; Deep: [deDark_Wood];),
+    // Spear
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 4;); MaxDamage: (Min: 5; Max: 7;)); Price: 180; Color: clDarkRed; Deep: [deDark_Wood];),
+    // Javelin
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 4; Max: 6;); MaxDamage: (Min: 10; Max: 12;)); Price: 320; Color: clDarkRed; Deep: [deGray_Cave];),
+    // Fuscina
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 7;); MaxDamage: (Min: 16; Max: 19;)); Price: 360; Color: clDarkRed; Deep: [deGray_Cave];),
+    // War Spear
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 6; Max: 10;); MaxDamage: (Min: 25; Max: 28;)); Price: 540; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // Harpoon
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 7; Max: 11;); MaxDamage: (Min: 35; Max: 39;)); Price: 575; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // Silvan Whisper
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 8; Max: 11;); MaxDamage: (Min: 50; Max: 52;)); Price: 720; Color: clDarkRed; Deep: [deBlood_Cave];),
+    // Impaler
+    (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 9; Max: 11;); MaxDamage: (Min: 65; Max: 67;)); Price: 790; Color: clDarkRed; Deep: [deBlood_Cave];),
     // Soul Reaver
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 10; Max: 12;); MaxDamage: (Min: 80; Max: 89;)); Price: 940; Color: clDarkRed; Deep: [deDrom];),
     // Honed Spear,
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 10; Max: 15;); MaxDamage: (Min: 90; Max: 100;)); Price: 970; Color: clDarkRed; Deep: [deDrom];),
+
+    // Slag Hammer
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 4;); MaxDamage: (Min: 5; Max: 6;)); Price: 175; Color: clDarkRed; Deep: [deDark_Wood];),
+    // Spiked Cudgel
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 3; Max: 5;); MaxDamage: (Min: 7; Max: 9;)); Price: 220; Color: clDarkRed; Deep: [deDark_Wood];),
+    // Warhammer
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 6; Max: 9;); MaxDamage: (Min: 11; Max: 13;)); Price: 345; Color: clDarkRed; Deep: [deGray_Cave];),
+    // War Mace
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 8; Max: 10;); MaxDamage: (Min: 17; Max: 19;)); Price: 410; Color: clDarkRed; Deep: [deGray_Cave];),
+    // Flanged Mace
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 14;); MaxDamage: (Min: 22; Max: 25;)); Price: 590; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // War Gavel
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 15; Max: 18;); MaxDamage: (Min: 30; Max: 33;)); Price: 650; Color: clDarkRed; Deep: [deDeep_Cave];),
+    // Barbarous Mace
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 19; Max: 22;); MaxDamage: (Min: 38; Max: 41;)); Price: 780; Color: clDarkRed; Deep: [deBlood_Cave];),
+    // Adept Hammer
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 48; Max: 51;)); Price: 850; Color: clDarkRed; Deep: [deBlood_Cave];),
     // War Maul
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 30; Max: 35;); MaxDamage: (Min: 65; Max: 69;)); Price: 950; Color: clDarkRed; Deep: [deDrom];),
