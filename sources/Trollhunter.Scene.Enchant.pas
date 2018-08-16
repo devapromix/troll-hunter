@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Enchant;
+﻿unit Trollhunter.Scene.Enchant;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -15,7 +16,8 @@ type
 
 implementation
 
-uses BearLibTerminal,
+uses
+  BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.Language,
   Trollhunter.Item,

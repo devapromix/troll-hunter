@@ -88,8 +88,7 @@ var
 begin
   Difficulty := Game.Difficulty;
   repeat
-    Game.Difficulty := TDifficultyEnum(Math.RandomRange(0,
-      Ord(High(TDifficultyEnum)) + 1));
+    Game.Difficulty := TDifficultyEnum(Math.RandomRange(0, Ord(High(TDifficultyEnum)) + 1));
   until (Difficulty <> Game.Difficulty);
 end;
 
@@ -109,8 +108,7 @@ begin
         I := Ord(Key) - Ord(TK_A);
         if (I > Ord(High(TDifficultyEnum))) then
           Exit;
-        Game.Difficulty := TDifficultyEnum(Math.EnsureRange(I, 0,
-          Ord(High(TDifficultyEnum))));
+        Game.Difficulty := TDifficultyEnum(Math.EnsureRange(I, 0, Ord(High(TDifficultyEnum))));
         NextScene;
       end;
     TK_SPACE:

@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Rest;
+﻿unit Trollhunter.Scene.Rest;
 
 interface
 
-uses Trollhunter.Scenes,
+uses
+  Trollhunter.Scenes,
   Trollhunter.Types;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneRest }
 
-uses SysUtils,
+uses
+  SysUtils,
   BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.Terminal,
@@ -32,14 +34,11 @@ begin
   Y := 1;
 
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
-    TK_ALIGN_LEFT);
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'), TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
-    TK_ALIGN_LEFT);
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'), TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' +
-    _('Rest for 1000 turns'), TK_ALIGN_LEFT);
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'), TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 

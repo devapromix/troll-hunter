@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Load;
+﻿unit Trollhunter.Scene.Load;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -17,7 +18,8 @@ implementation
 
 { TSceneLoad }
 
-uses BearLibTerminal,
+uses
+  BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Language;
 
@@ -26,8 +28,7 @@ begin
   if IsLoad then
     Terminal.Print(CX, CY, _('Loading...'), TK_ALIGN_CENTER)
   else
-    Terminal.Print(CX, CY, _('Creating the world, please wait...'),
-      TK_ALIGN_CENTER);
+    Terminal.Print(CX, CY, _('Creating the world, please wait...'), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneLoad.Update(var Key: UInt);

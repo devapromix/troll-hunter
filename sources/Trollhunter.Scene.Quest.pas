@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Quest;
+﻿unit Trollhunter.Scene.Quest;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneQuest }
 
-uses BearLibTerminal,
+uses
+  BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.Player.Quest,
   Trollhunter.Language,

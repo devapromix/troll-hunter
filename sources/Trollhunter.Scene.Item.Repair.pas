@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Item.Repair;
+﻿unit Trollhunter.Scene.Item.Repair;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -30,8 +31,7 @@ uses
 
 procedure TSceneRepair.Render;
 begin
-  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1,
-    clDarkestRed);
+  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
 
   UI.FromAToZ;
   Items.RenderInventory(ptRepair);

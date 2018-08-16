@@ -36,8 +36,7 @@ type
 const
   QuestBase: array [TQuestEnum] of TQuestBase = (
     // The Hunt (Kill N creatures)
-    (Level: 1; QuestType: qtKillMobs; Mobs: [mbBlack_Bear, mbGrizzly_Bear];
-    Amount: (Min: 3; Max: 5;);));
+    (Level: 1; QuestType: qtKillMobs; Mobs: [mbBlack_Bear, mbGrizzly_Bear]; Amount: (Min: 3; Max: 5;);));
 
 type
   TQuestState = (qsActive, qsDone, qsFinish);
@@ -108,8 +107,7 @@ begin
     with FQuest[I] do
     begin
       // Killing monsters
-      if ((QuestType = AQuestType) and (QuestState = qsActive) and
-        (Mob = TMobEnum(Value))) then
+      if ((QuestType = AQuestType) and (QuestState = qsActive) and (Mob = TMobEnum(Value))) then
         Kills := Kills + 1;
     end;
 end;

@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Title;
+Ôªøunit Trollhunter.Scene.Title;
 
 interface
 
@@ -47,14 +47,13 @@ begin
   Scenes.SetScene(scLoad);
   Terminal.Refresh;
   Terminal_Delay(1000);
-  Scenes.SetScene(scTitle); // ÚËÏ˜‡ÒÓ‚Ó
+  Scenes.SetScene(scTitle); // —Ç–∏–º—á–∞—Å–æ–≤–æ
 end;
 
 procedure TSceneTitle.Render;
 begin
   Logo.Render(True);
-  Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2),
-    14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
+  Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
   RenderHeroes;
   if Mode.Wizard then
   begin
@@ -81,8 +80,7 @@ begin
 
   for I := 0 to FCount - 1 do
   begin
-    Terminal.Print(L, T + I + 2, UI.MenuItem(Chr(I + 65), '==========',
-      FCur = I));
+    Terminal.Print(L, T + I + 2, UI.MenuItem(Chr(I + 65), '==========', FCur = I));
   end;
 end;
 

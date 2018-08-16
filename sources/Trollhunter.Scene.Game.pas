@@ -17,7 +17,8 @@ implementation
 
 { TSceneGame }
 
-uses Math,
+uses
+  Math,
   Types,
   SysUtils,
   BearLibTerminal,
@@ -69,14 +70,12 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
-          UI.Icon(icLife), Mobs.Mob[C].Attributes.Attrib[atLife].Value,
+        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)], UI.Icon(icLife), Mobs.Mob[C].Attributes.Attrib[atLife].Value,
           Mobs.Mob[C].Attributes.Attrib[atMaxLife].Value]);
       end;
     end;
     //
-    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S,
-      TK_ALIGN_TOP);
+    Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height, S, TK_ALIGN_TOP);
   end;
 
   procedure AddTo(X, Y: Int);
@@ -222,7 +221,7 @@ begin
         Player.Shoot := False;
       end;
     TK_S: // Shoot/Spell
-    if Player.CanShootOrCastSpell then
+      if Player.CanShootOrCastSpell then
       begin
         Player.LX := Player.X;
         Player.LY := Player.Y;
@@ -280,8 +279,7 @@ begin
           Exit;
         end;
         // Portal
-        if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teTownPortal)
-        then
+        if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teTownPortal) then
         begin
           Map.SetTileEnum(Player.X, Player.Y, deDark_Wood, teStoneFloor);
           Player.X := Game.Portal.X;

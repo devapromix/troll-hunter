@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Item.Amount;
+﻿unit Trollhunter.Scene.Item.Amount;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -41,13 +42,11 @@ begin
   if Player.ItemIsDrop then
     FItem := Items_Inventory_GetItem(Player.ItemIndex)
   else
-    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Player.ItemIndex,
-      Player.X, Player.Y);
+    FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Player.ItemIndex, Player.X, Player.Y);
 
   MaxAmount := FItem.Amount;
 
-  Terminal.Print(CX, CY, Format('%d/%dx', [Player.ItemAmount, FItem.Amount]),
-    TK_ALIGN_LEFT);
+  Terminal.Print(CX, CY, Format('%d/%dx', [Player.ItemAmount, FItem.Amount]), TK_ALIGN_LEFT);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));

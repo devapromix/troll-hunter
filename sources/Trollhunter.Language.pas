@@ -99,7 +99,8 @@ begin
       S := SL[I];
       J := Pos('=', S);
       FID.Append(Copy(S, 1, J - 1));
-      FValue.Append(S.Remove(0, J));    end;
+      FValue.Append(S.Remove(0, J));
+    end;
   finally
     FreeAndNil(SL);
   end;

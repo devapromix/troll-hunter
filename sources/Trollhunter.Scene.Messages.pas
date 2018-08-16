@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Messages;
+﻿unit Trollhunter.Scene.Messages;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneMessages }
 
-uses BearLibTerminal,
+uses
+  BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.UI.Log, Trollhunter.Language;
 

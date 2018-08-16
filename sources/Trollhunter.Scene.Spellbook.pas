@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Spellbook;
+﻿unit Trollhunter.Scene.Spellbook;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -51,10 +52,8 @@ begin
     begin
       Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
       Terminal.ForegroundColor(clGray);
-      Terminal.Print(5, Y, Format('(%s) %s %s',
-        [Items.GetItemLevel(Spellbook.GetSpell(I).Spell.Level),
-        Spellbook.GetSpellName(I), Items.GetInfo('-',
-        Spellbook.GetSpell(I).Spell.ManaCost, 'Mana')]));
+      Terminal.Print(5, Y, Format('(%s) %s %s', [Items.GetItemLevel(Spellbook.GetSpell(I).Spell.Level), Spellbook.GetSpellName(I),
+        Items.GetInfo('-', Spellbook.GetSpell(I).Spell.ManaCost, 'Mana')]));
       Inc(Y);
       Inc(V);
     end;

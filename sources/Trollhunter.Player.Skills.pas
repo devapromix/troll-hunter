@@ -1,8 +1,9 @@
-unit Trollhunter.Player.Skills;
+﻿unit Trollhunter.Player.Skills;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TSkillEnum = (
@@ -45,7 +46,8 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   Math,
   Trollhunter.Language,

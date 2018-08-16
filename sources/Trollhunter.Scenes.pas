@@ -11,10 +11,8 @@ uses
   Trollhunter.Attribute;
 
 type
-  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scInv, scDrop, scItems,
-    scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest, scSell,
-    scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook,
-    scOptions, scIdentification, scBackground, scEnchant, scClass, scRace,
+  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scInv, scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest, scSell,
+    scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook, scOptions, scIdentification, scBackground, scEnchant, scClass, scRace,
     scItemInfo, scFinal);
 
 type
@@ -30,25 +28,22 @@ type
     constructor Create;
     procedure Render; virtual; abstract;
     procedure AddLine(AHotKey, AText: string);
-    procedure AddOption(AHotKey, AText: string; AOption: Boolean;
-      AColor: Cardinal = $FFAAAAAA); overload;
+    procedure AddOption(AHotKey, AText: string; AOption: Boolean; AColor: Cardinal = $FFAAAAAA); overload;
     procedure Add(); overload;
     procedure Add(AText: string; AValue: Int); overload;
-    procedure Add(AText: string; AValue: string;
-      AColor: Cardinal = $FF00FF00); overload;
+    procedure Add(AText: string; AValue: string; AColor: Cardinal = $FF00FF00); overload;
     procedure Update(var Key: UInt); virtual; abstract;
     procedure AddKey(AKey, AStr: string; IsRender: Boolean = False); overload;
-    procedure AddKey(AKey, AStr, AAdvStr: string;
-      IsRender: Boolean = False); overload;
+    procedure AddKey(AKey, AStr, AAdvStr: string; IsRender: Boolean = False); overload;
     procedure Title(S: string; F: Boolean = True);
   end;
 
 type
   TMenuScene = class(TScene)
   private
-    //procedure PrevScene; abstract;
-    //procedure NextScene; abstract;
-    //procedure Add(const AName: string);
+    // procedure PrevScene; abstract;
+    // procedure NextScene; abstract;
+    // procedure Add(const AName: string);
   public
 
   end;
@@ -69,10 +64,8 @@ type
     property FinalEnum: TFinalEnum read FFinalEnum;
     property PrevSceneEnum: TSceneEnum read FPrevSceneEnum;
     function GetScene(I: TSceneEnum): TScene;
-    procedure SetScene(ASceneEnum: TSceneEnum;
-      AFinalEnum: TFinalEnum = feNone); overload;
-    procedure SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum;
-      AFinalEnum: TFinalEnum = feNone); overload;
+    procedure SetScene(ASceneEnum: TSceneEnum; AFinalEnum: TFinalEnum = feNone); overload;
+    procedure SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum; AFinalEnum: TFinalEnum = feNone); overload;
     property PrevScene: TSceneEnum read FPrevSceneEnum write FPrevSceneEnum;
     procedure GoBack;
   end;
@@ -153,16 +146,13 @@ begin
   end;
 end;
 
-procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean;
-  AColor: Cardinal);
+procedure TScene.AddOption(AHotKey, AText: string; AOption: Boolean; AColor: Cardinal);
 begin
   Self.Add();
   Terminal.ForegroundColor(AColor);
-  Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, UI.KeyToStr(AHotKey) + ' ' + AText
-    + ':', TK_ALIGN_LEFT);
+  Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, UI.KeyToStr(AHotKey) + ' ' + AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clLightestBlue);
-  Terminal.Print(Math.IfThen(X = 1, CX - 2, CX + (CX - 2)), Y,
-    '[[' + IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
+  Terminal.Print(Math.IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, '[[' + IfThen(AOption, 'X', ' ') + ']]', TK_ALIGN_RIGHT);
 end;
 
 constructor TScene.Create;
@@ -185,8 +175,7 @@ begin
   if (IsRender and (KStr <> '')) then
   begin
     Terminal.ForegroundColor(clDefault);
-    Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height - 2,
-      Trim(Self.KStr), TK_ALIGN_CENTER);
+    Terminal.Print(Terminal.Window.Width div 2, Terminal.Window.Height - 2, Trim(Self.KStr), TK_ALIGN_CENTER);
     KStr := '';
   end;
 end;
@@ -204,8 +193,7 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
-  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, UI.KeyToStr(AHotKey, AText),
-    TK_ALIGN_LEFT);
+  Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, UI.KeyToStr(AHotKey, AText), TK_ALIGN_LEFT);
   Self.Add();
 end;
 
@@ -215,8 +203,7 @@ begin
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(clGreen);
-  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue.ToString(),
-    TK_ALIGN_RIGHT);
+  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue.ToString(), TK_ALIGN_RIGHT);
 end;
 
 procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
@@ -225,8 +212,7 @@ begin
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
   Terminal.ForegroundColor(AColor);
-  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue,
-    TK_ALIGN_RIGHT);
+  Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue, TK_ALIGN_RIGHT);
 end;
 
 { TScenes }
@@ -330,8 +316,7 @@ begin
   end;
 end;
 
-procedure TScenes.SetScene(ASceneEnum: TSceneEnum;
-  AFinalEnum: TFinalEnum = feNone);
+procedure TScenes.SetScene(ASceneEnum: TSceneEnum; AFinalEnum: TFinalEnum = feNone);
 begin
   Game.Timer := UIntMax;
   Game.ShowEffects := False;
@@ -340,8 +325,7 @@ begin
   Render;
 end;
 
-procedure TScenes.SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum;
-  AFinalEnum: TFinalEnum = feNone);
+procedure TScenes.SetScene(ASceneEnum, CurrSceneEnum: TSceneEnum; AFinalEnum: TFinalEnum = feNone);
 begin
   FPrevSceneEnum := CurrSceneEnum;
   SetScene(ASceneEnum, AFinalEnum);
@@ -358,8 +342,7 @@ begin
       begin
         if (SceneEnum = scTitle) then
           Game.CanClose := True;
-        if Mode.Game and not(SceneEnum = scFinal) and
-          not Player.IsDead then
+        if Mode.Game and not(SceneEnum = scFinal) and not Player.IsDead then
           SetScene(scFinal, SceneEnum, feQuit);
       end;
   end;

@@ -1,4 +1,4 @@
-unit Trollhunter.Map;
+﻿unit Trollhunter.Map;
 
 interface
 
@@ -19,16 +19,13 @@ type
   end;
 
 type
-  TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
-    teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
+  TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
     teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
-  FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs,
-    teDnStairs, teWater];
-  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
-    teDoor, teGate];
+  FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater];
+  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor, teGate];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
@@ -46,12 +43,9 @@ type
     FMap: array [MapSize, MapSize, TMapEnum] of TTileEnum;
     FFog: array [MapSize, MapSize, TMapEnum] of Boolean;
     FFOV: array [MapSize, MapSize] of Boolean;
-    procedure AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum;
-      ABaseTileEnum, ATileEnum: TTileEnum);
-    procedure AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt;
-      ABaseTileEnum, ATileEnum: TTileEnum);
-    procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
-      ATile: TTileEnum; AZ: TMapEnum);
+    procedure AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
+    procedure AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt; ABaseTileEnum, ATileEnum: TTileEnum);
+    procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal; ATile: TTileEnum; AZ: TMapEnum);
     procedure InitTiles;
     function GetName: string;
   public
@@ -206,8 +200,7 @@ begin
   AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDrom);
 end;
 
-procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum;
-  ABaseTileEnum, ATileEnum: TTileEnum);
+procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
 var
   Z: TMapEnum;
   I, X, Y: UInt;
@@ -249,8 +242,7 @@ begin
   end;
 end;
 
-procedure TMap.AddTile(ASymbol: Char; AName: string; AColor: Cardinal;
-  ATile: TTileEnum; AZ: TMapEnum);
+procedure TMap.AddTile(ASymbol: Char; AName: string; AColor: Cardinal; ATile: TTileEnum; AZ: TMapEnum);
 begin
   with Tile[ATile, AZ] do
   begin
@@ -260,8 +252,7 @@ begin
   end;
 end;
 
-procedure TMap.AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt;
-  ABaseTileEnum, ATileEnum: TTileEnum);
+procedure TMap.AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt; ABaseTileEnum, ATileEnum: TTileEnum);
 var
   K, X, Y: UInt;
   Z: TMapEnum;
@@ -383,8 +374,7 @@ const
       X := Math.RandomRange(Pd, UIntMax - Pd);
       Y := Math.RandomRange(Pd, UIntMax - Pd);
     until (GetTileEnum(X, Y, ADeep) = ABaseTileEnum);
-    AddSpot(X, Y, Math.RandomRange(49, UIntMax), ADeep, ABaseTileEnum,
-      ATileEnum);
+    AddSpot(X, Y, Math.RandomRange(49, UIntMax), ADeep, ABaseTileEnum, ATileEnum);
   end;
 
   procedure AddFrame(AX, AY, AW, AH: UInt; ABaseTileEnum: TTileEnum);
@@ -396,13 +386,11 @@ const
     PY := AY - (AH div 2);
     for X := PX to PX + AW do
       for Y := PY to PY + AH do
-        if not(((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
-        then
+        if not(((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH)))) then
           SetTileEnum(X, Y, Z, ABaseTileEnum);
   end;
 
-  procedure AddRect(AX, AY, AW, AH: UInt;
-    AFloorTileEnum, AWallTileEnum: TTileEnum; IsFog: Boolean = False);
+  procedure AddRect(AX, AY, AW, AH: UInt; AFloorTileEnum, AWallTileEnum: TTileEnum; IsFog: Boolean = False);
   var
     X, Y: UInt;
     PX, PY: UInt;
@@ -414,8 +402,7 @@ const
       begin
         if IsFog then
           Self.SetFog(X, Y, False);
-        if (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
-        then
+        if (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH)))) then
           SetTileEnum(X, Y, Z, AFloorTileEnum)
         else
           SetTileEnum(X, Y, Z, AWallTileEnum);
@@ -483,8 +470,7 @@ const
     I, J, T, X, Y, PX, PY: UInt;
     HP: array [0 .. 7] of Boolean;
   const
-    House: array [0 .. 7] of TPoint = ((X: - 10; Y: - 10;), (X: 10; Y: - 10;
-      ), (X: - 10; Y: 10;), (X: 10; Y: 10;), (X: 0; Y: 10;), (X: - 10; Y: 0;
+    House: array [0 .. 7] of TPoint = ((X: - 10; Y: - 10;), (X: 10; Y: - 10;), (X: - 10; Y: 10;), (X: 10; Y: 10;), (X: 0; Y: 10;), (X: - 10; Y: 0;
       ), (X: 10; Y: 0;), (X: 0; Y: - 10;));
 
     procedure AddGate(AX, AY: UInt; SX, SY: ShortInt);
@@ -558,8 +544,7 @@ begin
           Self.SetVis(Z, True);
           Self.Clear(Z, teDefaultFloor);
           for I := 0 to 9999 do
-            Self.SetTileEnum(Math.RandomRange(0, UIntMax),
-              Math.RandomRange(0, UIntMax), Z, teDefaultWall);
+            Self.SetTileEnum(Math.RandomRange(0, UIntMax), Math.RandomRange(0, UIntMax), Z, teDefaultWall);
           Game.Spawn.X := RandomRange(25, UIntMax - 25);
           Game.Spawn.Y := RandomRange(25, UIntMax - 25);
           Game.Portal.X := Game.Spawn.X;
@@ -667,8 +652,7 @@ var
 begin
   PX := View.Width div 2;
   PY := View.Height div 2;
-  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and
-    (AX <= Player.X + PX - 1) and (AY <= Player.Y + PY - 1);
+  Result := (AX >= Player.X - PX) and (AY >= Player.Y - PY) and (AX <= Player.X + PX - 1) and (AY <= Player.Y + PY - 1);
 end;
 
 function TMap.GetFOV(AX, AY: UInt): Boolean;

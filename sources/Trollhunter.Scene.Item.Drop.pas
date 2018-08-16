@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Item.Drop;
+﻿unit Trollhunter.Scene.Item.Drop;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type

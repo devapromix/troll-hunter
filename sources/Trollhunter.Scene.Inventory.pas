@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Inventory;
+﻿unit Trollhunter.Scene.Inventory;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneInv }
 
-uses SysUtils,
+uses
+  SysUtils,
   BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.UI.Log,
@@ -27,8 +29,7 @@ uses SysUtils,
 
 procedure TSceneInv.Render;
 begin
-  UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'), UI.Icon(icGold),
-    Player.Gold, UI.Icon(icFlag), Items.InvCount, ItemMax]));
+  UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'), UI.Icon(icGold), Player.Gold, UI.Icon(icFlag), Items.InvCount, ItemMax]));
 
   UI.FromAToZ(ItemMax);
   Items.RenderInventory;

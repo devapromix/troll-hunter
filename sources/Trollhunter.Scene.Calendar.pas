@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Calendar;
+﻿unit Trollhunter.Scene.Calendar;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneCalendar }
 
-uses BearLibTerminal,
+uses
+  BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Helpers,
   Trollhunter.Game,
@@ -29,8 +31,7 @@ uses BearLibTerminal,
 
 procedure TSceneCalendar.Render;
 
-  procedure Add(const AText: string; AValue: string;
-    AAdvValue: string = ''); overload;
+  procedure Add(const AText: string; AValue: string; AAdvValue: string = ''); overload;
   var
     S: string;
     X: UInt;
@@ -51,8 +52,7 @@ procedure TSceneCalendar.Render;
     Inc(Y);
   end;
 
-  procedure Add(const AText: string; AValue: Int;
-    AAdvValue: string = ''); overload;
+  procedure Add(const AText: string; AValue: Int; AAdvValue: string = ''); overload;
   begin
     Add(AText, AValue.ToString(), AAdvValue);
   end;

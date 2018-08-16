@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Items;
+﻿unit Trollhunter.Scene.Items;
 
 interface
 
@@ -42,8 +42,7 @@ begin
   UI.Title(_('Pick up an item'));
 
   UI.FromAToZ;
-  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y)
-    .InRange(ItemMax);
+  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
@@ -69,8 +68,7 @@ begin
       Scenes.SetScene(scGame);
     TK_SPACE:
       begin
-        FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X,
-          Player.Y).InRange(ItemMax);
+        FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y).InRange(ItemMax);
         for I := 0 to FCount - 1 do
           Items.AddItemToInv;
       end;

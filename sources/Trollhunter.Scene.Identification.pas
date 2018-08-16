@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Identification;
+﻿unit Trollhunter.Scene.Identification;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneIdentification }
 
-uses BearLibTerminal,
+uses
+  BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.Game,
   Trollhunter.UI,

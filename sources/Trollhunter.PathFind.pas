@@ -2,17 +2,18 @@
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TGetXYVal = function(X, Y: Int): Boolean; stdcall;
 
-function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal;
-  var TargetX, TargetY: Int): Boolean;
+function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal; var TargetX, TargetY: Int): Boolean;
 
 implementation
 
-uses Math;
+uses
+  Math;
 
 const
   MAXLEN = 1000;
@@ -63,8 +64,7 @@ end;
 var
   NOpen: Int = 0;
 
-function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal;
-  var TargetX, TargetY: Int): Boolean;
+function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal; var TargetX, TargetY: Int): Boolean;
 
   procedure HeapSwap(I, J: Int);
   var
@@ -101,8 +101,7 @@ function PathFind(MapX, MapY, FromX, FromY, ToX, ToY: Int; Callback: TGetXYVal;
       LargestChild := I;
       if Open[LeftChild].Cost < Open[LargestChild].Cost then
         LargestChild := LeftChild;
-      if (RightChild < NOpen) and
-        (Open[RightChild].Cost < Open[LargestChild].Cost) then
+      if (RightChild < NOpen) and (Open[RightChild].Cost < Open[LargestChild].Cost) then
         LargestChild := RightChild;
       if LargestChild = I then
         Exit;

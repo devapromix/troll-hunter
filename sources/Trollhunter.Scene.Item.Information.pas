@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Item.Information;
+ï»¿unit Trollhunter.Scene.Item.Information;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -55,14 +56,13 @@ begin
   end
   else
   begin
-    UI.Title(_('Âûáåðèòå ïðåäìåò, î êîòîðîì âû õîòèòå óçíàòü áîëüøå'), 1,
-      clDarkestRed);
+    UI.Title(_('Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ñ€ÐµÐ´Ð¼ÐµÑ‚, Ð¾ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼ Ð²Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑƒÐ·Ð½Ð°Ñ‚ÑŒ Ð±Ð¾Ð»ÑŒÑˆÐµ'), 1, clDarkestRed);
 
     UI.FromAToZ;
     Items.RenderInventory;
     MsgLog.Render(2, True);
 
-    AddKey('A-Z', _('Èíôîðìàöèÿ î ïðåäìåòå'));
+    AddKey('A-Z', _('Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð¿Ñ€ÐµÐ´Ð¼ÐµÑ‚Ðµ'));
   end;
   AddKey('Esc', _('Close'), True);
 end;
@@ -99,8 +99,7 @@ begin
       if not FShowInfo then
       begin
         Index := Key - TK_A;
-        if (Player.IsDead) or (Items.InvCount = 0) or
-          (Index > Items.InvCount - 1) then
+        if (Player.IsDead) or (Items.InvCount = 0) or (Index > Items.InvCount - 1) then
           Exit;
         CurItem := Items_Inventory_GetItem(Index);
         FShowInfo := True;

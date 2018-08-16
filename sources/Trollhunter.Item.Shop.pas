@@ -113,10 +113,10 @@ end;
 
 destructor TShops.Destroy;
 var
-  S: TShopEnum;
+  I: TShopEnum;
 begin
-  for S := Low(TShopEnum) to High(TShopEnum) do
-    FreeAndNil(FShop[S]);
+  for I := Low(TShopEnum) to High(TShopEnum) do
+    FreeAndNil(FShop[I]);
   inherited;
 end;
 

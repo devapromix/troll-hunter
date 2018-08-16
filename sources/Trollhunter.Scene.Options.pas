@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Options;
+﻿unit Trollhunter.Scene.Options;
 
 interface
 
-uses Trollhunter.Scenes,
+uses
+  Trollhunter.Scenes,
   Trollhunter.Types;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneOptions }
 
-uses SysUtils,
+uses
+  SysUtils,
   BearLibTerminal,
   Trollhunter.Game,
   Trollhunter.UI,
@@ -33,8 +35,7 @@ begin
   AddOption('G', _('Auto pick up gems'), Game.GetOption(apGem));
   AddOption('F', _('Auto pick up food'), Game.GetOption(apFood));
   AddOption('Y', _('Auto pick up plants'), Game.GetOption(apPlant));
-  AddOption('P', _('Auto pick up potions'),
-    Game.GetOption(apPotion));
+  AddOption('P', _('Auto pick up potions'), Game.GetOption(apPotion));
   AddOption('U', _('Auto pick up flasks'), Game.GetOption(apFlask));
   AddOption('O', _('Auto pick up magic items'), Game.GetOption(apMagic));
   AddOption('S', _('Auto pick up scrolls'), Game.GetOption(apScroll));
@@ -45,8 +46,7 @@ begin
 
   // Settings
   Title(_('Settings'), False);
-  AddOption('W', UI.KeyToStr('ALT+ENTER') + ' ' + _('Fullscreen'),
-    Game.GetOption(apFullscreen), clLightBlue);
+  AddOption('W', UI.KeyToStr('ALT+ENTER') + ' ' + _('Fullscreen'), Game.GetOption(apFullscreen), clLightBlue);
 
   // Wizard mode
   if Mode.Wizard then
