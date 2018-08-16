@@ -1,8 +1,9 @@
-unit Trollhunter.Dialog;
+﻿unit Trollhunter.Dialog;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Scenes;
 
 type
@@ -50,11 +51,9 @@ begin
   // Heal
   if (ntHealer_A in NPCType) then
   begin
-    V := Player.Attributes.Attrib[atMaxLife].Value - Player.Attributes.Attrib
-      [atLife].Value;
+    V := Player.Attributes.Attrib[atMaxLife].Value - Player.Attributes.Attrib[atLife].Value;
     if (V > 0) then
-      S := ' (' + Items.GetInfo('+', V, 'Life') + ' ' +
-        Items.GetItemPrice(Round(V * 1.6)) + ')'
+      S := ' (' + Items.GetInfo('+', V, 'Life') + ' ' + Items.GetItemPrice(Round(V * 1.6)) + ')'
     else
       S := '';
     Add(_('Receive healing') + S);

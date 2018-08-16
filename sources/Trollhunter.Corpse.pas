@@ -1,8 +1,9 @@
-unit Trollhunter.Corpse;
+﻿unit Trollhunter.Corpse;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 const
   CorpseMax = 10;
@@ -31,7 +32,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.Player,
   Trollhunter.Map,
   Trollhunter.Game,
@@ -81,8 +83,7 @@ var
   I: UInt;
   S: string;
 begin
-  if (Player.X = 0) or (Player.Y = 0) or (Player.X = UIntMax) or
-    (Player.Y = UIntMax) then
+  if (Player.X = 0) or (Player.Y = 0) or (Player.X = UIntMax) or (Player.Y = UIntMax) then
     Exit;
   { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
     try
@@ -162,15 +163,13 @@ begin
   begin
     if (UInt(Ord(Map.Current)) <> FCorpse[I].Z) then
       Continue;
-    if not Map.InView(FCorpse[I].X, FCorpse[I].Y) or
-      (not Mode.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then
+    if not Map.InView(FCorpse[I].X, FCorpse[I].Y) or (not Mode.Wizard and not Map.GetFOV(FCorpse[I].X, FCorpse[I].Y)) then
       Continue;
     if ((FCorpse[I].X = 0) or (FCorpse[I].Y = 0)) then
       Continue;
     X := FCorpse[I].X - Player.X + AX + View.Left;
     Y := FCorpse[I].Y - Player.Y + AY + View.Top;
-    if not Mode.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) >
-      Player.Vision) then
+    if not Mode.Wizard and (Player.GetDist(FCorpse[I].X, FCorpse[I].Y) > Player.Vision) then
       Color := clFog
     else
       Color := clCorpse;

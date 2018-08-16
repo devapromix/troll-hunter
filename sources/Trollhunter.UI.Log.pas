@@ -1,4 +1,4 @@
-unit Trollhunter.UI.Log;
+﻿unit Trollhunter.UI.Log;
 
 interface
 
@@ -29,7 +29,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Math,
   Trollhunter.Terminal,
   BearLibTerminal,
@@ -98,8 +99,7 @@ begin
   else
     FAct := Terminal.Colorize(Trim(FMsg), Terminal.GetColorFromIni('Log'));
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height,
-    Trim(Self.GetLastMsg(MaxLogCapacity) + FAct), TK_ALIGN_BOTTOM);
+  Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height, Trim(Self.GetLastMsg(MaxLogCapacity) + FAct), TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.RenderAllMessages;
@@ -118,8 +118,7 @@ begin
     S := S + ' ' + Terminal.Colorize(FLog[FLog.Count - I], Color);
   end;
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, Trim(S),
-    TK_ALIGN_BOTTOM);
+  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, Trim(S), TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.Turn;

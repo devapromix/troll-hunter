@@ -266,7 +266,7 @@ begin
         Skills.DoSkill(skDodge);
         SatPerTurn := Ord(Game.Difficulty) + 6;
       end;
-    skSpear, skDagger:
+    skSpear, skDagger, skCrossbow:
       begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skAthletics);

@@ -2,16 +2,15 @@
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 const
   AttribMax = 100;
 
 type
-  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atPV, atDV, atStr, atDex,
-    atWil, atPer, atLife, atMana, atMaxLife, atMaxMana, atExtraGold, atVision,
-    atSat, atLev, atReLife, atReMana, atLifeAfEachKill,
-    atManaAfEachKill, atExp, atMaxExp);
+  TAttribEnum = (atDef, atMinDamage, atMaxDamage, atPV, atDV, atStr, atDex, atWil, atPer, atLife, atMana, atMaxLife, atMaxMana, atExtraGold, atVision,
+    atSat, atLev, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill, atExp, atMaxExp);
 
 const
   AttrLow = atReLife;
@@ -40,8 +39,7 @@ type
     destructor Destroy; override;
     procedure Clear;
     property Attrib[I: TAttribEnum]: TAttrib read GetAttrib write SetAttrib;
-    procedure Modify(const I: TAttribEnum; const AValue: Int = 1;
-      const APrm: Int = 0);
+    procedure Modify(const I: TAttribEnum; const AValue: Int = 1; const APrm: Int = 0);
     procedure SetValue(const I: TAttribEnum; const AValue: Int); overload;
     procedure SetPrm(const I: TAttribEnum; const APrm: Int);
     procedure SetValue(const I, J: TAttribEnum); overload;

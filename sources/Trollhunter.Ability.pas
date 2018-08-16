@@ -1,12 +1,12 @@
-unit Trollhunter.Ability;
+﻿unit Trollhunter.Ability;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
-  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
-    abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid,
+  TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen, abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid,
     abArmor_Reduction, abLight, abBerserk, abWeightless);
 
 type
@@ -26,8 +26,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Ability[const I: TAbilityEnum]: UInt read GetAbility
-      write SetAbility;
+    property Ability[const I: TAbilityEnum]: UInt read GetAbility write SetAbility;
     function IsAbility(const Value: TAbilityEnum): Boolean;
     procedure Modify(const I: TAbilityEnum; const Value: Int);
     function GetName(const Value: TAbilityEnum): string;
@@ -36,17 +35,16 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   Trollhunter.Helpers;
 
 { TAbility }
 
 const
-  AbilityColor: TAbility<string> = ('Lighter Green', 'White',
-    'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
-    'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green',
-    'Light Yellow', 'Lighter Yellow', 'Light Red', 'Light Blue');
+  AbilityColor: TAbility<string> = ('Lighter Green', 'White', 'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red', 'Dark Green',
+    'Light Blue', 'Dark Red', 'Dark White', 'Light Green', 'Light Yellow', 'Lighter Yellow', 'Light Red', 'Light Blue');
 
 procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin

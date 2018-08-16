@@ -1,8 +1,9 @@
-unit Trollhunter.Entity;
+﻿unit Trollhunter.Entity;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Map;
 
 type
@@ -26,7 +27,8 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.Game,
   Trollhunter.Language;
 

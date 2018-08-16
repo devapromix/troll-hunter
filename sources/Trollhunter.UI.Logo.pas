@@ -1,8 +1,9 @@
-unit Trollhunter.UI.Logo;
+﻿unit Trollhunter.UI.Logo;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TLogoArray<T> = array [0 .. 17] of T;
@@ -24,11 +25,13 @@ var
 
 implementation
 
-uses SysUtils, BearLibTerminal, Trollhunter.Terminal;
+uses
+  SysUtils,
+  BearLibTerminal,
+  Trollhunter.Terminal;
 
 const
-  T: TLogoArray<string> =
-    (' ______________                                                                                   ',
+  T: TLogoArray<string> = (' ______________                                                                                   ',
     '| ____  . ____ |              ___ ___ ___                               ___                       ',
     '|/    |. |    \|              \ .\\ .\\. \                              \ .\                      ',
     '      | .|                    | .||. || .|                              | .|                      ',

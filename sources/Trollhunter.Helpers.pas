@@ -1,4 +1,4 @@
-unit Trollhunter.Helpers;
+﻿unit Trollhunter.Helpers;
 
 interface
 

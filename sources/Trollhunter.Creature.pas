@@ -1,13 +1,14 @@
-unit Trollhunter.Creature;
+п»їunit Trollhunter.Creature;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Entity,
   Trollhunter.Ability,
   Trollhunter.Attribute;
 
-{ TODO -cNPC : Нужен кто-то, кто будет идентифицировать предметы за деньги. }
+{ TODO -cNPC : РќСѓР¶РµРЅ РєС‚Рѕ-С‚Рѕ, РєС‚Рѕ Р±СѓРґРµС‚ РёРґРµРЅС‚РёС„РёС†РёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚С‹ Р·Р° РґРµРЅСЊРіРё. }
 
 const
   PVMax = 250;
@@ -16,14 +17,10 @@ const
   ExtraGoldMax = 200;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-    efAllIdentification, efEnchantItem, efCraftStr, efCraftDex, efCraftWil,
-    efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision,
-    efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
-    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, efPrmStaff,
-    efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife,
-    efPrmMana, efPrmDV, efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer,
-    efRepair, efPrmBodybuilding, efPrmMeditation, efPrmEnchant_Item, efLight,
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efAllIdentification, efEnchantItem, efCraftStr, efCraftDex, efCraftWil,
+    efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak, efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration,
+    efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear, efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife,
+    efPrmMana, efPrmDV, efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation, efPrmEnchant_Item, efLight,
     efBerserk);
 
 const
@@ -31,8 +28,7 @@ const
   CraftEffHigh = efCraftAtr;
 
 const
-  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength',
-    'Dexterity', 'Willpower', 'Perception');
+  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength', 'Dexterity', 'Willpower', 'Perception');
 
 type
   TEffects = set of TEffect;
@@ -72,7 +68,8 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Math,
   Trollhunter.Helpers;
 
