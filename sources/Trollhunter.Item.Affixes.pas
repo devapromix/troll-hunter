@@ -86,6 +86,33 @@ const
 type
   TSuffixArray<T> = array [TSuffixEnum] of T;
 
+type
+  TAffixes = class(TObject)
+  private
+    FSuffixName: TSuffixArray<string>;
+  public
+    constructor Create();
+    function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
+    procedure DoSuffix(var AItem: Item);
+    procedure DoCraft(const Effect: TEffect; const Index: UInt);
+    function GetSuffix(const SuffixEnum: TSuffixEnum): TSuffixBase;
+    function Amount: UInt;
+  end;
+
+var
+  Affixes: TAffixes = nil;
+
+implementation
+
+uses
+  Math,
+  TypInfo,
+  SysUtils,
+  Trollhunter.Terminal,
+  Trollhunter.Game,
+  Trollhunter.Helpers,
+  Trollhunter.Item;
+
 const
   SuffixBase: TSuffixArray<TSuffixBase> = (
     // None
@@ -400,32 +427,6 @@ const
     //
     );
 
-type
-  TAffixes = class(TObject)
-  private
-    FSuffixName: TSuffixArray<string>;
-  public
-    constructor Create();
-    function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
-    procedure DoSuffix(var AItem: Item);
-    procedure DoCraft(const Effect: TEffect; const Index: UInt);
-    function Amount: UInt;
-  end;
-
-var
-  Affixes: TAffixes = nil;
-
-implementation
-
-uses
-  Math,
-  TypInfo,
-  SysUtils,
-  Trollhunter.Terminal,
-  Trollhunter.Game,
-  Trollhunter.Helpers,
-  Trollhunter.Item;
-
 function TAffixes.Amount: UInt;
 begin
   Result := Ord(High(TSuffixEnum)) + 1;
@@ -601,6 +602,11 @@ begin
     AItem.Value := SB.PrmValue;
   // Price
   Trollhunter.Item.TItems.CalcItem(AItem);
+end;
+
+function TAffixes.GetSuffix(const SuffixEnum: TSuffixEnum): TSuffixBase;
+begin
+  Result := SuffixBase[SuffixEnum];
 end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;

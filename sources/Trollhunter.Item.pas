@@ -87,7 +87,7 @@ var
   SB: TSuffixBase;
 begin
   // Suffix
-  SB := SuffixBase[TSuffixEnum(AItem.Identify)];
+  SB := Affixes.GetSuffix(TSuffixEnum(AItem.Identify));
   // Damage
   if (AItem.MinDamage > 0) and (AItem.MinDamage >= AItem.MaxDamage) then
     AItem.MinDamage := AItem.MaxDamage - 1;
@@ -890,7 +890,7 @@ begin
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
       if (Index > 0) then
         I := Index;
-      SB := SuffixBase[TSuffixEnum(I)];
+      SB := Affixes.GetSuffix(TSuffixEnum(I));
       // Level
       { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
         begin
