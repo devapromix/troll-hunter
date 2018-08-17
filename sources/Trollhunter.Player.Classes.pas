@@ -79,25 +79,23 @@ var
 implementation
 
 uses
-  TypInfo,
   SysUtils,
   Trollhunter.Helpers,
   Trollhunter.Utils,
   Trollhunter.Item,
   Trollhunter.Player,
   Trollhunter.UI,
-  Trollhunter.Language;
+  Trollhunter.Language,
+  Trollhunter.Enum.Helpers;
 
 { TClasses }
 
 constructor TClasses.Create;
 var
-  I: TClassEnum;
-  P: Pointer;
+  ClassEnum: TClassEnum;
 begin
-  P := TypeInfo(TClassEnum);
-  for I := Low(TClassEnum) to High(TClassEnum) do
-    FClassName[I] := GetEnumName(P, Ord(I)).GetName('cl');
+  for ClassEnum := Low(TClassEnum) to High(TClassEnum) do
+    FClassName[ClassEnum] := Enum<TClassEnum>.ValueName(ClassEnum).GetName('cl');
   FSkills := TSkills.Create;
 end;
 

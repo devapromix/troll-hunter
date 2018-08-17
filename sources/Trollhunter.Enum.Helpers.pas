@@ -1,4 +1,4 @@
-unit Trollhunter.Enum.Helpers;
+unit Trollhunter.Enum.Helpers; // https://codegists.com/snippet/pascal/enumhelperpas_ortuagustin_pascal
  
 interface
  
