@@ -69,8 +69,7 @@ uses
   Trollhunter.Scene.Item.Information in 'sources\Trollhunter.Scene.Item.Information.pas',
   Trollhunter.Scene.Final in 'sources\Trollhunter.Scene.Final.pas',
   Trollhunter.Scene.Buy in 'sources\Trollhunter.Scene.Buy.pas',
-  Trollhunter.Scene.Sell in 'sources\Trollhunter.Scene.Sell.pas',
-  Trollhunter.Enum.Helpers in 'sources\Trollhunter.Enum.Helpers.pas';
+  Trollhunter.Scene.Sell in 'sources\Trollhunter.Scene.Sell.pas';
 
 var
   Key: UInt = 0;
