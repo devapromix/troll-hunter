@@ -2,10 +2,12 @@
 
 uses
   SysUtils,
-  BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
-  uBearLibItemsCommon in 'Sources\BearLibItems\uBearLibItemsCommon.pas',
-  uBearLibItemsDungeon in 'Sources\BearLibItems\uBearLibItemsDungeon.pas',
-  uBearLibItemsInventory in 'Sources\BearLibItems\uBearLibItemsInventory.pas',
+  uBearLibItemsCommon in 'sources\Third-Party\BearLibItems\uBearLibItemsCommon.pas',
+  uBearLibItemsDungeon in 'sources\Third-Party\BearLibItems\uBearLibItemsDungeon.pas',
+  uBearLibItemsInventory in 'sources\Third-Party\BearLibItems\uBearLibItemsInventory.pas',
+  BearLibTerminal in 'sources\Third-Party\BearLibTerminal\BearLibTerminal.pas',
+  EnumHelper in 'sources\Third-Party\Enums\EnumHelper.pas',
+  Generics.Tuples in 'sources\Third-Party\Tuples\Generics.Tuples.pas',
   Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
   Trollhunter.Game in 'Sources\Trollhunter.Game.pas',
   Trollhunter.Language in 'Sources\Trollhunter.Language.pas',

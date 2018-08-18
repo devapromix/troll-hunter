@@ -80,13 +80,13 @@ implementation
 
 uses
   SysUtils,
+  EnumHelper,
   Trollhunter.Helpers,
   Trollhunter.Utils,
   Trollhunter.Item,
   Trollhunter.Player,
   Trollhunter.UI,
-  Trollhunter.Language,
-  Trollhunter.Enum.Helpers;
+  Trollhunter.Language;
 
 { TClasses }
 

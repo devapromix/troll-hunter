@@ -93,10 +93,12 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Sources\BearLibTerminal\BearLibTerminal.pas"/>
-        <DCCReference Include="Sources\BearLibItems\uBearLibItemsCommon.pas"/>
-        <DCCReference Include="Sources\BearLibItems\uBearLibItemsDungeon.pas"/>
-        <DCCReference Include="Sources\BearLibItems\uBearLibItemsInventory.pas"/>
+        <DCCReference Include="sources\Third-Party\BearLibItems\uBearLibItemsCommon.pas"/>
+        <DCCReference Include="sources\Third-Party\BearLibItems\uBearLibItemsDungeon.pas"/>
+        <DCCReference Include="sources\Third-Party\BearLibItems\uBearLibItemsInventory.pas"/>
+        <DCCReference Include="sources\Third-Party\BearLibTerminal\BearLibTerminal.pas"/>
+        <DCCReference Include="sources\Third-Party\Enums\EnumHelper.pas"/>
+        <DCCReference Include="sources\Third-Party\Tuples\Generics.Tuples.pas"/>
         <DCCReference Include="Sources\Trollhunter.Types.pas"/>
         <DCCReference Include="Sources\Trollhunter.Game.pas"/>
         <DCCReference Include="Sources\Trollhunter.Language.pas"/>
