@@ -37,7 +37,8 @@ uses
   Trollhunter.Player,
   Trollhunter.Player.Quest,
   Trollhunter.Player.Types,
-  Trollhunter.Scene.Final;
+  Trollhunter.Scene.Final,
+  Trollhunter.Mob.Types;
 
 procedure TSceneGame.Render;
 var
@@ -70,7 +71,8 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)], UI.Icon(icLife), Mobs.Mob[C].Attributes.Attrib[atLife].Value,
+        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
+        UI.Icon(icLife), Mobs.Mob[C].Attributes.Attrib[atLife].Value,
           Mobs.Mob[C].Attributes.Attrib[atMaxLife].Value]);
       end;
     end;
@@ -244,15 +246,16 @@ begin
         end;
     TK_COMMA:
       begin
+        // Up stairs
         if Player.IsDead then
           Exit;
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
         begin
           if (Map.Current > Low(TMapEnum)) then
           begin
+            Player.Wait;
             MsgLog.Add(_('You climb up the ladder...'));
             Map.Current := Pred(Map.Current);
-            Player.Wait;
           end;
         end
         else
@@ -267,9 +270,9 @@ begin
       end;
     TK_PERIOD:
       begin
+        // Portal in town
         if Player.IsDead then
           Exit;
-        // Portal in town
         if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = tePortal) then
         begin
           Player.X := Game.Spawn.X;
@@ -294,9 +297,9 @@ begin
         begin
           if (Map.Current < High(TMapEnum)) then
           begin
+            Player.Wait;
             MsgLog.Add(_('You climb down the ladder...'));
             Map.Current := Succ(Map.Current);
-            Player.Wait;
           end;
         end
         else

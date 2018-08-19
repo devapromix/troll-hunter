@@ -1026,7 +1026,7 @@ end;
 
 class function ItemBase.Count: UInt;
 begin
-  Result := Ord(Length(Base));
+  Result := Length(Base);
 end;
 
 end.

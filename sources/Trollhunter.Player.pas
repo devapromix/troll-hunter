@@ -179,7 +179,8 @@ uses
   Trollhunter.Helpers,
   Trollhunter.Item.Types,
   Trollhunter.Utils,
-  Trollhunter.Item.Base;
+  Trollhunter.Item.Base,
+  Trollhunter.Mob.Types, Trollhunter.Mob.Base;
 
 const
   NextExp: array [1 .. MaxLevel] of Int = (10, 10, 20, 30, 30, 100, 200, 300, 300, 1000, 2000, 3000, 3000, 10000, 20000, 30000, 30000, 100000,
@@ -670,7 +671,7 @@ procedure TPlayer.Dialog(AMob: TMob);
 begin
   Game.Timer := UIntMax;
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
-  NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
+  NPCType := MobBase.GetMob(AMob.ID).NPCType;
   Scenes.SetScene(scDialog);
 end;
 

@@ -90,7 +90,8 @@ uses
   Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Scenes,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  Trollhunter.Mob.Types;
 
 { TMap }
 

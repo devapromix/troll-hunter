@@ -35,7 +35,8 @@ uses
   Trollhunter.Item.Shop,
   Trollhunter.Player.Quest,
   Trollhunter.Player.Helpers,
-  Trollhunter.Item.Base;
+  Trollhunter.Item.Base,
+  Trollhunter.Mob.Base;
 
 var
   Wizard: Boolean = False;
@@ -50,7 +51,7 @@ begin
     Title(_('Wizard Mode'));
 
     Add(_('Game Difficulty'), Game.GetDifficultyName);
-    Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
+    Add(_('Monsters'), MobBase.Count - (13 + 7));
     Add(_('Bosses'), 13);
     Add(_('NPCs'), 7);
     Add(_('Items'), ItemBase.Count);

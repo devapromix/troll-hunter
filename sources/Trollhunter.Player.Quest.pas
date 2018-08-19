@@ -5,6 +5,7 @@ interface
 uses
   Trollhunter.Types,
   Trollhunter.Creature,
+  Trollhunter.Mob.Types,
   Trollhunter.Mob;
 
 { TODO -cУбить существо : Убить уникального босса на локации (от первой до предпоследней). }

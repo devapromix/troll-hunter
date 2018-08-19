@@ -29,7 +29,8 @@ uses
   Trollhunter.Player.Quest,
   Trollhunter.UI,
   Trollhunter.UI.Log,
-  Trollhunter.Language;
+  Trollhunter.Language,
+  Trollhunter.Mob.Types;
 
 procedure TSceneDialog.Render;
 var
