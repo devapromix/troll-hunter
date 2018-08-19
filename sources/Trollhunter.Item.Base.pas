@@ -34,7 +34,7 @@ type
 type
   ItemBase = class(TObject)
   public
-    class function GetItem(const Value: Int): TItemBase; overload;
+    class function GetItem(const Value: UInt): TItemBase; overload;
     class function GetItem(const Value: Item): TItemBase; overload;
     class function GetItem(const Value: TItemEnum): TItemBase; overload;
     class function Count: UInt;
@@ -1010,7 +1010,7 @@ const
 
     );
 
-class function ItemBase.GetItem(const Value: Int): TItemBase;
+class function ItemBase.GetItem(const Value: UInt): TItemBase;
 begin
   Result := Base[TItemEnum(Value)];
 end;

@@ -29,7 +29,7 @@ type
   MobBase = class(TObject)
   public
     class function GetMob(const Value: TMobEnum): TMobBase; overload;
-    class function GetMob(const Value: Int): TMobBase; overload;
+    class function GetMob(const Value: UInt): TMobBase; overload;
     class function Count: UInt;
   end;
 
@@ -289,7 +289,7 @@ begin
   Result := Base[Value];
 end;
 
-class function MobBase.GetMob(const Value: Int): TMobBase;
+class function MobBase.GetMob(const Value: UInt): TMobBase;
 begin
   Result := Base[TMobEnum(Value)];
 end;
