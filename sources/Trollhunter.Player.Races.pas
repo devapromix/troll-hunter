@@ -86,18 +86,16 @@ implementation
 uses
   TypInfo,
   SysUtils,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers, EnumHelper;
 
 { TRaces }
 
 constructor TRaces.Create;
 var
   I: TRaceEnum;
-  P: Pointer;
 begin
-  P := TypeInfo(TRaceEnum);
   for I := Low(TRaceEnum) to High(TRaceEnum) do
-    FRaceName[I] := GetEnumName(P, Ord(I)).GetName('rc');
+    FRaceName[I] := Enum<TRaceEnum>.ValueName(I).GetName('rc');
 end;
 
 destructor TRaces.Destroy;

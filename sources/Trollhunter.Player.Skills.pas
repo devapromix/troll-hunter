@@ -56,7 +56,8 @@ uses
   Trollhunter.Game,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  EnumHelper;
 
 { TSkills }
 
@@ -75,12 +76,10 @@ end;
 constructor TSkills.Create;
 var
   I: TSkillEnum;
-  P: Pointer;
 begin
   Self.Clear;
-  P := TypeInfo(TSkillEnum);
   for I := Low(TSkillEnum) to High(TSkillEnum) do
-    FSkillName[I] := GetEnumName(P, Ord(I)).GetName('sk');
+    FSkillName[I] := Enum<TSkillEnum>.ValueName(I).GetName('sk');
 end;
 
 destructor TSkills.Destroy;

@@ -91,7 +91,8 @@ uses
   Trollhunter.Player.Quest,
   Trollhunter.Helpers,
   Trollhunter.Item.Types,
-  Trollhunter.Mob.Base;
+  Trollhunter.Mob.Base,
+  EnumHelper;
 
 function MyCallback(X, Y: Int): Boolean; stdcall;
 begin
@@ -675,15 +676,11 @@ end;
 constructor TMobs.Create;
 var
   I: TMobEnum;
-  P: Pointer;
-  S: string;
 begin
   SetLength(FMob, 0);
-  P := TypeInfo(TMobEnum);
   for I := Low(TMobEnum) to High(TMobEnum) do
   begin
-    S := GetEnumName(P, Ord(I)).GetName('mb');
-    FMobName[I] := S;
+    FMobName[I] := Enum<TMobEnum>.ValueName(I).GetName('mb');
   end;
 end;
 

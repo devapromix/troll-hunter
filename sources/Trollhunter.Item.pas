@@ -47,7 +47,6 @@ type
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
     function AddItemInfo(V: TArray<string>): string;
-    function StrToItemEnum(const S: string): TItemEnum;
     procedure SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: UInt8);
     function GetBonus(const AItem: Item; const BonusType: TBonusType): UInt8;
     procedure DelCorpses();
@@ -65,6 +64,7 @@ uses
   TypInfo,
   StrUtils,
   SysUtils,
+  EnumHelper,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
   Trollhunter.Terminal,
@@ -488,26 +488,16 @@ end;
 constructor TItems.Create;
 var
   I: TItemEnum;
-  P: Pointer;
 begin
   Items_Open();
-  P := TypeInfo(TItemEnum);
   for I := Low(TItemEnum) to High(TItemEnum) do
-    FItemName[I] := GetEnumName(P, Ord(I)).GetName('iv');
+    FItemName[I] := Enum<TItemEnum>.ValueName(I).GetName('iv');
 end;
 
 destructor TItems.Destroy;
 begin
   Items_Close();
   inherited;
-end;
-
-function TItems.StrToItemEnum(const S: string): TItemEnum;
-var
-  P: Pointer;
-begin
-  P := TypeInfo(TItemEnum);
-  Result := TItemEnum(GetEnumValue(P, 'iv' + S));
 end;
 
 function TItems.GetName(I: TItemEnum): string;

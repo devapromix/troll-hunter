@@ -112,7 +112,8 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Game,
   Trollhunter.Helpers,
-  Trollhunter.Item;
+  Trollhunter.Item,
+  EnumHelper;
 
 const
   SuffixBase: TSuffixArray<TSuffixBase> = (
@@ -436,11 +437,9 @@ end;
 constructor TAffixes.Create();
 var
   I: TSuffixEnum;
-  P: Pointer;
 begin
-  P := TypeInfo(TSuffixEnum);
   for I := Low(TSuffixEnum) to High(TSuffixEnum) do
-    FSuffixName[I] := GetEnumName(P, Ord(I)).GetName('');
+    FSuffixName[I] := Enum<TSuffixEnum>.ValueName(I).GetName('');
 end;
 
 procedure TAffixes.DoCraft(const Effect: TEffect; const Index: UInt);

@@ -38,7 +38,8 @@ implementation
 uses
   SysUtils,
   TypInfo,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  EnumHelper;
 
 { TAbility }
 
@@ -62,12 +63,10 @@ end;
 constructor TAbilities.Create;
 var
   I: TAbilityEnum;
-  P: Pointer;
 begin
   Self.Clear;
-  P := TypeInfo(TAbilityEnum);
   for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    FAbilityName[I] := GetEnumName(P, Ord(I)).GetName('ab');
+    FAbilityName[I] := Enum<TAbilityEnum>.ValueName(I).GetName('ab');
 end;
 
 destructor TAbilities.Destroy;

@@ -91,7 +91,8 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Scenes,
   Trollhunter.Helpers,
-  Trollhunter.Mob.Types;
+  Trollhunter.Mob.Types,
+  EnumHelper;
 
 { TMap }
 
@@ -320,12 +321,10 @@ end;
 constructor TMap.Create;
 var
   I: TMapEnum;
-  P: Pointer;
 begin
   Self.Current := deDark_Wood;
-  P := TypeInfo(TMapEnum);
   for I := Low(TMapEnum) to High(TMapEnum) do
-    FMapName[I] := GetEnumName(P, Ord(I)).GetName('de');
+    FMapName[I] := Enum<TMapEnum>.ValueName(I).GetName('de');
 end;
 
 destructor TMap.Destroy;
