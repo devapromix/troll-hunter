@@ -38,7 +38,8 @@ uses
   Trollhunter.Player.Quest,
   Trollhunter.Player.Types,
   Trollhunter.Scene.Final,
-  Trollhunter.Mob.Types;
+  Trollhunter.Mob.Types,
+  Trollhunter.Helpers;
 
 procedure TSceneGame.Render;
 var
@@ -71,8 +72,7 @@ var
       C := Mobs.GetIndex(X, Y);
       if (C > -1) then
       begin
-        S := S + Format('%s (%s%d/%d). ', [Mobs.Name[TMobEnum(Mobs.Mob[C].ID)],
-        UI.Icon(icLife), Mobs.Mob[C].Attributes.Attrib[atLife].Value,
+        S := S + Format('%s (%s%d/%d). ', [Mobs.GetName(Mobs.Mob[C].ID), UI.Icon(icLife), Mobs.Mob[C].Attributes.Attrib[atLife].Value,
           Mobs.Mob[C].Attributes.Attrib[atMaxLife].Value]);
       end;
     end;

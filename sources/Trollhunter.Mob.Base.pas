@@ -35,7 +35,8 @@ type
 
 implementation
 
-uses Trollhunter.Game;
+uses
+  Trollhunter.Game;
 
 const
   Base: array [TMobEnum] of TMobBase = (

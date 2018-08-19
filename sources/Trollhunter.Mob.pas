@@ -46,7 +46,7 @@ type
     FMob: TArray<TMob>;
     function GetMob(I: Int): TMob;
     procedure SetMob(I: Int; const Value: TMob);
-    function GetName(I: TMobEnum): string;
+    function GetName(I: TMobEnum): string; overload;
     function ChMob(I: Int; AX, AY: UInt): Boolean;
   public
     constructor Create();
@@ -61,6 +61,7 @@ type
     function GetIndex(AX, AY: UInt): Int;
     property Mob[I: Int]: TMob read GetMob write SetMob;
     property Name[I: TMobEnum]: string read GetName;
+    function GetName(I: UInt): string; overload;
   end;
 
 type
@@ -170,7 +171,7 @@ begin
   if MobBase.GetMob(ID).Boss then
   begin
     if Mode.Wizard then
-      Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)), X, Y, Ord(AZ)]));
+      Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(ID), X, Y, Ord(AZ)]));
     Boss := True;
     IsBoss := True;
     // PV
@@ -195,7 +196,7 @@ var
 begin
   if IsDead or Player.IsDead or (Force <> fcEnemy) then
     Exit;
-  The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+  The := GetCapit(GetDescThe(Mobs.GetName(ID)));
   if (Player.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) then
   begin
     Game.ShowEffects := False;
@@ -334,7 +335,7 @@ begin
     if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)) then
       Player.BreakItem();
     if Player.IsDead then
-      Player.Defeat(Mobs.GetName(TMobEnum(ID)));
+      Player.Defeat(Mobs.GetName(ID));
   end
   else
     Miss();
@@ -353,7 +354,7 @@ begin
   // Quests
   Quests.DoQuest(qtKillMobs, FID);
   Self.Alive := False;
-  The := GetDescThe(Mobs.GetName(TMobEnum(ID)));
+  The := GetDescThe(Mobs.GetName(ID));
   case Math.RandomRange(0, 2) of
     0:
       S := Format(_('You kill %s.'), [The]);
@@ -379,7 +380,7 @@ begin
   Player.Statictics.Inc(stScore, MobBase.GetMob(ID).Level * V);
   Self.DropItems;
   // Boss
-  if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mbTroll_King)) then
+  if (Boss and (Map.Current = FinalDungeon) and (ID.MobEnum = mbTroll_King)) then
   begin
     if not Mode.Wizard then
       Game.Won := True;
@@ -430,7 +431,7 @@ begin
       Player.Skills.DoSkill(skStealth);
       if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
       begin
-        The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+        The := GetCapit(GetDescThe(Mobs.GetName(ID)));
         MsgLog.Add(Format(_('%s notices you!'), [The]));
       end;
       Exit;
@@ -752,6 +753,11 @@ end;
 procedure TMobs.SetMob(I: Int; const Value: TMob);
 begin
   FMob[I] := Value;
+end;
+
+function TMobs.GetName(I: UInt): string;
+begin
+  Result := GetName(I.MobEnum);
 end;
 
 function TMobs.GetName(I: TMobEnum): string;

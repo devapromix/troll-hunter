@@ -66,7 +66,7 @@ type
     function Amount(): Int;
     procedure Add(const AQuestEnum: TQuestEnum);
     property Quest[I: Int]: TQuest read GetQuest write SetQuest;
-    procedure DoQuest(const AQuestType: TQuestType; const Value: Int);
+    procedure DoQuest(const AQuestType: TQuestType; const Value: UInt);
     property Current: TQuestEnum read FCurrent write FCurrent;
     function GetName(const AQuestEnum: TQuestEnum): string;
   end;
@@ -81,7 +81,8 @@ uses
   System.Generics.Collections,
   Trollhunter.Map,
   Trollhunter.UI.Log,
-  Trollhunter.Language;
+  Trollhunter.Language,
+  Trollhunter.Helpers;
 
 { TQuests }
 
@@ -100,7 +101,7 @@ begin
   FQuest[I] := Value
 end;
 
-procedure TQuests.DoQuest(const AQuestType: TQuestType; const Value: Int);
+procedure TQuests.DoQuest(const AQuestType: TQuestType; const Value: UInt);
 var
   I: Int;
 begin
@@ -108,7 +109,7 @@ begin
     with FQuest[I] do
     begin
       // Killing monsters
-      if ((QuestType = AQuestType) and (QuestState = qsActive) and (Mob = TMobEnum(Value))) then
+      if ((QuestType = AQuestType) and (QuestState = qsActive) and (Mob = Value.MobEnum)) then
         Kills := Kills + 1;
     end;
 end;

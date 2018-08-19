@@ -72,7 +72,6 @@ type
     FStatistics: TStatistics;
     FSex: TSexEnum;
     FSkills: TSkills;
-    FExp: Int;
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
@@ -327,7 +326,7 @@ begin
     GenNPCText;
     Exit;
   end;
-  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
+  The := GetDescThe(Mobs.GetName(Mob.ID));
   if (Mob.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
@@ -428,7 +427,6 @@ var
   FAttrib: TAttribArray<UInt>;
   Attrib: TAttribEnum;
   I, FCount, Str, Dex, Wil, Per, Life, Mana: Int;
-  ID: TItemEnum;
   FItem: Item;
 
   procedure AddAttrib(const AAttrib: TAttribEnum; const Value: UInt);
@@ -489,7 +487,6 @@ begin
     begin
       if (FItem.Identify = 0) then
         Continue;
-      ID := TItemEnum(FItem.ItemID);
       AddAttrib(atDef, FItem.Defense);
       AddAttrib(atMinDamage, FItem.MinDamage);
       AddAttrib(atMaxDamage, FItem.MaxDamage);
@@ -514,9 +511,9 @@ begin
         AddAttrib(atLifeAfEachKill, Items.GetBonus(FItem, btLifeAfEachKill));
         AddAttrib(atManaAfEachKill, Items.GetBonus(FItem, btManaAfEachKill));
       end;
-      if (ItemBase.GetItem(ID).SlotType = stMainHand) then
-        FWeaponSkill := GetSkill(ItemBase.GetItem(ID).ItemType);
-      if (ItemBase.GetItem(ID).SlotType = stTorch) then
+      if (ItemBase.GetItem(FItem).SlotType = stMainHand) then
+        FWeaponSkill := GetSkill(ItemBase.GetItem(FItem).ItemType);
+      if (ItemBase.GetItem(FItem).SlotType = stTorch) then
       begin
         Light := Light + FItem.Value;
         FItem.Value := FItem.Value - 1;
@@ -670,7 +667,7 @@ end;
 procedure TPlayer.Dialog(AMob: TMob);
 begin
   Game.Timer := UIntMax;
-  NPCName := Mobs.Name[TMobEnum(AMob.ID)];
+  NPCName := Mobs.GetName(AMob.ID);
   NPCType := MobBase.GetMob(AMob.ID).NPCType;
   Scenes.SetScene(scDialog);
 end;
@@ -787,7 +784,6 @@ end;
 procedure TPlayer.Use(Index: Int);
 var
   FItem: Item;
-  I: TItemEnum;
   ItemType: TItemType;
 begin
   if IsDead or (Items.InvCount = 0) or (Index > Items.InvCount - 1) then
@@ -807,10 +803,9 @@ begin
     Self.Calc;
     Exit;
   end;
-  I := TItemEnum(FItem.ItemID);
-  ItemType := ItemBase.GetItem(I).ItemType;
+  ItemType := ItemBase.GetItem(FItem.ItemID.ItemEnum).ItemType;
   // No mana
-  if (Player.Attributes.Attrib[atMana].Value < ItemBase.GetItem(I).ManaCost) then
+  if (Player.Attributes.Attrib[atMana].Value < ItemBase.GetItem(FItem.ItemID.ItemEnum).ManaCost) then
   begin
     MsgLog.Add(Format(_('You need more mana!'), [FItem.Level]));
     Self.Calc;
@@ -852,10 +847,10 @@ begin
       end;
       if (ItemType in ScrollTypeItems + RuneTypeItems) then
       begin
-        if (Attributes.Attrib[atMana].Value >= ItemBase.GetItem(I).ManaCost) then
+        if (Attributes.Attrib[atMana].Value >= ItemBase.GetItem(FItem.ItemID.ItemEnum).ManaCost) then
         begin
           Skills.DoSkill(skConcentration);
-          Attributes.Modify(atMana, -ItemBase.GetItem(I).ManaCost);
+          Attributes.Modify(atMana, -ItemBase.GetItem(FItem.ItemID.ItemEnum).ManaCost);
           Statictics.Inc(stSpCast);
         end
         else
@@ -894,7 +889,7 @@ begin
   begin
     AItem := Items_Inventory_GetItem(I);
     if (AItem.Equipment > 0) then
-      if (ItemBase.GetItem(TItemEnum(AItem.ItemID)).SlotType = ASlot) then
+      if (ItemBase.GetItem(AItem.ItemID.ItemEnum).SlotType = ASlot) then
         Exit(True);
   end;
 end;
@@ -1173,7 +1168,6 @@ procedure TPlayer.BreakItem(ASlot: TSlotType; Value: UInt = 1);
 var
   FItem: Item;
   FCount, I: Int;
-  FI: TItemEnum;
 begin
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
@@ -1181,8 +1175,7 @@ begin
     FItem := Items_Inventory_GetItem(I);
     if (FItem.Equipment > 0) then
     begin
-      FI := TItemEnum(FItem.ItemID);
-      if (ItemBase.GetItem(FI).SlotType = ASlot) then
+      if (ItemBase.GetItem(FItem.ItemID.ItemEnum).SlotType = ASlot) then
       begin
         BreakItem(I, Value);
         Exit;
