@@ -177,7 +177,6 @@ implementation
 
 uses
   SysUtils,
-  Vcl.Dialogs,
   BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,

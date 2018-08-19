@@ -42,6 +42,8 @@ type
 
 implementation
 
+uses Trollhunter.Helpers;
+
 const
   Base: array [TItemEnum] of TItemBase = (
     /// / == All maps == ////
@@ -1012,12 +1014,12 @@ const
 
 class function ItemBase.GetItem(const Value: UInt): TItemBase;
 begin
-  Result := Base[TItemEnum(Value)];
+  Result := Base[Value.ItemEnum];
 end;
 
 class function ItemBase.GetItem(const Value: Item): TItemBase;
 begin
-  Result := Base[TItemEnum(Value.ItemID)];
+  Result := Base[Value.ItemID.ItemEnum];
 end;
 
 class function ItemBase.GetItem(const Value: TItemEnum): TItemBase;

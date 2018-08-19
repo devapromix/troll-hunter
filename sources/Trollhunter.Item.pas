@@ -28,7 +28,6 @@ type
     destructor Destroy; override;
     procedure Render(AX, AY: UInt);
     procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1; IsRare: Boolean = False);
-    function GetItemEnum(AItemID: Int): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False; ACount: UInt = 0; IsShort: Boolean = False): string;
     function RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True;
       PriceType: TPriceType = ptNone): string;
@@ -87,7 +86,7 @@ var
   SB: TSuffixBase;
 begin
   // Suffix
-  SB := Affixes.GetSuffix(TSuffixEnum(AItem.Identify));
+  SB := Affixes.GetSuffix(AItem.Identify.SuffixEnum);
   // Damage
   if (AItem.MinDamage > 0) and (AItem.MinDamage >= AItem.MaxDamage) then
     AItem.MinDamage := AItem.MaxDamage - 1;
@@ -212,7 +211,7 @@ begin
       S := S + GetAmount();
   end
   // Corpse
-  else if (TItemEnum(ID) = ivCorpse) then
+  else if (ID.ItemEnum = ivCorpse) then
     S := ''
     // Light (Torch)
   else if (ItemType = itTorch) then
@@ -229,7 +228,7 @@ begin
     begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DefenseSuffixes) then
+      if (AItem.Identify > 0) and (AItem.Identify.SuffixEnum in DefenseSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
     // Damage
@@ -237,7 +236,7 @@ begin
     begin
       if (AItem.MinDamage > 0) then
         T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage, AItem.MaxDamage]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes) then
+      if (AItem.Identify > 0) and (AItem.Identify.SuffixEnum in DamageSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
 
@@ -279,7 +278,7 @@ begin
     if ItemType in SmithTypeItems then
     begin
       D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability, AItem.MaxDurability]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DurabilitySuffixes) then
+      if (AItem.Identify > 0) and (AItem.Identify.SuffixEnum in DurabilitySuffixes) then
         D := Terminal.Colorize(D, 'Rare');
     end;
     S := S + AddItemInfo([Level, T, D]);
@@ -746,7 +745,6 @@ end;
 
 function TItems.AddItemInfo(V: TArray<string>): string;
 var
-  I: UInt;
   R: string;
 begin
   Result := '';
@@ -851,11 +849,6 @@ begin
   end;
 end;
 
-function TItems.GetItemEnum(AItemID: Int): TItemEnum;
-begin
-  Result := TItemEnum(AItemID);
-end;
-
 procedure TItems.LootGold(const AX, AY: UInt);
 begin
   Loot(AX, AY, ivGold);
@@ -879,7 +872,7 @@ end;
 
 function TItems.Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False; Index: UInt = 0): Boolean;
 var
-  I: UInt;
+  I: Int;
   SB: TSuffixBase;
 begin
   Result := False;
@@ -890,7 +883,7 @@ begin
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
       if (Index > 0) then
         I := Index;
-      SB := Affixes.GetSuffix(TSuffixEnum(I));
+      SB := Affixes.GetSuffix(I.SuffixEnum);
       // Level
       { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
         begin
@@ -932,7 +925,7 @@ function TItems.GetName(AItem: Item; IsShort: Boolean = False): string;
 var
   N, S: string;
 begin
-  N := _(Trim(GetName(TItemEnum(AItem.ItemID))));
+  N := _(Trim(GetName(AItem.ItemID.ItemEnum)));
   case AItem.Identify of
     0:
       begin
@@ -944,7 +937,7 @@ begin
       end;
     1 .. UIntMax:
       begin
-        Result := N + ' ' + _(Affixes.GetSuffixName(TSuffixEnum(AItem.Identify)));
+        Result := N + ' ' + _(Affixes.GetSuffixName(AItem.Identify.SuffixEnum));
         if (AItem.SlotID > 0) then
           Result := Terminal.Colorize(Result, 'Rare')
         else
@@ -1006,7 +999,7 @@ begin
         X := FItem.X + Math.RandomRange(0, 2);
         Y := FItem.Y + Math.RandomRange(0, 2);
         if (Map.InMap(X, Y) and (Map.GetTileEnum(X, Y, M) in SpawnTiles) and (M in ItemBase.GetItem(FItem).Deep)) then
-          Loot(X, Y, TItemEnum(FItem.ItemID));
+          Loot(X, Y, FItem.ItemID.ItemEnum);
       end;
     end;
   end;

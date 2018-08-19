@@ -43,8 +43,8 @@ var
 implementation
 
 uses
-  SysUtils,
   Math,
+  SysUtils,
   Trollhunter.Language,
   Trollhunter.Item,
   Trollhunter.Item.Shop,

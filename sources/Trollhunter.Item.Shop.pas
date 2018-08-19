@@ -51,8 +51,8 @@ var
 implementation
 
 uses
-  SysUtils,
   Math,
+  SysUtils,
   Trollhunter.Map,
   Trollhunter.Creature,
   Trollhunter.Attribute,

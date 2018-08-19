@@ -4,7 +4,10 @@ interface
 
 uses
   Classes,
-  Trollhunter.Types;
+  Trollhunter.Types,
+  Trollhunter.Mob.Types,
+  Trollhunter.Item.Affixes,
+  Trollhunter.Item.Types;
 
 type
   TIntHelper = record helper for Int
@@ -12,6 +15,8 @@ type
     function Percent(AValue: Int): Int; inline;
     function InRange(AMaxValue: Int): Int; inline;
     function ToString: string;
+    function ItemEnum: TItemEnum;
+    function SuffixEnum: TSuffixEnum;
   end;
 
 type
@@ -20,6 +25,8 @@ type
     function Percent(AValue: Int): Int; inline;
     function InRange(AMaxValue: UInt): UInt; inline;
     function ToString: string;
+    function MobEnum: TMobEnum;
+    function ItemEnum: TItemEnum;
   end;
 
 type
@@ -31,8 +38,8 @@ type
 implementation
 
 uses
-  SysUtils,
-  Math;
+  Math,
+  SysUtils;
 
 { IntHelper }
 
@@ -51,6 +58,16 @@ begin
   Result := IntToStr(Self);
 end;
 
+function TIntHelper.ItemEnum: TItemEnum;
+begin
+  Result := TItemEnum(Self);
+end;
+
+function TIntHelper.SuffixEnum: TSuffixEnum;
+begin
+  Result := TSuffixEnum(Self);
+end;
+
 { UIntHelper }
 
 function TUIntHelper.InRange(AMaxValue: UInt): UInt;
@@ -66,6 +83,16 @@ end;
 function TUIntHelper.ToString: string;
 begin
   Result := IntToStr(Self);
+end;
+
+function TUIntHelper.MobEnum: TMobEnum;
+begin
+  Result := TMobEnum(Self);
+end;
+
+function TUIntHelper.ItemEnum: TItemEnum;
+begin
+  Result := TItemEnum(Self);
 end;
 
 { TStringHelper }

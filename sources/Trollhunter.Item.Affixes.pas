@@ -492,7 +492,7 @@ var
   end;
 
 begin
-  SB := SuffixBase[TSuffixEnum(AItem.Identify)];
+  SB := SuffixBase[AItem.Identify.SuffixEnum];
   case TSuffixEnum(AItem.Identify) of
     // Vision
     of_Radiance:
