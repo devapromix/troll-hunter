@@ -87,7 +87,7 @@ begin
   Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (1/2)']), TK_ALIGN_CENTER);
   // Level
   Add(Format('%s %d', [_('Level'), Player.Attributes.Attrib[atLev].Value]), UI.Icon(icElixir), 'Gold', Player.Attributes.Attrib[atExp].Value,
-    Player.Attributes.Attrib[atMaxExp].Value);
+    Player.GetDeltaToNext);
   // Attributes
   Add('Strength', UI.Icon(icStr), 'Strength', Player.Attributes.Attrib[atStr], AttribMax);
   Add('Dexterity', UI.Icon(icDex), 'Dexterity', Player.Attributes.Attrib[atDex], AttribMax);

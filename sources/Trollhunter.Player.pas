@@ -26,6 +26,7 @@ const
   BaseLife: UInt = 20;
   BaseMana: UInt = 10;
   BaseAttrib: UInt = 5;
+  MaxLevel = 20;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
@@ -75,7 +76,6 @@ type
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
-    procedure CalcMaxExp;
   public
     constructor Create;
     destructor Destroy; override;
@@ -146,6 +146,7 @@ type
     function EqItem(ASlot: TSlotType; var AItem: Item): Boolean;
     function CanShootOrCastSpell(var AItem: Item): Boolean; overload;
     function CanShootOrCastSpell: Boolean; overload;
+    function GetDeltaToNext: Int;
   end;
 
 var
@@ -180,9 +181,13 @@ uses
   Trollhunter.Utils,
   Trollhunter.Item.Base;
 
-{ TPlayer }
+const
+  NextExp: array [1 .. MaxLevel] of Int = (10, 10, 20, 30, 30, 100, 200, 300, 300, 1000, 2000, 3000, 3000, 10000, 20000, 30000, 30000, 100000,
+    200000, 300000);
 
-// Generate a random player's background (from Kharne and UMoria roguelikes)
+  { TPlayer }
+
+  // Generate a random player's background (from Kharne and UMoria roguelikes)
 procedure TPlayer.GenerateBackground();
 var
   I: (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType, cpEyeColour, cpHairStyle, cpHairColour, cpComplexion);
@@ -606,7 +611,6 @@ begin
 
   FWeaponSkill := skNone;
   Attributes.SetValue(atLev, 1);
-  CalcMaxExp;
   GenerateBackground();
   Calc();
   Fill();
@@ -689,6 +693,11 @@ function TPlayer.GetVision: UInt;
 begin
   Result := Game.EnsureRange((Attributes.Attrib[atVision].Value - Abilities.Ability[abBlinded]) + 3, VisionMax);
   Result := Math.IfThen(Calendar.IsDay, Result, Result div 2);
+end;
+
+function TPlayer.GetDeltaToNext: Int;
+begin
+  Result := NextExp[Attributes.Attrib[atLev].Value.InRange(MaxLevel)];
 end;
 
 function TPlayer.GetSatiationStr: string;
@@ -887,11 +896,6 @@ begin
       if (ItemBase.GetItem(TItemEnum(AItem.ItemID)).SlotType = ASlot) then
         Exit(True);
   end;
-end;
-
-procedure TPlayer.CalcMaxExp;
-begin
-  Attributes.SetValue(atMaxExp, Attributes.Attrib[atLev].Value * 100);
 end;
 
 function TPlayer.CanShootOrCastSpell: Boolean;
@@ -1439,12 +1443,10 @@ end;
 procedure TPlayer.AddExp(Value: UInt = 1);
 begin
   Attributes.Modify(atExp, Value);
-  if (Attributes.Attrib[atExp].Value >= Attributes.Attrib[atMaxExp].Value) then
+  if (Attributes.Attrib[atExp].Value >= GetDeltaToNext) then
   begin
-    Attributes.Modify(atExp, -Attributes.Attrib[atMaxExp].Value);
-    Attributes.Modify(atLev, 1);
-    CalcMaxExp;
     // You leveled up! You are now level %d!
+    Attributes.Modify(atLev, 1);
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Attrib[atLev].Value]), clAlarm));
     Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib[atLev].Value);
   end;

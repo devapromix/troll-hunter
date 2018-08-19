@@ -1,3 +1,8 @@
+(*
+   EnumHelper by ortuagustin https://codegists.com/user/ortuagustin
+   English translation for comments - by Karagy
+*)
+
 unit EnumHelper;
 
 interface
@@ -15,17 +20,17 @@ type
 {$ENDREGION}
 
 {$REGION 'EnumNamesAttribute'}
-  /// <summary> Este atributo permite anotar un tipo enumerativo con una lista de valores que identifican
-  /// a cada valor de dicho tipo </summary>
-  /// <summary> El constructor recibe un identificador y un string delimitado por un caracter, podria verse
-  /// a ese string como un "array". Esto es implementado asi debido a una limitacion de Delphi, ya que no se permite
-  /// inicializar atributos con arreglos (aunque sean constantes) </summary>
-  /// <summary> Para obtener el valor se debe usar el ayudante Enum<T>.EnumName(Identificador, Valor) </summary>
-  /// <summary> Un ejemplo de uso seria: </summary>
+  /// <summary> This attribute allows you to annotate an enumerative type with a list of values that identify
+  /// to each value of that type </summary>
+  /// <summary> The constructor receives an identifier and a string delimited by a character, it could be seen
+  /// to that string as an "array". This is implemented due to a limitation of Delphi, since it is not allowed
+  /// initialize attributes with fixes (even if they are constant) </summary>
+  /// <summary> To get the value you should use the Enum helper <T> .EnumName (Identifier, Value) </summary>
+  /// <summary> An example of serious use: </summary>
   /// <summary> type </summary>
-  /// <summary>   [EnumNames('TestEnumAttribute', 'Hello, World')] </summary>
-  /// <summary>   TTestEnumeration = (First, Second); </summary>
-  /// <summary> Enum<TTestEnumeration>.EnumName('TestEnumAttribute', TTestEnumeration.First) --> 'Hello' </summary>
+  /// <summary> [EnumNames ('TestEnumAttribute', 'Hello, World')] </summary>
+  /// <summary> TTestEnumeration = (First, Second); </summary>
+  /// <summary> Enum <TTestEnumeration> .EnumName ('TestEnumAttribute', TTestEnumeration.First) -> 'Hello' </summary>
   EnumNamesAttribute = class(TCustomAttribute)
   strict private
     FIdentifier: string;
@@ -39,7 +44,7 @@ type
 {$ENDREGION}
 
 {$REGION 'Enum<T>'}
-  /// <summary> Record que contiene metodos estaticos para trabajar con tipos enums </summary>
+  /// <summary> Record that contains static methods to work with enums types </summary>
   Enum<T: record {: enum}> = record
   strict private
     class function EnumTypeInfo: PTypeInfo; static; inline;
@@ -54,49 +59,48 @@ type
     class procedure NameNotFound(const Identifier: string; const Value: T); static;
     class procedure OutOfRange(const Value: T; const Namespace, MethodName: string); static;
   public
-    /// <summary> El nombre del tipo enum </summary>
+    /// <summary> The name of the enum type </summary>
     class function TypeName: string; static; inline;
-    /// <summary> El nombre del valor enum </summary>
+    /// <summary> The name of the enum value </summary>
     class function ValueName(const Value: T): string; static; inline;
-    /// <summary> Devuelve el valor del tipo enum anotado por el atributo EnumNames </summary>
-    /// <summary> Si el enum no esta anotado por el atributo EnumNames, o no esta anotado por un atributo
-    /// EnumNames con el identificador indicado, se eleva una excepcion EEnumNameNotFound </summary>
-    /// <remarks> Ver EnumNamesAttribute </remarks>
+    /// <summary> Returns the value of the enum type annotated by the EnumNames attribute </summary>
+    /// <summary> If the enum is not annotated by the EnumNames attribute, or is not annotated by an attribute
+    /// EnumNames with the indicated identifier, an exception is raised EEnumNameNotFound </summary>
+    /// <remarks> See EnumNamesAttribute </remarks>
     class function EnumName(const Identifier: string; const Value: T): string; static; inline;
-    /// <summary> Devuelve el valor del tipo enum anotado por el atributo EnumNames </summary>
-    /// <summary> En lugar de elevar una excepcion EEnumNameNotFound, se devuelve el valor Default </summary>
-    /// <summary> Si Default = EmptyStr se devuelve ValueName(Value) </summary>
-    /// <remarks> Ver EnumNamesAttribute </remarks>
+    /// <summary> Returns the value of the enum type annotated by the EnumNames attribute </summary>
+    /// <summary> Instead of raising an EEnumNameNotFound exception, the Default value is returned </summary>
+    /// <summary> If Default = EmptyStr, ValueName (Value) is returned </summary>
+    /// <remarks> See EnumNamesAttribute </remarks>
     class function EnumNameOrDefault(const Identifier: string; const Value: T; const Default: string = ''): string; static; inline;
-    /// <summary> Devuelve todos los nombres con los que fue anotado el enum </summary>
+    /// <summary> Returns all the names with which the enum was written down </summary>
     class function EnumNames(const Identifier: string): TArray<string>; static; inline;
-    /// <summary> Devuelve el valor enum dado un Ordinal </summary>
+    /// <summary> Returns the enum value given an Ordinal </summary>
     class function Parse(const Ordinal: Integer): T; static; inline;
-    /// <summary> Convierte el valor enum a su correspondiente Ordinal </summary>
+    /// <summary> Convert the value enum to its corresponding Ordinal </summary>
     class function ToInteger(const Value: T): Integer; static; inline;
-    /// <summary> El valor maximo del enum. Equivalente a Ord(High(T)) </summary>
+    /// <summary> The maximum value of the enum. Equivalent to Ord (High (T)) </summary>
     class function MaxValue: Integer; static; inline;
-    /// <summary> El valor maximo del enum. Equivalente a Ord(Low(T)) </summary>
+    /// <summary> The minimum value of the enum. Equivalent to Ord (Low (T)) </summary>
     class function MinValue: Integer; static; inline;
-    /// <summary> Devuelve True si el valor del tipo enum se encuentra dentro del rango permitido </summary>
+    /// <summary> Returns True if the value of the enum type is within the allowed range </summary>
     class function InRange(const Value: T): Boolean; overload; static;
-    /// <summary> Devuelve True si el entero se encuentra dentro del rango permitido del tipo enum </summary>
+    /// <summary> Returns True if the integer is within the allowed range of the enum type </summary>
     class function InRange(const Value: Integer): Boolean; overload; static;
-    /// <summary> Eleva una excepcion EEnumOutOfRange si el valor del tipo enum esta fuera del rango
-    // permitido </summary>
-    /// <param name="Value"> El valor a testear </param>
-    /// <param name="Namespace"> Describe el "contexto" de quien invoca a este metodo (ej clase o unidad) </param>
-    /// <param name="MethodName"> Nombre del metodo que invoco a esta rutina </param>
+    /// <summary> Raise an exception EEnumOutOfRange if the value of the enum type is out of range allowed </summary>
+    /// <param name = "Value"> The value to test </param>
+    /// <param name = "Namespace"> Describes the "context" of the person invoking this method (eg class or unit) </param>
+    /// <param name = "MethodName"> Name of the method that invoked this routine </param>
     class procedure CheckInRange(const Value: T; const Namespace, MethodName: string); static;
-    /// <summary> Cantidad de elementos del enum </summary>
+    /// <summary> Amount of elements of the enum </summary>
     class function Count: Integer; static;
-    /// <summary> Devuelve un Array con los elementos del enum </summary>
+    /// <summary> Returns an Array with the elements of the enum </summary>
     class function AsArray: TArray<T>; static;
   end;
 {$ENDREGION}
 
 {$REGION 'Rtti'}
-  /// <summary> Mantiene una instancia de TRttiContext privada al que delega los metodos publicos </summary>
+  /// <summary> It maintains a private TRttiContext instance to which it delegates public methods </summary>
   Rtti = record
   public type
     TAttributeClass = class of TCustomAttribute;
@@ -107,13 +111,13 @@ type
     class function GetContext: TRttiContext; static;
     class property Context: TRttiContext read GetContext;
   public
-    /// <summary> Obtiene el TRttiType de la clase de una objeto determinado </summary>
+    /// <summary> Gets the TRttiType of the class of a given object </summary>
     class function GetObjectRtti(const AObject: TObject): TRttiType; static;
-    /// <summary> Obtiene el TRttiType para un clase determinada </summary>
+    /// <summary> Get the TRttiType for a given class </summary>
     class function GetClassRtti(const AClass: TClass): TRttiType; static;
-    /// <summary> Obtiene el TRttiType para un tipo determinado </summary>
+    /// <summary> Get the TRttiType for a certain type </summary>
     class function GetTypeRtti(const ATypeInfo: PPTypeInfo): TRttiType; static;
-    /// <summary> Obtiene el TRttiType para un enum </summary>
+    /// <summary> Get the TRttiType for an enum </summary>
     class function GetEnumRtti<T: record {: enum}>: TRttiType; static;
   end;
 {$ENDREGION}
@@ -123,13 +127,13 @@ type
   strict private
     procedure AttributeNotFoundError(const AttributeName: string);
   public
-    /// <summary> Devuelve el atributo de la clase determinada por el tipo generico </summary>
-    /// <remarks> Eleva una excepcion EAttributeNotFound si el tipo no esta anotado con ese atributo </remarks>
+    /// <summary> Returns the attribute of the class determined by the generic type </summary>
+    /// <remarks> Raise an EAttributeNotFound exception if the type is not annotated with that attribute </remarks>
     function GetAttribute<T: TCustomAttribute>: T;
-    /// <summary> Este metodo ya lo provee la RTTI de Delphi, pero necesito sobrecargarlo porque la version
-    /// generica lo oculta </summary>
+    /// <summary> This method is already provided by the RTTI of Delphi, but I need to overload it because the
+    /// generic version hides it. </summary>
     function GetAttributes: TArray<TCustomAttribute>; overload;
-    /// <summary> Devuelve todos los atributos de la clase determinada por el tipo generico </summary>
+    /// <summary> Returns all attributes of the class determined by the generic type </summary>
     function GetAttributes<T: TCustomAttribute>: TArray<T>; overload;
   end;
 {$ENDREGION}
