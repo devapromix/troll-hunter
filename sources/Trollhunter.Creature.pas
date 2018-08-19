@@ -4,6 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
+  Trollhunter.Mob.Types,
   Trollhunter.Entity,
   Trollhunter.Ability,
   Trollhunter.Attribute;
@@ -32,19 +33,6 @@ const
 
 type
   TEffects = set of TEffect;
-
-type
-  TMinMax = record
-    Min: UInt;
-    Max: UInt;
-  end;
-
-  TDamage = TMinMax;
-
-  TBaseDamage = record
-    MinDamage: TDamage;
-    MaxDamage: TDamage;
-  end;
 
 type
   TCreature = class(TEntity)

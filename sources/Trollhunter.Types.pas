@@ -9,6 +9,12 @@ type
 const
   UIntMax = High(Byte);
 
+type
+  TMinMax = record
+    Min: UInt;
+    Max: UInt;
+  end;
+
 implementation
 
 end.

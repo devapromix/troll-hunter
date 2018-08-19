@@ -2,6 +2,9 @@
 
 interface
 
+uses
+  Trollhunter.Types;
+
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead, mrElemental, mrGiant, mrPlant);
 
@@ -67,6 +70,15 @@ type
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);
+
+type
+  TDamage = TMinMax;
+
+type
+  TBaseDamage = record
+    MinDamage: TDamage;
+    MaxDamage: TDamage;
+  end;
 
 implementation
 

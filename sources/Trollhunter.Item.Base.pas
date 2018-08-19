@@ -5,6 +5,7 @@ interface
 uses
   uBearLibItemsCommon,
   Trollhunter.Types,
+  Trollhunter.Mob.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
   Trollhunter.Game,

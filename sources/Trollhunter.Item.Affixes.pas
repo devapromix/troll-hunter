@@ -4,6 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
+  Trollhunter.Mob.Types,
   uBeaRLibItemsCommon,
   Trollhunter.Creature,
   Trollhunter.Item.Types;
