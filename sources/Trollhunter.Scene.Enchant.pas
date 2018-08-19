@@ -9,7 +9,7 @@ uses
 type
   TSceneEnchant = class(TScene)
   public
-    Suffix: UInt;
+    //Suffix: UInt;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;

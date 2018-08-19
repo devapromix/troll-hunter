@@ -20,7 +20,8 @@ implementation
 uses
   BearLibTerminal,
   Trollhunter.UI,
-  Trollhunter.UI.Log, Trollhunter.Language;
+  Trollhunter.UI.Log,
+  Trollhunter.Language;
 
 procedure TSceneMessages.Render;
 begin
