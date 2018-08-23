@@ -55,8 +55,8 @@ end;
 
 function TEntity.GetDescAn(S: string): string;
 begin
-  if (Trim(S) <> '') then
-    Result := LowerCase(S)
+  if (S.Trim <> '') then
+    Result := S.ToLower
   else
     Result := '(???)' + S;
   if (Language.Current <> 'english') then
@@ -69,8 +69,8 @@ end;
 
 function TEntity.GetDescThe(S: string): string;
 begin
-  if (Trim(S) <> '') then
-    Result := LowerCase(S)
+  if (S.Trim <> '') then
+    Result := S.ToLower
   else
     Result := '(???)' + S;
   if (Language.Current <> 'english') then
