@@ -541,34 +541,34 @@ const
     (Symbol: ''''; ItemType: itTalisman; SlotType: stNeck; MaxStack: 1; MaxDurability: 130; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 4000; Color: clYellow; Deep: [deDrom];),
 
-    // Wand #1
+    // Wooden Wand (Wand #1)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 10; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;)); Price: 550; Color: clDarkBlue; Deep: [deDark_Wood]; ManaCost: 2;),
-    // Wand #2
+    // Mystery Wand (Wand #2)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 12; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;)); Price: 600; Color: clDarkBlue; Deep: [deDark_Wood]; ManaCost: 2;),
-    // Wand #3
+    // Bonetooth Wand (Wand #3)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 14; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 650; Color: clDarkBlue; Deep: [deGray_Cave]; ManaCost: 2;),
-    // Wand #4
+    // Sanctified Wand (Wand #4)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 16; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;)); Price: 700; Color: clDarkBlue; Deep: [deGray_Cave]; ManaCost: 3;),
-    // Wand #5
+    // Black Maw Wand (Wand #5)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 18; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;)); Price: 750; Color: clDarkBlue; Deep: [deDeep_Cave]; ManaCost: 3;),
-    // Wand #6
+    // Deadhand Wand (Wand #6)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 20; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;)); Price: 800; Color: clDarkBlue; Deep: [deDeep_Cave]; ManaCost: 3;),
-    // Wand #7
+    // Lone Antler Wand (Wand #7)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 22; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;)); Price: 850; Color: clDarkBlue; Deep: [deBlood_Cave]; ManaCost: 4;),
-    // Wand #8
+    // Hexclaw Wand (Wand #8)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 24; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;)); Price: 900; Color: clDarkBlue; Deep: [deBlood_Cave]; ManaCost: 4;),
-    // Wand #9
+    // Monkey Paw Wand (Wand #9)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 27; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;)); Price: 950; Color: clDarkBlue; Deep: [deDrom]; ManaCost: 4;),
-    // Wand #10
+    // Fangjaw Wand (Wand #10)
     (Symbol: '-'; ItemType: itWand; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;)); Price: 1000; Color: clDarkBlue; Deep: [deDrom]; ManaCost: 5;),
 

@@ -73,13 +73,8 @@ const
   // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
   // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
 
-  // Wooden Wand , Mystery Wand , Bonetooth Wand , Sanctified Wand ,
-
   // Light Crossbow , Crossbow , Heavy Crossbow , Siege Crossbow , Demon Crossbow
   // Heavy Siege Crossbow , War Crossbow , Phantom Crossbow , Runic Crossbow , Ancient Crossbow
-
-  // Dagger , Kris , Sacrificial Kris , Leafblade , Long Dagger
-  // Jagged Dagger , Trident Dagger , Divine Dagger , Blood Dagger , Shadow Dagger
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
@@ -157,7 +152,8 @@ type
     ivCrimson_Talisman, ivDead_Reckoning,
 
     // Wands
-    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8, ivWand9, ivWand10,
+    ivWooden_Wand, ivMystery_Wand, ivBonetooth_Wand, ivSanctified_Wand, ivBlack_Maw_Wand, ivDeadhand_Wand, ivLone_Antler_Wand, ivHexclaw_Wand,
+    ivMonkey_Paw_Wand, ivFangjaw_Wand,
 
     // Battle Staves
     ivQuarterstaff,
