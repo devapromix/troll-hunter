@@ -44,7 +44,7 @@ const
 
 procedure TMsgLog.Add(S: string);
 begin
-  FMsg := FMsg + ' ' + Trim(S);
+  FMsg := FMsg + ' ' + S.Trim;
   Game.Timer := UIntMax;
 end;
 
@@ -94,10 +94,10 @@ begin
   if (Flag and (Game.Timer = 0)) then
     Exit;
   Player.RenderInfo;
-  if (Trim(MsgLog.Msg) = '') then
+  if MsgLog.Msg.Trim.IsEmpty then
     FAct := ''
   else
-    FAct := Terminal.Colorize(Trim(FMsg), Terminal.GetColorFromIni('Log'));
+    FAct := Terminal.Colorize(FMsg.Trim, Terminal.GetColorFromIni('Log'));
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height, Trim(Self.GetLastMsg(MaxLogCapacity) + FAct), TK_ALIGN_BOTTOM);
 end;
@@ -118,13 +118,13 @@ begin
     S := S + ' ' + Terminal.Colorize(FLog[FLog.Count - I], Color);
   end;
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, Trim(S), TK_ALIGN_BOTTOM);
+  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, S.Trim, TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.Turn;
 begin
-  if (Trim(FMsg) <> '') then
-    FLog.Append(Trim(FMsg));
+  if not FMsg.Trim.IsEmpty then
+    FLog.Append(FMsg.Trim);
 end;
 
 initialization

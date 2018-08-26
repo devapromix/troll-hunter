@@ -48,7 +48,7 @@ end;
 
 function TEntity.GetCapit(S: string): string;
 begin
-  if (S.Trim <> '') then
+  if not S.IsEmpty then
     Result := UpCase(S[1]) + Copy(S, 2, Length(S))
   else
     Result := '(???)' + S;
@@ -56,7 +56,7 @@ end;
 
 function TEntity.GetDescAn(S: string): string;
 begin
-  if (S.Trim <> '') then
+  if not S.IsEmpty then
     Result := S.ToLower
   else
     Result := '(???)' + S;
@@ -70,7 +70,7 @@ end;
 
 function TEntity.GetDescThe(S: string): string;
 begin
-  if (S.Trim <> '') then
+  if not S.IsEmpty then
     Result := S.ToLower
   else
     Result := '(???)' + S;
