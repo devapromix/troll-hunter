@@ -36,6 +36,7 @@ uses
 
 constructor TEntity.Create;
 begin
+  inherited;
 
 end;
 
@@ -47,7 +48,7 @@ end;
 
 function TEntity.GetCapit(S: string): string;
 begin
-  if (Trim(S) <> '') then
+  if (S.Trim <> '') then
     Result := UpCase(S[1]) + Copy(S, 2, Length(S))
   else
     Result := '(???)' + S;
