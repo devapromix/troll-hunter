@@ -69,6 +69,9 @@ const
 
   // Hide Boots
 
+  // Long Staff , War Staff , Mentor Staff , Obsidian Staff , Elder Staff ,
+  // Shamanic Staff , High Priest Staff , Arcane Staff ,
+
   // Hide Shield , Iron Shield , Steel Shield , Dragonscale Shield , Dragonplate Shield
   // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
   // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
@@ -156,10 +159,12 @@ type
     ivMonkey_Paw_Wand, ivFangjaw_Wand,
 
     // Battle Staves
-    ivQuarterstaff,
+    ivQuarterstaff, ivBlade_Staff, ivGrinning_Staff, ivHorned_Staff, ivBattle_Staff, ivSerpent_Staff, ivLunaris_Staff, ivTiger_Staff, ivMoon_Staff,
+    ivDragon_Staff,
 
     // Magic Staves
-    ivShort_Staff, ivStaff2, ivStaff3, ivStaff4, ivStaff5, ivStaff6, ivStaff7, ivStaff8, ivStaff9, ivStaff10,
+    ivShort_Staff, ivSacrament_Staff, ivGhost_Staff, ivYew_Staff, ivBone_Staff, ivApprentice1s_Staff, ivDisciple1s_Staff, ivAcolyte1s_Staff,
+    iv_Archmage1s_Staff, ivAncient_Staff,
 
     // Daggers
     ivDagger, ivKris, ivSacrificial_Kris, ivLeafblade, ivLong_Dagger, ivJagged_Dagger, ivTrident_Dagger, ivDivine_Dagger, ivBlood_Dagger,

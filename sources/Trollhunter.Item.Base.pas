@@ -574,36 +574,63 @@ const
 
     // Quarterstaff (Battle Staff #1)
     (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 20; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 170; Color: clDarkGreen; Deep: [deDark_Wood];),
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 170; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Blade Staff (Battle Staff #2)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 25; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 210; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Grinning Staff (Battle Staff #3)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 250; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Horned Staff (Battle Staff #4)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 35; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 290; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Battle Staff (Battle Staff #5)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 330; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Serpent Staff (Battle Staff #6)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 45; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 370; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Lunaris Staff (Battle Staff #7)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 50; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 410; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Tiger Staff (Battle Staff #8)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 55; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 450; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Moon Staff (Battle Staff #9)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 60; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 490; Color: clDarkYellow; Deep: [deDark_Wood];),
+    // Dragon Staff (Battle Staff #10)
+    (Symbol: '|'; ItemType: itBattleStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 65; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 3; Max: 4;)); Price: 530; Color: clDarkYellow; Deep: [deDark_Wood];),
 
     // Short Staff (Staff #1)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 2; Max: 3;)); Price: 300; Color: clDarkGreen; Deep: [deDark_Wood]; ManaCost: 12;),
-    // (Staff #2)
+    // Sacrament Staff (Staff #2)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;)); Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ManaCost: 2;),
-    // (Staff #3)
+    // Ghost Staff (Staff #3)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 4;); MaxDamage: (Min: 4; Max: 5;)); Price: 500; Color: clDarkGreen; Deep: [deGray_Cave]; ManaCost: 3;),
-    // (Staff #4)
+    // Yew Staff (Staff #4)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 4; Max: 5;); MaxDamage: (Min: 6; Max: 7;)); Price: 600; Color: clDarkGreen; Deep: [deGray_Cave]; ManaCost: 3;),
-    // (Staff #5)
+    // Bone Staff (Staff #5)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 6; Max: 7;)); Price: 700; Color: clDarkGreen; Deep: [deDeep_Cave]; ManaCost: 4;),
-    // (Staff #6)
+    // Apprentice's Staff (Staff #6)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 6; Max: 7;); MaxDamage: (Min: 8; Max: 9;)); Price: 800; Color: clDarkGreen; Deep: [deDeep_Cave]; ManaCost: 4;),
-    // (Staff #7)
+    // Disciple's Staff (Staff #7)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 7; Max: 8;); MaxDamage: (Min: 8; Max: 9;)); Price: 900; Color: clDarkGreen; Deep: [deBlood_Cave]; ManaCost: 5;),
-    // (Staff #8)
+    // Acolyte's Staff (Staff #8)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 9;); MaxDamage: (Min: 10; Max: 11;)); Price: 1000; Color: clDarkGreen; Deep: [deBlood_Cave]; ManaCost: 6;),
-    // (Staff #9)
+    // Archmage's Staff (Staff #9)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 9; Max: 10;); MaxDamage: (Min: 11; Max: 12;)); Price: 1100; Color: clDarkGreen; Deep: [deDrom]; ManaCost: 7;),
-    // (Staff #10)
+    // Ancient Staff (Staff #10)
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ManaCost: 8;),
 
