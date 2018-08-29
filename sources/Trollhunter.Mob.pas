@@ -406,7 +406,7 @@ end;
 
 function TMob.GetVision: UInt;
 begin
-  Result := EnsureRange(VisionMax - (Player.Skills.Skill[skStealth].Value div 6), 3, VisionMax);
+  Result := EnsureRange(VisionMax - (Player.Skills.GetSkill(skStealth) div 6), 3, VisionMax);
 end;
 
 procedure TMob.Process;
@@ -429,7 +429,6 @@ begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
       Abilities.Ability[abSleeping] := 0;
-      Player.Skills.DoSkill(skStealth);
       if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
       begin
         The := GetCapit(GetDescThe(Mobs.GetName(ID)));
