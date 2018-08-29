@@ -26,7 +26,7 @@ const
   BaseLife: UInt = 20;
   BaseMana: UInt = 10;
   BaseAttrib: UInt = 5;
-  MaxLevel = 20;
+  MaxLevel = 30;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
@@ -180,8 +180,13 @@ uses
   Trollhunter.Mob.Types, Trollhunter.Mob.Base;
 
 const
-  NextExp: array [1 .. MaxLevel] of Int = (10, 10, 20, 30, 30, 100, 200, 300, 300, 1000, 2000, 3000, 3000, 10000, 20000, 30000, 30000, 100000,
-    200000, 300000);
+  NextExp: array [1 .. MaxLevel] of Int = (
+    // 1 - 10
+    10, 25, 45, 70, 100, 140, 190, 250, 320, 400,
+    // 11 - 20
+    490, 630, 940, 1390, 1640, 2110, 2620, 3290, 4000, 4300,
+    // 21 - 30
+    5750, 6100, 6900, 7800, 8300, 9000, 10000, 10600, 12100, 13700);
 
   { TPlayer }
 
@@ -223,7 +228,9 @@ begin
   end;
 end;
 
-procedure TPlayer.RnItem(FItem: Item; const Index: Int);
+procedure TPlayer.RnItem(FItem: Item;
+
+  const Index: Int);
 begin
   if (FItem.Durability = 0) then
   begin
@@ -380,7 +387,11 @@ var
   I, FCount, Str, Dex, Wil, Per, Life, Mana: Int;
   FItem: Item;
 
-  procedure AddAttrib(const AAttrib: TAttribEnum; const Value: UInt);
+  procedure AddAttrib(
+
+    const AAttrib: TAttribEnum;
+
+    const Value: UInt);
   begin
     FAttrib[AAttrib] := FAttrib[AAttrib] + Value;
   end;
@@ -393,7 +404,9 @@ var
       FAttrib[I] := 0;
   end;
 
-  function GetSkill(const Value: TItemType): TSkillEnum;
+  function GetSkill(
+
+    const Value: TItemType): TSkillEnum;
   begin
     case Value of
       itBlade:
@@ -827,7 +840,9 @@ begin
   // MsgLog.Add(Format(_('You don''t know how to use %s.'), [The]));
 end;
 
-function TPlayer.EqItem(ASlot: TSlotType; var AItem: Item): Boolean;
+function TPlayer.EqItem(ASlot: TSlotType;
+
+  var AItem: Item): Boolean;
 var
   FCount, I: Int;
 begin
@@ -849,7 +864,9 @@ begin
   Result := CanShootOrCastSpell(I);
 end;
 
-function TPlayer.CanShootOrCastSpell(var AItem: Item): Boolean;
+function TPlayer.CanShootOrCastSpell(
+
+  var AItem: Item): Boolean;
 begin
   Result := False;
   if not IsDead and Self.EqItem(stMainHand, AItem) then
@@ -1276,7 +1293,9 @@ begin
   end;
 end;
 
-procedure TPlayer.RenderWeather(const AX, AY, AWidth: UInt);
+procedure TPlayer.RenderWeather(
+
+  const AX, AY, AWidth: UInt);
 var
   SunOrMoonGlyphColor, SunOrMoonGlyph, SunOrMoon, SkyColor, SkyBef, SkyAft: string;
   Left: UInt;
@@ -1564,7 +1583,11 @@ begin
   Fill();
 end;
 
-procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);
+procedure TPlayer.DoEffects(
+
+  const Effects: TEffects;
+
+  const Value: UInt = 0);
 var
   V, VX, VY: UInt;
   Ef: TEffect;
