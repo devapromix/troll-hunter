@@ -10,7 +10,7 @@ const
 
 type
   TAttribEnum = (atDef, atMinDamage, atMaxDamage, atPV, atDV, atStr, atDex, atWil, atPer, atLife, atMana, atMaxLife, atMaxMana, atExtraGold, atVision,
-    atSat, atLev, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill, atExp);
+    atSat, atLev, atReLife, atReMana, atLifeAfEachKill, atManaAfEachKill, atExp, atSkillpoint, atMaxMap);
 
 const
   AttrLow = atReLife;

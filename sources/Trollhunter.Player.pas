@@ -48,16 +48,16 @@ const
   SkillExpMax = 50;
   BeginSkill = 5;
   StartSkill = 3;
+  SkillpointPerLevel = 5;
 
 type
   TPlayer = class(TCreature)
   private
     FLX: UInt;
     FLY: UInt;
-    FMaxMap: UInt;
     FLook: Boolean;
     FShoot: Boolean;
-    FGold: Int;
+    FGold: UInt;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
     FRace: TRaceEnum;
@@ -81,10 +81,9 @@ type
     property LX: UInt read FLX write FLX;
     property LY: UInt read FLY write FLY;
     property Vision: UInt read GetVision;
-    property MaxMap: UInt read FMaxMap write FMaxMap;
     property Look: Boolean read FLook write FLook;
     property Shoot: Boolean read FShoot write FShoot;
-    property Gold: Int read FGold write FGold;
+    property Gold: UInt read FGold;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
@@ -479,7 +478,7 @@ begin
     end;
   end;
   //
-  Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
+  FGold := Items_Inventory_GetItemAmount(Ord(ivGold));
   // Strength
   Str := BaseAttrib + Round(Skills.Skill[skAthletics] * 1.2) + Round(Skills.Skill[skToughness] * 0.2) + FAttrib[atStr] + Attributes.Attrib[atStr].Prm
     + Races.Attrib[atStr] + PCClasses.Attrib[atStr];
@@ -551,8 +550,7 @@ begin
   Items_Inventory_Clear();
   Self.Empty;
   Attributes.SetValue(atSat, SatiatedMax);
-  Gold := 0;
-  MaxMap := 0;
+  FGold := 0;
   PlayerName := Trim(Terminal_Get('ini.player.name'));
   if (PlayerName = '') then
     Name := _('PLAYER')
@@ -1391,6 +1389,7 @@ begin
   begin
     // You leveled up! You are now level %d!
     Attributes.Modify(atLev, 1);
+    Attributes.Modify(atSkillpoint, SkillpointPerLevel);
     MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Attrib[atLev].Value]), clAlarm));
     Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib[atLev].Value);
   end;
@@ -1404,7 +1403,7 @@ begin
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
       Statictics.Inc(stScore, Ord(Map.Current) * 15);
-    MaxMap := MaxMap + 1;
+    Attributes.Modify(atMaxMap);
   end;
   SatPerTurn := 1;
   Move(drOrigin);
