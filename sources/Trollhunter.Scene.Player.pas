@@ -75,7 +75,9 @@ procedure TScenePlayer.Add(const AStr, AIcons, ABarColor: string; const ACur: TA
 begin
   W := X * 2 - 3;
   UI.Bar(1, 0, Y + (D * 2), W, ACur.Value, AMax, color_from_name(LowerCase(ABarColor)), clDarkGray);
-  if Mode.Wizard then
+  if (AMax = 0) then
+    Terminal.Print(X, Y + (D * 2), Format('%s %d', [AIcons + ' ' + AStr, ACur.Value]), TK_ALIGN_CENTER)
+  else if Mode.Wizard then
     Terminal.Print(X, Y + (D * 2), Format('%s %d(%d)/%d', [AIcons + ' ' + AStr, ACur.Value, ACur.Prm, AMax]), TK_ALIGN_CENTER)
   else
     Terminal.Print(X, Y + (D * 2), Format('%s %d/%d', [AIcons + ' ' + AStr, ACur.Value, AMax]), TK_ALIGN_CENTER);
@@ -109,12 +111,14 @@ end;
 procedure TScenePlayer.RenderInfo;
 begin
   Terminal.Print(X, Y + 2, Format(FT, [_('Attributes') + ' (2/2)']), TK_ALIGN_CENTER);
+  // Skillpoints
+  Add('Skillpoints', UI.Icon(icElixir) + UI.Icon(icBook2), 'Dark Green', Player.Attributes.Attrib[atSkillpoint], 0);
   //
   Add('Replenish Life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atReLife].Value, ReLifeMax);
   Add('Regeneration Mana', UI.Icon(icElixir) + UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atReMana].Value, ReManaMax);
   //
   Add('To Life after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atLifeAfEachKill].Value, LifeAEKMax);
-  Add('To Mana after each Kill', UI.Icon(icPlus) + UI.Icon(icLife), 'Mana', Player.Attributes.Attrib[atManaAfEachKill].Value, ManaAEKMax);
+  Add('To Mana after each Kill', UI.Icon(icPlus) + UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atManaAfEachKill].Value, ManaAEKMax);
   //
   Add('Extra Gold from Monsters (%)', UI.Icon(icPlus) + UI.Icon(icGold), 'Gold', Player.Attributes.Attrib[atExtraGold].Value, ExtraGoldMax);
   //

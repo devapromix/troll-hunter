@@ -45,11 +45,12 @@ var
   I, L, W: UInt;
 begin
   L := Wd;
-  W := Round(Cur / Max * L);
+  if (Max <> 0) then
+    W := Round(Cur / Max * L);
   for I := 0 to L do
   begin
     Terminal.BackgroundColor(ADarkColor);
-    if ((I <= W) and (Cur > 0)) then
+    if ((Max <> 0) and (I <= W) and (Cur > 0)) then
       Terminal.BackgroundColor(AColor);
     Terminal.Print(X + I + LM, Y, ' ');
     Terminal.BackgroundColor(0);
