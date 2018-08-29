@@ -133,7 +133,6 @@ type
     procedure BreakItem(); overload;
     procedure AddExp(Value: UInt = 1);
     procedure Start;
-    procedure DoWeaponSkill;
     procedure Rest(ATurns: UInt);
     procedure Dialog(AMob: TMob);
     procedure RnItem(FItem: Item; const Index: Int);
@@ -254,52 +253,6 @@ begin
   Mobs.Process;
 end;
 
-procedure TPlayer.DoWeaponSkill;
-begin
-  case FWeaponSkill of
-    skBlade:
-      begin
-        Skills.DoSkill(FWeaponSkill, 2);
-        Skills.DoSkill(skAthletics, 2);
-        Skills.DoSkill(skDodge, 2);
-        SatPerTurn := Ord(Game.Difficulty) + 5;
-      end;
-    skAxe:
-      begin
-        Skills.DoSkill(FWeaponSkill, 2);
-        Skills.DoSkill(skAthletics, 3);
-        Skills.DoSkill(skDodge);
-        SatPerTurn := Ord(Game.Difficulty) + 6;
-      end;
-    skSpear, skDagger, skCrossbow:
-      begin
-        Skills.DoSkill(FWeaponSkill, 2);
-        Skills.DoSkill(skAthletics);
-        Skills.DoSkill(skDodge, 3);
-        SatPerTurn := Ord(Game.Difficulty) + 4;
-      end;
-    skMace:
-      begin
-        Skills.DoSkill(FWeaponSkill, 2);
-        Skills.DoSkill(skAthletics, 4);
-        SatPerTurn := Ord(Game.Difficulty) + 7;
-      end;
-    skStaff, skWand:
-      begin
-        Skills.DoSkill(FWeaponSkill, 2);
-        Skills.DoSkill(skDodge);
-        Skills.DoSkill(skConcentration, 3);
-        SatPerTurn := Ord(Game.Difficulty) + 8;
-      end;
-    skBow:
-      begin
-        Skills.DoSkill(FWeaponSkill, 2);
-        Skills.DoSkill(skDodge, 4);
-        SatPerTurn := Ord(Game.Difficulty) + 4;
-      end;
-  end;
-end;
-
 procedure TPlayer.Attack(Index: Int);
 var
   V, Ch: UInt;
@@ -337,7 +290,7 @@ begin
       Dec(Dam, Dam div 3);
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
-    Cr := Skills.Skill[FWeaponSkill].Value;
+    Cr := Skills.GetSkill(FWeaponSkill);
     if ((Ch < Cr) and not Abilities.IsAbility(abWeak)) then
     begin
       if (Ch > (Cr div 10)) then
@@ -369,7 +322,6 @@ begin
       BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
-    DoWeaponSkill;
     // Victory
     if Mob.IsDead then
       Mob.Defeat;
@@ -529,19 +481,19 @@ begin
   //
   Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
   // Strength
-  Str := BaseAttrib + Round(Skills.Skill[skAthletics].Value * 1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] +
-    Attributes.Attrib[atStr].Prm + Races.Attrib[atStr] + PCClasses.Attrib[atStr];
+  Str := BaseAttrib + Round(Skills.Skill[skAthletics] * 1.2) + Round(Skills.Skill[skToughness] * 0.2) + FAttrib[atStr] + Attributes.Attrib[atStr].Prm
+    + Races.Attrib[atStr] + PCClasses.Attrib[atStr];
   Attributes.SetValue(atStr, EnsureRange(Str, 1, AttribMax));
   // Dexterity
-  Dex := BaseAttrib + Round(Skills.Skill[skDodge].Value * 1.4) + FAttrib[atDex] + Attributes.Attrib[atDex].Prm + Races.Attrib[atDex] +
+  Dex := BaseAttrib + Round(Skills.Skill[skDodge] * 1.4) + FAttrib[atDex] + Attributes.Attrib[atDex].Prm + Races.Attrib[atDex] +
     PCClasses.Attrib[atDex];
   Attributes.SetValue(atDex, EnsureRange(Dex, 1, AttribMax));
   // Willpower
-  Wil := BaseAttrib + Round(Skills.Skill[skConcentration].Value * 1.4) + FAttrib[atWil] + Attributes.Attrib[atWil].Prm + Races.Attrib[atWil] +
+  Wil := BaseAttrib + Round(Skills.Skill[skConcentration] * 1.4) + FAttrib[atWil] + Attributes.Attrib[atWil].Prm + Races.Attrib[atWil] +
     PCClasses.Attrib[atWil];
   Attributes.SetValue(atWil, EnsureRange(Wil, 1, AttribMax));
   // Perception
-  Per := BaseAttrib + Round(Skills.Skill[skToughness].Value * 1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm + Races.Attrib[atPer] +
+  Per := BaseAttrib + Round(Skills.Skill[skToughness] * 1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm + Races.Attrib[atPer] +
     PCClasses.Attrib[atPer];
   Attributes.SetValue(atPer, EnsureRange(Per, 1, AttribMax));
   //
@@ -562,7 +514,7 @@ begin
   // DV
   Attributes.SetValue(atDV, Game.EnsureRange(Round(Attributes.Attrib[atDex].Value * (DVMax / AttribMax)) + Attributes.Attrib[atDV].Prm, DVMax));
   // PV
-  Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness].Value / 1.4) - 4 + FAttrib[atDef] + Attributes.Attrib[atPV].Prm, PVMax));
+  Attributes.SetValue(atPV, Game.EnsureRange(Round(Skills.Skill[skToughness] / 1.4) - 4 + FAttrib[atDef] + Attributes.Attrib[atPV].Prm, PVMax));
   if Abilities.IsAbility(abArmor_Reduction) then
     LoAttrib(atPV);
   // Life
@@ -629,7 +581,6 @@ begin
     begin
       MsgLog.Add(Format(_('You crafted %s.'), [Items.GetNameThe(FItem)]));
       Statictics.Inc(stItCrafted);
-      Skills.DoSkill(skEnchant_Item, FItem.Level);
       Scenes.SetScene(scInv);
     end;
     Self.Calc;
@@ -849,7 +800,6 @@ begin
       begin
         if (Attributes.Attrib[atMana].Value >= ItemBase.GetItem(FItem.ItemID.ItemEnum).ManaCost) then
         begin
-          Skills.DoSkill(skConcentration);
           Attributes.Modify(atMana, -ItemBase.GetItem(FItem.ItemID.ItemEnum).ManaCost);
           Statictics.Inc(stSpCast);
         end
@@ -1669,11 +1619,10 @@ begin
   // Mana
   if (efMana in Effects) then
   begin
-    V := Skills.Skill[skConcentration].Value + Value;
+    V := Skills.Skill[skConcentration] + Value;
     MsgLog.Add(_('You feel magical energies restoring.'));
     MsgLog.Add(Format(F, [_('Mana'), Min(Self.Attributes.Attrib[atMaxMana].Value - Self.Attributes.Attrib[atMana].Value, V)]));
     Self.Attributes.Modify(atMana, V);
-    Skills.DoSkill(skConcentration);
   end;
   // Food
   if (efFood in Effects) then
@@ -1696,7 +1645,7 @@ begin
   // Enchant Item
   if (efEnchantItem in Effects) then
   begin
-    Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)), Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
+    Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)), Math.EnsureRange(Player.Skills.Skill[skEnchant_Item] div 10, 0, 7));
     Scenes.SetScene(scEnchant);
   end;
   // Repair
@@ -1708,8 +1657,8 @@ begin
   // Teleportation
   if (efTeleportation in Effects) then
   begin
-    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
-    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration].Value + Value);
+    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration] + Value);
+    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration] + Value);
     X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
     Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
     MsgLog.Add(_('You have teleported into new place!'));
@@ -1750,7 +1699,7 @@ begin
   // Bloodlust
   if (efBloodlust in Effects) then
   begin
-    V := Math.RandomRange(Value, Skills.Skill[skConcentration].Value + Value);
+    V := Math.RandomRange(Value, Skills.Skill[skConcentration] + Value);
     Abilities.Modify(abBloodlust, V);
     MsgLog.Add(Format(_('You feel lust for blood (%d).'), [V]));
   end;
@@ -1884,7 +1833,7 @@ end;
 
 procedure TPlayer.Turn();
 var
-  Turns: UInt;
+  Turns, Bodybuilding, Meditation: UInt;
 begin
   // Regen
   if Abilities.IsAbility(abRegen) then
@@ -1895,13 +1844,15 @@ begin
   if not Abilities.IsAbility(abDiseased) then
   begin
     // Replenish Life
-    Turns := LifeTurnMax - Skills.Skill[skBodybuilding].Value;
+    Bodybuilding := Skills.GetSkill(skBodybuilding);
+    Turns := LifeTurnMax - Bodybuilding;
     if (Statictics.Get(stTurn) mod Turns = 0) then
-      Attributes.Modify(atLife, Skills.Skill[skBodybuilding].Value);
+      Attributes.Modify(atLife, Bodybuilding);
     // Regenerate Mana
-    Turns := ManaTurnMax - Skills.Skill[skMeditation].Value;
+    Meditation := Skills.GetSkill(skMeditation);
+    Turns := ManaTurnMax - Meditation;
     if (Statictics.Get(stTurn) mod Turns = 0) then
-      Attributes.Modify(atMana, Skills.Skill[skMeditation].Value);
+      Attributes.Modify(atMana, Meditation);
   end;
 end;
 

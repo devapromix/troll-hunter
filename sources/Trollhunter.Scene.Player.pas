@@ -138,8 +138,8 @@ begin
   begin
     I := TSkillEnum(FSkillCursorTop + J);
     D := ((J - 1) * 2) + Y + 2;
-    UI.Bar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed, clDarkGray);
-    Terminal.Print(B, D, Format('%s %d/%d', [Player.Skills.GetName(I), Player.Skills.Skill[I].Value, SkillMax]), TK_ALIGN_CENTER);
+    UI.Bar(X, 0, D, X - 2, Player.Skills.GetSkill(I), SkillMax, clDarkRed, clDarkGray);
+    Terminal.Print(B, D, Format('%s %d/%d', [Player.Skills.GetName(I), Player.Skills.GetSkill(I), SkillMax]), TK_ALIGN_CENTER);
   end;
 end;
 
