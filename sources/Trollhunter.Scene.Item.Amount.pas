@@ -37,6 +37,7 @@ procedure TSceneAmount.Render;
 var
   FItem: Item;
 begin
+  inherited;
   UI.Title(_('Enter amount'));
 
   if Player.ItemIsDrop then

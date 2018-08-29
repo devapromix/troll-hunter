@@ -27,6 +27,7 @@ uses
 
 procedure TSceneOptions.Render;
 begin
+  inherited;
   Y := 1;
   // Options
   Title(_('Options'));

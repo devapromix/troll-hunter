@@ -19,14 +19,20 @@ type
   TFinalEnum = (feNone, feQuit, feWon, feDefeat);
 
 type
-  TScene = class(TObject)
+  IScene = interface
+    procedure Render;
+    procedure Update(var Key: UInt);
+  end;
+
+type
+  TScene = class(TInterfacedObject, IScene)
   private
     KStr: string;
   public
     X, Y: Int;
     CX, CY: Int;
     constructor Create;
-    procedure Render; virtual; abstract;
+    procedure Render; virtual;
     procedure AddLine(AHotKey, AText: string);
     procedure AddOption(AHotKey, AText: string; AOption: Boolean; AColor: Cardinal = $FFAAAAAA); overload;
     procedure Add(); overload;
@@ -52,7 +58,7 @@ type
   TScenes = class(TScene)
   private
     FSceneEnum: TSceneEnum;
-    FScene: array [TSceneEnum] of TScene;
+    FScene: array [TSceneEnum] of IScene;
     FPrevSceneEnum: TSceneEnum;
     FFinalEnum: TFinalEnum;
   public
@@ -158,6 +164,12 @@ end;
 constructor TScene.Create;
 begin
   KStr := '';
+end;
+
+procedure TScene.Render;
+begin
+  CX := Terminal.Window.Width div 2;
+  CY := Terminal.Window.Height div 2;
 end;
 
 procedure TScene.Title(S: string; F: Boolean);
@@ -285,17 +297,14 @@ begin
 end;
 
 destructor TScenes.Destroy;
-var
-  I: TSceneEnum;
 begin
-  for I := Low(TSceneEnum) to High(TSceneEnum) do
-    FreeAndNil(FScene[I]);
+
   inherited;
 end;
 
 function TScenes.GetScene(I: TSceneEnum): TScene;
 begin
-  Result := FScene[I];
+  Result := TScene(FScene[I]);
 end;
 
 procedure TScenes.GoBack;
@@ -309,11 +318,7 @@ begin
   Terminal.ForegroundColor(clDefault);
   Terminal.Clear;
   if (FScene[SceneEnum] <> nil) then
-  begin
-    FScene[SceneEnum].CX := Terminal.Window.Width div 2;
-    FScene[SceneEnum].CY := Terminal.Window.Height div 2;
     FScene[SceneEnum].Render;
-  end;
 end;
 
 procedure TScenes.SetScene(ASceneEnum: TSceneEnum; AFinalEnum: TFinalEnum = feNone);

@@ -58,6 +58,7 @@ procedure TSceneCalendar.Render;
   end;
 
 begin
+  inherited;
   UI.Title(_('Calendar'));
 
   Y := 10;

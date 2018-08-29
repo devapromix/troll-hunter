@@ -28,6 +28,8 @@ uses
 
 procedure TSceneName.Render;
 begin
+  inherited;
+
   UI.Title(_('Choose a name'));
 
   Terminal.Print(CX - 14, CY - 1, _('Enter your player''s name') + ': ' +

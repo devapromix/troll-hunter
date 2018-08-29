@@ -44,6 +44,7 @@ var
   end;
 
 begin
+  inherited;
   UI.Title(NPCName + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;

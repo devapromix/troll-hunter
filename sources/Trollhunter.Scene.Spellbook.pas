@@ -42,6 +42,7 @@ var
   end;
 
 begin
+  inherited;
   UI.Title(_('Spellbook'));
 
   V := 0;

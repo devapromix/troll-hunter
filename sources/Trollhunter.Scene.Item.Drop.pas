@@ -31,6 +31,7 @@ uses
 
 procedure TSceneDrop.Render;
 begin
+  inherited;
   UI.Title(_('Choose the item you wish to drop'), 1, clDarkestRed);
 
   UI.FromAToZ;

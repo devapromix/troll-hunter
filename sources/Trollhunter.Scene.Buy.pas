@@ -30,6 +30,7 @@ uses
 
 procedure TSceneBuy.Render;
 begin
+  inherited;
   UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;

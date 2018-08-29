@@ -38,6 +38,7 @@ var
   I, FCount, MapID: Int;
   FItem: Item;
 begin
+  inherited;
   MapID := Ord(Map.Current);
   UI.Title(_('Pick up an item'));
 

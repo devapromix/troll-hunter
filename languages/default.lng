@@ -204,6 +204,7 @@ of Life(=
 of Mana'=
 of Perception'=
 of Regeneration=
+of Success=
 of the Brute=
 of the Mongoose=
 of the Thief=
@@ -346,6 +347,7 @@ You are the hero who departs on a quest to stop the enemies and save your homela
 You ate %s.=
 You bought %s (-%d gold).=
 You can not use this yet (unidentified)!=
+You cannot climb down here.=
 You cannot climb up here.=
 You climb down the ladder...=
 You climb up the ladder...=

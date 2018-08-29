@@ -30,6 +30,7 @@ uses
 
 procedure TSceneFinal.Render;
 begin
+  inherited Render;
   case Scenes.FinalEnum of
     feWon:
       begin

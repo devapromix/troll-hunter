@@ -25,6 +25,7 @@ uses
 
 procedure TSceneMessages.Render;
 begin
+  inherited;
   UI.Title(_('Last messages'));
   MsgLog.RenderAllMessages;
   AddKey('Esc', _('Close'), True);

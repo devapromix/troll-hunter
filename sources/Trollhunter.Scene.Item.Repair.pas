@@ -31,6 +31,7 @@ uses
 
 procedure TSceneRepair.Render;
 begin
+  inherited;
   UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
 
   UI.FromAToZ;

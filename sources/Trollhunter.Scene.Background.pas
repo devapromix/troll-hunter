@@ -29,6 +29,7 @@ uses
 
 procedure TSceneBackground.Render;
 begin
+  inherited;
   UI.Title(_('Character Background'));
 
   Terminal.ForegroundColor(clGray);

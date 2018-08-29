@@ -29,6 +29,7 @@ uses
 
 procedure TSceneInv.Render;
 begin
+  inherited;
   UI.Title(Format('%s [[%s%d %s%d/%d]]', [_('Inventory'), UI.Icon(icGold), Player.Gold, UI.Icon(icFlag), Items.InvCount, ItemMax]));
 
   UI.FromAToZ(ItemMax);

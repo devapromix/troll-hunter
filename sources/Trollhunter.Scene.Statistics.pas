@@ -45,6 +45,7 @@ var
 
 procedure TSceneStatistics.Render;
 begin
+  inherited;
   Y := 1;
   if Mode.Wizard and Wizard then
   begin

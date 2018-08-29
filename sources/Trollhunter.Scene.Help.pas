@@ -39,6 +39,7 @@ end;
 
 procedure TSceneHelp.Render;
 begin
+  inherited;
   UI.Title(_('Help'));
 
   case Scenes.PrevSceneEnum of

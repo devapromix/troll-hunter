@@ -65,7 +65,7 @@ end;
 
 constructor TAttributes.Create;
 begin
-
+  Self.Clear;
 end;
 
 destructor TAttributes.Destroy;

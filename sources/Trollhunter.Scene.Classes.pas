@@ -70,6 +70,7 @@ var
   end;
 
 begin
+  inherited;
   UI.Title(_('Choose a class'));
   I := 0;
   Y := 2;

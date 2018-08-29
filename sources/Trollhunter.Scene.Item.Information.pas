@@ -47,6 +47,7 @@ end;
 
 procedure TSceneItemInfo.Render;
 begin
+  inherited;
   Y := 1;
   if FShowInfo then
   begin

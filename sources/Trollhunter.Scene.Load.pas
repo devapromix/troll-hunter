@@ -25,6 +25,7 @@ uses
 
 procedure TSceneLoad.Render;
 begin
+  inherited;
   if IsLoad then
     Terminal.Print(CX, CY, _('Loading...'), TK_ALIGN_CENTER)
   else

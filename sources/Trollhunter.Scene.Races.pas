@@ -74,6 +74,8 @@ var
   end;
 
 begin
+  inherited;
+
   UI.Title(_('Choose a race'));
   I := 0;
   Y := 2;

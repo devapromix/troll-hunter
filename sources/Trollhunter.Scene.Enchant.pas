@@ -9,7 +9,6 @@ uses
 type
   TSceneEnchant = class(TScene)
   public
-    //Suffix: UInt;
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -29,6 +28,7 @@ uses
 
 procedure TSceneEnchant.Render;
 begin
+  inherited;
   UI.Title(_('Enchant an item'), 1, clDarkestRed);
 
   UI.FromAToZ();
