@@ -73,9 +73,6 @@ var
     Inc(Y);
   end;
 
-var
-  F: TRaceEnum;
-
 begin
   UI.Title(_('Choose a race'));
   I := 0;

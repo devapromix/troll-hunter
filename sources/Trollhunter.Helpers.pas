@@ -3,6 +3,7 @@
 interface
 
 uses
+  Math,
   Classes,
   Trollhunter.Types,
   Trollhunter.Mob.Types,
@@ -12,8 +13,8 @@ uses
 type
   TIntHelper = record helper for Int
   public
-    function Percent(AValue: Int): Int; inline;
-    function InRange(AMaxValue: Int): Int; inline;
+    function Percent(AValue: Int): Int;
+    function InRange(AMaxValue: Int): Int;
     function ToString: string;
     function ItemEnum: TItemEnum;
     function SuffixEnum: TSuffixEnum;
@@ -38,7 +39,6 @@ type
 implementation
 
 uses
-  Math,
   SysUtils;
 
 { IntHelper }

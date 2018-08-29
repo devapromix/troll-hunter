@@ -56,7 +56,7 @@ type
     function Colorize(const AStr, AColor: string): string; overload;
     function Colorize(const ANum: Int; const AColor: string): string; overload;
     function GetTextScreenshot: string;
-    function SetEntSize(ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
+    function SetEntSize(const ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
     function GetColor(Color: Int): Cardinal;
   end;
 
@@ -226,7 +226,7 @@ begin
   terminal_refresh;
 end;
 
-function TTerminal.SetEntSize(ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
+function TTerminal.SetEntSize(const ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
 begin
   Result.Left := ALeft;
   Result.Top := ATop;

@@ -42,9 +42,9 @@ uses
 { TCorpses }
 
 procedure TCorpses.Save(Index, AX, AY, AZ: UInt);
-var
+//var
   // F: TIniFile;
-  S: string;
+//  S: string;
 begin
   { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
     try
@@ -62,9 +62,9 @@ begin
 end;
 
 procedure TCorpses.Load(Index: UInt);
-var
+//var
   // F: TIniFile;
-  S: string;
+//  S: string;
 begin
   { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
     try
@@ -78,12 +78,12 @@ begin
 end;
 
 procedure TCorpses.Append;
-var
+//var
   // F: TIniFile;
-  I: UInt;
-  S: string;
+//  I: UInt;
+//  S: string;
 begin
-  if (Player.X = 0) or (Player.Y = 0) or (Player.X = UIntMax) or (Player.Y = UIntMax) then
+//  if (Player.X = 0) or (Player.Y = 0) or (Player.X = UIntMax) or (Player.Y = UIntMax) then
     Exit;
   { F := TIniFile.Create(Game.GetPath() + 'morgue.thi');
     try
