@@ -1384,7 +1384,10 @@ end;
 
 procedure TPlayer.AddExp(Value: UInt = 1);
 begin
+  if not IsDead and (Value = 0) then
+    Exit;
   Attributes.Modify(atExp, Value);
+  MsgLog.Add(Format(_('You gain %d exp.'), [Value]));
   if (Attributes.Attrib[atExp].Value >= GetDeltaToNext) then
   begin
     // You leveled up! You are now level %d!

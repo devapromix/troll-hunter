@@ -366,6 +366,7 @@ begin
     S := Terminal.Colorize(S, clAlarm);
   MsgLog.Add(S);
   Player.Statictics.Inc(stKills);
+  Player.AddExp(MobBase.GetMob(ID).Level);
 
   // Mana and Life After Each Kill
   V := Player.Attributes.Attrib[atLifeAfEachKill].Value.InRange(LifeAEKMax);
