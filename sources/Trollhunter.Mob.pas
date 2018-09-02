@@ -43,7 +43,7 @@ type
   TMobs = class(TEntity)
   private
     FMobName: array [TMobEnum] of string;
-    FMob: TArray<TMob>;
+    FMob: TArray<IEntity>;
     function GetMob(I: Int): TMob;
     procedure SetMob(I: Int; const Value: TMob);
     function GetName(I: TMobEnum): string; overload;
@@ -598,12 +598,12 @@ var
 
   procedure AddMob();
   begin
-    FMob[I].Add(AZ, AX, AY, AID, AForce);
+    Self.GetMob(I).Add(AZ, AX, AY, AID, AForce);
   end;
 
 begin
   for I := 0 to Self.Count - 1 do
-    if not FMob[I].Alive then
+    if not GetMob(I).Alive then
     begin
       AddMob();
       Exit;
@@ -685,17 +685,14 @@ begin
 end;
 
 destructor TMobs.Destroy;
-var
-  I: Int;
 begin
-  for I := 0 to Count - 1 do
-    FreeAndNil(FMob[I]);
+
   inherited;
 end;
 
 function TMobs.ChMob(I: Int; AX, AY: UInt): Boolean;
 begin
-  with FMob[I] do
+  with GetMob(I) do
     Result := Alive and (Maps = Map.Current) and (AX = X) and (AY = Y)
 end;
 
@@ -724,7 +721,7 @@ end;
 
 function TMobs.GetMob(I: Int): TMob;
 begin
-  Result := FMob[I]
+  Result := TMob(FMob[I]);
 end;
 
 procedure TMobs.Process;
@@ -733,8 +730,8 @@ var
 begin
   if (Count > 0) then
     for I := 0 to Count - 1 do
-      if FMob[I].Alive and (FMob[I].Maps = Map.Current) then
-        FMob[I].Process;
+      if GetMob(I).Alive and (GetMob(I).Maps = Map.Current) then
+        GetMob(I).Process;
 end;
 
 procedure TMobs.Render(AX, AY: UInt);
@@ -743,8 +740,8 @@ var
 begin
   if (Count > 0) then
     for I := 0 to Count - 1 do
-      if FMob[I].Alive and (FMob[I].Maps = Map.Current) then
-        FMob[I].Render(AX, AY);
+      if GetMob(I).Alive and (GetMob(I).Maps = Map.Current) then
+        GetMob(I).Render(AX, AY);
 end;
 
 procedure TMobs.SetMob(I: Int; const Value: TMob);

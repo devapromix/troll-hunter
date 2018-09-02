@@ -80,6 +80,7 @@ var
   IsRender: Boolean = True;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
   Randomize();
 {$IFDEF FPC}
 {$IFDEF Windows}
@@ -92,9 +93,6 @@ begin
 {$ENDIF}
 {$ENDIF}
 {$ELSE}
-{$IF COMPILERVERSION >= 18}
-  ReportMemoryLeaksOnShutdown := True;
-{$IFEND}
 {$IFDEF DEBUG}
 {$APPTYPE CONSOLE}
   Mode.Wizard := True;

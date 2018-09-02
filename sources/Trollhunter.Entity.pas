@@ -7,7 +7,12 @@ uses
   Trollhunter.Map;
 
 type
-  TEntity = class(TObject)
+  IEntity = interface
+
+  end;
+
+type
+  TEntity = class(TInterfacedObject, IEntity)
   private
     FX: UInt;
     FY: UInt;
