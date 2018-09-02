@@ -43,16 +43,13 @@ type
     procedure ForegroundColor(Value: Cardinal); overload;
     procedure Print(AX, AY: Int; AText: string); overload;
     procedure Print(AX, AY: Int; AText: string; Align: Int); overload;
-    procedure Print(AX, AY: Int; AText: string; AForegroundColor: Cardinal;
-      ABackgroundColor: Cardinal); overload;
-    procedure Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
-      Align: UInt); overload;
+    procedure Print(AX, AY: Int; AText: string; AForegroundColor: Cardinal; ABackgroundColor: Cardinal); overload;
+    procedure Print(ALeft, ATop, AWidth, AHeight: Int; AText: string; Align: UInt); overload;
     function Pick(const AX, AY: UInt): UInt;
     property Char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
     function GetColorFromIni(AKey: string): string; overload;
-    function GetColorFromIni(AKey: string; ADefault: string): Cardinal;
-      overload;
+    function GetColorFromIni(AKey: string; ADefault: string): Cardinal; overload;
     function Colorize(const AStr, AColor: string): string; overload;
     function Colorize(const ANum: Int; const AColor: string): string; overload;
     function GetTextScreenshot: string;
@@ -68,8 +65,7 @@ implementation
 uses
   SysUtils,
   Classes,
-  Math,
-  Trollhunter.Game;
+  Math;
 
 { TTerminal }
 
@@ -113,8 +109,7 @@ end;
 
 function TTerminal.GetColor(Color: Int): Cardinal;
 begin
-  Result := color_from_argb($FF, UInt(Color), UInt(Color shr 8),
-    UInt(Color shr 16));
+  Result := color_from_argb($FF, UInt(Color), UInt(Color shr 8), UInt(Color shr 16));
 end;
 
 function TTerminal.GetColorFromIni(AKey: string; ADefault: string): Cardinal;
@@ -162,34 +157,23 @@ end;
 procedure TTerminal.Init;
 var
   Value: TEntSize;
-  Wizard: string;
 begin
-  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 100),
-    100, UIntMax);
-  Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'),
-    30), 30, UIntMax div 2);
+  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 100), 100, UIntMax);
+  Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'), 30), 30, UIntMax div 2);
   Screen := SetEntSize(0, 0, Value.Width, Value.Height);
-  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'),
-    35), 35, 50);
+  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'), 35), 35, 50);
   Panel := SetEntSize(0, 0, Value.Width, 4);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);
-  Log := SetEntSize(View.Width + 2, Status.Height + 4, Panel.Width,
-    Screen.Height - Panel.Height - 9);
+  Log := SetEntSize(View.Width + 2, Status.Height + 4, Panel.Width, Screen.Height - Panel.Height - 9);
   Info := SetEntSize(View.Width + 2, Screen.Height - 4, Panel.Width, 3);
   //
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
-  Wizard := '';
-  if Mode.Wizard then
-    Wizard := '[WIZARD]';
-  terminal_set(Format('window: size=%dx%d, title=%s',
-    [Screen.Width, Screen.Height, Format('%s %s'.Trim, [Game.GetTitle,
-    Wizard])]));
+  terminal_set(Format('window.size=%dx%d', [Screen.Width, Screen.Height]));
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
-  terminal_set(Format('icon font: Fontello.ttf, size=%dx%d, codepage=437;',
-    [Round(FChar.Width * 1.4), Round(FChar.Height * 1.4)]));
+  terminal_set(Format('icon font: Fontello.ttf, size=%dx%d, codepage=437;', [Round(FChar.Width * 1.4), Round(FChar.Height * 1.4)]));
 end;
 
 procedure TTerminal.Print(AX, AY: Int; AText: string);
@@ -207,14 +191,12 @@ begin
   Result := terminal_pick(AX, AY, 0);
 end;
 
-procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
-  Align: UInt);
+procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Int; AText: string; Align: UInt);
 begin
   terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
 end;
 
-procedure TTerminal.Print(AX, AY: Int; AText: string;
-  AForegroundColor: Cardinal; ABackgroundColor: Cardinal);
+procedure TTerminal.Print(AX, AY: Int; AText: string; AForegroundColor: Cardinal; ABackgroundColor: Cardinal);
 begin
   terminal_bkcolor(ABackgroundColor);
   terminal_color(AForegroundColor);

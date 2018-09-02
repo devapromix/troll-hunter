@@ -202,12 +202,13 @@ constructor TGame.Create;
 var
   I: UInt;
   J: TAPOptionEnum;
+  Wizard: string;
 begin
   Randomize;
   Timer := 0;
   Won := False;
   Mode.Game := False;
-//  Mode.Wizard := False;
+  // Mode.Wizard := False;
   for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
     FAPOption[J] := True;
   CanClose := False;
@@ -224,6 +225,10 @@ begin
     if (LowerCase(ParamStr(I)) = '-w') then
       Mode.Wizard := True;
   Language := TLanguage.Create;
+  Wizard := '';
+  if Mode.Wizard then
+    Wizard := '[WIZARD]';
+  terminal_set(Format('window.title=' + Trim('%s %s'), [Game.GetTitle, Wizard]));
 end;
 
 destructor TGame.Destroy;

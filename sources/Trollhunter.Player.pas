@@ -614,9 +614,11 @@ begin
   if (Game.Difficulty < dfHard) then
     MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]))
   else
+  begin
     MsgLog.Add(Format(_('Press %s to exit...'), [UI.KeyToStr('SPACE')]));
-  Corpses.Append();
-  Game.Screenshot := Terminal.GetTextScreenshot();
+    Corpses.Append();
+    Game.Screenshot := Terminal.GetTextScreenshot();
+  end;
 end;
 
 destructor TPlayer.Destroy;
