@@ -1403,16 +1403,22 @@ end;
 
 procedure TPlayer.AddExp(Value: UInt = 1);
 begin
-  if not IsDead and (Value = 0) then
+  if not IsDead and (Value = 0) and (Attributes.Attrib[atLev].Value >= MaxLevel) then
     Exit;
   Attributes.Modify(atExp, Value);
   MsgLog.Add(Format(_('You gain %d exp.'), [Value]));
-  if (Attributes.Attrib[atExp].Value >= GetDeltaToNext) then
+  if (Attributes.Attrib[atExp].Value >= GetDeltaToNext()) then
   begin
-    // You leveled up! You are now level %d!
     Attributes.Modify(atLev, 1);
     Attributes.Modify(atSkillpoint, SkillpointPerLevel);
-    MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Attrib[atLev].Value]), clAlarm));
+    case Math.RandomRange(0, 2) of
+      0:
+        MsgLog.Add(Terminal.Colorize(Format(_('You advance to level %d!'), [Attributes.Attrib[atLev].Value]), clAlarm));
+      1:
+        MsgLog.Add(Terminal.Colorize(Format(_('You are now level %d!'), [Attributes.Attrib[atLev].Value]), clAlarm));
+    else
+      MsgLog.Add(Terminal.Colorize(_('You leveled up!'), clAlarm));
+    end;
     Statictics.Inc(stTurn, Attributes.Attrib[atLev].Value * Attributes.Attrib[atLev].Value);
   end;
 end;
