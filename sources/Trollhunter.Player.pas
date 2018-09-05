@@ -179,15 +179,6 @@ uses
   Trollhunter.Item.Base,
   Trollhunter.Mob.Types, Trollhunter.Mob.Base;
 
-const
-  NextExp: array [1 .. MaxLevel] of Int = (
-    // 1 - 10
-    10, 25, 45, 70, 100, 140, 190, 250, 320, 400,
-    // 11 - 20
-    490, 630, 940, 1390, 1640, 2110, 2620, 3290, 4000, 4300,
-    // 21 - 30
-    5750, 6100, 6900, 7800, 8300, 9000, 10000, 10600, 12100, 13700);
-
   { TPlayer }
 
   // Generate a random player's background (from Kharne and UMoria roguelikes)
@@ -658,8 +649,13 @@ begin
 end;
 
 function TPlayer.GetDeltaToNext: Int;
+var
+  Level, I: UInt;
 begin
-  Result := NextExp[Attributes.Attrib[atLev].Value.InRange(MaxLevel)];
+  Result := 0;
+  Level := Attributes.Attrib[atLev].Value.InRange(MaxLevel);
+  for I := 1 to Level do
+    Result := Result + (I * 50);
 end;
 
 function TPlayer.GetSatiationStr: string;
