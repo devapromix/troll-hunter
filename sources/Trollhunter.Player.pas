@@ -26,7 +26,7 @@ const
   BaseLife: UInt = 20;
   BaseMana: UInt = 10;
   BaseAttrib: UInt = 5;
-  MaxLevel = 30;
+  MaxLevel = 50;
   // Satiation
   StarvingMax = 500;
   SatiatedMax = 8000;
