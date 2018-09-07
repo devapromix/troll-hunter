@@ -66,7 +66,8 @@ type
     function GetTile(AX, AY: UInt): TTile; overload;
     function GetTile(ATileEnum: TTileEnum): TTile; overload;
     procedure SetTileEnum(AX, AY: UInt; AZ: TMapEnum; ATileEnum: TTileEnum);
-    function GetTileEnum(AX, AY: UInt; AZ: TMapEnum): TTileEnum;
+    function GetTileEnum(AX, AY: UInt; AZ: TMapEnum): TTileEnum; overload;
+    function GetTileEnum(AX, AY: UInt): TTileEnum; overload;
     property Name: string read GetName;
     function EnsureRange(Value: Int): UInt;
   end;
@@ -596,6 +597,11 @@ end;
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;
 begin
   Result := Tile[ATileEnum][Current];
+end;
+
+function TMap.GetTileEnum(AX, AY: UInt): TTileEnum;
+begin
+  Result := FMap[AX][AY][Current];
 end;
 
 function TMap.GetTile(AX, AY: UInt): TTile;
