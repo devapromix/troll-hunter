@@ -118,7 +118,7 @@ begin
     S := S + ' ' + Terminal.Colorize(FLog[FLog.Count - I], Color);
   end;
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, S.Trim, TK_ALIGN_BOTTOM);
+  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, S.Trim, TK_ALIGN_TOP);
 end;
 
 procedure TMsgLog.Turn;
