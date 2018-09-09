@@ -79,6 +79,7 @@ uses
   Math,
   SysUtils,
   TypInfo,
+  Vcl.Dialogs,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,

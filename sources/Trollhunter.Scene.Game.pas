@@ -168,9 +168,8 @@ begin
         if Mode.Wizard or not Map.GetFog(X, Y) then
           Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
       end;
-  // Items, player's corpses, player, mobs
+  // Items, player, mobs
   Items.Render(PX, PY);
-  Corpses.Render(PX, PY);
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
   // Player info
