@@ -184,6 +184,8 @@ begin
   Terminal.ForegroundColor(clDefault);
   // Log
   MsgLog.Render;
+  //
+  UI.RenderTile('');
 end;
 
 procedure TSceneGame.Update(var Key: UInt);

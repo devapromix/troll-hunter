@@ -76,7 +76,7 @@ uses
   Trollhunter.Mob.Types in 'sources\Trollhunter.Mob.Types.pas';
 
 var
-  Key: UInt = 0;
+  Key: UInt;
   IsRender: Boolean = True;
 
 begin
@@ -112,7 +112,6 @@ begin
       Scenes.Render();
       Terminal.Refresh();
     end;
-    Key := 0;
     if terminal_has_input() then
     begin
       Key := terminal_read();
