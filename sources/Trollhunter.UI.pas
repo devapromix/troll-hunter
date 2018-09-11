@@ -96,7 +96,7 @@ end;
 
 class procedure UI.RenderTile(const S: string);
 begin
-  Terminal.Print(0, 0, '[U+E000]');
+  //Terminal.Print(0, 0, '[U+E000]');
 end;
 
 class procedure UI.Title(const S: string; AY: UInt = 1; BGColor: Cardinal = 0);
