@@ -162,6 +162,8 @@ type
     function GetDifficultyName: string; overload;
     function GetTitle: string;
     procedure LoadConfig;
+    procedure Save;
+    procedure Load;
     procedure Start;
     procedure Log(S: string);
     function EnsureRange(const AValue, AMax: Int): Int;
@@ -177,6 +179,7 @@ implementation
 
 uses
   SysUtils,
+  Vcl.Dialogs,
   BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
@@ -279,6 +282,12 @@ begin
   terminal_set('Log: ' + S);
 end;
 
+procedure TGame.Load;
+begin
+  ShowMessage('LOAD GAME');
+  Scenes.SetScene(scTitle); // тимчасово
+end;
+
 procedure TGame.LoadConfig;
 begin
   // Settings
@@ -301,6 +310,11 @@ end;
 procedure TGame.ChOption(I: TAPOptionEnum);
 begin
   FAPOption[I] := not FAPOption[I];
+end;
+
+procedure TGame.Save;
+begin
+  ShowMessage('SAVE GAME!');
 end;
 
 procedure TGame.Start;

@@ -77,6 +77,7 @@ begin
         TK_Y:
           begin
             Player.SaveCharacterDump(_('Quit the game'));
+            Game.Save;
             Game.CanClose := True;
           end;
         TK_ESCAPE, TK_N:

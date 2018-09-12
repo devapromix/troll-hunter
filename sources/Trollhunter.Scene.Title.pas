@@ -47,7 +47,7 @@ begin
   Scenes.SetScene(scLoad);
   Terminal.Refresh;
   Terminal_Delay(1000);
-  Scenes.SetScene(scTitle); // тимчасово
+  Game.Load;
 end;
 
 procedure TSceneTitle.Render;
