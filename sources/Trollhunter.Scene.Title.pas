@@ -8,8 +8,13 @@ uses
 
 type
   TSceneTitle = class(TScene)
+  private const
+    MaxRows = 10;
   private
+    FMin: UInt;
+    FMax: UInt;
     FCur: UInt;
+    FTop: UInt;
     FCount: UInt;
     procedure Load;
   public
@@ -38,6 +43,9 @@ uses
 constructor TSceneTitle.Create;
 begin
   FCur := 0;
+  FTop := 0;
+  FMin := 0;
+  FMax := 0;
   FCount := 0;
 end;
 
@@ -71,16 +79,20 @@ const
 var
   I: UInt;
 begin
-  FCount := 5;
+  FTop := 2;
+  FCount := 25;
   if (FCount = 0) then
     Exit;
 
   Terminal.ForegroundColor(clWhite);
   Terminal.Print(L + 4, T, _('Which hero shall you play?'));
 
-  for I := 0 to FCount - 1 do
+  FMin := FTop;
+  FMax := Min(FCount, MaxRows) + FTop;
+
+  for I := FMin to FMax - 1 do
   begin
-    Terminal.Print(L, T + I + 2, UI.MenuItem(Chr(I + 65), '==========', FCur = I));
+    Terminal.Print(L, T + I + 2-FTop, UI.MenuItem(Chr(I + 65), '==========', FCur = I));
   end;
 end;
 
