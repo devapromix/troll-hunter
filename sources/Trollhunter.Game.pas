@@ -3,6 +3,7 @@
 interface
 
 uses
+  System.Classes,
   Trollhunter.Types,
   Trollhunter.Entity,
   Trollhunter.Map,
@@ -142,6 +143,7 @@ type
     FShowEffects: Boolean;
     FAPOption: array [TAPOptionEnum] of Boolean;
   public
+    SaveFL: TStringList;
     constructor Create;
     destructor Destroy; override;
     property Difficulty: TDifficultyEnum read FDifficulty write FDifficulty;
@@ -170,6 +172,7 @@ type
     function GetOption(I: TAPOptionEnum): Boolean;
     procedure ChOption(I: TAPOptionEnum);
     procedure ChScreen;
+    procedure ScanDir;
   end;
 
 var
@@ -189,7 +192,8 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
   Trollhunter.Player.Spellbook,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  Trollhunter.Utils;
 
 { TGame }
 
@@ -232,10 +236,13 @@ begin
   if Mode.Wizard then
     Wizard := '[WIZARD]';
   terminal_set(Format('window.title=' + Trim('%s %s'), [Game.GetTitle, Wizard]));
+  SaveFL := TStringList.Create;
+  ScanDir();
 end;
 
 destructor TGame.Destroy;
 begin
+  FreeAndNil(SaveFL);
   Language.SaveDefault;
   FreeAndNil(Language);
   FreeAndNil(FPortal);
@@ -315,6 +322,14 @@ end;
 procedure TGame.Save;
 begin
   ShowMessage('SAVE GAME!');
+end;
+
+procedure TGame.ScanDir;
+var
+  DirName: string;
+begin
+  ForceDirectories(Utils.GetPath('saves'));
+  DirName := Utils.GetPath('saves');
 end;
 
 procedure TGame.Start;
