@@ -327,9 +327,24 @@ end;
 procedure TGame.ScanDir;
 var
   DirName: string;
+  SR: TSearchRec;
+  S: string;
 begin
   ForceDirectories(Utils.GetPath('saves'));
-  DirName := Utils.GetPath('saves');
+  DirName := Utils.GetPath('saves') + '*.sav';
+  SaveFL.Clear;
+  if (FindFirst(DirName, faAnyFile, SR) = 0) then
+  begin
+    repeat
+      S := Trim(SR.Name);
+      if (S = '') then
+        Continue;
+      Delete(S, Length(S) - 3, 4);
+      SaveFL.Append(S);
+    until FindNext(SR) <> 0;
+    FindClose(SR);
+  end;
+  SaveFL.Sort;
 end;
 
 procedure TGame.Start;
