@@ -144,6 +144,7 @@ type
     FAPOption: array [TAPOptionEnum] of Boolean;
   public
     SaveFL: TStringList;
+    SaveTL: TStringList;
     constructor Create;
     destructor Destroy; override;
     property Difficulty: TDifficultyEnum read FDifficulty write FDifficulty;
@@ -237,11 +238,13 @@ begin
     Wizard := '[WIZARD]';
   terminal_set(Format('window.title=' + Trim('%s %s'), [Game.GetTitle, Wizard]));
   SaveFL := TStringList.Create;
+  SaveTL := TStringList.Create;
   ScanDir();
 end;
 
 destructor TGame.Destroy;
 begin
+  FreeAndNil(SaveTL);
   FreeAndNil(SaveFL);
   Language.SaveDefault;
   FreeAndNil(Language);
@@ -326,6 +329,7 @@ end;
 
 procedure TGame.ScanDir;
 var
+  SL: TStringList;
   DirName: string;
   SR: TSearchRec;
   S: string;
@@ -333,18 +337,26 @@ begin
   ForceDirectories(Utils.GetPath('saves'));
   DirName := Utils.GetPath('saves') + '*.sav';
   SaveFL.Clear;
-  if (FindFirst(DirName, faAnyFile, SR) = 0) then
-  begin
-    repeat
-      S := Trim(SR.Name);
-      if (S = '') then
-        Continue;
-      Delete(S, Length(S) - 3, 4);
-      SaveFL.Append(S);
-    until FindNext(SR) <> 0;
-    FindClose(SR);
+  SaveTL.Clear;
+  SL := TStringList.Create;
+  try
+    if (FindFirst(DirName, faAnyFile, SR) = 0) then
+    begin
+      repeat
+        S := Trim(SR.Name);
+        if (S = '') then
+          Continue;
+        SL.LoadFromFile(S, TEncoding.UTF8);
+        SaveTL.Append(SL[0]);
+        Delete(S, Length(S) - 3, 4);
+        SaveFL.Append(S);
+      until FindNext(SR) <> 0;
+      FindClose(SR);
+    end;
+    SaveFL.Sort;
+  finally
+    FreeAndNil(SL);
   end;
-  SaveFL.Sort;
 end;
 
 procedure TGame.Start;
