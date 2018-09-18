@@ -330,25 +330,22 @@ end;
 procedure TGame.ScanDir;
 var
   SL: TStringList;
-  DirName: string;
   SR: TSearchRec;
   S: string;
 begin
   ForceDirectories(Utils.GetPath('saves'));
-  DirName := Utils.GetPath('saves');
   SaveFL.Clear;
   SaveTL.Clear;
   SL := TStringList.Create;
   try
-    if (FindFirst(DirName + '*.sav', faAnyFile, SR) = 0) then
+    if (FindFirst(Utils.GetPath('saves') + '*.sav', faAnyFile, SR) = 0) then
     begin
       repeat
         S := Trim(SR.Name);
         if (S = '') then
           Continue;
-        SL.LoadFromFile(DirName + S, TEncoding.UTF8);
+        SL.LoadFromFile(Utils.GetPath('saves') + S, TEncoding.UTF8);
         SaveTL.Append(SL[0]);
-        //Delete(S, Length(S) - 3, 4);
         SaveFL.Append(S);
       until FindNext(SR) <> 0;
       FindClose(SR);
