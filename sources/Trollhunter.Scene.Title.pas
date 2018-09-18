@@ -66,7 +66,7 @@ begin
   if Mode.Wizard then
   begin
     Self.AddKey('Space', _('Create a new hero'));
-    Self.AddKey('Z', Terminal.Colorize(_('Turn Wizard Mode Off'), 'Red'), True);
+    Self.AddKey('Tab', Terminal.Colorize(_('Turn Wizard Mode Off'), 'Red'), True);
   end
   else
     Self.AddKey('Space', _('Create a new hero'), True);
@@ -79,8 +79,8 @@ const
 var
   I: UInt;
 begin
-  FTop := 2;
-  FCount := 25;
+  // FTop := 2;
+  FCount := Game.SaveFL.Count;
   if (FCount = 0) then
     Exit;
 
@@ -92,7 +92,7 @@ begin
 
   for I := FMin to FMax - 1 do
   begin
-    Terminal.Print(L, T + I + 2-FTop, UI.MenuItem(Chr(I + 65), '==========', FCur = I));
+    Terminal.Print(L, T + I + 2 - FTop, UI.MenuItem(Chr(I + 65), Game.SaveTL[I], FCur = I));
   end;
 end;
 
@@ -105,6 +105,8 @@ begin
           Exit;
         if FCur > 0 then
           FCur := Pred(FCur);
+        if (FTop > 0) then
+          FTop := Pred(FTop);
       end;
     TK_DOWN, TK_KP_2:
       begin
@@ -112,10 +114,12 @@ begin
           Exit;
         if FCur < FCount - 1 then
           FCur := Succ(FCur);
+        if FTop < FCount - 1 then
+          FTop := Succ(FTop);
       end;
     TK_ESCAPE:
       Game.CanClose := True;
-    TK_A .. TK_J:
+    TK_A .. TK_Z:
       begin
         if (Key - (TK_A) > FCount - 1) then
           Exit;
@@ -126,7 +130,7 @@ begin
       Scenes.SetScene(scDifficulty);
     TK_ENTER, TK_KP_ENTER:
       Load;
-    TK_Z:
+    TK_TAB:
       Mode.Wizard := False;
   end;
 end;
