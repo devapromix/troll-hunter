@@ -114,7 +114,7 @@ begin
           Exit;
         if FCur < FCount - 1 then
           FCur := Succ(FCur);
-        if FTop < FCount - 1 then
+        if FTop < FCount - MaxRows - 1 then
           FTop := Succ(FTop);
       end;
     TK_ESCAPE:
