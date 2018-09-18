@@ -335,20 +335,20 @@ var
   S: string;
 begin
   ForceDirectories(Utils.GetPath('saves'));
-  DirName := Utils.GetPath('saves') + '*.sav';
+  DirName := Utils.GetPath('saves');
   SaveFL.Clear;
   SaveTL.Clear;
   SL := TStringList.Create;
   try
-    if (FindFirst(DirName, faAnyFile, SR) = 0) then
+    if (FindFirst(DirName + '*.sav', faAnyFile, SR) = 0) then
     begin
       repeat
         S := Trim(SR.Name);
         if (S = '') then
           Continue;
-        SL.LoadFromFile(S, TEncoding.UTF8);
+        SL.LoadFromFile(DirName + S, TEncoding.UTF8);
         SaveTL.Append(SL[0]);
-        Delete(S, Length(S) - 3, 4);
+        //Delete(S, Length(S) - 3, 4);
         SaveFL.Append(S);
       until FindNext(SR) <> 0;
       FindClose(SR);
@@ -357,6 +357,8 @@ begin
   finally
     FreeAndNil(SL);
   end;
+  ShowMessage(SaveFL.Text);
+  ShowMessage(SaveTL.Text);
 end;
 
 procedure TGame.Start;
