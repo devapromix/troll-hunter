@@ -11,8 +11,6 @@ type
   private const
     MaxRows = 10;
   private
-    FMin: UInt;
-    FMax: UInt;
     FCur: UInt;
     FTop: UInt;
     FCount: UInt;
@@ -44,8 +42,6 @@ constructor TSceneTitle.Create;
 begin
   FCur := 0;
   FTop := 0;
-  FMin := 0;
-  FMax := 0;
   FCount := 0;
 end;
 
@@ -79,18 +75,14 @@ const
 var
   I: UInt;
 begin
-  // FTop := 2;
-  FCount := Game.SaveFL.Count;
+  FCount := EnsureRange(Game.SaveFL.Count, 0, 26);
   if (FCount = 0) then
     Exit;
 
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(L + 4, T, _('Which hero shall you play?'));
+  Terminal.Print(L, T, _('Which hero shall you play?'));
 
-  FMin := FTop;
-  FMax := Min(FCount, MaxRows) + FTop;
-
-  for I := FMin to FMax - 1 do
+  for I := FTop to Min(FCount, MaxRows) + FTop - 1 do
   begin
     Terminal.Print(L, T + I + 2 - FTop, UI.MenuItem(Chr(I + 65), Game.SaveTL[I], FCur = I));
   end;
@@ -103,18 +95,18 @@ begin
       begin
         if (FCount = 0) then
           Exit;
-        if FCur > 0 then
+        if (FCur > 0) then
           FCur := Pred(FCur);
-        if (FTop > 0) then
+        if (FTop > 0) and (FCur = FTop - 1) then
           FTop := Pred(FTop);
       end;
     TK_DOWN, TK_KP_2:
       begin
         if (FCount = 0) then
           Exit;
-        if FCur < FCount - 1 then
+        if (FCur < FCount - 1) then
           FCur := Succ(FCur);
-        if FTop < FCount - MaxRows - 1 then
+        if (FTop < FCount - 1) and (FCur = FTop + MaxRows) then
           FTop := Succ(FTop);
       end;
     TK_ESCAPE:
