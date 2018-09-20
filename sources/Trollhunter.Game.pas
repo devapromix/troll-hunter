@@ -142,6 +142,7 @@ type
     FPortalTile: TTileEnum;
     FShowEffects: Boolean;
     FAPOption: array [TAPOptionEnum] of Boolean;
+    FFileName: string;
   public
     SaveFL: TStringList;
     SaveTL: TStringList;
@@ -166,7 +167,7 @@ type
     function GetTitle: string;
     procedure LoadConfig;
     procedure Save;
-    procedure Load;
+    procedure Load(FileName: string);
     procedure Start;
     procedure Log(S: string);
     function EnsureRange(const AValue, AMax: Int): Int;
@@ -174,6 +175,7 @@ type
     procedure ChOption(I: TAPOptionEnum);
     procedure ChScreen;
     procedure ScanDir;
+    procedure GenSaveFileName;
   end;
 
 var
@@ -258,6 +260,11 @@ begin
   Result := AValue.InRange(AMax);
 end;
 
+procedure TGame.GenSaveFileName;
+begin
+  FFileName := 'xxx';
+end;
+
 function TGame.GetDifficultyName: string;
 begin
   Result := GetDifficultyName(Difficulty);
@@ -292,10 +299,16 @@ begin
   terminal_set('Log: ' + S);
 end;
 
-procedure TGame.Load;
+procedure TGame.Load(FileName: string);
 begin
-  ShowMessage('LOAD GAME');
+  FFileName := FileName;
+  ShowMessage(Format('LOAD GAME: %s', [FFileName]));
   Scenes.SetScene(scTitle); // тимчасово
+end;
+
+procedure TGame.Save;
+begin
+  ShowMessage(Format('SAVE GAME: %s', [FFileName]));
 end;
 
 procedure TGame.LoadConfig;
@@ -320,11 +333,6 @@ end;
 procedure TGame.ChOption(I: TAPOptionEnum);
 begin
   FAPOption[I] := not FAPOption[I];
-end;
-
-procedure TGame.Save;
-begin
-  ShowMessage('SAVE GAME!');
 end;
 
 procedure TGame.ScanDir;
@@ -354,8 +362,6 @@ begin
   finally
     FreeAndNil(SL);
   end;
-  ShowMessage(SaveFL.Text);
-  ShowMessage(SaveTL.Text);
 end;
 
 procedure TGame.Start;

@@ -14,7 +14,7 @@ type
     FCur: UInt;
     FTop: UInt;
     FCount: UInt;
-    procedure Load;
+    procedure Load(FileName: string);
   public
     constructor Create;
     procedure Render; override;
@@ -45,13 +45,13 @@ begin
   FCount := 0;
 end;
 
-procedure TSceneTitle.Load;
+procedure TSceneTitle.Load(FileName: string);
 begin
   (Scenes.GetScene(scLoad) as TSceneLoad).IsLoad := True;
   Scenes.SetScene(scLoad);
   Terminal.Refresh;
   Terminal_Delay(1000);
-  Game.Load;
+  Game.Load(FileName);
 end;
 
 procedure TSceneTitle.Render;
@@ -116,12 +116,15 @@ begin
         if (Key - (TK_A) > FCount - 1) then
           Exit;
         FCur := Key - (TK_A);
-        Load;
+        Load(Game.SaveFL[FCur]);
       end;
     TK_SPACE:
+    begin
+      Game.GenSaveFileName;
       Scenes.SetScene(scDifficulty);
+    end;
     TK_ENTER, TK_KP_ENTER:
-      Load;
+      Load(Game.SaveFL[FCur]);
     TK_TAB:
       Mode.Wizard := False;
   end;
