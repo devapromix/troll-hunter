@@ -262,7 +262,7 @@ end;
 
 procedure TGame.GenSaveFileName;
 begin
-  FFileName := 'xxx';
+  FFileName := Utils.GetDateTime('-', '-') + '.sav';
 end;
 
 function TGame.GetDifficultyName: string;

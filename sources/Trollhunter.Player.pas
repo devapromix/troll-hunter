@@ -1330,14 +1330,6 @@ function TPlayer.SaveCharacterDump(AReason: string): string;
 var
   MorgueFileName: string;
   SL: TStringList;
-
-  function GetDateTime(DateSep: Char = '.'; TimeSep: Char = ':'): string;
-  begin
-    Result := DateToStr(Date) + '-' + TimeToStr(Time);
-    Result := StringReplace(Result, '.', DateSep, [rfReplaceAll]);
-    Result := StringReplace(Result, ':', TimeSep, [rfReplaceAll]);
-  end;
-
 begin
   Result := '';
   if Mode.Wizard then
@@ -1346,7 +1338,7 @@ begin
   try
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
-    SL.Append(GetDateTime);
+    SL.Append(Utils.GetDateTime);
     SL.Append(Format('%s: %s.', [_('Difficulty'), GetPureText(Game.GetDifficultyName)]));
     SL.Append('');
     SL.Append(Player.Name);
@@ -1373,7 +1365,7 @@ begin
     SL.Append(GetPureText(Items.GetInventory));
     SL.Append(Format('%s: %d', [_('Gold'), Gold]));
     ForceDirectories(Utils.GetPath('morgue'));
-    MorgueFileName := Format('%s-%s-character-dump.txt', [Player.Name, GetDateTime('-', '-')]);
+    MorgueFileName := Format('%s-%s-character-dump.txt', [Player.Name, Utils.GetDateTime('-', '-')]);
     SL.SaveToFile(Utils.GetPath('morgue') + MorgueFileName{$IFNDEF FPC}, TEncoding.UTF8{$ENDIF});
   finally
     FreeAndNil(SL);
