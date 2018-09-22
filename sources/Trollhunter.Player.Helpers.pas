@@ -8,6 +8,7 @@ uses
 type
   TPlayerHelper = class helper for TPlayer
     function FullName: string;
+    function SaveName: string;
     function Gender: string;
   end;
 
@@ -20,7 +21,9 @@ uses
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
-  Trollhunter.Language;
+  Trollhunter.Language,
+  Trollhunter.Attribute,
+  Trollhunter.Utils;
 
 { TPlayerHelper }
 
@@ -36,6 +39,12 @@ begin
     Result := _('Male')
   else
     Result := _('Female');
+end;
+
+function TPlayerHelper.SaveName: string;
+begin
+  Result := Format('%s, %s, %s, %d level [[%s]]', [IfThen(Player.Name.Trim = '', _('PLAYER'), Player.Name), _(Races.GetName(Player.HRace)),
+    _(PCClasses.GetName(Player.HClass)), Player.Attributes.Attrib[atLev].Value, Utils.GetDateTime]);
 end;
 
 end.

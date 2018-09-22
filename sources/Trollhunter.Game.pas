@@ -196,7 +196,8 @@ uses
   Trollhunter.Item.Shop,
   Trollhunter.Player.Spellbook,
   Trollhunter.Helpers,
-  Trollhunter.Utils;
+  Trollhunter.Utils, 
+  Trollhunter.Player.Helpers;
 
 { TGame }
 
@@ -300,15 +301,30 @@ begin
 end;
 
 procedure TGame.Load(FileName: string);
+var
+  Path: string;
 begin
   FFileName := FileName;
-  ShowMessage(Format('LOAD GAME: %s', [FFileName]));
+  Path := Utils.GetPath('saves') + FFileName;
+  ShowMessage(Format('LOAD GAME: %s', [Path]));
   Scenes.SetScene(scTitle); // тимчасово
 end;
 
 procedure TGame.Save;
+var
+  Path: string;
+  SL: TStringList;
 begin
-  ShowMessage(Format('SAVE GAME: %s', [FFileName]));
+  Path := Utils.GetPath('saves') + FFileName;
+  ShowMessage(Format('SAVE GAME: %s', [Path]));
+  SL := TStringList.Create;
+  try
+    SL.Clear;
+    SL.Append(Player.SaveName);
+    SL.SaveToFile(Path, TEncoding.UTF8);
+  finally
+    FreeAndNil(SL);
+  end;
 end;
 
 procedure TGame.LoadConfig;
