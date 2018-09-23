@@ -119,12 +119,13 @@ begin
         Load(Game.SaveFL[FCur]);
       end;
     TK_SPACE:
-    begin
-      Game.GenSaveFileName;
-      Scenes.SetScene(scDifficulty);
-    end;
+      begin
+        Game.GenSaveFileName;
+        Scenes.SetScene(scDifficulty);
+      end;
     TK_ENTER, TK_KP_ENTER:
-      Load(Game.SaveFL[FCur]);
+      if Game.SaveFL.Count > 0 then
+        Load(Game.SaveFL[FCur]);
     TK_TAB:
       Mode.Wizard := False;
   end;

@@ -306,7 +306,6 @@ var
 begin
   FFileName := FileName;
   Path := Utils.GetPath('saves') + FFileName;
-  ShowMessage(Format('LOAD GAME: %s', [Path]));
   Scenes.SetScene(scTitle); // тимчасово
 end;
 
@@ -316,7 +315,6 @@ var
   SL: TStringList;
 begin
   Path := Utils.GetPath('saves') + FFileName;
-  ShowMessage(Format('SAVE GAME: %s', [Path]));
   SL := TStringList.Create;
   try
     SL.Clear;
