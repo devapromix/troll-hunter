@@ -87,6 +87,7 @@ begin
       case Key of
         TK_ENTER, TK_KP_ENTER:
           begin
+            Game.DeleteCurrentSaveFile;
             Player.SaveCharacterDump(Format(_('Killed by %s'), [Player.Killer]));
             Game.CanClose := True;
           end;

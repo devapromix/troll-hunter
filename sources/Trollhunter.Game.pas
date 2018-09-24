@@ -176,6 +176,7 @@ type
     procedure ChScreen;
     procedure ScanDir;
     procedure GenSaveFileName;
+    procedure DeleteCurrentSaveFile;
   end;
 
 var
@@ -196,7 +197,7 @@ uses
   Trollhunter.Item.Shop,
   Trollhunter.Player.Spellbook,
   Trollhunter.Helpers,
-  Trollhunter.Utils, 
+  Trollhunter.Utils,
   Trollhunter.Player.Helpers;
 
 { TGame }
@@ -243,6 +244,13 @@ begin
   SaveFL := TStringList.Create;
   SaveTL := TStringList.Create;
   ScanDir();
+end;
+
+procedure TGame.DeleteCurrentSaveFile;
+var
+  Path: string;
+begin
+  Path := Utils.GetPath('saves') + FFileName;
 end;
 
 destructor TGame.Destroy;

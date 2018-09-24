@@ -320,6 +320,7 @@ begin
           Player.Fill;
           Exit;
         end;
+        // Show final scene
         Scenes.SetScene(scFinal, feDefeat);
         Exit;
       end
