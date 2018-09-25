@@ -251,6 +251,8 @@ var
   Path: string;
 begin
   Path := Utils.GetPath('saves') + FFileName;
+  if FileExists(Path) then
+    DeleteFile(Path);
 end;
 
 destructor TGame.Destroy;
