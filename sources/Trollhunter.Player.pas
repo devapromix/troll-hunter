@@ -3,6 +3,7 @@
 interface
 
 uses
+  Classes,
   uBearLibItemsCommon,
   Trollhunter.Types,
   Trollhunter.Creature,
@@ -144,6 +145,8 @@ type
     function CanShootOrCastSpell(var AItem: Item): Boolean; overload;
     function CanShootOrCastSpell: Boolean; overload;
     function GetDeltaToNext: Int;
+    procedure Save(SL: TStringList);
+    procedure Load(SL: TStringList);
   end;
 
 var
@@ -152,7 +155,6 @@ var
 implementation
 
 uses
-  Classes,
   SysUtils,
   Math,
   BearLibTerminal,
@@ -179,9 +181,9 @@ uses
   Trollhunter.Item.Base,
   Trollhunter.Mob.Types, Trollhunter.Mob.Base;
 
-  { TPlayer }
+{ TPlayer }
 
-  // Generate a random player's background (from Kharne and UMoria roguelikes)
+// Generate a random player's background (from Kharne and UMoria roguelikes)
 procedure TPlayer.GenerateBackground();
 var
   I: (cpChild, cpClass, cpParent, cpCredit, cpBackground, cpEyeType, cpEyeColour, cpHairStyle, cpHairColour, cpComplexion);
@@ -610,6 +612,16 @@ begin
     Corpses.Append();
     Game.Screenshot := Terminal.GetTextScreenshot();
   end;
+end;
+
+procedure TPlayer.Save(SL: TStringList);
+begin
+  SL.Append(Self.Name);
+end;
+
+procedure TPlayer.Load(SL: TStringList);
+begin
+
 end;
 
 destructor TPlayer.Destroy;

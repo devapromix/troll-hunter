@@ -329,6 +329,7 @@ begin
   try
     SL.Clear;
     SL.Append(Player.SaveName);
+    Player.Save(SL);
     SL.SaveToFile(Path, TEncoding.UTF8);
   finally
     FreeAndNil(SL);
