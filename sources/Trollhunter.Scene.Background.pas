@@ -33,7 +33,7 @@ begin
   UI.Title(_('Character Background'));
 
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background, TK_ALIGN_BOTTOM);
+  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Terminal.Colorize(Player.Background, 'Yellow'), TK_ALIGN_BOTTOM);
 
   if not Mode.Game then
   begin
