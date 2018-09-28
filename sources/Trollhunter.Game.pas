@@ -328,8 +328,22 @@ begin
   SL := TStringList.Create;
   try
     SL.Clear;
+    //
     SL.Append(Player.SaveName);
+    // Game
+    SL.Append(Ord(FDifficulty).ToString);
+    SL.Append(FWon.ToString);
+    // Options
+
+    // Player
     Player.Save(SL);
+    // Attributes
+
+    // Inventory
+
+    // Statistics
+
+    // Save data
     SL.SaveToFile(Path, TEncoding.UTF8);
   finally
     FreeAndNil(SL);

@@ -57,8 +57,8 @@ type
 implementation
 
 uses
-  SysUtils,
   Math,
+  SysUtils,
   Trollhunter.Helpers;
 
 { TCreature }

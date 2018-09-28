@@ -615,8 +615,14 @@ end;
 
 procedure TPlayer.Save(SL: TStringList);
 begin
-  SL.Append(FName);
-  SL.Append(FBackground);
+  SL.Append(Name);
+  SL.Append(Background);
+  SL.Append(Ord(Sex).ToString);
+  SL.Append(Ord(HRace).ToString);
+  SL.Append(Ord(HClass).ToString);
+  SL.Append(X.ToString);
+  SL.Append(Y.ToString);
+  SL.Append(Ord(Z).ToString);
 end;
 
 procedure TPlayer.Load(SL: TStringList);
