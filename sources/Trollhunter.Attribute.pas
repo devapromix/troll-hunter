@@ -3,6 +3,7 @@
 interface
 
 uses
+  Classes,
   Trollhunter.Types;
 
 const
@@ -43,11 +44,13 @@ type
     procedure SetValue(const I: TAttribEnum; const AValue: Int); overload;
     procedure SetPrm(const I: TAttribEnum; const APrm: Int);
     procedure SetValue(const I, J: TAttribEnum); overload;
+    procedure Save(SL: TStringList);
   end;
 
 implementation
 
 uses
+  SysUtils,
   Trollhunter.Helpers;
 
 { TAttributes }
@@ -94,6 +97,14 @@ begin
     atMana:
       SetValue(I, FAttrib[I].Value.InRange(FAttrib[atMaxMana].Value));
   end;
+end;
+
+procedure TAttributes.Save(SL: TStringList);
+var
+  I: TAttribEnum;
+begin
+  for I := Low(FAttrib) to High(FAttrib) do
+    SL.Append(Format('%d, %d', [FAttrib[I].Value, FAttrib[I].Prm]));
 end;
 
 procedure TAttributes.SetAttrib(I: TAttribEnum; const Value: TAttrib);

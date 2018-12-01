@@ -338,7 +338,7 @@ begin
     // Player
     Player.Save(SL);
     // Attributes
-
+    Player.Attributes.Save(SL);
     // Inventory
 
     // Statistics
