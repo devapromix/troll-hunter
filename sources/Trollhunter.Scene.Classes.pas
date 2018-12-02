@@ -147,6 +147,10 @@ var
   I: Int;
 begin
   case Key of
+    TK_LEFT, TK_KP_4:
+      SetClass(Low(TClassEnum));
+    TK_RIGHT, TK_KP_6:
+      SetClass(High(TClassEnum));
     TK_UP, TK_KP_8:
       if Player.HClass > Low(TClassEnum) then
         SetClass(Pred(Player.HClass));

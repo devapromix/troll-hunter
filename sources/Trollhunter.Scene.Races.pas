@@ -169,6 +169,10 @@ var
   I: Int;
 begin
   case Key of
+    TK_LEFT, TK_KP_4:
+      SetRace(Low(TRaceEnum));
+    TK_RIGHT, TK_KP_6:
+      SetRace(High(TRaceEnum));
     TK_UP, TK_KP_8:
       if Player.HRace > Low(TRaceEnum) then
         SetRace(Pred(Player.HRace));
