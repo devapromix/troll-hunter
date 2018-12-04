@@ -101,8 +101,9 @@ begin
 
   Terminal.Print(DX, 19, _('Skills') + ': ' + Terminal.Colorize(PCClasses.GetSkills(Player.HClass), 'Lush'));
 
+  // Description
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY, _(PCClasses.GetDescription(Player.HClass)), TK_ALIGN_BOTTOM);
+  Terminal.Print(DX, dsTop, Round(CX * 1.4), Screen.Height - 3, _(PCClasses.GetDescription(Player.HClass)), TK_ALIGN_TOP);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));

@@ -8,6 +8,9 @@ uses
   Trollhunter.Player.Races,
   Trollhunter.Scenes;
 
+const
+  dsTop = 21;
+
 type
   TSceneRace = class(TScene)
   private
@@ -91,15 +94,18 @@ begin
     Terminal.Colorize(Races.Attrib[atDex], 'Lush'));
   Terminal.Print(DX, 11, _('Willpower') + ': ' + Terminal.Colorize(UI.Icon(icBook) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
     Terminal.Colorize(Races.Attrib[atWil], 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
-    Terminal.Colorize(Races.Attrib[atPer], 'Lush'));
+  Terminal.Print(DX, 12, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush')
+    + Terminal.Colorize(Races.Attrib[atPer], 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atLife], 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') + Terminal.Colorize(Races.Attrib[atMana], 'Lush'));
+  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+    Terminal.Colorize(Races.Attrib[atLife], 'Lush'));
+  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+    Terminal.Colorize(Races.Attrib[atMana], 'Lush'));
 
+  // Description
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY, _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);
+  Terminal.Print(DX, dsTop, Round(CX * 1.4), Screen.Height - 3, _(Races.GetDescription(Player.HRace)), TK_ALIGN_TOP);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
