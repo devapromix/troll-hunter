@@ -9,7 +9,7 @@ uses
   Trollhunter.Scenes;
 
 const
-  dsTop = 21;
+  dsTop = 22;
 
 type
   TSceneRace = class(TScene)
@@ -88,19 +88,19 @@ begin
   RenderInfo;
 
   // Attributes
-  Terminal.Print(DX, 9, _('Strength') + ': ' + Terminal.Colorize(UI.Icon(icStr) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+  Terminal.Print(DX, 10, _('Strength') + ': ' + Terminal.Colorize(UI.Icon(icStr) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
     Terminal.Colorize(Races.Attrib[atStr], 'Lush'));
-  Terminal.Print(DX, 10, _('Dexterity') + ': ' + Terminal.Colorize(UI.Icon(icDex) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+  Terminal.Print(DX, 11, _('Dexterity') + ': ' + Terminal.Colorize(UI.Icon(icDex) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
     Terminal.Colorize(Races.Attrib[atDex], 'Lush'));
-  Terminal.Print(DX, 11, _('Willpower') + ': ' + Terminal.Colorize(UI.Icon(icBook) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+  Terminal.Print(DX, 12, _('Willpower') + ': ' + Terminal.Colorize(UI.Icon(icBook) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
     Terminal.Colorize(Races.Attrib[atWil], 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush')
+  Terminal.Print(DX, 13, _('Perception') + ': ' + Terminal.Colorize(UI.Icon(icLeaf) + BaseAttrib.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush')
     + Terminal.Colorize(Races.Attrib[atPer], 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+  Terminal.Print(DX, 15, _('Life') + ': ' + Terminal.Colorize(UI.Icon(icLife) + BaseLife.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
     Terminal.Colorize(Races.Attrib[atLife], 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
+  Terminal.Print(DX, 16, _('Mana') + ': ' + Terminal.Colorize(UI.Icon(icMana) + BaseMana.ToString, 'NoMana') + '  ' + UI.Icon(icPlus, 'Lush') +
     Terminal.Colorize(Races.Attrib[atMana], 'Lush'));
 
   // Description
@@ -116,11 +116,12 @@ procedure TSceneRace.RenderInfo;
 begin
   DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize(Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize(Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize(Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize(Player.Gender, 'Lush'));
-  Terminal.Print(DX, 7, _('Metabolism') + ': ' + Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
+  Terminal.Print(DX, 3, _('Race') + ': ' + Terminal.Colorize(_(Races.GetName(Player.HRace)), 'Lush'));
+  Terminal.Print(DX, 4, _('Age') + ': ' + Terminal.Colorize(Player.Statictics.Get(stAge), 'Lush'));
+  Terminal.Print(DX, 5, _('Height') + ': ' + Terminal.Colorize(Player.Statictics.Get(stHeight), 'Lush'));
+  Terminal.Print(DX, 6, _('Weight') + ': ' + Terminal.Colorize(Player.Statictics.Get(stWeight), 'Lush'));
+  Terminal.Print(DX, 7, _('Sex') + ': ' + Terminal.Colorize(Player.Gender, 'Lush'));
+  Terminal.Print(DX, 8, _('Metabolism') + ': ' + Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 end;
 
 procedure TSceneRace.ReRoll;
