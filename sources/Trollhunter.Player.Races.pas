@@ -8,7 +8,7 @@ uses
   Trollhunter.Attribute;
 
 type
-  TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);
+  TRaceEnum = (rcHuman, rcHalfling, rcElf, rcGnome, rcDwarf);
 
 type
   TRaceArray<T> = array [TRaceEnum] of T;
@@ -32,16 +32,31 @@ type
   end;
 
 const
-  dsHuman = '';
-  dsElf = '';
-  dsGnome = '';
-  dsDwarf = '';
+  dsHuman = 'Люди - самая молодая раса. Они легко ко всему приспосабливаются. ' +
+    'Благодаря своим способностям, часто правят империями, которыми другим расам управлять сложно. ' +
+    'Живут мало, но у них разнообразные религии, вкусы, мораль и привычки.';
+  dsHalfling = 'Низкорослая раса восхитительных и знаменитых взломщиков и карманников. ' +
+    'Хафлинги крепки и трудолюбивы, в основном тихие и мирные. В целом они предпочитают домашний уют опасностям приключений. ' +
+    'Обитают во всех известных городах и селениях мира.';
+  dsElf = 'Самая древняя и самая таинственная раса. Эльфы оставили неизгладимый след в истории мира, ' +
+    'большинство героев разных эпох из их числа. Быстры, ловки, а об эльфийской магии, которой в совершенстве ' +
+    'владеет каждый эльф, ходят легенды.';
+  dsGnome = 'Раньше гномы жили дикими племенами высоко в горах, но спустя несколько веков научились ' +
+    'самым простым ремеслам и торговле. В наше время они все так же ведут уединенный образ жизни вдали от ' +
+    'цивиллизаций. Славятся большими магическими способностями.';
+  dsDwarf = 'Дворфы селятся в горах, разрабатывают там месторождения полезных ископаемых и строят целые ' +
+    'подземные города. Невысоки, приземисты, крепко сложены. Дворфы честны и прямолинейны, что часто приводит ' +
+    'их к конфликтам с другими разумными расами.';
 
 const
   RaceProp: TRaceArray<TRaceProp> = (
     // Human
-    (Description: dsHuman; Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;); Weight: (Min: 70; Max: 110;); Metabolism: (Min: 80; Max: 85;);
+    (Description: dsHuman; Age: (Min: 16; Max: 50;); Height: (Min: 160; Max: 180;); Weight: (Min: 70; Max: 110;); Metabolism: (Min: 80; Max: 85;);
     Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 1; Max: 2;); Perception: (Min: 1; Max: 2;); Life: (Min: 5; Max: 8;);
+    Mana: (Min: 5; Max: 8;);),
+    // Halfling
+    (Description: dsHalfling; Age: (Min: 18; Max: 120;); Height: (Min: 80; Max: 120;); Weight: (Min: 30; Max: 60;); Metabolism: (Min: 50; Max: 75;);
+    Strength: (Min: 1; Max: 1;); Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 1; Max: 2;); Perception: (Min: 2; Max: 4;); Life: (Min: 5; Max: 8;);
     Mana: (Min: 5; Max: 8;);),
     // Elf
     (Description: dsElf; Age: (Min: 75; Max: 800;); Height: (Min: 190; Max: 250;); Weight: (Min: 50; Max: 100;); Metabolism: (Min: 60; Max: 65;);
@@ -83,7 +98,8 @@ implementation
 uses
   TypInfo,
   SysUtils,
-  Trollhunter.Helpers, EnumHelper;
+  Trollhunter.Helpers,
+  EnumHelper;
 
 { TRaces }
 

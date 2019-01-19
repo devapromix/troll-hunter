@@ -209,7 +209,8 @@ type
     ivShort_Spear, ivSpear, ivJavelin, ivFuscina, ivWar_Spear, ivHarpoon, ivSilvan_Whisper, ivImpaler, ivSoul_Reaver, ivHoned_Spear,
 
     // Maces
-    ivSlag_Hammer, ivSpiked_Cudgel, ivWarhammer, ivWar_Mace, ivFlanged_Mace, ivWar_Gavel, ivBarbarous_Mace, ivAdept_Hammer, ivWar_Maul, ivDoom_Hammer
+    ivWorn_Mace, ivSlag_Hammer, ivSpiked_Cudgel, ivWarhammer, ivWar_Mace, ivFlanged_Mace, ivWar_Gavel, ivBarbarous_Mace, ivAdept_Hammer, ivWar_Maul,
+    ivDoom_Hammer
 
     //
     );

@@ -1006,6 +1006,9 @@ const
     (Symbol: '|'; ItemType: itSpear; SlotType: stMainHand; MaxStack: 1; MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 10; Max: 15;); MaxDamage: (Min: 90; Max: 100;)); Price: 970; Color: clDarkRed; Deep: [deDrom];),
 
+    // Worn Mace
+    (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 25; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;)); Price: 155; Color: clDarkYellow; Deep: [deDark_Wood];),
     // Slag Hammer
     (Symbol: ')'; ItemType: itMace; SlotType: stMainHand; MaxStack: 1; MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 4;); MaxDamage: (Min: 5; Max: 6;)); Price: 175; Color: clDarkRed; Deep: [deDark_Wood];),
