@@ -70,7 +70,7 @@ const
     // Thief
     (Description: dsThief; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
     Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;); Skill: (skDagger, skToughness, skStealth);
-    Item: (ivCap, ivQuilted_Armor, None, None, ivDagger, None, None, None);)
+    Item: (ivCap, ivQuilted_Armor, None, None, ivSharp_Dirk, None, None, None);)
     /// ///
     );
 

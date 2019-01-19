@@ -167,7 +167,7 @@ type
     iv_Archmage1s_Staff, ivAncient_Staff,
 
     // Daggers
-    ivDagger, ivKris, ivSacrificial_Kris, ivLeafblade, ivLong_Dagger, ivJagged_Dagger, ivTrident_Dagger, ivDivine_Dagger, ivBlood_Dagger,
+    ivSharp_Dirk, ivKris, ivSacrificial_Kris, ivLeafblade, ivLong_Dagger, ivJagged_Dagger, ivTrident_Dagger, ivDivine_Dagger, ivBlood_Dagger,
     ivShadow_Dagger,
 
     // Bows

@@ -634,7 +634,7 @@ const
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1; MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;)); Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ManaCost: 8;),
 
-    // Dagger (Dagger #1)
+    // Sharp Dirk (Dagger #1)
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1; MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;)); Price: 125; Color: clDarkBlue; Deep: [deDark_Wood];),
     // Kris (Dagger #2)
