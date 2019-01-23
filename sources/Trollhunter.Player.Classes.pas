@@ -11,7 +11,7 @@ uses
   Trollhunter.Attribute;
 
 type
-  TClassEnum = (clWarrior, clRanger, clMonk, clMage, clThief);
+  TClassEnum = (clWarrior, clRanger, clMonk, clMage, clRogue);
 
 type
   TClassSkillEnum = (skWeapon, skMain, skAdd);
@@ -45,7 +45,7 @@ const
   dsMage = 'Маги обладают знаниями древних заклятий и могут призывать к себе на помощь силу стихий. ' +
     'Они способны наносить огромный урон большому количеству врагов, а также замедлять, сковывать и откидывать врагов. ' +
     'В качестве оружия маги используют магические артефакты, которые дают им силу и единение с энергетическими потоками мира.';
-  dsThief = 'Мастера совершать кражи, вскрывать замки, отыскивать и обезвреживать ловушки. ' +
+  dsRogue = 'Мастера совершать кражи, вскрывать замки, отыскивать и обезвреживать ловушки. ' +
     'Благодаря незаметности и разнообразным техникам боя, наносящим урон в течение времени, они способны поражать врага постоянно, ' +
     'снижая уровень здоровья соперника до тех пор, пока у бедной жертвы не пропадет воля к победе.';
 
@@ -67,8 +67,8 @@ const
     (Description: dsMage; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 0; Max: 0;); Willpower: (Min: 1; Max: 4;); Perception: (Min: 1; Max: 2;);
     Life: (Min: 0; Max: 0;); Mana: (Min: 15; Max: 25;); Skill: (skStaff, skConcentration, skMeditation);
     Item: (ivHood, ivLight_Clothes, None, None, ivShort_Staff, None, None, None);),
-    // Thief
-    (Description: dsThief; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
+    // Rogue
+    (Description: dsRogue; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1; Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
     Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;); Skill: (skDagger, skToughness, skStealth);
     Item: (ivCap, ivQuilted_Armor, None, None, ivSharp_Dirk, None, None, None);)
     /// ///
