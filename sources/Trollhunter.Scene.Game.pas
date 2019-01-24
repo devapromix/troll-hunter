@@ -359,7 +359,7 @@ begin
       begin
         if Player.IsDead then
           Exit;
-        Player.Pickup;
+        Player.Pickup();
       end;
     TK_I:
       Scenes.SetScene(scInv);
@@ -367,7 +367,7 @@ begin
       Scenes.SetScene(scMessages);
     TK_F:
       begin
-        if Player.IsDead then
+        if Player.IsDead() then
           Exit;
         Scenes.SetScene(scDrop, scGame);
       end;

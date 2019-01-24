@@ -24,7 +24,9 @@ uses
   BearLibTerminal,
   Trollhunter.Language,
   Trollhunter.UI,
-  Trollhunter.Terminal;
+  Trollhunter.Terminal,
+  Trollhunter.Player,
+  Trollhunter.Player.Classes;
 
 constructor TSceneHelp.Create;
 begin
@@ -136,6 +138,11 @@ begin
         AddLine('I', _('Show Inventory'));
         AddLine('P', _('Character Screen'));
         AddLine('K', _('Calendar'));
+        //
+        if Player.HClass = clRogue then
+        begin
+          AddLine('V', _('Eviscerate'));
+        end;
         AddLine('S', _('Shoot'));
         AddLine('?', _('Show this Help Screen'));
 

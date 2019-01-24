@@ -50,6 +50,8 @@ const
   BeginSkill = 5;
   StartSkill = 3;
   SkillpointPerLevel = 5;
+  //
+  RogueEviscerateManaCost = 7;
 
 type
   TPlayer = class(TCreature)
@@ -182,7 +184,8 @@ uses
   Trollhunter.Item.Types,
   Trollhunter.Utils,
   Trollhunter.Item.Base,
-  Trollhunter.Mob.Types, Trollhunter.Mob.Base;
+  Trollhunter.Mob.Types,
+  Trollhunter.Mob.Base;
 
 { TPlayer }
 
@@ -1612,12 +1615,21 @@ var
 begin
   if Player.IsDead or (Target = nil) or (Target.Combo = 0) or not Target.Alive or (Target.Force <> fcEnemy) then
     Exit;
+  if (Self.Attributes.Attrib[atMana].Value < RogueEviscerateManaCost) then
+  begin
+    MsgLog.Add(_('You need more mana!'));
+    Exit;
+  end;
+  Attributes.Modify(atMana, -RogueEviscerateManaCost);
   Dam := (Attributes.Attrib[atPer].Value div 4) * Target.Combo;
+  Dam := Math.RandomRange(Dam - 1, Dam + 2);
   Target.Attributes.Modify(atLife, -Dam);
-  MsgLog.Add(Format(Terminal.Colorize('Eviscerate (%d)!', 'orange'), [Dam]) );
+  MsgLog.Add(Format(Terminal.Colorize('%s (%d)!', 'orange'), [_('Eviscerate'), Dam]));
   if Target.IsDead then
     Target.Defeat;
   AddTurn;
+  Target.Combo := 0;
+  Target := nil;
 end;
 
 procedure TPlayer.DoEffects(
@@ -1906,12 +1918,12 @@ begin
   if not Abilities.IsAbility(abDiseased) then
   begin
     // Replenish Life
-    Bodybuilding := Skills.GetSkill(skBodybuilding);
+    Bodybuilding := Skills.GetSkill(skBodybuilding) + 2;
     Turns := LifeTurnMax - Bodybuilding;
     if (Statictics.Get(stTurn) mod Turns = 0) then
       Attributes.Modify(atLife, Bodybuilding);
     // Regenerate Mana
-    Meditation := Skills.GetSkill(skMeditation);
+    Meditation := Skills.GetSkill(skMeditation) + 5;
     Turns := ManaTurnMax - Meditation;
     if (Statictics.Get(stTurn) mod Turns = 0) then
       Attributes.Modify(atMana, Meditation);
