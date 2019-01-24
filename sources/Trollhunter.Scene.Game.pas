@@ -39,7 +39,8 @@ uses
   Trollhunter.Player.Types,
   Trollhunter.Scene.Final,
   Trollhunter.Mob.Types,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  Trollhunter.Player.Classes;
 
 procedure TSceneGame.Render;
 var
@@ -343,6 +344,11 @@ begin
       Game.ShowEffects := not Game.ShowEffects;
     TK_K:
       Scenes.SetScene(scCalendar);
+    TK_V:
+      begin
+        if Player.HClass = clRogue then
+          Player.RogueEviscerate();
+      end;
     TK_R:
       begin
         if Player.IsDead then

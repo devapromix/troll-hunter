@@ -20,6 +20,7 @@ type
     Boss: Boolean;
     FColor: Cardinal;
     FAlive: Boolean;
+    FCombo: UInt;
     function GetVision: UInt;
   public
     constructor Create();
@@ -35,6 +36,7 @@ type
     property ID: UInt read FID write FID;
     property Force: TForce read FForce write FForce;
     property Color: Cardinal read FColor;
+    property Combo: UInt read FCombo write FCombo;
     property Vision: UInt read GetVision;
     property Alive: Boolean read FAlive write FAlive;
   end;
@@ -345,7 +347,8 @@ end;
 
 constructor TMob.Create;
 begin
-  inherited;
+  inherited Create;
+  Combo := 0;
 end;
 
 procedure TMob.Defeat;
@@ -478,6 +481,8 @@ begin
     Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color, clBkMob)
   else
     Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color, clBkPlayer);
+  if Self.Combo > 0 then
+    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top - 1, Self.Combo.ToString, Color)
 end;
 
 procedure TMob.Walk(AX, AY: UInt; PX: UInt = 0; PY: UInt = 0);

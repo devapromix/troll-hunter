@@ -73,6 +73,7 @@ type
     FStatistics: TStatistics;
     FSex: TSexEnum;
     FSkills: TSkills;
+    FTarget: TMob;
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
@@ -147,6 +148,8 @@ type
     function GetDeltaToNext: Int;
     procedure Save(SL: TStringList);
     procedure Load(SL: TStringList);
+    property Target: TMob read FTarget write FTarget;
+    procedure RogueEviscerate;
   end;
 
 var
@@ -314,6 +317,11 @@ begin
     end;
     // Attack
     Mob.Attributes.Modify(atLife, -Dam);
+    if Player.HClass = clRogue then
+    begin
+      Player.Target := Mob;
+      Mob.Combo := Mob.Combo + 1;
+    end;
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
@@ -594,6 +602,7 @@ constructor TPlayer.Create;
 begin
   inherited;
   FStatistics := TStatistics.Create;
+  Target := nil;
   Skills := TSkills.Create;
   Self.Clear;
 end;
@@ -1595,6 +1604,20 @@ begin
   // Calc
   Calc();
   Fill();
+end;
+
+procedure TPlayer.RogueEviscerate;
+var
+  Dam: UInt;
+begin
+  if Player.IsDead or (Target = nil) or (Target.Combo = 0) or not Target.Alive or (Target.Force <> fcEnemy) then
+    Exit;
+  Dam := (Attributes.Attrib[atPer].Value div 4) * Target.Combo;
+  Target.Attributes.Modify(atLife, -Dam);
+  MsgLog.Add(Format(Terminal.Colorize('Eviscerate (%d)!', 'orange'), [Dam]) );
+  if Target.IsDead then
+    Target.Defeat;
+  AddTurn;
 end;
 
 procedure TPlayer.DoEffects(
