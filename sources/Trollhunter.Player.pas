@@ -612,6 +612,8 @@ end;
 
 procedure TPlayer.Defeat(AKiller: string = '');
 begin
+  Target.Combo := 0;
+  Target := nil;
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
   MsgLog.Add(Terminal.Colorize(_('Better luck next time!'), 'Light Yellow'));

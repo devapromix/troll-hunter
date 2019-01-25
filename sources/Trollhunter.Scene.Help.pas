@@ -133,7 +133,7 @@ begin
         AddLine('R', _('Rest'));
         AddLine('M', _('View messages'));
         // AddLine('B', _('Spellbook'));
-        AddLine('N', _('Show Statistics'));
+        AddLine('J', _('Show Statistics'));
         AddLine('O', _('Options'));
         AddLine('I', _('Show Inventory'));
         AddLine('P', _('Character Screen'));
@@ -142,6 +142,8 @@ begin
         if Player.HClass = clRogue then
         begin
           AddLine('V', _('Eviscerate'));
+          // AddLine('B', _(''));
+          // AddLine('N', _(''));
         end;
         AddLine('S', _('Shoot'));
         AddLine('?', _('Show this Help Screen'));

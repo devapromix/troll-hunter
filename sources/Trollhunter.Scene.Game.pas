@@ -349,6 +349,14 @@ begin
         if Player.HClass = clRogue then
           Player.RogueEviscerate();
       end;
+    TK_B:
+      begin
+        if Player.HClass = clRogue then;
+      end;
+    TK_N:
+      begin
+        if Player.HClass = clRogue then;
+      end;
     TK_R:
       begin
         if Player.IsDead then
@@ -373,11 +381,11 @@ begin
       end;
     TK_P:
       Scenes.SetScene(scPlayer);
-    TK_N:
+    TK_J:
       Scenes.SetScene(scStatistics);
     TK_O:
       Scenes.SetScene(scOptions);
-    // TK_B:
+    // TK_F:
     // Scenes.SetScene(scSpellbook);
     TK_Y:
       if Mode.Wizard then
