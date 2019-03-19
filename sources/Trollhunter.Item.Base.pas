@@ -271,7 +271,15 @@ const
     // Hunk of Meat
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clLightestYellow; Deep: [deDark_Wood .. deDrom];
-    Effects: [efFood]; Value: 900;),
+    Effects: [efFood, efCureWeak]; Value: 900;),
+    // Healing Herb
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 15; Color: clYellow; Deep: [deDark_Wood .. deDrom];
+    Effects: [efLife, efFood]; Value: 25;),
+    // Silver Pod
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 25; Color: clYellow; Deep: [deDark_Wood .. deDrom];
+    Effects: [efMana, efFood, efCurePoison]; Value: 135;),
 
     // Key
     (Symbol: '`'; ItemType: itKey; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -297,11 +305,6 @@ const
     (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 25; Color: clLightBlue; Deep: [deDark_Wood .. deDrom];
     Effects: [efMana]; Value: 35;),
-
-    // Healing Herb
-    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 15; Color: clYellow; Deep: [deDark_Wood .. deDrom];
-    Effects: [efLife, efFood]; Value: 25;),
 
     // Ruby #1
     (Symbol: '$'; ItemType: itGem; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);

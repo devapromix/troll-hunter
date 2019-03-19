@@ -119,7 +119,7 @@ type
     ivRune_of_Town_Portal,
 
     // Foods and Plants
-    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
+    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat, ivHealing_Herb, ivSilver_Pod,
 
     // Keys
     ivKey,
@@ -127,9 +127,6 @@ type
     ivTorch, ivOil_Lamp,
     // Orbs
     ivLight_Orb, ivLife_Orb, ivMana_Orb,
-
-    // Foods and Plants
-    ivHealing_Herb,
 
     // Ruby (Gems)
     ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby, ivImperial_Ruby, ivRoyal_Ruby,
