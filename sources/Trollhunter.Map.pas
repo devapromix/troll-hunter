@@ -20,12 +20,12 @@ type
 
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
-    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal);
+    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal, teMagicOrb, teHorne, teAnvil);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
-  FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater];
-  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor, teGate];
+  FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater, teMagicOrb];
+  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor, teGate, teMagicOrb, teHorne, teAnvil];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
@@ -201,6 +201,24 @@ begin
   AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDeep_Cave);
   AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deBlood_Cave);
   AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDrom);
+  // Magic Orb
+  AddTile('O', _('Magic Orb'), $FF9999FF, teMagicOrb, deDark_Wood);
+  AddTile('O', _('Magic Orb'), $FF8888FF, teMagicOrb, deGray_Cave);
+  AddTile('O', _('Magic Orb'), $FF7777FF, teMagicOrb, deDeep_Cave);
+  AddTile('O', _('Magic Orb'), $FF6666FF, teMagicOrb, deBlood_Cave);
+  AddTile('O', _('Magic Orb'), $FF5555FF, teMagicOrb, deDrom);
+  // Anvil
+  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deDark_Wood);
+  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deGray_Cave);
+  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deDeep_Cave);
+  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deBlood_Cave);
+  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deDrom);
+  // Horne
+  AddTile('O', _('h'), $FFFF2222, teHorne, deDark_Wood);
+  AddTile('O', _('h'), $FFFF2222, teHorne, deGray_Cave);
+  AddTile('O', _('h'), $FFFF2222, teHorne, deDeep_Cave);
+  AddTile('O', _('h'), $FFFF2222, teHorne, deBlood_Cave);
+  AddTile('O', _('h'), $FFFF2222, teHorne, deDrom);
 end;
 
 procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
@@ -410,33 +428,64 @@ const
       end;
   end;
 
-  procedure AddNPC(AX, AY: UInt);
-  var
-    I: UInt;
+  function AddNPC(AX, AY: UInt): UInt;
   begin
     repeat
-      I := Math.RandomRange(0, 7);
-    until not BNPC[I];
-    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + I);
-    BNPC[I] := True;
+      Result := Math.RandomRange(0, 7);
+    until not BNPC[Result];
+    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + Result);
+    BNPC[Result] := True;
   end;
 
   procedure AddHouse(AX, AY, CX, CY, D: UInt; AV: Boolean; F: Boolean);
   var
+    T: Int;
     W, H: UInt;
     IsDoor: Boolean;
 
-    procedure AddDoor(X, Y: UInt);
+    procedure AddObjs(X, Y, A, B: Int);
+    var
+      I: UInt;
+      J, K: Int;
     begin
       if IsDoor then
         Exit;
-      SetTileEnum(X, Y, Z, teDoor);
+      SetTileEnum(AX + X, AY + Y, Z, teDoor);
       IsDoor := True;
-      AddNPC(AX, AY);
+      I := AddNPC(AX, AY);
+      if A = 0 then
+        A := Math.RandomRange(0, 3) - 1;
+      if B = 0 then
+        B := Math.RandomRange(0, 3) - 1;
+      J := Math.RandomRange(0, 3) - 1;
+      K := Math.RandomRange(0, 3) - 1;
+      case I of
+        0: // Eldan (the magic trader)
+          begin
+            SetTileEnum(AX - 1, AY + 1, Z, teMagicOrb);
+            SetTileEnum(AX - 1, AY - 1, Z, teMagicOrb);
+            SetTileEnum(AX + 1, AY + 1, Z, teMagicOrb);
+            SetTileEnum(AX + 1, AY - 1, Z, teMagicOrb);
+          end;
+        1: // Petra (the trader)
+          begin
+            SetTileEnum(AX + A, AY + B, Z, teMagicOrb);
+          end;
+        2: // Bran (the blacksmith)
+          begin
+            SetTileEnum(AX + A, AY + B, Z, teHorne);
+            SetTileEnum(AX + J, AY + K, Z, teAnvil);
+          end;
+        3: // Tarn (the tavern owner)
+          begin
+            SetTileEnum(AX + A, AY + B, Z, teMagicOrb);
+          end;
+      end;
     end;
 
   begin
     IsDoor := False;
+    T := Math.RandomRange(0, 3) - 1;
     W := IfThen(AV, 8, RandomRange(2, 5) * 2);
     H := IfThen(AV, 8, RandomRange(2, 5) * 2);
     AddRect(AX, AY, W, H, teWoodenFloor, teWoodenWall);
@@ -445,25 +494,25 @@ const
     begin
       case D of
         4:
-          AddDoor(AX, AY - (H div 2));
+          AddObjs(0, -(H div 2), 0, (H div 2) - 1);
         5:
-          AddDoor(AX + (H div 2), AY);
+          AddObjs(H div 2, 0, -(H div 2) + 1, 0);
         6:
-          AddDoor(AX - (H div 2), AY);
+          AddObjs(-(H div 2), 0, (H div 2) - 1, 0);
         7:
-          AddDoor(AX, AY + (H div 2));
+          AddObjs(0, H div 2, 0, -(H div 2) + 1);
       end;
       Exit;
     end;
     if F then
       if (AX <= CX) then
-        AddDoor(AX + (W div 2), AY)
+        AddObjs(W div 2, 0, -(W div 2) + 1, 0)
       else
-        AddDoor(AX - (W div 2), AY)
+        AddObjs(-(W div 2), 0, (W div 2) - 1, 0)
     else if (AY <= CY) then
-      AddDoor(AX, AY + (H div 2))
+      AddObjs(0, H div 2, 0, -(H div 2) + 1)
     else
-      AddDoor(AX, AY - (H div 2));
+      AddObjs(0, -(H div 2), 0, (H div 2) - 1);
   end;
 
   procedure AddVillage(AX, AY: UInt);
