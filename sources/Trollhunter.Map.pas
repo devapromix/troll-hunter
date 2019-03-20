@@ -20,16 +20,16 @@ type
 
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
-    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal, teMagicOrb, teHorne, teAnvil);
+    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal, teMagicOrb, teForge, teAnvil, teWoodenTable);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater, teMagicOrb];
-  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor, teGate, teMagicOrb, teHorne, teAnvil];
+  VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor, teDoor, teGate, teMagicOrb, teForge, teAnvil, teWoodenTable];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
-  Tile: array [TTileEnum, TMapEnum] of TTile;
+  Tile: array [TTileEnum] of TTile;
 
 type
   MapSize = System.Byte;
@@ -45,7 +45,7 @@ type
     FFOV: array [MapSize, MapSize] of Boolean;
     procedure AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
     procedure AddTiles(AX, AY: UInt; AZ: TMapEnum; AType: UInt; ADen: UInt; ABaseTileEnum, ATileEnum: TTileEnum);
-    procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal; ATile: TTileEnum; AZ: TMapEnum);
+    procedure AddTile(ASymbol: Char; AName: string; AColor: Cardinal; ATile: TTileEnum);
     procedure InitTiles;
     function GetName: string;
   public
@@ -99,126 +99,27 @@ uses
 
 procedure TMap.InitTiles;
 begin
-  // DefaultFloor
-  AddTile('"', _('Grass'), $FF113311, teDefaultFloor, deDark_Wood);
-  AddTile(':', _('Dirt'), $FF331133, teDefaultFloor, deGray_Cave);
-  AddTile('.', _('Stone'), $FF222111, teDefaultFloor, deDeep_Cave);
-  AddTile(';', _('Stone'), $FF330000, teDefaultFloor, deBlood_Cave);
-  AddTile('~', _('Stone'), $FF002200, teDefaultFloor, deDrom);
-  // DefaultWall
-  AddTile('T', _('Tree'), $FF006622, teDefaultWall, deDark_Wood);
-  AddTile('#', _('Wall'), $FF444422, teDefaultWall, deGray_Cave);
-  AddTile('#', _('Wall'), $FF222133, teDefaultWall, deDeep_Cave);
-  AddTile('#', _('Wall'), $FF322118, teDefaultWall, deBlood_Cave);
-  AddTile('#', _('Wall'), $FF112211, teDefaultWall, deDrom);
-  // Rock
-  AddTile('^', _('Rock'), $FF556655, teRock, deDark_Wood);
-  AddTile(':', _('Wall'), $FF444422, teRock, deGray_Cave);
-  AddTile(':', _('Wall'), $FF222133, teRock, deDeep_Cave);
-  AddTile(':', _('Wall'), $FF322118, teRock, deBlood_Cave);
-  AddTile(':', _('Wall'), $FF112233, teRock, deDrom);
-  // Floor #1
-  AddTile('"', _('Grass'), $FF446644, teFloor1, deDark_Wood);
-  AddTile('"', _('Grass'), $FF99AA99, teFloor1, deGray_Cave);
-  AddTile('.', _('Stone'), $FF224422, teFloor1, deDeep_Cave);
-  AddTile(';', _('Stone'), $FF225533, teFloor1, deBlood_Cave);
-  AddTile('~', _('Stone'), $FF228833, teFloor1, deDrom);
-  // Floor #2
-  AddTile('"', _('Grass'), $FF447755, teFloor2, deDark_Wood);
-  AddTile('"', _('Grass'), $FF779977, teFloor2, deGray_Cave);
-  AddTile('.', _('Stone'), $FF22CC44, teFloor2, deDeep_Cave);
-  AddTile(';', _('Stone'), $FF333322, teFloor2, deBlood_Cave);
-  AddTile('~', _('Stone'), $FF334422, teFloor2, deDrom);
-  // Floor #3
-  AddTile('"', _('Grass'), $FF778866, teFloor3, deDark_Wood);
-  AddTile('"', _('Grass'), $FF668866, teFloor3, deGray_Cave);
-  AddTile('.', _('Stone'), $FF338855, teFloor3, deDeep_Cave);
-  AddTile(';', _('Stone'), $FF223333, teFloor3, deBlood_Cave);
-  AddTile('~', _('Stone'), $FF226622, teFloor3, deDrom);
-  // Up Stairs
-  AddTile('*', _('Stairs'), $FFFFFF00, teUpStairs, deDark_Wood);
-  AddTile('<', _('Stairs'), $FFEEEE00, teUpStairs, deGray_Cave);
-  AddTile('<', _('Stairs'), $FFDDDD00, teUpStairs, deDeep_Cave);
-  AddTile('<', _('Stairs'), $FFCCCC00, teUpStairs, deBlood_Cave);
-  AddTile('<', _('Stairs'), $FFBBBB00, teUpStairs, deDrom);
-  // Down Stairs
-  AddTile('*', _('Stairs'), $FFFFFF00, teDnStairs, deDark_Wood);
-  AddTile('>', _('Stairs'), $FFEEEE00, teDnStairs, deGray_Cave);
-  AddTile('>', _('Stairs'), $FFDDDD00, teDnStairs, deDeep_Cave);
-  AddTile('>', _('Stairs'), $FFCCCC00, teDnStairs, deBlood_Cave);
-  AddTile('>', _('Stairs'), $FFBBBB00, teDnStairs, deDrom);
-  // Water
-  AddTile('=', _('Water'), $FF333388, teWater, deDark_Wood);
-  AddTile('=', _('Water'), $FF333377, teWater, deGray_Cave);
-  AddTile('=', _('Water'), $FF222266, teWater, deDeep_Cave);
-  AddTile('=', _('Water'), $FF222255, teWater, deBlood_Cave);
-  AddTile('=', _('Water'), $FF222244, teWater, deDrom);
-  // Stone Wall
-  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDark_Wood);
-  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deGray_Cave);
-  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDeep_Cave);
-  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deBlood_Cave);
-  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall, deDrom);
-  // _Wooden Wall
-  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDark_Wood);
-  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deGray_Cave);
-  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDeep_Cave);
-  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deBlood_Cave);
-  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall, deDrom);
-  // Stone Floor
-  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDark_Wood);
-  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deGray_Cave);
-  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDeep_Cave);
-  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deBlood_Cave);
-  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor, deDrom);
-  // _Wooden Floor
-  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDark_Wood);
-  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deGray_Cave);
-  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDeep_Cave);
-  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deBlood_Cave);
-  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor, deDrom);
-  // Door
-  AddTile('+', _('Door'), $FF675725, teDoor, deDark_Wood);
-  AddTile('+', _('Door'), $FF675725, teDoor, deGray_Cave);
-  AddTile('+', _('Door'), $FF675725, teDoor, deDeep_Cave);
-  AddTile('+', _('Door'), $FF675725, teDoor, deBlood_Cave);
-  AddTile('+', _('Door'), $FF675725, teDoor, deDrom);
-  // Gate
-  AddTile('+', _('Gate'), $FF515F55, teGate, deDark_Wood);
-  AddTile('+', _('Gate'), $FF515F55, teGate, deGray_Cave);
-  AddTile('+', _('Gate'), $FF515F55, teGate, deDeep_Cave);
-  AddTile('+', _('Gate'), $FF515F55, teGate, deBlood_Cave);
-  AddTile('+', _('Gate'), $FF515F55, teGate, deDrom);
-  // Portal
-  AddTile('O', _('Portal'), $FF9999FF, tePortal, deDark_Wood);
-  AddTile('O', _('Portal'), $FF9999FF, tePortal, deGray_Cave);
-  AddTile('O', _('Portal'), $FF9999FF, tePortal, deDeep_Cave);
-  AddTile('O', _('Portal'), $FF9999FF, tePortal, deBlood_Cave);
-  AddTile('O', _('Portal'), $FF9999FF, tePortal, deDrom);
-  // Town Portal
-  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDark_Wood);
-  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deGray_Cave);
-  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDeep_Cave);
-  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deBlood_Cave);
-  AddTile('O', _('Portal'), $FF9999FF, teTownPortal, deDrom);
-  // Magic Orb
-  AddTile('O', _('Magic Orb'), $FF9999FF, teMagicOrb, deDark_Wood);
-  AddTile('O', _('Magic Orb'), $FF8888FF, teMagicOrb, deGray_Cave);
-  AddTile('O', _('Magic Orb'), $FF7777FF, teMagicOrb, deDeep_Cave);
-  AddTile('O', _('Magic Orb'), $FF6666FF, teMagicOrb, deBlood_Cave);
-  AddTile('O', _('Magic Orb'), $FF5555FF, teMagicOrb, deDrom);
-  // Anvil
-  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deDark_Wood);
-  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deGray_Cave);
-  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deDeep_Cave);
-  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deBlood_Cave);
-  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil, deDrom);
-  // Horne
-  AddTile('O', _('h'), $FFFF2222, teHorne, deDark_Wood);
-  AddTile('O', _('h'), $FFFF2222, teHorne, deGray_Cave);
-  AddTile('O', _('h'), $FFFF2222, teHorne, deDeep_Cave);
-  AddTile('O', _('h'), $FFFF2222, teHorne, deBlood_Cave);
-  AddTile('O', _('h'), $FFFF2222, teHorne, deDrom);
+  AddTile('"', _('Grass'), $FF113311, teDefaultFloor);
+  AddTile('T', _('Tree'), $FF006622, teDefaultWall);
+  AddTile('^', _('Rock'), $FF556655, teRock);
+  AddTile('"', _('Grass'), $FF446644, teFloor1);
+  AddTile('"', _('Grass'), $FF447755, teFloor2);
+  AddTile('"', _('Grass'), $FF778866, teFloor3);
+  AddTile('*', _('Stairs'), $FFFFFF00, teUpStairs);
+  AddTile('*', _('Stairs'), $FFFFFF00, teDnStairs);
+  AddTile('=', _('Water'), $FF333388, teWater);
+  AddTile('#', _('Stone Wall'), $FF818F95, teStoneWall);
+  AddTile('#', _('Wooden Wall'), $FF776735, teWoodenWall);
+  AddTile('.', _('Stone Floor'), $FF818F95, teStoneFloor);
+  AddTile('.', _('Wooden Floor'), $FF776735, teWoodenFloor);
+  AddTile('+', _('Door'), $FF675725, teDoor);
+  AddTile('+', _('Gate'), $FF515F55, teGate);
+  AddTile('O', _('Portal'), $FF9999FF, tePortal);
+  AddTile('O', _('Portal'), $FF9999FF, teTownPortal);
+  AddTile('O', _('Magic Orb'), $FFCCCCFF, teMagicOrb);
+  AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil);
+  AddTile('#', _('Forge'), $FFFF2222, teForge);
+  AddTile('#', _('Wooden Table'), $FF997744, teWoodenTable);
 end;
 
 procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
@@ -263,9 +164,9 @@ begin
   end;
 end;
 
-procedure TMap.AddTile(ASymbol: Char; AName: string; AColor: Cardinal; ATile: TTileEnum; AZ: TMapEnum);
+procedure TMap.AddTile(ASymbol: Char; AName: string; AColor: Cardinal; ATile: TTileEnum);
 begin
-  with Tile[ATile, AZ] do
+  with Tile[ATile] do
   begin
     Symbol := ASymbol;
     Name := AName;
@@ -469,16 +370,29 @@ const
           end;
         1: // Petra (the trader)
           begin
-            SetTileEnum(AX + A, AY + B, Z, teMagicOrb);
+            SetTileEnum(AX + A, AY + B, Z, teWoodenTable);
           end;
         2: // Bran (the blacksmith)
           begin
-            SetTileEnum(AX + A, AY + B, Z, teHorne);
+            SetTileEnum(AX + A, AY + B, Z, teWoodenTable);
+            SetTileEnum(AX + A, AY + B, Z, teForge);
             SetTileEnum(AX + J, AY + K, Z, teAnvil);
           end;
         3: // Tarn (the tavern owner)
           begin
-            SetTileEnum(AX + A, AY + B, Z, teMagicOrb);
+            SetTileEnum(AX + A, AY + B, Z, teWoodenTable);
+          end;
+        4: // Sirius (the trader)
+          begin
+            SetTileEnum(AX + A, AY + B, Z, teWoodenTable);
+          end;
+        5: // Thor (the trader)
+          begin
+            SetTileEnum(AX + A, AY + B, Z, teWoodenTable);
+          end;
+        6: // Virna (the healer)
+          begin
+            SetTileEnum(AX + A, AY + B, Z, teWoodenTable);
           end;
       end;
     end;
@@ -645,7 +559,7 @@ end;
 
 function TMap.GetTile(ATileEnum: TTileEnum): TTile;
 begin
-  Result := Tile[ATileEnum][Current];
+  Result := Tile[ATileEnum];
 end;
 
 function TMap.GetTileEnum(AX, AY: UInt): TTileEnum;
@@ -655,7 +569,7 @@ end;
 
 function TMap.GetTile(AX, AY: UInt): TTile;
 begin
-  Result := Tile[FMap[AX][AY][Current]][Current];
+  Result := Tile[FMap[AX][AY][Current]];
 end;
 
 function TMap.GetName: string;

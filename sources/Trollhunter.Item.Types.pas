@@ -143,6 +143,8 @@ type
     ivMoonstone_Ring, ivValuable_Ring, ivPrecious_Ring, ivEthreal_Ring, ivExquisite_Ring, ivScarab_Ring, ivCrystal_Ring, ivPrismatic_Ring,
     ivCitrine_Ring, ivGold_Ring,
 
+    // Quartz Ring, Viridian Band, Stardust Band
+
     // Amulets
     ivTurquoise_Amulet, ivOnyx_Amulet, ivViridian_Amulet, iv_Lunar_Amulet, ivJade_Amulet, ivClaw_Amulet, ivAgate_Amulet, ivGothic_Amulet,
     ivAncient_Amulet, ivAlmighty_Amulet,
@@ -163,6 +165,8 @@ type
     ivShort_Staff, ivSacrament_Staff, ivGhost_Staff, ivYew_Staff, ivBone_Staff, ivApprentice1s_Staff, ivDisciple1s_Staff, ivAcolyte1s_Staff,
     iv_Archmage1s_Staff, ivAncient_Staff,
 
+    // Soulkeeper
+
     // Daggers
     ivSharp_Dirk, ivKris, ivSacrificial_Kris, ivLeafblade, ivLong_Dagger, ivJagged_Dagger, ivTrident_Dagger, ivDivine_Dagger, ivBlood_Dagger,
     ivShadow_Dagger,
@@ -170,6 +174,8 @@ type
     // Bows
     ivShort_Bow, ivHunter1s_Bow, ivLong_Bow, ivHero_Bow, ivBattle_Bow, ivComposite_Bow, ivImperial_Bow, ivRevenant_Bow, ivAncient_Bow,
     ivDragonbone_Bow,
+
+    // Ravenwood Bow
 
     // Body Armors
     ivQuilted_Armor, ivLeather_Armor, ivHard_Leather_Armor, ivBattle_Armor, ivBrigantine_Armor, ivRing_Mail, ivChain_Mail, ivScale_Mail,
