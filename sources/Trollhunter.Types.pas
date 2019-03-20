@@ -3,7 +3,7 @@ unit Trollhunter.Types;
 interface
 
 type
-  Int = System.NativeInt;
+  Int = System.Integer;
   UInt = System.Word;
 
 const

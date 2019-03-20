@@ -31,7 +31,6 @@ uses
   Trollhunter.Creature in 'Sources\Trollhunter.Creature.pas',
   Trollhunter.Attribute in 'Sources\Trollhunter.Attribute.pas',
   Trollhunter.UI in 'Sources\Trollhunter.UI.pas',
-  Trollhunter.PathFind in 'Sources\Trollhunter.PathFind.pas',
   Trollhunter.Player.Quest in 'Sources\Trollhunter.Player.Quest.pas',
   Trollhunter.Helpers in 'Sources\Trollhunter.Helpers.pas',
   Trollhunter.Weather in 'sources\Trollhunter.Weather.pas',
@@ -73,7 +72,8 @@ uses
   Trollhunter.Scene.Buy in 'sources\Trollhunter.Scene.Buy.pas',
   Trollhunter.Scene.Sell in 'sources\Trollhunter.Scene.Sell.pas',
   Trollhunter.Mob.Base in 'sources\Trollhunter.Mob.Base.pas',
-  Trollhunter.Mob.Types in 'sources\Trollhunter.Mob.Types.pas';
+  Trollhunter.Mob.Types in 'sources\Trollhunter.Mob.Types.pas',
+  PathFind in 'sources\Third-Party\PathFind\PathFind.pas';
 
 var
   Key: UInt;

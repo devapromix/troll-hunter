@@ -82,6 +82,7 @@ uses
   SysUtils,
   TypInfo,
   Vcl.Dialogs,
+  PathFind,
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
@@ -90,7 +91,6 @@ uses
   Trollhunter.Player.Skills,
   Trollhunter.Statistic,
   Trollhunter.Attribute,
-  Trollhunter.PathFind,
   Trollhunter.Player.Quest,
   Trollhunter.Helpers,
   Trollhunter.Item.Types,
@@ -446,7 +446,7 @@ begin
   if (Dist <= 2) and Player.IsRest then
     Player.IsRest := False;
   // A*
-  if not PathFind(UIntMax + 1, UIntMax + 1, X, Y, Player.X, Player.Y, @MyCallback, NX, NY) then
+  if not IsPathFind(UIntMax + 1, UIntMax + 1, X, Y, Player.X, Player.Y, @MyCallback, NX, NY) then
     Exit;
   if (NX = Int(Player.X)) and (NY = Int(Player.Y)) then
   begin
