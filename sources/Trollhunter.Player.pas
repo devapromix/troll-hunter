@@ -1475,6 +1475,7 @@ begin
   Abilities.Ability[abWeak] := 0;
   if (Math.RandomRange(0, 9) = 0) then
     Abilities.Ability[abDrunk] := 0;
+  Map.SetTileEnum(Player.X, Player.Y, Map.Current, teCampfire);
   IsRest := False;
 end;
 

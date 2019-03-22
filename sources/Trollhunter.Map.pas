@@ -20,7 +20,7 @@ type
 
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2, teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
-    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal, teMagicOrb, teForge, teAnvil, teWoodenTable);
+    teStoneFloor, teWoodenFloor, teDoor, teCampfire, teGate, tePortal, teTownPortal, teMagicOrb, teForge, teAnvil, teWoodenTable);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
@@ -120,6 +120,7 @@ begin
   AddTile('#', _('Anvil'), $FFAAAAAA, teAnvil);
   AddTile('#', _('Forge'), $FFFF2222, teForge);
   AddTile('#', _('Wooden Table'), $FF997744, teWoodenTable);
+  AddTile('.', _('Campfire'), $FFFF2222, teCampfire);
 end;
 
 procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum; ABaseTileEnum, ATileEnum: TTileEnum);
