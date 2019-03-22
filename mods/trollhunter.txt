@@ -1,0 +1,7 @@
+﻿Name=Trollhunter
+Descr=Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains. In the center of this land there is a village named Dork. It's people are in grave danger as the Troll King and his armies are marching to lay waste on all of its inhabitants. Unless a hero will rise to take a stand against the forces of evil. You are the hero who departs on a quest to stop the enemies and save your homeland, Elvion. Survive, gather equipment, fight adversaries and be ready for the final confrontation. Good luck! You will need it.
+ModVersion=0.1
+Author=Apromix
+Maps=trollhunter.ini
+PlayerX=1
+PlayerY=2

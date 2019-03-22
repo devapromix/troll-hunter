@@ -13,7 +13,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scInv, scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest, scSell,
     scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook, scOptions, scIdentification, scBackground, scEnchant, scClass, scRace,
-    scItemInfo, scFinal);
+    scItemInfo, scFinal, scMods);
 
 type
   TFinalEnum = (feNone, feQuit, feWon, feDefeat);
@@ -138,7 +138,8 @@ uses
   Trollhunter.Scene.Item.Information,
   Trollhunter.Scene.Final,
   Trollhunter.Scene.Buy,
-  Trollhunter.Scene.Sell;
+  Trollhunter.Scene.Sell,
+  Trollhunter.Scene.Mods;
 
 { TScene }
 
@@ -293,6 +294,8 @@ begin
         FScene[I] := TSceneItemInfo.Create;
       scFinal:
         FScene[I] := TSceneFinal.Create;
+      scMods:
+        FScene[I] := TSceneMods.Create;
     end;
 end;
 

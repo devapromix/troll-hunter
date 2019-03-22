@@ -45,7 +45,7 @@ end;
 
 procedure TSceneDifficulty.PrevScene;
 begin
-  Scenes.SetScene(scTitle);
+  Scenes.SetScene(scMods);
 end;
 
 procedure TSceneDifficulty.Render;

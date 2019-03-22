@@ -36,7 +36,8 @@ uses
   Trollhunter.UI.Logo,
   Trollhunter.Helpers,
   Trollhunter.Language,
-  Trollhunter.Scene.Load;
+  Trollhunter.Scene.Load,
+  Trollhunter.Mods;
 
 constructor TSceneTitle.Create;
 begin
@@ -120,8 +121,10 @@ begin
       end;
     TK_SPACE:
       begin
+        GMods.LoadMods;
         Game.GenSaveFileName;
-        Scenes.SetScene(scDifficulty);
+        Sleep(100);
+        Scenes.SetScene(scMods);
       end;
     TK_ENTER, TK_KP_ENTER:
       if Game.SaveFL.Count > 0 then

@@ -3,7 +3,7 @@ unit Trollhunter.Mods;
 interface
 
 uses
-System.Classes;
+  System.Classes;
 
 type
   TMods = class(TObject)
@@ -15,10 +15,12 @@ type
     function GetCurValue(const Name: string; DefValue: string): string; overload;
     function GetCurValue(const Name: string; DefValue: Integer): Integer; overload;
   public
+    ModFL, ModNL, ModDL: TStringList;
     constructor Create;
     destructor Destroy; override;
     function GetPath(const SubDir, FileName: string): string;
     procedure SetCurrent(const FileName: string);
+    procedure LoadMods;
     property Current: string read FCurrent;
     function PlayerX: Integer;
     function PlayerY: Integer;
@@ -30,19 +32,26 @@ var
 implementation
 
 uses
-System.SysUtils,
-Trollhunter.Utils;
+  Dialogs,
+  System.SysUtils,
+  Trollhunter.Utils;
 
 { TMods }
 
 constructor TMods.Create;
 begin
   FSL := TStringList.Create;
+  ModNL := TStringList.Create;
+  ModFL := TStringList.Create;
+  ModDL := TStringList.Create;
   FCurrent := Default;
 end;
 
 destructor TMods.Destroy;
 begin
+  FreeAndNil(ModDL);
+  FreeAndNil(ModFL);
+  FreeAndNil(ModNL);
   FreeAndNil(FSL);
   inherited;
 end;
@@ -70,6 +79,36 @@ begin
     Result := Utils.GetPath('mods' + PathDelim + Default +PathDelim + SubDir) + FileName;
 end;
 
+procedure TMods.LoadMods;
+var
+  SL: TStringList;
+  SR: TSearchRec;
+  S: string;
+begin
+  ForceDirectories(Utils.GetPath('mods'));
+  ModFL.Clear;
+  ModNL.Clear;
+  SL := TStringList.Create;
+  try
+    if (FindFirst(Utils.GetPath('mods') + '*.txt', faAnyFile, SR) = 0) then
+    begin
+      repeat
+        S := Trim(SR.Name);
+        if (S = '') then
+          Continue;
+        SL.LoadFromFile(Utils.GetPath('mods') + S, TEncoding.UTF8);
+        ModNL.Append(SL.Values['Name']);
+        ModDL.Append(SL.Values['Descr']);
+        ModFL.Append(S);
+      until FindNext(SR) <> 0;
+      FindClose(SR);
+    end;
+  finally
+    FreeAndNil(SL);
+  end;
+  ShowMessage(ModFL.Text);
+end;
+
 function TMods.PlayerX: Integer;
 begin
   Result := GetCurValue('PlayerX', 1);
@@ -85,8 +124,9 @@ var
   FN: string;
 begin
   FCurrent := FileName;
-  FSL.LoadFromFile(GetPath('', 'mod.txt'), TEncoding.UTF8);
+  FSL.LoadFromFile(Utils.GetPath('mods') + FileName, TEncoding.UTF8);
   FN := GetCurValue('Maps', '');
+//  ShowMessage(FileName);
 end;
 
 initialization
@@ -98,4 +138,3 @@ finalization
 FreeAndNil(GMods);
 
 end.
-
