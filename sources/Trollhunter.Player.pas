@@ -1463,19 +1463,29 @@ procedure TPlayer.Rest(ATurns: UInt);
 var
   T: UInt;
 begin
+  if (Player.Attributes.Attrib[atLife].Value = Player.Attributes.Attrib[atMaxLife].Value) then
+  begin
+    MsgLog.Add(_('You do not need to rest.'));
+    Exit;
+  end;
+  if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) in VillageTiles) then
+  begin
+    MsgLog.Add(_('You do not to burn campfire in village!'));
+    Exit;
+  end;
   IsRest := True;
-  MsgLog.Add(Format(_('Start rest (%d turns)!'), [ATurns]));
+  Map.SetTileEnum(Player.X, Player.Y, Map.Current, teCampfire);
+  MsgLog.Add(Format(_('You resting (%d turns)!'), [ATurns]));
   for T := 1 to ATurns do
   begin
     if not IsRest then
       Break;
     Wait();
   end;
-  MsgLog.Add(Format(_('Finish rest (%d turns)!'), [T - 1]));
+  MsgLog.Add(_('You feel fresh again.'));
   Abilities.Ability[abWeak] := 0;
   if (Math.RandomRange(0, 9) = 0) then
     Abilities.Ability[abDrunk] := 0;
-  Map.SetTileEnum(Player.X, Player.Y, Map.Current, teCampfire);
   IsRest := False;
 end;
 

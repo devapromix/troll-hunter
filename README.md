@@ -9,6 +9,9 @@ Far away in an uncharted region of the Earth land Elvion lies surrounded by moun
 
 You are the hero who departs on a quest to stop the enemies and save your homeland, Elvion. Survive, gather equipment, fight adversaries and be ready for the final confrontation. Good luck! You will need it.
 
+##Hints on how to play
+Use in game help '?'
+
 ## Current State
 The game is currently in demo stage with very limited contents and lots of issues to solve and improve.
 
