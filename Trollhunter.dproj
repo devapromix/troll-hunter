@@ -167,6 +167,7 @@
         <DCCReference Include="sources\Trollhunter.Mob.Types.pas"/>
         <DCCReference Include="sources\Third-Party\PathFind\PathFind.pas"/>
         <DCCReference Include="sources\Trollhunter.Mods.pas"/>
+        <DCCReference Include="sources\Trollhunter.Scene.Mods.pas"/>
         <None Include="Trollhunter.todo"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
