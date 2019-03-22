@@ -80,6 +80,7 @@ begin
         UI.Title(_('Keybindings'), 5);
         X := 1;
         Y := 7;
+        AddLine('Enter', _('Equipment')+'/'+_('Show All'));
         AddLine('Tab', _('Drop an item to the floor'));
         AddLine('Backspace', _('Show information about item'));
         AddLine('Space', _('Character Screen'));

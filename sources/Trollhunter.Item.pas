@@ -29,14 +29,14 @@ type
     procedure Render(AX, AY: UInt);
     procedure Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1; AID: Int = -1; IsRare: Boolean = False);
     function GetItemInfo(AItem: Item; IsManyItems: Boolean = False; ACount: UInt = 0; IsShort: Boolean = False): string;
-    function RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True;
-      PriceType: TPriceType = ptNone): string;
+    function RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True; PriceType: TPriceType = ptNone;
+      IsEquipment: Boolean = False): string;
     procedure AddItemToInv(Index: Int = 0; AFlag: Boolean = False); overload;
     procedure AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1; EqFlag: Boolean = False; IdFlag: Boolean = False; SufID: UInt = 0); overload;
     function GetInventory: string;
     function InvCount: Integer;
     function GetInfo(Sign: string; Value: UInt; Color: string; RareColor: string = ''): string;
-    procedure RenderInventory(PriceType: TPriceType = ptNone);
+    procedure RenderInventory(PriceType: TPriceType = ptNone; IsEquipment: Boolean = False);
     procedure LootGold(const AX, AY: UInt);
     procedure Loot(const AX, AY: UInt; AItemEnum: TItemEnum); overload;
     procedure Loot(const AX, AY: UInt; AIsBoss: Boolean); overload;
@@ -568,8 +568,8 @@ begin
     Result := Trim(Terminal.Colorize(Format('%s%s%d%s', [S, Sign, Value, P]), Color));
 end;
 
-function TItems.RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True;
-  PriceType: TPriceType = ptNone): string;
+function TItems.RenderInvItem(const AX, AY, I: Int; AItem: Item; IsAdvInfo: Boolean = False; IsRender: Boolean = True; PriceType: TPriceType = ptNone;
+  IsEquipment: Boolean = False): string;
 var
   S: string;
   D: TItemBase;
@@ -585,6 +585,9 @@ const
   end;
 
 begin
+  if IsEquipment then
+    if AItem.Equipment <= 0 then
+      Exit;
   Result := '';
   D := ItemBase.GetItem(AItem);
   Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '', IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
@@ -851,13 +854,13 @@ begin
   end;
 end;
 
-procedure TItems.RenderInventory(PriceType: TPriceType = ptNone);
+procedure TItems.RenderInventory(PriceType: TPriceType = ptNone; IsEquipment: Boolean = False);
 var
   I, FCount: Int;
 begin
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
-    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, PriceType);
+    Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, PriceType, IsEquipment);
 end;
 
 function TItems.Identify(var AItem: Item; IsNew: Boolean = False; IsRare: Boolean = False; Index: UInt = 0): Boolean;
