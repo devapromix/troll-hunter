@@ -1,0 +1,6 @@
+﻿Name=Trollhunter
+ModVersion=0.1
+Author=Apromix
+Maps=trollhunter.ini
+PlayerX=1
+PlayerY=2

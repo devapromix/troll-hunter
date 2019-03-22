@@ -73,7 +73,8 @@ uses
   Trollhunter.Scene.Sell in 'sources\Trollhunter.Scene.Sell.pas',
   Trollhunter.Mob.Base in 'sources\Trollhunter.Mob.Base.pas',
   Trollhunter.Mob.Types in 'sources\Trollhunter.Mob.Types.pas',
-  PathFind in 'sources\Third-Party\PathFind\PathFind.pas';
+  PathFind in 'sources\Third-Party\PathFind\PathFind.pas',
+  Trollhunter.Mods in 'sources\Trollhunter.Mods.pas';
 
 var
   Key: UInt;
