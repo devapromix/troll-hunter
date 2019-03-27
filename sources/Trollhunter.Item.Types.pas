@@ -175,6 +175,9 @@ type
     ivShort_Bow, ivHunter1s_Bow, ivLong_Bow, ivHero_Bow, ivBattle_Bow, ivComposite_Bow, ivImperial_Bow, ivRevenant_Bow, ivAncient_Bow,
     ivDragonbone_Bow,
 
+    // Hornwood Recurve Bow
+    // Laminated Recurve Bow
+    // Fine Short Bow
     // Ravenwood Bow
 
     // Body Armors

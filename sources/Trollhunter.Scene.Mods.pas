@@ -45,7 +45,6 @@ end;
 
 procedure TSceneMods.NextScene;
 begin
-
   Scenes.SetScene(scDifficulty);
 end;
 
@@ -72,6 +71,7 @@ var
     Terminal.Print(5, Y, _(AName));
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(CX - (CX div 2), 2, _(AName));
+    Terminal.ForegroundColor(clGray);
     Terminal.Print(CX - (CX div 2), 4, Round(CX * 1.4), CY, ADescr, TK_ALIGN_TOP);
     Inc(I);
     Inc(Y);
