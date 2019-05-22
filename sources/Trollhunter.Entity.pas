@@ -18,8 +18,6 @@ type
     FY: UInt;
     FZ: TMapEnum;
   public
-    constructor Create;
-    destructor Destroy; override;
     property X: UInt read FX write FX;
     property Y: UInt read FY write FY;
     property Z: TMapEnum read FZ write FZ;
@@ -38,18 +36,6 @@ uses
   Trollhunter.Language;
 
 { TEntity }
-
-constructor TEntity.Create;
-begin
-  inherited;
-
-end;
-
-destructor TEntity.Destroy;
-begin
-
-  inherited;
-end;
 
 function TEntity.GetCapit(S: string): string;
 begin
