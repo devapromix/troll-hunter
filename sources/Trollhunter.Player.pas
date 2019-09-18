@@ -615,7 +615,12 @@ begin
   Target.Combo := 0;
   Target := nil;
   Killer := AKiller;
-  MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
+  case Math.RandomRange(0, 3) of
+    0:
+      MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
+  else
+    MsgLog.Add(Terminal.Colorize(_('You have died...'), 'Light Red'));
+  end;
   MsgLog.Add(Terminal.Colorize(_('Better luck next time!'), 'Light Yellow'));
   if (Game.Difficulty < dfHard) then
     MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]))
