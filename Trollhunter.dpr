@@ -75,7 +75,8 @@ uses
   Trollhunter.Mob.Types in 'sources\Trollhunter.Mob.Types.pas',
   PathFind in 'sources\Third-Party\PathFind\PathFind.pas',
   Trollhunter.Mods in 'sources\Trollhunter.Mods.pas',
-  Trollhunter.Scene.Mods in 'sources\Trollhunter.Scene.Mods.pas';
+  Trollhunter.Scene.Mods in 'sources\Trollhunter.Scene.Mods.pas',
+  RLLog in 'sources\Third-Party\RLLog\RLLog.pas';
 
 var
   Key: UInt;
