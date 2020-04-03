@@ -648,7 +648,7 @@ begin
     if Game.Timer > 0 then
       Terminal.Print(Status.Left - L, AY + I, S)
     else
-      Terminal.Print(Screen.Width - L, AY + I, S);
+      Terminal.Print(Terminal.Screen.Width - L, AY + I, S);
   end
   else
     Result := Result + S;

@@ -58,7 +58,7 @@ end;
 procedure TSceneTitle.Render;
 begin
   Logo.Render(True);
-  Terminal.Print(Screen.Width - ((Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
+  Terminal.Print(Terminal.Screen.Width - ((Terminal.Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
   RenderHeroes;
   if Mode.Wizard then
   begin

@@ -91,7 +91,7 @@ var
   I, C: Int;
 begin
   S := '';
-  C := Math.Min(Screen.Height - 3, Count);
+  C := Math.Min(Terminal.Screen.Height - 3, Count);
   for I := C downto 1 do
   begin
     if (Odd(I)) then
@@ -101,7 +101,7 @@ begin
     S := S + ' ' + Terminal.Colorize(Get(I), Color);
   end;
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, S.Trim, TK_ALIGN_TOP);
+  Terminal.Print(1, 2, Terminal.Screen.Width - 1, Terminal.Screen.Height - 4, S.Trim, TK_ALIGN_TOP);
 end;
 
 initialization

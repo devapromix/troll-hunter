@@ -95,7 +95,7 @@ procedure TLogo.Render(const IsSword: Boolean);
 var
   I: UInt;
 begin
-  FX := Screen.Width div 2;
+  FX := Terminal.Screen.Width div 2;
   for I := 0 to 17 do
     Terminal.Print(FX, I + 3, FL[I], TK_ALIGN_CENTER);
   if IsSword then

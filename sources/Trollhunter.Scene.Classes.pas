@@ -103,7 +103,7 @@ begin
 
   // Description
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, dsTop, Round(CX * 1.4), Screen.Height - 3, _(PCClasses.GetDescription(Player.HClass)), TK_ALIGN_TOP);
+  Terminal.Print(DX, dsTop, Round(CX * 1.4), Terminal.Screen.Height - 3, _(PCClasses.GetDescription(Player.HClass)), TK_ALIGN_TOP);
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));

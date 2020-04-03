@@ -36,7 +36,7 @@ procedure TSceneCalendar.Render;
     S: string;
     X: UInt;
   begin
-    X := Screen.Width div 3;
+    X := Terminal.Screen.Width div 3;
     S := '';
     if (AAdvValue <> '') then
       S := AAdvValue;

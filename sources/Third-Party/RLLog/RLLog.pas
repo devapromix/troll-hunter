@@ -1,4 +1,4 @@
-unit RLLog;
+﻿unit RLLog;
 
 interface
 
