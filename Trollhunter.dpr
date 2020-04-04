@@ -115,6 +115,7 @@ begin
     begin
       Scenes.Render();
       Terminal.Refresh();
+      IsRender := False;
     end;
     if terminal_has_input() then
     begin
@@ -124,7 +125,6 @@ begin
       Continue;
     end;
     terminal_delay(10);
-    IsRender := False;
   until Game.CanClose;
 
 end.
