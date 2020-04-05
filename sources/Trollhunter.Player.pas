@@ -60,7 +60,7 @@ type
     FLY: UInt;
     FLook: Boolean;
     FShoot: Boolean;
-    FGold: UInt;
+    FGold: Cardinal;
     FKiller: string;
     FWeaponSkill: TSkillEnum;
     FRace: TRaceEnum;
@@ -87,7 +87,7 @@ type
     property Vision: UInt read GetVision;
     property Look: Boolean read FLook write FLook;
     property Shoot: Boolean read FShoot write FShoot;
-    property Gold: UInt read FGold;
+    property Gold: Cardinal read FGold;
     property Killer: string read FKiller write FKiller;
     property IsRest: Boolean read FIsRest write FIsRest;
     property ItemIsDrop: Boolean read FItemIsDrop write FItemIsDrop;
