@@ -13,7 +13,7 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scInv, scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog, scQuest, scSell,
     scRepair, scBuy, scCalendar, scDifficulty, scRest, scName, scSpellbook, scOptions, scIdentification, scBackground, scEnchant, scClass, scRace,
-    scItemInfo, scFinal, scMods);
+    scItemInfo, scFinal, scMods, scCredits);
 
 type
   TFinalEnum = (feNone, feQuit, feWon, feDefeat);
@@ -139,7 +139,8 @@ uses
   Trollhunter.Scene.Final,
   Trollhunter.Scene.Buy,
   Trollhunter.Scene.Sell,
-  Trollhunter.Scene.Mods;
+  Trollhunter.Scene.Mods,
+  Trollhunter.Scene.Credits;
 
 { TScene }
 
@@ -222,8 +223,11 @@ end;
 procedure TScene.Add(AText: string; AValue: string; AColor: Cardinal);
 begin
   Self.Add();
-  Terminal.ForegroundColor(clWhite);
-  Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
+  if (AText <> '') then
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(IfThen(X = 1, 2, CX + 2), Y, AText + ':', TK_ALIGN_LEFT);
+  end;
   Terminal.ForegroundColor(AColor);
   Terminal.Print(IfThen(X = 1, CX - 2, CX + (CX - 2)), Y, AValue, TK_ALIGN_RIGHT);
 end;
@@ -296,6 +300,8 @@ begin
         FScene[I] := TSceneFinal.Create;
       scMods:
         FScene[I] := TSceneMods.Create;
+      scCredits:
+        FScene[I] := TSceneCredits.Create;
     end;
 end;
 

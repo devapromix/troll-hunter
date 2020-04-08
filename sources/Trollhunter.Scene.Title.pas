@@ -58,15 +58,17 @@ end;
 procedure TSceneTitle.Render;
 begin
   Logo.Render(True);
-  Terminal.Print(Terminal.Screen.Width - ((Terminal.Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]), TK_ALIGN_RIGHT);
+  Terminal.Print(Terminal.Screen.Width - ((Terminal.Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('by Apromix v.%s', [Game.GetVersion]),
+    TK_ALIGN_RIGHT);
   RenderHeroes;
   if Mode.Wizard then
   begin
     Self.AddKey('Space', _('Create a new hero'));
-    Self.AddKey('Tab', Terminal.Colorize(_('Turn Wizard Mode Off'), 'Red'), True);
+    Self.AddKey('Tab', Terminal.Colorize(_('Turn Wizard Mode Off'), 'Red'));
   end
   else
-    Self.AddKey('Space', _('Create a new hero'), True);
+    Self.AddKey('Space', _('Create a new hero'));
+  Self.AddKey('1', _('Credits'), True);
 end;
 
 procedure TSceneTitle.RenderHeroes;
@@ -131,6 +133,8 @@ begin
         Load(Game.SaveFL[FCur]);
     TK_TAB:
       Mode.Wizard := False;
+    TK_1:
+      Scenes.SetScene(scCredits);
   end;
 end;
 

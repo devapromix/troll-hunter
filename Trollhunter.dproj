@@ -170,6 +170,7 @@
         <DCCReference Include="sources\Trollhunter.Scene.Mods.pas"/>
         <DCCReference Include="sources\Third-Party\RLLog\RLLog.pas"/>
         <DCCReference Include="sources\Third-Party\PasTerminal\PasTerminal.pas"/>
+        <DCCReference Include="sources\Trollhunter.Scene.Credits.pas"/>
         <None Include="Trollhunter.todo"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
@@ -251,7 +252,7 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -269,7 +270,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
