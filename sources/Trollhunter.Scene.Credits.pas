@@ -34,7 +34,7 @@ begin
   Add(_('Author'), 'Sergiy Tkach (devapromix)');
   Add(_('Special thanks'), '');
   Add(_('Year'), '2018-2020');
-  Add('', 'Vlad Phomin (Phomm)');
+  Add('', 'Vlad Fomin (phomm)');
   Add;
   Add('', 'Eugene Loza (eugeneloza)');
   AddKey('Esc', _('Back'), True);
