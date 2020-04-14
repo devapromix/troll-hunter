@@ -42,6 +42,7 @@ begin
 
   MsgLog.Render(2, True);
 
+  AddKey('A-C', _('Rest'));
   AddKey('Esc', _('Back'), True);
 end;
 
