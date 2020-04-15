@@ -27,15 +27,17 @@ uses
 { TSceneEnchant }
 
 procedure TSceneEnchant.Render;
+var
+  C: UInt;
 begin
   inherited;
   UI.Title(_('Enchant an item'), 1, clDarkestRed);
 
   UI.FromAToZ();
-  Items.RenderInventory();
+  C := Items.RenderInventory();
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Select an item'));
+  AddKey(C, _('Select an item'));
   AddKey('Esc', _('Close'), True);
 end;
 
