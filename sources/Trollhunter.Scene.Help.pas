@@ -142,7 +142,7 @@ begin
         //
         if Player.HClass = clRogue then
         begin
-          AddLine('V', _('Eviscerate'));
+          AddLine('V', _('Eviscerate (Rogue)'));
           // AddLine('B', _(''));
           // AddLine('N', _(''));
         end;

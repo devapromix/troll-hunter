@@ -15,7 +15,8 @@ type
     FMonth: UInt;
     FYear: UInt;
   public
-    constructor Create(const ADay, AMonth: UInt; const AYear: UInt);
+    constructor Create; overload;
+    constructor Create(const ADay, AMonth: UInt; const AYear: UInt); overload;
     property Minute: UInt read FMinute;
     property Hour: UInt read FHour;
     property Day: UInt read FDay;
@@ -65,6 +66,16 @@ begin
   FDayOfWeek := ADay;
   FMonth := AMonth;
   FYear := AYear;
+end;
+
+constructor TCalendar.Create;
+var
+  Day, Month, Year: UInt;
+begin
+  Month := RandomRange(1, 12);
+  Day := RandomRange(1, DaysPerMonth(Month));
+  Year := RandomRange(1, 9);
+  Create(Day, Month, Year + 1290);
 end;
 
 function TCalendar.DaysPerMonth(AMonth: UInt): UInt;
@@ -188,7 +199,7 @@ end;
 
 initialization
 
-Calendar := TCalendar.Create(1, 1, 1297);
+Calendar := TCalendar.Create;
 
 finalization
 

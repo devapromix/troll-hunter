@@ -203,7 +203,7 @@ end;
 
 function TShops.Render: UInt;
 var
-  I: Int;
+  I: UInt;
 begin
   Result := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
   for I := 0 to Result - 1 do
