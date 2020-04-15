@@ -16,7 +16,7 @@ type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
 
 type
-  TShop = class
+  TShop = class(TObject)
   private
     FItemsStore: TItemsStore;
     FCount: UInt;
@@ -29,7 +29,7 @@ type
   end;
 
 type
-  TShops = class
+  TShops = class(TObject)
     FCurrent: TShopEnum;
     FShop: array [TShopEnum] of TShop;
     function GetShop(I: TShopEnum): TShop;
@@ -39,7 +39,7 @@ type
     destructor Destroy; override;
     procedure New;
     procedure Clear;
-    procedure Render;
+    function Render: UInt;
     function Count: UInt;
     property Current: TShopEnum read FCurrent write FCurrent;
     property Shop[I: TShopEnum]: TShop read GetShop write SetShop;
@@ -201,12 +201,12 @@ begin
   end;
 end;
 
-procedure TShops.Render;
+function TShops.Render: UInt;
 var
-  I, C: Int;
+  I: Int;
 begin
-  C := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
-  for I := 0 to C - 1 do
+  Result := Shops.Shop[Shops.Current].Count.InRange(ItemMax);
+  for I := 0 to Result - 1 do
     Items.RenderInvItem(5, 2, I, Shops.Shop[Shops.Current].GetItem(I), True, True, ptBuy);
 end;
 

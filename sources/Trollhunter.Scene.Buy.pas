@@ -29,15 +29,17 @@ uses
 { TSceneBuy }
 
 procedure TSceneBuy.Render;
+var
+  C: UInt;
 begin
   inherited;
   UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
-  Shops.Render;
+  C := Shops.Render;
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Buy an item'));
+  AddKey(C, _('Buy an item'));
   AddKey('Esc', _('Close'), True);
 end;
 

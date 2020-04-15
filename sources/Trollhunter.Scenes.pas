@@ -39,6 +39,7 @@ type
     procedure Add(AText: string; AValue: Int); overload;
     procedure Add(AText: string; AValue: string; AColor: Cardinal = $FF00FF00); overload;
     procedure Update(var Key: UInt); virtual; abstract;
+    procedure AddKey(const C: UInt; AStr: string; IsRender: Boolean = False); overload;
     procedure AddKey(AKey, AStr: string; IsRender: Boolean = False); overload;
     procedure AddKey(AKey, AStr, AAdvStr: string; IsRender: Boolean = False); overload;
     procedure Title(S: string; F: Boolean = True);
@@ -203,6 +204,20 @@ begin
   else
     S := AAdvStr;
   AddKey(AKey, S, IsRender);
+end;
+
+procedure TScene.AddKey(const C: UInt; AStr: string; IsRender: Boolean);
+var
+  S: string;
+begin
+  if (C = 0) or (C > 26) then
+    Exit;
+  S := 'A';
+  if (C > 1) then
+  begin
+    S := S + '-' + Chr(Ord('A') + C - 1);
+  end;
+  AddKey(S, AStr, IsRender);
 end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
