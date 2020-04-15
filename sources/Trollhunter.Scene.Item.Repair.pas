@@ -34,13 +34,13 @@ var
   C: UInt;
 begin
   inherited;
-  UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
+  UI.Title(_('Repair items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
 
   UI.FromAToZ;
   C := Items.RenderInventory(ptRepair);
   MsgLog.Render(2, True);
 
-  AddKey(C, _('Repairing an item'));
+  AddKey(C, _('Repair an item'));
   AddKey('Esc', _('Close'), True);
 end;
 
@@ -50,7 +50,7 @@ begin
     TK_ESCAPE:
       // Close
       Scenes.GoBack();
-    TK_A .. TK_Z: // Repairing an item
+    TK_A .. TK_Z:
       Player.RepairItem(Key - TK_A);
   else
     Game.Timer := UIntMax;

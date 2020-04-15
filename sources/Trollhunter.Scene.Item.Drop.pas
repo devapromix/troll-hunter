@@ -30,15 +30,17 @@ uses
   Trollhunter.Player;
 
 procedure TSceneDrop.Render;
+var
+  C: UInt;
 begin
   inherited;
   UI.Title(_('Choose the item you wish to drop'), 1, clDarkestRed);
 
   UI.FromAToZ;
-  Items.RenderInventory;
+  C := Items.RenderInventory;
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Drop an item'));
+  AddKey(C, _('Drop an item'));
   AddKey('Esc', _('Close'), True);
 end;
 

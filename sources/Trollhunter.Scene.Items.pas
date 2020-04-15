@@ -35,16 +35,17 @@ uses
 
 procedure TSceneItems.Render;
 var
-  I, FCount, MapID: Int;
+  I, MapID: Int;
   FItem: Item;
+  C: UInt;
 begin
   inherited;
   MapID := Ord(Map.Current);
   UI.Title(_('Pick up an item'));
 
   UI.FromAToZ;
-  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
-  for I := 0 to FCount - 1 do
+  C := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
+  for I := 0 to C - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
     Items.RenderInvItem(5, 2, I, FItem);
@@ -54,9 +55,9 @@ begin
 
   AddKey('Esc', _('Close'));
   AddKey('Space', _('Pick up all items'));
-  AddKey('A-Z', _('Pick up an item'), True);
+  AddKey(C, _('Pick up an item'), True);
 
-  if (FCount <= 0) then
+  if (C = 0) then
     Scenes.SetScene(scGame);
 end;
 

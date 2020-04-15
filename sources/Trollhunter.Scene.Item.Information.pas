@@ -46,6 +46,8 @@ begin
 end;
 
 procedure TSceneItemInfo.Render;
+var
+  C: UInt;
 begin
   inherited;
   Y := 1;
@@ -63,7 +65,7 @@ begin
     Items.RenderInventory;
     MsgLog.Render(2, True);
 
-    AddKey('A-Z', _('Show information about item'));
+    AddKey(C, _('Show information about item'));
   end;
   AddKey('Esc', _('Close'), True);
 end;

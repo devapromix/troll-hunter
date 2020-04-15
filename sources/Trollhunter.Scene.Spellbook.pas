@@ -32,7 +32,7 @@ uses
 procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
-  V: UInt;
+  V, C: UInt;
 
   function IsSpell(I: TSpellEnum): Boolean;
   begin
@@ -60,7 +60,7 @@ begin
     end;
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Cast spell'));
+  AddKey(C, _('Cast spell'));
   AddKey('Esc', _('Close'), True);
 end;
 
