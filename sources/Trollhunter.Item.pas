@@ -36,7 +36,7 @@ type
     function GetInventory: string;
     function InvCount: Integer;
     function GetInfo(Sign: string; Value: UInt; Color: string; RareColor: string = ''): string;
-    procedure RenderInventory(PriceType: TPriceType = ptNone; IsEquipment: Boolean = False);
+    function RenderInventory(PriceType: TPriceType = ptNone; IsEquipment: Boolean = False): UInt;
     procedure LootGold(const AX, AY: UInt);
     procedure Loot(const AX, AY: UInt; AItemEnum: TItemEnum); overload;
     procedure Loot(const AX, AY: UInt; AIsBoss: Boolean); overload;
@@ -854,12 +854,12 @@ begin
   end;
 end;
 
-procedure TItems.RenderInventory(PriceType: TPriceType = ptNone; IsEquipment: Boolean = False);
+function TItems.RenderInventory(PriceType: TPriceType = ptNone; IsEquipment: Boolean = False): UInt;
 var
-  I, FCount: Int;
+  I: UInt;
 begin
-  FCount := Items_Inventory_GetCount().InRange(ItemMax);
-  for I := 0 to FCount - 1 do
+  Result := Items_Inventory_GetCount().InRange(ItemMax);
+  for I := 0 to Result - 1 do
     Items.RenderInvItem(5, 2, I, Items_Inventory_GetItem(I), True, True, PriceType, IsEquipment);
 end;
 

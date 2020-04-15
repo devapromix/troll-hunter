@@ -30,14 +30,16 @@ uses
 { TSceneSell }
 
 procedure TSceneSell.Render;
+var
+  C: UInt;
 begin
   UI.Title(_('Selling items') + ' ' + UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
-  Items.RenderInventory(ptSell);
+  C := Items.RenderInventory(ptSell);
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Selling an item'));
+  AddKey(C, _('Selling an item'));
   AddKey('Esc', _('Close'), True);
 end;
 

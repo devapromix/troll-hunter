@@ -30,15 +30,17 @@ uses
   Trollhunter.Item.Types;
 
 procedure TSceneRepair.Render;
+var
+  C: UInt;
 begin
   inherited;
   UI.Title(_('Repairing items') + ' ' + UI.GoldLeft(Player.Gold), 1, clDarkestRed);
 
   UI.FromAToZ;
-  Items.RenderInventory(ptRepair);
+  C := Items.RenderInventory(ptRepair);
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Repairing an item'));
+  AddKey(C, _('Repairing an item'));
   AddKey('Esc', _('Close'), True);
 end;
 
