@@ -43,7 +43,7 @@ begin
   AddOption('R', _('Auto pick up runes'), Game.GetOption(apRune));
   AddOption('B', _('Auto pick up books'), Game.GetOption(apBook));
   AddOption('K', _('Auto pick up keys'), Game.GetOption(apKey));
-  AddOption('D', _('Show items price in inventory'), Game.GetOption(apShPrice));
+  AddOption('D', _('Show items price'), Game.GetOption(apShPrice));
 
   // Settings
   Title(_('Settings'), False);

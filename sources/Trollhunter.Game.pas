@@ -143,6 +143,7 @@ type
     FShowEffects: Boolean;
     FAPOption: array [TAPOptionEnum] of Boolean;
     FFileName: string;
+    procedure SetOptions;
   public
     SaveFL: TStringList;
     SaveTL: TStringList;
@@ -403,6 +404,11 @@ begin
   end;
 end;
 
+procedure TGame.SetOptions;
+begin
+  ChOption(apShPrice);
+end;
+
 procedure TGame.Start;
 begin
   Player.Clear;
@@ -411,6 +417,7 @@ begin
   Player.Fill;
   Spellbook.Start;
   Shops.New;
+  SetOptions;
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'), _('You need to find and kill The King Troll!'), _('Press ? for help.')]),
