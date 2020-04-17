@@ -53,7 +53,7 @@ begin
     Result := '(???)' + S;
   if (Language.Current <> 'english') then
     Exit;
-  if (Result[1] in ['a', 'e', 'i', 'o', 'u']) then
+  if CharInSet(Result[1], ['a', 'e', 'i', 'o', 'u']) then
     Result := 'an ' + Result
   else
     Result := 'a ' + Result;
