@@ -44,7 +44,7 @@ uses
 
 procedure TSceneGame.Render;
 var
-  I, PX, PY, DX, DY: Int;
+  I, PX, PY, DX, DY, C: Int;
   R: UInt;
   T: TTile;
   Min, Max: TPoint;
@@ -165,7 +165,11 @@ begin
           end;
         end
         else
+        begin
+          if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
+            Terminal.BackgroundColor(clLook);
           Terminal.ForegroundColor(T.Color);
+        end;
         if Mode.Wizard or not Map.GetFog(X, Y) then
           Terminal.Print(DX + View.Left, DY + View.Top, T.Symbol);
       end;

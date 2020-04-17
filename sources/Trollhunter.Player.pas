@@ -1284,12 +1284,7 @@ begin
   if IsDead then
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
-  begin
-    if Look then
-      Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer)
-    else
-      Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
-  end;
+    Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, IfThen(Look, clLook, clBkPlayer));
 end;
 
 procedure TPlayer.RenderInfo;

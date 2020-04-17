@@ -467,6 +467,7 @@ end;
 procedure TMob.Render(AX, AY: UInt);
 var
   C: Char;
+  F: Boolean;
 begin
   if not Map.InView(X, Y) or (not Mode.Wizard and not Map.GetFOV(X, Y)) then
     Exit;
@@ -475,12 +476,11 @@ begin
   C := MobBase.GetMob(ID).Symbol;
   if (Self.Boss) then
     C := Chr(Ord(C) - 32);
-  if Player.Look then
-    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color)
-  else if Self.Force = fcEnemy then
-    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color, clBkMob)
+  F := Player.Look and (Player.LX = Self.X) and (Player.LY = Self.Y);
+  if Self.Force = fcEnemy then
+    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color, IfThen(F, clRed, clBkMob))
   else
-    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color, clBkPlayer);
+    Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top, C, Color, IfThen(F, clGreen, clBkPlayer));
   if Self.Combo > 0 then
     Terminal.Print(X - Player.X + AX + View.Left, Y - Player.Y + AY + View.Top - 1, Self.Combo.ToString, Color)
 end;
