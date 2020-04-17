@@ -54,8 +54,8 @@ begin
   MsgLog.Render(2, True);
 
   AddKey('Esc', _('Close'));
-  AddKey('Space', _('Pick up all items'));
-  AddKey(C, _('Pick up an item'), True);
+  AddKey(C, _('Pick up an item'));
+  AddKey('?', _('Help'), True);
 
   if (C = 0) then
     Scenes.SetScene(scGame);
@@ -66,8 +66,12 @@ var
   I, FCount: Int;
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
       Scenes.SetScene(scGame);
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scItems);
+    TK_ENTER, TK_KP_ENTER:
+      Scenes.SetScene(scInv);
     TK_SPACE:
       begin
         FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X, Player.Y).InRange(ItemMax);
@@ -75,7 +79,6 @@ begin
           Items.AddItemToInv;
       end;
     TK_A .. TK_Z:
-      // Pick up
       Items.AddItemToInv(Key - TK_A);
   else
     Game.Timer := UIntMax;

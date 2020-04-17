@@ -58,8 +58,10 @@ begin
     TK_ESCAPE: // Close
       Scenes.SetScene(scGame);
     TK_TAB: // Drop
-      Scenes.SetScene(scDrop, scInv);
+      Scenes.SetScene(scDrop);
     TK_ENTER, TK_KP_ENTER:
+      Scenes.SetScene(scItems);
+    TK_1:
       begin
         IsEquipment := not IsEquipment;
         Render;

@@ -80,11 +80,31 @@ begin
         UI.Title(_('Keybindings'), 5);
         X := 1;
         Y := 7;
-        AddLine('Enter', _('Equipment')+'/'+_('Show All'));
+        AddLine('1', _('Show only equipment') + '/' + _('Show all'));
         AddLine('Tab', _('Drop an item to the floor'));
+        AddLine('Enter', _('Show items on the floor'));
         AddLine('Backspace', _('Show information about item'));
         AddLine('Space', _('Character Screen'));
         AddLine('A-Z', _('Use an item'));
+      end;
+    scItems:
+      begin
+        UI.Title(_('Keybindings'), 5);
+
+        X := 1;
+        Y := 7;
+        AddLine('Enter', _('Show Inventory'));
+        AddLine('Space', _('Pick up all items'));
+        AddLine('A-Z', _('Pick up an item'));
+      end;
+    scDrop:
+      begin
+        UI.Title(_('Keybindings'), 5);
+
+        X := 1;
+        Y := 7;
+        AddLine('Enter', _('Show items on the floor'));
+        AddLine('A-Z', _('Drop an item to the floor'));
       end;
     scPlayer:
       begin

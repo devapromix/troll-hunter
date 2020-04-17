@@ -40,16 +40,20 @@ begin
   C := Items.RenderInventory;
   MsgLog.Render(2, True);
 
+  AddKey('Esc', _('Close'));
   AddKey(C, _('Drop an item'));
-  AddKey('Esc', _('Close'), True);
+  AddKey('?', _('Help'), True);
 end;
 
 procedure TSceneDrop.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
-      // Close
-      Scenes.GoBack;
+      Scenes.SetScene(scInv);
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scDrop);
+    TK_ENTER, TK_KP_ENTER:
+      Scenes.SetScene(scItems);
     TK_A .. TK_Z: // Drop an item
       Player.Drop(Key - TK_A);
   else
