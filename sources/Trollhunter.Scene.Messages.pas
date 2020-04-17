@@ -35,7 +35,6 @@ procedure TSceneMessages.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
-      // Close
       Scenes.SetScene(scGame);
   end;
 end;

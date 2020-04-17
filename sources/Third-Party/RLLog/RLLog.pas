@@ -16,6 +16,7 @@ type
     procedure Append(const S: string);
     property Msg: string read FMsg write FMsg;
     function Get(const I: Integer): string;
+    function GetLast(const I: Integer): string;
     function Count: Integer;
     procedure Clear;
     procedure Turn;
@@ -43,7 +44,7 @@ end;
 
 constructor TRLLog.Create;
 begin
-  FLog:= TStringList.Create;
+  FLog := TStringList.Create;
 end;
 
 destructor TRLLog.Destroy;
@@ -53,6 +54,11 @@ begin
 end;
 
 function TRLLog.Get(const I: Integer): string;
+begin
+  Result := FLog[I];
+end;
+
+function TRLLog.GetLast(const I: Integer): string;
 begin
   Result := FLog[Count - I];
 end;
