@@ -28,7 +28,8 @@ begin
   inherited;
   UI.Title(_('Last messages'));
   MsgLog.RenderAllMessages;
-  AddKey('Esc', _('Close'), True);
+  AddKey('Esc', _('Close'));
+  AddKey('?', _('Help'), True);
 end;
 
 procedure TSceneMessages.Update(var Key: UInt);
@@ -36,6 +37,8 @@ begin
   case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scMessages);
   end;
 end;
 

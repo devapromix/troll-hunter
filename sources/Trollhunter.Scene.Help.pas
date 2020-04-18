@@ -128,6 +128,15 @@ begin
         AddLine('Left/A', _('Min'));
         AddLine('Right/D', _('Max'));
       end;
+    scMessages:
+      begin
+        Terminal.Print(CX, 3, 'Newest messages are on top of the log.', TK_ALIGN_CENTER);
+
+        UI.Title(_('Keybindings'), 5);
+        X := 1;
+        Y := 7;
+        AddLine('Up/Down', _('Scroll log'));
+      end;
     scGame:
       begin
         Terminal.Print(CX, 3, _('Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains.'), TK_ALIGN_CENTER);
