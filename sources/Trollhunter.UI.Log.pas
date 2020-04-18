@@ -84,23 +84,12 @@ var
   Log, Color: string;
   I, C, LogHeight: Int;
 begin
+  Log := '';
+  LogHeight := Terminal.Screen.Height - 3;
+  for I := Count - 1 downto 0 do
+    Log := Log + Terminal.Colorize(Get(I), GetColor(I)) + #13#10;
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(1, 2, Terminal.Screen.Width - 1, Terminal.Screen.Height - 4, Trim(Self.GetLastMsg(MaxLogCapacity)), TK_ALIGN_BOTTOM);
-
-  {
-    C := Math.Min(Terminal.Screen.Height - 3, Count);
-    for I := C downto 1 do
-    begin
-    if (Odd(I)) then
-    Color := 'darker gray'
-    else
-    Color := 'light gray';
-    Log := Log + Terminal.Colorize(Get(I), Color) + #13#10;
-    end;
-  }
-
-  // Terminal.ForegroundColor(clGray);
-  // Terminal.Print(1, 2, Terminal.Screen.Width - 1, Terminal.Screen.Height - 4, Log.Trim, TK_ALIGN_TOP);
+  Terminal.Print(1, 2, Terminal.Screen.Width - 1, Terminal.Screen.Height - 4, Log.Trim, TK_ALIGN_TOP);
 end;
 
 function TMsgLog.GetColor(I: Int): string;
