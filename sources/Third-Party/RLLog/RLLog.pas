@@ -15,7 +15,6 @@ type
     destructor Destroy; override;
     procedure Append(const S: string);
     property Msg: string read FMsg write FMsg;
-    property Log: TStringList read FLog;
     function Get(const I: Integer): string;
     function GetLast(const I: Integer): string;
     procedure Add(const S: string);
@@ -30,7 +29,7 @@ implementation
 
 procedure TRLLog.Add(const S: string);
 begin
-  Log.Append(S);
+  FLog.Append(S);
 end;
 
 procedure TRLLog.Append(const S: string);
