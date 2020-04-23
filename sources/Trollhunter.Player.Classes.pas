@@ -140,7 +140,7 @@ begin
     begin
       ItemName := Items.Name[ClassProp[I].Item[J]];
       Utils.AppStr(Result, _(ItemName), F);
-      F := True;
+      F := True;    {TODO: Улучшать на неск. пунктов атрибуты и скилы, например, если халфлинг вор или дворф воин и т.д.}
     end;
 end;
 

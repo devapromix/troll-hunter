@@ -119,7 +119,7 @@ type
     ivRune_of_Town_Portal,
 
     // Foods and Plants
-    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat, ivHealing_Herb, ivSilver_Pod,
+    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivTroll_Herb, ivHunk_of_Meat, ivHealing_Herb, ivSilver_Pod,
 
     // Keys
     ivKey,

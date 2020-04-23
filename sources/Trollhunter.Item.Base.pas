@@ -268,6 +268,10 @@ const
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 50; Color: clLightestGreen; Deep: [deDark_Wood .. deDrom];
     Effects: [efFood]; Value: 150;),
+    // Troll herb
+    (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 20; Color: clLightestRed; Deep: [deDark_Wood .. deDrom];
+    Effects: [efFood, efLife, efCurePoison]; Value: 85;),
     // Hunk of Meat
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 300; Color: clLightestYellow; Deep: [deDark_Wood .. deDrom];
