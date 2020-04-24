@@ -251,6 +251,10 @@ const
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 4800; Color: clLightGreen; Deep: [deDark_Wood .. deDrom];
     Effects: [efTownPortal]; Value: 0; ManaCost: 50; Rare: True;),
+    // Rune of Hunger
+    (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;)); Price: 4500; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom];
+    Effects: [efFood]; Value: 400; ManaCost: 30; Rare: True;),
 
     // Bread ration
     (Symbol: ':'; ItemType: itFood; SlotType: stNone; MaxStack: 16; MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);

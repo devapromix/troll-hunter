@@ -116,7 +116,7 @@ type
 
     // Runes
     ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing, ivRune_of_Greater_Healing, ivRune_of_Full_Healing, ivRune_of_Teleportation,
-    ivRune_of_Town_Portal,
+    ivRune_of_Town_Portal, ivRune_of_Hunger,
 
     // Foods and Plants
     ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivTroll_Herb, ivHunk_of_Meat, ivHealing_Herb, ivSilver_Pod,
