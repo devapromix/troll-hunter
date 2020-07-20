@@ -46,7 +46,7 @@ type
     function GetName(AItem: Item; IsShort: Boolean = False): string; overload;
     function GetNameThe(AItem: Item): string;
     procedure AddItemToDungeon(AItem: Item);
-    function AddItemInfo(V: TArray<string>): string;
+    function AddItemInfo(V: array of string): string;
     procedure SetBonus(var AItem: Item; const BonusType: TBonusType; const Value: UInt8);
     function GetBonus(const AItem: Item; const BonusType: TBonusType): UInt8;
     procedure DelCorpses();
@@ -736,7 +736,7 @@ begin
   end;
 end;
 
-function TItems.AddItemInfo(V: TArray<string>): string;
+function TItems.AddItemInfo(V: array of string): string;
 var
   R: string;
 begin
