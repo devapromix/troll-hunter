@@ -33,7 +33,7 @@ begin
   Title(_('Credits'));
   Add(_('Author'), 'Sergiy Tkach (devapromix)');
   Add(_('Special thanks'), '');
-  Add(_('Year'), '2018-2020');
+  Add(_('Year'), '2018-2021');
   Add('', 'Vlad Fomin (phomm)');
   Add;
   Add('', 'Eugene Loza (eugeneloza)');

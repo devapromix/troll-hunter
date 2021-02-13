@@ -40,7 +40,7 @@ You may need to set "executable" bit in Linux.
 ![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_5.png)
 
 ## Credits
-Copyright (C) 2017-2018 by Sergiy Tkach (Apromix).
+Copyright (C) 2017-2021 by Sergiy Tkach (Apromix).
 
 Trollhunter is open source, written in pascal, the full source is available at:
 https://github.com/devapromix-roguelikes/troll-hunter

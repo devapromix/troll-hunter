@@ -3,7 +3,7 @@
 interface
 
 uses
-  System.Classes,
+  Classes,
   Trollhunter.Types,
   Trollhunter.Entity,
   Trollhunter.Map,
@@ -187,7 +187,6 @@ implementation
 
 uses
   SysUtils,
-  Vcl.Dialogs,
   BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,

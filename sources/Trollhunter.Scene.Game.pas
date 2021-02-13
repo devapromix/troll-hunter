@@ -348,6 +348,7 @@ begin
       Game.ShowEffects := not Game.ShowEffects;
     TK_K:
       Scenes.SetScene(scCalendar);
+
     TK_V:
       begin
         if Player.HClass = clRogue then
@@ -361,6 +362,7 @@ begin
       begin
         if Player.HClass = clRogue then;
       end;
+
     TK_R:
       begin
         if Player.IsDead then
