@@ -58,7 +58,8 @@ end;
 procedure TSceneTitle.Render;
 begin
   Logo.Render(True);
-  Terminal.Print(Terminal.Screen.Width - ((Terminal.Screen.Width div 2) - (Logo.Width div 2) + 2), 14, Format('v.%s', [Game.GetVersion]),
+  Terminal.Print(Terminal.Screen.Width - ((Terminal.Screen.Width div 2) -
+    (Logo.Width div 2) + 2), 14, Format('v.%s', [Game.GetVersion]),
     TK_ALIGN_RIGHT);
   RenderHeroes;
   if Mode.Wizard then
@@ -87,7 +88,8 @@ begin
 
   for I := FTop to Min(FCount, MaxRows) + FTop - 1 do
   begin
-    Terminal.Print(L, T + I + 2 - FTop, UI.MenuItem(Chr(I + 65), Game.SaveTL[I], FCur = I));
+    Terminal.Print(L, T + I + 2 - FTop, UI.MenuItem(Chr(I + 65), Game.SaveTL[I],
+      FCur = I));
   end;
 end;
 
@@ -132,7 +134,10 @@ begin
       if Game.SaveFL.Count > 0 then
         Load(Game.SaveFL[FCur]);
     TK_TAB:
-      Mode.Wizard := False;
+      begin
+        Mode.Wizard := False;
+        Game.SetWindowTitle;
+      end;
     TK_1:
       Scenes.SetScene(scCredits);
   end;

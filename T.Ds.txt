@@ -1,3 +1,19 @@
+  terminal_open();
+
+  terminal_set('window.size=160x50');
+  terminal_set('0xE000: resources\tile.dirt.png');
+
+  terminal_put(0 * 4, 0 * 2, $E000);
+  terminal_put(0 * 4, 1 * 2, $E000);
+  terminal_put(1 * 4, 0 * 2, $E000);
+  terminal_put(1 * 4, 1 * 2, $E000);
+
+  terminal_put(39 * 4, 24 * 2, $E000);
+
+  terminal_refresh();
+
+font: resources/fonts/UbuntuMono-R.ttf, size=12
+
 {$IFDEF FPC}
 {$MODESWITCH ADVANCEDRECORDS}
 {$ENDIF}

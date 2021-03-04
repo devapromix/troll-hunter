@@ -28,6 +28,30 @@ uses
   Trollhunter.Player,
   Trollhunter.Game;
 
+{  writeln('   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM');
+	writeln('   MMMMMMMMMMMM        MMMMMMMMMMMM');
+	writeln('   MMMMMMMMMM            MMMMMMMMMM');
+	writeln('   MMMMMMMMM              MMMMMMMMM');
+	writeln('   MMMMMMMM                MMMMMMMM');
+	writeln('   MMMMMMM                 MMMMMMMM');
+	writeln('   MMMMMMM                  MMMMMMM');
+	writeln('   MMMMMMM                  MMMMMMM');
+	writeln('   MMMMMMM    MMM    MMM    MMMMMMM');
+	writeln('   MMMMMMM   MMMMM   MMMM   MMMMMMM');
+	writeln('   MMMMMMM   MMMMM   MMMM   MMMMMMM');
+	writeln('   MMMMMMMM   MMMM M MMMM  MMMMMMMM');
+	writeln('   MMVKMMMM        M        MMMMMMM');
+	writeln('   MMMMMMMM       MMM      MMMMMMMM');
+	writeln('   MMMMMMMMMMMM   MMM  MMMMMMMMMMMM');
+	writeln('   MMMMMMMMMM MM       M  MMMMMMMMM');
+	writeln('   MMMMMMMMMM  M M M M M MMMMMMMMMM');
+	writeln('   MMMMMMMMMMM MMMMMMMMM MMMMMMMMMM');
+	writeln('   MMMMMMMMMMM M MMMMM M MMMMMMMMMM');
+	writeln('   MMMMMMMMMMM   M M M  MMMMMMMMMMM');
+	writeln('   MMMMMMMMMMMM         MMMMMMMMMMM');
+	writeln('   MMMMMMMMMMMMMM     MMMMMMMMMMMMM');
+	writeln('   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM');       }
+
 procedure TSceneFinal.Render;
 begin
   inherited Render;
