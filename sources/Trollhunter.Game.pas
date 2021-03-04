@@ -178,6 +178,7 @@ type
     procedure ScanDir;
     procedure GenSaveFileName;
     procedure DeleteCurrentSaveFile;
+    procedure SetWindowTitle;
   end;
 
 var
@@ -214,7 +215,6 @@ constructor TGame.Create;
 var
   I: UInt;
   J: TAPOptionEnum;
-  Wizard: string;
 begin
   Randomize;
   Timer := 0;
@@ -237,10 +237,7 @@ begin
     if (LowerCase(ParamStr(I)) = '-w') then
       Mode.Wizard := True;
   Language := TLanguage.Create;
-  Wizard := '';
-  if Mode.Wizard then
-    Wizard := '[WIZARD]';
-  terminal_set(Format('window.title=' + Trim('%s %s'), [Game.GetTitle, Wizard]));
+  SetWindowTitle;
   SaveFL := TStringList.Create;
   SaveTL := TStringList.Create;
   ScanDir();
@@ -253,6 +250,16 @@ begin
   Path := Utils.GetPath('saves') + FFileName;
   if FileExists(Path) then
     DeleteFile(Path);
+end;
+
+procedure TGame.SetWindowTitle;
+var
+  Wizard: string;
+begin
+  Wizard := '';
+  if Mode.Wizard then
+    Wizard := '[WIZARD]';
+  terminal_set(Format('window.title=' + Trim('%s %s'), [Game.GetTitle, Wizard]));
 end;
 
 destructor TGame.Destroy;
