@@ -69,6 +69,14 @@ var
     Inc(Y);
   end;
 
+  procedure RenderClassPict;
+  var
+    I: UInt;
+  begin
+    for I := 0 to 14 do
+      Terminal.Print(60, I + 2, ClassPict[Player.HClass][I]);
+  end;
+
 begin
   inherited;
   Terminal.Clear;
@@ -104,6 +112,7 @@ begin
   // Description
   Terminal.ForegroundColor(clGray);
   Terminal.Print(DX, dsTop, Round(CX * 1.4), Terminal.Screen.Height - 3, _(PCClasses.GetDescription(Player.HClass)), TK_ALIGN_TOP);
+  RenderClassPict;
 
   AddKey('Enter', _('Confirm'));
   AddKey('Esc', _('Back'));
