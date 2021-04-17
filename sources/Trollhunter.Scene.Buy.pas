@@ -33,14 +33,16 @@ var
   C: UInt;
 begin
   inherited;
-  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' + UI.GoldLeft(Player.Gold));
+  UI.Title(Format(_('Buying at %s'), [NPCName]) + ' ' +
+    UI.GoldLeft(Player.Gold));
 
   UI.FromAToZ;
   C := Shops.Render;
   MsgLog.Render(2, True);
 
   AddKey(C, _('Buy an item'));
-  AddKey('Esc', _('Close'), True);
+  AddKey('Esc', _('Close'));
+  AddKey('?', _('Help'), True);
 end;
 
 procedure TSceneBuy.Update(var Key: UInt);
@@ -51,6 +53,8 @@ begin
       Scenes.SetScene(scDialog);
     TK_A .. TK_Z: // Buy items
       Player.Buy(Key - TK_A);
+    TK_SLASH:
+      Scenes.SetScene(scHelp, scBuy);
   else
     Game.Timer := UIntMax;
   end;
