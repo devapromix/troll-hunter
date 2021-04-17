@@ -21,22 +21,34 @@ uses
   SysUtils,
   Trollhunter.UI,
   Trollhunter.Language,
-  BearLibTerminal;
+  BearLibTerminal,
+  Trollhunter.Terminal,
+  Trollhunter.Player.Classes;
 
 { TSceneCredits }
 
 procedure TSceneCredits.Render;
+var
+  I: UInt;
 begin
   inherited;
   Y := 1;
   // Options
   Title(_('Credits'));
-  Add(_('Author'), 'Sergiy Tkach (devapromix)');
-  Add(_('Special thanks'), '');
-  Add(_('Year'), '2018-2021');
-  Add('', 'Vlad Fomin (phomm)');
   Add;
-  Add('', 'Eugene Loza (eugeneloza)');
+  Add(_('Author'), 'Sergiy Tkach (Apromix)');
+  Add;
+  Add;
+  Add;
+  Add(_('Special thanks'), '');
+  Add;
+  Add('', 'Vlad Fomin (Phomm)');
+  Add;
+  Add('', 'Eugene Loza (Eugeneloza)');
+
+  for I := 0 to 14 do
+    Terminal.Print(10, I + 6, '[color=light gray]' + ClassPict[clWarrior][I]);
+
   AddKey('Esc', _('Back'), True);
 end;
 
