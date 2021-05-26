@@ -20,6 +20,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.UI,
+  Trollhunter.UI.Images,
   Trollhunter.Language,
   BearLibTerminal,
   Trollhunter.Terminal,

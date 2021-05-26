@@ -40,6 +40,7 @@ uses
   Trollhunter.Player.Types,
   Trollhunter.Player.Helpers,
   Trollhunter.UI,
+  Trollhunter.UI.Images,
   Trollhunter.Statistic,
   Trollhunter.Scene.Classes;
 

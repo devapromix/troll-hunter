@@ -31,7 +31,8 @@ uses
   Trollhunter.Terminal;
 
 const
-  T: TLogoArray<string> = (' ______________                                                                                   ',
+  T: TLogoArray<string> =
+    (' ______________                                                                                   ',
     '| ____  . ____ |              ___ ___ ___                               ___                       ',
     '|/    |. |    \|              \ .\\ .\\. \                              \ .\                      ',
     '      | .|                    | .||. || .|                              | .|                      ',
@@ -98,7 +99,7 @@ begin
   FX := Terminal.Screen.Width div 2;
   for I := 0 to 17 do
     Terminal.Print(FX, I + 3, FL[I], TK_ALIGN_CENTER);
-  if IsSword then
+  // if IsSword then
 end;
 
 function TLogo.Width: UInt;

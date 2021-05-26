@@ -78,7 +78,8 @@ uses
   Trollhunter.Scene.Mods in 'sources\Trollhunter.Scene.Mods.pas',
   RLLog in 'sources\Third-Party\RLLog\RLLog.pas',
   PasTerminal in 'sources\Third-Party\PasTerminal\PasTerminal.pas',
-  Trollhunter.Scene.Credits in 'sources\Trollhunter.Scene.Credits.pas';
+  Trollhunter.Scene.Credits in 'sources\Trollhunter.Scene.Credits.pas',
+  Trollhunter.UI.Images in 'sources\Trollhunter.UI.Images.pas';
 
 var
   Key: UInt;

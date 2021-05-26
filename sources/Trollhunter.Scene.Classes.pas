@@ -33,7 +33,8 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Game,
   Trollhunter.Player.Races,
-  Trollhunter.UI;
+  Trollhunter.UI,
+  Trollhunter.UI.Images;
 
 { TSceneClass }
 
