@@ -1,0 +1,20 @@
+  // Plants
+
+  (
+  Sprite     : 'TAMARILIS';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 0;
+  Weight     : 1;
+  ManaCost   : 0;
+  IsStack    : True;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsPlant;
+  SubCats    : [scNone];
+  Color      : clNone;
+  )
+

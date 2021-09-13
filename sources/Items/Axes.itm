@@ -1,0 +1,127 @@
+  // Axes
+  
+  (
+  Sprite     : 'HATCHET';
+  AdvSprite  : '';
+  MinDamage  : 2;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 15;
+  Weight     : 5;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'WARAXE';
+  AdvSprite  : '';
+  MinDamage  : 3;
+  MaxDamage  : 4;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 20;
+  Weight     : 7;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'LARGEAXE';
+  AdvSprite  : '';
+  MinDamage  : 4;
+  MaxDamage  : 5;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 25;
+  Weight     : 9;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'BROADAXE';   
+  AdvSprite  : '';
+  MinDamage  : 5;
+  MaxDamage  : 6;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 30;
+  Weight     : 11;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'BATTLEAXE';   
+  AdvSprite  : '';
+  MinDamage  : 6;
+  MaxDamage  : 7;
+  Protect    : 1;
+  Rarity     : riNormal;
+  MaxTough   : 35;
+  Weight     : 13;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'GREATAXE';   
+  AdvSprite  : '';
+  MinDamage  : 7;
+  MaxDamage  : 8;
+  Protect    : 2;
+  Rarity     : riNormal;
+  MaxTough   : 40;
+  Weight     : 15;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'GIANTAXE';   
+  AdvSprite  : '';
+  MinDamage  : 8;
+  MaxDamage  : 9;
+  Protect    : 3;
+  Rarity     : riNormal;
+  MaxTough   : 50;
+  Weight     : 20;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scAxe];
+  Color      : clNone;
+  ),

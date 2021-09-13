@@ -1,0 +1,58 @@
+  // Crossbows
+
+  (
+  Sprite     : 'LIGHTCROSSBOW';
+  AdvSprite  : '';
+  MinDamage  : 2;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 20;
+  Weight     : 7;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scCrossBow];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'SIEGECROSSBOW';
+  AdvSprite  : '';
+  MinDamage  : 3;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 25;
+  Weight     : 8;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scCrossBow];
+  Color      : clNone;
+  ),
+
+  // Projectiles
+
+  (
+  Sprite     : 'BOLT';
+  AdvSprite  : '';
+  MinDamage  : 2;
+  MaxDamage  : 2;      
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 0;
+  Weight     : 0;
+  ManaCost   : 0;
+  IsStack    : True;
+  MinCount   : 10;
+  MaxCount   : 35;
+  Category   : dsLHand;
+  SubCats    : [scCrossBow];
+  Color      : clNone;
+  ),
+

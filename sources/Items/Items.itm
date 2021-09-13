@@ -1,0 +1,80 @@
+  // Gold coins
+
+  (
+  Sprite     : 'GOLDCOINS';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 0;
+  Weight     : 0;
+  ManaCost   : 0;
+  IsStack    : True;
+  MinCount   : 3;
+  MaxCount   : 9;
+  Category   : dsGold;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+
+  // Keys
+
+  (
+  Sprite     : 'KEY';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 0;
+  Weight     : 0;
+  ManaCost   : 0;
+  IsStack    : True;
+  MinCount   : 1;
+  MaxCount   : 2;
+  Category   : dsKey;
+  SubCats    : [scKey];
+  Color      : clNone;
+  ),
+
+  // Smith
+  (
+  Sprite     : 'SLEDGEHAMMER';
+  AdvSprite  : 'SLEDGEHAMMER';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 0;
+  Rarity     : riMagic;  
+  MaxTough   : 0;
+  Weight     : 8;
+  ManaCost   : 0;
+  IsStack    : True;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRepair;
+  SubCats    : [scRepair25];     
+  Color      : clNone;
+  ),
+
+  // Ore
+  
+  (
+  Sprite     : 'ORE';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 0;
+  Rarity     : riMagic;
+  MaxTough   : 0;
+  Weight     : 0;
+  ManaCost   : 0;
+  IsStack    : True;
+  MinCount   : 3;
+  MaxCount   : 9;
+  Category   : dsGold;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+

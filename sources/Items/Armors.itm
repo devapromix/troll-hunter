@@ -1,0 +1,150 @@
+  // Plates
+
+  (
+  Sprite     : 'LEATHERARMOR';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 10;
+  Rarity     : riNormal;
+  MaxTough   : 55;
+  Weight     : 7;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsBody;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'STUDDEDLEATHER';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 15;
+  Rarity     : riNormal;
+  MaxTough   : 65;
+  Weight     : 9;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsBody;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'RINGMAIL';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 20;
+  Rarity     : riNormal;
+  MaxTough   : 85;
+  Weight     : 11;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsBody;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'SCALEMAIL';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 25;
+  Rarity     : riNormal;
+  MaxTough   : 100;
+  Weight     : 15;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsBody;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  // Helms
+
+  (
+  Sprite     : 'CAP';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 1;
+  Rarity     : riNormal;
+  MaxTough   : 10;
+  Weight     : 2;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsHead;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'HELM';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 2;
+  Rarity     : riNormal;
+  MaxTough   : 15;
+  Weight     : 3;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsHead;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  // Boots
+
+  (
+  Sprite     : 'MESHBOOTS';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 1;
+  Rarity     : riNormal;
+  MaxTough   : 15;
+  Weight     : 4;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsFoot;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'HEAVYBOOTS';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 2;
+  Rarity     : riNormal;
+  MaxTough   : 20;
+  Weight     : 6;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsFoot;
+  SubCats    : [scNone];
+  Color      : clNone;
+  ),
+

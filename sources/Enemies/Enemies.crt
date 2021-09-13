@@ -1,0 +1,379 @@
+  (
+  Sprite     : 'BIGSPIDER';
+  AIType     : aiMelee;
+  Decor      : dtWeb;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 2;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Radius     : 8;
+  Distance   : 0;
+  Projectile : ptNone;  
+  Strength   : 4;
+  Dexterity  : 2;
+  Will       : 2;
+  Speed      : 1;
+  Poison     : (Power: 1; Duration: 7);
+  Blind      : (Power: 1; Duration: 9);
+  ),
+
+  (
+  Sprite     : 'REDSPIDER'; 
+  AIType     : aiRanged;
+  Decor      : dtWeb;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Radius     : 9;
+  Distance   : 5;
+  Projectile : ptFireball;
+  Strength   : 2;
+  Dexterity  : 5;
+  Will       : 1;
+  Speed      : 3;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 1; Duration: 12);
+  ),
+
+  (
+  Sprite     : 'CAVESPIDER';
+  AIType     : aiBerserk;
+  Decor      : dtWeb;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 2;
+  MaxDamage  : 4;
+  Protect    : 1;
+  Radius     : 9;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 3;
+  Dexterity  : 3;
+  Will       : 2;
+  Speed      : 2;
+  Poison     : (Power: 2; Duration: 7);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'GOBLIN';
+  AIType     : aiGoblin;
+  Decor      : dtBlood;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 2;
+  MaxDamage  : 4;
+  Protect    : 0;
+  Radius     : 12;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 6;
+  Dexterity  : 2;
+  Will       : 2;
+  Speed      : 10;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'DARKGOBLIN';
+  AIType     : aiGoblin;
+  Decor      : dtBlood;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 2;
+  MaxDamage  : 4;
+  Protect    : 0;
+  Radius     : 12;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 5;
+  Dexterity  : 3;
+  Will       : 2;
+  Speed      : 12;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'CAVEGOBLIN';
+  AIType     : aiGoblin;
+  Decor      : dtBlood;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 2;
+  MaxDamage  : 5;
+  Protect    : 1;
+  Radius     : 12;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 6;
+  Dexterity  : 3;
+  Will       : 1;
+  Speed      : 12;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'SLUG';
+  AIType     : aiSlug;
+  Decor      : dtSlime;
+  Level      : 1;
+  Exp        : 1;
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Radius     : 8;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 2;
+  Dexterity  : 5;
+  Will       : 1;
+  Speed      : 1;
+  Poison     : (Power: 3; Duration: 7);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'BIGSLIME';
+  AIType     : aiBigSlime;
+  Decor      : dtSlime;
+  Level      : 1;
+  Exp        : 3;
+  MinDamage  : 1;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Radius     : 9;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 4;
+  Dexterity  : 12;
+  Will       : 1;
+  Speed      : 1;
+  Poison     : (Power: 2; Duration: 5);
+  Blind      : (Power: 1; Duration: 15);
+  ),
+
+  (
+  Sprite     : 'SLIME';
+  AIType     : aiSlime;
+  Decor      : dtSlime;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Radius     : 8;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 2;
+  Dexterity  : 10;
+  Will       : 1;
+  Speed      : 1;
+  Poison     : (Power: 1; Duration: 3);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'SMALLSLIME';
+  AIType     : aiBerserk;
+  Decor      : dtSlime;
+  Level      : 1;
+  Exp        : 1;
+  MinDamage  : 1;
+  MaxDamage  : 1;
+  Protect    : 0;
+  Radius     : 7;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 1;
+  Dexterity  : 8;
+  Will       : 1;
+  Speed      : 1;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'BAT';
+  AIType     : aiMelee;
+  Decor      : dtBlood;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Radius     : 12;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 2;
+  Dexterity  : 5;
+  Will       : 2;
+  Speed      : 18;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'BLUEBAT';
+  AIType     : aiMelee;
+  Decor      : dtBlood;
+  Level      : 1;
+  Exp        : 2;
+  MinDamage  : 1;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Radius     : 12;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 4;
+  Dexterity  : 3;
+  Will       : 2;
+  Speed      : 21;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'CAVEBAT';
+  AIType     : aiBerserk;
+  Decor      : dtBlood;
+  Level      : 2;
+  Exp        : 3;
+  MinDamage  : 2;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Radius     : 12;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 5;
+  Dexterity  : 2;
+  Will       : 1;
+  Speed      : 25;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'SKELETON';
+  AIType     : aiBerserk;
+  Decor      : dtBone;
+  Level      : 2;
+  Exp        : 4;
+  MinDamage  : 2;
+  MaxDamage  : 5;
+  Protect    : 0;
+  Radius     : 10;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 3;
+  Dexterity  : 4;
+  Will       : 3;
+  Speed      : 6;
+  Poison     : (Power: 2; Duration: 5);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'SKELETONMAGE';
+  AIType     : aiRanged;
+  Decor      : dtBone;
+  Level      : 2;
+  Exp        : 4;
+  MinDamage  : 1;
+  MaxDamage  : 3;
+  Protect    : 0;
+  Radius     : 10;
+  Distance   : 6;
+  Projectile : ptFireball;
+  Strength   : 2;
+  Dexterity  : 3;
+  Will       : 5;
+  Speed      : 4;
+  Poison     : (Power: 0; Duration: 0);
+  Blind      : (Power: 1; Duration: 18);
+  ),
+
+  (
+  Sprite     : 'MAGAN';
+  AIType     : aiRanged;
+  Decor      : dtBlood;
+  Level      : 2;
+  Exp        : 3;
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Radius     : 8;
+  Distance   : 5;
+  Projectile : ptPoisonball;
+  Strength   : 3;
+  Dexterity  : 2;
+  Will       : 5;
+  Speed      : 6;
+  Poison     : (Power: 1; Duration: 5);
+  Blind      : (Power: 1; Duration: 20);
+  ),
+
+  (
+  Sprite     : 'DARKEYE';
+  AIType     : aiRanged;
+  Decor      : dtBlood;
+  Level      : 2;
+  Exp        : 3;
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Radius     : 9;
+  Distance   : 5;
+  Projectile : ptPoisonball;
+  Strength   : 4;
+  Dexterity  : 4;
+  Will       : 2;
+  Speed      : 6;
+  Poison     : (Power: 2; Duration: 4);
+  Blind      : (Power: 1; Duration: 30);
+  ),
+
+  (
+  Sprite     : 'NECROMANCER';
+  AIType     : aiNecro;
+  Decor      : dtBlood;
+  Level      : 3;
+  Exp        : 5;
+  MinDamage  : 2;
+  MaxDamage  : 5;
+  Protect    : 1;
+  Radius     : 8;
+  Distance   : 5;
+  Projectile : ptPoisonball;
+  Strength   : 4;
+  Dexterity  : 4;
+  Will       : 7;
+  Speed      : 2;
+  Poison     : (Power: 3; Duration: 9);
+  Blind      : (Power: 0; Duration: 0);
+  ),
+
+  (
+  Sprite     : 'TUORG';
+  AIType     : aiBerserk;
+  Decor      : dtBlood;
+  Level      : 4;
+  Exp        : 5;
+  MinDamage  : 3;
+  MaxDamage  : 5;
+  Protect    : 2;
+  Radius     : 7;
+  Distance   : 0;
+  Projectile : ptNone;
+  Strength   : 6;
+  Dexterity  : 4;
+  Will       : 1;
+  Speed      : 4;
+  Poison     : (Power: 4; Duration: 5);
+  Blind      : (Power: 0; Duration: 0);
+  )

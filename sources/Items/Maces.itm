@@ -1,0 +1,20 @@
+  // Maces
+
+  (
+  Sprite     : 'STONEHAMMER';
+  AdvSprite  : '';
+  MinDamage  : 1;
+  MaxDamage  : 2;
+  Protect    : 0;
+  Rarity     : riNormal;
+  MaxTough   : 10;
+  Weight     : 10;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsRHand;
+  SubCats    : [scMace];
+  Color      : clNone;
+  ),
+  

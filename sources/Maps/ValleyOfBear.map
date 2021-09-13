@@ -1,0 +1,65 @@
+  (
+  ID          : 'VALLEYOFBEAR';
+  Level       : 3;
+  Items       : PotionLevel1 + WeaponLevel1 + AmmuntLevel1;
+  Creatures   : 'GOBLIN,DARKGOBLIN,BAT,';
+  Underground : False;
+  Village     : False;
+  GenID       : G_DARK_FOREST;
+  DecorType   : dtNone;
+  DecTypSize  : 0;
+  DecTypCount : 0;
+  IsAutoEnt   : False;
+  PrevMap     : 'THEUNDERGROUNDP';
+  NextMap     : 'STONYFIELD';
+  AltNextMap  : 'INTERNALPIT1';
+  IsAltMapEnt : False;
+  IsTraps     : True;
+  FloorTile   : tlGrass;
+  FloorRes    : 'GRASS1';
+  WallRes     : 'WALL3';
+  ),
+
+  (
+  ID          : 'INTERNALPIT1';
+  Level       : 4;
+  Items       : PotionLevel1 + WeaponLevel1 + AmmuntLevel1;
+  Creatures   : 'DARKGOBLIN,CAVEGOBLIN,CAVEBAT,DARKEYE,';
+  Underground : True;
+  Village     : False;
+  GenID       : G_CAVES;
+  DecorType   : dtBone;
+  DecTypSize  : 20;
+  DecTypCount : 60;
+  IsAutoEnt   : False;
+  PrevMap     : 'VALLEYOFBEAR';
+  NextMap     : '';
+  AltNextMap  : 'INTERNALPIT2';
+  IsAltMapEnt : True;
+  IsTraps     : True;
+  FloorTile   : tlFloor;
+  FloorRes    : 'FLOOR1';
+  WallRes     : 'WALL2';
+  ),
+
+  (
+  ID          : 'INTERNALPIT2';
+  Level       : 5;
+  Items       : PotionLevel1 + WeaponLevel1 + AmmuntLevel1 + AmmuntLevel2 + RarityLevel1 + ScrollLevel1;
+  Creatures   : 'DARKGOBLIN,CAVEGOBLIN,CAVEBAT,DARKEYE,DARKEYE,TUORG,';
+  Underground : True;
+  Village     : False;
+  GenID       : G_CAVES;
+  DecorType   : dtBone;
+  DecTypSize  : 35;
+  DecTypCount : 105;
+  IsAutoEnt   : False;
+  PrevMap     : 'INTERNALPIT1';
+  NextMap     : '';
+  AltNextMap  : '';
+  IsAltMapEnt : True;
+  IsTraps     : True;
+  FloorTile   : tlFloor;
+  FloorRes    : 'FLOOR1';
+  WallRes     : 'WALL2';
+  ),

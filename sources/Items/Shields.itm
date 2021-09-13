@@ -1,0 +1,74 @@
+  // Shields
+
+  (
+  Sprite     : 'SMALLSHIELD';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 3;
+  Rarity     : riNormal;
+  MaxTough   : 30;
+  Weight     : 5;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsLHand;
+  SubCats    : [scShield];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'LARGESHIELD';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 5;
+  Rarity     : riNormal;
+  MaxTough   : 40;
+  Weight     : 10;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsLHand;
+  SubCats    : [scShield];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'TOWERSHIELD';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 7;
+  Rarity     : riNormal;
+  MaxTough   : 50;
+  Weight     : 15;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsLHand;
+  SubCats    : [scShield];
+  Color      : clNone;
+  ),
+
+  (
+  Sprite     : 'GOTHICSHIELD';
+  AdvSprite  : '';
+  MinDamage  : 0;
+  MaxDamage  : 0;
+  Protect    : 10;
+  Rarity     : riNormal;
+  MaxTough   : 75;
+  Weight     : 25;
+  ManaCost   : 0;
+  IsStack    : False;
+  MinCount   : 1;
+  MaxCount   : 1;
+  Category   : dsLHand;
+  SubCats    : [scShield];
+  Color      : clNone;
+  ),
+

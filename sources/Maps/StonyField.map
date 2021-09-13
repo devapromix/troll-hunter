@@ -1,0 +1,22 @@
+  (
+  ID          : 'STONYFIELD';    
+  Level       : 5;
+  Items       : PotionLevel1 + PotionLevel2 + WeaponLevel1 + AmmuntLevel1 + RarityLevel1 + ScrollLevel1;
+  Creatures   : 'SKELETON,SKELETONMAGE,NECROMANCER,DARKEYE,MAGAN,';
+  Underground : False;  
+  Village     : False;
+  GenID       : G_STONY_FIELD;
+  DecorType   : dtStone;
+  DecTypSize  : 50;
+  DecTypCount : 150;
+  IsAutoEnt   : False;
+  PrevMap     : 'VALLEYOFBEAR';
+  NextMap     : '';
+  AltNextMap  : '';
+  IsAltMapEnt : False;
+  IsTraps     : True;
+  FloorTile   : tlGrass;
+  FloorRes    : 'GRASS3';
+  WallRes     : '';
+  ),
+

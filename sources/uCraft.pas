@@ -1,0 +1,101 @@
+unit uCraft;
+
+interface
+
+type
+  TCraftRec = record     
+    A, B, C: string;
+  end;
+
+const
+  CraftItems: array [0..13] of TCraftRec = (
+
+  (
+  A: 'NORMLIFEPOTION';
+  B: 'NORMMANAPOTION';
+  C: 'MINIMEGAPOTION';
+  ),
+
+  (
+  A: 'BASELIFEPOTION';
+  B: 'BASEMANAPOTION';
+  C: 'NORMMEGAPOTION';
+  ),
+
+  (
+  A: 'NANOLIFEPOTION';
+  B: 'NANOMANAPOTION';
+  C: 'BASEMEGAPOTION';
+  ),
+
+  (
+  A: 'BIGLIFEPOTION';
+  B: 'BIGMANAPOTION';
+  C: 'NANOMEGAPOTION';
+  ),
+  
+  (
+  A: 'MINILIFEPOTION';
+  B: 'MINILIFEPOTION';
+  C: 'MINIMANAPOTION';
+  ),
+
+  (
+  A: 'MINIMANAPOTION';
+  B: 'MINIMANAPOTION';
+  C: 'MINILIFEPOTION';
+  ),
+
+  (
+  A: 'NORMLIFEPOTION';
+  B: 'NORMLIFEPOTION';
+  C: 'NORMMANAPOTION';
+  ),
+
+  (
+  A: 'NORMMANAPOTION';
+  B: 'NORMMANAPOTION';
+  C: 'NORMLIFEPOTION';
+  ),
+
+  (
+  A: 'BASELIFEPOTION';
+  B: 'BASELIFEPOTION';
+  C: 'BASEMANAPOTION';
+  ),
+
+  (
+  A: 'BASEMANAPOTION';
+  B: 'BASEMANAPOTION';
+  C: 'BASELIFEPOTION';
+  ),
+
+  (
+  A: 'NANOLIFEPOTION';
+  B: 'NANOLIFEPOTION';
+  C: 'NANOMANAPOTION';
+  ),
+
+  (
+  A: 'NANOMANAPOTION';
+  B: 'NANOMANAPOTION';
+  C: 'NANOLIFEPOTION';
+  ),
+
+  (
+  A: 'BIGLIFEPOTION';
+  B: 'BIGLIFEPOTION';
+  C: 'BIGMANAPOTION';
+  ),
+
+  (
+  A: 'BIGMANAPOTION';
+  B: 'BIGMANAPOTION';
+  C: 'BIGLIFEPOTION';
+  )
+
+  );
+
+implementation
+
+end.
