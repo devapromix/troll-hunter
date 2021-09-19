@@ -49,7 +49,7 @@ uses
   uSceneInv,
   uItem,
   Trollhunter.Graph,
-  uGame,
+  Trollhunter.Game,
   uSceneGame,
   uBox,
   Trollhunter.Color,

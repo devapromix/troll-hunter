@@ -37,7 +37,7 @@ uses
   Trollhunter.MainForm,
   uSceneRecords,
   uCreatures,
-  uGame,
+  Trollhunter.Game,
   uSceneLoad,
   uError,
   Trollhunter.Utils,

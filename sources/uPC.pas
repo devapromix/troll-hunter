@@ -124,7 +124,7 @@ uses
   uTime,
   uSettings,
   uScreenshot,
-  uGame,
+  Trollhunter.Game,
   uSceneRecords,
   uFormulas;
 

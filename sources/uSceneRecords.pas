@@ -35,7 +35,7 @@ uses
   uError,
   uBox,
   uLang,
-  uGame;
+  Trollhunter.Game;
 
 { TSceneRecords }
 

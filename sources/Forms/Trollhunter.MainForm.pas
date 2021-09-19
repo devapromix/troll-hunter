@@ -50,7 +50,7 @@ uses
   Trollhunter.Utils,
   uBox,
   uScreenshot,
-  uGame,
+  Trollhunter.Game,
   uSceneLevelUp,
   uLostMemory;
 

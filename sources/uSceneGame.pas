@@ -45,7 +45,7 @@ uses
   uTrap,
   uBox,
   uLog,
-  uGame,
+  Trollhunter.Game,
   uItem,
   Trollhunter.Color,
   uError,

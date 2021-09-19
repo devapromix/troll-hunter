@@ -17,5 +17,3 @@ del /S *.*proj.local
 del /S *.tvsconfig
 del /S *.stat
 del *.dbg
-del sources/*.lfm
-del *.lfm

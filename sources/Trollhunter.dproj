@@ -140,7 +140,7 @@
         <DCCReference Include="uScreenshot.pas"/>
         <DCCReference Include="uLog.pas"/>
         <DCCReference Include="uSceneAbout.pas"/>
-        <DCCReference Include="uGame.pas"/>
+        <DCCReference Include="Trollhunter.Game.pas"/>
         <DCCReference Include="uSceneName.pas"/>
         <DCCReference Include="uSceneRecords.pas"/>
         <DCCReference Include="uSceneLoad.pas"/>

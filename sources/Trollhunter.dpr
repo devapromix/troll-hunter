@@ -21,7 +21,7 @@ uses
   uScreenshot in 'uScreenshot.pas',
   uLog in 'uLog.pas',
   uSceneAbout in 'uSceneAbout.pas',
-  uGame in 'uGame.pas',
+  Trollhunter.Game in 'Trollhunter.Game.pas',
   uSceneName in 'uSceneName.pas',
   uSceneRecords in 'uSceneRecords.pas',
   uSceneLoad in 'uSceneLoad.pas',

@@ -32,7 +32,7 @@ uses
   Trollhunter.Graph,
   uTempSys,
   uPC,
-  uGame,
+  Trollhunter.Game,
   uCreatures,
   Trollhunter.Utils;
 

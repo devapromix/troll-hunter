@@ -42,7 +42,7 @@ uses
   uError,
   Trollhunter.Graph,
   Trollhunter.Color,
-  uGame,
+  Trollhunter.Game,
   uSceneGame,
   Trollhunter.Utils,
   uLog,
