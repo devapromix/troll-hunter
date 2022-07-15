@@ -5,7 +5,7 @@ interface
 uses
   Classes,
   uEffect,
-  uCreature,
+  Trollhunter.Creature,
   uInv,
   uSkill,
   uTempSys,
@@ -115,7 +115,7 @@ uses
   uItem,
   Trollhunter.Scenes,
   uSceneLevelUp,
-  uCreatures,
+  Trollhunter.Creatures,
   uProjectiles,
   Trollhunter.Utils,
   uMap,

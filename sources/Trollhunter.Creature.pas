@@ -1,4 +1,4 @@
-﻿unit uCreature;
+﻿unit Trollhunter.Creature;
 
 interface
 
@@ -75,7 +75,7 @@ uses
   uMap,
   Trollhunter.Tile,
   Trollhunter.Utils,
-  uCreatures,
+  Trollhunter.Creatures,
   uLang,
   uLog,
   uError,

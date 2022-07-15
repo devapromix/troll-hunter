@@ -9,7 +9,7 @@ uses
   Trollhunter.Scenes,
   uInv,
   uItem,
-  uCreatures,
+  Trollhunter.Creatures,
   uSceneBaseGame;
 
 type

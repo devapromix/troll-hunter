@@ -36,7 +36,7 @@ uses
   Trollhunter.Scenes,
   Trollhunter.MainForm,
   uSceneRecords,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Game,
   uSceneLoad,
   uError,
@@ -45,7 +45,7 @@ uses
   uLang,
   uSettings,
   uItem,
-  uCreature,
+  Trollhunter.Creature,
   uMap;
 
 { TSceneMenu }

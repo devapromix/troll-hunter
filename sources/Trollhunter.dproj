@@ -111,14 +111,13 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="uLostMemory.pas"/>
         <DCCReference Include="Forms\Trollhunter.MainForm.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <DCCReference Include="Scenes\Trollhunter.Scenes.pas"/>
         <DCCReference Include="Scenes\Trollhunter.Scene.pas"/>
         <DCCReference Include="uSceneGame.pas"/>
-        <DCCReference Include="uCreatures.pas"/>
+        <DCCReference Include="Trollhunter.Creatures.pas"/>
         <DCCReference Include="Trollhunter.Graph.pas"/>
         <DCCReference Include="uMap.pas"/>
         <DCCReference Include="uSceneMenu.pas"/>
@@ -173,7 +172,7 @@
         <DCCReference Include="uSceneIntro.pas"/>
         <DCCReference Include="uPC.pas"/>
         <DCCReference Include="uBaseCreature.pas"/>
-        <DCCReference Include="uCreature.pas"/>
+        <DCCReference Include="Trollhunter.Creature.pas"/>
         <DCCReference Include="uEnemy.pas"/>
         <DCCReference Include="uFormulas.pas"/>
         <DCCReference Include="uGlobalMap.pas"/>

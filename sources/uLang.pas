@@ -4,7 +4,7 @@ interface
 
 uses
   uItem,
-  uCreature,
+  Trollhunter.Creature,
   uMap;
 
 const
@@ -480,7 +480,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.Utils,
-  uCreatures;
+  Trollhunter.Creatures;
 
 function GetLang(ID: Word): string;
 begin

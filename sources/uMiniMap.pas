@@ -27,7 +27,7 @@ uses
   Types,
   uMap,
   Trollhunter.Tile,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Utils,
   Trollhunter.Color,
   Trollhunter.Graph;

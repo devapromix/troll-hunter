@@ -12,7 +12,7 @@ uses
   Trollhunter.Utils,
   PNGImage,
   Trollhunter.Graph,
-  uCreatures,
+  Trollhunter.Creatures,
   uError;
 
 function TakeScreenshot(F: Boolean = True): string;

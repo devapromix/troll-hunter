@@ -7,7 +7,7 @@ procedure DoTime();
 implementation
 
 uses
-  uCreatures;
+  Trollhunter.Creatures;
 
 procedure DoTime();
 var

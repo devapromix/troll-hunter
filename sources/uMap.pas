@@ -111,7 +111,7 @@ uses
   SysUtils,
   Math,
   uAStar,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Utils,
   uError,
   Trollhunter.Graph,
@@ -154,7 +154,7 @@ begin
   I := 1;
   if not isValidCell(X, Y) then
     Exit;
-  with uCreatures.Creatures do
+  with Trollhunter.Creatures.Creatures do
   begin
     L := Math.Max(Abs(AX - X), Abs(AY - Y)) + 1;
     if (AX = X) and (AY < Y) then
@@ -180,8 +180,8 @@ var
     if (Cell[Y][X].Tile in FloorSet) then
       case AP of
         pdCreature:
-          if (uCreatures.Creatures.EmptyCell(X, Y)) then
-            uCreatures.Creatures.Add(X, Y, D);
+          if (Trollhunter.Creatures.Creatures.EmptyCell(X, Y)) then
+            Trollhunter.Creatures.Creatures.Add(X, Y, D);
         pdDecorator:
           Decorators.Insert(StrToDecorType(D), X, Y);
         pdItem:
@@ -343,10 +343,10 @@ begin
     end;
     ClearViz;
     // Hero pos
-    if (uCreatures.Creatures.PC.Dungeon = 0) then
+    if (Trollhunter.Creatures.Creatures.PC.Dungeon = 0) then
     begin
       GenNewFloorPos();
-      uCreatures.Creatures.PC.SetPosition(X, Y);
+      Trollhunter.Creatures.Creatures.PC.SetPosition(X, Y);
     end;
     // Add stairs
     if not Map.Info.IsAutoEnt and (Map.Info.PrevMap <> '') then
@@ -630,7 +630,7 @@ begin
     FS.Append('MapCreatures ' + Map.Creatures);
     FS.Append('MapLevel ' + IntToStr(Map.Level));
     // Creatures
-    with uCreatures.Creatures do
+    with Trollhunter.Creatures.Creatures do
       if (Length(Enemy) > 0) then
         for I := 0 to High(Enemy) do
           FS.Append('AddCreature ' + IntToStr(Enemy[I].Pos.X) + ' ' +
@@ -666,7 +666,7 @@ end;
 procedure TMap.Clear;
 begin
   MiniMap.Clear;
-  uCreatures.Creatures.Clear;
+  Trollhunter.Creatures.Creatures.Clear;
   uItem.Items.Clear;
 end;
 
@@ -691,7 +691,7 @@ end;
 
 function TMap.Info(): TMapRec;
 begin
-  Result := MapInfo[uCreatures.Creatures.PC.Dungeon];
+  Result := MapInfo[Trollhunter.Creatures.Creatures.PC.Dungeon];
 end;
 
 function TMap.GetMapIndex(ID: string): Integer;
@@ -717,35 +717,36 @@ var
   B: Boolean;
   X, Y, DX, DY: Integer;
 begin
-  for X := uCreatures.Creatures.PC.Pos.X - (Graph.RW + 1)
-    to uCreatures.Creatures.PC.Pos.X + (Graph.RW + 1) do
-    for Y := uCreatures.Creatures.PC.Pos.Y - (Graph.RH + 1)
-      to uCreatures.Creatures.PC.Pos.Y + (Graph.RH + 1) do
+  for X := Trollhunter.Creatures.Creatures.PC.Pos.X - (Graph.RW + 1)
+    to Trollhunter.Creatures.Creatures.PC.Pos.X + (Graph.RW + 1) do
+    for Y := Trollhunter.Creatures.Creatures.PC.Pos.Y - (Graph.RH + 1)
+      to Trollhunter.Creatures.Creatures.PC.Pos.Y + (Graph.RH + 1) do
     begin
       if (X < 0) or (Y < 0) or (X > MapSide - 1) or (Y > MapSide - 1) then
         Continue;
       Map.Cell[Y][X].FOV := False;
     end;
   ///
-  for X := uCreatures.Creatures.PC.Pos.X - Graph.RW to uCreatures.Creatures.PC.
-    Pos.X + Graph.RW do
-    for Y := uCreatures.Creatures.PC.Pos.Y - Graph.RH to uCreatures.Creatures.
-      PC.Pos.Y + Graph.RH do
+  for X := Trollhunter.Creatures.Creatures.PC.Pos.X -
+    Graph.RW to Trollhunter.Creatures.Creatures.PC.Pos.X + Graph.RW do
+    for Y := Trollhunter.Creatures.Creatures.PC.Pos.Y -
+      Graph.RH to Trollhunter.Creatures.Creatures.PC.Pos.Y + Graph.RH do
     begin
       if (X < 0) or (Y < 0) or (X > MapSide - 1) or (Y > MapSide - 1) then
         Continue;
-      if (GetDist(uCreatures.Creatures.PC.Pos.X, uCreatures.Creatures.PC.Pos.Y,
-        X, Y) > uCreatures.Creatures.PC.GetRadius) then
+      if (GetDist(Trollhunter.Creatures.Creatures.PC.Pos.X,
+        Trollhunter.Creatures.Creatures.PC.Pos.Y, X, Y) >
+        Trollhunter.Creatures.Creatures.PC.GetRadius) then
         Continue;
-      Map.LineFOV2(uCreatures.Creatures.PC.Pos.X,
-        uCreatures.Creatures.PC.Pos.Y, X, Y);
+      Map.LineFOV2(Trollhunter.Creatures.Creatures.PC.Pos.X,
+        Trollhunter.Creatures.Creatures.PC.Pos.Y, X, Y);
     end;
   with Graph.Surface.Canvas do
   begin
-    for X := uCreatures.Creatures.PC.Pos.X - Graph.RW to uCreatures.Creatures.
-      PC.Pos.X + Graph.RW do
-      for Y := uCreatures.Creatures.PC.Pos.Y -
-        Graph.RH to uCreatures.Creatures.PC.Pos.Y + Graph.RH do
+    for X := Trollhunter.Creatures.Creatures.PC.Pos.X -
+      Graph.RW to Trollhunter.Creatures.Creatures.PC.Pos.X + Graph.RW do
+      for Y := Trollhunter.Creatures.Creatures.PC.Pos.Y -
+        Graph.RH to Trollhunter.Creatures.Creatures.PC.Pos.Y + Graph.RH do
       begin
         if (X < 0) or (Y < 0) or (X > MapSide - 1) or (Y > MapSide - 1) then
           Continue;
@@ -756,9 +757,10 @@ begin
             Continue;
           B := True;
         end;
-        DX := (X - (uCreatures.Creatures.PC.Pos.X - Graph.RW)) * TileSize;
-        DY := (Y - (uCreatures.Creatures.PC.Pos.Y - Graph.RH)) * TileSize +
-          Graph.CharHeight;
+        DX := (X - (Trollhunter.Creatures.Creatures.PC.Pos.X - Graph.RW))
+          * TileSize;
+        DY := (Y - (Trollhunter.Creatures.Creatures.PC.Pos.Y - Graph.RH)) *
+          TileSize + Graph.CharHeight;
         if not Map.Cell[Y, X].Viz then
           Map.VizCell(X, Y);
         case Map.Cell[Y][X].Tile of
@@ -845,16 +847,16 @@ begin
               Draw(DX, DY, Res.TREASURE);
         end;
         Decorators.Render(X, Y, DX, DY);
-        uCreatures.Creatures.Render(X, Y, DX, DY, True);
+        Trollhunter.Creatures.Creatures.Render(X, Y, DX, DY, True);
         uItem.Items.Render(X, Y, DX, DY);
-        uCreatures.Creatures.Render(X, Y, DX, DY, False);
+        Trollhunter.Creatures.Creatures.Render(X, Y, DX, DY, False);
         if not ParamLight then
           Light.Render(X, Y, DX, DY);
 
         // Look
         if (CursorMode <> cmNone) then
-          if ((uCreatures.Creatures.PC.Look.X = X) and
-            (uCreatures.Creatures.PC.Look.Y = Y)) then
+          if ((Trollhunter.Creatures.Creatures.PC.Look.X = X) and
+            (Trollhunter.Creatures.Creatures.PC.Look.Y = Y)) then
           begin
             Brush.Style := bsClear;
             case CursorMode of
@@ -866,7 +868,7 @@ begin
             Rectangle(DX, DY, DX + TileSize, DY + TileSize);
           end;
       end;
-    uCreatures.Creatures.PC.Render;
+    Trollhunter.Creatures.Creatures.PC.Render;
   end;
 end;
 

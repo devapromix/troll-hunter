@@ -34,7 +34,7 @@ uses
   uError,
   Trollhunter.Graph,
   uItem,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Color,
   Trollhunter.Utils,
   uLang,

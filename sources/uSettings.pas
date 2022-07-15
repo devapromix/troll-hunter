@@ -29,7 +29,7 @@ uses
   IniFiles,
   Trollhunter.Utils,
   Trollhunter.Graph,
-  uCreatures;
+  Trollhunter.Creatures;
 
 { TSettings }
 

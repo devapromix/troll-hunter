@@ -28,7 +28,7 @@ uses
   Graphics,
   SysUtils,
   Trollhunter.Graph,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Scenes,
   uSceneGame,
   Trollhunter.Color,

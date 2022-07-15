@@ -12,7 +12,9 @@ function GetMaxWeight(A: Integer): Integer;
 
 implementation
 
-uses uCreatures, uSkill;
+uses
+  Trollhunter.Creatures,
+  uSkill;
 
 // Сила заклинания "Глаз Чародея". Pадиус.
 function GetWizardEyePower: Integer;
@@ -42,7 +44,8 @@ end;
 function GetMaxAP(A: Integer): Integer;
 begin
   Result := Round(25 - A / 1.4);
-  if (Result < 1) then Result := 1;
+  if (Result < 1) then
+    Result := 1;
 end;
 
 // Макс. возможный объем инвентаря.

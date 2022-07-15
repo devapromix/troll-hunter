@@ -4,8 +4,8 @@ interface
 
 uses
   Graphics,
-  uCreature,
-  uCreatures;
+  Trollhunter.Creature,
+  Trollhunter.Creatures;
 
 type
   TProjectile = class(TObject)

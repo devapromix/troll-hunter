@@ -33,7 +33,7 @@ uses
   uTempSys,
   uPC,
   Trollhunter.Game,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Utils;
 
 { TEffects }

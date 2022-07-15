@@ -43,15 +43,14 @@ implementation
 uses
   Types,
   Trollhunter.Scenes,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Graph,
   uSceneMenu,
   uMap,
   Trollhunter.Utils,
   uScreenshot,
   Trollhunter.Game,
-  uSceneLevelUp,
-  uLostMemory;
+  uSceneLevelUp;
 
 {$R *.dfm}
 

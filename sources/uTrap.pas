@@ -29,7 +29,7 @@ uses
   SysUtils,
   uMap,
   Trollhunter.Graph,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Utils,
   uLog,
   uLang,

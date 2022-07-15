@@ -39,7 +39,7 @@ uses
   SysUtils,
   Trollhunter.MainForm,
   Trollhunter.Graph,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Scenes,
   Trollhunter.Utils,
   uTrap,

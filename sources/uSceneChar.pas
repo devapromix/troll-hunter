@@ -40,7 +40,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Utils,
   uSceneGame,
-  uCreatures,
+  Trollhunter.Creatures,
   uSceneInv,
   uItem,
   Trollhunter.Color,

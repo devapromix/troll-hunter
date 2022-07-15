@@ -26,7 +26,7 @@ implementation
 
 uses
   SysUtils,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Scenes,
   uSceneGame,
   Graphics,

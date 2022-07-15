@@ -36,7 +36,7 @@ uses
   Trollhunter.MainForm,
   uMap,
   Trollhunter.Utils,
-  uCreatures,
+  Trollhunter.Creatures,
   uLog,
   uZip,
   Trollhunter.Graph,

@@ -1,14 +1,13 @@
 ﻿program Trollhunter;
 
 uses
-  uLostMemory in 'uLostMemory.pas',
   Windows,
   Forms,
   Trollhunter.MainForm in 'Forms\Trollhunter.MainForm.pas' {MainForm},
   Trollhunter.Scenes in 'Scenes\Trollhunter.Scenes.pas',
   Trollhunter.Scene in 'Scenes\Trollhunter.Scene.pas',
   uSceneGame in 'uSceneGame.pas',
-  uCreatures in 'uCreatures.pas',
+  Trollhunter.Creatures in 'Trollhunter.Creatures.pas',
   Trollhunter.Graph in 'Trollhunter.Graph.pas',
   uMap in 'uMap.pas',
   uSceneMenu in 'uSceneMenu.pas',
@@ -63,7 +62,7 @@ uses
   uSceneIntro in 'uSceneIntro.pas',
   uPC in 'uPC.pas',
   uBaseCreature in 'uBaseCreature.pas',
-  uCreature in 'uCreature.pas',
+  Trollhunter.Creature in 'Trollhunter.Creature.pas',
   uEnemy in 'uEnemy.pas',
   uFormulas in 'uFormulas.pas',
   uGlobalMap in 'uGlobalMap.pas',

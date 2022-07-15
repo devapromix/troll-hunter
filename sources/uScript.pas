@@ -28,7 +28,7 @@ implementation
 uses
   Dialogs,
   uMap,
-  uCreatures,
+  Trollhunter.Creatures,
   uError,
   uItem;
 

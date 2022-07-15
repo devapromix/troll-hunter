@@ -127,7 +127,7 @@ uses
   Windows,
   Forms,
   JPEG,
-  uCreatures,
+  Trollhunter.Creatures,
   uMap,
   uLog,
   Trollhunter.MainForm,

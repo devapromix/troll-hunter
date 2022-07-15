@@ -235,7 +235,7 @@ uses
   uError,
   uMap,
   Trollhunter.Graph,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Scenes,
   uLog,
   uSceneItem,

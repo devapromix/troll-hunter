@@ -44,7 +44,7 @@ uses
   SysUtils,
   uError,
   uLog,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Scenes,
   uSceneInv,
   uItem,

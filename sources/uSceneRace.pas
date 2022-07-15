@@ -36,7 +36,7 @@ uses
   uError,
   uSceneGame,
   uLang,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.MainForm,
   Trollhunter.Scenes,
   Trollhunter.Color,

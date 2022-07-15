@@ -1,10 +1,10 @@
-﻿unit uCreatures;
+﻿unit Trollhunter.Creatures;
 
 interface
 
 uses
   Graphics,
-  uCreature,
+  Trollhunter.Creature,
   uPC,
   uEnemy;
 

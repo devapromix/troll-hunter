@@ -37,7 +37,7 @@ uses
   Trollhunter.Color,
   uError,
   uStatistics,
-  uCreatures,
+  Trollhunter.Creatures,
   uLang;
 
 procedure TSceneStatistics.Add(S, P: string);

@@ -85,7 +85,7 @@ uses
   Trollhunter.Tile,
   uMap,
   uLog,
-  uCreatures,
+  Trollhunter.Creatures,
   uAStar,
   uError;
 

@@ -3,7 +3,7 @@
 interface
 
 uses
-  uCreature;
+  Trollhunter.Creature;
 
 type
   TEnemy = class(TCreature)
@@ -26,7 +26,7 @@ implementation
 uses
   Types,
   SysUtils,
-  uCreatures,
+  Trollhunter.Creatures,
   Trollhunter.Utils,
   uLog,
   uLang,
