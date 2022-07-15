@@ -43,7 +43,6 @@ uses
   Trollhunter.Scenes,
   Trollhunter.Utils,
   uTrap,
-  uBox,
   uLog,
   Trollhunter.Game,
   uItem,

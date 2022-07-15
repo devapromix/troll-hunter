@@ -37,8 +37,7 @@ uses
   uError,
   Trollhunter.Utils,
   uLang,
-  uSettings,
-  uBox;
+  uSettings;
 
 { TSceneSettings }
 

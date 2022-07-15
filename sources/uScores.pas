@@ -33,7 +33,6 @@ uses
   SysUtils,
   Trollhunter.Utils,
   uZip,
-  uBox,
   uError,
   Trollhunter.MainForm,
   uLang;

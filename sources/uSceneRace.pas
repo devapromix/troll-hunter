@@ -32,7 +32,6 @@ uses
   Windows,
   SysUtils,
   Types,
-  uBox,
   Trollhunter.Graph,
   uError,
   uSceneGame,

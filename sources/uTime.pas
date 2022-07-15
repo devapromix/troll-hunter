@@ -6,7 +6,8 @@ procedure DoTime();
 
 implementation
 
-uses uCreatures, uBox;
+uses
+  uCreatures;
 
 procedure DoTime();
 var

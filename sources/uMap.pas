@@ -113,7 +113,6 @@ uses
   uAStar,
   uCreatures,
   Trollhunter.Utils,
-  uBox,
   uError,
   Trollhunter.Graph,
   Trollhunter.Color,

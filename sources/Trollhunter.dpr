@@ -13,7 +13,6 @@ uses
   uMap in 'uMap.pas',
   uSceneMenu in 'uSceneMenu.pas',
   Trollhunter.Utils in 'Trollhunter.Utils.pas',
-  uBox in 'uBox.pas',
   uItem in 'uItem.pas',
   uTrap in 'uTrap.pas',
   uScript in 'uScript.pas',

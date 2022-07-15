@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  uBox,
+  Dialogs,
   uMap,
   uCreatures,
   uError,
@@ -132,9 +132,9 @@ end;
 
 procedure TScript.ShowError(Operator: string; Line: Integer);
 begin
-  Box(Format('Operator <%s> except error!' + #13 + 'Script file: "%s"' + #13 +
-    'Line: %d' + #13 + 'Code: %s', [Operator, FFileName, Line, FL[Line]]),
-    'Script Error!');
+  ShowMessage(Format('Operator <%s> except error!' + #13 + 'Script file: "%s"' +
+    #13 + 'Line: %d' + #13 + 'Code: %s', [Operator, FFileName, Line,
+    FL[Line]]));
   Halt;
 end;
 

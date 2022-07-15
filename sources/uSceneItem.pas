@@ -51,7 +51,6 @@ uses
   Trollhunter.Graph,
   Trollhunter.Game,
   uSceneGame,
-  uBox,
   Trollhunter.Color,
   Trollhunter.Utils,
   uMap,

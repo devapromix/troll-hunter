@@ -35,7 +35,6 @@ uses
   uSceneMenu,
   Trollhunter.Utils,
   Trollhunter.Color,
-  uBox,
   Trollhunter.MainForm,
   Trollhunter.Game,
   uCreatures,

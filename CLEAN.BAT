@@ -8,6 +8,7 @@ del /s *.otares
 del /s *.local
 del /s *.cfg
 del /s *.ddp
+del /s *.drc
 del /s *.lps
 del /s *.a
 del /s *.o

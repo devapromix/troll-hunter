@@ -56,7 +56,6 @@ implementation
 uses
   SysUtils,
   Trollhunter.Utils,
-  uBox,
   uLang;
 
 { TRandItems }

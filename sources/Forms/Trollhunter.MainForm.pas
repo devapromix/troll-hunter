@@ -48,7 +48,6 @@ uses
   uSceneMenu,
   uMap,
   Trollhunter.Utils,
-  uBox,
   uScreenshot,
   Trollhunter.Game,
   uSceneLevelUp,

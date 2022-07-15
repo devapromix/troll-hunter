@@ -38,7 +38,6 @@ uses
   Windows,
   Types,
   SysUtils,
-  uBox,
   uError,
   Trollhunter.Graph,
   Trollhunter.Color,

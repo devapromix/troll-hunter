@@ -238,7 +238,6 @@ uses
   uCreatures,
   Trollhunter.Scenes,
   uLog,
-  uBox,
   uSceneItem,
   Trollhunter.Tile,
   uSceneItems,

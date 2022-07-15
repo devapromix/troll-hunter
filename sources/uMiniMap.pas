@@ -30,8 +30,7 @@ uses
   uCreatures,
   Trollhunter.Utils,
   Trollhunter.Color,
-  Trollhunter.Graph,
-  uBox;
+  Trollhunter.Graph;
 
 { TMiniMap }
 
