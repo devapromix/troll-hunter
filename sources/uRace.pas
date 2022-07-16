@@ -1,11 +1,11 @@
-unit uRace;
+﻿unit uRace;
 
 interface
 
 uses uSkill;
 
 const
-  RacesCount = 9;
+  RacesCount = 10;
 
 type
   TItemProp = record
@@ -84,7 +84,7 @@ const
   Speed     : -2;
   RHWeapon  : (ID: 'STONEHAMMER';   Count: 1);
   LHWeapon  : (ID: '';              Count: 0);
-  Skills    : ((Skill: skMace; Level: 10), (Skill: skShield; Level: 0));
+  Skills    : ((Skill: skMace; Level: 20), (Skill: skShield; Level: 0));
   ),
   ( // High Elf
   NameLangID: 187;
@@ -103,17 +103,17 @@ const
   Will      : -2;
   Speed     : -1;
   RHWeapon  : (ID: 'HUNTBOW';       Count: 1);
-  LHWeapon  : (ID: 'ARROW';         Count: 50);
+  LHWeapon  : (ID: 'ARROW';         Count: 75);
   Skills    : ((Skill: skBow; Level: 10), (Skill: skTrap; Level: 10));
   ),
   ( // Dark Elf
   NameLangID: 189;
-  Strength  : -1;
-  Dexterity : 3;
+  Strength  : -3;
+  Dexterity : 1;
   Will      : 1;
   Speed     : 1;
   RHWeapon  : (ID: 'LIGHTCROSSBOW'; Count: 1);
-  LHWeapon  : (ID: 'BOLT';          Count: 50);
+  LHWeapon  : (ID: 'BOLT';          Count: 75);
   Skills    : ((Skill: skCrossBow; Level: 10), (Skill: skTrap; Level: 10));
   ),
   ( // Deep Dwarf
@@ -125,6 +125,16 @@ const
   RHWeapon  : (ID: 'HATCHET';       Count: 1);
   LHWeapon  : (ID: 'SMALLSHIELD';   Count: 1);
   Skills    : ((Skill: skAxe; Level: 10), (Skill: skShield; Level: 10));
+  ),
+  ( // Cave Dwarf
+  NameLangID: 191;
+  Strength  : -1;
+  Dexterity : 4;
+  Will      : -2;
+  Speed     : -1;
+  RHWeapon  : (ID: 'STONEHAMMER';       Count: 1);
+  LHWeapon  : (ID: '';   Count: 0);
+  Skills    : ((Skill: skMace; Level: 15), (Skill: skTrap; Level: 5));
   )
   );
   
