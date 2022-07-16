@@ -7,7 +7,7 @@ uses
   Graphics,
   Trollhunter.Scene,
   Trollhunter.Scenes,
-  uInv,
+  Trollhunter.Inv,
   Trollhunter.Item,
   Trollhunter.Creatures,
   uSceneBaseGame;
@@ -44,9 +44,9 @@ uses
   Trollhunter.Game,
   uSceneGame,
   Trollhunter.Utils,
-  uLog,
+  Trollhunter.Log,
   uSceneItem,
-  uLang,
+  Trollhunter.Lang,
   uSceneChar;
 
 { TSceneInv }

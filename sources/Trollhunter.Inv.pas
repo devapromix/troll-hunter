@@ -1,9 +1,9 @@
-﻿unit uInv;
+﻿unit Trollhunter.Inv;
 
 interface
 
 uses
- Classes;
+  Classes;
 
 type
   TRecInv = record
@@ -64,8 +64,8 @@ type
 implementation
 
 uses
-SysUtils,
-Trollhunter.Utils;
+  SysUtils,
+  Trollhunter.Utils;
 
 constructor TInv.Create(AMaxCount, AMaxWeight: Integer);
 begin

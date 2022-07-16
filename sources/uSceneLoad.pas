@@ -40,7 +40,7 @@ uses
   Trollhunter.Creatures,
   uSceneGame,
   Trollhunter.Error,
-  uLang;
+  Trollhunter.Lang;
 
 { TSceneLoad }
 

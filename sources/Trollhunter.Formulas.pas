@@ -1,4 +1,4 @@
-unit uFormulas;
+unit Trollhunter.Formulas;
 
 interface
 
@@ -14,7 +14,7 @@ implementation
 
 uses
   Trollhunter.Creatures,
-  uSkill;
+  Trollhunter.Skill;
 
 // Сила заклинания "Глаз Чародея". Pадиус.
 function GetWizardEyePower: Integer;

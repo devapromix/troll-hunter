@@ -33,7 +33,7 @@ uses
   Trollhunter.Scenes,
   Trollhunter.Color,
   Trollhunter.Error,
-  uLang,
+  Trollhunter.Lang,
   Trollhunter.Game;
 
 { TSceneRecords }

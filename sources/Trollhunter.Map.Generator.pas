@@ -4,7 +4,7 @@
   ***CAVES\ANTNEST ALGORITHM AUTOR - JAKOB DEBSKI***
 }
 
-unit uMapGenerator;
+unit Trollhunter.Map.Generator;
 
 interface
 

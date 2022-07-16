@@ -1,17 +1,17 @@
-﻿unit uPC;
+﻿unit Trollhunter.PC;
 
 interface
 
 uses
   Classes,
-  uEffect,
+  Trollhunter.Effect,
   Trollhunter.Creature,
-  uInv,
-  uSkill,
-  uTempSys,
-  uRandItems,
+  Trollhunter.Inv,
+  Trollhunter.Skill,
+  Trollhunter.TempSys,
+  Trollhunter.RandItems,
   Trollhunter.GlobalMap,
-  uStatistics;
+  Trollhunter.Statistics;
 
 type
   TPC = class(TCreature)
@@ -109,24 +109,24 @@ uses
   Graphics,
   Trollhunter.Error,
   Trollhunter.Graph,
-  uLog,
-  uDecorator,
-  uLang,
+  Trollhunter.Log,
+  Trollhunter.Decorator,
+  Trollhunter.Lang,
   Trollhunter.Item,
   Trollhunter.Scenes,
   uSceneLevelUp,
   Trollhunter.Creatures,
-  uProjectiles,
+  Trollhunter.Projectiles,
   Trollhunter.Utils,
   Trollhunter.Map,
   uSceneItem,
   uSceneGame,
-  uTime,
-  uSettings,
-  uScreenshot,
+  Trollhunter.Time,
+  Trollhunter.Settings,
+  Trollhunter.Screenshot,
   Trollhunter.Game,
   uSceneRecords,
-  uFormulas;
+  Trollhunter.Formulas;
 
 { TPC }
 
@@ -676,7 +676,7 @@ end;
 procedure TPC.DoTime;
 begin
   Turns := Turns + 1;
-  uTime.DoTime();
+  Trollhunter.Time.DoTime();
 end;
 
 procedure TPC.TrainSkill;

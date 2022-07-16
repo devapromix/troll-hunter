@@ -1,4 +1,4 @@
-﻿unit uName;
+﻿unit Trollhunter.Name;
 
 interface
 

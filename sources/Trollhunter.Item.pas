@@ -7,9 +7,9 @@ uses
   Graphics,
   Classes,
   Trollhunter.Color,
-  uCraft,
+  Trollhunter.Craft,
   Trollhunter.Entity,
-  uRandItems;
+  Trollhunter.RandItems;
 
 const
   ItemsCount = 76;
@@ -237,15 +237,15 @@ uses
   Trollhunter.Graph,
   Trollhunter.Creatures,
   Trollhunter.Scenes,
-  uLog,
+  Trollhunter.Log,
   uSceneItem,
   Trollhunter.Tile,
   uSceneItems,
-  uLang,
-  uTempSys,
-  uInv,
-  uSkill,
-  uFormulas;
+  Trollhunter.Lang,
+  Trollhunter.TempSys,
+  Trollhunter.Inv,
+  Trollhunter.Skill,
+  Trollhunter.Formulas;
 
 { TBaseItem }
 

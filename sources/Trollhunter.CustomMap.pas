@@ -1,4 +1,4 @@
-﻿unit uCustomMap;
+﻿unit Trollhunter.CustomMap;
 
 interface
 

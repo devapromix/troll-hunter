@@ -1,4 +1,4 @@
-﻿unit uLang;
+﻿unit Trollhunter.Lang;
 
 interface
 

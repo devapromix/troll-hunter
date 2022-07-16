@@ -5,8 +5,8 @@ interface
 uses
   Graphics,
   Trollhunter.Creature,
-  uPC,
-  uEnemy;
+  Trollhunter.PC,
+  Trollhunter.Enemy;
 
 type
   TEnemies = array of TEnemy;
@@ -58,11 +58,11 @@ uses
   Trollhunter.Utils,
   Trollhunter.Error,
   Trollhunter.Graph,
-  uProjectiles,
+  Trollhunter.Projectiles,
   Trollhunter.Item,
-  uLog,
-  uLang,
-  uDecorator,
+  Trollhunter.Log,
+  Trollhunter.Lang,
+  Trollhunter.Decorator,
   Trollhunter.Map,
   Trollhunter.Tile;
 

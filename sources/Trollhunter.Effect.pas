@@ -1,4 +1,4 @@
-﻿unit uEffect;
+﻿unit Trollhunter.Effect;
 
 interface
 
@@ -30,8 +30,8 @@ uses
   Windows,
   Trollhunter.Error,
   Trollhunter.Graph,
-  uTempSys,
-  uPC,
+  Trollhunter.TempSys,
+  Trollhunter.PC,
   Trollhunter.Game,
   Trollhunter.Creatures,
   Trollhunter.Utils;

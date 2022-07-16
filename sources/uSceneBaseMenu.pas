@@ -22,7 +22,7 @@ implementation
 
 uses
   SysUtils,
-  uLang,
+  Trollhunter.Lang,
   Trollhunter.Graph,
   Trollhunter.Scenes,
   uSceneMenu;

@@ -37,7 +37,7 @@ uses
   Trollhunter.Creatures,
   Trollhunter.Color,
   Trollhunter.Utils,
-  uLang,
+  Trollhunter.Lang,
   uSceneInv;
 
 { TSceneItem }

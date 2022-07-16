@@ -1,4 +1,4 @@
-﻿unit uSkill;
+﻿unit Trollhunter.Skill;
 
 interface
 
@@ -79,8 +79,8 @@ implementation
 uses
   SysUtils,
   Trollhunter.Utils,
-  uLog,
-  uLang;
+  Trollhunter.Log,
+  Trollhunter.Lang;
 
 { TSkill }
 

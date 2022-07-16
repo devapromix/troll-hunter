@@ -1,4 +1,4 @@
-﻿unit uEnemy;
+﻿unit Trollhunter.Enemy;
 
 interface
 
@@ -28,11 +28,11 @@ uses
   SysUtils,
   Trollhunter.Creatures,
   Trollhunter.Utils,
-  uLog,
-  uLang,
+  Trollhunter.Log,
+  Trollhunter.Lang,
   Trollhunter.Error,
-  uProjectiles,
-  uDecorator,
+  Trollhunter.Projectiles,
+  Trollhunter.Decorator,
   Trollhunter.AStar,
   Trollhunter.Map;
 

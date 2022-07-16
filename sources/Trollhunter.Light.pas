@@ -1,4 +1,4 @@
-﻿unit uLight;
+﻿unit Trollhunter.Light;
 
 interface
 
@@ -28,7 +28,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Map,
   Trollhunter.Creatures,
-  uDecorator,
+  Trollhunter.Decorator,
   Trollhunter.Tile;
 
 procedure TLight.Render(X, Y, DX, DY: Integer);

@@ -4,8 +4,8 @@ interface
 
 uses
   Classes,
-  uCustomMap,
-  uTown,
+  Trollhunter.CustomMap,
+  Trollhunter.Town,
   Trollhunter.Utils;
 
 type

@@ -31,7 +31,7 @@ uses
   SysUtils,
   Trollhunter.Graph,
   Trollhunter.Error,
-  uLang,
+  Trollhunter.Lang,
   Trollhunter.Color;
 
 { TSceneHelp }

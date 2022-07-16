@@ -1,4 +1,4 @@
-﻿unit uSettings;
+﻿unit Trollhunter.Settings;
 
 interface
 

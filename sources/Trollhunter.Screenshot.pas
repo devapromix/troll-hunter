@@ -1,4 +1,4 @@
-﻿unit uScreenshot;
+﻿unit Trollhunter.Screenshot;
 
 interface
 

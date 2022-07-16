@@ -42,8 +42,8 @@ uses
   Trollhunter.Error,
   Trollhunter.Utils,
   uSceneSettings,
-  uLang,
-  uSettings,
+  Trollhunter.Lang,
+  Trollhunter.Settings,
   Trollhunter.Item,
   Trollhunter.Creature,
   Trollhunter.Map;

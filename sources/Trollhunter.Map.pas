@@ -5,13 +5,13 @@ interface
 uses
   Graphics,
   Classes,
-  uCustomMap,
+  Trollhunter.CustomMap,
   Trollhunter.MiniMap,
   Trollhunter.Item,
-  uScript,
+  Trollhunter.Script,
   Trollhunter.Tile,
-  uDecorator,
-  uMapGenerator;
+  Trollhunter.Decorator,
+  Trollhunter.Map.Generator;
 
 const
   MapsCount = 9;
@@ -116,7 +116,7 @@ uses
   Trollhunter.Error,
   Trollhunter.Graph,
   Trollhunter.Color,
-  uLight,
+  Trollhunter.Light,
   Trollhunter.Resources;
 
 { TMap }

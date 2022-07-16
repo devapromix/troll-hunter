@@ -1,8 +1,9 @@
-﻿unit uRace;
+﻿unit Trollhunter.Race;
 
 interface
 
-uses uSkill;
+uses
+  Trollhunter.Skill;
 
 const
   RacesCount = 10;

@@ -26,19 +26,19 @@ implementation
 
 uses
   SysUtils,
+  Graphics,
   Trollhunter.Creatures,
   Trollhunter.Scenes,
   uSceneGame,
-  Graphics,
   Trollhunter.Graph,
   Trollhunter.Color,
   Trollhunter.Game,
   Trollhunter.MainForm,
   uSceneMenu,
-  uName,
+  Trollhunter.Name,
   Trollhunter.Utils,
   Trollhunter.Error,
-  uLang,
+  Trollhunter.Lang,
   uSceneRace;
 
 { TSceneName }

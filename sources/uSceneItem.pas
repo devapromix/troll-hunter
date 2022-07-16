@@ -43,7 +43,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.Error,
-  uLog,
+  Trollhunter.Log,
   Trollhunter.Creatures,
   Trollhunter.Scenes,
   uSceneInv,
@@ -55,8 +55,8 @@ uses
   Trollhunter.Utils,
   Trollhunter.Map,
   Trollhunter.Tile,
-  uLang,
-  uSkill;
+  Trollhunter.Lang,
+  Trollhunter.Skill;
 
 { TSceneItem }
 

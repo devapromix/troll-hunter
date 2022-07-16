@@ -1,4 +1,4 @@
-﻿unit uScript;
+﻿unit Trollhunter.Script;
 
 interface
 

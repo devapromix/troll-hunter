@@ -1,4 +1,4 @@
-﻿unit uRandItems;
+﻿unit Trollhunter.RandItems;
 
 interface
 
@@ -56,7 +56,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.Utils,
-  uLang;
+  Trollhunter.Lang;
 
 { TRandItems }
 

@@ -1,8 +1,10 @@
-unit uZip;
+unit Trollhunter.Zip;
 
 interface
 
-uses SysUtils, ZipForge;
+uses 
+  SysUtils, 
+  ZipForge;
 
 const
   PWD = '4444';      

@@ -35,16 +35,16 @@ uses
   Trollhunter.Graph,
   Trollhunter.Error,
   uSceneGame,
-  uLang,
+  Trollhunter.Lang,
   Trollhunter.Creatures,
   Trollhunter.MainForm,
   Trollhunter.Scenes,
   Trollhunter.Color,
   uSceneInv,
-  uRace,
+  Trollhunter.Race,
   Trollhunter.Utils,
   Trollhunter.Item,
-  uSkill;
+  Trollhunter.Skill;
 
 { TSceneRace }
 

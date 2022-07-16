@@ -33,8 +33,8 @@ uses
   uSceneGame,
   Trollhunter.Color,
   Trollhunter.Error,
-  uLog,
-  uLang,
+  Trollhunter.Log,
+  Trollhunter.Lang,
   Trollhunter.Utils;
 
 { TSceneLevelUp }

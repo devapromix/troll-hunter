@@ -6,8 +6,8 @@ uses
   Types,
   Graphics,
   Trollhunter.BaseCreature,
-  uDecorator,
-  uTempSys;
+  Trollhunter.Decorator,
+  Trollhunter.TempSys;
 
 const
   CreaturesCount = 19;
@@ -76,11 +76,11 @@ uses
   Trollhunter.Tile,
   Trollhunter.Utils,
   Trollhunter.Creatures,
-  uLang,
-  uLog,
+  Trollhunter.Lang,
+  Trollhunter.Log,
   Trollhunter.Error,
   Trollhunter.Graph,
-  uFormulas;
+  Trollhunter.Formulas;
 
 { TCreature }
 

@@ -33,10 +33,10 @@ uses
   Math,
   SysUtils,
   Trollhunter.Utils,
-  uZip,
+  Trollhunter.Zip,
   Trollhunter.Error,
   Trollhunter.MainForm,
-  uLang;
+  Trollhunter.Lang;
 
 { TScores }
 

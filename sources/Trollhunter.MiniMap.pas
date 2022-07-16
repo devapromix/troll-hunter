@@ -4,7 +4,7 @@ interface
 
 uses
   Graphics,
-  uCustomMap;
+  Trollhunter.CustomMap;
 
 type
   TMiniMap = class(TCustomMap)

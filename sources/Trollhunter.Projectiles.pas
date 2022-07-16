@@ -1,4 +1,4 @@
-﻿unit uProjectiles;
+﻿unit Trollhunter.Projectiles;
 
 interface
 

@@ -1,4 +1,4 @@
-﻿unit uLog;
+﻿unit Trollhunter.Log;
 
 interface
 

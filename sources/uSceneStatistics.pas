@@ -36,9 +36,9 @@ uses
   Trollhunter.Graph,
   Trollhunter.Color,
   Trollhunter.Error,
-  uStatistics,
+  Trollhunter.Statistics,
   Trollhunter.Creatures,
-  uLang;
+  Trollhunter.Lang;
 
 procedure TSceneStatistics.Add(S, P: string);
 begin

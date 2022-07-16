@@ -129,12 +129,12 @@ uses
   JPEG,
   Trollhunter.Creatures,
   Trollhunter.Map,
-  uLog,
+  Trollhunter.Log,
   Trollhunter.MainForm,
   Trollhunter.Utils,
   Trollhunter.Error,
-  uSettings,
-  uLang;
+  Trollhunter.Settings,
+  Trollhunter.Lang;
 
 {$R images.res}
 { TGraph }
@@ -492,7 +492,7 @@ end;
 
 procedure TText.BarOut(const KeyID: string; LID: Word; IsNewBar: Boolean);
 begin
-  Self.BarOut(KeyID, uLang.GetLang(LID), IsNewBar);
+  Self.BarOut(KeyID, GetLang(LID), IsNewBar);
 end;
 
 function TText.ClearText(const S: string): string;

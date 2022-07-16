@@ -1,4 +1,4 @@
-﻿unit uTrap;
+﻿unit Trollhunter.Trap;
 
 interface
 
@@ -31,10 +31,10 @@ uses
   Trollhunter.Graph,
   Trollhunter.Creatures,
   Trollhunter.Utils,
-  uLog,
-  uLang,
-  uDecorator,
-  uProjectiles;
+  Trollhunter.Log,
+  Trollhunter.Lang,
+  Trollhunter.Decorator,
+  Trollhunter.Projectiles;
 
 procedure TTrap.Fire;
 var

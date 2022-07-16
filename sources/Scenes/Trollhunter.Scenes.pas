@@ -25,7 +25,7 @@ var
 implementation
 
 uses
-  uScreenshot;
+  Trollhunter.Screenshot;
 
 { TScenes }
 

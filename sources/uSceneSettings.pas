@@ -36,8 +36,8 @@ uses
   uSceneMenu,
   Trollhunter.Error,
   Trollhunter.Utils,
-  uLang,
-  uSettings;
+  Trollhunter.Lang,
+  Trollhunter.Settings;
 
 { TSceneSettings }
 

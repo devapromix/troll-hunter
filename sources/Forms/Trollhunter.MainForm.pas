@@ -48,7 +48,7 @@ uses
   uSceneMenu,
   Trollhunter.Map,
   Trollhunter.Utils,
-  uScreenshot,
+  Trollhunter.Screenshot,
   Trollhunter.Game,
   uSceneLevelUp;
 

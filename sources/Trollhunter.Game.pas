@@ -37,13 +37,13 @@ uses
   Trollhunter.Map,
   Trollhunter.Utils,
   Trollhunter.Creatures,
-  uLog,
-  uZip,
+  Trollhunter.Log,
+  Trollhunter.Zip,
   Trollhunter.Graph,
   Trollhunter.Error,
-  uTempSys,
+  Trollhunter.TempSys,
   Trollhunter.Item,
-  uSettings,
+  Trollhunter.Settings,
   Trollhunter.Resources;
 
 { TGame }

@@ -81,10 +81,10 @@ uses
   Forms,
   Classes,
   Trollhunter.Item,
-  uLang,
+  Trollhunter.Lang,
   Trollhunter.Tile,
   Trollhunter.Map,
-  uLog,
+  Trollhunter.Log,
   Trollhunter.Creatures,
   Trollhunter.AStar,
   Trollhunter.Error;

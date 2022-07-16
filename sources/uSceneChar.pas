@@ -44,9 +44,9 @@ uses
   uSceneInv,
   Trollhunter.Item,
   Trollhunter.Color,
-  uLang,
+  Trollhunter.Lang,
   Trollhunter.Map,
-  uSkill;
+  Trollhunter.Skill;
 
 { TSceneChar }
 

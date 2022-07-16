@@ -1,4 +1,4 @@
-﻿unit uDecorator;
+﻿unit Trollhunter.Decorator;
 
 interface
 
@@ -125,7 +125,7 @@ uses
   Windows,
   Trollhunter.Graph,
   Trollhunter.Error,
-  uLight,
+  Trollhunter.Light,
   Trollhunter.Map,
   Trollhunter.Tile,
   Trollhunter.Utils;

@@ -41,9 +41,9 @@ uses
   Trollhunter.Utils,
   Trollhunter.Graph,
   Trollhunter.Color,
-  uLight,
+  Trollhunter.Light,
   Trollhunter.Map,
-  uDecorator;
+  Trollhunter.Decorator;
 
 { TResources }
 
