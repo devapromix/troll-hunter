@@ -1,4 +1,4 @@
-﻿unit uGlobalMap;
+﻿unit Trollhunter.GlobalMap;
 
 interface
 

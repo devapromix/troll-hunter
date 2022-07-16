@@ -21,8 +21,9 @@ type
   end;
 
 const
-  SkillParam: array [0 .. SkillsCount] of TSkillRec = ((Exp: 3;),
-    // Daggers and knives
+  SkillParam: array [0 .. SkillsCount] of TSkillRec = (
+    //
+    (Exp: 3;), // Daggers and knives
     (Exp: 3;), //
     (Exp: 3;), //
     (Exp: 3;), //

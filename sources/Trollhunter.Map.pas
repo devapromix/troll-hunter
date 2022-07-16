@@ -6,7 +6,7 @@ uses
   Graphics,
   Classes,
   uCustomMap,
-  uMiniMap,
+  Trollhunter.MiniMap,
   Trollhunter.Item,
   uScript,
   Trollhunter.Tile,
@@ -108,8 +108,8 @@ var
 implementation
 
 uses
-  SysUtils,
   Math,
+  SysUtils,
   Trollhunter.AStar,
   Trollhunter.Creatures,
   Trollhunter.Utils,
@@ -474,7 +474,8 @@ begin
         Y := Rand(2, Map.Height - 3);
       until (Map.Cell[Y][X].Tile in FloorSet);
       S := GetRandItemID;
-      if (DungeonItems[Trollhunter.Item.Items.ItemIndex(S)].Category = dsGold) then
+      if (DungeonItems[Trollhunter.Item.Items.ItemIndex(S)].Category = dsGold)
+      then
         SpotDraw(pdItem, X, Y, S, Clamp(Info.Level, 2, 5))
       else
         Trollhunter.Item.Items.Add(X, Y, GetRandItemID);
@@ -497,13 +498,16 @@ begin
     Map.Items := RemoveBack(',', Map.Items);
     V := Explode(',', Map.Items);
     Result := V[Rand(0, High(V))];
-    if (DungeonItems[Trollhunter.Item.Items.ItemIndex(Result)].Rarity = riMagic) then
+    if (DungeonItems[Trollhunter.Item.Items.ItemIndex(Result)].Rarity = riMagic)
+    then
       if (Rand(0, 5) > 0) then
         Result := GetRandItemID;
-    if (DungeonItems[Trollhunter.Item.Items.ItemIndex(Result)].Rarity = riRare) then
+    if (DungeonItems[Trollhunter.Item.Items.ItemIndex(Result)].Rarity = riRare)
+    then
       if (Rand(0, 15) > 0) then
         Result := GetRandItemID;
-    if (DungeonItems[Trollhunter.Item.Items.ItemIndex(Result)].Rarity = riUnique) then
+    if (DungeonItems[Trollhunter.Item.Items.ItemIndex(Result)].Rarity = riUnique)
+    then
       if (Rand(0, 45) > 0) then
         Result := GetRandItemID;
   except

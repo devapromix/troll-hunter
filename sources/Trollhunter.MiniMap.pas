@@ -1,4 +1,4 @@
-﻿unit uMiniMap;
+﻿unit Trollhunter.MiniMap;
 
 interface
 

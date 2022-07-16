@@ -132,10 +132,10 @@ begin
       until not HasName(FTown[I].Name);
 
     //
-    N := '';
-    for I := 0 to TownsAmount - 1 do
+    { N := '';
+      for I := 0 to TownsAmount - 1 do
       N := N + ' ' + FTown[I].Name;
-    ShowMessage(N);
+      ShowMessage(N); }
 
   except
     on E: Exception do

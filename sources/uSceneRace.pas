@@ -229,8 +229,9 @@ begin
       if (Count > 0) then
       begin
         Font.Color := cDkYellow;
-        TextOut(Graph.CharWidth, Graph.CharHeight * 2, '#');
-        TextOut(Graph.CharWidth * 3, Graph.CharHeight * 2, GetLang(180));
+        Graph.Text.DrawOut(1, 2, '#');
+        Graph.Text.DrawOut(3, 2, GetLang(180));
+        Graph.Text.DrawOut(T, 2, GetLang(320));
       end;
       H := C + 5;
       Font.Style := [fsBold];

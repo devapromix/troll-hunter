@@ -10,7 +10,7 @@ uses
   uSkill,
   uTempSys,
   uRandItems,
-  uGlobalMap,
+  Trollhunter.GlobalMap,
   uStatistics;
 
 type

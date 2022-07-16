@@ -5,7 +5,7 @@ interface
 uses
   Types,
   Graphics,
-  uBaseCreature,
+  Trollhunter.BaseCreature,
   uDecorator,
   uTempSys;
 

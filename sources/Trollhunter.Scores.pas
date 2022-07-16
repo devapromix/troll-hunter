@@ -1,4 +1,4 @@
-﻿unit uScores;
+﻿unit Trollhunter.Scores;
 
 interface
 

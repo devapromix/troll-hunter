@@ -634,7 +634,8 @@ begin
   end;
   for i := 0 to J do
   begin
-    Trollhunter.Item.Items.Add(Creatures.PC.Pos.X, Creatures.PC.Pos.Y, Map.GetRandItemID);
+    Trollhunter.Item.Items.Add(Creatures.PC.Pos.X, Creatures.PC.Pos.Y,
+      Map.GetRandItemID);
     if not F or (Rand(1, 2) = 1) then
       Break;
   end;

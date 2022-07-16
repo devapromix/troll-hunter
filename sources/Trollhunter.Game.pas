@@ -3,7 +3,7 @@
 interface
 
 uses
-  uScores;
+  Trollhunter.Scores;
 
 type
   TPCInfo = record
