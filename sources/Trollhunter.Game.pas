@@ -34,7 +34,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.MainForm,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Utils,
   Trollhunter.Creatures,
   uLog,
@@ -42,7 +42,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Error,
   uTempSys,
-  uItem,
+  Trollhunter.Item,
   uSettings,
   Trollhunter.Resources;
 

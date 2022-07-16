@@ -42,7 +42,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Color,
   uLight,
-  uMap,
+  Trollhunter.Map,
   uDecorator;
 
 { TResources }

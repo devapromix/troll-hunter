@@ -3,7 +3,7 @@
 interface
 
 uses
-  uEntity;
+  Trollhunter.Entity;
 
 type
   TBaseTrap = class(TEntity)
@@ -27,7 +27,7 @@ implementation
 
 uses
   SysUtils,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Graph,
   Trollhunter.Creatures,
   Trollhunter.Utils,

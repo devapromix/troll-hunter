@@ -1,4 +1,4 @@
-unit uEntity;
+unit Trollhunter.Entity;
 
 interface
 
@@ -13,7 +13,7 @@ type
     procedure SetImage(const Value: TBitmap);
     procedure SetPos(const Value: TPoint);
     function GetPos: TPoint;
-    procedure SetName(const Value: string);   
+    procedure SetName(const Value: string);
   public
     procedure SetPosition(const X, Y: Integer);
     constructor Create();
@@ -23,7 +23,7 @@ type
     property Pos: TPoint read GetPos write SetPos;
   end;
 
-implementation    
+implementation
 
 { TEntity }
 

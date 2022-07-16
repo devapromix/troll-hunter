@@ -1,4 +1,4 @@
-unit uBar;
+unit Trollhunter.Bar;
 
 interface
 

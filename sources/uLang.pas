@@ -3,9 +3,9 @@
 interface
 
 uses
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Creature,
-  uMap;
+  Trollhunter.Map;
 
 const
   Lang: array [0..309 + 1, 0..1] of string = (

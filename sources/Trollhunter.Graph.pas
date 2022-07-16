@@ -128,7 +128,7 @@ uses
   Forms,
   JPEG,
   Trollhunter.Creatures,
-  uMap,
+  Trollhunter.Map,
   uLog,
   Trollhunter.MainForm,
   Trollhunter.Utils,

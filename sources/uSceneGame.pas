@@ -6,7 +6,7 @@ uses
   Classes,
   Graphics,
   Trollhunter.Scene,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Tile;
 
 var
@@ -45,7 +45,7 @@ uses
   uTrap,
   uLog,
   Trollhunter.Game,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Color,
   Trollhunter.Error,
   uSceneMenu,

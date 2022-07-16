@@ -34,7 +34,7 @@ uses
   uProjectiles,
   uDecorator,
   Trollhunter.AStar,
-  uMap;
+  Trollhunter.Map;
 
 procedure TEnemy.Poison;
 begin

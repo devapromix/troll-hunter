@@ -43,7 +43,7 @@ uses
   uSceneInv,
   uRace,
   Trollhunter.Utils,
-  uItem,
+  Trollhunter.Item,
   uSkill;
 
 { TSceneRace }

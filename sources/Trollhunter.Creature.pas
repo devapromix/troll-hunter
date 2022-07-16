@@ -72,7 +72,7 @@ implementation
 
 uses
   SysUtils,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Tile,
   Trollhunter.Utils,
   Trollhunter.Creatures,

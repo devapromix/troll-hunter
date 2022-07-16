@@ -27,10 +27,10 @@ implementation
 
 uses
   Dialogs,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Creatures,
   Trollhunter.Error,
-  uItem;
+  Trollhunter.Item;
 
 { TScript }
 

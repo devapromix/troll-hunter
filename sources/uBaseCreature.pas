@@ -2,7 +2,9 @@ unit uBaseCreature;
 
 interface
 
-uses uEntity, uBar;
+uses
+  Trollhunter.Entity,
+  Trollhunter.Bar;
 
 type
   TBaseCreature = class(TEntity)

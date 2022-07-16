@@ -42,10 +42,10 @@ uses
   uSceneGame,
   Trollhunter.Creatures,
   uSceneInv,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Color,
   uLang,
-  uMap,
+  Trollhunter.Map,
   uSkill;
 
 { TSceneChar }

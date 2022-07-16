@@ -44,9 +44,9 @@ uses
   uSceneSettings,
   uLang,
   uSettings,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Creature,
-  uMap;
+  Trollhunter.Map;
 
 { TSceneMenu }
 

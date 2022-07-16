@@ -59,11 +59,11 @@ uses
   Trollhunter.Error,
   Trollhunter.Graph,
   uProjectiles,
-  uItem,
+  Trollhunter.Item,
   uLog,
   uLang,
   uDecorator,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Tile;
 
 { TCreatures }

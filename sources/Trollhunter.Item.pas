@@ -1,4 +1,4 @@
-﻿unit uItem;
+﻿unit Trollhunter.Item;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   Classes,
   Trollhunter.Color,
   uCraft,
-  uEntity,
+  Trollhunter.Entity,
   uRandItems;
 
 const
@@ -233,7 +233,7 @@ uses
   SysUtils,
   Trollhunter.Utils,
   Trollhunter.Error,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Graph,
   Trollhunter.Creatures,
   Trollhunter.Scenes,

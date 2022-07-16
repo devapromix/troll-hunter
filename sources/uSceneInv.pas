@@ -8,7 +8,7 @@ uses
   Trollhunter.Scene,
   Trollhunter.Scenes,
   uInv,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Creatures,
   uSceneBaseGame;
 

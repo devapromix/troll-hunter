@@ -119,10 +119,10 @@
         <DCCReference Include="uSceneGame.pas"/>
         <DCCReference Include="Trollhunter.Creatures.pas"/>
         <DCCReference Include="Trollhunter.Graph.pas"/>
-        <DCCReference Include="uMap.pas"/>
+        <DCCReference Include="Trollhunter.Map.pas"/>
         <DCCReference Include="uSceneMenu.pas"/>
         <DCCReference Include="Trollhunter.Utils.pas"/>
-        <DCCReference Include="uItem.pas"/>
+        <DCCReference Include="Trollhunter.Item.pas"/>
         <DCCReference Include="uTrap.pas"/>
         <DCCReference Include="uScript.pas"/>
         <DCCReference Include="Trollhunter.Tile.pas"/>
@@ -164,8 +164,8 @@
         <DCCReference Include="uSceneRace.pas"/>
         <DCCReference Include="uRace.pas"/>
         <DCCReference Include="uSkill.pas"/>
-        <DCCReference Include="uEntity.pas"/>
-        <DCCReference Include="uBar.pas"/>
+        <DCCReference Include="Trollhunter.Entity.pas"/>
+        <DCCReference Include="Trollhunter.Bar.pas"/>
         <DCCReference Include="uMiniMap.pas"/>
         <DCCReference Include="uCustomMap.pas"/>
         <DCCReference Include="uRandItems.pas"/>

@@ -126,7 +126,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Error,
   uLight,
-  uMap,
+  Trollhunter.Map,
   Trollhunter.Tile,
   Trollhunter.Utils;
 
