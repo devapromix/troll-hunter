@@ -36,7 +36,7 @@ implementation
 
 uses
   SysUtils,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   Trollhunter.Utils,
   uSceneGame,

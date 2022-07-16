@@ -110,10 +110,10 @@ implementation
 uses
   SysUtils,
   Math,
-  uAStar,
+  Trollhunter.AStar,
   Trollhunter.Creatures,
   Trollhunter.Utils,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   Trollhunter.Color,
   uLight,

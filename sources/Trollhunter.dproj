@@ -137,8 +137,8 @@
         <DCCReference Include="Trollhunter.Color.pas"/>
         <DCCReference Include="uName.pas"/>
         <DCCReference Include="uMapGenerator.pas"/>
-        <DCCReference Include="uAStar.pas"/>
-        <DCCReference Include="uError.pas"/>
+        <DCCReference Include="Trollhunter.AStar.pas"/>
+        <DCCReference Include="Trollhunter.Error.pas"/>
         <DCCReference Include="uSceneLevelUp.pas"/>
         <DCCReference Include="uInv.pas"/>
         <DCCReference Include="uSceneInv.pas"/>

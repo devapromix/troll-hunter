@@ -56,7 +56,7 @@ uses
   Types,
   SysUtils,
   Trollhunter.Utils,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   uProjectiles,
   uItem,

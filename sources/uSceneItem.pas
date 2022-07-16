@@ -42,7 +42,7 @@ implementation
 
 uses
   SysUtils,
-  uError,
+  Trollhunter.Error,
   uLog,
   Trollhunter.Creatures,
   Trollhunter.Scenes,

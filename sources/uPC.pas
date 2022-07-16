@@ -107,7 +107,7 @@ uses
   Windows,
   SysUtils,
   Graphics,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   uLog,
   uDecorator,

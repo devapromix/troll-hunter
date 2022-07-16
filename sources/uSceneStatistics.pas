@@ -35,7 +35,7 @@ uses
   SysUtils,
   Trollhunter.Graph,
   Trollhunter.Color,
-  uError,
+  Trollhunter.Error,
   uStatistics,
   Trollhunter.Creatures,
   uLang;

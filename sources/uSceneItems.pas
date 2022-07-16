@@ -31,7 +31,7 @@ uses
   SysUtils,
   uSceneGame,
   Trollhunter.Scenes,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   uItem,
   Trollhunter.Creatures,

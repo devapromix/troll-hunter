@@ -132,7 +132,7 @@ uses
   uLog,
   Trollhunter.MainForm,
   Trollhunter.Utils,
-  uError,
+  Trollhunter.Error,
   uSettings,
   uLang;
 

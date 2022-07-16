@@ -3,7 +3,7 @@
 uses
   Windows,
   Forms,
-  Trollhunter.MainForm in 'Forms\Trollhunter.MainForm.pas' {MainForm},
+  Trollhunter.MainForm in 'Forms\Trollhunter.MainForm.pas' {MainForm} ,
   Trollhunter.Scenes in 'Scenes\Trollhunter.Scenes.pas',
   Trollhunter.Scene in 'Scenes\Trollhunter.Scene.pas',
   uSceneGame in 'uSceneGame.pas',
@@ -27,8 +27,8 @@ uses
   Trollhunter.Color in 'Trollhunter.Color.pas',
   uName in 'uName.pas',
   uMapGenerator in 'uMapGenerator.pas',
-  uAStar in 'uAStar.pas',
-  uError in 'uError.pas',
+  Trollhunter.AStar in 'Trollhunter.AStar.pas',
+  Trollhunter.Error in 'Trollhunter.Error.pas',
   uSceneLevelUp in 'uSceneLevelUp.pas',
   uInv in 'uInv.pas',
   uSceneInv in 'uSceneInv.pas',
@@ -73,16 +73,21 @@ uses
 
 {$R *.res}
 
-var UniqueMapping: THandle;
+var
+  UniqueMapping: THandle;
 
 begin
-  UniqueMapping := CreateFileMapping($ffffffff,
-    nil, PAGE_READONLY, 0, 32,'m6gh7jq2lb6mbpfrwchmaltdr45');
-  if UniqueMapping = 0 then Halt else
-    if GetLastError = ERROR_ALREADY_EXISTS then Halt;
+  UniqueMapping := CreateFileMapping($FFFFFFFF, nil, PAGE_READONLY, 0, 32,
+    'm6gh7jq2lb6mbpfrwchmaltdr45');
+  if UniqueMapping = 0 then
+    Halt
+  else if GetLastError = ERROR_ALREADY_EXISTS then
+    Halt;
   Application.Initialize;
   Application.Title := 'Trollhunter';
   Application.CreateForm(TMainForm, MainForm);
-  if ParamCraftDoc then Items.MakeCraftDoc;
+  if ParamCraftDoc then
+    Items.MakeCraftDoc;
   Application.Run;
+
 end.

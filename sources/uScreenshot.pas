@@ -13,7 +13,7 @@ uses
   PNGImage,
   Trollhunter.Graph,
   Trollhunter.Creatures,
-  uError;
+  Trollhunter.Error;
 
 function TakeScreenshot(F: Boolean = True): string;
 var
@@ -21,10 +21,10 @@ var
 
   procedure Screenshot(FileName: string);
   var
-    P: TPNGObject;
+    P: TPNGImage;
   begin
     try
-      P := TPNGObject.Create;
+      P := TPNGImage.Create;
       try
         P.Assign(Graph.Surface);
         P.SaveToFile(FileName);

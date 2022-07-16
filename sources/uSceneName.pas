@@ -37,7 +37,7 @@ uses
   uSceneMenu,
   uName,
   Trollhunter.Utils,
-  uError,
+  Trollhunter.Error,
   uLang,
   uSceneRace;
 

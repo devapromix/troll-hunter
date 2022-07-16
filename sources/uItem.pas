@@ -232,7 +232,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.Utils,
-  uError,
+  Trollhunter.Error,
   uMap,
   Trollhunter.Graph,
   Trollhunter.Creatures,
@@ -261,7 +261,7 @@ begin
     SetPosition(AX, AY);
   except
     on E: Exception do
-      uError.Error.Add('BaseItem.Create', E.Message);
+      Error.Add('BaseItem.Create', E.Message);
   end;
 end;
 
@@ -321,7 +321,7 @@ begin
     Tileset.Free;
   except
     on E: Exception do
-      uError.Error.Add('Items.Add', E.Message);
+      Error.Add('Items.Add', E.Message);
   end;
 end;
 
@@ -346,7 +346,7 @@ begin
     end;
   except
     on E: Exception do
-      uError.Error.Add('Items.Add', E.Message);
+      Error.Add('Items.Add', E.Message);
   end;
 end;
 
@@ -385,7 +385,7 @@ begin
         Graph.ModTileColor(Icon, AdvSprite, Color);
     except
       on E: Exception do
-        uError.Error.Add('Items.Colors', E.Message);
+        Error.Add('Items.Colors', E.Message);
     end;
 end;
 
@@ -537,7 +537,7 @@ begin
         end;
   except
     on E: Exception do
-      uError.Error.Add('Items.UseSubCats', E.Message);
+      Error.Add('Items.UseSubCats', E.Message);
   end;
 end;
 
@@ -548,7 +548,7 @@ begin
       UseSubCats(Index);
   except
     on E: Exception do
-      uError.Error.Add('Items.UseItem', E.Message);
+      Error.Add('Items.UseItem', E.Message);
   end;
 end;
 
@@ -599,7 +599,7 @@ begin
       end;
   except
     on E: Exception do
-      uError.Error.Add('Items.Grow', E.Message);
+      Error.Add('Items.Grow', E.Message);
   end;
 end;
 
@@ -653,7 +653,7 @@ begin
     end;
   except
     on E: Exception do
-      uError.Error.Add('Items.MakeCraftDoc', E.Message);
+      Error.Add('Items.MakeCraftDoc', E.Message);
   end;
 end;
 
@@ -740,7 +740,7 @@ begin
         end;
   except
     on E: Exception do
-      uError.Error.Add('Items.Pickup', E.Message);
+      Error.Add('Items.Pickup', E.Message);
   end;
 end;
 
@@ -768,7 +768,7 @@ begin
       end;
   except
     on E: Exception do
-      uError.Error.Add('Items.Render', E.Message);
+      Error.Add('Items.Render', E.Message);
   end;
 end;
 
@@ -779,8 +779,9 @@ begin
     Font.Style := [fsBold];
     Font.Color := cRdYellow;
     with Creatures.PC.Inv do
-      Trollhunter.Graph.Graph.Text.TextCenter(Y, Format('%s: %d/%d | %s: %d/%ds',
-        [GetLang(41), Count, MaxCount, GetLang(42), Weight, MaxWeight]));
+      Trollhunter.Graph.Graph.Text.TextCenter(Y,
+        Format('%s: %d/%d | %s: %d/%ds', [GetLang(41), Count, MaxCount,
+        GetLang(42), Weight, MaxWeight]));
   end;
 end;
 
@@ -952,7 +953,7 @@ begin
       end;
   except
     on E: Exception do
-      uError.Error.Add('Items.Identify', E.Message);
+      Error.Add('Items.Identify', E.Message);
   end;
 end;
 
@@ -971,7 +972,7 @@ begin
       end;
   except
     on E: Exception do
-      uError.Error.Add('Items.RepairAll', E.Message);
+      Error.Add('Items.RepairAll', E.Message);
   end;
 end;
 

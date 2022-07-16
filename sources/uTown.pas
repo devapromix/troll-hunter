@@ -31,7 +31,11 @@ type
 
 implementation
 
-uses SysUtils, Classes, uError, Dialogs;
+uses
+  SysUtils,
+  Classes,
+  Dialogs,
+  Trollhunter.Error;
 
 { TTown }
 

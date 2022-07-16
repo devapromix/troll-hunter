@@ -39,7 +39,7 @@ uses
   Trollhunter.Game,
   Trollhunter.Creatures,
   uSceneGame,
-  uError,
+  Trollhunter.Error,
   uLang;
 
 { TSceneLoad }

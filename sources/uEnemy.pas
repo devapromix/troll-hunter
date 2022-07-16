@@ -30,10 +30,10 @@ uses
   Trollhunter.Utils,
   uLog,
   uLang,
-  uError,
+  Trollhunter.Error,
   uProjectiles,
   uDecorator,
-  uAStar,
+  Trollhunter.AStar,
   uMap;
 
 procedure TEnemy.Poison;

@@ -1,4 +1,4 @@
-﻿unit uAStar;
+﻿unit Trollhunter.AStar;
 
 interface
 

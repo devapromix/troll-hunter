@@ -29,7 +29,7 @@ uses
   Dialogs,
   uMap,
   Trollhunter.Creatures,
-  uError,
+  Trollhunter.Error,
   uItem;
 
 { TScript }

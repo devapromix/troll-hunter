@@ -30,7 +30,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.Graph,
-  uError,
+  Trollhunter.Error,
   uLang,
   Trollhunter.Color;
 

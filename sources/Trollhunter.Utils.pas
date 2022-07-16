@@ -86,8 +86,8 @@ uses
   uMap,
   uLog,
   Trollhunter.Creatures,
-  uAStar,
-  uError;
+  Trollhunter.AStar,
+  Trollhunter.Error;
 
 function IsRealMapCell(X, Y: Integer): Boolean;
 begin

@@ -1,4 +1,4 @@
-﻿unit uError;
+﻿unit Trollhunter.Error;
 
 interface
 

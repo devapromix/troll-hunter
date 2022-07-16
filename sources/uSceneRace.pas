@@ -33,7 +33,7 @@ uses
   SysUtils,
   Types,
   Trollhunter.Graph,
-  uError,
+  Trollhunter.Error,
   uSceneGame,
   uLang,
   Trollhunter.Creatures,

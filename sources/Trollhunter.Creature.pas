@@ -78,7 +78,7 @@ uses
   Trollhunter.Creatures,
   uLang,
   uLog,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   uFormulas;
 

@@ -28,7 +28,7 @@ implementation
 
 uses
   Windows,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   uTempSys,
   uPC,

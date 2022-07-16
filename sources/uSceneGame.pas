@@ -47,7 +47,7 @@ uses
   Trollhunter.Game,
   uItem,
   Trollhunter.Color,
-  uError,
+  Trollhunter.Error,
   uSceneMenu,
   uSceneInv,
   uProjectiles,

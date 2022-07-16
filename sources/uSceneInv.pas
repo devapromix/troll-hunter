@@ -38,7 +38,7 @@ uses
   Windows,
   Types,
   SysUtils,
-  uError,
+  Trollhunter.Error,
   Trollhunter.Graph,
   Trollhunter.Color,
   Trollhunter.Game,

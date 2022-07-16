@@ -35,7 +35,7 @@ implementation
 
 uses
   SysUtils,
-  uError;
+  Trollhunter.Error;
 
 const
   MapMinLevel = 0;

@@ -40,7 +40,7 @@ uses
   uLog,
   uZip,
   Trollhunter.Graph,
-  uError,
+  Trollhunter.Error,
   uTempSys,
   uItem,
   uSettings,
