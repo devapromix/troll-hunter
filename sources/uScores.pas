@@ -8,7 +8,7 @@ uses
 type
   TScores = class(TObject)
   private
-    P: array [0 .. 6] of TStringList;
+    P: array [0 .. 5] of TStringList;
     FLine: Integer;
     FMaxCount: Integer;
     procedure SetMaxCount(const Value: Integer);
@@ -30,6 +30,7 @@ type
 implementation
 
 uses
+  Math,
   SysUtils,
   Trollhunter.Utils,
   uZip,
@@ -70,13 +71,13 @@ begin
       P[3].Append(IntToStr(Level));
       P[4].Append(IntToStr(Dungeon));
       P[5].Append(IntToStr(Turns));
-      Line := P[0].Count - 1;
+      Line := Count - 1;
       Save;
       Exit;
     end;
   except
     on E: Exception do
-      Error.Add('Scors.Add', E.Message);
+      Error.Add('Scores.Add', E.Message);
   end;
 end;
 
@@ -167,9 +168,7 @@ var
 begin
   A := TStringList.Create;
   try
-    C := Count - 1;
-    if C > MaxCount - 1 then
-      C := MaxCount - 1;
+    C := EnsureRange(Count - 1, 0, MaxCount - 1);
     for I := 0 to C do
       try
         S := '';
