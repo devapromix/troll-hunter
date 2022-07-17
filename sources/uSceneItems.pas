@@ -160,7 +160,7 @@ begin
             if ((DungeonItems[V].MaxTough > 0) and
               (Items.Item[I].Prop.Tough <= 0)) then
               Font.Color := cRed;
-            Graph.Text.DrawOut(5, Y, GetItemLang(DungeonItems[V].Sprite) +
+            Graph.Text.DrawText(5, Y, GetItemLang(DungeonItems[V].Sprite) +
               Items.GetItemProp(Items.Item[I].Count, Items.Item[I].Prop.Tough,
               I, V) + Items.GetWeight(V));
             Inc(Y);

@@ -12,7 +12,7 @@ const
 
   ('Start new game', 'Начало новой игры'), // 000
   ('Load previous game', 'Загрузить игру'),
-  ('Settings', 'Настройки'),
+  ('Game settings', 'Игровые настройки'),
   ('High scores table', 'Таблица рекордов'),
   ('Character creation', 'Создание персонажа'),
   ('', ''),
