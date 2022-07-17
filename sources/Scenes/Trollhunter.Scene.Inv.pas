@@ -1,4 +1,4 @@
-﻿unit uSceneInv;
+﻿unit Trollhunter.Scene.Inv;
 
 interface
 
@@ -10,7 +10,7 @@ uses
   Trollhunter.Inv,
   Trollhunter.Item,
   Trollhunter.Creatures,
-  uSceneBaseGame;
+  Trollhunter.Scene.BaseGame;
 
 type
   TSceneInv = class(TSceneBaseGame)
@@ -42,7 +42,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Color,
   Trollhunter.Game,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Utils,
   Trollhunter.Log,
   uSceneItem,

@@ -30,7 +30,7 @@ uses
   Trollhunter.Graph,
   Trollhunter.Creatures,
   Trollhunter.Scenes,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Color,
   Trollhunter.Error,
   Trollhunter.Log,

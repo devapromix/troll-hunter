@@ -5,7 +5,7 @@ interface
 uses
   Classes,
   Trollhunter.Scene,
-  uSceneBaseMenu;
+  Trollhunter.Scene.BaseMenu;
 
 type
   TSceneLoad = class(TSceneBaseMenu)
@@ -32,13 +32,13 @@ uses
   Graphics,
   Trollhunter.Graph,
   Trollhunter.Scenes,
-  uSceneMenu,
+  Trollhunter.Scene.Menu,
   Trollhunter.Utils,
   Trollhunter.Color,
   Trollhunter.MainForm,
   Trollhunter.Game,
   Trollhunter.Creatures,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Error,
   Trollhunter.Lang;
 

@@ -5,7 +5,7 @@ interface
 uses
   Windows,
   Graphics,
-  Trollhunter.Tile;
+  Trollhunter.Map.Tiles;
 
 type
   TObjCell = record

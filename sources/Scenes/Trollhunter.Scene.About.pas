@@ -1,10 +1,10 @@
-unit uSceneAbout;
+﻿unit Trollhunter.Scene.About;
 
 interface
 
 uses
-Classes,
-Trollhunter.Scene;
+  Classes,
+  Trollhunter.Scene;
 
 type
   TSceneAbout = class(TScene)
@@ -55,9 +55,11 @@ begin
 end;
 
 initialization
-  SceneAbout := TSceneAbout.Create;
+
+SceneAbout := TSceneAbout.Create;
 
 finalization
-  SceneAbout.Free;
+
+SceneAbout.Free;
 
 end.

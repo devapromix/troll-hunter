@@ -45,7 +45,7 @@ uses
   Trollhunter.Scenes,
   Trollhunter.Creatures,
   Trollhunter.Graph,
-  uSceneMenu,
+  Trollhunter.Scene.Menu,
   Trollhunter.Map,
   Trollhunter.Utils,
   Trollhunter.Screenshot,

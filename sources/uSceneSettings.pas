@@ -5,7 +5,7 @@ interface
 uses
   Classes,
   Trollhunter.Scene,
-  uSceneBaseMenu;
+  Trollhunter.Scene.BaseMenu;
 
 type
   TSceneSettings = class(TSceneBaseMenu)
@@ -33,7 +33,7 @@ uses
   Trollhunter.Color,
   Trollhunter.Scenes,
   Trollhunter.MainForm,
-  uSceneMenu,
+  Trollhunter.Scene.Menu,
   Trollhunter.Error,
   Trollhunter.Utils,
   Trollhunter.Lang,

@@ -82,7 +82,7 @@ uses
   Classes,
   Trollhunter.Item,
   Trollhunter.Lang,
-  Trollhunter.Tile,
+  Trollhunter.Map.Tiles,
   Trollhunter.Map,
   Trollhunter.Log,
   Trollhunter.Creatures,

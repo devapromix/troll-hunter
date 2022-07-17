@@ -46,15 +46,15 @@ uses
   Trollhunter.Log,
   Trollhunter.Creatures,
   Trollhunter.Scenes,
-  uSceneInv,
+  Trollhunter.Scene.Inv,
   Trollhunter.Item,
   Trollhunter.Graph,
   Trollhunter.Game,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Color,
   Trollhunter.Utils,
   Trollhunter.Map,
-  Trollhunter.Tile,
+  Trollhunter.Map.Tiles,
   Trollhunter.Lang,
   Trollhunter.Skill;
 

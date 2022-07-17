@@ -9,7 +9,7 @@ uses
   Trollhunter.MiniMap,
   Trollhunter.Item,
   Trollhunter.Script,
-  Trollhunter.Tile,
+  Trollhunter.Map.Tiles,
   Trollhunter.Decorator,
   Trollhunter.Map.Generator;
 

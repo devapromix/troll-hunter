@@ -1,4 +1,4 @@
-﻿unit uSceneBaseMenu;
+﻿unit Trollhunter.Scene.BaseGame;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Trollhunter.Scene;
 
 type
-  TSceneBaseMenu = class(TScene)
+  TSceneBaseGame = class(TScene)
   private
     FID: Word;
   public
@@ -25,40 +25,40 @@ uses
   Trollhunter.Lang,
   Trollhunter.Graph,
   Trollhunter.Scenes,
-  uSceneMenu;
+  Trollhunter.Scene.Game;
 
-{ TSceneBaseMenu }
+{ TSceneBaseGame }
 
-constructor TSceneBaseMenu.Create(TitleLangID: Word);
+constructor TSceneBaseGame.Create(TitleLangID: Word);
 begin
   FID := Word(TitleLangID);
 end;
 
-destructor TSceneBaseMenu.Destroy;
+destructor TSceneBaseGame.Destroy;
 begin
 
   inherited;
 end;
 
-procedure TSceneBaseMenu.KeyDown(var Key: Word; Shift: TShiftState);
+procedure TSceneBaseGame.KeyDown(var Key: Word; Shift: TShiftState);
 begin
   inherited;
   if (Key = 27) or (Key = 123) then
-    Scenes.Scene := SceneMenu;
+    Scenes.Scene := SceneGame;
 end;
 
-procedure TSceneBaseMenu.KeyPress(var Key: Char);
+procedure TSceneBaseGame.KeyPress(var Key: Char);
 begin
   inherited;
 
 end;
 
-procedure TSceneBaseMenu.Render;
+procedure TSceneBaseGame.Render;
 begin
   inherited;
   Graph.Clear(0);
   Graph.Text.TitleOut(GetLang(FID));
-  Graph.Text.BarOut('esc', GetLang(29), True);
+  Graph.Text.BarOut('esc', GetLang(27), True);
 end;
 
 end.

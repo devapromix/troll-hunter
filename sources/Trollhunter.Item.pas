@@ -240,7 +240,7 @@ uses
   Trollhunter.Scenes,
   Trollhunter.Log,
   uSceneItem,
-  Trollhunter.Tile,
+  Trollhunter.Map.Tiles,
   uSceneItems,
   Trollhunter.Lang,
   Trollhunter.TempSys,

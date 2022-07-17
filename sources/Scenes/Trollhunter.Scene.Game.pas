@@ -1,4 +1,4 @@
-﻿unit uSceneGame;
+﻿unit Trollhunter.Scene.Game;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Graphics,
   Trollhunter.Scene,
   Trollhunter.Map,
-  Trollhunter.Tile;
+  Trollhunter.Map.Tiles;
 
 var
   TT, MaxTT: Cardinal;
@@ -48,8 +48,8 @@ uses
   Trollhunter.Item,
   Trollhunter.Color,
   Trollhunter.Error,
-  uSceneMenu,
-  uSceneInv,
+  Trollhunter.Scene.Menu,
+  Trollhunter.Scene.Inv,
   Trollhunter.Projectiles,
   uSceneItem,
   Trollhunter.Decorator,

@@ -26,10 +26,10 @@ uses
   Types,
   Trollhunter.Utils,
   Trollhunter.Graph,
-  Trollhunter.Map,
   Trollhunter.Creatures,
   Trollhunter.Decorator,
-  Trollhunter.Tile;
+  Trollhunter.Map,
+  Trollhunter.Map.Tiles;
 
 procedure TLight.Render(X, Y, DX, DY: Integer);
 var

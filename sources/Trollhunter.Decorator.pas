@@ -127,7 +127,7 @@ uses
   Trollhunter.Error,
   Trollhunter.Light,
   Trollhunter.Map,
-  Trollhunter.Tile,
+  Trollhunter.Map.Tiles,
   Trollhunter.Utils;
 
 { TDecorators }

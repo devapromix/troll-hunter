@@ -120,7 +120,7 @@ uses
   Trollhunter.Utils,
   Trollhunter.Map,
   uSceneItem,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Time,
   Trollhunter.Settings,
   Trollhunter.Screenshot,

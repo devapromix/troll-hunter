@@ -6,7 +6,7 @@ uses
   Classes,
   Graphics,
   Trollhunter.Scene,
-  uSceneBaseMenu;
+  Trollhunter.Scene.BaseMenu;
 
 type
   TSceneRace = class(TSceneBaseMenu)
@@ -34,13 +34,13 @@ uses
   Types,
   Trollhunter.Graph,
   Trollhunter.Error,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Lang,
   Trollhunter.Creatures,
   Trollhunter.MainForm,
   Trollhunter.Scenes,
   Trollhunter.Color,
-  uSceneInv,
+  Trollhunter.Scene.Inv,
   Trollhunter.Race,
   Trollhunter.Utils,
   Trollhunter.Item,

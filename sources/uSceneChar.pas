@@ -7,7 +7,7 @@ uses
   Graphics,
   Trollhunter.Scene,
   Trollhunter.Scenes,
-  uSceneBaseGame;
+  Trollhunter.Scene.BaseGame;
 
 type
   TSceneChar = class(TSceneBaseGame)
@@ -39,9 +39,9 @@ uses
   Trollhunter.Error,
   Trollhunter.Graph,
   Trollhunter.Utils,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Creatures,
-  uSceneInv,
+  Trollhunter.Scene.Inv,
   Trollhunter.Item,
   Trollhunter.Color,
   Trollhunter.Lang,

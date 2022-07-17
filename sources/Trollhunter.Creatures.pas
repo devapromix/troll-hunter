@@ -64,7 +64,7 @@ uses
   Trollhunter.Lang,
   Trollhunter.Decorator,
   Trollhunter.Map,
-  Trollhunter.Tile;
+  Trollhunter.Map.Tiles;
 
 { TCreatures }
 

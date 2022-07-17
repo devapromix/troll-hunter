@@ -7,7 +7,7 @@ uses
   Graphics,
   Windows,
   Trollhunter.Scene,
-  uSceneBaseGame;
+  Trollhunter.Scene.BaseGame;
 
 type
   TSceneItems = class(TSceneBaseGame)
@@ -29,7 +29,7 @@ implementation
 
 uses
   SysUtils,
-  uSceneGame,
+  Trollhunter.Scene.Game,
   Trollhunter.Scenes,
   Trollhunter.Error,
   Trollhunter.Graph,
@@ -38,7 +38,7 @@ uses
   Trollhunter.Color,
   Trollhunter.Utils,
   Trollhunter.Lang,
-  uSceneInv;
+  Trollhunter.Scene.Inv;
 
 { TSceneItem }
 

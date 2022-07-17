@@ -26,7 +26,7 @@ implementation
 uses
   Types,
   Trollhunter.Map,
-  Trollhunter.Tile,
+  Trollhunter.Map.Tiles,
   Trollhunter.Creatures,
   Trollhunter.Utils,
   Trollhunter.Color,

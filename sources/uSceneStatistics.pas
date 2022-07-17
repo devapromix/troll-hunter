@@ -7,7 +7,7 @@ uses
   Graphics,
   Trollhunter.Scene,
   Trollhunter.Scenes,
-  uSceneBaseGame;
+  Trollhunter.Scene.BaseGame;
 
 type
   TSceneStatistics = class(TSceneBaseGame)
