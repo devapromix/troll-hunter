@@ -42,13 +42,13 @@ uses
   Trollhunter.Graph,
   Trollhunter.Color,
   Trollhunter.Game,
-  Trollhunter.Scene.Game,
   Trollhunter.Utils,
   Trollhunter.Log,
-  uSceneItem,
   Trollhunter.Lang,
-  uSceneChar,
-  uSceneItems;
+  Trollhunter.Scene.Game,
+  Trollhunter.Scene.Item,
+  Trollhunter.Scene.Char,
+  Trollhunter.Scene.Items;
 
 { TSceneInv }
 

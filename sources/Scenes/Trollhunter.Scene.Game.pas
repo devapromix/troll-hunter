@@ -51,16 +51,16 @@ uses
   Trollhunter.Scene.Menu,
   Trollhunter.Scene.Inv,
   Trollhunter.Projectiles,
-  uSceneItem,
+  Trollhunter.Scene.Item,
   Trollhunter.Decorator,
-  uSceneChar,
+  Trollhunter.Scene.Char,
   Trollhunter.Lang,
   Trollhunter.Light,
   Trollhunter.Look,
-  uSceneHelp,
-  uSceneLevelUp,
+  Trollhunter.Scene.Help,
+  Trollhunter.Scene.LevelUp,
   Trollhunter.Skill,
-  uSceneStatistics,
+  Trollhunter.Scene.Statistics,
   Trollhunter.Statistics;
 
 { TGame }

@@ -1,4 +1,4 @@
-﻿unit uSceneSettings;
+﻿unit Trollhunter.Scene.Settings;
 
 interface
 

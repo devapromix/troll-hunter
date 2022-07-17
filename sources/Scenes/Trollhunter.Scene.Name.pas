@@ -1,4 +1,4 @@
-﻿unit uSceneName;
+﻿unit Trollhunter.Scene.Name;
 
 interface
 
@@ -39,7 +39,7 @@ uses
   Trollhunter.Utils,
   Trollhunter.Error,
   Trollhunter.Lang,
-  uSceneRace;
+  Trollhunter.Scene.Race;
 
 { TSceneName }
 

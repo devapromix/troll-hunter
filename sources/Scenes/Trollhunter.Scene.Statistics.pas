@@ -1,4 +1,4 @@
-﻿unit uSceneStatistics;
+﻿unit Trollhunter.Scene.Statistics;
 
 interface
 

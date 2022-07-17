@@ -50,7 +50,7 @@ uses
   Trollhunter.Utils,
   Trollhunter.Screenshot,
   Trollhunter.Game,
-  uSceneLevelUp;
+  Trollhunter.Scene.LevelUp;
 
 {$R *.dfm}
 

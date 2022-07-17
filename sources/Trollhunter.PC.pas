@@ -114,18 +114,18 @@ uses
   Trollhunter.Lang,
   Trollhunter.Item,
   Trollhunter.Scenes,
-  uSceneLevelUp,
+  Trollhunter.Scene.LevelUp,
   Trollhunter.Creatures,
   Trollhunter.Projectiles,
   Trollhunter.Utils,
   Trollhunter.Map,
-  uSceneItem,
+  Trollhunter.Scene.Item,
   Trollhunter.Scene.Game,
   Trollhunter.Time,
   Trollhunter.Settings,
   Trollhunter.Screenshot,
   Trollhunter.Game,
-  uSceneRecords,
+  Trollhunter.Scene.Records,
   Trollhunter.Formulas;
 
 { TPC }
