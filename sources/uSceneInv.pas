@@ -47,7 +47,8 @@ uses
   Trollhunter.Log,
   uSceneItem,
   Trollhunter.Lang,
-  uSceneChar;
+  uSceneChar,
+  uSceneItems;
 
 { TSceneInv }
 
@@ -87,6 +88,12 @@ begin
             CursorPos := ClampCycle(CursorPos, 1, C);
             Render;
           end;
+        end;
+      8:
+        begin
+          C := Items.CellItemsCount(Creatures.PC.Pos.X, Creatures.PC.Pos.Y);
+          if (C > 0) then
+            Scenes.Scene := SceneItems;
         end;
       32:
         Scenes.Scene := SceneChar;
@@ -258,6 +265,8 @@ begin
       else if (C > 1) then
         Graph.Text.BarOut('enter, a-' + Chr(96 + C), GetLang(24), False);
       Graph.Text.BarOut('space', GetLang(8), False);
+      if (Items.CellItemsCount(Creatures.PC.Pos.X, Creatures.PC.Pos.Y) > 0) then
+        Graph.Text.BarOut('backspace', GetLang(111), False);
       Draw(Graph.Surface.Width - 72, Graph.CharHeight, Hero);
       if (ItemUseID <> '') then
         RenderUseIcon;

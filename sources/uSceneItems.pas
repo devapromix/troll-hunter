@@ -74,6 +74,11 @@ begin
           end;
         end;
       32:
+        begin
+          Items.PickupAll;
+          Scenes.Scene := SceneGame
+        end;
+      8:
         Scenes.Scene := SceneInv;
       13:
         begin
@@ -170,7 +175,8 @@ begin
         Graph.Text.BarOut('enter, a', GetLang(26), False)
       else if (C > 1) then
         Graph.Text.BarOut('enter, a-' + Chr(96 + C), GetLang(26), False);
-      Graph.Text.BarOut('space', GetLang(25), False);
+      Graph.Text.BarOut('backspace', GetLang(25), False);
+      Graph.Text.BarOut('space', GetLang(50), False);
     end;
     Graph.Render;
     Tileset.Free;

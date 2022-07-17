@@ -60,7 +60,7 @@ const
   ('There is an open chest.', 'Открытый сундук.'),
   ('random name', 'генерировать имя'),
   ('to return to inventory', 'вернуться в инвентарь'),
-  ('', ''), // 050
+  ('pickup all items', 'поднять все предметы'), // 050
   ('There are many items lays in the chest (#w%s$).', 'Несколько предметов лежат в сундуке (#w%s$).'),
   ('A #w%s$ lays in the chest.', '#w%s$ лежит в сундуке.'),
   ('There are many items lays in the ground (#w%s$).', 'Несколько предметов лежат на земле (#w%s$).'),
@@ -121,7 +121,7 @@ const
   ('You hit the %s %d.', '%s теряет ману %d.'), 
   ('You find then hidden trap.', 'Ты нашел скрытую ловушку.'),
   ('Area', 'Локация'), // 110
-  ('', ''),
+  ('Items on the ground', 'Предметы на земле'),
   ('Allows you to open the lock.', 'Позволяет открыть замок.'),
   ('', ''),
   ('', ''),

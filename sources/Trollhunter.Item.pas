@@ -191,6 +191,7 @@ type
     property Item: TItem read FItem write SetItem;
     procedure Clear;
     procedure Pickup(Index: Integer = 0);
+    procedure PickupAll;
     function Craft(A, B: string): string;
     procedure Damage(const ItemSet: TCatSet; Chance: Byte = 3);
     function IsDollSubCat(SC: TSubCats): Boolean;
@@ -741,6 +742,20 @@ begin
   except
     on E: Exception do
       Error.Add('Items.Pickup', E.Message);
+  end;
+end;
+
+procedure TItems.PickupAll;
+var
+  C, I: Integer;
+begin
+  try
+    C := Items.CellItemsCount(Creatures.PC.Pos.X, Creatures.PC.Pos.Y);
+    for I := 0 to C do
+      Pickup(I);
+  except
+    on E: Exception do
+      Error.Add('Items.PickupAll', E.Message);
   end;
 end;
 
