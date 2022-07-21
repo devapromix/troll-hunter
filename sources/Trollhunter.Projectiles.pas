@@ -17,6 +17,7 @@ type
     constructor Create(ACreature: TCreature; FromX, FromY, ToX, ToY: Integer);
   end;
 
+type
   TAnimNumber = class(TObject)
   private
     FBack: Graphics.TBitmap;

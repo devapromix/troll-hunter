@@ -1,8 +1,8 @@
   (
   ID          : 'STONYFIELD';    
-  Level       : 5;
+  Level       : 4;
   Items       : PotionLevel1 + PotionLevel2 + WeaponLevel1 + AmmuntLevel1 + RarityLevel1 + ScrollLevel1;
-  Creatures   : 'SKELETON,SKELETONMAGE,NECROMANCER,DARKEYE,MAGAN,';
+  Creatures   : 'SKELETON,SKELETONMAGE,DARKEYE,';
   Underground : False;  
   Village     : False;
   GenID       : G_STONY_FIELD;

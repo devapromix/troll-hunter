@@ -784,7 +784,7 @@ begin
   Prop.Radius := Clamp(Prop.Radius, 0, 9);
   Result := Prop.Radius;
   if TempSys.IsVar('Blind') then
-    Result := 0;
+    Result := 1;
 end;
 
 procedure TPC.Defeat;

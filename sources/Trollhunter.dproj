@@ -106,6 +106,7 @@
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_MinorVer>13</VerInfo_MinorVer>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
+        <Debugger_RunParams>-d</Debugger_RunParams>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
