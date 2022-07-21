@@ -142,7 +142,7 @@ begin
       Add(GetLang(15), Creatures.PC.Prop.Strength);
       Add(GetLang(16), Creatures.PC.Prop.Dexterity);
       Add(GetLang(17), Creatures.PC.Prop.Will);
-      Add(GetLang(18), Creatures.PC.Prop.Speed);
+      Add(GetLang(18), Creatures.PC.GetSpeed);
       Add();
       Add(Graph.Bars.LIFE, GetLang(22), Format('%d/%d', [Creatures.PC.LIFE.Cur,
         Creatures.PC.LIFE.Max]));

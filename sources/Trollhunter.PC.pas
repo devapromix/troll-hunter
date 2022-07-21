@@ -99,11 +99,14 @@ type
     property Effects: TEffects read FEffects write SetEffects;
     function GetRadius: Integer;
     procedure Portal;
+    function GetSpeed: Integer;
+
   end;
 
 implementation
 
 uses
+  Math,
   Windows,
   SysUtils,
   Graphics,
@@ -755,6 +758,7 @@ end;
 procedure TPC.Calc;
 begin
   inherited Calc;
+  AP.SetMax(GetMaxAP(GetSpeed));
   Inv.MaxCount := GetMaxCount(Prop.Strength);
   Inv.MaxWeight := GetMaxWeight(Prop.Strength);
   Mana.SetMax(GetMaxMana(Prop.Will) +
@@ -785,6 +789,14 @@ begin
   Result := Prop.Radius;
   if TempSys.IsVar('Blind') then
     Result := 1;
+end;
+
+function TPC.GetSpeed: Integer;
+begin
+  Result := Prop.Speed;
+  if TempSys.IsVar('Webbed') then
+    Result := Math.EnsureRange(Prop.Speed - TempSys.Power('Webbed'), 3,
+      Prop.Speed);
 end;
 
 procedure TPC.Defeat;

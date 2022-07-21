@@ -71,6 +71,7 @@ type
 implementation
 
 uses
+  Math,
   SysUtils,
   Trollhunter.Map,
   Trollhunter.Map.Tiles,
@@ -144,11 +145,23 @@ procedure TCreature.Move(AX, AY: Integer; B: Boolean = True);
   begin
     with Creatures.PC.TempSys do
       try
-        Add('Poison', Map.Level, Rand(Map.Level * 3, Map.Level * 5));
+        Add('Poison', Map.Level, Rand(Map.Level * 2, Map.Level * 4));
         Log.Add(Format(GetLang(105), [Power('Poison'), Duration('Poison')]));
       except
         on E: Exception do
           Error.Add('Creature.Move.TrapPoison', E.Message);
+      end;
+  end;
+
+  procedure TrapWeb();
+  begin
+    with Creatures.PC.TempSys do
+      try
+        Add('Webbed', Map.Level, Rand(Map.Level * 3, Map.Level * 5));
+        Log.Add(Format(GetLang(113), [Power('Webbed'), Duration('Webbed')]));
+      except
+        on E: Exception do
+          Error.Add('Creature.Move.TrapWeb', E.Message);
       end;
   end;
 
@@ -188,7 +201,8 @@ procedure TCreature.Move(AX, AY: Integer; B: Boolean = True);
           TrapMagic();
         dTrapSum:
           Creatures.Summon();
-
+        dTrapWeb:
+          TrapWeb();
         dTrapMax:
           Creatures.Teleport(True);
       else
@@ -204,15 +218,7 @@ procedure TCreature.Move(AX, AY: Integer; B: Boolean = True);
 
 begin
   try
-    case Map.Cell[Pos.Y][Pos.X].Decor of
-      dWeb, dTrapWeb:
-        // Web
-        if B and (Rand(1, 10) > 1) then
-          Exit;
-    end;
     SetPosition(Pos.X + AX, Pos.Y + AY);
-    // Pos.Y := Pos.Y + AY;
-    // Pos.X := Pos.X + AX;
     if (Mana.Cur < Mana.Max) and (Rand(1, 3) = 1) then
       Mana.Inc;
     case Map.Cell[Pos.Y][Pos.X].Decor of
@@ -224,6 +230,8 @@ begin
         end;
       dTrapMin .. dTrapMax:
         DoTrap(Map.Cell[Pos.Y][Pos.X].Decor);
+      dWeb:
+        TrapWeb();
     end;
   except
     on E: Exception do

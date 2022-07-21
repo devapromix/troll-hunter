@@ -123,7 +123,7 @@ const
   ('Area', 'Локация'), // 110
   ('Items on the ground', 'Предметы на земле'),
   ('Allows you to open the lock.', 'Позволяет открыть замок.'),
-  ('', ''),
+  ('You are webbed %d (%d m).', 'Ты запутался в паутине %d (%d х).'),
   ('', ''),
   ('Shows enemies. Radius -', 'Показывает врагов. Обзор -'),
   ('', ''),
