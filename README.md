@@ -1,4 +1,4 @@
-![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/logo.png)
+![screenshot](https://github.com/devapromix/troll-hunter/blob/master/screenshots/logo.png)
 
 ![license](https://img.shields.io/npm/l/express.svg)
 
@@ -9,14 +9,16 @@ Far away in an uncharted region of the Earth land Elvion lies surrounded by moun
 
 You are the hero who departs on a quest to stop the enemies and save your homeland, Elvion. Survive, gather equipment, fight adversaries and be ready for the final confrontation. Good luck! You will need it.
 
-##Hints on how to play
+## Hints on how to play
 Use in game help '?'
 
 ## Current State
 The game is currently in demo stage with very limited contents and lots of issues to solve and improve.
 
 ## Contributing
-Contributions are welcome! Please fork this repository and then once you have made and tested your changes, submit a pull request.
+Contributions are welcome! Please fork this repository and then once you have made and tested your changes, submit a pull request. 
+
+[Note to Linux users: the new version builds under Linux (with some effort) but does not run.]
 
 ## System requirements
 
@@ -37,10 +39,8 @@ You may need to set "executable" bit in Linux.
 
 ![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_4.png)
 
-![screenshot](https://github.com/devapromix-roguelikes/troll-hunter/blob/master/screenshots/screenshot_5.png)
-
 ## Credits
 Copyright (C) 2017-2021 by Sergiy Tkach (Apromix).
 
 Trollhunter is open source, written in pascal, the full source is available at:
-https://github.com/devapromix-roguelikes/troll-hunter
+https://github.com/devapromix/troll-hunter
