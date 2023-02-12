@@ -1,1 +1,0 @@
-Trollhunter -r1280x700 -d

@@ -1,1 +1,0 @@
-Trollhunter -r900x600 -d
