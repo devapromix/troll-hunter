@@ -1228,8 +1228,10 @@ begin
     TK_ALIGN_LEFT);
 
   AddKey('Esc', _('Close'));
+  AddKey('LEFT/A', '1');
   AddKey('UP/W', _('More'));
   AddKey('DOWN/X', _('Less'));
+  AddKey('RIGHT/D', _('Max'));
   AddKey('Enter', _('Apply'), True);
 end;
 
@@ -1252,10 +1254,14 @@ begin
         else
           Player.PickUpAmount(Player.ItemIndex);
       end;
+    TK_LEFT, TK_KP_4, TK_A:
+      ChAmount(1);
     TK_UP, TK_KP_8, TK_W:
       ChAmount(Player.ItemAmount + 1);
     TK_DOWN, TK_KP_2, TK_X:
       ChAmount(Player.ItemAmount - 1);
+    TK_RIGHT, TK_KP_6, TK_D:
+      ChAmount(MaxAmount);
   end;
 end;
 
