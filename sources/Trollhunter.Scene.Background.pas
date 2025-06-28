@@ -17,9 +17,6 @@ type
 
 implementation
 
-const
-  DELAY_MS = 1000;
-
 { TSceneBackground }
 
 uses
@@ -30,6 +27,9 @@ uses
   uLanguage,
   uGame,
   uMap;
+
+const
+  DELAY_MS = 1000;
 
 procedure TSceneBackground.Render;
 begin

@@ -12,12 +12,13 @@ type
     FAct: string;
     FMsg: string;
     FLog: TStringList;
+    function GetColorByIndex(const AIndex: Int): string;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Render(const Y: UInt = 0; Flag: Boolean = False);
     procedure Clear;
-    procedure Add(S: string);
+    procedure Add(const AMsg: string);
     procedure Turn;
     property Msg: string read FMsg write FMsg;
     function GetLastMsg(const ACount: Int): string;
@@ -29,7 +30,9 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
+  StrUtils,
   Math,
   Trollhunter.Terminal,
   BearLibTerminal,
@@ -39,12 +42,19 @@ uses SysUtils,
 { TMsgLog }
 
 const
-  MaxLogCapacity = 50;
+  MAX_LOG_CAPACITY = 50;
 
-procedure TMsgLog.Add(S: string);
+function TMsgLog.GetColorByIndex(const AIndex: Int): string;
 begin
-  FMsg := FMsg + ' ' + Trim(S);
+  Result := IfThen(Odd(AIndex), 'dark gray', 'light gray');
+end;
+
+procedure TMsgLog.Add(const AMsg: string);
+begin
+  FMsg := FMsg + ' ' + Trim(AMsg);
   Game.Timer := UIntMax;
+  while FLog.Count >= MAX_LOG_CAPACITY do
+    FLog.Delete(0);
 end;
 
 procedure TMsgLog.Clear;
@@ -68,23 +78,17 @@ end;
 function TMsgLog.GetLastMsg(const ACount: Int): string;
 var
   I, C: Int;
-  SL: TStringList;
-  Color: string;
+  LStringList: TStringList;
 begin
-  SL := TStringList.Create;
+  LStringList := TStringList.Create;
   try
     C := Math.Min(ACount, FLog.Count);
     for I := C downto 1 do
-    begin
-      if (Odd(I)) then
-        Color := 'dark gray'
-      else
-        Color := 'light gray';
-      SL.Append(Terminal.Colorize(FLog[FLog.Count - I], Color));
-    end;
-    Result := SL.Text;
+      LStringList.Append(Terminal.Colorize(FLog[FLog.Count - I],
+        GetColorByIndex(I)));
+    Result := LStringList.Text;
   finally
-    FreeAndNil(SL);
+    FreeAndNil(LStringList);
   end;
 end;
 
@@ -99,24 +103,18 @@ begin
     FAct := Terminal.Colorize(Trim(FMsg), Terminal.GetColorFromIni('Log'));
   Terminal.ForegroundColor(clGray);
   Terminal.Print(Log.Left, Log.Top + Y, Log.Width, Log.Height,
-    Trim(Self.GetLastMsg(MaxLogCapacity) + FAct), TK_ALIGN_BOTTOM);
+    Trim(Self.GetLastMsg(MAX_LOG_CAPACITY) + FAct), TK_ALIGN_BOTTOM);
 end;
 
 procedure TMsgLog.RenderAllMessages;
 var
-  S, Color: string;
+  S: string;
   I, C: Int;
 begin
   S := '';
   C := Math.Min(Screen.Height - 3, FLog.Count);
   for I := C downto 1 do
-  begin
-    if (Odd(I)) then
-      Color := 'dark gray'
-    else
-      Color := 'light gray';
-    S := S + ' ' + Terminal.Colorize(FLog[FLog.Count - I], Color);
-  end;
+    S := S + ' ' + Terminal.Colorize(FLog[FLog.Count - I], GetColorByIndex(I));
   Terminal.ForegroundColor(clGray);
   Terminal.Print(1, 2, Screen.Width - 1, Screen.Height - 4, Trim(S),
     TK_ALIGN_BOTTOM);
