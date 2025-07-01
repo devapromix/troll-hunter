@@ -2,7 +2,8 @@ unit uSkill;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TSkillEnum = (
@@ -49,13 +50,14 @@ const
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   Math,
   uLanguage,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
   uHelpers;

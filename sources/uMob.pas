@@ -2,7 +2,13 @@ unit uMob;
 
 interface
 
-uses Trollhunter.Types, uGame, uMap, uEntity, uCreature, uAbility;
+uses
+  Trollhunter.Types,
+  Trollhunter.Game,
+  uMap,
+  uEntity,
+  uCreature,
+  uAbility;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead,
@@ -487,7 +493,8 @@ var
 
 implementation
 
-uses Math,
+uses
+  Math,
   SysUtils,
   TypInfo,
   Trollhunter.Terminal,
@@ -684,8 +691,7 @@ begin
       (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Game.EnsureRange(Math.RandomRange(L + 5,
-        L + 9), UIntMax);
+      Dam := Game.EnsureRange(Math.RandomRange(L + 5, L + 9), UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
         Dam := Game.EnsureRange(Dam * 3, UIntMax);
       Player.Abilities.Modify(abDiseased, Dam);
@@ -735,8 +741,7 @@ begin
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Game.EnsureRange(Math.RandomRange(L + 3,
-        L + 5), UIntMax);
+      Dam := Game.EnsureRange(Math.RandomRange(L + 3, L + 5), UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
         Dam := Game.EnsureRange(Dam * 3, UIntMax);
       Player.Abilities.Modify(abCursed, Dam);
@@ -758,8 +763,8 @@ begin
       Exit;
     end;
     // Attack
-    Dam := Game.EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min , MobBase[TMobEnum(ID)].Damage.Max +
-      3), UIntMax);
+    Dam := Game.EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min,
+      MobBase[TMobEnum(ID)].Damage.Max + 3), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
@@ -773,8 +778,7 @@ begin
     // Damage
     Player.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
-    if (((Math.RandomRange(0, 9) = 0) and
-      not Mode.Wizard)) then
+    if (((Math.RandomRange(0, 9) = 0) and not Mode.Wizard)) then
       Player.BreakItem();
     if Player.IsDead then
       Player.Defeat(Mobs.GetName(TMobEnum(ID)));

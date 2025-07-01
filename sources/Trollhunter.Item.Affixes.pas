@@ -2,7 +2,11 @@ unit Trollhunter.Item.Affixes;
 
 interface
 
-uses Trollhunter.Types, uCreature, Trollhunter.Item.Types, uBeaRLibItemsCommon;
+uses
+  Trollhunter.Types,
+  uCreature,
+  Trollhunter.Item.Types,
+  uBeaRLibItemsCommon;
 
 type
   TSuffixBase = record
@@ -572,7 +576,14 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, Trollhunter.Terminal, uGame, uHelpers, uItem;
+uses
+  SysUtils,
+  TypInfo,
+  Math,
+  Trollhunter.Terminal,
+  Trollhunter.Game,
+  uHelpers,
+  uItem;
 
 function TAffixes.Amount: UInt;
 begin

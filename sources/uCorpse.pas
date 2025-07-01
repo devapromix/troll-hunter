@@ -2,7 +2,8 @@ unit uCorpse;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 const
   CorpseMax = 10;
@@ -31,10 +32,11 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.Player,
   uMap,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.Terminal;
 
 { TCorpses }

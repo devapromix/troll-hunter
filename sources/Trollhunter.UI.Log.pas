@@ -37,7 +37,7 @@ uses
   Trollhunter.Terminal,
   BearLibTerminal,
   Trollhunter.Player,
-  uGame;
+  Trollhunter.Game;
 
 { TMsgLog }
 

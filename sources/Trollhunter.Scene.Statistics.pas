@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Statistics;
 
 interface
 
-uses uScenes,
+uses
+  uScenes,
   Trollhunter.Types;
 
 type
@@ -14,11 +15,12 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.UI,
   Trollhunter.Player,
   Trollhunter.Player.Types,
-  uGame,
+  Trollhunter.Game,
   uLanguage,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,

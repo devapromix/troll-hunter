@@ -2,7 +2,9 @@ unit Trollhunter.Scene.Quest;
 
 interface
 
-uses Trollhunter.Types, uScenes;
+uses
+  Trollhunter.Types,
+  uScenes;
 
 type
   TSceneQuest = class(TScene)
@@ -15,7 +17,12 @@ implementation
 
 { TSceneQuest }
 
-uses Trollhunter.UI, uQuest, uLanguage, BearLibTerminal, uGame;
+uses
+  Trollhunter.UI,
+  uQuest,
+  uLanguage,
+  BearLibTerminal,
+  Trollhunter.Game;
 
 procedure TSceneQuest.Render;
 begin

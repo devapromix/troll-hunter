@@ -92,7 +92,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Sources\Trollhunter.Types.pas"/>
-        <DCCReference Include="Sources\uGame.pas"/>
+        <DCCReference Include="sources\Trollhunter.Game.pas"/>
         <DCCReference Include="Sources\uLanguage.pas"/>
         <DCCReference Include="Sources\Trollhunter.Terminal.pas"/>
         <DCCReference Include="Sources\uScenes.pas"/>
@@ -218,13 +218,13 @@
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Trollhunter.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="Trollhunter.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Trollhunter.exe</RemoteName>
                         <Overwrite>true</Overwrite>

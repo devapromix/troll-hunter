@@ -25,7 +25,7 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Player,
   uLanguage,
-  uGame,
+  Trollhunter.Game,
   uMap;
 
 const

@@ -2,7 +2,8 @@ unit uMap;
 
 interface
 
-uses Trollhunter.Types;
+uses
+Trollhunter.Types;
 
 type
   TMapEnum = (deDark_Wood, deGray_Cave, deDeep_Cave, deBlood_Cave, deDrom);
@@ -85,7 +86,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+ SysUtils,
   Math,
   Types,
   TypInfo,
@@ -94,7 +96,7 @@ uses SysUtils,
   uItem,
   uLanguage,
   Trollhunter.Terminal,
-  uGame,
+  Trollhunter.Game,
   uCreature,
   uAttribute,
   uScenes,

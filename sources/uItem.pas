@@ -4,11 +4,12 @@ interface
 
 { TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
   uBearLibItemsCommon,
-  uGame,
+  Trollhunter.Game,
   uMap,
   Trollhunter.Player,
   uEntity,
@@ -1637,7 +1638,8 @@ var
 
 implementation
 
-uses Math,
+uses
+  Math,
   Classes,
   TypInfo,
   SysUtils,
@@ -2017,8 +2019,7 @@ begin
     itCoin:
       begin
         Value := Ord(AZ) + 1;
-        FItem.Amount := Math.RandomRange(Value * Value,
-          Value * Value * 5) + 1;
+        FItem.Amount := Math.RandomRange(Value * Value, Value * Value * 5) + 1;
         if Player.Talents.IsTalent(tlMiser) then
           FItem.Amount := FItem.Amount * 2;
         // Extra Gold from Monsters

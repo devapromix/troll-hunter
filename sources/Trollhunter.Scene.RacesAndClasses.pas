@@ -2,7 +2,8 @@ unit Trollhunter.Scene.RacesAndClasses;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   uScenes;
 
 type
@@ -34,14 +35,15 @@ type
 
 implementation
 
-uses Math,
+uses
+  Math,
   BearLibTerminal,
   uLanguage,
   Trollhunter.Terminal,
   Trollhunter.Player,
   uAttribute,
   uAbility,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
   Trollhunter.UI,

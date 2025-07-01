@@ -2,7 +2,8 @@ unit Trollhunter.Scene.Name;
 
 interface
 
-uses uScenes,
+uses
+  uScenes,
   Trollhunter.Types;
 
 type
@@ -14,10 +15,11 @@ type
 
 implementation
 
-uses Trollhunter.Terminal,
+uses
+  Trollhunter.Terminal,
   Trollhunter.UI,
   Trollhunter.Player,
-  uGame,
+  Trollhunter.Game,
   uLanguage,
   BearLibTerminal;
 

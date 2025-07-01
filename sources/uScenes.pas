@@ -8,7 +8,7 @@ uses
   Trollhunter.Types,
   uBearLibItemsCommon,
   uMob,
-  uGame,
+  Trollhunter.Game,
   uAttribute;
 
 type
@@ -264,7 +264,8 @@ uses
   Trollhunter.Player.Types,
   Trollhunter.Scene.Statistics,
   Trollhunter.Scene.Options,
-  Trollhunter.Player.Helpers, Trollhunter.Scene.Help;
+  Trollhunter.Player.Helpers,
+  Trollhunter.Scene.Help;
 
 { TScene }
 

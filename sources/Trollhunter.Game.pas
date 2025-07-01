@@ -1,4 +1,4 @@
-unit uGame;
+unit Trollhunter.Game;
 
 interface
 
