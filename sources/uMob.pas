@@ -570,17 +570,16 @@ begin
   FColor := MobBase[TMobEnum(ID)].Color;
   // Life
   V := Game.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss,
-    (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25, 0), UIntMax);
+    (MobBase[TMobEnum(ID)].Level) * 25, 0), UIntMax);
   Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife
-    + V, MobBase[TMobEnum(ID)].MaxLife + (Ord(Game.Difficulty) *
-    MobBase[TMobEnum(ID)].Level) + V));
+    + V, MobBase[TMobEnum(ID)].MaxLife + MobBase[TMobEnum(ID)].Level + V));
   Self.Fill;
   // DV
-  V := MobBase[TMobEnum(ID)].DV + (Ord(Game.Difficulty) * 5);
+  V := MobBase[TMobEnum(ID)].DV + 5;
   Attributes.SetValue(atDV, Math.EnsureRange(Math.RandomRange(V - 10, V + 10),
     5, DVMax - 10));
   // PV
-  V := MobBase[TMobEnum(ID)].PV + (Ord(Game.Difficulty) * 10);
+  V := MobBase[TMobEnum(ID)].PV + 10;
   Attributes.SetValue(atPV, Game.EnsureRange(Math.RandomRange(V, V * 2),
     PVMax - 10));
   // Boss
@@ -594,8 +593,8 @@ begin
     // PV
     Attributes.SetValue(atPV,
       Math.EnsureRange(Math.RandomRange(Attributes.Attrib[atPV].Value,
-      Attributes.Attrib[atPV].Value + (MobBase[TMobEnum(ID)].Level *
-      Ord(Game.Difficulty))), Attributes.Attrib[atPV].Value, PVMax - 10));
+      Attributes.Attrib[atPV].Value + (MobBase[TMobEnum(ID)].Level)),
+      Attributes.Attrib[atPV].Value, PVMax - 10));
   end;
 end;
 
@@ -685,8 +684,8 @@ begin
       (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Game.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 5),
-        L * (Ord(Game.Difficulty) + 9)), UIntMax);
+      Dam := Game.EnsureRange(Math.RandomRange(L + 5,
+        L + 9), UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
         Dam := Game.EnsureRange(Dam * 3, UIntMax);
       Player.Abilities.Modify(abDiseased, Dam);
@@ -736,8 +735,8 @@ begin
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
-      Dam := Game.EnsureRange(Math.RandomRange(L * (Ord(Game.Difficulty) + 3),
-        L * (Ord(Game.Difficulty) + 5)), UIntMax);
+      Dam := Game.EnsureRange(Math.RandomRange(L + 3,
+        L + 5), UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
         Dam := Game.EnsureRange(Dam * 3, UIntMax);
       Player.Abilities.Modify(abCursed, Dam);
@@ -759,9 +758,8 @@ begin
       Exit;
     end;
     // Attack
-    Dam := Game.EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
-      Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
-      (Ord(Game.Difficulty) * 3)), UIntMax);
+    Dam := Game.EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min , MobBase[TMobEnum(ID)].Damage.Max +
+      3), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
@@ -775,7 +773,7 @@ begin
     // Damage
     Player.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format(_('%s hits you (%d).'), [The, Dam]));
-    if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and
+    if (((Math.RandomRange(0, 9) = 0) and
       not Mode.Wizard)) then
       Player.BreakItem();
     if Player.IsDead then
@@ -1082,7 +1080,7 @@ begin
   FCount := MobBase[TMobEnum(ID)].MaxCount;
   FCount := Math.EnsureRange(Math.RandomRange(FCount div 2, FCount), 1, FCount);
   if (FCount > 1) then
-    FCount := Math.RandomRange(FCount, FCount + (Ord(Game.Difficulty) * 2));
+    FCount := Math.RandomRange(FCount, FCount + 2);
   for I := 1 to FCount do
   begin
     repeat

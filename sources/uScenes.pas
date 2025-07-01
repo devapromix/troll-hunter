@@ -14,9 +14,9 @@ uses
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
-    scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification, scBackground,
-    scEnchant, scClass, scRace);
+    scQuest, scSell, scRepair, scBuy, scCalendar, scRest, scName, scSpellbook,
+    scOptions, scTalents, scIdentification, scBackground, scEnchant,
+    scClass, scRace);
 
 type
   TScene = class(TObject)
@@ -74,13 +74,6 @@ type
 
 type
   TSceneSpellbook = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneDifficulty = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -407,8 +400,6 @@ begin
         FScene[I] := TSceneRepair.Create;
       scCalendar:
         FScene[I] := TSceneCalendar.Create;
-      scDifficulty:
-        FScene[I] := TSceneDifficulty.Create;
       scRest:
         FScene[I] := TSceneRest.Create;
       scName:
@@ -544,10 +535,10 @@ begin
     TK_A .. TK_J:
       ;
     TK_SPACE:
-      Scenes.SetScene(scDifficulty);
+      Scenes.SetScene(scRace);
     TK_ENTER, TK_KP_ENTER:
       if Mode.Wizard then
-        Scenes.SetScene(scDifficulty);
+        Scenes.SetScene(scRace);
     TK_Z:
       Mode.Wizard := False;
   end;
@@ -813,12 +804,9 @@ begin
     TK_SPACE:
       if Player.IsDead then
       begin
-        if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
-        begin
-          Player.Spawn;
-          Player.Fill;
-          Exit;
-        end;
+        Player.Spawn;
+        Player.Fill;
+        Exit;
         Scenes.SetScene(scDef);
         Exit;
       end;
@@ -1628,56 +1616,6 @@ begin
   end;
 end;
 
-{ TSceneDifficulty }
-
-procedure TSceneDifficulty.Render;
-begin
-  UI.Title(_('Choose a difficulty'));
-
-  Terminal.Print(CX - 5, CY - 3, Format('%s %s', [UI.KeyToStr('A'), _('Easy')]),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), _('Normal')]
-    ), TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 1, Format('%s %s', [UI.KeyToStr('C'), _('Hard')]),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 3, Format('%s %s', [UI.KeyToStr('D'), _('Hell')]),
-    TK_ALIGN_LEFT);
-
-  AddKey('Esc', _('Back'), True);
-end;
-
-procedure TSceneDifficulty.Update(var Key: UInt);
-begin
-  case Key of
-    TK_A .. TK_D, TK_ENTER, TK_KP_ENTER:
-      begin
-        case Key of
-          TK_A:
-            Game.Difficulty := dfEasy;
-          TK_B:
-            Game.Difficulty := dfNormal;
-          TK_C:
-            Game.Difficulty := dfHard;
-          TK_D:
-            Game.Difficulty := dfHell;
-          TK_ENTER, TK_KP_ENTER:
-            if Mode.Wizard then
-              Game.Difficulty := dfNormal
-            else
-              Exit;
-        end;
-        Game.Start();
-        Scenes.SetScene(scRace, scDifficulty);
-        (Scenes.GetScene(scRace) as TSceneRace).SelRand;
-        (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
-        (Scenes.GetScene(scClass) as TSceneClass).SelRand;
-        (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
-      end;
-    TK_ESCAPE:
-      Scenes.SetScene(scTitle);
-  end;
-end;
-
 { TSceneSpells }
 
 procedure TSceneSpellbook.Render;
@@ -1712,7 +1650,7 @@ begin
     end;
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Cast spell'));
+  AddKey('A-Z', _('Cast a spell'));
   AddKey('Esc', _('Close'), True);
 end;
 
