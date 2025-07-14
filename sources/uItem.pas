@@ -844,7 +844,7 @@ const
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
     Price: 1000; Color: clDarkBlue; Deep: [deDrom];),
 
-    // Dagger #1
+    // Small Dagger
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;));
@@ -1073,7 +1073,7 @@ const
     Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;));
     Price: 400; Color: clDarkGreen; Deep: [deDark_Wood];),
 
-    /// / == Gray Cave == ////
+    //// == Gray Cave == ////
 
     // Helm
     (Symbol: '^'; ItemType: itHeadgear; SlotType: stHead; MaxStack: 1;
