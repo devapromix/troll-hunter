@@ -28,6 +28,8 @@ type
     Effects: TEffects;
   end;
 
+  { of the Damned }
+
 type
   TSuffixEnum = (
     // None
@@ -39,8 +41,8 @@ type
     of_Fortifying, of_Antidote, of_Soothing, of_Poultice, of_Berserk,
     // Rare Elixirs
     of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf,
-    of_the_Ogre, of_the_Troll, of_prmMana1, of_prmMana2, of_prmMana3,
-    of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
+    of_the_Ogre, of_the_Troll, of_Dusk, of_prmMana2, of_prmMana3, of_prmMana4,
+    of_prmMana5, of_prmMana6, of_the_Unicorn,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
@@ -65,7 +67,7 @@ type
     of_the_Mongoose, of_the_Fox, of_the_Lynx, of_the_Falcon, of_the_Panther,
     of_the_Leopard, of_the_Jaguar,
     // Willpower I - VII
-    of_Focus, of_Energy, of_Brilliance, of_Willpower4, of_the_Medusa,
+    of_Focus, of_Energy, of_Brilliance, of_Eternal_Fire, of_the_Medusa,
     of_Wizardry, of_the_Mind,
     // Perception I - VII
     of_Perception1, of_Perception2, of_Perception3, of_Perception4,
@@ -154,7 +156,7 @@ const
     (Level: (Min: 7; Max: 15); Price: 8000; Occurence: FlaskTypeItems;
     PrmValue: 7; Rare: True; Effects: [efPrmLife];),
 
-    // (Perma Mana I)
+    // of Dusk
     (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;
     PrmValue: 1; Rare: True; Effects: [efPrmMana];),
     // (Perma Mana II)
@@ -417,25 +419,25 @@ const
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Dexterity: (Min: 26; Max: 30);),
 
-    // (Willpower I)
+    // of_Focus (Willpower I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
     Willpower: (Min: 1; Max: 2);),
-    // (Willpower II)
+    // of_Energy (Willpower II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
     Willpower: (Min: 3; Max: 5);),
-    // (Willpower III)
+    // of_Brilliance (Willpower III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Willpower: (Min: 6; Max: 9);),
-    // (Willpower IV)
+    // of_Eternal_Fire (Willpower IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Willpower: (Min: 10; Max: 14);),
-    // (Willpower V)
+    // of_the_Medusa (Willpower V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
     Willpower: (Min: 15; Max: 20);),
-    // (Willpower VI)
+    // of_Wizardry (Willpower VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
     Willpower: (Min: 21; Max: 25);),
-    // (Willpower VII)
+    // of_the_Mind (Willpower VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Willpower: (Min: 26; Max: 30);),
 
