@@ -170,7 +170,7 @@ type
     ivHatchet, ivBattle_Axe, // Axe
     ivShort_Spear, ivSpear, // Spear
     ivSlag_Hammer, ivSpiked_Cudgel, // Mace
-    ivQuarterstaff, ivStaff2, // Staff
+    ivQuarterstaff, ivShort_Staff, // Staff
     // Gray Cave
     ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
     ivHard_Leather_Armor, ivBattle_Armor, ivFancy_Clothes, ivRobe, // Body Armor
@@ -181,7 +181,7 @@ type
     ivMeat_Axe, ivFlesh_Tearer, // Axe
     ivJavelin, ivFuscina, // Spear
     ivWarhammer, ivWar_Mace, // Mace
-    ivStaff3, ivStaff4, // Staff
+    ivLong_Staff, ivGnarled_Staff, // Staff
     // Deep Cave
     ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
     ivBrigantine_Armor, ivRing_Mail, ivLight_Furs, ivClean_Robe, // Body Armor
@@ -192,7 +192,7 @@ type
     ivWar_Axe, ivDark_Axe, // Axe
     ivWar_Spear, ivHarpoon, // Spear
     ivFlanged_Mace, ivWar_Gavel, // Mace
-    ivStaff5, ivStaff6, // Staff
+    ivBattle_Staff, ivWar_Staff, // Staff
     // Blood Cave
     ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
     ivChain_Mail, ivScale_Mail, ivThick_Furs, ivHard_Robe, // Body Armor
@@ -203,7 +203,7 @@ type
     ivBerserker_Axe, ivMarauder_Axe, // Axe
     ivSilvan_Whisper, ivImpaler, // Spear
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
-    ivStaff7, ivStaff8, // Staff
+    ivGothic_Staff, ivHyperion_Staff, // Staff
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
     ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
@@ -215,7 +215,7 @@ type
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
     ivWar_Maul, ivDoom_Hammer, // Mace
-    ivStaff9, ivStaff10 // Staff
+    ivArchon_Staff , ivRune_Staff // Staff
     );
 
 const

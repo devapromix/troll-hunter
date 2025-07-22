@@ -1065,7 +1065,7 @@ const
     MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 2; Max: 3;));
     Price: 300; Color: clDarkGreen; Deep: [deDark_Wood];),
-    // Staff2
+    // Short Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 3;); MaxDamage: (Min: 4; Max: 5;));
@@ -1187,12 +1187,12 @@ const
     MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 10;); MaxDamage: (Min: 17; Max: 19;));
     Price: 410; Color: clDarkRed; Deep: [deGray_Cave];),
-    // Staff3
+    // Long Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 4;); MaxDamage: (Min: 4; Max: 5;));
     Price: 500; Color: clDarkGreen; Deep: [deGray_Cave];),
-    // Staff4
+    // Gnarled Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 4; Max: 5;); MaxDamage: (Min: 6; Max: 7;));
@@ -1314,12 +1314,12 @@ const
     MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 18;); MaxDamage: (Min: 30; Max: 33;));
     Price: 650; Color: clDarkRed; Deep: [deDeep_Cave];),
-    // Staff5
+    // Battle Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 6; Max: 7;));
     Price: 700; Color: clDarkGreen; Deep: [deDeep_Cave];),
-    // Staff6
+    // War Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 6; Max: 7;); MaxDamage: (Min: 8; Max: 9;));
@@ -1441,12 +1441,12 @@ const
     MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 24; Max: 27;); MaxDamage: (Min: 48; Max: 51;));
     Price: 850; Color: clDarkRed; Deep: [deBlood_Cave];),
-    // Staff7
+    // Gothic Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 7; Max: 8;); MaxDamage: (Min: 8; Max: 9;));
     Price: 900; Color: clDarkGreen; Deep: [deBlood_Cave];),
-    // Staff8
+    // Hyperion Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 9;); MaxDamage: (Min: 10; Max: 11;));
@@ -1568,12 +1568,12 @@ const
     MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 36; Max: 40;); MaxDamage: (Min: 70; Max: 80;));
     Price: 1000; Color: clDarkRed; Deep: [deDrom];),
-    // Staff9
+    // Archon Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 9; Max: 10;); MaxDamage: (Min: 11; Max: 12;));
     Price: 1100; Color: clDarkGreen; Deep: [deDrom];),
-    // Staff10
+    // Rune Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
