@@ -9,7 +9,7 @@ uses
   uCreature,
   uMob,
   uBearLibItemsCommon,
-  uSkill,
+  Trollhunter.Skill,
   Trollhunter.Statistic,
   uTalent,
   Trollhunter.Player.Races,

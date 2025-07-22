@@ -28,7 +28,7 @@ uses
   uAttribute,
   uBearLibItemsCommon,
   BearLibTerminal,
-  uSkill,
+  Trollhunter.Skill,
   uItem,
   uMob,
   Trollhunter.Item.Affixes,

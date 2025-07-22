@@ -502,7 +502,7 @@ uses
   Trollhunter.UI.Log,
   uLanguage,
   uItem,
-  uSkill,
+  Trollhunter.Skill,
   Trollhunter.Statistic,
   uAttribute,
   uPathFind,

@@ -48,7 +48,7 @@ uses
   Trollhunter.Player.Classes,
   Trollhunter.UI,
   Trollhunter.Statistic,
-  uSkill,
+  Trollhunter.Skill,
   Trollhunter.Player.Types,
   Trollhunter.Player.Helpers;
 

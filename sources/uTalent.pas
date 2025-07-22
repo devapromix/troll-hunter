@@ -111,7 +111,7 @@ implementation
 uses SysUtils,
   TypInfo,
   uLanguage,
-  uSkill,
+  Trollhunter.Skill,
   uScenes,
   Trollhunter.Player,
   uAttribute,

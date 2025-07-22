@@ -241,7 +241,7 @@ uses
   Trollhunter.Item.Shop,
   uSpellbook,
   uTalent,
-  uSkill,
+  Trollhunter.Skill,
   Trollhunter.UI.Logo,
   uEntity,
   uCreature,
