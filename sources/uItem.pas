@@ -893,52 +893,52 @@ const
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
     Price: 350; Color: clDarkBlue; Deep: [deDrom];),
 
-    // Bow #1
+    // Short Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;));
     Price: 200; Color: clDarkBlue; Deep: [deDark_Wood];),
-    // Bow #2
+    // Hunting Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;));
     Price: 250; Color: clDarkBlue; Deep: [deDark_Wood];),
-    // Bow #3
+    // Long Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 45; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
     Price: 300; Color: clDarkBlue; Deep: [deGray_Cave];),
-    // Bow #4
+    // Nomad Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 50; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;));
     Price: 350; Color: clDarkBlue; Deep: [deGray_Cave];),
-    // Bow #5
+    // Heavy Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 55; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;));
     Price: 400; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    // Bow #6
+    // Composite Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 60; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;));
     Price: 450; Color: clDarkBlue; Deep: [deDeep_Cave];),
-    // Bow #7
+    // Master Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 65; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;));
     Price: 500; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    // Bow #8
+    // War Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;));
     Price: 550; Color: clDarkBlue; Deep: [deBlood_Cave];),
-    // Bow #9
+    // Dragon Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;));
     Price: 600; Color: clDarkBlue; Deep: [deDrom];),
-    // Bow #10
+    // Ancient Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 80; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));

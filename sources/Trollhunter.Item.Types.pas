@@ -156,8 +156,8 @@ type
     ivSmall_Dagger, ivDagger, ivKris, ivDirk, ivRondel, ivPoignard, ivKatar,
     ivBlood_Spike, ivMithril_Blade, ivDivine_Stiletto,
     // Bows
-    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
-    ivBow9, ivBow10,
+    ivShort_Bow, ivHunting_Bow, ivLong_Bow, ivNomad_Bow, ivHeavy_Bow,
+    ivComposite_Bow, ivMaster_Bow, ivWar_Bow, ivDragon_Bow, ivAncient_Bow,
 
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
