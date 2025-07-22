@@ -82,14 +82,6 @@ const
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
-  { rough / необроблений
-    imperfect / недосконалий
-    common / типовий
-    precious / дорогоцінний
-    flawless / без недоліків
-    perfect / досконалий
-    outworldly / неземний }
-
   { Potion, Flask, Extract, Essence, Elixir }
 
 type
@@ -161,11 +153,12 @@ type
     ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
     ivWand9, ivWand10,
     // Daggers
-    ivSmall_Dagger, ivDagger, ivKris, ivDirk, ivDagger5, ivDagger6, ivDagger7,
-    ivDagger8, ivDagger9, ivDagger10,
+    ivSmall_Dagger, ivDagger, ivKris, ivDirk, ivRondel, ivPoignard, ivKatar,
+    ivBlood_Spike, ivMithril_Blade, ivDivine_Stiletto,
     // Bows
     ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
     ivBow9, ivBow10,
+
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
