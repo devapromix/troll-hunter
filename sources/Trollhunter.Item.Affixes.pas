@@ -28,7 +28,11 @@ type
     Effects: TEffects;
   end;
 
-  { of the Damned }
+  {
+  All: of the Damned
+
+  Bows: of Swiftness
+  }
 
 type
   TSuffixEnum = (
@@ -50,9 +54,9 @@ type
     // Mana I - VII
     of_Mana1, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
     // Life and Mana I - VII
-    of_Atr1, of_Atr2, of_Atr3, of_Atr4, of_Atr5, of_Atr6, of_Atr7,
+    of_Atr1, of_Atr2, of_Atr3, of_the_Moon, of_Atr5, of_Atr6, of_Atr7,
     // Defense I - VII
-    of_Defense1, of_Defense2, of_Defense3, of_Defense4, of_Defense5,
+    of_Defense, of_Protection, of_Defense3, of_Defense4, of_Defense5,
     of_Defense6, of_Defense7,
     // Damage I - VII
     of_Damage1, of_Damage2, of_Damage3, of_Damage4, of_Damage5, of_Damage6,
@@ -92,7 +96,7 @@ type
     );
 
 const
-  DefenseSuffixes = [of_Defense1 .. of_Defense7];
+  DefenseSuffixes = [of_Defense .. of_Defense7];
   DamageSuffixes = [of_Damage1 .. of_Damage7];
   DurabilitySuffixes = [of_Craftmanship .. of_Permanance];
 
@@ -281,7 +285,7 @@ const
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9);),
-    // (Life and Mana IV)
+    // of the Moon (Life and Mana IV)
     (Level: (Min: 4; Max: 9); Price: 700; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
@@ -302,10 +306,10 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Life: (Min: 24; Max: 30); Mana: (Min: 23; Max: 30);),
 
-    // (Defense I)
+    // Defense (Defense I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 1; Max: 4);),
-    // (Defense II)
+    // Protection (Defense II)
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 5; Max: 8);),
     // (Defense III)
@@ -707,7 +711,7 @@ begin
       for BT := btStr to btPer do
         SetAtr(BT, SB.Level.Min, SB.Level.Max);
     // Defense
-    of_Defense1 .. of_Defense7:
+    of_Defense .. of_Defense7:
       begin
         if (SB.Defense.Min > 0) then
           AItem.Defense := AItem.Defense + Math.EnsureRange
