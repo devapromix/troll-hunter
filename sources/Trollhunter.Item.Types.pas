@@ -150,8 +150,8 @@ type
     ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
     // Wands
-    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
-    ivWand9, ivWand10,
+    ivYew_Wand, ivWater_Wand, ivBone_Wand, ivWand4, ivGrim_Wand, ivWand6,
+    ivGrave_Wand, ivWand8, ivLich_Wand, ivWand10,
     // Daggers
     ivSmall_Dagger, ivDagger, ivKris, ivDirk, ivRondel, ivPoignard, ivKatar,
     ivBlood_Spike, ivMithril_Blade, ivDivine_Stiletto,
@@ -215,7 +215,7 @@ type
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
     ivWar_Maul, ivDoom_Hammer, // Mace
-    ivArchon_Staff , ivRune_Staff // Staff
+    ivArchon_Staff, ivRune_Staff // Staff
     );
 
 const
