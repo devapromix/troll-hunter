@@ -236,7 +236,6 @@ uses
   Trollhunter.UI.Log,
   uItem,
   uLanguage,
-  uCorpse,
   uCalendar,
   Trollhunter.Item.Shop,
   uSpellbook,
@@ -251,7 +250,7 @@ uses
   uBearLibItemsInventory,
   uQuest,
   Trollhunter.Item.Affixes,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
   Trollhunter.Scene.Enchant,
@@ -565,8 +564,6 @@ var
     Terminal.BackgroundColor(0);
     Terminal.ForegroundColor(clDefault);
     S := S + T.Name + '. ';
-    if Corpses.IsCorpse(X, Y) then
-      S := S + _('Corpse') + '. ';
     C := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
     if (C > 0) then
     begin
@@ -678,7 +675,6 @@ begin
       end;
   // Items, player's corpses, player, mobs
   Items.Render(PX, PY);
-  Corpses.Render(PX, PY);
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
   // Player info

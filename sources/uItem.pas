@@ -1651,7 +1651,7 @@ uses
   Trollhunter.UI,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Statistic;
 
 { TItems }

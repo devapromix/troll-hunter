@@ -29,9 +29,9 @@ type
   end;
 
   {
-  All: of the Damned
+    All: of the Damned
 
-  Bows: of Swiftness
+    Bows: of Swiftness
   }
 
 type
@@ -588,7 +588,7 @@ uses
   Math,
   Trollhunter.Terminal,
   Trollhunter.Game,
-  uHelpers,
+  Trollhunter.Helpers,
   uItem;
 
 function TAffixes.Amount: UInt;

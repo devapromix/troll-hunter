@@ -60,7 +60,7 @@ uses
   Trollhunter.Game,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TSkills }
 

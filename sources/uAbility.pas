@@ -33,7 +33,10 @@ type
 
 implementation
 
-uses SysUtils, TypInfo, uHelpers;
+uses
+  SysUtils,
+  TypInfo,
+  Trollhunter.Helpers;
 
 { TAbility }
 

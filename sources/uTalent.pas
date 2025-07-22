@@ -2,7 +2,8 @@ unit uTalent;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   uCreature;
 
 const
@@ -108,14 +109,15 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   uLanguage,
   Trollhunter.Skill,
   uScenes,
   Trollhunter.Player,
   uAttribute,
-  uHelpers;
+  Trollhunter.Helpers;
 
 const
   TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',

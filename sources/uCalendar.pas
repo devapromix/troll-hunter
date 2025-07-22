@@ -2,7 +2,8 @@ unit uCalendar;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TCalendar = class(TObject)
@@ -41,7 +42,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Math,
   uLanguage,
   uItem,
@@ -50,7 +52,7 @@ uses SysUtils,
   Trollhunter.Player,
   uCreature,
   uAttribute,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TCalendar }
 

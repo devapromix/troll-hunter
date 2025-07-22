@@ -507,7 +507,7 @@ uses
   uAttribute,
   uPathFind,
   uQuest,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Item.Types;
 
 function MyCallback(X, Y: Int): Boolean; stdcall;
@@ -578,7 +578,7 @@ begin
   // Life
   V := Game.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss,
     (MobBase[TMobEnum(ID)].Level) * 25, 0), UIntMax);
-  Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife
+  Attributes.SetValue(atMaxLife, RandomRange(MobBase[TMobEnum(ID)].MaxLife
     + V, MobBase[TMobEnum(ID)].MaxLife + MobBase[TMobEnum(ID)].Level + V));
   Self.Fill;
   // DV
