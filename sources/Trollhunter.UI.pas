@@ -32,8 +32,7 @@ uses
   SysUtils,
   BearLibTerminal,
   Trollhunter.Terminal,
-  Trollhunter.Game,
-  uLanguage;
+  Trollhunter.Game;
 
 const
   IconStr: array [TIconEnum] of string = ('F8D0', 'F8D1', 'F8D2', 'F8D3',
@@ -79,7 +78,7 @@ end;
 
 class function UI.GoldLeft(const Value: Cardinal): string;
 begin
-  Result := Format(F, [Format(UI.Icon(icGold) + _('%d gold left'), [Value])]);
+  Result := Format(F, [Format(UI.Icon(icGold) + '%d gold left', [Value])]);
 end;
 
 class function UI.Icon(const AIcon: TIconEnum; const AColor: string): string;

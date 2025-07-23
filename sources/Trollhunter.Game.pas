@@ -1,12 +1,11 @@
-unit Trollhunter.Game;
+﻿unit Trollhunter.Game;
 
 interface
 
 uses
   Trollhunter.Types,
-  uEntity,
-  uMap,
-  uLanguage;
+  Trollhunter.Entity,
+  Trollhunter.Map;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
@@ -225,14 +224,10 @@ begin
     if (LowerCase(ParamStr(I)) = '-l') then
       IsUseLang := True;
   end;
-  Language := TLanguage.Create(IsUseLang);
-  Language.UseLanguage('russian');
 end;
 
 destructor TGame.Destroy;
 begin
-  Language.SaveDefault;
-  FreeAndNil(Language);
   FreeAndNil(FPortal);
   FreeAndNil(FSpawn);
   inherited;
@@ -276,8 +271,6 @@ procedure TGame.LoadConfig;
 begin
   // Settings
   FAPOption[apFullscreen] := terminal_get('window.fullscreen') = 'true';
-  // Localization
-  Language.UseLanguage(terminal_get('ini.localization.language'));
   // Load colors
   clDefault := Terminal.GetColorFromIni('Default', 'Yellow');
   clBackground := Terminal.GetColorFromIni('Background', 'Black');
@@ -306,14 +299,14 @@ begin
   Shops.New;
   // Intro
   MsgLog.Clear;
-  MsgLog.Add(Terminal.Colorize(Format('%s %s %s', [_('Welcome to Elvion!'),
-    _('You need to find and kill The King Troll!'), _('Press ? for help.')]),
+  MsgLog.Add(Terminal.Colorize(Format('%s %s %s', ['Welcome to Trollhunter!',
+    'You need to find and kill The King Troll!', 'Press ? for help.']),
     clAlarm));
 end;
 
 function TGame.GetTitle: string;
 begin
-  Result := _('Trollhunter');
+  Result := 'Trollhunter';
 end;
 
 initialization
