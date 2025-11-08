@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Name;
+﻿unit Trollhunter.Scene.Name;
 
 interface
 
@@ -20,20 +20,19 @@ uses
   Trollhunter.UI,
   Trollhunter.Player,
   Trollhunter.Game,
-  uLanguage,
   BearLibTerminal;
 
 { TSceneName }
 
 procedure TSceneName.Render;
 begin
-  UI.Title(_('Choose a name'));
+  UI.Title('Choose a name');
 
-  Terminal.Print(CX - 14, CY, _('Enter your player''s name') + ': ' +
+  Terminal.Print(CX - 14, CY, 'Enter your player''s name' + ': ' +
     Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
 
-  AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'), True);
+  AddKey('Enter', 'Confirm');
+  AddKey('Esc', 'Back', True);
 end;
 
 procedure TSceneName.Update(var Key: UInt);
@@ -47,7 +46,7 @@ begin
     TK_ENTER, TK_KP_ENTER:
       begin
         if (Player.Name = '') then
-          Player.Name := _('PLAYER');
+          Player.Name := 'Trollhunter';
         Scenes.SetScene(scBackground, scName);
       end;
     TK_A .. TK_Z:

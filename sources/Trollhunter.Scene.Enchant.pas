@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Enchant;
+﻿unit Trollhunter.Scene.Enchant;
 
 interface
 
@@ -18,7 +18,6 @@ implementation
 
 uses
   Trollhunter.UI,
-  uLanguage,
   uItem,
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
@@ -30,14 +29,14 @@ uses
 
 procedure TSceneEnchant.Render;
 begin
-  UI.Title(_('Enchant an item'), 1, clDarkestRed);
+  UI.Title('Enchant an item', 1, clDarkestRed);
 
   UI.FromAToZ();
   Items.RenderInventory();
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', _('Select an item'));
-  AddKey('Esc', _('Close'), True);
+  AddKey('A-Z', 'Select an item');
+  AddKey('Esc', 'Close', True);
 end;
 
 procedure TSceneEnchant.Update(var Key: UInt);

@@ -1,4 +1,4 @@
-unit Trollhunter.Player.Classes;
+﻿unit Trollhunter.Player.Classes;
 
 interface
 

@@ -54,7 +54,7 @@ implementation
 uses
   SysUtils,
   Math,
-  uMap,
+  Trollhunter.Map,
   uCreature,
   uAttribute,
   Trollhunter.Helpers,
