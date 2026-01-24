@@ -2,7 +2,8 @@ unit uSpellbook;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   uCreature;
 
 type
@@ -55,7 +56,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   uLanguage,
   Trollhunter.Player,
   Trollhunter.UI.Log,

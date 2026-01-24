@@ -29,7 +29,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Math,
   Trollhunter.Terminal,
   BearLibTerminal,

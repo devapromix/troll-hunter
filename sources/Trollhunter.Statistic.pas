@@ -1,4 +1,4 @@
-unit Trollhunter.Statistic;
+﻿unit Trollhunter.Statistic;
 
 interface
 

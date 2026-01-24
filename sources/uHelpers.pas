@@ -1,4 +1,4 @@
-unit uHelpers;
+﻿unit uHelpers;
 
 interface
 

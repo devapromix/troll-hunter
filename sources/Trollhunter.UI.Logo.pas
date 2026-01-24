@@ -1,4 +1,4 @@
-unit Trollhunter.UI.Logo;
+﻿unit Trollhunter.UI.Logo;
 
 interface
 

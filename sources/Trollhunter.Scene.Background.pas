@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Background;
+﻿unit Trollhunter.Scene.Background;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   uScenes;
 
 type
@@ -16,7 +17,8 @@ implementation
 
 { TSceneBackground }
 
-uses Trollhunter.UI,
+uses
+  Trollhunter.UI,
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,

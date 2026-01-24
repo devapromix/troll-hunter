@@ -2,7 +2,8 @@ unit uGame;
 
 interface
 
-uses Trollhunter.Types,
+uses
+  Trollhunter.Types,
   uEntity,
   uMap,
   uLanguage;
@@ -175,7 +176,8 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   uScenes,

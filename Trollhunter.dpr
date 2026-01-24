@@ -1,4 +1,4 @@
-{$IFDEF FPC}
+﻿{$IFDEF FPC}
 {$IFDEF Windows}
 {$APPTYPE GUI}
 {$ENDIF}
