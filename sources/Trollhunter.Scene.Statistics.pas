@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Statistics;
+﻿unit Trollhunter.Scene.Statistics;
 
 interface
 
-uses uScenes,
+uses
+  uScenes,
   Trollhunter.Types;
 
 type
@@ -14,19 +15,19 @@ type
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   Trollhunter.UI,
   Trollhunter.Player,
   Trollhunter.Player.Types,
-  uGame,
-  uLanguage,
+  Trollhunter.Game,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
   Trollhunter.Statistic,
   uAttribute,
   uBearLibItemsCommon,
   BearLibTerminal,
-  uSkill,
+  Trollhunter.Skill,
   uItem,
   uMob,
   Trollhunter.Item.Affixes,
@@ -45,72 +46,72 @@ begin
   Y := 1;
   if Mode.Wizard and Wizard then
   begin
-    Title(_('Wizard Mode'));
+    Title('Wizard Mode');
 
-    Add(_('Monsters'), Ord(Length(MobBase)) - (13 + 7));
-    Add(_('Bosses'), 13);
-    Add(_('NPCs'), 7);
-    Add(_('Items'), Ord(Length(ItemBase)));
-    Add(_('Shops'), Shops.Count);
-    Add(_('Quests'), Quests.Amount);
-    Add(_('Talents'), Player.Talents.Amount);
-    Add(_('Affixes'), Affixes.Amount);
-    Add(_('Item Types'), Ord(High(TItemType)));
-    Add(_('Skills'), Ord(High(TSkillEnum)));
+    Add('Monsters', Ord(Length(MobBase)) - (13 + 7));
+    Add('Bosses', 13);
+    Add('NPCs', 7);
+    Add('Items', Ord(Length(ItemBase)));
+    Add('Shops', Shops.Count);
+    Add('Quests', Quests.Amount);
+    Add('Talents', Player.Talents.Amount);
+    Add('Affixes', Affixes.Amount);
+    Add('Item Types', Ord(High(TItemType)));
+    Add('Skills', Ord(High(TSkillEnum)));
   end
   else
   begin
     Title(Player.FullName);
 
-    Add(_('Level'), Player.Attributes.Attrib[atLev].Value);
-    Add(_('Scores'), Player.Statictics.Get(stScore));
-    Add(_('Age'), Player.Statictics.Get(stAge));
-    Add(_('Weight'), Player.Statictics.Get(stWeight));
-    Add(_('Height'), Player.Statictics.Get(stHeight));
-    Add(_('Metabolism'), Player.Statictics.Get(stMetabolism));
+    Add('Level', Player.Attributes.Attrib[atLev].Value);
+    Add('Scores', Player.Statictics.Get(stScore));
+    Add('Age', Player.Statictics.Get(stAge));
+    Add('Weight', Player.Statictics.Get(stWeight));
+    Add('Height', Player.Statictics.Get(stHeight));
+    Add('Metabolism', Player.Statictics.Get(stMetabolism));
 
-    Title(_('Statistics'), False);
+    Title('Statistics', False);
 
     // Add(_('Talent'), Player.GetTalentName(Player.GetTalent(0)));
-    Add(_('Tiles Moved'), Player.Statictics.Get(stTurn));
-    Add(_('Monsters Killed'), Player.Statictics.Get(stKills));
-    Add(_('Items Found'), Player.Statictics.Get(stFound));
+    Add('Tiles Moved', Player.Statictics.Get(stTurn));
+    Add('Monsters Killed', Player.Statictics.Get(stKills));
+    Add('Items Found', Player.Statictics.Get(stFound));
     // Add(_('Chests Found'), );
     // Add(_('Doors Opened'), );
-    Add(_('Potions Drunk'), Player.Statictics.Get(stPotDrunk));
-    Add(_('Scrolls Read'), Player.Statictics.Get(stScrRead));
-    Add(_('Spells Cast'), Player.Statictics.Get(stSpCast));
-    Add(_('Foods Eaten'), Player.Statictics.Get(stFdEat));
+    Add('Potions Drunk', Player.Statictics.Get(stPotDrunk));
+    Add('Scrolls Read', Player.Statictics.Get(stScrRead));
+    Add('Spells Cast', Player.Statictics.Get(stSpCast));
+    Add('Foods Eaten', Player.Statictics.Get(stFdEat));
     // Add(_('Melee Attack Performed'), );
     // Add(_('Ranged Attack Performed'), );
     // Add(_('Unarmed Attack Performed'), );
     // Add(_('Times Fallen Into Pit'), );
     // Add(_('Items Sold'), );
-    Add(_('Items Used'), Player.Statictics.Get(stItUsed));
-    Add(_('Items Repaired'), Player.Statictics.Get(stItRep));
-    Add(_('Items Identified'), Player.Statictics.Get(stItIdent));
-    Add(_('Items Crafted'), Player.Statictics.Get(stItCrafted));
-    Add(_('Coins Looted'), Player.Statictics.Get(stCoinsLooted));
+    Add('Items Used', Player.Statictics.Get(stItUsed));
+    Add('Items Repaired', Player.Statictics.Get(stItRep));
+    Add('Items Identified', Player.Statictics.Get(stItIdent));
+    Add('Items Crafted', Player.Statictics.Get(stItCrafted));
+    Add('Coins Looted', Player.Statictics.Get(stCoinsLooted));
     // Add(_('Gold from Sales'), );
     // Add(_(''), );
   end;
 
   if Wizard then
   begin
-    Title(_('Version'), False);
+    Title('Version', False);
 
-    Add(_('Game Version'), Game.GetVersion);
-    Add(_('BeaRLibTerminal'), BearLibTerminal.terminal_get('version'));
+    Add('Game Version', Game.GetVersion);
+    Add('BeaRLibTerminal', BearLibTerminal.terminal_get('version'));
     Self.Add();
-    Add(_('BeaRLibItems'), Items_GetVersion);
+    Add('BeaRLibItems', Items_GetVersion);
   end;
 
-  AddKey('Esc', _('Close'), not Mode.Wizard);
+  AddKey('Esc', 'Close', not Mode.Wizard);
   if Mode.Wizard then
     if Wizard then
-      AddKey('Z', _('Back'), True)
+      AddKey('Z', 'Back', True)
     else
-      AddKey('Z', _('Wizard Mode'), True);
+      AddKey('Z', 'Wizard Mode', True);
 end;
 
 procedure TSceneStatistics.Update(var Key: UInt);

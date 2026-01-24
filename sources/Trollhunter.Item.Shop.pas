@@ -54,10 +54,10 @@ implementation
 uses
   SysUtils,
   Math,
-  uMap,
+  Trollhunter.Map,
   uCreature,
   uAttribute,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Item.Types;
 
 { TShop }

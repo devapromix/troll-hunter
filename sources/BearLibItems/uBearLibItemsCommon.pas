@@ -1,8 +1,10 @@
-unit uBearLibItemsCommon;
+﻿unit uBearLibItemsCommon;
 
 interface
 
-uses Trollhunter.Types, uCreature;
+uses
+  Trollhunter.Types,
+  Trollhunter.Creature;
 
 const
   BonusCount = 3;
@@ -126,8 +128,7 @@ begin
   Result := (AItems[Index].MapID = AMapID);
 end;
 
-function HasItem(AItems: TItems; Index, AMapID: Int;
-  AX, AY: Int): Boolean;
+function HasItem(AItems: TItems; Index, AMapID: Int; AX, AY: Int): Boolean;
 begin
   if (AX = -1) and (AY = -1) then
     Result := HasItem(AItems, Index, AMapID)
