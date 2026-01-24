@@ -2,7 +2,11 @@ unit Trollhunter.Item.Affixes;
 
 interface
 
-uses Trollhunter.Types, uCreature, Trollhunter.Item.Types, uBeaRLibItemsCommon;
+uses
+  Trollhunter.Types,
+  uCreature,
+  Trollhunter.Item.Types,
+  uBeaRLibItemsCommon;
 
 type
   TSuffixBase = record
@@ -24,6 +28,12 @@ type
     Effects: TEffects;
   end;
 
+  {
+    All: of the Damned
+
+    Bows: of Swiftness
+  }
+
 type
   TSuffixEnum = (
     // None
@@ -35,8 +45,8 @@ type
     of_Fortifying, of_Antidote, of_Soothing, of_Poultice, of_Berserk,
     // Rare Elixirs
     of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf,
-    of_the_Ogre, of_the_Troll, of_prmMana1, of_prmMana2, of_prmMana3,
-    of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
+    of_the_Ogre, of_the_Troll, of_Dusk, of_prmMana2, of_prmMana3, of_prmMana4,
+    of_prmMana5, of_prmMana6, of_the_Unicorn,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
     // Life I - VII
@@ -44,9 +54,9 @@ type
     // Mana I - VII
     of_Mana1, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
     // Life and Mana I - VII
-    of_Atr1, of_Atr2, of_Atr3, of_Atr4, of_Atr5, of_Atr6, of_Atr7,
+    of_Atr1, of_Atr2, of_Atr3, of_the_Moon, of_Atr5, of_Atr6, of_Atr7,
     // Defense I - VII
-    of_Defense1, of_Defense2, of_Defense3, of_Defense4, of_Defense5,
+    of_Defense, of_Protection, of_Defense3, of_Defense4, of_Defense5,
     of_Defense6, of_Defense7,
     // Damage I - VII
     of_Damage1, of_Damage2, of_Damage3, of_Damage4, of_Damage5, of_Damage6,
@@ -61,7 +71,7 @@ type
     of_the_Mongoose, of_the_Fox, of_the_Lynx, of_the_Falcon, of_the_Panther,
     of_the_Leopard, of_the_Jaguar,
     // Willpower I - VII
-    of_Focus, of_Energy, of_Brilliance, of_Willpower4, of_the_Medusa,
+    of_Focus, of_Energy, of_Brilliance, of_Eternal_Fire, of_the_Medusa,
     of_Wizardry, of_the_Mind,
     // Perception I - VII
     of_Perception1, of_Perception2, of_Perception3, of_Perception4,
@@ -86,7 +96,7 @@ type
     );
 
 const
-  DefenseSuffixes = [of_Defense1 .. of_Defense7];
+  DefenseSuffixes = [of_Defense .. of_Defense7];
   DamageSuffixes = [of_Damage1 .. of_Damage7];
   DurabilitySuffixes = [of_Craftmanship .. of_Permanance];
 
@@ -150,7 +160,7 @@ const
     (Level: (Min: 7; Max: 15); Price: 8000; Occurence: FlaskTypeItems;
     PrmValue: 7; Rare: True; Effects: [efPrmLife];),
 
-    // (Perma Mana I)
+    // of Dusk
     (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;
     PrmValue: 1; Rare: True; Effects: [efPrmMana];),
     // (Perma Mana II)
@@ -275,7 +285,7 @@ const
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9);),
-    // (Life and Mana IV)
+    // of the Moon (Life and Mana IV)
     (Level: (Min: 4; Max: 9); Price: 700; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
@@ -296,10 +306,10 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
     Life: (Min: 24; Max: 30); Mana: (Min: 23; Max: 30);),
 
-    // (Defense I)
+    // Defense (Defense I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 1; Max: 4);),
-    // (Defense II)
+    // Protection (Defense II)
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 5; Max: 8);),
     // (Defense III)
@@ -413,25 +423,25 @@ const
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Dexterity: (Min: 26; Max: 30);),
 
-    // (Willpower I)
+    // of_Focus (Willpower I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
     Willpower: (Min: 1; Max: 2);),
-    // (Willpower II)
+    // of_Energy (Willpower II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
     Willpower: (Min: 3; Max: 5);),
-    // (Willpower III)
+    // of_Brilliance (Willpower III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
     Willpower: (Min: 6; Max: 9);),
-    // (Willpower IV)
+    // of_Eternal_Fire (Willpower IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
     Willpower: (Min: 10; Max: 14);),
-    // (Willpower V)
+    // of_the_Medusa (Willpower V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
     Willpower: (Min: 15; Max: 20);),
-    // (Willpower VI)
+    // of_Wizardry (Willpower VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
     Willpower: (Min: 21; Max: 25);),
-    // (Willpower VII)
+    // of_the_Mind (Willpower VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
     Willpower: (Min: 26; Max: 30);),
 
@@ -572,7 +582,14 @@ var
 
 implementation
 
-uses SysUtils, TypInfo, Math, Trollhunter.Terminal, uGame, uHelpers, uItem;
+uses
+  SysUtils,
+  TypInfo,
+  Math,
+  Trollhunter.Terminal,
+  Trollhunter.Game,
+  Trollhunter.Helpers,
+  uItem;
 
 function TAffixes.Amount: UInt;
 begin
@@ -694,7 +711,7 @@ begin
       for BT := btStr to btPer do
         SetAtr(BT, SB.Level.Min, SB.Level.Max);
     // Defense
-    of_Defense1 .. of_Defense7:
+    of_Defense .. of_Defense7:
       begin
         if (SB.Defense.Min > 0) then
           AItem.Defense := AItem.Defense + Math.EnsureRange

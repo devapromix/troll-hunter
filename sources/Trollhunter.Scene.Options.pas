@@ -1,8 +1,9 @@
-unit Trollhunter.Scene.Options;
+﻿unit Trollhunter.Scene.Options;
 
 interface
 
-uses uScenes,
+uses
+  uScenes,
   Trollhunter.Types;
 
 type
@@ -16,50 +17,50 @@ implementation
 
 { TSceneOptions }
 
-uses uGame,
+uses
+  BearLibTerminal,
+  Trollhunter.Game,
   Trollhunter.UI,
-  uLanguage,
-  BearLibTerminal, Trollhunter.Item.Shop;
+  Trollhunter.Item.Shop;
 
 procedure TSceneOptions.Render;
 begin
   Y := 1;
   // Options
-  Title(_('Options'));
+  Title('Options');
 
-  AddOption('C', _('Auto pick up coins'), Game.GetOption(apCoin));
-  AddOption('G', _('Auto pick up gems'), Game.GetOption(apGem));
-  AddOption('F', _('Auto pick up food'), Game.GetOption(apFood));
-  AddOption('Y', _('Auto pick up plants'), Game.GetOption(apPlant));
-  AddOption('P', _('Auto pick up potions and flasks'),
-    Game.GetOption(apPotion));
-  AddOption('U', _('Auto pick up flasks'), Game.GetOption(apFlask));
-  AddOption('O', _('Auto pick up magic items'), Game.GetOption(apMagic));
-  AddOption('S', _('Auto pick up scrolls'), Game.GetOption(apScroll));
-  AddOption('R', _('Auto pick up runes'), Game.GetOption(apRune));
-  AddOption('B', _('Auto pick up books'), Game.GetOption(apBook));
-  AddOption('K', _('Auto pick up keys'), Game.GetOption(apKey));
-  AddOption('D', _('Show items price in inventory'), Game.GetOption(apShPrice));
+  AddOption('C', 'Auto pick up coins', Game.GetOption(apCoin));
+  AddOption('G', 'Auto pick up gems', Game.GetOption(apGem));
+  AddOption('F', 'Auto pick up food', Game.GetOption(apFood));
+  AddOption('Y', 'Auto pick up plants', Game.GetOption(apPlant));
+  AddOption('P', 'Auto pick up potions and flasks', Game.GetOption(apPotion));
+  AddOption('U', 'Auto pick up flasks', Game.GetOption(apFlask));
+  AddOption('O', 'Auto pick up magic items', Game.GetOption(apMagic));
+  AddOption('S', 'Auto pick up scrolls', Game.GetOption(apScroll));
+  AddOption('R', 'Auto pick up runes', Game.GetOption(apRune));
+  AddOption('B', 'Auto pick up books', Game.GetOption(apBook));
+  AddOption('K', 'Auto pick up keys', Game.GetOption(apKey));
+  AddOption('D', 'Show items price in inventory', Game.GetOption(apShPrice));
 
   // Settings
-  Title(_('Settings'), False);
-  AddOption('W', _('Fullscreen'), Game.GetOption(apFullscreen), clLightBlue);
+  Title('Settings', False);
+  AddOption('W', 'Fullscreen', Game.GetOption(apFullscreen), clLightBlue);
 
   // Wizard mode
   if Mode.Wizard then
   begin
-    Title(_('Wizard Mode'), False);
+    Title('Wizard Mode', False);
 
-    AddOption('Z', _('Turn Wizard Mode Off'), Mode.Wizard, clRed);
-    AddOption('M', _('Show map'), Game.ShowMap);
-    AddOption('T', _('Reload all shops'), False);
+    AddOption('Z', 'Turn Wizard Mode Off', Mode.Wizard, clRed);
+    AddOption('M', 'Show map', Game.ShowMap);
+    AddOption('T', 'Reload all shops', False);
     // AddOption('J', _(''), False);
-    AddOption('L', _('Leave corpses'), Game.LCorpses);
-    AddOption('I', _('Show ID of items'), Game.ShowID);
-    AddOption('N', _('Hide level of an item'), Game.GetOption(apHdLevOfItem));
+    AddOption('L', 'Leave corpses', Game.LCorpses);
+    AddOption('I', 'Show ID of items', Game.ShowID);
+    AddOption('N', 'Hide level of an item', Game.GetOption(apHdLevOfItem));
   end;
 
-  AddKey('Esc', _('Back'), True);
+  AddKey('Esc', 'Back', True);
 end;
 
 procedure TSceneOptions.Update(var Key: UInt);

@@ -1,8 +1,9 @@
-unit uSkill;
+unit Trollhunter.Skill;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TSkillEnum = (
@@ -49,16 +50,16 @@ const
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   Math,
-  uLanguage,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uGame,
+  Trollhunter.Game,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
-  uHelpers;
+  Trollhunter.Helpers;
 
 { TSkills }
 
@@ -104,7 +105,7 @@ begin
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
       // Add message {!!!}
-      MsgLog.Add(Terminal.Colorize(Format(_('Your skill %s has raised to %d!'),
+      MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
         [GetName(ASkill), FSkill[ASkill].Value]), clAlarm));
       // Add exp
       Player.AddExp();

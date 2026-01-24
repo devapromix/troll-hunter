@@ -24,16 +24,15 @@ uses
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uLanguage,
-  uGame,
-  uMap;
+  Trollhunter.Game,
+  Trollhunter.Map;
 
 const
   DELAY_MS = 1000;
 
 procedure TSceneBackground.Render;
 begin
-  UI.Title(_('Character Background'));
+  UI.Title('Character Background');
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background,
@@ -41,10 +40,10 @@ begin
 
   if not Mode.Game then
   begin
-    AddKey('Enter', _('Start game'));
-    AddKey('Space', _('Re-roll'));
+    AddKey('Enter', 'Start game');
+    AddKey('Space', 'Re-roll');
   end;
-  AddKey('Esc', _('Close'), _('Back'), True);
+  AddKey('Esc', 'Close', 'Back', True);
 end;
 
 procedure TSceneBackground.StartGame;

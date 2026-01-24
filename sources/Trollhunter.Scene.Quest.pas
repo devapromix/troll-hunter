@@ -1,8 +1,10 @@
-unit Trollhunter.Scene.Quest;
+﻿unit Trollhunter.Scene.Quest;
 
 interface
 
-uses Trollhunter.Types, uScenes;
+uses
+  Trollhunter.Types,
+  uScenes;
 
 type
   TSceneQuest = class(TScene)
@@ -15,14 +17,18 @@ implementation
 
 { TSceneQuest }
 
-uses Trollhunter.UI, uQuest, uLanguage, BearLibTerminal, uGame;
+uses
+  Trollhunter.UI,
+  uQuest,
+  BearLibTerminal,
+  Trollhunter.Game;
 
 procedure TSceneQuest.Render;
 begin
   UI.Title(Quests.GetName(Quests.Current), 1);
 
-  AddKey('Enter', _('Accept'));
-  AddKey('Esc', _('Decline'), True);
+  AddKey('Enter', 'Accept');
+  AddKey('Esc', 'Decline', True);
 end;
 
 procedure TSceneQuest.Update(var Key: UInt);
