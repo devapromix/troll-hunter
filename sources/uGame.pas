@@ -114,9 +114,6 @@ var
   Mode: TMode;
 
 type
-  TDifficulty = (dfEasy, dfNormal, dfHard, dfHell);
-
-type
   TSpawn = class(TEntity);
 
 type
@@ -126,7 +123,6 @@ type
 type
   TGame = class(TObject)
   private
-    FDifficulty: TDifficulty;
     FTimer: UInt;
     FWon: Boolean;
     FCanClose: Boolean;
@@ -143,7 +139,6 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property Difficulty: TDifficulty read FDifficulty write FDifficulty;
     property Timer: UInt read FTimer write FTimer;
     property Won: Boolean read FWon write FWon;
     property CanClose: Boolean read FCanClose write FCanClose;
@@ -153,7 +148,6 @@ type
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
     property Portal: TSpawn read FPortal write FPortal;
-    function GetStrDifficulty: string;
     function GetVersion: string;
     property PortalMap: TMapEnum read FPortalMap write FPortalMap;
     property PortalTile: TTileEnum read FPortalTile write FPortalTile;
@@ -220,7 +214,6 @@ begin
   ShowMap := True;
   ShowID := False;
   LCorpses := True;
-  Difficulty := dfNormal;
   FSpawn := TSpawn.Create;
   FPortal := TSpawn.Create;
   PortalMap := deDark_Wood;
@@ -267,21 +260,6 @@ end;
 function TGame.GetOption(I: TAPOptionEnum): Boolean;
 begin
   Result := FAPOption[I]
-end;
-
-function TGame.GetStrDifficulty: string;
-begin
-  case Difficulty of
-    dfEasy:
-      Result := _('Easy');
-    dfNormal:
-      Result := _('Normal');
-    dfHard:
-      Result := _('Hard');
-  else
-    Result := Terminal.Colorize(_('Hell'), 'Red');
-  end;
-
 end;
 
 function TGame.GetVersion: string;

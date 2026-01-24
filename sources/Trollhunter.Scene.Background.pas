@@ -8,9 +8,11 @@ uses
 
 type
   TSceneBackground = class(TScene)
+  private
+    procedure StartGame;
   public
     procedure Render; override;
-    procedure Update(var Key: UInt); override;
+    procedure Update(var AKey: UInt); override;
   end;
 
 implementation
@@ -25,6 +27,9 @@ uses
   uLanguage,
   uGame,
   uMap;
+
+const
+  DELAY_MS = 1000;
 
 procedure TSceneBackground.Render;
 begin
@@ -42,23 +47,25 @@ begin
   AddKey('Esc', _('Close'), _('Back'), True);
 end;
 
-procedure TSceneBackground.Update(var Key: UInt);
+procedure TSceneBackground.StartGame;
 begin
-  case Key of
+  Scenes.SetScene(scLoad);
+  Terminal.Refresh;
+  Terminal_Delay(DELAY_MS);
+  Map.Gen;
+  Mode.Game := True;
+  Player.Talents.DoTalent(TSceneTalents(Scenes.GetScene(scTalents)).Talent);
+  Player.StartEquip;
+  Player.StartSkills;
+  Scenes.SetScene(scGame);
+end;
+
+procedure TSceneBackground.Update(var AKey: UInt);
+begin
+  case AKey of
     TK_ENTER, TK_KP_ENTER:
       if not Mode.Game then
-      begin
-        Scenes.SetScene(scLoad);
-        Terminal.Refresh;
-        Terminal_Delay(1000);
-        Map.Gen;
-        Mode.Game := True;
-        Player.Talents.DoTalent
-          (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
-        Player.StartEquip;
-        Player.StartSkills;
-        Scenes.SetScene(scGame);
-      end;
+        StartGame;
     TK_SPACE:
       if not Mode.Game then
         Player.GenerateBackground();

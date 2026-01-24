@@ -720,12 +720,6 @@ begin
           AItem.MaxDurability := AItem.MaxDurability +
             Math.EnsureRange(Math.RandomRange(SB.MaxDurability.Min,
             SB.MaxDurability.Max + 1), 1, UIntMax);
-          case Game.Difficulty of
-            dfEasy:
-              AItem.Durability := AItem.MaxDurability;
-            dfHell:
-              AItem.Durability := Math.RandomRange(0, 5) + 1;
-          end;
         end;
       end;
     // Replenish Life

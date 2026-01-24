@@ -215,7 +215,7 @@ begin
       end;
     TK_ESCAPE:
       begin
-        Scenes.SetScene(scDifficulty);
+        Scenes.SetScene(scTitle);
       end;
     TK_BACKSPACE:
       begin

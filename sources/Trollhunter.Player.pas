@@ -262,40 +262,40 @@ begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skAthletics, 2);
         Skills.DoSkill(skDodge, 2);
-        SatPerTurn := Ord(Game.Difficulty) + 5;
+        SatPerTurn := 5;
       end;
     skAxe:
       begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skAthletics, 3);
         Skills.DoSkill(skDodge);
-        SatPerTurn := Ord(Game.Difficulty) + 6;
+        SatPerTurn := 6;
       end;
     skSpear, skDagger:
       begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skAthletics);
         Skills.DoSkill(skDodge, 3);
-        SatPerTurn := Ord(Game.Difficulty) + 4;
+        SatPerTurn := 4;
       end;
     skMace:
       begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skAthletics, 4);
-        SatPerTurn := Ord(Game.Difficulty) + 7;
+        SatPerTurn := 7;
       end;
     skStaff, skWand:
       begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skDodge);
         Skills.DoSkill(skConcentration, 3);
-        SatPerTurn := Ord(Game.Difficulty) + 8;
+        SatPerTurn := 8;
       end;
     skBow:
       begin
         Skills.DoSkill(FWeaponSkill, 2);
         Skills.DoSkill(skDodge, 4);
-        SatPerTurn := Ord(Game.Difficulty) + 4;
+        SatPerTurn := 4;
       end;
   end;
 end;
@@ -311,7 +311,7 @@ var
   begin
     MsgLog.Add(Format(_('You miss %s.'), [The]));
     // MsgLog.Add(Format(_('You fail to hurt %s.'), [The]));
-    SatPerTurn := Ord(Game.Difficulty) + 3;
+    SatPerTurn := 3;
   end;
 
 begin
@@ -367,8 +367,7 @@ begin
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format(_('You hit %s (%d).'), [The, Dam]));
     // Break weapon
-    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
-    then
+    if ((Math.RandomRange(0, 10) = 0) and not Mode.Wizard) then
       BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
@@ -658,10 +657,7 @@ begin
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize(_('You die...'), 'Light Red'));
   MsgLog.Add(Terminal.Colorize(_('Better luck next time!'), 'Light Yellow'));
-  if (Game.Difficulty < dfHard) then
-    MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]))
-  else
-    MsgLog.Add(Format(_('Press %s to exit...'), [UI.KeyToStr('SPACE')]));
+  MsgLog.Add(Format(_('Press %s to try again...'), [UI.KeyToStr('SPACE')]));
   Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
@@ -1090,14 +1086,11 @@ begin
     end;
     if (FItem.MaxDurability > 0) then
     begin
-      if (Game.Difficulty > dfEasy) then
+      Dec(FItem.MaxDurability);
+      if (FItem.MaxDurability = 0) then
       begin
-        Dec(FItem.MaxDurability);
-        if (FItem.MaxDurability = 0) then
-        begin
-          RnItem(FItem, Index);
-          Exit;
-        end;
+        RnItem(FItem, Index);
+        Exit;
       end;
       FItem.Durability := FItem.MaxDurability;
       if ((Items_Inventory_DeleteItemAmount(Ord(ivGold), RepairCost) > 0) and
@@ -1363,8 +1356,6 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', [_('Difficulty'),
-      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
@@ -1491,16 +1482,10 @@ begin
   end
   else
   begin
-    if (Game.Difficulty < dfHard) then
-    begin
-      Items.AddItemToInv(ivCap, 1, True, True);
-      Items.AddItemToInv(ivQuilted_Armor, 1, True, True);
-    end;
-    if (Game.Difficulty < dfNormal) then
-    begin
-      Items.AddItemToInv(ivLeather_Gloves, 1, True, True);
-      Items.AddItemToInv(ivShoes, 1, True, True);
-    end;
+    Items.AddItemToInv(ivCap, 1, True, True);
+    Items.AddItemToInv(ivQuilted_Armor, 1, True, True);
+    Items.AddItemToInv(ivLeather_Gloves, 1, True, True);
+    Items.AddItemToInv(ivShoes, 1, True, True);
   end;
   { // Add weapon
     if Mode.Wizard then
@@ -1581,7 +1566,6 @@ end;
 procedure TPlayer.StartEquip;
 var
   J: TSlotType;
-  D: UInt;
 begin
   // Equipment
   for J := Low(ClassProp[HClass].Item) to High(ClassProp[HClass].Item) do
@@ -1591,8 +1575,8 @@ begin
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 9, 5));
   Items.AddItemToInv(ivTorch, IfThen(Mode.Wizard, 9, 3));
   // Add coins
-  D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
-  Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));
+  Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999),
+    StartGold));
   // Calc
   Calc();
   Fill();
