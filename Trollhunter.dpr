@@ -7,8 +7,8 @@
 program Trollhunter;
 
 uses
-  SysUtils,
   Dialogs,
+  SysUtils,
   BearLibTerminal,
   Trollhunter.Types,
   Trollhunter.Game,

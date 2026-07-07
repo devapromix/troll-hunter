@@ -11,7 +11,7 @@ uses
   uBearLibItemsCommon,
   Trollhunter.Skill,
   Trollhunter.Statistic,
-  uTalent,
+  Trollhunter.Talent,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
 

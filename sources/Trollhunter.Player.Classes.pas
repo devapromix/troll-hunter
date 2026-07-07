@@ -31,31 +31,31 @@ type
 const
   ClassProp: array [TClassEnum] of TClassProp = (
     // Warrior
-    (Description: 'Warrior'; Strength: (Min: 1; Max: 4;); Dexterity: (Min: 1;
-    Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
-    Life: (Min: 10; Max: 15;); Mana: (Min: 0; Max: 0;);
+    (Description: 'Warrior'; Strength: (Min: 1; Max: 4; ); Dexterity: (Min: 1;
+    Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
+    Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
     Skill: (skBlade, skAthletics, skBodybuilding);
     Item: (ivCap, ivQuilted_Armor, None, None, ivRusty_Sword, ivBuckler,
-    None, None);),
+    None, None); ),
     // Mage
-    (Description: 'Mage'; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 0;
-    Max: 0;); Willpower: (Min: 1; Max: 4;); Perception: (Min: 1; Max: 2;);
-    Life: (Min: 0; Max: 0;); Mana: (Min: 15; Max: 25;);
+    (Description: 'Mage'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 0;
+    Max: 0; ); Willpower: (Min: 1; Max: 4; ); Perception: (Min: 1; Max: 2; );
+    Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
     Skill: (skStaff, skConcentration, skMeditation);
     Item: (ivHood, ivLight_Clothes, None, None, ivQuarterstaff, None,
-    None, None);),
+    None, None); ),
     // Ranger
-    (Description: 'Ranger'; Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1;
-    Max: 4;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
-    Life: (Min: 5; Max: 10;); Mana: (Min: 1; Max: 5;);
+    (Description: 'Ranger'; Strength: (Min: 1; Max: 2; ); Dexterity: (Min: 1;
+    Max: 4; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
+    Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
     Skill: (skBow, skDodge, skDodge); Item: (ivCap, ivQuilted_Armor, None, None,
-    ivBow1, None, None, None);),
+    ivBow1, None, None, None); ),
     // Thief
-    (Description: 'Thief'; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1;
-    Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
-    Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;);
+    (Description: 'Thief'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1;
+    Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
+    Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
     Skill: (skDagger, skToughness, skStealth);
-    Item: (ivCap, ivQuilted_Armor, None, None, ivDagger1, None, None, None);)
+    Item: (ivCap, ivQuilted_Armor, None, None, ivDagger1, None, None, None); )
     /// ///
     );
 
@@ -79,13 +79,14 @@ var
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   uHelpers,
   Trollhunter.Utils,
   uItem;
 
-{ TClasses }
+  { TClasses }
 
 constructor TClasses.Create;
 var
@@ -112,7 +113,7 @@ end;
 function TClasses.GetItems(I: TClassEnum): string;
 var
   J: TSlotType;
-  F: Boolean;
+  F: boolean;
   S: string;
 begin
   F := False;
@@ -128,7 +129,7 @@ end;
 
 function TClasses.GetName(I: TClassEnum): string;
 begin
-  Result := FClassName[I]
+  Result := FClassName[I];
 end;
 
 function TClasses.GetSkillBeginValue(ClassSkillEnum: TClassSkillEnum): UInt;
@@ -136,15 +137,15 @@ begin
   case ClassSkillEnum of
     skWeapon, skMain:
       Result := BeginSkill;
-  else
-    Result := StartSkill;
+    else
+      Result := StartSkill;
   end;
 end;
 
 function TClasses.GetSkills(I: TClassEnum): string;
 var
   J: TClassSkillEnum;
-  F: Boolean;
+  F: boolean;
   S: string;
 begin
   F := False;
@@ -160,10 +161,10 @@ end;
 
 initialization
 
-Classes := TClasses.Create;
+  Classes := TClasses.Create;
 
 finalization
 
-FreeAndNil(Classes);
+  FreeAndNil(Classes);
 
 end.

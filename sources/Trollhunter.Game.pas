@@ -286,7 +286,7 @@ end;
 
 function TGame.GetVersion: string;
 begin
-  Result := '0.13.1';
+  Result := '0.14.1';
 end;
 
 procedure TGame.Log(S: string);

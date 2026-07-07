@@ -2,17 +2,18 @@ unit Trollhunter.Skill;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TSkillEnum = (
-    //
+
     skNone,
-    //
+
     skStealth,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness,
-    //
+
     skBodybuilding, skMeditation, skEnchant_Item,
     // Weapon skills
     skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow);
@@ -49,7 +50,8 @@ const
 
 implementation
 
-uses SysUtils,
+uses
+  SysUtils,
   TypInfo,
   Math,
   uLanguage,
@@ -60,7 +62,7 @@ uses SysUtils,
   Trollhunter.Statistic,
   uHelpers;
 
-{ TSkills }
+  { TSkills }
 
 procedure TSkills.Clear;
 var
@@ -124,18 +126,17 @@ end;
 
 function TSkills.GetSkill(I: TSkillEnum): TSkill;
 begin
-  Result := FSkill[I]
+  Result := FSkill[I];
 end;
 
 procedure TSkills.Modify(I: TSkillEnum; Value: Int);
 begin
-  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin,
-    SkillMax);
+  FSkill[I].Value := Math.EnsureRange(FSkill[I].Value + Value, SkillMin, SkillMax);
 end;
 
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);
 begin
-  FSkill[I] := Value
+  FSkill[I] := Value;
 end;
 
 end.
