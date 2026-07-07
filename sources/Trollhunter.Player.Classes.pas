@@ -1,4 +1,4 @@
-﻿unit Trollhunter.Player.Classes;
+unit Trollhunter.Player.Classes;
 
 interface
 
@@ -49,14 +49,13 @@ const
     Max: 4;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 0; Max: 0;);
     Life: (Min: 5; Max: 10;); Mana: (Min: 1; Max: 5;);
     Skill: (skBow, skDodge, skDodge); Item: (ivCap, ivQuilted_Armor, None, None,
-    ivShort_Bow, None, None, None);),
+    ivBow1, None, None, None);),
     // Thief
     (Description: 'Thief'; Strength: (Min: 0; Max: 0;); Dexterity: (Min: 1;
     Max: 2;); Willpower: (Min: 0; Max: 0;); Perception: (Min: 1; Max: 4;);
     Life: (Min: 5; Max: 7;); Mana: (Min: 5; Max: 7;);
     Skill: (skDagger, skToughness, skStealth);
-    Item: (ivCap, ivQuilted_Armor, None, None, ivSmall_Dagger, None,
-    None, None);)
+    Item: (ivCap, ivQuilted_Armor, None, None, ivDagger1, None, None, None);)
     /// ///
     );
 
@@ -80,10 +79,9 @@ var
 
 implementation
 
-uses
-  SysUtils,
+uses SysUtils,
   TypInfo,
-  Trollhunter.Helpers,
+  uHelpers,
   Trollhunter.Utils,
   uItem;
 

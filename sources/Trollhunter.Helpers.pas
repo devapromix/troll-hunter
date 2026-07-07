@@ -2,7 +2,8 @@ unit Trollhunter.Helpers;
 
 interface
 
-uses Classes,
+uses
+  Classes,
   Trollhunter.Types,
   uBearLibItemsCommon,
   Trollhunter.Player;
@@ -24,16 +25,14 @@ type
   end;
 
 type
-  TStringHelper = record helper for
-    string
+  TStringHelper = record helper for  string
     function GetName(const Pref: string): string;
   end;
 
 type
   TStringListHelper = class helper for TStringList
-    function Join(const CharSeparator: Char): string;
-    function Explode(const CharSeparator: Char; const Source: string)
-      : TStringList;
+    function Join(const CharSeparator: char): string;
+    function Explode(const CharSeparator: char; const Source: string): TStringList;
   end;
 
 type
@@ -45,7 +44,7 @@ implementation
 
 uses SysUtils, Math;
 
-{ IntHelper }
+  { IntHelper }
 
 function TIntHelper.InRange(AMaxValue: Int): Int;
 begin
@@ -96,9 +95,9 @@ end;
 
 { TStringListHelper }
 
-function TStringListHelper.Join(const CharSeparator: Char): string;
+function TStringListHelper.Join(const CharSeparator: char): string;
 var
-  I: Integer;
+  I: integer;
 begin
   Result := '';
   for I := 0 to Self.Count - 1 do
@@ -108,10 +107,10 @@ begin
       Result := Result + Self[I];
 end;
 
-function TStringListHelper.Explode(const CharSeparator: Char;
+function TStringListHelper.Explode(const CharSeparator: char;
   const Source: string): TStringList;
 var
-  I: Integer;
+  I: integer;
   Strings: TStringList;
 begin
   Strings := TStringList.Create;

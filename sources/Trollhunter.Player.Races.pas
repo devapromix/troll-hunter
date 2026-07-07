@@ -75,10 +75,9 @@ var
 
 implementation
 
-uses
-  TypInfo,
+uses TypInfo,
   SysUtils,
-  Trollhunter.Helpers;
+  uHelpers;
 
 { TRaces }
 

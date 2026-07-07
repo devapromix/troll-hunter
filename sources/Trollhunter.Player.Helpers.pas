@@ -1,9 +1,8 @@
-﻿unit Trollhunter.Player.Helpers;
+unit Trollhunter.Player.Helpers;
 
 interface
 
-uses
-  Trollhunter.Player;
+uses Trollhunter.Player;
 
 type
   TPlayerHelper = class helper for TPlayer
@@ -13,11 +12,11 @@ type
 
 implementation
 
-uses
-  SysUtils,
+uses SysUtils,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
-  Trollhunter.Player.Classes;
+  Trollhunter.Player.Classes,
+  uLanguage;
 
 { TPlayerHelper }
 
@@ -30,9 +29,9 @@ end;
 function TPlayerHelper.Gender: string;
 begin
   if (Player.Sex = sxMale) then
-    Result := 'Male'
+    Result := _('Male')
   else
-    Result := 'Female';
+    Result := _('Female');
 end;
 
 end.

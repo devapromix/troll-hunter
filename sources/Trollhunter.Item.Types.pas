@@ -82,6 +82,14 @@ const
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
+  { rough / необроблений
+    imperfect / недосконалий
+    common / типовий
+    precious / дорогоцінний
+    flawless / без недоліків
+    perfect / досконалий
+    outworldly / неземний }
+
   { Potion, Flask, Extract, Essence, Elixir }
 
 type
@@ -150,15 +158,14 @@ type
     ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
     // Wands
-    ivYew_Wand, ivWater_Wand, ivBone_Wand, ivWand4, ivGrim_Wand, ivWand6,
-    ivGrave_Wand, ivWand8, ivLich_Wand, ivWand10,
+    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
+    ivWand9, ivWand10,
     // Daggers
-    ivSmall_Dagger, ivDagger, ivKris, ivDirk, ivRondel, ivPoignard, ivKatar,
-    ivBlood_Spike, ivMithril_Blade, ivDivine_Stiletto,
+    ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
+    ivDagger8, ivDagger9, ivDagger10,
     // Bows
-    ivShort_Bow, ivHunting_Bow, ivLong_Bow, ivNomad_Bow, ivHeavy_Bow,
-    ivComposite_Bow, ivMaster_Bow, ivWar_Bow, ivDragon_Bow, ivAncient_Bow,
-
+    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
+    ivBow9, ivBow10,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
@@ -170,7 +177,7 @@ type
     ivHatchet, ivBattle_Axe, // Axe
     ivShort_Spear, ivSpear, // Spear
     ivSlag_Hammer, ivSpiked_Cudgel, // Mace
-    ivQuarterstaff, ivShort_Staff, // Staff
+    ivQuarterstaff, ivStaff2, // Staff
     // Gray Cave
     ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
     ivHard_Leather_Armor, ivBattle_Armor, ivFancy_Clothes, ivRobe, // Body Armor
@@ -181,7 +188,7 @@ type
     ivMeat_Axe, ivFlesh_Tearer, // Axe
     ivJavelin, ivFuscina, // Spear
     ivWarhammer, ivWar_Mace, // Mace
-    ivLong_Staff, ivGnarled_Staff, // Staff
+    ivStaff3, ivStaff4, // Staff
     // Deep Cave
     ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
     ivBrigantine_Armor, ivRing_Mail, ivLight_Furs, ivClean_Robe, // Body Armor
@@ -192,7 +199,7 @@ type
     ivWar_Axe, ivDark_Axe, // Axe
     ivWar_Spear, ivHarpoon, // Spear
     ivFlanged_Mace, ivWar_Gavel, // Mace
-    ivBattle_Staff, ivWar_Staff, // Staff
+    ivStaff5, ivStaff6, // Staff
     // Blood Cave
     ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
     ivChain_Mail, ivScale_Mail, ivThick_Furs, ivHard_Robe, // Body Armor
@@ -203,7 +210,7 @@ type
     ivBerserker_Axe, ivMarauder_Axe, // Axe
     ivSilvan_Whisper, ivImpaler, // Spear
     ivBarbarous_Mace, ivAdept_Hammer, // Mace
-    ivGothic_Staff, ivHyperion_Staff, // Staff
+    ivStaff7, ivStaff8, // Staff
     // Drom
     ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
     ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
@@ -215,7 +222,7 @@ type
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
     ivWar_Maul, ivDoom_Hammer, // Mace
-    ivArchon_Staff, ivRune_Staff // Staff
+    ivStaff9, ivStaff10 // Staff
     );
 
 const

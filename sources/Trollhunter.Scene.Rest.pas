@@ -1,9 +1,9 @@
-﻿unit Trollhunter.Scene.Rest;
+unit Trollhunter.Scene.Rest;
 
 interface
 
 uses
-  uScenes,
+  Trollhunter.Scenes,
   Trollhunter.Types;
 
 type
@@ -22,29 +22,30 @@ uses
   Trollhunter.UI,
   Trollhunter.Terminal,
   BearLibTerminal,
+  uLanguage,
   Trollhunter.UI.Log,
   Trollhunter.Player;
 
 procedure TSceneRest.Render;
 begin
-  UI.Title('Rest duration');
+  UI.Title(_('Rest duration'));
 
   UI.FromAToZ;
   Y := 1;
 
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 10 turns',
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 100 turns',
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 1000 turns',
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'),
     TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
-  AddKey('Esc', 'Back', True);
+  AddKey('Esc', _('Back'), True);
 end;
 
 procedure TSceneRest.Update(var Key: UInt);
@@ -54,7 +55,7 @@ begin
       Player.Rest(StrToInt('1' + StringOfChar('0', Key - TK_A + 1)));
     TK_ESCAPE:
       Scenes.SetScene(scGame);
-  end
+  end;
 end;
 
 end.

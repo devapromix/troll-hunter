@@ -1,70 +1,27 @@
-﻿{$IFDEF FPC}
+{$IFDEF FPC}
 {$IFDEF Windows}
 {$APPTYPE GUI}
 {$ENDIF}
 {$ENDIF}
+
 program Trollhunter;
 
 uses
   SysUtils,
   Dialogs,
-  Trollhunter.Types in 'Sources\Trollhunter.Types.pas',
-  Trollhunter.Game in 'sources\Trollhunter.Game.pas',
-  Trollhunter.Terminal in 'Sources\Trollhunter.Terminal.pas',
-  Trollhunter.Scenes in 'sources\Trollhunter.Scenes.pas',
-  Trollhunter.Player in 'Sources\Trollhunter.Player.pas',
-  Trollhunter.Map in 'sources\Trollhunter.Map.pas',
-  Trollhunter.Item in 'sources\Trollhunter.Item.pas',
-  Trollhunter.Mob in 'sources\Trollhunter.Mob.pas',
-  Trollhunter.UI.Log in 'Sources\Trollhunter.UI.Log.pas',
-  Trollhunter.Entity in 'sources\Trollhunter.Entity.pas',
-  Trollhunter.Calendar in 'sources\Trollhunter.Calendar.pas',
-  Trollhunter.Item.Shop in 'Sources\Trollhunter.Item.Shop.pas',
-  Trollhunter.Spellbook in 'sources\Trollhunter.Spellbook.pas',
-  Trollhunter.Talent in 'sources\Trollhunter.Talent.pas',
-  Trollhunter.Ability in 'sources\Trollhunter.Ability.pas',
-  Trollhunter.UI.Logo in 'Sources\Trollhunter.UI.Logo.pas',
-  Trollhunter.Statistic in 'sources\Trollhunter.Statistic.pas',
-  Trollhunter.Item.Affixes in 'Sources\Trollhunter.Item.Affixes.pas',
-  Trollhunter.Creature in 'sources\Trollhunter.Creature.pas',
-  Trollhunter.Attribute in 'sources\Trollhunter.Attribute.pas',
-  Trollhunter.UI in 'Sources\Trollhunter.UI.pas',
-  BearLibTerminal in 'Sources\BearLibTerminal\BearLibTerminal.pas',
-  uPathFind in 'Sources\BearLibPathFind\uPathFind.pas',
-  uBearLibItemsCommon in 'Sources\BearLibItems\uBearLibItemsCommon.pas',
-  uBearLibItemsDungeon in 'Sources\BearLibItems\uBearLibItemsDungeon.pas',
-  uBearLibItemsInventory in 'Sources\BearLibItems\uBearLibItemsInventory.pas',
-  Trollhunter.Quest in 'sources\Trollhunter.Quest.pas',
-  Trollhunter.Helpers in 'sources\Trollhunter.Helpers.pas',
-  Trollhunter.Weather in 'sources\Trollhunter.Weather.pas',
-  Trollhunter.Player.Races in 'sources\Trollhunter.Player.Races.pas',
-  Trollhunter.Player.Classes in 'sources\Trollhunter.Player.Classes.pas',
-  Trollhunter.Scene.Enchant in 'sources\Trollhunter.Scene.Enchant.pas',
-  Trollhunter.Scene.Name in 'sources\Trollhunter.Scene.Name.pas',
-  Trollhunter.Scene.Rest in 'sources\Trollhunter.Scene.Rest.pas',
-  Trollhunter.Scene.RacesAndClasses in 'sources\Trollhunter.Scene.RacesAndClasses.pas',
-  Trollhunter.Scene.Quest in 'sources\Trollhunter.Scene.Quest.pas',
-  Trollhunter.Utils in 'sources\Trollhunter.Utils.pas',
-  Trollhunter.Scene.Background in 'sources\Trollhunter.Scene.Background.pas',
-  Trollhunter.Item.Types in 'sources\Trollhunter.Item.Types.pas',
-  Trollhunter.Player.Types in 'sources\Trollhunter.Player.Types.pas',
-  Trollhunter.Scene.Statistics in 'sources\Trollhunter.Scene.Statistics.pas',
-  Trollhunter.Scene.Options in 'sources\Trollhunter.Scene.Options.pas',
-  Trollhunter.Player.Helpers in 'sources\Trollhunter.Player.Helpers.pas',
-  Trollhunter.Scene.Help in 'sources\Trollhunter.Scene.Help.pas',
-  Trollhunter.Skill in 'sources\Trollhunter.Skill.pas';
+  BearLibTerminal,
+  Trollhunter.Types,
+  Trollhunter.Game,
+  Trollhunter.Terminal,
+  Trollhunter.Scenes,
+  Trollhunter.Helpers;
 
 var
   Key: UInt = 0;
-  IsRender: Boolean = True;
+  IsRender: boolean = True;
 
 begin
   Randomize();
-{$IFNDEF FPC}
-{$IF COMPILERVERSION >= 18}
-  ReportMemoryLeaksOnShutdown := True;
-{$IFEND}
-{$ENDIF}
   Game.LoadConfig();
   repeat
     if (Game.Timer > 0) then

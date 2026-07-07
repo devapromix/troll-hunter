@@ -1,11 +1,12 @@
-﻿unit Trollhunter.Game;
+unit Trollhunter.Game;
 
 interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Entity,
-  Trollhunter.Map;
+  uEntity,
+  Trollhunter.Map,
+  uLanguage;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
@@ -90,27 +91,30 @@ const
   clFog = $FF222222;
 
 var
-  clDefault: Cardinal = $FFFFFF00;
-  clBackground: Cardinal = $00000000;
-  clCorpse: Cardinal = $FF555555;
-  clLook: Cardinal = $FFFFFF33;
-  clBkMob: Cardinal = $FF330000;
-  clPlayer: Cardinal = $FF009900;
-  clBkPlayer: Cardinal = $FF003300;
-  clLife: Cardinal = $FF990000;
-  clMana: Cardinal = $FF000099;
+  clDefault: cardinal = $FFFFFF00;
+  clBackground: cardinal = $00000000;
+  clCorpse: cardinal = $FF555555;
+  clLook: cardinal = $FFFFFF33;
+  clBkMob: cardinal = $FF330000;
+  clPlayer: cardinal = $FF009900;
+  clBkPlayer: cardinal = $FF003300;
+  clLife: cardinal = $FF990000;
+  clMana: cardinal = $FF000099;
 
 var
   clAlarm: string = 'Lightest Green';
 
 type
   TMode = record
-    Game: Boolean;
-    Wizard: Boolean;
+    Game: boolean;
+    Wizard: boolean;
   end;
 
 var
   Mode: TMode;
+
+type
+  TDifficulty = (dfEasy, dfNormal, dfHard, dfHell);
 
 type
   TSpawn = class(TEntity);
@@ -122,44 +126,47 @@ type
 type
   TGame = class(TObject)
   private
+    FDifficulty: TDifficulty;
     FTimer: UInt;
-    FWon: Boolean;
-    FCanClose: Boolean;
-    FShowMap: Boolean;
-    FShowID: Boolean;
-    FLCorpses: Boolean;
+    FWon: boolean;
+    FCanClose: boolean;
+    FShowMap: boolean;
+    FShowID: boolean;
+    FLCorpses: boolean;
     FScreenshot: string;
     FSpawn: TSpawn;
     FPortal: TSpawn;
     FPortalMap: TMapEnum;
     FPortalTile: TTileEnum;
-    FShowEffects: Boolean;
-    FAPOption: array [TAPOptionEnum] of Boolean;
+    FShowEffects: boolean;
+    FAPOption: array [TAPOptionEnum] of boolean;
   public
     constructor Create;
     destructor Destroy; override;
+    property Difficulty: TDifficulty read FDifficulty write FDifficulty;
     property Timer: UInt read FTimer write FTimer;
-    property Won: Boolean read FWon write FWon;
-    property CanClose: Boolean read FCanClose write FCanClose;
-    property ShowMap: Boolean read FShowMap write FShowMap;
-    property ShowID: Boolean read FShowID write FShowID;
-    property LCorpses: Boolean read FLCorpses write FLCorpses;
+    property Won: boolean read FWon write FWon;
+    property CanClose: boolean read FCanClose write FCanClose;
+    property ShowMap: boolean read FShowMap write FShowMap;
+    property ShowID: boolean read FShowID write FShowID;
+    property LCorpses: boolean read FLCorpses write FLCorpses;
     property Screenshot: string read FScreenshot write FScreenshot;
     property Spawn: TSpawn read FSpawn write FSpawn;
     property Portal: TSpawn read FPortal write FPortal;
+    function GetStrDifficulty: string;
     function GetVersion: string;
     property PortalMap: TMapEnum read FPortalMap write FPortalMap;
     property PortalTile: TTileEnum read FPortalTile write FPortalTile;
-    property ShowEffects: Boolean read FShowEffects write FShowEffects;
+    property ShowEffects: boolean read FShowEffects write FShowEffects;
     function GetTitle: string;
     procedure LoadConfig;
     procedure Start;
     procedure Log(S: string);
     function GetCursor: string;
-    function IfThen(AValue: Boolean; const ATrue: string;
+    function IfThen(AValue: boolean; const ATrue: string;
       const AFalse: string): string;
     function EnsureRange(const AValue, AMax: Int): Int;
-    function GetOption(I: TAPOptionEnum): Boolean;
+    function GetOption(I: TAPOptionEnum): boolean;
     procedure ChOption(I: TAPOptionEnum);
     procedure ChScreen;
   end;
@@ -173,7 +180,7 @@ uses
   SysUtils,
   Trollhunter.Player,
   Trollhunter.UI.Log,
-  uScenes,
+  Trollhunter.Scenes,
   Math,
   Dialogs,
   BearLibTerminal,
@@ -182,9 +189,9 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
   uSpellbook,
-  Trollhunter.Helpers;
+  uHelpers;
 
-{ TGame }
+  { TGame }
 
 procedure TGame.ChScreen;
 begin
@@ -198,7 +205,7 @@ constructor TGame.Create;
 var
   I: UInt;
   J: TAPOptionEnum;
-  IsUseLang: Boolean;
+  IsUseLang: boolean;
 begin
   Randomize;
   Timer := 0;
@@ -213,6 +220,7 @@ begin
   ShowMap := True;
   ShowID := False;
   LCorpses := True;
+  Difficulty := dfNormal;
   FSpawn := TSpawn.Create;
   FPortal := TSpawn.Create;
   PortalMap := deDark_Wood;
@@ -224,10 +232,14 @@ begin
     if (LowerCase(ParamStr(I)) = '-l') then
       IsUseLang := True;
   end;
+  Language := TLanguage.Create(IsUseLang);
+  Language.UseLanguage('russian');
 end;
 
 destructor TGame.Destroy;
 begin
+  Language.SaveDefault;
+  FreeAndNil(Language);
   FreeAndNil(FPortal);
   FreeAndNil(FSpawn);
   inherited;
@@ -238,7 +250,7 @@ begin
   Result := AValue.InRange(AMax);
 end;
 
-function TGame.IfThen(AValue: Boolean; const ATrue: string;
+function TGame.IfThen(AValue: boolean; const ATrue: string;
   const AFalse: string): string;
 begin
   if AValue then
@@ -252,14 +264,29 @@ begin
   Result := '_';
 end;
 
-function TGame.GetOption(I: TAPOptionEnum): Boolean;
+function TGame.GetOption(I: TAPOptionEnum): boolean;
 begin
-  Result := FAPOption[I]
+  Result := FAPOption[I];
+end;
+
+function TGame.GetStrDifficulty: string;
+begin
+  case Difficulty of
+    dfEasy:
+      Result := _('Easy');
+    dfNormal:
+      Result := _('Normal');
+    dfHard:
+      Result := _('Hard');
+    else
+      Result := Terminal.Colorize(_('Hell'), 'Red');
+  end;
+
 end;
 
 function TGame.GetVersion: string;
 begin
-  Result := '0.14.0';
+  Result := '0.13.1';
 end;
 
 procedure TGame.Log(S: string);
@@ -271,6 +298,8 @@ procedure TGame.LoadConfig;
 begin
   // Settings
   FAPOption[apFullscreen] := terminal_get('window.fullscreen') = 'true';
+  // Localization
+  Language.UseLanguage(terminal_get('ini.localization.language'));
   // Load colors
   clDefault := Terminal.GetColorFromIni('Default', 'Yellow');
   clBackground := Terminal.GetColorFromIni('Background', 'Black');
@@ -299,22 +328,22 @@ begin
   Shops.New;
   // Intro
   MsgLog.Clear;
-  MsgLog.Add(Terminal.Colorize(Format('%s %s %s', ['Welcome to Trollhunter!',
-    'You need to find and kill The King Troll!', 'Press ? for help.']),
-    clAlarm));
+  MsgLog.Add(Terminal.Colorize(Format('%s %s %s',
+    [_('Welcome to Elvion!'), _('You need to find and kill The King Troll!'),
+    _('Press ? for help.')]), clAlarm));
 end;
 
 function TGame.GetTitle: string;
 begin
-  Result := 'Trollhunter';
+  Result := _('Trollhunter');
 end;
 
 initialization
 
-Game := TGame.Create;
+  Game := TGame.Create;
 
 finalization
 
-FreeAndNil(Game);
+  FreeAndNil(Game);
 
 end.

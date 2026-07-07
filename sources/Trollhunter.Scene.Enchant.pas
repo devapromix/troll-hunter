@@ -1,10 +1,10 @@
-﻿unit Trollhunter.Scene.Enchant;
+unit Trollhunter.Scene.Enchant;
 
 interface
 
 uses
   Trollhunter.Types,
-  uScenes;
+  Trollhunter.Scenes;
 
 type
   TSceneEnchant = class(TScene)
@@ -18,6 +18,7 @@ implementation
 
 uses
   Trollhunter.UI,
+  uLanguage,
   uItem,
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
@@ -25,18 +26,18 @@ uses
   Trollhunter.Player,
   Trollhunter.Game;
 
-{ TSceneEnchant }
+  { TSceneEnchant }
 
 procedure TSceneEnchant.Render;
 begin
-  UI.Title('Enchant an item', 1, clDarkestRed);
+  UI.Title(_('Enchant an item'), 1, clDarkestRed);
 
   UI.FromAToZ();
   Items.RenderInventory();
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', 'Select an item');
-  AddKey('Esc', 'Close', True);
+  AddKey('A-Z', _('Select an item'));
+  AddKey('Esc', _('Close'), True);
 end;
 
 procedure TSceneEnchant.Update(var Key: UInt);
@@ -46,9 +47,9 @@ begin
       Scenes.SetScene(scInv);
     TK_A .. TK_Z:
       Player.CraftItem(Key - TK_A);
-  else
-    Game.Timer := UIntMax;
-  end
+    else
+      Game.Timer := UIntMax;
+  end;
 end;
 
 end.
