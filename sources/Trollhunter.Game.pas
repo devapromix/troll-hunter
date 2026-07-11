@@ -5,8 +5,7 @@ interface
 uses
   Trollhunter.Types,
   uEntity,
-  Trollhunter.Map,
-  uLanguage;
+  Trollhunter.Map;
 
 {
   "Berserk" : "While berserk, combatant will get an extra attack (or spell cast) each turn."
@@ -232,14 +231,10 @@ begin
     if (LowerCase(ParamStr(I)) = '-l') then
       IsUseLang := True;
   end;
-  Language := TLanguage.Create(IsUseLang);
-  Language.UseLanguage('russian');
 end;
 
 destructor TGame.Destroy;
 begin
-  Language.SaveDefault;
-  FreeAndNil(Language);
   FreeAndNil(FPortal);
   FreeAndNil(FSpawn);
   inherited;
@@ -273,13 +268,13 @@ function TGame.GetStrDifficulty: string;
 begin
   case Difficulty of
     dfEasy:
-      Result := _('Easy');
+      Result := 'Easy';
     dfNormal:
-      Result := _('Normal');
+      Result := 'Normal';
     dfHard:
-      Result := _('Hard');
+      Result := 'Hard';
     else
-      Result := Terminal.Colorize(_('Hell'), 'Red');
+      Result := Terminal.Colorize('Hell', 'Red');
   end;
 
 end;
@@ -298,8 +293,6 @@ procedure TGame.LoadConfig;
 begin
   // Settings
   FAPOption[apFullscreen] := terminal_get('window.fullscreen') = 'true';
-  // Localization
-  Language.UseLanguage(terminal_get('ini.localization.language'));
   // Load colors
   clDefault := Terminal.GetColorFromIni('Default', 'Yellow');
   clBackground := Terminal.GetColorFromIni('Background', 'Black');
@@ -329,13 +322,13 @@ begin
   // Intro
   MsgLog.Clear;
   MsgLog.Add(Terminal.Colorize(Format('%s %s %s',
-    [_('Welcome to Elvion!'), _('You need to find and kill The King Troll!'),
-    _('Press ? for help.')]), clAlarm));
+    ['Welcome to Elvion!', 'You need to find and kill The King Troll!',
+    'Press ? for help.']), clAlarm));
 end;
 
 function TGame.GetTitle: string;
 begin
-  Result := _('Trollhunter');
+  Result := 'Trollhunter';
 end;
 
 initialization

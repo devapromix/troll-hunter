@@ -20,15 +20,14 @@ uses
   BearLibTerminal,
   Trollhunter.UI,
   uQuest,
-  uLanguage,
   Trollhunter.Game;
 
 procedure TSceneQuest.Render;
 begin
   UI.Title(Quests.GetName(Quests.Current), 1);
 
-  AddKey('Enter', _('Accept'));
-  AddKey('Esc', _('Decline'), True);
+  AddKey('Enter', 'Accept');
+  AddKey('Esc', 'Decline', True);
 end;
 
 procedure TSceneQuest.Update(var Key: UInt);

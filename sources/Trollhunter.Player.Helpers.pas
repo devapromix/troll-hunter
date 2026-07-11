@@ -15,8 +15,7 @@ implementation
 uses SysUtils,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
-  Trollhunter.Player.Classes,
-  uLanguage;
+  Trollhunter.Player.Classes;
 
 { TPlayerHelper }
 
@@ -29,9 +28,9 @@ end;
 function TPlayerHelper.Gender: string;
 begin
   if (Player.Sex = sxMale) then
-    Result := _('Male')
+    Result := 'Male'
   else
-    Result := _('Female');
+    Result := 'Female';
 end;
 
 end.

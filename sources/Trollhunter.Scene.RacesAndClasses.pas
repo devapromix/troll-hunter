@@ -38,7 +38,6 @@ implementation
 uses
   Math,
   BearLibTerminal,
-  uLanguage,
   Trollhunter.Terminal,
   Trollhunter.Player,
   uAttribute,
@@ -61,30 +60,30 @@ procedure TVScene.Render;
 begin
   DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(DX, 3, _('Age') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 3, 'Age' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(DX, 4, _('Height') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 4, 'Height' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(DX, 5, _('Weight') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 5, 'Weight' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 6, _('Sex') + ': ' + Terminal.Colorize(Player.Gender, 'Lush'));
-  Terminal.Print(DX, 7, _('Metabolism') + ': ' +
+  Terminal.Print(DX, 6, 'Sex' + ': ' + Terminal.Colorize(Player.Gender, 'Lush'));
+  Terminal.Print(DX, 7, 'Metabolism' + ': ' +
     Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 
   // Attributes
-  Terminal.Print(DX, 9, _('Strength') + ': ' +
+  Terminal.Print(DX, 9, 'Strength' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(DX, 10, _('Dexterity') + ': ' +
+  Terminal.Print(DX, 10, 'Dexterity' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(DX, 11, _('Willpower') + ': ' +
+  Terminal.Print(DX, 11, 'Willpower' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(DX, 12, _('Perception') + ': ' +
+  Terminal.Print(DX, 12, 'Perception' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, _('Life') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 14, 'Life' + ': ' + Terminal.Colorize(
     Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(DX, 15, _('Mana') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 15, 'Mana' + ': ' + Terminal.Colorize(
     Player.Attributes.Attrib[atMana].Prm, 'Lush'));
 end;
 
@@ -112,7 +111,7 @@ var
   end;
 
 begin
-  UI.Title(_('Choose a race'));
+  UI.Title('Choose a race');
   I := 0;
   Y := 2;
   for R := Low(TRaceEnum) to High(TRaceEnum) do
@@ -122,11 +121,11 @@ begin
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(DX, CY - (CY div 2), CX, CY,
-    _(Races.GetDescription(Player.HRace)), TK_ALIGN_BOTTOM);
+    Races.GetDescription(Player.HRace), TK_ALIGN_BOTTOM);
 
-  AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'));
-  AddKey('?', _('Help'), True);
+  AddKey('Enter', 'Confirm');
+  AddKey('Esc', 'Back');
+  AddKey('?', 'Help', True);
 end;
 
 class procedure TSceneRace.RenderInfo;
@@ -252,7 +251,7 @@ var
   end;
 
 begin
-  UI.Title(_('Choose a class'));
+  UI.Title('Choose a class');
   I := 0;
   Y := 2;
   for C := Low(TClassEnum) to High(TClassEnum) do
@@ -260,19 +259,19 @@ begin
 
   inherited Render;
 
-  Terminal.Print(DX, 17, _('Items') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 17, 'Items' + ': ' + Terminal.Colorize(
     Classes.GetItems(Player.HClass), 'Lush'));
 
-  Terminal.Print(DX, 19, _('Skills') + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 19, 'Skills' + ': ' + Terminal.Colorize(
     Classes.GetSkills(Player.HClass), 'Lush'));
 
   Terminal.ForegroundColor(clGray);
   Terminal.Print(DX, CY - (CY div 2), CX, CY,
-    _(Classes.GetDescription(Player.HClass)), TK_ALIGN_BOTTOM);
+    Classes.GetDescription(Player.HClass), TK_ALIGN_BOTTOM);
 
-  AddKey('Enter', _('Confirm'));
-  AddKey('Esc', _('Back'));
-  AddKey('?', _('Help'), True);
+  AddKey('Enter', 'Confirm');
+  AddKey('Esc', 'Back');
+  AddKey('?', 'Help', True);
 end;
 
 procedure TSceneClass.ReRoll;

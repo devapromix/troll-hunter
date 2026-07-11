@@ -112,7 +112,6 @@ implementation
 uses
   SysUtils,
   TypInfo,
-  uLanguage,
   Trollhunter.Skill,
   Trollhunter.Scenes,
   Trollhunter.Player,
@@ -202,15 +201,15 @@ const
 begin
   case TalentBase[I].TalentBonus of
     tbNone:
-      Result := _(TalentHint[I]);
+      Result := TalentHint[I];
     tbGold:
-      Result := Format(F, [StartGold, _(TalentHint[I])]);
+      Result := Format(F, [StartGold, TalentHint[I]]);
     tbSkill:
-      Result := Format(F, [StartSkill, _(TalentHint[I])]);
+      Result := Format(F, [StartSkill, TalentHint[I]]);
     tbTalent:
-      Result := Format(F, [TalentPrm, _(TalentHint[I])]);
+      Result := Format(F, [TalentPrm, TalentHint[I]]);
     tbAttrib:
-      Result := Format(F, [AttribPrm, _(TalentHint[I])]);
+      Result := Format(F, [AttribPrm, TalentHint[I]]);
     else
       Result := '-';
   end;

@@ -22,30 +22,29 @@ uses
   Trollhunter.UI,
   Trollhunter.Terminal,
   BearLibTerminal,
-  uLanguage,
   Trollhunter.UI.Log,
   Trollhunter.Player;
 
 procedure TSceneRest.Render;
 begin
-  UI.Title(_('Rest duration'));
+  UI.Title('Rest duration');
 
   UI.FromAToZ;
   Y := 1;
 
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 10 turns'),
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 10 turns',
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 100 turns'),
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 100 turns',
     TK_ALIGN_LEFT);
   Inc(Y);
-  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + _('Rest for 1000 turns'),
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 1000 turns',
     TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
-  AddKey('Esc', _('Back'), True);
+  AddKey('Esc', 'Back', True);
 end;
 
 procedure TSceneRest.Update(var Key: UInt);
