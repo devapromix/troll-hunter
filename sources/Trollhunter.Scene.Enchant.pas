@@ -17,11 +17,11 @@ type
 implementation
 
 uses
+  BearLibTerminal,
   Trollhunter.UI,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
-  BearLibTerminal,
   Trollhunter.Player,
   Trollhunter.Game;
 

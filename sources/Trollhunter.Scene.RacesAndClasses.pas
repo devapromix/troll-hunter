@@ -41,7 +41,7 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Attribute,
-  uAbility,
+  Trollhunter.Ability,
   Trollhunter.Game,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,

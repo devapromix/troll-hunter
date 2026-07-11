@@ -4,7 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
-  uEntity,
+  Trollhunter.Entity,
   Trollhunter.Map;
 
 {
@@ -176,18 +176,18 @@ var
 implementation
 
 uses
+  Math,
+  Dialogs,
+  BearLibTerminal,
   SysUtils,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   Trollhunter.Scenes,
-  Math,
-  Dialogs,
-  BearLibTerminal,
-  uItem,
-  uMob,
+  Trollhunter.Item,
+  Trollhunter.Mob,
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
-  uSpellbook,
+  Trollhunter.Spellbook,
   Trollhunter.Helpers;
 
   { TGame }

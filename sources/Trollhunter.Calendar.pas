@@ -1,4 +1,4 @@
-unit uCalendar;
+unit Trollhunter.Calendar;
 
 interface
 
@@ -43,11 +43,11 @@ implementation
 
 uses SysUtils,
   Math,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Item.Shop,
   Trollhunter.UI.Log,
   Trollhunter.Player,
-  uCreature,
+  Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Helpers;
 

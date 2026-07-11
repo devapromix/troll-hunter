@@ -1,10 +1,11 @@
-unit uCreature;
+unit Trollhunter.Creature;
 
 interface
 
 uses
   Trollhunter.Types,
-  uEntity, uAbility,
+  Trollhunter.Entity,
+  Trollhunter.Ability,
   Trollhunter.Attribute;
 
 { TODO -cNPC : Нужен кто-то, кто будет идентифицировать предметы за деньги. }

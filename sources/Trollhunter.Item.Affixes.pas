@@ -2,7 +2,11 @@ unit Trollhunter.Item.Affixes;
 
 interface
 
-uses Trollhunter.Types, uCreature, Trollhunter.Item.Types, uBeaRLibItemsCommon;
+uses
+  Trollhunter.Types,
+  Trollhunter.Creature,
+  Trollhunter.Item.Types,
+  Trollhunter.Item.Common;
 
 type
   TSuffixBase = record
@@ -579,7 +583,7 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Game,
   Trollhunter.Helpers,
-  uItem;
+  Trollhunter.Item;
 
 function TAffixes.Amount: UInt;
 begin
@@ -764,7 +768,7 @@ begin
   if (SB.PrmValue > 0) then
     AItem.Value := SB.PrmValue;
   // Price
-  uItem.TItems.CalcItem(AItem);
+  Trollhunter.Item.TItems.CalcItem(AItem);
 end;
 
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;

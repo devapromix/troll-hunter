@@ -8,12 +8,12 @@ uses
   Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
-  uBearLibItemsCommon,
+  Trollhunter.Item.Common,
   Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Player,
-  uEntity,
-  uCreature;
+  Trollhunter.Entity,
+  Trollhunter.Creature;
 
 type
   TItemBase = record
@@ -1649,8 +1649,8 @@ uses
   Trollhunter.Item.Affixes,
   Trollhunter.Attribute,
   Trollhunter.UI,
-  uBearLibItemsDungeon,
-  uBearLibItemsInventory,
+  Trollhunter.Item.Dungeon,
+  Trollhunter.Item.Inventory,
   Trollhunter.Helpers,
   Trollhunter.Statistic;
 

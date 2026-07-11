@@ -2,9 +2,9 @@ unit Trollhunter.Spellbook;
 
 interface
 
-uses 
-Trollhunter.Types,
-  uCreature;
+uses
+  Trollhunter.Types,
+  Trollhunter.Creature;
 
 type
   TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation,
@@ -22,19 +22,19 @@ type
 const
   SpellBase: array [TSpellEnum] of TSpellBase = (
     // Heal
-    (Level: 1; Effects: [efLife]; Value: 100; ManaCost: 20; Price: 200;),
+    (Level: 1; Effects: [efLife]; Value: 100; ManaCost: 20; Price: 200; ),
     // Town Portal
-    (Level: 2; Effects: [efTownPortal]; Value: 0; ManaCost: 24; Price: 500;),
+    (Level: 2; Effects: [efTownPortal]; Value: 0; ManaCost: 24; Price: 500; ),
     // Cure Poison
-    (Level: 2; Effects: [efCurePoison]; Value: 0; ManaCost: 30; Price: 600;),
+    (Level: 2; Effects: [efCurePoison]; Value: 0; ManaCost: 30; Price: 600; ),
     // Teleportation
-    (Level: 3; Effects: [efTeleportation]; Value: 7; ManaCost: 40; Price: 750;),
+    (Level: 3; Effects: [efTeleportation]; Value: 7; ManaCost: 40; Price: 750; ),
     // Magic Eye
-    (Level: 3; Effects: [efMagicEye]; Value: 20; ManaCost: 50; Price: 900;));
+    (Level: 3; Effects: [efMagicEye]; Value: 20; ManaCost: 50; Price: 900; ));
 
 type
   TSpell = record
-    Enable: Boolean;
+    Enable: boolean;
     Spell: TSpellBase;
   end;
 
@@ -56,15 +56,15 @@ var
 
 implementation
 
-uses 
-SysUtils,
+uses
+  SysUtils,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
   Trollhunter.UI,
-  uAttribute;
+  Trollhunter.Attribute;
 
-{ TSpellbook }
+  { TSpellbook }
 
 procedure TSpellbook.AddSpell(ASpellEnum: TSpellEnum);
 begin
@@ -148,10 +148,10 @@ end;
 
 initialization
 
-Spellbook := TSpellbook.Create;
+  Spellbook := TSpellbook.Create;
 
 finalization
 
-FreeAndNil(Spellbook);
+  FreeAndNil(Spellbook);
 
 end.

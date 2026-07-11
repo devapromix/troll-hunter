@@ -25,15 +25,15 @@ uses
   Trollhunter.Player.Classes,
   Trollhunter.Statistic,
   Trollhunter.Attribute,
-  uBearLibItemsCommon,
+  Trollhunter.Item.Common,
   BearLibTerminal,
   Trollhunter.Skill,
-  uItem,
-  uMob,
+  Trollhunter.Item,
+  Trollhunter.Mob,
   Trollhunter.Item.Affixes,
   Trollhunter.Item.Types,
   Trollhunter.Item.Shop,
-  uQuest,
+  Trollhunter.Quest,
   Trollhunter.Player.Helpers;
 
 var
@@ -103,8 +103,6 @@ begin
 
     Add('Game Version', Game.GetVersion);
     Add('BeaRLibTerminal', BearLibTerminal.terminal_get('version'));
-    Self.Add();
-    Add('BeaRLibItems', Items_GetVersion);
   end;
 
   AddKey('Esc', 'Close', not Mode.Wizard);

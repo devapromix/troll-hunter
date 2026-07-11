@@ -6,7 +6,7 @@ uses
   Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
-  uCreature,
+  Trollhunter.Creature,
   Trollhunter.Skill;
 
 type
@@ -84,7 +84,7 @@ uses
   TypInfo,
   Trollhunter.Helpers,
   Trollhunter.Utils,
-  uItem;
+  Trollhunter.Item;
 
   { TClasses }
 

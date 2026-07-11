@@ -4,7 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
-  uCreature;
+  Trollhunter.Creature;
 
 type
   TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);

@@ -4,9 +4,9 @@ interface
 
 uses
   Trollhunter.Types,
-  uBeaRLibItemsCommon,
+  Trollhunter.Item.Common,
   Trollhunter.Player,
-  uItem;
+  Trollhunter.Item;
 
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
@@ -55,7 +55,7 @@ uses
   SysUtils,
   Math,
   Trollhunter.Map,
-  uCreature,
+  Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Helpers,
   Trollhunter.Item.Types;

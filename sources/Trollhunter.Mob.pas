@@ -1,4 +1,4 @@
-unit uMob;
+unit Trollhunter.Mob;
 
 interface
 
@@ -6,9 +6,9 @@ uses
   Trollhunter.Types,
   Trollhunter.Game,
   Trollhunter.Map,
-  uEntity,
-  uCreature,
-  uAbility;
+  Trollhunter.Entity,
+  Trollhunter.Creature,
+  Trollhunter.Ability;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead,
@@ -500,12 +500,12 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.UI.Log,
-  uItem,
+  Trollhunter.Item,
   Trollhunter.Skill,
   Trollhunter.Statistic,
   Trollhunter.Attribute,
   Trollhunter.PathFind,
-  uQuest,
+  Trollhunter.Quest,
   Trollhunter.Helpers,
   Trollhunter.Item.Types;
 

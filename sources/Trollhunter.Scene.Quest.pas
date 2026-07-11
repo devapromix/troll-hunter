@@ -19,7 +19,7 @@ implementation
 uses
   BearLibTerminal,
   Trollhunter.UI,
-  uQuest,
+  Trollhunter.Quest,
   Trollhunter.Game;
 
 procedure TSceneQuest.Render;
