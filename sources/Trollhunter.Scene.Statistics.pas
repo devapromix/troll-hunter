@@ -24,7 +24,7 @@ uses
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
   Trollhunter.Statistic,
-  uAttribute,
+  Trollhunter.Attribute,
   uBearLibItemsCommon,
   BearLibTerminal,
   Trollhunter.Skill,

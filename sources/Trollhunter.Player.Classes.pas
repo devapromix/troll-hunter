@@ -82,7 +82,7 @@ implementation
 uses
   SysUtils,
   TypInfo,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Utils,
   uItem;
 

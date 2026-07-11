@@ -97,9 +97,9 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Game,
   uCreature,
-  uAttribute,
+  Trollhunter.Attribute,
   Trollhunter.Scenes,
-  uHelpers;
+  Trollhunter.Helpers;
 
   { TMap }
 

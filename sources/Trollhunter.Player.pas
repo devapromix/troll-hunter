@@ -151,18 +151,17 @@ uses
   Dialogs,
   Trollhunter.Terminal,
   Trollhunter.UI.Log,
-  uCorpse,
   uCalendar,
   Trollhunter.Item.Shop,
   BearLibTerminal,
   uAbility,
   Trollhunter.Item.Affixes,
-  uAttribute,
+  Trollhunter.Attribute,
   uSpellbook,
   Trollhunter.UI,
   uBearLibItemsDungeon,
   uBearLibItemsInventory,
-  uHelpers,
+  Trollhunter.Helpers,
   Trollhunter.Item.Types,
   Trollhunter.Utils;
 
@@ -662,7 +661,6 @@ begin
     MsgLog.Add(Format('Press %s to try again...', [UI.KeyToStr('SPACE')]))
   else
     MsgLog.Add(Format('Press %s to exit...', [UI.KeyToStr('SPACE')]));
-  Corpses.Append();
   Game.Screenshot := Terminal.GetTextScreenshot();
 end;
 
@@ -1208,7 +1206,6 @@ var
   FCount: Int;
 begin
   Statictics.Inc(stFound);
-  Corpses.DelCorpse(X, Y);
   /// / Your backpack is full!
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
   if (FCount > 0) then

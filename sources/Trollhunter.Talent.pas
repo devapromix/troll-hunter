@@ -115,8 +115,8 @@ uses
   Trollhunter.Skill,
   Trollhunter.Scenes,
   Trollhunter.Player,
-  uAttribute,
-  uHelpers;
+  Trollhunter.Attribute,
+  Trollhunter.Helpers;
 
 const
   TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',

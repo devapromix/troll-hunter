@@ -40,7 +40,7 @@ uses
   BearLibTerminal,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  uAttribute,
+  Trollhunter.Attribute,
   uAbility,
   Trollhunter.Game,
   Trollhunter.Player.Races,

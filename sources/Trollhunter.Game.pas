@@ -188,7 +188,7 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Item.Shop,
   uSpellbook,
-  uHelpers;
+  Trollhunter.Helpers;
 
   { TGame }
 

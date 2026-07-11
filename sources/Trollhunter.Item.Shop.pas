@@ -56,8 +56,8 @@ uses
   Math,
   Trollhunter.Map,
   uCreature,
-  uAttribute,
-  uHelpers,
+  Trollhunter.Attribute,
+  Trollhunter.Helpers,
   Trollhunter.Item.Types;
 
 { TShop }
