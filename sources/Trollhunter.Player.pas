@@ -42,6 +42,9 @@ const
   AttribPrm = 7;
 
 type
+
+  { TPlayer }
+
   TPlayer = class(TCreature)
   private
     FLX: UInt;
@@ -133,6 +136,7 @@ type
     procedure Turn;
     procedure StartEquip;
     procedure StartSkills;
+    function GetStartGold: UInt;
   end;
 
 var
@@ -807,8 +811,7 @@ begin
   // Need level
   if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
-    MsgLog.Add(Format('You can not use this yet (need level %d)!',
-      [FItem.Level]));
+    MsgLog.Add(Format('You can not use this yet (need level %d)!', [FItem.Level]));
     Self.Calc;
     Exit;
   end;
@@ -898,8 +901,7 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
   begin
-    MsgLog.Add(Format('You can not use this yet (need level %d)!',
-      [FItem.Level]));
+    MsgLog.Add(Format('You can not use this yet (need level %d)!', [FItem.Level]));
     Self.Calc;
     Exit;
   end;
@@ -944,8 +946,7 @@ begin
   begin
     Value := FItem.Price div 4;
     Items.AddItemToInv(ivGold, Value);
-    MsgLog.Add(Format('You sold %s (+%d gold).',
-      [Items.GetNameThe(FItem), Value]));
+    MsgLog.Add(Format('You sold %s (+%d gold).', [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
   Wait;
@@ -1089,7 +1090,12 @@ begin
     begin
       if (Game.Difficulty > dfEasy) then
       begin
-        Dec(FItem.MaxDurability);
+        if (Game.Difficulty = dfHell) then
+          FItem.MaxDurability :=
+            Math.EnsureRange(FItem.MaxDurability - Math.RandomRange(2, 4), 0,
+            FItem.MaxDurability)
+        else
+          Dec(FItem.MaxDurability);
         if (FItem.MaxDurability = 0) then
         begin
           RnItem(FItem, Index);
@@ -1193,8 +1199,8 @@ begin
   FItem.Amount := ItemAmount;
   Items.AddItemToDungeon(FItem);
   if (FItem.Amount > 1) then
-    MsgLog.Add(Format('You drop %s (%dx).',
-      [Items.GetNameThe(FItem), FItem.Amount]))
+    MsgLog.Add(Format('You drop %s (%dx).', [Items.GetNameThe(FItem),
+      FItem.Amount]))
   else
     MsgLog.Add(Format('You drop %s.', [Items.GetNameThe(FItem)]));
   Scenes.SetScene(scDrop);
@@ -1356,8 +1362,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', ['Difficulty',
-      GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.',
+      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
@@ -1577,7 +1583,7 @@ end;
 procedure TPlayer.StartEquip;
 var
   J: TSlotType;
-  D: UInt;
+  LGold: UInt;
 begin
   // Equipment
   for J := Low(ClassProp[HClass].Item) to High(ClassProp[HClass].Item) do
@@ -1587,8 +1593,8 @@ begin
   Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 9, 5));
   Items.AddItemToInv(ivTorch, IfThen(Mode.Wizard, 9, 3));
   // Add coins
-  D := IfThen(Game.Difficulty <> dfHell, StartGold, 0);
-  Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), D));
+  LGold := GetStartGold();
+  Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), LGold));
   // Calc
   Calc();
   Fill();
@@ -1605,6 +1611,22 @@ begin
   // Calc
   Calc();
   Fill();
+end;
+
+function TPlayer.GetStartGold: UInt;
+begin
+  case Game.Difficulty of
+    dfEasy:
+      Result := Round(StartGold * 1.5);
+    dfNormal:
+      Result := StartGold;
+    dfHard:
+      Result := Round(StartGold * 0.5);
+    dfHell:
+      Result := Round(StartGold * 0.1);
+    else
+      Result := StartGold;
+  end;
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);
@@ -1667,8 +1689,7 @@ begin
   begin
     V := Skills.Skill[skConcentration].Value + Value;
     MsgLog.Add('You feel magical energies restoring.');
-    MsgLog.Add(Format(F, ['Mana',
-      Min(Self.Attributes.Attrib[atMaxMana].Value -
+    MsgLog.Add(Format(F, ['Mana', Min(Self.Attributes.Attrib[atMaxMana].Value -
       Self.Attributes.Attrib[atMana].Value, V)]));
     Self.Attributes.Modify(atMana, V);
     Skills.DoSkill(skConcentration);

@@ -113,7 +113,7 @@ var
 begin
   UI.Title('Choose a race');
   I := 0;
-  Y := 2;
+  Y := 3;
   for R := Low(TRaceEnum) to High(TRaceEnum) do
     Add(Races.GetName(R));
 
@@ -253,7 +253,7 @@ var
 begin
   UI.Title('Choose a class');
   I := 0;
-  Y := 2;
+  Y := 3;
   for C := Low(TClassEnum) to High(TClassEnum) do
     Add(Trollhunter.Player.Classes.Classes.GetName(C));
 

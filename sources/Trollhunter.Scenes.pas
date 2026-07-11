@@ -80,13 +80,6 @@ type
   end;
 
 type
-  TSceneDifficulty = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneCalendar = class(TScene)
   public
     procedure Render; override;
@@ -263,6 +256,7 @@ uses
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
   Trollhunter.Scene.RacesAndClasses,
+  Trollhunter.Scene.Difficulty,
   Trollhunter.Scene.Quest,
   Trollhunter.Scene.Background,
   Trollhunter.Item.Types,
@@ -1610,56 +1604,6 @@ begin
     TK_ESCAPE:
       // Close
       Scenes.SetScene(scGame);
-  end;
-end;
-
-{ TSceneDifficulty }
-
-procedure TSceneDifficulty.Render;
-begin
-  UI.Title('Choose a difficulty');
-
-  Terminal.Print(CX - 5, CY - 3, Format('%s %s', [UI.KeyToStr('A'), 'Easy']),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY - 1, Format('%s %s', [UI.KeyToStr('B'), 'Normal']),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 1, Format('%s %s', [UI.KeyToStr('C'), 'Hard']),
-    TK_ALIGN_LEFT);
-  Terminal.Print(CX - 5, CY + 3, Format('%s %s', [UI.KeyToStr('D'), 'Hell']),
-    TK_ALIGN_LEFT);
-
-  AddKey('Esc', 'Back', True);
-end;
-
-procedure TSceneDifficulty.Update(var Key: UInt);
-begin
-  case Key of
-    TK_A .. TK_D, TK_ENTER, TK_KP_ENTER:
-    begin
-      case Key of
-        TK_A:
-          Game.Difficulty := dfEasy;
-        TK_B:
-          Game.Difficulty := dfNormal;
-        TK_C:
-          Game.Difficulty := dfHard;
-        TK_D:
-          Game.Difficulty := dfHell;
-        TK_ENTER, TK_KP_ENTER:
-          if Mode.Wizard then
-            Game.Difficulty := dfNormal
-          else
-            Exit;
-      end;
-      Game.Start();
-      Scenes.SetScene(scRace, scDifficulty);
-      (Scenes.GetScene(scRace) as TSceneRace).SelRand;
-      (Scenes.GetScene(scRace) as TSceneRace).ReRoll;
-      (Scenes.GetScene(scClass) as TSceneClass).SelRand;
-      (Scenes.GetScene(scClass) as TSceneClass).ReRoll;
-    end;
-    TK_ESCAPE:
-      Scenes.SetScene(scTitle);
   end;
 end;
 
