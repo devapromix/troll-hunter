@@ -37,10 +37,12 @@ type
     // Potions, Antidote, Elixirs, Extracts
     of_Minor_Healing, of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation,
     of_Fortifying, of_Antidote, of_Soothing, of_Poultice, of_Berserk,
-    // Rare Elixirs
-    of_prmLife1, of_prmLife2, of_prmLife3, of_prmLife4, of_the_Greatwolf,
-    of_the_Ogre, of_the_Troll, of_prmMana1, of_prmMana2, of_prmMana3,
-    of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
+    // Rare Life Elixirs
+    of_Vigor, of_Vitality, of_the_Greatwolf, of_the_Giant, of_the_Colossus,
+    of_the_Behemoth, of_Immortality,
+    // Rare Mana Elixirs
+    of_Insight, of_Clarity, of_the_Adept, of_the_Magus, of_the_Sage,
+    of_the_Archmage, of_the_Unicorn,
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Artisanship,
     // Life I - VII
