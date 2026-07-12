@@ -67,11 +67,11 @@ type
     of_the_Mongoose, of_the_Fox, of_the_Lynx, of_the_Falcon, of_the_Panther,
     of_the_Leopard, of_the_Jaguar,
     // Willpower I - VII
-    of_Focus, of_Energy, of_Brilliance, of_Willpower4, of_the_Medusa,
+    of_Focus, of_Energy, of_Brilliance, of_Resolve, of_the_Medusa,
     of_Wizardry, of_the_Mind,
     // Perception I - VII
-    of_Perception1, of_Perception2, of_Perception3, of_Perception4,
-    of_Perception5, of_Perception6, of_Perception7,
+    of_Awareness, of_Perception, of_the_Seer, of_Divination,
+    of_True_Sight, of_Foresight, of_Omniscience,
     // Additional All Attributes I - VII
     of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
     of_the_Universe, of_the_Infinite,
@@ -87,7 +87,7 @@ type
     // Mana After Each Kill I - III
     of_Absorption, of_Osmosis, of_Consumption,
     // Extra Gold from Monsters I - III
-    of_the_Thief, of_ExtraGoldFromMonsters2, of_Greed
+    of_the_Thief, of_Plunder, of_Greed
 
     );
 
@@ -612,7 +612,7 @@ begin
     efCraftWil:
       Items.Index := Ord(TSuffixEnum(of_Focus)) + Index;
     efCraftPer:
-      Items.Index := Ord(TSuffixEnum(of_Perception1)) + Index;
+      Items.Index := Ord(TSuffixEnum(of_Awareness)) + Index;
     efCraftAtr:
       Items.Index := Ord(TSuffixEnum(of_the_Sky)) + Index;
   end;
@@ -700,7 +700,7 @@ begin
     of_Focus .. of_the_Mind:
       SetAtr(btWil, SB.Willpower.Min, SB.Willpower.Max);
     // Perception
-    of_Perception1 .. of_Perception7:
+    of_Awareness .. of_Omniscience:
       SetAtr(btPer, SB.Perception.Min, SB.Perception.Max);
     // Additional All Attributes
     of_the_Sky .. of_the_Infinite:
