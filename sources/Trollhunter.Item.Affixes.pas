@@ -42,7 +42,7 @@ type
     of_the_Ogre, of_the_Troll, of_prmMana1, of_prmMana2, of_prmMana3,
     of_prmMana4, of_prmMana5, of_prmMana6, of_the_Unicorn,
     // Oil I - V
-    of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Permanence,
+    of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Artisanship,
     // Life I - VII
     of_Hale, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
@@ -56,8 +56,8 @@ type
     of_Damage1, of_Damage2, of_Damage3, of_Damage4, of_Damage5, of_Damage6,
     of_Damage7,
     // Durability I - VII
-    of_Craftmanship, of_Durability, of_Sturdiness, of_Structure, of_Endurance,
-    of_the_Ages, of_Permanance,
+    of_Craftsmanship, of_Durability, of_Sturdiness, of_Structure, of_Endurance,
+    of_the_Ages, of_Permanence,
     // Strength I - VII
     of_the_Brute, of_the_Lion, of_the_Bear, of_the_Leviathan, of_the_Goliath,
     of_the_Titan, of_the_Gods,
@@ -92,7 +92,7 @@ type
 const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
   DamageSuffixes = [of_Damage1 .. of_Damage7];
-  DurabilitySuffixes = [of_Craftmanship .. of_Permanance];
+  DurabilitySuffixes = [of_Craftsmanship .. of_Permanence];
 
 const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
@@ -666,7 +666,7 @@ begin
 
     end;
     // Oil
-    of_Blacksmith .. of_Permanence:
+    of_Blacksmith .. of_Artisanship:
     begin
       // Cursed or Blessed
       // AItem.Effect := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
@@ -724,7 +724,7 @@ begin
           SB.Damage.MaxDamage.Max + 1), 2, UIntMax);
     end;
     // Durability
-    of_Craftmanship .. of_Permanance:
+    of_Craftsmanship .. of_Permanence:
     begin
       if (SB.MaxDurability.Min > 0) then
       begin
