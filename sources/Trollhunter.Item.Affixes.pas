@@ -48,7 +48,7 @@ type
     // Life I - VII
     of_Hale, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
-    of_Mana1, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
+    of_the_Novice, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
     // Life and Mana I - VII
     of_Atr1, of_Atr2, of_Atr3, of_Atr4, of_Atr5, of_Atr6, of_Atr7,
     // Defense I - VII
@@ -76,7 +76,7 @@ type
     of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
     of_the_Universe, of_the_Infinite,
     // Staves and Wands I - VII
-    of_the_Eternal_Wanderer, of_Sorcery, of_Magic, of_Power, of_Balance,
+    of_the_Eternal_Wanderer, of_Sorcery, of_Wizardry, of_Power, of_Balance,
     of_Dominance, of_Death,
     // Replenish Life I - III
     of_the_Lizard, of_the_Starfish, of_the_Phoenix,
@@ -484,7 +484,7 @@ const
     // of Sorcery (Staves and Wands II)
     (Level: (Min: 2; Max: 5); Price: 900; Occurence: MagicWeaponTypeItems;
     Mana: (Min: 15; Max: 20); ),
-    // of Magic (Staves and Wands III)
+    // of_Wizardry (Staves and Wands III)
     (Level: (Min: 3; Max: 7); Price: 1200; Occurence: MagicWeaponTypeItems;
     Mana: (Min: 25; Max: 30); ),
     // of Power (Staves and Wands IV)
@@ -682,7 +682,7 @@ begin
     of_Hale .. of_Life7:
       SetLife(btLife);
     // Mana
-    of_Mana1 .. of_Mana7, of_the_Eternal_Wanderer .. of_Death:
+    of_the_Novice .. of_Mana7, of_the_Eternal_Wanderer .. of_Death:
       SetMana(btMana);
     // Life and Mana
     of_Atr1 .. of_Atr7:
