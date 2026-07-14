@@ -42,7 +42,7 @@ type
     // Life I - VII
     of_Hale, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
     // Mana I - VII
-    of_Mana1, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
+    of_the_Novice, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
     // Life and Mana I - VII
     of_Atr1, of_Atr2, of_Atr3, of_Atr4, of_Atr5, of_Atr6, of_Atr7,
     // Defense I - VII
@@ -676,7 +676,7 @@ begin
     of_Hale .. of_Life7:
       SetLife(btLife);
     // Mana
-    of_Mana1 .. of_Mana7, of_the_Eternal_Wanderer .. of_Death:
+    of_the_Novice .. of_Mana7, of_the_Eternal_Wanderer .. of_Death:
       SetMana(btMana);
     // Life and Mana
     of_Atr1 .. of_Atr7:
