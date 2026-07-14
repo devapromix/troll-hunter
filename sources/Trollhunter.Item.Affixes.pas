@@ -76,7 +76,7 @@ type
     of_the_Sky, of_the_Meteor, of_the_Comet, of_the_Heavens, of_the_Galaxy,
     of_the_Universe, of_the_Infinite,
     // Staves and Wands I - VII
-    of_the_Eternal_Wanderer, of_Sorcery, of_Wizardry, of_Power, of_Balance,
+    of_the_Eternal_Wanderer, of_Sorcery, of_Meditation, of_Power, of_Balance,
     of_Dominance, of_Death,
     // Replenish Life I - III
     of_the_Lizard, of_the_Starfish, of_the_Phoenix,
@@ -484,7 +484,7 @@ const
     // of Sorcery (Staves and Wands II)
     (Level: (Min: 2; Max: 5); Price: 900; Occurence: MagicWeaponTypeItems;
     Mana: (Min: 15; Max: 20); ),
-    // of_Wizardry (Staves and Wands III)
+    // of Meditation (Staves and Wands III)
     (Level: (Min: 3; Max: 7); Price: 1200; Occurence: MagicWeaponTypeItems;
     Mana: (Min: 25; Max: 30); ),
     // of Power (Staves and Wands IV)
