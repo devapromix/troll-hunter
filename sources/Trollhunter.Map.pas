@@ -21,14 +21,15 @@ type
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
     teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
-    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal);
+    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal,
+    teStash);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3,
     teUpStairs, teDnStairs, teWater];
   VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
-    teDoor, teGate];
+    teDoor, teGate, teStash];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
 
 var
@@ -207,6 +208,12 @@ begin
   AddTile('O', 'Portal', $FF9999FF, teTownPortal, deDeep_Cave);
   AddTile('O', 'Portal', $FF9999FF, teTownPortal, deBlood_Cave);
   AddTile('O', 'Portal', $FF9999FF, teTownPortal, deDrom);
+  // Stash
+  AddTile('=', 'Stash', $FF9999FF, teStash, deDark_Wood);
+  AddTile('=', 'Stash', $FF9999FF, teStash, deGray_Cave);
+  AddTile('=', 'Stash', $FF9999FF, teStash, deDeep_Cave);
+  AddTile('=', 'Stash', $FF9999FF, teStash, deBlood_Cave);
+  AddTile('=', 'Stash', $FF9999FF, teStash, deDrom);
 end;
 
 procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum;
@@ -489,6 +496,11 @@ const
       ), (X: -10; Y: 10; ), (X: 10; Y: 10; ), (X: 0; Y: 10; ), (X: -10; Y: 0;
       ), (X: 10; Y: 0; ), (X: 0; Y: -10; ));
 
+    procedure AddStash(AX, AY: UInt);
+    begin
+      SetTileEnum(AX, AY, Z, teStash);
+    end;
+
     procedure AddGate(AX, AY: UInt; SX, SY: shortint);
     begin
       SetTileEnum(AX + SX, AY + SY, Z, teGate);
@@ -515,17 +527,29 @@ const
     AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall, True);
     for I := 0 to High(House) do
       HP[I] := False;
-    // Add gate
+    // Add gate and stash
     J := Math.RandomRange(4, 8);
     case J of
       4:
+      begin
         AddGate(AX, AY, 0, -16);
+        AddStash(AX + (RandomRange(1, 4) - 2), AY + 3);
+      end;
       5:
+      begin
         AddGate(AX, AY, 16, 0);
+        AddStash(AX - 3, AY + (RandomRange(1, 4) - 2));
+      end;
       6:
+      begin
         AddGate(AX, AY, -16, 0);
+        AddStash(AX + 3, AY + (RandomRange(1, 4) - 2));
+      end;
       7:
+      begin
         AddGate(AX, AY, 0, 16);
+        AddStash(AX + (RandomRange(1, 4) - 2), AY - 3);
+      end;
     end;
     PX := AX - House[J].X;
     PY := AY - House[J].Y;
