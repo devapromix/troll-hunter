@@ -2454,11 +2454,22 @@ begin
   if (Items_Dungeon_DeleteMapItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
   begin
     Items_Inventory_AppendItem(FItem);
-    if (FItem.Amount = 1) then
-      MsgLog.Add(Format('You picked up %s.', [Items.GetNameThe(FItem)]))
+    if Player.IsOnStash then
+    begin
+      if (FItem.Amount = 1) then
+        MsgLog.Add(Format('You took %s from the stash.', [Items.GetNameThe(FItem)]))
+      else
+        MsgLog.Add(Format('You took %s (%dx) from the stash.',
+          [Items.GetNameThe(FItem), FItem.Amount]));
+    end
     else
-      MsgLog.Add(Format('You picked up %s (%dx).',
-        [Items.GetNameThe(FItem), FItem.Amount]));
+    begin
+      if (FItem.Amount = 1) then
+        MsgLog.Add(Format('You picked up %s.', [Items.GetNameThe(FItem)]))
+      else
+        MsgLog.Add(Format('You picked up %s (%dx).',
+          [Items.GetNameThe(FItem), FItem.Amount]));
+    end;
     // Statistics
     case ItemBase[TItemEnum(FItem.ItemID)].ItemType of
       itCoin:

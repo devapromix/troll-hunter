@@ -27,6 +27,7 @@ uses
   Trollhunter.Item.Types,
   Trollhunter.Item.Dungeon,
   Trollhunter.Map,
+  Trollhunter.Helpers,
   Trollhunter.Game;
 
 procedure TSceneItems.Render;

@@ -16,7 +16,7 @@ type
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scIdentification, scBackground,
-    scEnchant, scClass, scRace);
+    scEnchant, scClass, scRace, scStash);
 
 type
   TScene = class(TObject)
