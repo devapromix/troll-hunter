@@ -1003,14 +1003,25 @@ end;
 
 procedure TSceneDrop.Render;
 begin
-  UI.Title('Choose the item you wish to drop', 1, clDarkestRed);
+  if Player.IsOnStash then
+    UI.Title('Choose the item you wish to store', 1, clDarkestGreen)
+  else
+    UI.Title('Choose the item you wish to drop', 1, clDarkestRed);
 
   UI.FromAToZ;
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', 'Drop an item');
-  AddKey('Esc', 'Close', True);
+  if Player.IsOnStash then
+  begin
+    AddKey('A-Z', 'Store an item');
+    AddKey('Esc', 'Close', True);
+  end
+  else
+  begin
+    AddKey('A-Z', 'Drop an item');
+    AddKey('Esc', 'Close', True);
+  end;
 end;
 
 procedure TSceneDrop.Update(var Key: UInt);
@@ -1019,7 +1030,7 @@ begin
     TK_ESCAPE:
       // Close
       Scenes.GoBack;
-    TK_A .. TK_Z: // Drop an item
+    TK_A .. TK_Z:
       Player.Drop(Key - TK_A);
     else
       Game.Timer := UIntMax;

@@ -137,6 +137,7 @@ type
     procedure StartEquip;
     procedure StartSkills;
     function GetStartGold: UInt;
+    function IsOnStash: boolean;
   end;
 
 var
@@ -1362,8 +1363,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.',
-      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.', ['Difficulty',
+      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
@@ -1627,6 +1628,11 @@ begin
     else
       Result := StartGold;
   end;
+end;
+
+function TPlayer.IsOnStash: boolean;
+begin
+  Result := (Map.GetTileEnum(X, Y, Map.Current) = teStash);
 end;
 
 procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);
