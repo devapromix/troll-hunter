@@ -1267,10 +1267,15 @@ var
   FItem: Item;
 begin
   MapID := Ord(Map.Current);
-  UI.Title('Pick up an item');
+
+  if Player.IsOnStash then
+    UI.Title('Stash', 1, clDarkestGreen)
+  else
+    UI.Title('Pick up an item');
 
   UI.FromAToZ;
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
+
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
@@ -1279,14 +1284,22 @@ begin
 
   MsgLog.Render(2, True);
 
-  AddKey('Esc', 'Close');
-  AddKey('Space', 'Pick up all items');
-  AddKey('A-Z', 'Pick up an item', True);
+  if Player.IsOnStash then
+  begin
+    AddKey('Esc', 'Close');
+    AddKey('Space', 'Take all items from stash');
+    AddKey('A-Z', 'Take an item', True);
+  end
+  else
+  begin
+    AddKey('Esc', 'Close');
+    AddKey('Space', 'Pick up all items');
+    AddKey('A-Z', 'Pick up an item', True);
+  end;
 
   if (FCount <= 0) then
     Scenes.SetScene(scGame);
 end;
-
 procedure TSceneItems.Update(var Key: UInt);
 var
   I, FCount: Int;
