@@ -252,6 +252,7 @@ uses
   Trollhunter.Scene.Statistics,
   Trollhunter.Scene.Options,
   Trollhunter.Player.Helpers,
+  Trollhunter.Scene.Stash,
   Trollhunter.Scene.Help;
 
   { TScene }
@@ -411,6 +412,8 @@ begin
         FScene[I] := TSceneRace.Create;
       scClass:
         FScene[I] := TSceneClass.Create;
+      scStash:
+        FScene[I] := TSceneStash.Create;
     end;
 end;
 

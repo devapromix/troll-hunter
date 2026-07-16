@@ -1215,6 +1215,13 @@ begin
   Statictics.Inc(stFound);
   /// / Your backpack is full!
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
+  if Player.IsOnStash then
+  begin
+    // Stash scene
+    Game.Timer := UIntMax;
+    Scenes.SetScene(scStash);
+  end
+  else
   if (FCount > 0) then
   begin
     if (FCount = 1) then
@@ -1363,8 +1370,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', ['Difficulty',
-      GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.',
+      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
