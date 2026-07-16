@@ -159,23 +159,9 @@ type
   end;
 
 type
-  TSceneDrop = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneAmount = class(TScene)
   public
     MaxAmount: Int;
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneItems = class(TScene)
-  public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -255,6 +241,8 @@ uses
   Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
+  Trollhunter.Scene.Drop,
+  Trollhunter.Scene.Items,
   Trollhunter.Scene.RacesAndClasses,
   Trollhunter.Scene.Difficulty,
   Trollhunter.Scene.Quest,
@@ -999,44 +987,6 @@ begin
   end;
 end;
 
-{ TSceneDrop }
-
-procedure TSceneDrop.Render;
-begin
-  if Player.IsOnStash then
-    UI.Title('Choose the item you wish to store', 1, clDarkestGreen)
-  else
-    UI.Title('Choose the item you wish to drop', 1, clDarkestRed);
-
-  UI.FromAToZ;
-  Items.RenderInventory;
-  MsgLog.Render(2, True);
-
-  if Player.IsOnStash then
-  begin
-    AddKey('A-Z', 'Store an item');
-    AddKey('Esc', 'Close', True);
-  end
-  else
-  begin
-    AddKey('A-Z', 'Drop an item');
-    AddKey('Esc', 'Close', True);
-  end;
-end;
-
-procedure TSceneDrop.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.GoBack;
-    TK_A .. TK_Z:
-      Player.Drop(Key - TK_A);
-    else
-      Game.Timer := UIntMax;
-  end;
-end;
-
 { TScenePlayer }
 
 constructor TScenePlayer.Create;
@@ -1256,69 +1206,6 @@ begin
       ChAmount(Player.ItemAmount + 1);
     TK_DOWN, TK_KP_2, TK_X:
       ChAmount(Player.ItemAmount - 1);
-  end;
-end;
-
-{ TSceneItems }
-
-procedure TSceneItems.Render;
-var
-  I, FCount, MapID: Int;
-  FItem: Item;
-begin
-  MapID := Ord(Map.Current);
-
-  if Player.IsOnStash then
-    UI.Title('Stash', 1, clDarkestGreen)
-  else
-    UI.Title('Pick up an item');
-
-  UI.FromAToZ;
-  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
-
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Dungeon_GetMapItemXY(MapID, I, Player.X, Player.Y);
-    Items.RenderInvItem(5, 2, I, FItem);
-  end;
-
-  MsgLog.Render(2, True);
-
-  if Player.IsOnStash then
-  begin
-    AddKey('Esc', 'Close');
-    AddKey('Space', 'Take all items from stash');
-    AddKey('A-Z', 'Take an item', True);
-  end
-  else
-  begin
-    AddKey('Esc', 'Close');
-    AddKey('Space', 'Pick up all items');
-    AddKey('A-Z', 'Pick up an item', True);
-  end;
-
-  if (FCount <= 0) then
-    Scenes.SetScene(scGame);
-end;
-procedure TSceneItems.Update(var Key: UInt);
-var
-  I, FCount: Int;
-begin
-  case Key of
-    TK_ESCAPE: // Close
-      Scenes.SetScene(scGame);
-    TK_SPACE:
-    begin
-      FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), Player.X,
-        Player.Y).InRange(ItemMax);
-      for I := 0 to FCount - 1 do
-        Items.AddItemToInv;
-    end;
-    TK_A .. TK_Z:
-      // Pick up
-      Items.AddItemToInv(Key - TK_A);
-    else
-      Game.Timer := UIntMax;
   end;
 end;
 
