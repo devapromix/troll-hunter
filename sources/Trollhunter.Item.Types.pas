@@ -10,7 +10,7 @@ type
     itArrow, itTorch);
 
 const
-  ItemGlyph: array [TItemType] of Char = (' ', ' ', '%', '`', '$', '.', '!',
+  ItemGlyph: array [TItemType] of char = (' ', ' ', '%', '`', '$', '.', '!',
     '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '-',
     ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
 
@@ -26,7 +26,7 @@ const
   // ~   Pelts and body parts   )   A shield
   // &   Chests, Containers
 
-  //
+
 
 const
   CoinTypeItems = [itCoin];
@@ -46,8 +46,8 @@ const
   FlaskTypeItems = [itFlask];
   MagicTypeItems = [itOrb, itStone];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
-  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand, itBow,
-    itDagger];
+  WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand,
+    itBow, itDagger];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow];
@@ -67,8 +67,8 @@ const
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
-    FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems + KeyTypeItems
-    + PlantTypeItems + FlaskTypeItems + MagicTypeItems;
+    FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
+    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems;
 
   // Silver Sword , Forsworn Sword , Hero Sword
   // Skyforge War Axe , Dragonbone War Axe
@@ -164,8 +164,8 @@ type
     ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
     ivDagger8, ivDagger9, ivDagger10,
     // Bows
-    ivBow1, ivBow2, ivBow3, ivBow4, ivBow5, ivBow6, ivBow7, ivBow8,
-    ivBow9, ivBow10,
+    ivShort_Bow, ivHunting_Bow, ivLong_Bow, ivNomad_Bow, ivHeavy_Bow,
+    ivComposite_Bow, ivMaster_Bow, ivWar_Bow, ivDragon_Bow, ivAncient_Bow,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
