@@ -968,7 +968,7 @@ begin
       Player.BreakItem(stOffHand);
     5:
       Player.BreakItem(stNeck);
-    6:
+    else
       Player.BreakItem(stFinger);
   end;
 end;
@@ -1168,7 +1168,10 @@ var
       AItem.Equipment := 0;
       AItem.MapID := Ord(Map.Current);
       Items.AddItemToDungeon(AItem);
-      MsgLog.Add(Format('You drop %s.', [Items.GetNameThe(AItem)]));
+      if IsOnStash then
+        MsgLog.Add(Format('You put %s into the stash.', [Items.GetNameThe(AItem)]))
+      else
+        MsgLog.Add(Format('You drop %s.', [Items.GetNameThe(AItem)]));
       Wait();
     end;
   end;
@@ -1199,12 +1202,24 @@ begin
   FItem.MapID := Ord(Map.Current);
   FItem.Amount := ItemAmount;
   Items.AddItemToDungeon(FItem);
-  if (FItem.Amount > 1) then
-    MsgLog.Add(Format('You drop %s (%dx).', [Items.GetNameThe(FItem),
-      FItem.Amount]))
+  if IsOnStash then
+  begin
+    if (FItem.Amount > 1) then
+      MsgLog.Add(Format('You put %s (%dx) into the stash.',
+        [Items.GetNameThe(FItem), FItem.Amount]))
+    else
+      MsgLog.Add(Format('You put %s into the stash.', [Items.GetNameThe(FItem)]));
+    Scenes.SetScene(scStore);
+  end
   else
-    MsgLog.Add(Format('You drop %s.', [Items.GetNameThe(FItem)]));
-  Scenes.SetScene(scDrop);
+  begin
+    if (FItem.Amount > 1) then
+      MsgLog.Add(Format('You drop %s (%dx).', [Items.GetNameThe(FItem),
+        FItem.Amount]))
+    else
+      MsgLog.Add(Format('You drop %s.', [Items.GetNameThe(FItem)]));
+    Scenes.SetScene(scDrop);
+  end;
   Wait();
 end;
 
@@ -1370,8 +1385,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.',
-      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.', ['Difficulty',
+      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
