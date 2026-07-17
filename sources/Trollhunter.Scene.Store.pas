@@ -1,4 +1,4 @@
-unit Trollhunter.Scene.Drop;
+unit Trollhunter.Scene.Store;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Trollhunter.Types;
 
 type
-  TSceneDrop = class(TScene)
+  TSceneStore = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -23,19 +23,19 @@ uses
   Trollhunter.Item,
   Trollhunter.Game;
 
-procedure TSceneDrop.Render;
+procedure TSceneStore.Render;
 begin
-  UI.Title('Choose the item you wish to drop', 1, clDarkestRed);
+  UI.Title('Choose the item you wish to store', 1, clDarkestGreen);
 
   UI.FromAToZ;
   Items.RenderInventory;
   MsgLog.Render(2, True);
 
-  AddKey('A-Z', 'Drop an item');
+  AddKey('A-Z', 'Store an item');
   AddKey('Esc', 'Close', True);
 end;
 
-procedure TSceneDrop.Update(var Key: UInt);
+procedure TSceneStore.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:

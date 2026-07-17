@@ -15,8 +15,6 @@ type
 
 implementation
 
-{ TSceneItems }
-
 uses
   BearLibTerminal,
   Trollhunter.UI,
@@ -35,14 +33,10 @@ var
   I, FCount, MapID: Int;
   FItem: Item;
 begin
-  MapID := Ord(Map.Current);
-
-  if Player.IsOnStash then
-    UI.Title('Stash', 1, clDarkestGreen)
-  else
-    UI.Title('Pick up an item');
+  UI.Title('Pick up an item');
 
   UI.FromAToZ;
+  MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
 
   for I := 0 to FCount - 1 do
@@ -53,18 +47,9 @@ begin
 
   MsgLog.Render(2, True);
 
-  if Player.IsOnStash then
-  begin
-    AddKey('Esc', 'Close');
-    AddKey('Space', 'Take all items from stash');
-    AddKey('A-Z', 'Take an item', True);
-  end
-  else
-  begin
-    AddKey('Esc', 'Close');
-    AddKey('Space', 'Pick up all items');
-    AddKey('A-Z', 'Pick up an item', True);
-  end;
+  AddKey('Esc', 'Close');
+  AddKey('Space', 'Pick up all items');
+  AddKey('A-Z', 'Pick up an item', True);
 
   if (FCount <= 0) then
     Scenes.SetScene(scGame);
@@ -75,7 +60,7 @@ var
   I, FCount: Int;
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
       Scenes.SetScene(scGame);
     TK_SPACE:
     begin
@@ -85,7 +70,6 @@ begin
         Items.AddItemToInv;
     end;
     TK_A .. TK_Z:
-      // Pick up
       Items.AddItemToInv(Key - TK_A);
     else
       Game.Timer := UIntMax;

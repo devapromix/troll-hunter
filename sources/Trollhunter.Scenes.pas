@@ -16,7 +16,7 @@ type
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scIdentification, scBackground,
-    scEnchant, scClass, scRace, scStash);
+    scEnchant, scClass, scRace, scStash, scStore);
 
 type
   TScene = class(TObject)
@@ -253,6 +253,7 @@ uses
   Trollhunter.Scene.Options,
   Trollhunter.Player.Helpers,
   Trollhunter.Scene.Stash,
+  Trollhunter.Scene.Store,
   Trollhunter.Scene.Help;
 
   { TScene }
@@ -414,6 +415,8 @@ begin
         FScene[I] := TSceneClass.Create;
       scStash:
         FScene[I] := TSceneStash.Create;
+      scStore:
+        FScene[I] := TSceneStore.Create;
     end;
 end;
 
@@ -837,7 +840,10 @@ begin
     begin
       if Player.IsDead then
         Exit;
-      Scenes.SetScene(scDrop, scGame);
+      if Player.IsOnStash then
+        Scenes.SetScene(scStore, scGame)
+      else
+        Scenes.SetScene(scDrop, scGame);
     end;
     TK_P:
       Scenes.SetScene(scPlayer);
@@ -901,8 +907,8 @@ begin
   Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase('Game over!!!'), TK_ALIGN_CENTER);
   if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format('You dead. Press %s',
-      [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER)
+    Terminal.Print(CX, CY + 3, Format('You dead. Press %s', [UI.KeyToStr('ENTER')]),
+      TK_ALIGN_CENTER)
   else
     Terminal.Print(CX, CY + 3, Format('You were slain by %s. Press %s',
       [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
@@ -937,8 +943,8 @@ begin
   Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase('Congratulations!!!'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 3, Format('You have won. Press %s',
-    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY + 3, Format('You have won. Press %s', [UI.KeyToStr('ENTER')]),
+    TK_ALIGN_CENTER);
 end;
 
 procedure TSceneWin.Update(var Key: UInt);
@@ -971,19 +977,26 @@ end;
 procedure TSceneInv.Update(var Key: UInt);
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
       Scenes.SetScene(scGame);
-    TK_TAB: // Drop
-      Scenes.SetScene(scDrop, scInv);
+    TK_TAB:
+    begin
+      if Player.IsDead then
+        Exit;
+      if Player.IsOnStash then
+        Scenes.SetScene(scStore, scInv)
+      else
+        Scenes.SetScene(scDrop, scInv);
+    end;
     TK_ENTER, TK_KP_ENTER:
     begin
 
     end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scInv);
-    TK_SPACE: // Player
+    TK_SPACE:
       Scenes.SetScene(scPlayer);
-    TK_A .. TK_Z: // Use an item
+    TK_A .. TK_Z:
       Player.Use(Key - TK_A);
     else
       Game.Timer := UIntMax;

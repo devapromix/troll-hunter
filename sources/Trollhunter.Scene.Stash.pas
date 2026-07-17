@@ -15,8 +15,6 @@ type
 
 implementation
 
-{ TSceneStash }
-
 uses
   BearLibTerminal,
   Trollhunter.UI,
@@ -35,12 +33,10 @@ var
   I, FCount, MapID: Int;
   FItem: Item;
 begin
-  MapID := Ord(Map.Current);
-
-  if Player.IsOnStash then
-    UI.Title('Stash');
+  UI.Title('Stash', 1, clDarkestGreen);
 
   UI.FromAToZ;
+  MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
 
   for I := 0 to FCount - 1 do
@@ -51,12 +47,9 @@ begin
 
   MsgLog.Render(2, True);
 
-  if Player.IsOnStash then
-  begin
-    AddKey('Esc', 'Close');
-    AddKey('Space', 'Show Inventory');
-    AddKey('A-Z', 'Take an item', True);
-  end;
+  AddKey('Esc', 'Close');
+  AddKey('Space', 'Show Inventory');
+  AddKey('A-Z', 'Take an item', True);
 end;
 
 procedure TSceneStash.Update(var Key: UInt);
@@ -64,14 +57,14 @@ var
   I, FCount: Int;
 begin
   case Key of
-    TK_ESCAPE: // Close
+    TK_ESCAPE:
       Scenes.SetScene(scGame);
-    TK_SPACE:  // Inventory
+    TK_SPACE:
     begin
       Game.Timer := UIntMax;
       Scenes.SetScene(scInv);
     end;
-    TK_A .. TK_Z:// Take an item
+    TK_A .. TK_Z:
       Items.AddItemToInv(Key - TK_A);
     else
       Game.Timer := UIntMax;
