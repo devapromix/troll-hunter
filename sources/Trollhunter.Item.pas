@@ -1630,6 +1630,7 @@ type
     function GetBonus(const AItem: Item; const BonusType: TBonusType): uint8;
     procedure DelCorpses();
     procedure AddPlants;
+    procedure ClearAllGroundItems;
   end;
 
 var
@@ -2662,6 +2663,33 @@ begin
           Loot(X, Y, TItemEnum(FItem.ItemID));
       end;
     end;
+  end;
+end;
+
+procedure TItems.ClearAllGroundItems;
+var
+  Z: TMapEnum;
+  X, Y, I, Count: Int;
+  FItem: Item;
+begin
+  for Z := Low(TMapEnum) to High(TMapEnum) do
+  begin
+    for Y := 0 to UIntMax do
+      for X := 0 to UIntMax do
+      begin
+        if Map.GetTileEnum(X, Y, Z) = teStash then Continue;
+
+        Count := Items_Dungeon_GetMapCountXY(Ord(Z), X, Y);
+        for I := Count - 1 downto 0 do
+        begin
+          FItem := Items_Dungeon_GetMapItemXY(Ord(Z), I, X, Y);
+
+          if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in PlantTypeItems) then
+            Continue;
+
+          Items_Dungeon_DeleteMapItemXY(Ord(Z), I, X, Y, FItem);
+        end;
+      end;
   end;
 end;
 

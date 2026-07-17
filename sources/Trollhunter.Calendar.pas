@@ -27,7 +27,7 @@ type
     function GetDayName(): string;
     function GetTime(): string;
     function GetTimeStr(): string;
-    function IsDay: Boolean;
+    function IsDay: boolean;
     procedure OnHour();
     procedure OnDay();
     procedure OnWeek();
@@ -51,7 +51,7 @@ uses SysUtils,
   Trollhunter.Attribute,
   Trollhunter.Helpers;
 
-{ TCalendar }
+  { TCalendar }
 
 constructor TCalendar.Create(const ADay, AMonth: UInt; const AYear: UInt);
 begin
@@ -74,7 +74,7 @@ end;
 
 function TCalendar.DaysThisMonth(): UInt;
 begin
-  Result := DaysPerMonth(Month)
+  Result := DaysPerMonth(Month);
 end;
 
 function TCalendar.GetDayName(): string;
@@ -110,12 +110,12 @@ begin
       Result := 'Day';
     19 .. 21:
       Result := 'Evening';
-  else
-    Result := 'Night';
+    else
+      Result := 'Night';
   end;
 end;
 
-function TCalendar.IsDay: Boolean;
+function TCalendar.IsDay: boolean;
 begin
   Result := (Hour >= 6) and (Hour <= 21);
 end;
@@ -134,6 +134,9 @@ begin
   if (Player.Attributes.Attrib[atReMana].Value > 0) then
     Player.Attributes.Modify(atMana, Player.Attributes.Attrib[atReMana]
       .Value.InRange(ReManaMax));
+  // Clear Items
+  if (FHour = 0) and (Random(4) = 0) then
+    Items.ClearAllGroundItems;
 end;
 
 procedure TCalendar.OnMonth();
@@ -190,10 +193,10 @@ end;
 
 initialization
 
-Calendar := TCalendar.Create(1, 1, 1297);
+  Calendar := TCalendar.Create(1, 1, 1297);
 
 finalization
 
-FreeAndNil(Calendar);
+  FreeAndNil(Calendar);
 
 end.
