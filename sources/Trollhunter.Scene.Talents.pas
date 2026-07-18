@@ -112,7 +112,7 @@ begin
             K := Key - TK_A;
             if Mode.Game then
               Player.Talents.DoTalent(K)
-            else if (K <= 5) then
+            else
             begin
               Self.Talent := K;
               Scenes.SetScene(scName);

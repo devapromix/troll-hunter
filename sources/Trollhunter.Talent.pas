@@ -15,11 +15,11 @@ const
 type
   TTalentEnum = (tlNone,
     tlStrong, tlDextrous, tlMage, tlTough,
-    tlSword_Mastery, tlAffinity_with_Axes, tlAffinity_with_Polearms,
-    tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
-    tlAffinity_with_Daggers, tlAffinity_with_Bows,
+    tlSword_Mastery, tlAxe_Training, tlPolearm_Dominance,
+    tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
+    tlDagger_Precision, tlBow_Archery,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlIron_Skin,
-    tlHardy, tlCharged);
+    tlHardy, tlCharged, tlShadowcraft);
 
 type
   TClassSet = set of TClassEnum;
@@ -46,7 +46,8 @@ const
     Description: ''),
 
     // Strong
-    (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics]; Classes: AllClasses; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics]; Classes: AllClasses;
+    Races: AllRaces;
     Description: 'Increases Athletics skill.'),
 
     // Dextrous
@@ -54,30 +55,32 @@ const
     Description: 'Increases Dodge skill.'),
 
     // Mage
-    (Level: 1; MaxLevel: 5; Effects: [efPrmConcentration]; Classes: AllClasses; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmConcentration]; Classes: AllClasses;
+    Races: AllRaces;
     Description: 'Increases Concentration skill.'),
 
     // Tough
-    (Level: 1; MaxLevel: 5; Effects: [efPrmToughness]; Classes: AllClasses; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmToughness]; Classes: AllClasses;
+    Races: AllRaces;
     Description: 'Increases Toughness skill.'),
 
     // Sword Mastery
     (Level: 1; MaxLevel: 5; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with swords.'),
 
-    // Affinity with Axes
+    // Axe Training
     (Level: 1; MaxLevel: 5; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with axes.'),
 
-    // Affinity with Polearms
+    // Polearm Dominance
     (Level: 1; MaxLevel: 5; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with polearms.'),
 
-    // Affinity with Maces
+    // Mace Crushing
     (Level: 1; MaxLevel: 5; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with maces.'),
 
-    // Affinity with Staves
+    // Staff Harmony
     (Level: 1; MaxLevel: 5; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases skill with staves.'),
 
@@ -85,24 +88,29 @@ const
     (Level: 1; MaxLevel: 5; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases skill with wands.'),
 
-    // Affinity with Daggers
-    (Level: 1; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger]; Races: AllRaces;
+    // Dagger Precision
+    (Level: 1; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger];
+    Races: AllRaces;
     Description: 'Increases skill with daggers.'),
 
-    // Affinity with Bows
-    (Level: 1; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief]; Races: AllRaces;
+    // Bow Archery
+    (Level: 1; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief];
+    Races: AllRaces;
     Description: 'Increases skill with bows.'),
 
     // Bodybuilding
-    (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
+    Races: AllRaces;
     Description: 'Increases Bodybuilding skill.'),
 
     // Meditation
-    (Level: 1; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage];
+    Races: AllRaces;
     Description: 'Increases Meditation skill.'),
 
     // Enchant Item
-    (Level: 1; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage];
+    Races: AllRaces;
     Description: 'Increases Enchant Item skill.'),
 
     // Careful
@@ -118,8 +126,12 @@ const
     Description: 'Increases maximum Life.'),
 
     // Charged
-    (Level: 1; MaxLevel: 5; Effects: [efPrmMana]; Classes: [clMage]; Races: AllRaces;
-    Description: 'Increases maximum Mana.')
+    (Level: 1; MaxLevel: 5; Effects: [efPrmMana]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases maximum Mana.'),
+
+    // Shadowcraft
+    (Level: 1; MaxLevel: 5; Effects: [efPrmStealth]; Classes: [clThief]; Races: AllRaces;
+    Description: 'Years of moving unseen have honed your stealth')
     );
 
 type
@@ -277,8 +289,7 @@ begin
   Result := (Player.HClass in TalentBase[ATalent].Classes) and
     (Player.HRace in TalentBase[ATalent].Races) and
     (NL <= TalentBase[ATalent].MaxLevel) and
-    (Player.Attributes.Attrib[atLev].Value >=
-    Self.RequiredPlayerLevel(ATalent, NL));
+    (Player.Attributes.Attrib[atLev].Value >= Self.RequiredPlayerLevel(ATalent, NL));
 end;
 
 function TTalents.GetDescription(I: TTalentEnum): string;

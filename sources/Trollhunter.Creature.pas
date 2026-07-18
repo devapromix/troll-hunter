@@ -22,7 +22,7 @@ type
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
     efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
     efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation,
-    efPrmEnchant_Item, efLight, efBerserk);
+    efPrmEnchant_Item, efLight, efBerserk, efPrmStealth);
 
 const
   CraftEffLow = efCraftStr;

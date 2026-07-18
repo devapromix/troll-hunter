@@ -1386,8 +1386,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.',
-      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.', ['Difficulty',
+      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
@@ -1882,6 +1882,9 @@ begin
   // Enchant Item
   if (efPrmEnchant_Item in Effects) then
     PrmTalentSkill(skEnchant_Item);
+  // Stealth
+  if (efPrmStealth in Effects) then
+    PrmTalentSkill(skStealth);
   // Life
   if (efPrmLife in Effects) then
   begin
