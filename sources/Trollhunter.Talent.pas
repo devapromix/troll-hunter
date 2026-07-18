@@ -19,7 +19,7 @@ type
     tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
     tlDagger_Precision, tlBow_Archery,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlIron_Skin,
-    tlHardy, tlCharged, tlShadowcraft, tlEvasion);
+    tlHardy, tlCharged, tlShadowcraft, tlAcrobatics, tlEvasion);
 
 type
   TClassSet = set of TClassEnum;
@@ -132,6 +132,10 @@ const
     // Shadowcraft
     (Level: 1; MaxLevel: 5; Effects: [efPrmStealth]; Classes: [clThief]; Races: AllRaces;
     Description: 'Years of moving unseen have honed your stealth'),
+
+    // Acrobatics
+    (Level: 1; MaxLevel: 5; Effects: [efPrmDodge]; Classes: [clRanger]; Races: AllRaces;
+    Description: 'Years of training have made your movements swift and unpredictable'),
 
     // Evasion
     (Level: 1; MaxLevel: 4; Effects: [efPrmDodge]; Classes: [clThief]; Races: [rcElf];
