@@ -289,9 +289,29 @@ begin
   Result := FTalentName[I];
 end;
 
+function IntToRoman(Value: UInt): string;
+const
+  Arabic: array [0 .. 12] of UInt = (1000, 900, 500, 400, 100, 90, 50, 40,
+    10, 9, 5, 4, 1);
+  Roman: array [0 .. 12] of string = ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L',
+    'XL', 'X', 'IX', 'V', 'IV', 'I');
+var
+  I: UInt;
+begin
+  Result := '';
+  if (Value = 0) then
+    Exit;
+  for I := 0 to 12 do
+    while (Value >= Arabic[I]) do
+    begin
+      Result := Result + Roman[I];
+      Dec(Value, Arabic[I]);
+    end;
+end;
+
 function TTalents.GetLevelName(I: TTalentEnum; ALevel: UInt): string;
 begin
-  Result := Self.GetName(I) + ' ' + IntToStr(ALevel);
+  Result := Self.GetName(I) + ' ' + IntToRoman(ALevel);
 end;
 
 function TTalents.GetTalent(I: UInt): TTalent;
