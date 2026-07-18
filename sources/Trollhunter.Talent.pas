@@ -18,9 +18,9 @@ type
     tlSword_Mastery, tlAxe_Training, tlPolearm_Dominance,
     tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
     tlDagger_Precision, tlBow_Archery,
-    tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlIron_Skin,
-    tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics, tlAlertness,
-    tlEvasion, tlTreasure_Hunter);
+    tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlElven_Grace,
+    tlIron_Skin, tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics,
+    tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder);
 
 type
   TClassSet = set of TClassEnum;
@@ -118,6 +118,10 @@ const
     (Level: 1; MaxLevel: 3; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
     Description: 'Your cautious nature helps you avoid enemy attacks. Increases DV'),
 
+    // Elven Grace
+    (Level: 1; MaxLevel: 2; Effects: [efPrmDV]; Classes: AllClasses; Races: [rcElf];
+    Description: 'The natural grace of the elves makes you difficult to hit'),
+
     // Iron Skin
     (Level: 1; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: [rcDwarf];
     Description: 'Your skin has become as hard as iron. Increases PV'),
@@ -150,11 +154,17 @@ const
 
     // Evasion
     (Level: 1; MaxLevel: 4; Effects: [efPrmDodge]; Classes: [clThief]; Races: [rcElf];
-    Description: 'Your agility allows you to evade attacks with greater ease') ,
+    Description: 'Your agility allows you to evade attacks with greater ease'),
 
     // Treasure Hunter
-    (Level: 1; MaxLevel: 5; Effects: [efPrmTreasureHunter]; Classes: AllClasses; Races: [rcGnome, rcDwarf];
-    Description: 'Increases the amount of gold dropped by monsters')
+    (Level: 1; MaxLevel: 5; Effects: [efPrmTreasureHunter]; Classes: AllClasses;
+    Races: [rcGnome, rcDwarf];
+    Description: 'Increases the amount of gold dropped by monsters'),
+
+    // Gold Finder
+    (Level: 1; MaxLevel: 5; Effects: [efGoldFinder]; Classes: AllClasses;
+    Races: AllRaces;
+    Description: 'Increases the chance of finding gold on defeated monsters')
     );
 
 type
