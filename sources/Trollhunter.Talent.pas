@@ -20,7 +20,7 @@ type
     tlDagger_Precision, tlBow_Archery,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlIron_Skin,
     tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics, tlAlertness,
-    tlEvasion);
+    tlEvasion, tlTreasure_Hunter);
 
 type
   TClassSet = set of TClassEnum;
@@ -102,17 +102,17 @@ const
     // Bodybuilding
     (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
     Races: [rcHuman, rcDwarf];
-    Description: 'Increases Bodybuilding skill.'),
+    Description: 'Relentless training has forged your body into a powerful weapon'),
 
     // Meditation
     (Level: 1; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage];
     Races: AllRaces;
-    Description: 'Increases Meditation skill.'),
+    Description: 'A disciplined mind grants greater control over magical energies'),
 
     // Enchant Item
     (Level: 1; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage];
     Races: [rcHuman, rcElf, rcGnome];
-    Description: 'Increases Enchant Item skill.'),
+    Description: 'Allows you to create more powerful magical items'),
 
     // Careful
     (Level: 1; MaxLevel: 3; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
@@ -150,7 +150,11 @@ const
 
     // Evasion
     (Level: 1; MaxLevel: 4; Effects: [efPrmDodge]; Classes: [clThief]; Races: [rcElf];
-    Description: 'Your agility allows you to evade attacks with greater ease')
+    Description: 'Your agility allows you to evade attacks with greater ease') ,
+
+    // Treasure Hunter
+    (Level: 1; MaxLevel: 5; Effects: [efPrmTreasureHunter]; Classes: AllClasses; Races: [rcGnome, rcDwarf];
+    Description: 'Increases the amount of gold dropped by monsters')
     );
 
 type

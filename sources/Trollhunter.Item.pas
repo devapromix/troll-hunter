@@ -898,53 +898,53 @@ const
     // Short Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 1; Max: 2;); MaxDamage: (Min: 3; Max: 4;));
-    Price: 200; Color: clDarkBlue; Deep: [deDark_Wood];),
+    Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 3; Max: 4; ));
+    Price: 200; Color: clDarkBlue; Deep: [deDark_Wood]; ),
     // Hunting Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 2; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 5; Max: 6;); MaxDamage: (Min: 7; Max: 8;));
-    Price: 250; Color: clDarkBlue; Deep: [deDark_Wood];),
+    Damage: (MinDamage: (Min: 5; Max: 6; ); MaxDamage: (Min: 7; Max: 8; ));
+    Price: 250; Color: clDarkBlue; Deep: [deDark_Wood]; ),
     // Long Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 45; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 11; Max: 12;); MaxDamage: (Min: 13; Max: 14;));
-    Price: 300; Color: clDarkBlue; Deep: [deGray_Cave];),
+    Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
+    Price: 300; Color: clDarkBlue; Deep: [deGray_Cave]; ),
     // Nomad Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 50; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 15; Max: 16;); MaxDamage: (Min: 17; Max: 18;));
-    Price: 350; Color: clDarkBlue; Deep: [deGray_Cave];),
+    Damage: (MinDamage: (Min: 15; Max: 16; ); MaxDamage: (Min: 17; Max: 18; ));
+    Price: 350; Color: clDarkBlue; Deep: [deGray_Cave]; ),
     // Heavy Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 55; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 21; Max: 22;); MaxDamage: (Min: 23; Max: 24;));
-    Price: 400; Color: clDarkBlue; Deep: [deDeep_Cave];),
+    Damage: (MinDamage: (Min: 21; Max: 22; ); MaxDamage: (Min: 23; Max: 24; ));
+    Price: 400; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
     // Composite Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 60; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 25; Max: 26;); MaxDamage: (Min: 27; Max: 28;));
-    Price: 450; Color: clDarkBlue; Deep: [deDeep_Cave];),
+    Damage: (MinDamage: (Min: 25; Max: 26; ); MaxDamage: (Min: 27; Max: 28; ));
+    Price: 450; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
     // Master Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 65; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 31; Max: 32;); MaxDamage: (Min: 33; Max: 34;));
-    Price: 500; Color: clDarkBlue; Deep: [deBlood_Cave];),
+    Damage: (MinDamage: (Min: 31; Max: 32; ); MaxDamage: (Min: 33; Max: 34; ));
+    Price: 500; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
     // War Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 35; Max: 36;); MaxDamage: (Min: 37; Max: 38;));
-    Price: 550; Color: clDarkBlue; Deep: [deBlood_Cave];),
+    Damage: (MinDamage: (Min: 35; Max: 36; ); MaxDamage: (Min: 37; Max: 38; ));
+    Price: 550; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
     // Dragon Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 75; Level: 9; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 41; Max: 42;); MaxDamage: (Min: 43; Max: 44;));
-    Price: 600; Color: clDarkBlue; Deep: [deDrom];),
+    Damage: (MinDamage: (Min: 41; Max: 42; ); MaxDamage: (Min: 43; Max: 44; ));
+    Price: 600; Color: clDarkBlue; Deep: [deDrom]; ),
     // Ancient Bow
     (Symbol: ')'; ItemType: itBow; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 80; Level: 10; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 45; Max: 46;); MaxDamage: (Min: 47; Max: 48;));
-    Price: 700; Color: clDarkBlue; Deep: [deDrom];),
+    Damage: (MinDamage: (Min: 45; Max: 46; ); MaxDamage: (Min: 47; Max: 48; ));
+    Price: 700; Color: clDarkBlue; Deep: [deDrom]; ),
 
     /// / == Dark _Wood == ////
 
@@ -1973,6 +1973,7 @@ var
   FItem: Item;
   Value: Int;
   IT: TItemType;
+  MinGold, MaxGold: Integer;
 begin
   I := 0;
   repeat
@@ -2013,9 +2014,21 @@ begin
   case IT of
     itCoin:
     begin
-      Value := Ord(AZ) + 1;
-      FItem.Amount := Math.RandomRange(Value * Value, Value *
-        Value * (5 - Ord(Game.Difficulty))) + 1;
+      MinGold := Sqr(Ord(AZ) + 1);
+      MaxGold := MinGold * (5 - Ord(Game.Difficulty));
+
+      // Base roll
+      FItem.Amount := Math.RandomRange(MinGold, MaxGold) + 1;
+
+      // Treasure Hunter
+      for I := 1 to Player.Talents.GetLevel(tlTreasure_Hunter) do
+      begin
+        Value := Math.RandomRange(MinGold, MaxGold) + 1;
+        if Value > FItem.Amount then
+          FItem.Amount := Value;
+      end;
+
+
       // Extra Gold from Monsters
       if (Player.Attributes.Attrib[atExtraGold].Value > 0) then
       begin
