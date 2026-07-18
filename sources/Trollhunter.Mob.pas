@@ -498,6 +498,7 @@ uses
   SysUtils,
   TypInfo,
   Trollhunter.Terminal,
+  Trollhunter.Talent,
   Trollhunter.Player,
   Trollhunter.UI.Log,
   Trollhunter.Item,
@@ -847,7 +848,13 @@ end;
 
 procedure TMob.DropItems;
 begin
+  // Add Loot
   Items.Loot(Self.X, Self.Y, Boss);
+  // Gold Finder Talent
+  if (Player.Talents.GetLevel(tlGold_Finder) > 0) and
+    (Math.RandomRange(0, 99) < Player.Talents.GetLevel(tlGold_Finder) * 5) then
+    Items.Loot(Self.X, Self.Y, ivGold);
+  // Corpse
   if Game.LCorpses then
     Items.Loot(Self.X, Self.Y, ivCorpse);
 end;

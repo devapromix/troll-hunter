@@ -1937,8 +1937,8 @@ begin
     PrmValue(efPrmPer, IfThen(Value = 0, MinPrm * Multiplier, Value));
     MsgLog.Add(Format('Perception +%d', [Value]));
   end;
-  // Treasure Hunter
-  if (efPrmTreasureHunter in Effects) then
+  // Treasure Hunter or Gold Finder
+  if (efPrmTreasureHunter in Effects) or (efGoldFinder in Effects) then
   begin
     MsgLog.Add('You increased the amount of gold dropped by monsters');
   end;
