@@ -56,7 +56,10 @@ var
   end;
 
 begin
-  UI.Title('Choose a talent');
+  if Player.Talents.IsPoint then
+    UI.Title('Choose a talent')
+  else
+    UI.Title('Talents');
 
   V := 0;
   Y := 2;
@@ -65,7 +68,7 @@ begin
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
     if (TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) then
-      Add(Player.Talents.GetName(T), Player.Talents.GetHint(T),
+      Add(Player.Talents.GetName(T), Player.Talents.GetDescription(T),
         Player.Talents.IsPoint);
 
   if Mode.Game then
@@ -75,12 +78,12 @@ begin
   begin
     AddKey('A-Z', 'Select a talent');
     if Mode.Game then
-    AddKey('Space', 'View Learned Talents');
+      AddKey('Space', 'Show Learned Talents');
     AddKey('Esc', 'Close', 'Back', True);
   end
   else
   begin
-    AddKey('Space', 'View Learned Talents');
+    AddKey('Space', 'Show Learned Talents');
     AddKey('Esc', 'Close', 'Back', True);
   end;
 end;
@@ -97,8 +100,8 @@ begin
       Scenes.GoBack;
     end;
     TK_SPACE:
-    if Mode.Game then
-      Scenes.SetScene(scLearnedTalents);
+      if Mode.Game then
+        Scenes.SetScene(scLearnedTalents);
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
     begin
       if Player.Talents.IsPoint then

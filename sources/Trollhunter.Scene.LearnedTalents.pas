@@ -44,7 +44,7 @@ begin
       begin
         Terminal.Print(5, Y, GetName(Talent[I].Enum));
         Terminal.ForegroundColor(clGray);
-        Terminal.Print(30, Y, GetHint(Talent[I].Enum));
+        Terminal.Print(30, Y, GetDescription(Talent[I].Enum));
       end;
       Terminal.ForegroundColor(clWhite);
     end;
@@ -54,7 +54,7 @@ begin
   if Mode.Game then
     MsgLog.Render(2, True);
 
-  AddKey('Space', 'Talent Selection');
+  AddKey('Space', 'Show Talents');
   AddKey('Esc', 'Close', 'Back', True);
 end;
 

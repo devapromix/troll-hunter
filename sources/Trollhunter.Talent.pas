@@ -10,72 +10,67 @@ const
   TalentMax = 10;
 
 type
-  TTalentEnum = (tlNone, tlStrong { Сильный }, tlDextrous { Ловкий },
-    tlMage { Маг }, tlTough { Тяжелый }, tlWealthy { Богатый },
+  TTalentEnum = (tlNone, tlStrong { Strong }, tlDextrous { Dextrous },
+    tlMage { Mage }, tlTough { Tough }, tlWealthy { Wealthy },
     tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
     tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
     tlAffinity_with_Daggers, tlAffinity_with_Bows, tlBodybuilding, tlMeditation,
-    tlEnchant_Item, tlMiser { Скряга }, tlCareful { Осторожный },
-    tlIron_Skin { Железная Кожа }, tlHardy { Выносливый },
-    tlCharged { Энергичный });
-
-type
-  TTalentBonus = (tbNone, tbAttrib, tbSkill, tbTalent, tbGold);
+    tlEnchant_Item, tlMiser { Miser }, tlCareful { Careful },
+    tlIron_Skin { Iron Skin }, tlHardy { Hardy },
+    tlCharged { Charged });
 
 type
   TTalentBase = record
     Level: UInt;
-    TalentBonus: TTalentBonus;
     Effects: TEffects;
   end;
 
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
     // None
-    (Level: 0; TalentBonus: tbNone; Effects: []; ),
+    (Level: 0; Effects: []; ),
     // Strong
-    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmAthletics]; ),
+    (Level: 1; Effects: [efPrmAthletics]; ),
     // Dextrous
-    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmDodge]; ),
+    (Level: 1; Effects: [efPrmDodge]; ),
     // Mage
-    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmConcentration]; ),
+    (Level: 1; Effects: [efPrmConcentration]; ),
     // Tough
-    (Level: 1; TalentBonus: tbSkill; Effects: [efPrmToughness]; ),
+    (Level: 1; Effects: [efPrmToughness]; ),
     // Wealthy
-    (Level: 1; TalentBonus: tbGold; Effects: [efPrmGold]; ),
+    (Level: 1; Effects: [efPrmGold]; ),
     // Affinity with Swords
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmBlade]; ),
+    (Level: 2; Effects: [efPrmBlade]; ),
     // Affinity with Axes
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmAxe]; ),
+    (Level: 2; Effects: [efPrmAxe]; ),
     // Affinity with Polearms
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmSpear]; ),
+    (Level: 2; Effects: [efPrmSpear]; ),
     // Affinity with Maces
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmMace]; ),
+    (Level: 2; Effects: [efPrmMace]; ),
     // Affinity with Staves
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmStaff]; ),
+    (Level: 2; Effects: [efPrmStaff]; ),
     // Affinity with Wands
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmWand]; ),
+    (Level: 2; Effects: [efPrmWand]; ),
     // Affinity with Daggers
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmDagger]; ),
+    (Level: 2; Effects: [efPrmDagger]; ),
     // Affinity with Bows
-    (Level: 2; TalentBonus: tbSkill; Effects: [efPrmBow]; ),
+    (Level: 2; Effects: [efPrmBow]; ),
     // Bodybuilding
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmBodybuilding]; ),
+    (Level: 3; Effects: [efPrmBodybuilding]; ),
     // Meditation
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmMeditation]; ),
+    (Level: 3; Effects: [efPrmMeditation]; ),
     // Enchant Item
-    (Level: 3; TalentBonus: tbSkill; Effects: [efPrmEnchant_Item]; ),
+    (Level: 3; Effects: [efPrmEnchant_Item]; ),
     // Miser
-    (Level: 4; TalentBonus: tbNone; Effects: [ef2xGold]; ),
+    (Level: 4; Effects: [ef2xGold]; ),
     // Careful
-    (Level: 4; TalentBonus: tbTalent; Effects: [efPrmDV]; ),
+    (Level: 4; Effects: [efPrmDV]; ),
     // Iron Skin
-    (Level: 4; TalentBonus: tbTalent; Effects: [efPrmPV]; ),
+    (Level: 4; Effects: [efPrmPV]; ),
     // Hardy
-    (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmLife]; ),
+    (Level: 5; Effects: [efPrmLife]; ),
     // Charged
-    (Level: 5; TalentBonus: tbAttrib; Effects: [efPrmMana]; )
-
+    (Level: 5; Effects: [efPrmMana]; )
     );
 
 type
@@ -99,7 +94,7 @@ type
     property IsPoint: boolean read FIsPoint write FIsPoint;
     property Talent[I: UInt]: TTalent read GetTalent write SetTalent;
     function GetName(I: TTalentEnum): string;
-    function GetHint(I: TTalentEnum): string;
+    function GetDescription(I: TTalentEnum): string;
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): boolean;
     function Count: UInt;
@@ -119,10 +114,28 @@ uses
   Trollhunter.Helpers;
 
 const
-  TalentHint: array [TTalentEnum] of string = ('', 'Athletics', 'Dodge',
-    'Concentration', 'Toughness', 'Gold', 'Blade', 'Axe', 'Spear', 'Mace',
-    'Staff', 'Wand', 'Dagger', 'Bow', 'Bodybuilding', 'Meditation',
-    'Enchant Item', 'x2 to Gold', 'DV', 'PV', 'Life', 'Mana');
+  TalentDescription: array [TTalentEnum] of string = ('',
+    'Increases Athletics skill.',
+    'Increases Dodge skill.',
+    'Increases Concentration skill.',
+    'Increases Toughness skill.',
+    'Grants extra gold at the start of the game.',
+    'Increases skill with swords.',
+    'Increases skill with axes.',
+    'Increases skill with polearms.',
+    'Increases skill with maces.',
+    'Increases skill with staves.',
+    'Increases skill with wands.',
+    'Increases skill with daggers.',
+    'Increases skill with bows.',
+    'Increases Bodybuilding skill.',
+    'Increases Meditation skill.',
+    'Increases Enchant Item skill.',
+    'Doubles the amount of gold dropped.',
+    'Increases Defense Value (DV).',
+    'Increases Protection Value (PV).',
+    'Increases maximum Life.',
+    'Increases maximum Mana.');
 
   { TTalents }
 
@@ -195,24 +208,9 @@ begin
     end;
 end;
 
-function TTalents.GetHint(I: TTalentEnum): string;
-const
-  F = '+%d to %s';
+function TTalents.GetDescription(I: TTalentEnum): string;
 begin
-  case TalentBase[I].TalentBonus of
-    tbNone:
-      Result := TalentHint[I];
-    tbGold:
-      Result := Format(F, [StartGold, TalentHint[I]]);
-    tbSkill:
-      Result := Format(F, [StartSkill, TalentHint[I]]);
-    tbTalent:
-      Result := Format(F, [TalentPrm, TalentHint[I]]);
-    tbAttrib:
-      Result := Format(F, [AttribPrm, TalentHint[I]]);
-    else
-      Result := '-';
-  end;
+  Result := TalentDescription[I];
 end;
 
 function TTalents.GetName(I: TTalentEnum): string;

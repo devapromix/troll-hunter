@@ -245,9 +245,8 @@
         <IsPartOfProject Value="True"/>
       </Unit51>
       <Unit52>
-        <Filename Value="sources\trollhunter.scene.learnedtalents.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.LearnedTalents.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Trollhunter.Scene.LearnedTalents"/>
       </Unit52>
     </Units>
   </ProjectOptions>
