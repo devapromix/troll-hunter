@@ -313,7 +313,10 @@ end;
 
 function TTalents.GetLevelName(I: TTalentEnum; ALevel: UInt): string;
 begin
-  Result := Self.GetName(I) + ' ' + IntToRoman(ALevel);
+  if (TalentBase[I].MaxLevel <= 1) then
+    Result := Self.GetName(I)
+  else
+    Result := Self.GetName(I) + ' ' + IntToRoman(ALevel);
 end;
 
 function TTalents.GetTalent(I: UInt): TTalent;
