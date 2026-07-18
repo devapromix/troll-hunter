@@ -225,7 +225,7 @@ end;
 
 procedure TTalents.DoTalent(Key: UInt);
 var
-  K: UInt;
+  K, L: UInt;
   T: TTalentEnum;
 begin
   K := 0;
@@ -234,9 +234,10 @@ begin
     begin
       if (Key = K) then
       begin
+        L := Self.NextLevel(T); // level about to be learned
         Self.Add(T);
         IsPoint := False;
-        Player.DoEffects(TalentBase[T].Effects);
+        Player.DoEffects(TalentBase[T].Effects, 0, L);
         Break;
       end;
       Inc(K);

@@ -114,7 +114,8 @@ type
     procedure Drop(Index: Int);
     procedure DropAmount(Index: Int);
     procedure Use(Index: Int);
-    procedure DoEffects(const Effects: TEffects; const Value: UInt = 0);
+    procedure DoEffects(const Effects: TEffects; const Value: UInt = 0;
+      const Multiplier: UInt = 1);
     procedure Equip(Index: Int);
     procedure UnEquip(Index: Int);
     procedure Sell(Index: Int);
@@ -1385,8 +1386,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', ['Difficulty',
-      GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.',
+      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
@@ -1657,7 +1658,8 @@ begin
   Result := (Map.GetTileEnum(X, Y, Map.Current) = teStash);
 end;
 
-procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0);
+procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0;
+  const Multiplier: UInt = 1);
 var
   V, VX, VY: UInt;
   Ef: TEffect;
@@ -1666,7 +1668,14 @@ const
 
   procedure PrmSkill(ASkill: TSkillEnum);
   begin
-    Skills.Modify(ASkill, StartSkill);
+    Skills.Modify(ASkill, StartSkill * Multiplier);
+    Calc();
+    Fill();
+  end;
+
+  procedure PrmTalentSkill(ASkill: TSkillEnum);
+  begin
+    Skills.Modify(ASkill, TalentSkill * Multiplier);
     Calc();
     Fill();
   end;
@@ -1830,95 +1839,95 @@ begin
   end;
   // Athletics
   if (efPrmAthletics in Effects) then
-    PrmSkill(skAthletics);
+    PrmTalentSkill(skAthletics);
   // Dodge
   if (efPrmDodge in Effects) then
-    PrmSkill(skDodge);
+    PrmTalentSkill(skDodge);
   // Concentration
   if (efPrmConcentration in Effects) then
-    PrmSkill(skConcentration);
+    PrmTalentSkill(skConcentration);
   // Toughness
   if (efPrmToughness in Effects) then
-    PrmSkill(skToughness);
+    PrmTalentSkill(skToughness);
   // Blade
   if (efPrmBlade in Effects) then
-    PrmSkill(skBlade);
+    PrmTalentSkill(skBlade);
   // Axe
   if (efPrmAxe in Effects) then
-    PrmSkill(skAxe);
+    PrmTalentSkill(skAxe);
   // Spear
   if (efPrmSpear in Effects) then
-    PrmSkill(skSpear);
+    PrmTalentSkill(skSpear);
   // Mace
   if (efPrmMace in Effects) then
-    PrmSkill(skMace);
+    PrmTalentSkill(skMace);
   // Staff
   if (efPrmStaff in Effects) then
-    PrmSkill(skStaff);
+    PrmTalentSkill(skStaff);
   // Wand
   if (efPrmWand in Effects) then
-    PrmSkill(skWand);
+    PrmTalentSkill(skWand);
   // Dagger
   if (efPrmDagger in Effects) then
-    PrmSkill(skDagger);
+    PrmTalentSkill(skDagger);
   // Bow
   if (efPrmBow in Effects) then
-    PrmSkill(skBow);
+    PrmTalentSkill(skBow);
   // Bodybuilding
   if (efPrmBodybuilding in Effects) then
-    PrmSkill(skBodybuilding);
+    PrmTalentSkill(skBodybuilding);
   // Meditation
   if (efPrmMeditation in Effects) then
-    PrmSkill(skMeditation);
+    PrmTalentSkill(skMeditation);
   // Enchant Item
   if (efPrmEnchant_Item in Effects) then
-    PrmSkill(skEnchant_Item);
+    PrmTalentSkill(skEnchant_Item);
   // Life
   if (efPrmLife in Effects) then
   begin
-    PrmValue(efPrmLife, IfThen(Value = 0, AttribPrm, Value));
+    PrmValue(efPrmLife, IfThen(Value = 0, AttribPrm * Multiplier, Value));
     MsgLog.Add('You increased your amount of life.');
   end;
   // Mana
   if (efPrmMana in Effects) then
   begin
-    PrmValue(efPrmMana, IfThen(Value = 0, AttribPrm, Value));
+    PrmValue(efPrmMana, IfThen(Value = 0, AttribPrm * Multiplier, Value));
     MsgLog.Add('You increased your amount of mana.');
   end;
   // DV
   if (efPrmDV in Effects) then
   begin
-    PrmValue(efPrmDV, IfThen(Value = 0, TalentPrm, Value));
+    PrmValue(efPrmDV, IfThen(Value = 0, TalentPrm * Multiplier, Value));
     MsgLog.Add('You increased a defense level');
   end;
   // PV
   if (efPrmPV in Effects) then
   begin
-    PrmValue(efPrmPV, IfThen(Value = 0, TalentPrm, Value));
+    PrmValue(efPrmPV, IfThen(Value = 0, TalentPrm * Multiplier, Value));
     MsgLog.Add('You increased a protection level');
   end;
   // Strength
   if (efPrmStr in Effects) then
   begin
-    PrmValue(efPrmStr, IfThen(Value = 0, MinPrm, Value));
+    PrmValue(efPrmStr, IfThen(Value = 0, MinPrm * Multiplier, Value));
     MsgLog.Add(Format('Strength +%d', [Value]));
   end;
   // Dexterity
   if (efPrmDex in Effects) then
   begin
-    PrmValue(efPrmDex, IfThen(Value = 0, MinPrm, Value));
+    PrmValue(efPrmDex, IfThen(Value = 0, MinPrm * Multiplier, Value));
     MsgLog.Add(Format('Dexterity +%d', [Value]));
   end;
   // Willpower
   if (efPrmWil in Effects) then
   begin
-    PrmValue(efPrmWil, IfThen(Value = 0, MinPrm, Value));
+    PrmValue(efPrmWil, IfThen(Value = 0, MinPrm * Multiplier, Value));
     MsgLog.Add(Format('Willpower +%d', [Value]));
   end;
   // Perception
   if (efPrmPer in Effects) then
   begin
-    PrmValue(efPrmPer, IfThen(Value = 0, MinPrm, Value));
+    PrmValue(efPrmPer, IfThen(Value = 0, MinPrm * Multiplier, Value));
     MsgLog.Add(Format('Perception +%d', [Value]));
   end;
 end;

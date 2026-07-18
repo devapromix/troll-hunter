@@ -47,6 +47,7 @@ const
   SkillExpMax = 50;
   BeginSkill = 10;
   StartSkill = 5;
+  TalentSkill = 1;
 
 implementation
 
