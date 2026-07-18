@@ -19,8 +19,8 @@ const
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efAllIdentification, efEnchantItem, efCraftStr,
     efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak,
-    efPrmGold, efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
-    efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, ef2xGold, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
+    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
+    efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
     efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation,
     efPrmEnchant_Item, efLight, efBerserk);
 

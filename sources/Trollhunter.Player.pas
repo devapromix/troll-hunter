@@ -1828,12 +1828,6 @@ begin
       MsgLog.Add('You are better now.');
     end;
   end;
-  // Gold
-  if (efPrmGold in Effects) then
-  begin
-    Items.AddItemToInv(ivGold, StartGold);
-    Player.Calc;
-  end;
   // Athletics
   if (efPrmAthletics in Effects) then
     PrmSkill(skAthletics);
@@ -1879,11 +1873,6 @@ begin
   // Enchant Item
   if (efPrmEnchant_Item in Effects) then
     PrmSkill(skEnchant_Item);
-  // 2x to gold
-  if (ef2xGold in Effects) then
-  begin
-
-  end;
   // Life
   if (efPrmLife in Effects) then
   begin
