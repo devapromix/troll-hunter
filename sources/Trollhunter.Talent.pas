@@ -19,7 +19,7 @@ type
     tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
     tlDagger_Precision, tlBow_Archery,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlIron_Skin,
-    tlHardy, tlCharged, tlShadowcraft, tlAcrobatics, tlEvasion);
+    tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics, tlEvasion);
 
 type
   TClassSet = set of TClassEnum;
@@ -47,7 +47,7 @@ const
 
     // Strong
     (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics]; Classes: AllClasses;
-    Races: AllRaces;
+    Races: [rcHuman, rcDwarf];
     Description: 'Increases Athletics skill.'),
 
     // Dextrous
@@ -100,7 +100,7 @@ const
 
     // Bodybuilding
     (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
-    Races: AllRaces;
+    Races: [rcHuman, rcDwarf];
     Description: 'Increases Bodybuilding skill.'),
 
     // Meditation
@@ -110,7 +110,7 @@ const
 
     // Enchant Item
     (Level: 1; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage];
-    Races: AllRaces;
+    Races: [rcHuman, rcElf, rcGnome];
     Description: 'Increases Enchant Item skill.'),
 
     // Careful
@@ -118,7 +118,7 @@ const
     Description: 'Increases Defense Value (DV).'),
 
     // Iron Skin
-    (Level: 1; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: [rcDwarf];
     Description: 'Increases Protection Value (PV).'),
 
     // Hardy
@@ -133,8 +133,13 @@ const
     (Level: 1; MaxLevel: 5; Effects: [efPrmStealth]; Classes: [clThief]; Races: AllRaces;
     Description: 'Years of moving unseen have honed your stealth'),
 
+    // Agility
+    (Level: 1; MaxLevel: 2; Effects: [efPrmDodge]; Classes: AllClasses;
+    Races: [rcHuman, rcElf, rcGnome];
+    Description: 'Allows you to react swiftly and avoid enemy attacks'),
+
     // Acrobatics
-    (Level: 1; MaxLevel: 5; Effects: [efPrmDodge]; Classes: [clRanger]; Races: AllRaces;
+    (Level: 1; MaxLevel: 3; Effects: [efPrmDodge]; Classes: [clRanger]; Races: AllRaces;
     Description: 'Years of training have made your movements swift and unpredictable'),
 
     // Evasion
