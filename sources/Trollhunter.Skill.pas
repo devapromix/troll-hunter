@@ -12,7 +12,7 @@ type
 
     skStealth,
     // Attributes skills
-    skAthletics, skDodge, skConcentration, skToughness,
+    skAthletics, skDodge, skConcentration, skToughness, skAwareness,
 
     skBodybuilding, skMeditation, skEnchant_Item,
     // Weapon skills

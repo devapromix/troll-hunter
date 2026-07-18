@@ -550,7 +550,8 @@ begin
     EnsureRange(Round(Skills.Skill[skConcentration].Value * 1.4) +
     FAttrib[atWil] + Attributes.Attrib[atWil].Prm, 1, AttribMax));
   Attributes.SetValue(atPer, EnsureRange(Round(Skills.Skill[skToughness].Value *
-    1.4) + FAttrib[atPer] + Attributes.Attrib[atPer].Prm, 1, AttribMax));
+    0.3) + Round(Skills.Skill[skAwareness].Value * 1.4) + FAttrib[atPer] +
+    Attributes.Attrib[atPer].Prm, 1, AttribMax));
 
   if (Abilities.IsAbility(abBerserk)) then
   begin
@@ -1386,8 +1387,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', ['Difficulty',
-      GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.',
+      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);

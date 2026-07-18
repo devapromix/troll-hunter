@@ -115,19 +115,19 @@ const
 
     // Careful
     (Level: 1; MaxLevel: 3; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
-    Description: 'Increases Defense Value (DV).'),
+    Description: 'Your cautious nature helps you avoid enemy attacks. Increases DV'),
 
     // Iron Skin
     (Level: 1; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: [rcDwarf];
-    Description: 'Increases Protection Value (PV).'),
+    Description: 'Your skin has become as hard as iron. Increases PV'),
 
     // Hardy
     (Level: 1; MaxLevel: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
-    Description: 'Increases maximum Life.'),
+    Description: 'Your exceptional endurance increases your maximum life'),
 
     // Charged
     (Level: 1; MaxLevel: 5; Effects: [efPrmMana]; Classes: AllClasses; Races: AllRaces;
-    Description: 'Increases maximum Mana.'),
+    Description: 'Arcane energy flows through your body. Increases maximum mana'),
 
     // Shadowcraft
     (Level: 1; MaxLevel: 5; Effects: [efPrmStealth]; Classes: [clThief]; Races: AllRaces;
