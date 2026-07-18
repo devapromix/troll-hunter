@@ -10,17 +10,18 @@ uses
 
 const
   TalentMax = 30;
+  // Every next level of a talent becomes available this many player levels
+  // after the previous one.
+  TalentLevelStep = 5;
 
 type
   TTalentEnum = (tlNone,
-    tlStrong, tlDextrous,
-    tlMage, tlTough,
+    tlStrong, tlDextrous, tlMage, tlTough,
     tlSword_Mastery, tlAffinity_with_Axes, tlAffinity_with_Polearms,
     tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
-    tlAffinity_with_Daggers, tlAffinity_with_Bows, tlBodybuilding, tlMeditation,
-    tlEnchant_Item, tlCareful,
-    tlIron_Skin, tlHardy,
-    tlCharged);
+    tlAffinity_with_Daggers, tlAffinity_with_Bows,
+    tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlIron_Skin,
+    tlHardy, tlCharged);
 
 type
   TClassSet = set of TClassEnum;
@@ -32,7 +33,8 @@ const
 
 type
   TTalentBase = record
-    Level: UInt;
+    Level: UInt;                // Player level required to learn talent level 1
+    MaxLevel: UInt;             // Maximum level this talent can reach
     Effects: TEffects;
     Classes: TClassSet;
     Races: TRaceSet;
@@ -42,84 +44,84 @@ type
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
     // None
-    (Level: 0; Effects: []; Classes: AllClasses; Races: AllRaces;
-     Description: ''),
+    (Level: 0; MaxLevel: 5; Effects: []; Classes: AllClasses; Races: AllRaces;
+    Description: ''),
 
     // Strong
-    (Level: 1; Effects: [efPrmAthletics]; Classes: AllClasses; Races: AllRaces;
-     Description: 'Increases Athletics skill.'),
+    (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases Athletics skill.'),
 
     // Dextrous
-    (Level: 1; Effects: [efPrmDodge]; Classes: AllClasses; Races: AllRaces;
-     Description: 'Increases Dodge skill.'),
+    (Level: 1; MaxLevel: 5; Effects: [efPrmDodge]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases Dodge skill.'),
 
     // Mage
-    (Level: 1; Effects: [efPrmConcentration]; Classes: AllClasses; Races: AllRaces;
-     Description: 'Increases Concentration skill.'),
+    (Level: 1; MaxLevel: 5; Effects: [efPrmConcentration]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases Concentration skill.'),
 
     // Tough
-    (Level: 1; Effects: [efPrmToughness]; Classes: AllClasses; Races: AllRaces;
-     Description: 'Increases Toughness skill.'),
+    (Level: 1; MaxLevel: 5; Effects: [efPrmToughness]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases Toughness skill.'),
 
     // Sword Mastery
-    (Level: 2; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
-     Description: 'Increases skill with swords.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Increases skill with swords.'),
 
     // Affinity with Axes
-    (Level: 2; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
-     Description: 'Increases skill with axes.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Increases skill with axes.'),
 
     // Affinity with Polearms
-    (Level: 2; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
-     Description: 'Increases skill with polearms.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Increases skill with polearms.'),
 
     // Affinity with Maces
-    (Level: 2; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
-     Description: 'Increases skill with maces.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Increases skill with maces.'),
 
     // Affinity with Staves
-    (Level: 2; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
-     Description: 'Increases skill with staves.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
+    Description: 'Increases skill with staves.'),
 
     // Affinity with Wands
-    (Level: 2; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
-     Description: 'Increases skill with wands.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
+    Description: 'Increases skill with wands.'),
 
     // Affinity with Daggers
-    (Level: 2; Effects: [efPrmDagger]; Classes: [clThief, clRanger]; Races: AllRaces;
-     Description: 'Increases skill with daggers.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger]; Races: AllRaces;
+    Description: 'Increases skill with daggers.'),
 
     // Affinity with Bows
-    (Level: 2; Effects: [efPrmBow]; Classes: [clRanger, clThief]; Races: AllRaces;
-     Description: 'Increases skill with bows.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief]; Races: AllRaces;
+    Description: 'Increases skill with bows.'),
 
     // Bodybuilding
-    (Level: 3; Effects: [efPrmBodybuilding]; Classes: [clWarrior]; Races: AllRaces;
-     Description: 'Increases Bodybuilding skill.'),
+    (Level: 3; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Increases Bodybuilding skill.'),
 
     // Meditation
-    (Level: 3; Effects: [efPrmMeditation]; Classes: [clMage]; Races: AllRaces;
-     Description: 'Increases Meditation skill.'),
+    (Level: 3; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage]; Races: AllRaces;
+    Description: 'Increases Meditation skill.'),
 
     // Enchant Item
-    (Level: 3; Effects: [efPrmEnchant_Item]; Classes: [clMage]; Races: AllRaces;
-     Description: 'Increases Enchant Item skill.'),
+    (Level: 3; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage]; Races: AllRaces;
+    Description: 'Increases Enchant Item skill.'),
 
     // Careful
-    (Level: 4; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
-     Description: 'Increases Defense Value (DV).'),
+    (Level: 4; MaxLevel: 5; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases Defense Value (DV).'),
 
     // Iron Skin
-    (Level: 4; Effects: [efPrmPV]; Classes: [clWarrior]; Races: AllRaces;
-     Description: 'Increases Protection Value (PV).'),
+    (Level: 4; MaxLevel: 5; Effects: [efPrmPV]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Increases Protection Value (PV).'),
 
     // Hardy
-    (Level: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
-     Description: 'Increases maximum Life.'),
+    (Level: 5; MaxLevel: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
+    Description: 'Increases maximum Life.'),
 
     // Charged
-    (Level: 5; Effects: [efPrmMana]; Classes: [clMage]; Races: AllRaces;
-     Description: 'Increases maximum Mana.')
+    (Level: 5; MaxLevel: 5; Effects: [efPrmMana]; Classes: [clMage]; Races: AllRaces;
+    Description: 'Increases maximum Mana.')
     );
 
 type
@@ -144,9 +146,14 @@ type
     property Talent[I: UInt]: TTalent read GetTalent write SetTalent;
     function GetName(I: TTalentEnum): string;
     function GetDescription(I: TTalentEnum): string;
+    function GetLevelName(I: TTalentEnum; ALevel: UInt): string;
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): boolean;
     function IsAvailable(const ATalent: TTalentEnum): boolean;
+    function GetLevel(const ATalent: TTalentEnum): UInt;
+    function NextLevel(const ATalent: TTalentEnum): UInt;
+    function RequiredPlayerLevel(const ATalent: TTalentEnum;
+      const ALevel: UInt): UInt;
     function Count: UInt;
     function Amount: UInt;
     procedure DoTalent(Key: UInt);
@@ -163,7 +170,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Helpers;
 
-{ TTalents }
+  { TTalents }
 
 procedure TTalents.Add(const ATalent: TTalentEnum);
 var
@@ -172,6 +179,7 @@ begin
   for I := 0 to TalentMax - 1 do
     if (FTalent[I].Enum = tlNone) then
     begin
+      FTalent[I].Level := Self.NextLevel(ATalent);
       FTalent[I].Enum := ATalent;
       Break;
     end;
@@ -204,7 +212,10 @@ var
 begin
   IsPoint := True;
   for I := 0 to TalentMax - 1 do
+  begin
     FTalent[I].Enum := tlNone;
+    FTalent[I].Level := 0;
+  end;
 end;
 
 destructor TTalents.Destroy;
@@ -219,8 +230,7 @@ var
 begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
-    if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and
-      (T <> tlNone) and Self.IsAvailable(T)) then
+    if (T <> tlNone) and Self.IsAvailable(T) then
     begin
       if (Key = K) then
       begin
@@ -233,10 +243,39 @@ begin
     end;
 end;
 
-function TTalents.IsAvailable(const ATalent: TTalentEnum): boolean;
+function TTalents.GetLevel(const ATalent: TTalentEnum): UInt;
+var
+  I: UInt;
 begin
+  Result := 0;
+  for I := 0 to TalentMax - 1 do
+    if (FTalent[I].Enum = ATalent) and (FTalent[I].Level > Result) then
+      Result := FTalent[I].Level;
+end;
+
+function TTalents.NextLevel(const ATalent: TTalentEnum): UInt;
+begin
+  Result := Self.GetLevel(ATalent) + 1;
+end;
+
+function TTalents.RequiredPlayerLevel(const ATalent: TTalentEnum;
+  const ALevel: UInt): UInt;
+begin
+  // Talent level 1 requires TalentBase[ATalent].Level; every next talent
+  // level requires TalentLevelStep more player levels than the previous one.
+  Result := TalentBase[ATalent].Level + (ALevel - 1) * TalentLevelStep;
+end;
+
+function TTalents.IsAvailable(const ATalent: TTalentEnum): boolean;
+var
+  NL: UInt;
+begin
+  NL := Self.NextLevel(ATalent);
   Result := (Player.HClass in TalentBase[ATalent].Classes) and
-    (Player.HRace in TalentBase[ATalent].Races);
+    (Player.HRace in TalentBase[ATalent].Races) and
+    (NL <= TalentBase[ATalent].MaxLevel) and
+    (Player.Attributes.Attrib[atLev].Value >=
+    Self.RequiredPlayerLevel(ATalent, NL));
 end;
 
 function TTalents.GetDescription(I: TTalentEnum): string;
@@ -247,6 +286,11 @@ end;
 function TTalents.GetName(I: TTalentEnum): string;
 begin
   Result := FTalentName[I];
+end;
+
+function TTalents.GetLevelName(I: TTalentEnum; ALevel: UInt): string;
+begin
+  Result := Self.GetName(I) + ' ' + IntToStr(ALevel);
 end;
 
 function TTalents.GetTalent(I: UInt): TTalent;

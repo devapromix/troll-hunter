@@ -42,7 +42,7 @@ begin
     begin
       with Player.Talents do
       begin
-        Terminal.Print(5, Y, GetName(Talent[I].Enum));
+        Terminal.Print(5, Y, GetLevelName(Talent[I].Enum, Talent[I].Level));
         Terminal.ForegroundColor(clGray);
         Terminal.Print(30, Y, GetDescription(Talent[I].Enum));
       end;
