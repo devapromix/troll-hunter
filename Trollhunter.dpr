@@ -10,7 +10,8 @@ uses
   Dialogs, SysUtils, BearLibTerminal, Trollhunter.Types, Trollhunter.Game,
   Trollhunter.Terminal, Trollhunter.Scenes, Trollhunter.Helpers,
   Trollhunter.Item, Trollhunter.PathFind, Trollhunter.Item.Common,
-  Trollhunter.Item.Dungeon, Trollhunter.Item.Inventory;
+  Trollhunter.Item.Dungeon, Trollhunter.Item.Inventory,
+  Trollhunter.Scene.LearnedTalents;
 
 var
   Key: UInt = 0;

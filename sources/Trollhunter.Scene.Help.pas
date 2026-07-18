@@ -82,6 +82,7 @@ begin
       AddLine('Right/Left', 'Change tab');
       AddLine('Up/Down', 'Scroll skills');
       AddLine('Tab', 'Show Background');
+      AddLine('T', 'Show Learned Talents');
       AddLine('Space', 'Show Inventory');
     end;
     scGame:

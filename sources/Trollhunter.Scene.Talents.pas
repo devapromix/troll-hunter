@@ -55,18 +55,6 @@ var
     Inc(V);
   end;
 
-  procedure Add(); overload;
-  begin
-    if (Player.Talents.Talent[V].Enum <> tlNone) then
-    begin
-      Terminal.ForegroundColor(clWhite);
-      with Player.Talents do
-        Terminal.Print(CX + (CX div 2), Y, GetName(Talent[V].Enum));
-    end;
-    Inc(Y);
-    Inc(V);
-  end;
-
 begin
   UI.Title('Choose a talent');
 
@@ -80,21 +68,21 @@ begin
       Add(Player.Talents.GetName(T), Player.Talents.GetHint(T),
         Player.Talents.IsPoint);
 
-  V := 0;
-  Y := 2;
-  for I := 0 to TalentMax - 1 do
-    Add();
-
   if Mode.Game then
     MsgLog.Render(2, True);
 
   if Player.Talents.IsPoint then
   begin
     AddKey('A-Z', 'Select a talent');
+    if Mode.Game then
+    AddKey('Space', 'View Learned Talents');
     AddKey('Esc', 'Close', 'Back', True);
   end
   else
+  begin
+    AddKey('Space', 'View Learned Talents');
     AddKey('Esc', 'Close', 'Back', True);
+  end;
 end;
 
 procedure TSceneTalents.Update(var Key: UInt);
@@ -108,6 +96,9 @@ begin
         Player.Talents.Clear;
       Scenes.GoBack;
     end;
+    TK_SPACE:
+    if Mode.Game then
+      Scenes.SetScene(scLearnedTalents);
     TK_A .. TK_Z, TK_ENTER, TK_KP_ENTER:
     begin
       if Player.Talents.IsPoint then

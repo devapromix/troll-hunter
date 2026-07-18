@@ -15,7 +15,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scIdentification, scBackground,
+    scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification, scBackground,
     scEnchant, scClass, scRace, scStash, scStore);
 
 type
@@ -245,6 +245,7 @@ uses
   Trollhunter.Scene.Stash,
   Trollhunter.Scene.Store,
   Trollhunter.Scene.Talents,
+  Trollhunter.Scene.LearnedTalents,
   Trollhunter.Scene.Help;
 
   { TScene }
@@ -392,6 +393,8 @@ begin
         FScene[I] := TSceneSpellbook.Create;
       scTalents:
         FScene[I] := TSceneTalents.Create;
+      scLearnedTalents:
+        FScene[I] := TSceneLearnedTalents.Create;
       scIdentification:
         FScene[I] := TSceneIdentification.Create;
       scBackground:
@@ -1139,6 +1142,9 @@ begin
     // Background
     TK_TAB:
       Scenes.SetScene(scBackground, scPlayer);
+    // Learned Talents
+    TK_T:
+      Scenes.SetScene(scLearnedTalents, scPlayer);
     // Information
     TK_LEFT, TK_A, TK_KP_4:
       FRenderInfo := False;
