@@ -4,15 +4,19 @@ interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Creature;
+  Trollhunter.Creature,
+  Trollhunter.Player.Classes,
+  Trollhunter.Player.Races;
 
 const
   TalentMax = 10;
 
 type
-  TTalentEnum = (tlNone, tlStrong { Strong }, tlDextrous { Dextrous },
+  TTalentEnum = (tlNone,
+    // Strong
+    tlStrong, tlDextrous { Dextrous },
     tlMage { Mage }, tlTough { Tough }, tlWealthy { Wealthy },
-    tlAffinity_with_Swords, tlAffinity_with_Axes, tlAffinity_with_Polearms,
+    tlSword_Mastery, tlAffinity_with_Axes, tlAffinity_with_Polearms,
     tlAffinity_with_Maces, tlAffinity_with_Staves, tlAffinity_with_Wands,
     tlAffinity_with_Daggers, tlAffinity_with_Bows, tlBodybuilding, tlMeditation,
     tlEnchant_Item, tlMiser { Miser }, tlCareful { Careful },
@@ -20,57 +24,68 @@ type
     tlCharged { Charged });
 
 type
+  TClassSet = set of TClassEnum;
+  TRaceSet = set of TRaceEnum;
+
+const
+  // All classes / all races - talent has no restriction
+  AllClasses = [clWarrior .. clThief];
+  AllRaces = [rcHuman .. rcDwarf];
+
+type
   TTalentBase = record
     Level: UInt;
     Effects: TEffects;
+    Classes: TClassSet;
+    Races: TRaceSet;
   end;
 
 const
   TalentBase: array [TTalentEnum] of TTalentBase = (
     // None
-    (Level: 0; Effects: []; ),
+    (Level: 0; Effects: []; Classes: AllClasses; Races: AllRaces; ),
     // Strong
-    (Level: 1; Effects: [efPrmAthletics]; ),
+    (Level: 1; Effects: [efPrmAthletics]; Classes: AllClasses; Races: AllRaces; ),
     // Dextrous
-    (Level: 1; Effects: [efPrmDodge]; ),
+    (Level: 1; Effects: [efPrmDodge]; Classes: AllClasses; Races: AllRaces; ),
     // Mage
-    (Level: 1; Effects: [efPrmConcentration]; ),
+    (Level: 1; Effects: [efPrmConcentration]; Classes: AllClasses; Races: AllRaces; ),
     // Tough
-    (Level: 1; Effects: [efPrmToughness]; ),
+    (Level: 1; Effects: [efPrmToughness]; Classes: AllClasses; Races: AllRaces; ),
     // Wealthy
-    (Level: 1; Effects: [efPrmGold]; ),
-    // Affinity with Swords
-    (Level: 2; Effects: [efPrmBlade]; ),
+    (Level: 1; Effects: [efPrmGold]; Classes: AllClasses; Races: AllRaces; ),
+    // Sword Mastery
+    (Level: 2; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces; ),
     // Affinity with Axes
-    (Level: 2; Effects: [efPrmAxe]; ),
+    (Level: 2; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces; ),
     // Affinity with Polearms
-    (Level: 2; Effects: [efPrmSpear]; ),
+    (Level: 2; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces; ),
     // Affinity with Maces
-    (Level: 2; Effects: [efPrmMace]; ),
+    (Level: 2; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces; ),
     // Affinity with Staves
-    (Level: 2; Effects: [efPrmStaff]; ),
+    (Level: 2; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces; ),
     // Affinity with Wands
-    (Level: 2; Effects: [efPrmWand]; ),
+    (Level: 2; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces; ),
     // Affinity with Daggers
-    (Level: 2; Effects: [efPrmDagger]; ),
+    (Level: 2; Effects: [efPrmDagger]; Classes: [clThief, clRanger]; Races: AllRaces; ),
     // Affinity with Bows
-    (Level: 2; Effects: [efPrmBow]; ),
+    (Level: 2; Effects: [efPrmBow]; Classes: [clRanger, clThief]; Races: AllRaces; ),
     // Bodybuilding
-    (Level: 3; Effects: [efPrmBodybuilding]; ),
+    (Level: 3; Effects: [efPrmBodybuilding]; Classes: [clWarrior]; Races: AllRaces; ),
     // Meditation
-    (Level: 3; Effects: [efPrmMeditation]; ),
+    (Level: 3; Effects: [efPrmMeditation]; Classes: [clMage]; Races: AllRaces; ),
     // Enchant Item
-    (Level: 3; Effects: [efPrmEnchant_Item]; ),
+    (Level: 3; Effects: [efPrmEnchant_Item]; Classes: [clMage]; Races: AllRaces; ),
     // Miser
-    (Level: 4; Effects: [ef2xGold]; ),
+    (Level: 4; Effects: [ef2xGold]; Classes: AllClasses; Races: AllRaces; ),
     // Careful
-    (Level: 4; Effects: [efPrmDV]; ),
+    (Level: 4; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces; ),
     // Iron Skin
-    (Level: 4; Effects: [efPrmPV]; ),
+    (Level: 4; Effects: [efPrmPV]; Classes: [clWarrior]; Races: AllRaces; ),
     // Hardy
-    (Level: 5; Effects: [efPrmLife]; ),
+    (Level: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces; ),
     // Charged
-    (Level: 5; Effects: [efPrmMana]; )
+    (Level: 5; Effects: [efPrmMana]; Classes: [clMage]; Races: AllRaces; )
     );
 
 type
@@ -97,6 +112,7 @@ type
     function GetDescription(I: TTalentEnum): string;
     procedure Add(const ATalent: TTalentEnum);
     function IsTalent(const ATalent: TTalentEnum): boolean;
+    function IsAvailable(const ATalent: TTalentEnum): boolean;
     function Count: UInt;
     function Amount: UInt;
     procedure DoTalent(Key: UInt);
@@ -195,7 +211,7 @@ begin
   K := 0;
   for T := Low(TTalentEnum) to High(TTalentEnum) do
     if ((TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and
-      (T <> tlNone)) then
+      (T <> tlNone) and Self.IsAvailable(T)) then
     begin
       if (Key = K) then
       begin
@@ -206,6 +222,12 @@ begin
       end;
       Inc(K);
     end;
+end;
+
+function TTalents.IsAvailable(const ATalent: TTalentEnum): boolean;
+begin
+  Result := (Player.HClass in TalentBase[ATalent].Classes) and
+    (Player.HRace in TalentBase[ATalent].Races);
 end;
 
 function TTalents.GetDescription(I: TTalentEnum): string;

@@ -67,7 +67,8 @@ begin
 
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
-    if (TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) then
+    if (TalentBase[T].Level = Player.Attributes.Attrib[atLev].Value) and
+      Player.Talents.IsAvailable(T) then
       Add(Player.Talents.GetName(T), Player.Talents.GetDescription(T),
         Player.Talents.IsPoint);
 
