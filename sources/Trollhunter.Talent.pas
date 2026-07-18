@@ -10,8 +10,6 @@ uses
 
 const
   TalentMax = 30;
-  // Every next level of a talent becomes available this many player levels
-  // after the previous one.
   TalentLevelStep = 5;
 
 type
@@ -33,12 +31,12 @@ const
 
 type
   TTalentBase = record
-    Level: UInt;                // Player level required to learn talent level 1
-    MaxLevel: UInt;             // Maximum level this talent can reach
+    Level: UInt;
+    MaxLevel: UInt;
     Effects: TEffects;
     Classes: TClassSet;
     Races: TRaceSet;
-    Description: string;        // ← Added
+    Description: string;
   end;
 
 const
@@ -64,63 +62,63 @@ const
     Description: 'Increases Toughness skill.'),
 
     // Sword Mastery
-    (Level: 2; MaxLevel: 5; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with swords.'),
 
     // Affinity with Axes
-    (Level: 2; MaxLevel: 5; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with axes.'),
 
     // Affinity with Polearms
-    (Level: 2; MaxLevel: 5; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with polearms.'),
 
     // Affinity with Maces
-    (Level: 2; MaxLevel: 5; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases skill with maces.'),
 
     // Affinity with Staves
-    (Level: 2; MaxLevel: 5; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases skill with staves.'),
 
     // Affinity with Wands
-    (Level: 2; MaxLevel: 5; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases skill with wands.'),
 
     // Affinity with Daggers
-    (Level: 2; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger]; Races: AllRaces;
     Description: 'Increases skill with daggers.'),
 
     // Affinity with Bows
-    (Level: 2; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief]; Races: AllRaces;
     Description: 'Increases skill with bows.'),
 
     // Bodybuilding
-    (Level: 3; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases Bodybuilding skill.'),
 
     // Meditation
-    (Level: 3; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases Meditation skill.'),
 
     // Enchant Item
-    (Level: 3; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases Enchant Item skill.'),
 
     // Careful
-    (Level: 4; MaxLevel: 5; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
+    (Level: 1; MaxLevel: 3; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
     Description: 'Increases Defense Value (DV).'),
 
     // Iron Skin
-    (Level: 4; MaxLevel: 5; Effects: [efPrmPV]; Classes: [clWarrior]; Races: AllRaces;
+    (Level: 1; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: AllRaces;
     Description: 'Increases Protection Value (PV).'),
 
     // Hardy
-    (Level: 5; MaxLevel: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
     Description: 'Increases maximum Life.'),
 
     // Charged
-    (Level: 5; MaxLevel: 5; Effects: [efPrmMana]; Classes: [clMage]; Races: AllRaces;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmMana]; Classes: [clMage]; Races: AllRaces;
     Description: 'Increases maximum Mana.')
     );
 
@@ -176,6 +174,12 @@ procedure TTalents.Add(const ATalent: TTalentEnum);
 var
   I: UInt;
 begin
+  for I := 0 to TalentMax - 1 do
+    if (FTalent[I].Enum = ATalent) then
+    begin
+      FTalent[I].Level := Self.NextLevel(ATalent);
+      Exit;
+    end;
   for I := 0 to TalentMax - 1 do
     if (FTalent[I].Enum = tlNone) then
     begin
@@ -234,7 +238,7 @@ begin
     begin
       if (Key = K) then
       begin
-        L := Self.NextLevel(T); // level about to be learned
+        L := Self.NextLevel(T);
         Self.Add(T);
         IsPoint := False;
         Player.DoEffects(TalentBase[T].Effects, 0, L);
@@ -262,8 +266,6 @@ end;
 function TTalents.RequiredPlayerLevel(const ATalent: TTalentEnum;
   const ALevel: UInt): UInt;
 begin
-  // Talent level 1 requires TalentBase[ATalent].Level; every next talent
-  // level requires TalentLevelStep more player levels than the previous one.
   Result := TalentBase[ATalent].Level + (ALevel - 1) * TalentLevelStep;
 end;
 
@@ -281,7 +283,7 @@ end;
 
 function TTalents.GetDescription(I: TTalentEnum): string;
 begin
-  Result := TalentBase[I].Description;   // ← Updated
+  Result := TalentBase[I].Description;
 end;
 
 function TTalents.GetName(I: TTalentEnum): string;
