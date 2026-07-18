@@ -1844,6 +1844,9 @@ begin
   // Dodge
   if (efPrmDodge in Effects) then
     PrmTalentSkill(skDodge);
+  // Awareness
+  if (efPrmAwareness in Effects) then
+    PrmTalentSkill(skAwareness);
   // Concentration
   if (efPrmConcentration in Effects) then
     PrmTalentSkill(skConcentration);
