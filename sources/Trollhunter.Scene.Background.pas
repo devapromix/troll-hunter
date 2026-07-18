@@ -23,6 +23,7 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Player,
   Trollhunter.Game,
+  Trollhunter.Scene.Talents,
   Trollhunter.Map;
 
 procedure TSceneBackground.Render;
