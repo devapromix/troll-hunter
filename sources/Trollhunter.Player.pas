@@ -312,7 +312,7 @@ procedure TPlayer.Attack(Index: Int);
 var
   V, Ch: UInt;
   Mob: TMob;
-  Dam, Cr: UInt;
+  Dam, Cr, TargetDV: UInt;
   CrStr, The: string;
 
   procedure Miss();
@@ -335,8 +335,10 @@ begin
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
-  if (Mob.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) and
-    not Abilities.IsAbility(abCursed) then
+  TargetDV := Mob.Attributes.Attrib[atDV].Value;
+  if Abilities.IsAbility(abBerserk) then
+    TargetDV := TargetDV div 2;
+  if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
     // Attack
@@ -344,7 +346,9 @@ begin
       1), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
-      Inc(Dam, Dam div 3);
+      Inc(Dam, Dam div 4);
+    if Abilities.IsAbility(abWeak) then
+      Dec(Dam, Dam div 3);
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
@@ -1388,8 +1392,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.',
-      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.', ['Difficulty',
+      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
