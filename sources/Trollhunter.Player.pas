@@ -344,7 +344,7 @@ begin
       1), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
-      Dec(Dam, Dam div 3);
+      Inc(Dam, Dam div 3);
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
