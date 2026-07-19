@@ -430,8 +430,9 @@ begin
   for I := 0 to Mobs.Count - 1 do
     if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
       (Mobs.Mob[I].MapZone = Map.Current) and
-      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= Self.Vision) and
-      Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) then
+      Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
+      (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= Self.Vision))) then
     begin
       SetLength(FFireTargets, Length(FFireTargets) + 1);
       FFireTargets[High(FFireTargets)] := I;
