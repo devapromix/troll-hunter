@@ -12,3 +12,4 @@
 *.dbg
 *.exe
 *.fuse_hidden*
+/sources/backup
