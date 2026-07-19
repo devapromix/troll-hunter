@@ -248,7 +248,8 @@ begin
   Calendar.Turn;
   if (Attributes.Attrib[atSat].Value > 0) and
     (Math.RandomRange(0, MetabolismMax) <= Player.Statictics.Get(stMetabolism)) then
-    Attributes.Modify(atSat, -SatPerTurn);
+    if not Utils.Chance(Player.Talents.GetLevel(tlSurvival) * 10) then
+      Attributes.Modify(atSat, -SatPerTurn);
   if Abilities.IsAbility(abWeak) then
     Attributes.Modify(atSat, -10);
   if (Attributes.Attrib[atSat].Value < StarvingMax) then
@@ -1941,6 +1942,11 @@ begin
   if (efPrmTreasureHunter in Effects) or (efGoldFinder in Effects) then
   begin
     MsgLog.Add('You increased the amount of gold dropped by monsters');
+  end;
+  // Survival
+  if (efPrmSurvival in Effects) then
+  begin
+    MsgLog.Add('You have mastered the basics of survival');
   end;
 end;
 

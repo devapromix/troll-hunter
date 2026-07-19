@@ -23,7 +23,7 @@ type
     efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
     efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation,
     efPrmEnchant_Item, efLight, efBerserk, efPrmStealth, efPrmAwareness,
-    efPrmTreasureHunter, efGoldFinder);
+    efPrmTreasureHunter, efGoldFinder, efPrmSurvival);
 
 const
   CraftEffLow = efCraftStr;

@@ -20,7 +20,7 @@ type
     tlDagger_Precision, tlBow_Archery,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlElven_Grace,
     tlIron_Skin, tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics,
-    tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder);
+    tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder, tlSurvival);
 
 type
   TClassSet = set of TClassEnum;
@@ -164,7 +164,12 @@ const
     // Gold Finder
     (Level: 1; MaxLevel: 5; Effects: [efGoldFinder]; Classes: AllClasses;
     Races: AllRaces;
-    Description: 'Increases the chance of finding gold on defeated monsters')
+    Description: 'Increases the chance of finding gold on defeated monsters'),
+
+    // Survival
+    (Level: 1; MaxLevel: 5; Effects: [efPrmSurvival];
+    Classes: AllClasses; Races: AllRaces;
+    Description: 'Your survival instincts help you make every ration last longer')
     );
 
 type
