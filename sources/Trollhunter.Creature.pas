@@ -17,11 +17,16 @@ const
   ExtraGoldMax = 200;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification, efAllIdentification, efEnchantItem, efCraftStr,
-    efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye, efCurePoison, efVision, efCureWeak,
-    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade, efPrmAxe, efPrmSpear,
-    efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, efBloodlust, efPrmLife, efPrmMana, efPrmDV,
-    efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair, efPrmBodybuilding, efPrmMeditation,
+  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
+  efAllIdentification, efEnchantItem, efCraftStr,
+    efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye,
+    efCurePoison, efVision, efCureWeak,
+    efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
+    efPrmAxe, efPrmSpear,
+    efPrmMace, efPrmStaff, efPrmWand, efPrmDagger, efPrmBow, efBloodlust,
+    efPrmLife, efPrmMana, efPrmDV,
+    efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair,
+    efPrmBodybuilding, efPrmMeditation,
     efPrmEnchant_Item, efLight, efBerserk, efPrmStealth, efPrmAwareness,
     efPrmTreasureHunter, efGoldFinder, efPrmSurvival);
 
@@ -30,7 +35,8 @@ const
   CraftEffHigh = efCraftAtr;
 
 const
-  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string = ('Strength', 'Dexterity', 'Willpower', 'Perception');
+  EfNameStr: array [CraftEffLow .. Pred(CraftEffHigh)] of string =
+    ('Strength', 'Dexterity', 'Willpower', 'Perception');
 
 type
   TEffects = set of TEffect;
@@ -153,7 +159,7 @@ begin
           abPoisoned:
             Value := 1;
           abBurning:
-            Value := Math.RandomRange(1, 2);
+            Value := Math.RandomRange(1, 3);
         else
           Value := 0;
         end;
