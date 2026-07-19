@@ -457,6 +457,7 @@ type
     property Color: cardinal read FColor;
     property Vision: UInt read GetVision;
     property Alive: boolean read FAlive write FAlive;
+    property MapZone: TMapEnum read Maps;
   end;
 
 type

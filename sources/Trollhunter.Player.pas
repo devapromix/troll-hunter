@@ -67,6 +67,9 @@ type
     FSex: TSexEnum;
     FTalents: TTalents;
     FSkills: TSkills;
+    FFireMode: boolean;
+    FFireTargets: array of Int;
+    FFireIndex: Int;
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
@@ -78,6 +81,9 @@ type
     property Vision: UInt read GetVision;
     property MaxMap: UInt read FMaxMap write FMaxMap;
     property Look: boolean read FLook write FLook;
+    property WeaponSkill: TSkillEnum read FWeaponSkill;
+    property FireMode: boolean read FFireMode;
+    property FireIndex: Int read FFireIndex;
     property Gold: Int read FGold write FGold;
     property Killer: string read FKiller write FKiller;
     property IsRest: boolean read FIsRest write FIsRest;
@@ -107,6 +113,11 @@ type
     function SaveCharacterDump(AReason: string): string;
     procedure Defeat(AKiller: string = '');
     procedure Attack(Index: Int);
+    function CanFire: boolean;
+    procedure FireModeEnter;
+    procedure FireModeExit;
+    procedure FireModeSwitch(ADir: Int);
+    function FireModeTarget: Int;
     procedure ReceiveHealing;
     procedure Buy(Index: Int);
     procedure PickUp;
@@ -393,6 +404,83 @@ begin
   AddTurn;
 end;
 
+function TPlayer.CanFire: boolean;
+begin
+  Result := (FWeaponSkill = skBow);
+end;
+
+procedure TPlayer.FireModeEnter;
+var
+  I, J: Int;
+  Tmp: Int;
+
+  function TargetDist(Idx: Int): Int;
+  begin
+    Result := Self.GetDist(Mobs.Mob[FFireTargets[Idx]].X,
+      Mobs.Mob[FFireTargets[Idx]].Y);
+  end;
+
+begin
+  SetLength(FFireTargets, 0);
+  if not CanFire then
+  begin
+    MsgLog.Add('You need a bow equipped to do that.');
+    Exit;
+  end;
+  for I := 0 to Mobs.Count - 1 do
+    if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
+      (Mobs.Mob[I].MapZone = Map.Current) and
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= Self.Vision) and
+      Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) then
+    begin
+      SetLength(FFireTargets, Length(FFireTargets) + 1);
+      FFireTargets[High(FFireTargets)] := I;
+    end;
+  if (Length(FFireTargets) = 0) then
+  begin
+    MsgLog.Add('There is no one in sight to shoot at.');
+    Exit;
+  end;
+  // Sort targets by distance (nearest first)
+  for I := 1 to High(FFireTargets) do
+  begin
+    J := I;
+    while (J > 0) and (TargetDist(J) < TargetDist(J - 1)) do
+    begin
+      Tmp := FFireTargets[J];
+      FFireTargets[J] := FFireTargets[J - 1];
+      FFireTargets[J - 1] := Tmp;
+      Dec(J);
+    end;
+  end;
+  FFireIndex := 0;
+  FFireMode := True;
+end;
+
+procedure TPlayer.FireModeExit;
+begin
+  FFireMode := False;
+  FFireIndex := -1;
+  SetLength(FFireTargets, 0);
+end;
+
+procedure TPlayer.FireModeSwitch(ADir: Int);
+begin
+  if not FFireMode or (Length(FFireTargets) = 0) then
+    Exit;
+  FFireIndex := (FFireIndex + ADir + Length(FFireTargets)) mod
+    Length(FFireTargets);
+end;
+
+function TPlayer.FireModeTarget: Int;
+begin
+  if FFireMode and (FFireIndex >= 0) and (FFireIndex < Length(FFireTargets))
+  then
+    Result := FFireTargets[FFireIndex]
+  else
+    Result := -1;
+end;
+
 procedure TPlayer.AutoPickup;
 var
   Index, FCount: Int;
@@ -627,6 +715,9 @@ begin
   else
     Name := PlayerName;
   FWeaponSkill := skNone;
+  FFireMode := False;
+  FFireIndex := -1;
+  SetLength(FFireTargets, 0);
   Attributes.SetValue(atLev, 1);
   GenerateBackground();
   Calc();

@@ -16,6 +16,8 @@ uses
 
 type
   TSceneGame = class(TScene)
+  private
+    procedure FireArrow;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -169,6 +171,27 @@ begin
   Items.Render(PX, PY);
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
+  // Fire mode: highlight the currently selected target
+  if Player.FireMode then
+  begin
+    I := Player.FireModeTarget;
+    if (I > -1) and Mobs.Mob[I].Alive then
+    begin
+      DX := Mobs.Mob[I].X - Player.X + PX;
+      DY := Mobs.Mob[I].Y - Player.Y + PY;
+      Terminal.BackgroundColor(clRed);
+      Terminal.ForegroundColor(Mobs.Mob[I].Color);
+      Terminal.Print(DX + View.Left, DY + View.Top,
+        MobBase[TMobEnum(Mobs.Mob[I].ID)].Symbol);
+      Terminal.BackgroundColor(clBackground);
+      Terminal.ForegroundColor(clDefault);
+      Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height,
+        Format('%s (%s%d/%d). [<-/->] target, [Enter] shoot, [V/Esc] cancel',
+        [Mobs.Name[TMobEnum(Mobs.Mob[I].ID)], UI.Icon(icLife),
+        Mobs.Mob[I].Attributes.Attrib[atLife].Value,
+        Mobs.Mob[I].Attributes.Attrib[atMaxLife].Value]), TK_ALIGN_TOP);
+    end;
+  end;
   // Player info
   Terminal.BackgroundColor(clBackground);
   Terminal.ForegroundColor(clDefault);
@@ -183,6 +206,48 @@ begin
   MsgLog.Render;
 end;
 
+procedure TSceneGame.FireArrow;
+var
+  Index, TX, TY, PX, PY, L, I, AX, AY, SX, SY: Int;
+  LR: real;
+  Sym: string;
+begin
+  Index := Player.FireModeTarget;
+  Player.FireModeExit;
+  if (Index < 0) or not Mobs.Mob[Index].Alive then
+    Exit;
+  TX := Mobs.Mob[Index].X;
+  TY := Mobs.Mob[Index].Y;
+  SX := Math.Sign(TX - Int(Player.X));
+  SY := Math.Sign(TY - Int(Player.Y));
+  if (SX = 0) then
+    Sym := '|'
+  else if (SY = 0) then
+    Sym := '-'
+  else if (SX = SY) then
+    Sym := '\'
+  else
+    Sym := '/';
+  PX := View.Width div 2;
+  PY := View.Height div 2;
+  L := Math.Max(Abs(Int(Player.X) - TX), Abs(Int(Player.Y) - TY));
+  if (L = 0) then
+    L := 1;
+  for I := 1 to L do
+  begin
+    LR := I / L;
+    AX := Int(Player.X) + Round((TX - Int(Player.X)) * LR);
+    AY := Int(Player.Y) + Round((TY - Int(Player.Y)) * LR);
+    Self.Render;
+    Terminal.ForegroundColor(clRed);
+    Terminal.Print(AX - Int(Player.X) + PX + View.Left,
+      AY - Int(Player.Y) + PY + View.Top, Sym);
+    terminal_refresh();
+    terminal_delay(15);
+  end;
+  Player.Attack(Index);
+end;
+
 procedure TSceneGame.Update(var Key: UInt);
 begin
   MsgLog.Turn;
@@ -190,6 +255,20 @@ begin
   if Game.Won then
   begin
     Scenes.SetScene(scWin);
+    Exit;
+  end;
+  if Player.FireMode then
+  begin
+    case Key of
+      TK_LEFT, TK_KP_4, TK_A:
+        Player.FireModeSwitch(-1);
+      TK_RIGHT, TK_KP_6, TK_D:
+        Player.FireModeSwitch(1);
+      TK_RETURN, TK_KP_ENTER:
+        FireArrow;
+      TK_V, TK_ESCAPE:
+        Player.FireModeExit;
+    end;
     Exit;
   end;
   case Key of
@@ -341,6 +420,15 @@ begin
         Scenes.SetScene(scStore, scGame)
       else
         Scenes.SetScene(scDrop, scGame);
+    end;
+    TK_V:
+    begin
+      if Player.IsDead then
+        Exit;
+      if Player.CanFire then
+        Player.FireModeEnter
+      else
+        MsgLog.Add('You need to equip a bow to use ranged fire mode.');
     end;
     TK_P:
       Scenes.SetScene(scPlayer);

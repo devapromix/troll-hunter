@@ -32,7 +32,7 @@ uses
 
 procedure TSceneTalents.Render;
 var
-  V, I: UInt;
+  V: UInt;
   T: TTalentEnum;
 
   procedure Add(const S, H: string; F: boolean = True); overload;
