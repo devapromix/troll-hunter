@@ -433,8 +433,15 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
-  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   Dist := Self.GetDist(Mob.X, Mob.Y);
+  // Adjacent enemies cannot be shot; force melee weapon instead
+  if (Dist <= 1) then
+  begin
+    Self.FireModeExit;
+    Self.Attack(Index);
+    Exit;
+  end;
+  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if Abilities.IsAbility(abBerserk) then
     TargetDV := TargetDV div 2;
@@ -530,6 +537,8 @@ begin
     if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
       (Mobs.Mob[I].MapZone = Map.Current) and
       Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
+      // Adjacent enemies cannot be shot; they must be fought in melee
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) and
       (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
       (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <=
       Math.Min(Self.Vision, Self.FireRange)))) then
