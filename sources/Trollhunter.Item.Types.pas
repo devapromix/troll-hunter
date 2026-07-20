@@ -7,12 +7,12 @@ type
     itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant, itBlade,
     itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield,
     itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman,
-    itArrow, itTorch);
+    itArrow, itQuiver, itTorch);
 
 const
   ItemGlyph: array [TItemType] of char = (' ', ' ', '%', '`', '$', '.', '!',
     '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '-',
-    ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', 'i');
+    ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', '/', 'i');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -24,7 +24,7 @@ const
   // "   An amulet              [   Hard armour (metal armor)
   // $   Money or gems          ]   Misc. armour (gloves, helm, boots)
   // ~   Pelts and body parts   )   A shield
-  // &   Chests, Containers
+  // &   Chests, Containers     /   Quiver
 
 
 
@@ -48,7 +48,9 @@ const
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand,
     itBow, itDagger];
-  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
+  ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet,
+    itQuiver];
+  QuiverTypeItems = [itQuiver];
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow];
   TorchTypeItems = [itTorch];
@@ -166,6 +168,9 @@ type
     // Bows
     ivShort_Bow, ivHunting_Bow, ivLong_Bow, ivNomad_Bow, ivHeavy_Bow,
     ivComposite_Bow, ivMaster_Bow, ivWar_Bow, ivDragon_Bow, ivAncient_Bow,
+    // Quivers
+    ivLight_Quiver, ivLeather_Quiver, ivKnothide_Quiver, ivHunting_Quiver,
+    ivQuickdraw_Quiver, ivRaptorHide_Quiver, ivHeavy_Quiver,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,

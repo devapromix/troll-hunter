@@ -49,7 +49,7 @@ const
     Max: 4; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
     Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
     Skill: (skBow, skDodge, skDodge); Item: (ivCap, ivQuilted_Armor, None, None,
-    ivDagger1, None, ivShort_Bow, None, None, None); ),
+    ivDagger1, None, ivShort_Bow, ivLight_Quiver, None, None); ),
     // Thief
     (Description: 'Thief'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1;
     Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
