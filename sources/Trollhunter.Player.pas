@@ -391,7 +391,12 @@ begin
     MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
-      BreakItem(stMainHand);
+    begin
+      if (FWeaponSkill = skBow) then
+        BreakItem(stRanged)
+      else
+        BreakItem(stMainHand);
+    end;
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     DoWeaponSkill;
@@ -619,7 +624,8 @@ begin
         AddAttrib(atLifeAfEachKill, Items.GetBonus(FItem, btLifeAfEachKill));
         AddAttrib(atManaAfEachKill, Items.GetBonus(FItem, btManaAfEachKill));
       end;
-      if (ItemBase[ID].SlotType = stMainHand) then
+      if (ItemBase[ID].SlotType = stMainHand) or
+        (ItemBase[ID].SlotType = stRanged) then
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
       if (ItemBase[ID].SlotType = stTorch) then
       begin
