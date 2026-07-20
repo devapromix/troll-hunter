@@ -213,9 +213,11 @@ var
   Sym: string;
 begin
   Index := Player.FireModeTarget;
-  Player.FireModeExit;
   if (Index < 0) or not Mobs.Mob[Index].Alive then
+  begin
+    Player.FireModeExit;
     Exit;
+  end;
   TX := Mobs.Mob[Index].X;
   TY := Mobs.Mob[Index].Y;
   SX := Math.Sign(TX - Int(Player.X));
@@ -246,6 +248,7 @@ begin
     terminal_delay(15);
   end;
   Player.Attack(Index);
+  Player.FireModeEnter;
 end;
 
 procedure TSceneGame.Update(var Key: UInt);

@@ -422,8 +422,10 @@ var
 
 begin
   SetLength(FFireTargets, 0);
+  FFireIndex := -1;
   if not CanFire then
   begin
+    FFireMode := False;
     MsgLog.Add('You need a bow equipped to do that.');
     Exit;
   end;
@@ -439,6 +441,7 @@ begin
     end;
   if (Length(FFireTargets) = 0) then
   begin
+    FFireMode := False;
     MsgLog.Add('There is no one in sight to shoot at.');
     Exit;
   end;
