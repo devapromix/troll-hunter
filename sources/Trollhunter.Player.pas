@@ -325,10 +325,13 @@ begin
 end;
 
 procedure TPlayer.Attack(Index: Int);
+const
+  // Player's own Dexterity (expressed via own DV) improves melee accuracy
+  AccuracyDexDivisor = 2;
 var
   V, Ch: UInt;
   Mob: TMob;
-  Dam, Cr, TargetDV: UInt;
+  Dam, Cr, TargetDV, AccBonus: UInt;
   CrStr, The: string;
 
   procedure Miss();
@@ -354,6 +357,9 @@ begin
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if Abilities.IsAbility(abBerserk) then
     TargetDV := TargetDV div 2;
+  // Dexterity bonus to accuracy
+  AccBonus := Self.Attributes.Attrib[atDV].Value div AccuracyDexDivisor;
+  TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
@@ -413,10 +419,12 @@ procedure TPlayer.RangedAttack(Index: Int);
 const
   // Extra effective target DV per tile beyond point-blank range
   RangeAccuracyPenalty = 3;
+  // Player's own Dexterity (expressed via own DV) improves ranged accuracy
+  AccuracyDexDivisor = 2;
 var
   V, Ch: UInt;
   Mob: TMob;
-  Dam, Cr, TargetDV, Dist, RMin, RMax: UInt;
+  Dam, Cr, TargetDV, AccBonus, Dist, RMin, RMax: UInt;
   CrStr, The: string;
 
   procedure Miss();
@@ -448,6 +456,9 @@ begin
   // The further the target, the harder it is to land a hit
   if (Dist > 1) then
     Inc(TargetDV, (Dist - 1) * RangeAccuracyPenalty);
+  // Dexterity bonus to accuracy
+  AccBonus := Self.Attributes.Attrib[atDV].Value div AccuracyDexDivisor;
+  TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
