@@ -418,6 +418,7 @@ procedure TPlayer.FireModeEnter;
 var
   I, J: Int;
   Tmp: Int;
+  PrevTarget: Int;
 
   function TargetDist(Idx: Int): Int;
   begin
@@ -426,6 +427,7 @@ var
   end;
 
 begin
+  PrevTarget := Self.FireModeTarget;
   SetLength(FFireTargets, 0);
   FFireIndex := -1;
   if not CanFire then
@@ -463,6 +465,13 @@ begin
     end;
   end;
   FFireIndex := 0;
+  if (PrevTarget >= 0) then
+    for I := 0 to High(FFireTargets) do
+      if (FFireTargets[I] = PrevTarget) then
+      begin
+        FFireIndex := I;
+        Break;
+      end;
   FFireMode := True;
 end;
 
