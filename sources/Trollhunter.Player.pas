@@ -480,7 +480,8 @@ end;
 
 function TPlayer.FireRange: UInt;
 begin
-  Result := 5 + ((FBowLevel + 1) div 2) + Talents.GetLevel(tlLong_Range);
+  Result := 4 + ((FBowLevel + 1) div 2) + Talents.GetLevel(tlLong_Range) +
+    Talents.GetLevel(tlElven_Marksman);
 end;
 
 procedure TPlayer.FireModeExit;

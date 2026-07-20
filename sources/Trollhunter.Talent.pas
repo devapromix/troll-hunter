@@ -17,7 +17,7 @@ type
     tlStrong, tlDextrous, tlMage, tlTough,
     tlSword_Mastery, tlAxe_Training, tlPolearm_Dominance,
     tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
-    tlDagger_Precision, tlBow_Archery, tlLong_Range,
+    tlDagger_Precision, tlBow_Archery, tlLong_Range, tlElven_Marksman,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlElven_Grace,
     tlIron_Skin, tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics,
     tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder, tlSurvival);
@@ -103,6 +103,10 @@ const
     (Level: 1; MaxLevel: 5; Effects: []; Classes: [clRanger];
     Races: AllRaces;
     Description: 'Increases the distance you can hit a target with a bow'),
+
+    // Elven Marksman
+    (Level: 1; MaxLevel: 1; Effects: []; Classes: [clRanger]; Races: [rcElf];
+    Description: 'The keen eyes of the elves let their archers strike from further away'),
 
     // Bodybuilding
     (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
