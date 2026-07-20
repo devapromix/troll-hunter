@@ -247,7 +247,7 @@ begin
     terminal_refresh();
     terminal_delay(15);
   end;
-  Player.Attack(Index);
+  Player.RangedAttack(Index);
   Player.FireModeEnter;
 end;
 

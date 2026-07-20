@@ -71,6 +71,8 @@ type
     FFireTargets: array of Int;
     FFireIndex: Int;
     FBowLevel: UInt;
+    FBowMinDamage: UInt;
+    FBowMaxDamage: UInt;
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
@@ -114,6 +116,7 @@ type
     function SaveCharacterDump(AReason: string): string;
     procedure Defeat(AKiller: string = '');
     procedure Attack(Index: Int);
+    procedure RangedAttack(Index: Int);
     function CanFire: boolean;
     procedure FireModeEnter;
     procedure FireModeExit;
@@ -393,12 +396,97 @@ begin
     MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
+      BreakItem(stMainHand);
+    if (CrStr <> '') then
+      MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
+    DoWeaponSkill;
+    // Victory
+    if Mob.IsDead then
+      Mob.Defeat;
+  end
+  else
+    Miss();
+  AddTurn;
+end;
+
+procedure TPlayer.RangedAttack(Index: Int);
+const
+  // Extra effective target DV per tile beyond point-blank range
+  RangeAccuracyPenalty = 3;
+var
+  V, Ch: UInt;
+  Mob: TMob;
+  Dam, Cr, TargetDV, Dist, RMin, RMax: UInt;
+  CrStr, The: string;
+
+  procedure Miss();
+  begin
+    MsgLog.Add(Format('You miss %s.', [The]));
+    SatPerTurn := Ord(Game.Difficulty) + 3;
+  end;
+
+begin
+  if (Index < 0) then
+    Exit;
+  Mob := Mobs.Mob[Index];
+  if not Mob.Alive then
+    Exit;
+  if (Mob.Force <> fcEnemy) then
+    Exit;
+  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
+  Dist := Self.GetDist(Mob.X, Mob.Y);
+  TargetDV := Mob.Attributes.Attrib[atDV].Value;
+  if Abilities.IsAbility(abBerserk) then
+    TargetDV := TargetDV div 2;
+  // The further the target, the harder it is to land a hit
+  if (Dist > 1) then
+    Inc(TargetDV, (Dist - 1) * RangeAccuracyPenalty);
+  if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
+  begin
+    CrStr := '';
+    // Attack - ranged damage scales with Dexterity, not Strength
+    RMin := EnsureRange(FBowMinDamage + Attributes.Attrib[atDex]
+      .Value div 3, 1, UIntMax - 1);
+    RMax := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value
+      div 2, 2, UIntMax);
+    Dam := Game.EnsureRange(RandomRange(RMin, RMax + 1), UIntMax);
+    // Abilities
+    if Abilities.IsAbility(abBloodlust) then
+      Inc(Dam, Dam div 4);
+    if Abilities.IsAbility(abWeak) then
+      Dec(Dam, Dam div 3);
+    // Critical hits...
+    Ch := Math.RandomRange(0, 100);
+    Cr := Skills.Skill[FWeaponSkill].Value;
+    if ((Ch < Cr) and not Abilities.IsAbility(abWeak)) then
     begin
-      if (FWeaponSkill = skBow) then
-        BreakItem(stRanged)
+      if (Ch > (Cr div 10)) then
+      begin
+        V := 2;
+        CrStr := 'It was a good hit!';
+      end
       else
-        BreakItem(stMainHand);
+      begin
+        V := 3;
+        CrStr := 'It was an excellent hit!';
+      end;
+      Dam := Dam * V;
+      CrStr := CrStr + Format(' (%dx)', [V]);
     end;
+    // PV
+    Dam := Self.GetRealDamage(Dam, Mob.Attributes.Attrib[atPV].Value);
+    if (Dam = 0) then
+    begin
+      Miss();
+      AddTurn;
+      Exit;
+    end;
+    // Attack
+    Mob.Attributes.Modify(atLife, -Dam);
+    MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
+    // Break weapon
+    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
+      BreakItem(stRanged);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     DoWeaponSkill;
@@ -646,7 +734,11 @@ begin
         (ItemBase[ID].SlotType = stRanged) then
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
       if (ItemBase[ID].SlotType = stRanged) then
+      begin
         FBowLevel := FItem.Level;
+        FBowMinDamage := FItem.MinDamage;
+        FBowMaxDamage := FItem.MaxDamage;
+      end;
       if (ItemBase[ID].SlotType = stTorch) then
       begin
         Light := Light + FItem.Value;
@@ -746,6 +838,8 @@ begin
     Name := PlayerName;
   FWeaponSkill := skNone;
   FBowLevel := 0;
+  FBowMinDamage := 0;
+  FBowMaxDamage := 0;
   FFireMode := False;
   FFireIndex := -1;
   SetLength(FFireTargets, 0);
