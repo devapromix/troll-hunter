@@ -318,7 +318,8 @@ begin
     skBow:
     begin
       Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skDodge, 4);
+      Skills.DoSkill(skDodge, 3);
+      Skills.DoSkill(skAthletics);
       SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
   end;
@@ -417,9 +418,7 @@ end;
 
 procedure TPlayer.RangedAttack(Index: Int);
 const
-  // Extra effective target DV per tile beyond point-blank range
   RangeAccuracyPenalty = 3;
-  // Player's own Dexterity (expressed via own DV) improves ranged accuracy
   AccuracyDexDivisor = 2;
 var
   V, Ch: UInt;
@@ -453,20 +452,17 @@ begin
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if Abilities.IsAbility(abBerserk) then
     TargetDV := TargetDV div 2;
-  // The further the target, the harder it is to land a hit
   if (Dist > 1) then
     Inc(TargetDV, (Dist - 1) * RangeAccuracyPenalty);
-  // Dexterity bonus to accuracy
   AccBonus := Self.Attributes.Attrib[atDV].Value div AccuracyDexDivisor;
   TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     CrStr := '';
-    // Attack - ranged damage scales with Dexterity, not Strength
     RMin := EnsureRange(FBowMinDamage + Attributes.Attrib[atDex]
-      .Value div 3, 1, UIntMax - 1);
+      .Value div 5, 1, UIntMax - 1);
     RMax := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value
-      div 2, 2, UIntMax);
+      div 3, 2, UIntMax);
     Dam := Game.EnsureRange(RandomRange(RMin, RMax + 1), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
@@ -503,7 +499,7 @@ begin
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
     // Break weapon
-    if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
+    if ((Math.RandomRange(0, 15 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
       BreakItem(stRanged);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
