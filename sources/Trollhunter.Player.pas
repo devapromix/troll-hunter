@@ -70,6 +70,7 @@ type
     FFireMode: boolean;
     FFireTargets: array of Int;
     FFireIndex: Int;
+    FBowLevel: UInt;
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
@@ -118,6 +119,7 @@ type
     procedure FireModeExit;
     procedure FireModeSwitch(ADir: Int);
     function FireModeTarget: Int;
+    function FireRange: UInt;
     procedure ReceiveHealing;
     procedure Buy(Index: Int);
     procedure PickUp;
@@ -441,7 +443,8 @@ begin
       (Mobs.Mob[I].MapZone = Map.Current) and
       Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
       (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
-      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= Self.Vision))) then
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <=
+      Math.Min(Self.Vision, Self.FireRange)))) then
     begin
       SetLength(FFireTargets, Length(FFireTargets) + 1);
       FFireTargets[High(FFireTargets)] := I;
@@ -473,6 +476,11 @@ begin
         Break;
       end;
   FFireMode := True;
+end;
+
+function TPlayer.FireRange: UInt;
+begin
+  Result := 5 + ((FBowLevel + 1) div 2) + Talents.GetLevel(tlLong_Range);
 end;
 
 procedure TPlayer.FireModeExit;
@@ -636,6 +644,8 @@ begin
       if (ItemBase[ID].SlotType = stMainHand) or
         (ItemBase[ID].SlotType = stRanged) then
         FWeaponSkill := GetSkill(ItemBase[ID].ItemType);
+      if (ItemBase[ID].SlotType = stRanged) then
+        FBowLevel := FItem.Level;
       if (ItemBase[ID].SlotType = stTorch) then
       begin
         Light := Light + FItem.Value;
@@ -734,6 +744,7 @@ begin
   else
     Name := PlayerName;
   FWeaponSkill := skNone;
+  FBowLevel := 0;
   FFireMode := False;
   FFireIndex := -1;
   SetLength(FFireTargets, 0);

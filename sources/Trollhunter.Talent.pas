@@ -17,7 +17,7 @@ type
     tlStrong, tlDextrous, tlMage, tlTough,
     tlSword_Mastery, tlAxe_Training, tlPolearm_Dominance,
     tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
-    tlDagger_Precision, tlBow_Archery,
+    tlDagger_Precision, tlBow_Archery, tlLong_Range,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlElven_Grace,
     tlIron_Skin, tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics,
     tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder, tlSurvival);
@@ -98,6 +98,11 @@ const
     (Level: 1; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief];
     Races: AllRaces;
     Description: 'Increases skill with bows.'),
+
+    // Long Range
+    (Level: 1; MaxLevel: 5; Effects: []; Classes: [clRanger];
+    Races: AllRaces;
+    Description: 'Increases the distance you can hit a target with a bow'),
 
     // Bodybuilding
     (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
