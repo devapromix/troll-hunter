@@ -433,8 +433,8 @@ begin
   for I := 0 to FCount - 1 do
   begin
     FItem := Items_Inventory_GetItem(I);
-    if (FItem.Equipment > 0) and
-      (ItemBase[TItemEnum(FItem.ItemID)].SlotType = stQuiver) then
+    if (FItem.Equipment > 0) and (ItemBase[TItemEnum(FItem.ItemID)].SlotType =
+      stQuiver) then
     begin
       Result := I;
       Exit;
@@ -452,8 +452,7 @@ var
   QIndex: Int;
 begin
   QIndex := Self.GetQuiverIndex;
-  Result := (QIndex >= 0) and
-    (Items_Inventory_GetItem(QIndex).Durability = 0);
+  Result := (QIndex >= 0) and (Items_Inventory_GetItem(QIndex).Durability = 0);
 end;
 
 function TPlayer.HasArrows: boolean;
@@ -551,8 +550,8 @@ begin
     CrStr := '';
     RMin := EnsureRange(FBowMinDamage + Attributes.Attrib[atDex]
       .Value div 5, 1, UIntMax - 1);
-    RMax := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value
-      div 3, 2, UIntMax);
+    RMax := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value div
+      3, 2, UIntMax);
     Dam := Game.EnsureRange(RandomRange(RMin, RMax + 1), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
@@ -590,7 +589,10 @@ begin
     MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 15 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
-      BreakItem(stRanged);
+      BreakItem(stRanged)
+    else
+    if ((Math.RandomRange(0, 20 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
+      BreakItem(stQuiver);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
     DoWeaponSkill;
@@ -707,14 +709,12 @@ procedure TPlayer.FireModeSwitch(ADir: Int);
 begin
   if not FFireMode or (Length(FFireTargets) = 0) then
     Exit;
-  FFireIndex := (FFireIndex + ADir + Length(FFireTargets)) mod
-    Length(FFireTargets);
+  FFireIndex := (FFireIndex + ADir + Length(FFireTargets)) mod Length(FFireTargets);
 end;
 
 function TPlayer.FireModeTarget: Int;
 begin
-  if FFireMode and (FFireIndex >= 0) and (FFireIndex < Length(FFireTargets))
-  then
+  if FFireMode and (FFireIndex >= 0) and (FFireIndex < Length(FFireTargets)) then
     Result := FFireTargets[FFireIndex]
   else
     Result := -1;
@@ -1785,8 +1785,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', ['Difficulty',
-      GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.',
+      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
