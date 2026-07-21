@@ -948,42 +948,69 @@ const
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
     MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 1; ));
-    Price: 70; Color: clDarkYellow; Deep: []; Value: 100; ),
+    Price: 50; Color: clDarkYellow; Deep: []; Value: 100; ),
+
     // Leather Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 45; Level: 2; Defense: (Min: 0; Max: 0);
+    MaxDurability: 50; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 2; ));
-    Price: 80; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 150; ),
-    // Trollhide Quiver
+    Price: 60; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 150; ),
+    // Harpy Hide Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 55; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 2; ));
-    Price: 90; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 200; ),
+    MaxDurability: 55; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 3; ));
+    Price: 70; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 200; ),
+    // Silverleaf Quiver
+    (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
+    MaxDurability: 60; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 2; Max: 3; ));
+    Price: 80; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 200; ),
+    // Troll Hide Quiver
+    (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
+    MaxDurability: 65; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 2; Max: 3; ));
+    Price: 90; Color: clDarkYellow; Deep: [deGray_Cave]; Value: 200; ),
     // Knothide_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 65; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 2; Max: 3; ));
+    MaxDurability: 70; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 2; Max: 4; ));
     Price: 100; Color: clDarkYellow; Deep: [deGray_Cave]; Value: 250; ),
+    // Medium Quiver
+    (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
+    MaxDurability: 75; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 3; Max: 4; ));
+    Price: 120; Color: clDarkYellow; Deep: [deGray_Cave]; Value: 250; ),
     // Hunting_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 75; Level: 4; Defense: (Min: 0; Max: 0);
+    MaxDurability: 80; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 3; Max: 4; ));
-    Price: 120; Color: clDarkYellow; Deep: [deDeep_Cave]; Value: 350; ),
+    Price: 150; Color: clDarkYellow; Deep: [deDeep_Cave]; Value: 350; ),
+    // War Quiver
+    (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
+    MaxDurability: 85; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 4; Max: 5; ));
+    Price: 180; Color: clDarkYellow; Deep: [deBlood_Cave]; Value: 400; ),
+    // Runed Quiver
+    (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
+    MaxDurability: 95; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 5; Max: 7; ));
+    Price: 350; Color: clYellow; Deep: [deBlood_Cave]; Value: 400;
+    Rare: True),
     // Quickdraw_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 85; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 4; Max: 5; ));
-    Price: 150; Color: clDarkYellow; Deep: [deBlood_Cave]; Value: 400; ),
-    // Raptorhide_Quiver
+    MaxDurability: 90; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 4; Max: 6; ));
+    Price: 220; Color: clDarkYellow; Deep: [deBlood_Cave]; Value: 400; ),
+    // Raptor Hide_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 95; Level: 6; Defense: (Min: 0; Max: 0);
+    MaxDurability: 95; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 5; Max: 6; ));
-    Price: 200; Color: clDarkYellow; Deep: [deDrom]; Value: 450; ),
+    Price: 260; Color: clDarkYellow; Deep: [deDrom]; Value: 450; ),
     // Heavy_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 105; Level: 7; Defense: (Min: 0; Max: 0);
+    MaxDurability: 100; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 6; Max: 7; ));
-    Price: 250; Color: clDarkYellow; Deep: [deDrom]; Value: 500; ),
+    Price: 300; Color: clDarkYellow; Deep: [deDrom]; Value: 500; ),
 
     /// / == Dark _Wood == ////
 
