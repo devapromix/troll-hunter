@@ -128,6 +128,7 @@ type
     function FireRange: UInt;
     procedure ReceiveHealing;
     function HasQuiver: boolean;
+    function IsQuiverBroken: boolean;
     function GetArrowsToBuy: Int;
     procedure BuyArrows;
     procedure Buy(Index: Int);
@@ -446,13 +447,25 @@ begin
   Result := (Self.GetQuiverIndex >= 0);
 end;
 
-function TPlayer.HasArrows: boolean;
+function TPlayer.IsQuiverBroken: boolean;
 var
   QIndex: Int;
 begin
   QIndex := Self.GetQuiverIndex;
   Result := (QIndex >= 0) and
-    (Items_Inventory_GetItem(QIndex).Value > 0);
+    (Items_Inventory_GetItem(QIndex).Durability = 0);
+end;
+
+function TPlayer.HasArrows: boolean;
+var
+  QIndex: Int;
+  FItem: Item;
+begin
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+    Exit(False);
+  FItem := Items_Inventory_GetItem(QIndex);
+  Result := (FItem.Durability > 0) and (FItem.Value > 0);
 end;
 
 procedure TPlayer.UseArrow;
@@ -464,7 +477,7 @@ begin
   if (QIndex < 0) then
     Exit;
   FItem := Items_Inventory_GetItem(QIndex);
-  if (FItem.Value = 0) then
+  if (FItem.Durability = 0) or (FItem.Value = 0) then
     Exit;
   FItem.Value := Game.EnsureRange(FItem.Value - 1, UIntMax);
   Items_Inventory_SetItem(QIndex, FItem);
@@ -509,6 +522,12 @@ begin
   if not Self.HasQuiver then
   begin
     MsgLog.Add('You need a quiver equipped to do that.');
+    Self.FireModeExit;
+    Exit;
+  end;
+  if Self.IsQuiverBroken then
+  begin
+    MsgLog.Add('Your quiver is broken and can''t hold arrows.');
     Self.FireModeExit;
     Exit;
   end;
@@ -615,6 +634,12 @@ begin
   begin
     FFireMode := False;
     MsgLog.Add('You need a quiver equipped to do that.');
+    Exit;
+  end;
+  if Self.IsQuiverBroken then
+  begin
+    FFireMode := False;
+    MsgLog.Add('Your quiver is broken and can''t hold arrows.');
     Exit;
   end;
   if not Self.HasArrows then
@@ -1341,6 +1366,8 @@ begin
   if (QIndex < 0) then
     Exit;
   FItem := Items_Inventory_GetItem(QIndex);
+  if (FItem.Durability = 0) then
+    Exit;
   Result := ItemBase[TItemEnum(FItem.ItemID)].Value - FItem.Value;
 end;
 
@@ -1353,6 +1380,11 @@ begin
   if not Self.HasQuiver then
   begin
     MsgLog.Add('You need a quiver equipped to do that.');
+    Exit;
+  end;
+  if Self.IsQuiverBroken then
+  begin
+    MsgLog.Add('Your quiver is broken and can''t hold arrows.');
     Exit;
   end;
   QIndex := Self.GetQuiverIndex;
