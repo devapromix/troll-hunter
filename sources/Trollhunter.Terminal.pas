@@ -188,6 +188,8 @@ begin
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
   terminal_set(Format('icon font: Fontello.ttf, size=%dx%d, codepage=437;',
     [Round(FChar.Width * 1.4), Round(FChar.Height * 1.4)]));
+  terminal_set(Format('icon2 font: icons.ttf, size=%dx%d, codepage=437;',
+    [Round(FChar.Width * 1.4), Round(FChar.Height * 1.4)]));
 end;
 
 procedure TTerminal.Print(AX, AY: Int; AText: string);

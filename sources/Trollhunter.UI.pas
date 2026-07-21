@@ -11,7 +11,7 @@ type
     icLife, icMana, icStar, icHammer, icElixir, icShield, icFood, icLeaf,
     icFeather, icStr, icDex, icBook, icVision, icFire, icIce,
     icLightning, icDrop, icSword, icSun, icMoon, icTroph, icAst, icKey, icRepair,
-    icBook2);
+    icBook2, icMusic, icBow, icGoldSack);
 
 type
   UI = class(TObject)
@@ -36,9 +36,11 @@ uses
 
 const
   IconStr: array [TIconEnum] of string = ('F8D0', 'F8D1', 'F8D2', 'F8D3', 'F8D4',
-    'F8D5', 'F8D6', 'F8D7', 'F8D8', 'F8D9', 'F8DA', 'F8DB', 'F8DC', 'F8DD', 'F8DE', 'F8DF',
-    'F8E0', 'F8E1', 'F8E2', 'F8E3', 'F8E4', 'F8E5', 'F8E6', 'F8E7', 'F8E8', 'F8E9', 'F8EA',
-    'F8EB', 'F8EC', 'F8ED', 'F8EE', 'F8EF');
+    'F8D5', 'F8D6', 'F8D7', 'F8D8', 'F8D9', 'F8DA', 'F8DB', 'F8DC',
+    'F8DD', 'F8DE', 'F8DF',
+    'F8E0', 'F8E1', 'F8E2', 'F8E3', 'F8E4', 'F8E5', 'F8E6', 'F8E7',
+    'F8E8', 'F8E9', 'F8EA',
+    'F8EB', 'F8EC', 'F8ED', 'F8EE', 'F8EF', 'F8F0', 'F8F1', 'F8F2');
   F = '[[%s]]';
 
   { UI }
@@ -80,11 +82,24 @@ end;
 
 class function UI.Icon(const AIcon: TIconEnum; const AColor: string): string;
 begin
-  if (AColor = '') then
-    Result := Format('[font=icon][U+%s][/font]', [UpperCase(IconStr[AIcon])])
+  if AIcon in [icMale..icBook2] then
+  begin
+    if (AColor = '') then
+      Result := Format('[font=icon][U+%s][/font]', [UpperCase(IconStr[AIcon])])
+    else
+      Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
+        [LowerCase(AColor), UpperCase(IconStr[AIcon])]);
+
+  end
   else
-    Result := Format('[font=icon][color=%s][U+%s][/color][/font]',
-      [LowerCase(AColor), UpperCase(IconStr[AIcon])]);
+  begin
+    if (AColor = '') then
+      Result := Format('[font=icon2][U+%s][/font]', [UpperCase(IconStr[AIcon])])
+    else
+      Result := Format('[font=icon2][color=%s][U+%s][/color][/font]',
+        [LowerCase(AColor), UpperCase(IconStr[AIcon])]);
+
+  end;
 end;
 
 class function UI.KeyToStr(AKey, AStr, AColor: string): string;

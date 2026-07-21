@@ -1893,7 +1893,7 @@ begin
     // Arrows (Quiver)
     if (IT = itQuiver) then
       T := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
-        ItemBase[TItemEnum(ID)].Value]);
+        ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btQuiverCap)]);
 
     if (AItem.Bonus[0] > 0) then
     begin
