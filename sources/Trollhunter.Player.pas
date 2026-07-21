@@ -76,6 +76,9 @@ type
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
+    function GetQuiverIndex: Int;
+    function HasArrows: boolean;
+    procedure UseArrow;
   public
     constructor Create;
     destructor Destroy; override;
@@ -416,6 +419,53 @@ begin
   AddTurn;
 end;
 
+function TPlayer.GetQuiverIndex: Int;
+var
+  FItem: Item;
+  FCount, I: Int;
+begin
+  Result := -1;
+  FCount := Items_Inventory_GetCount().InRange(ItemMax);
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    if (FItem.Equipment > 0) and
+      (ItemBase[TItemEnum(FItem.ItemID)].SlotType = stQuiver) then
+    begin
+      Result := I;
+      Exit;
+    end;
+  end;
+end;
+
+function TPlayer.HasArrows: boolean;
+var
+  QIndex: Int;
+begin
+  QIndex := Self.GetQuiverIndex;
+  Result := (QIndex >= 0) and
+    (Items_Inventory_GetItem(QIndex).Durability > 0);
+end;
+
+procedure TPlayer.UseArrow;
+var
+  QIndex: Int;
+  FItem: Item;
+begin
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+    Exit;
+  FItem := Items_Inventory_GetItem(QIndex);
+  if (FItem.Durability = 0) then
+    Exit;
+  FItem.Durability := Game.EnsureRange(FItem.Durability - 1, UIntMax);
+  Items_Inventory_SetItem(QIndex, FItem);
+  if (FItem.Durability <= 25) then
+    MsgLog.Add(Terminal.Colorize(
+      Format('You are running out of arrows (%d left in your quiver).',
+      [FItem.Durability]), clAlarm));
+end;
+
 procedure TPlayer.RangedAttack(Index: Int);
 const
   RangeAccuracyPenalty = 3;
@@ -448,6 +498,13 @@ begin
     Self.Attack(Index);
     Exit;
   end;
+  if not Self.HasArrows then
+  begin
+    MsgLog.Add('You have no arrows left in your quiver.');
+    Self.FireModeExit;
+    Exit;
+  end;
+  Self.UseArrow;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if Abilities.IsAbility(abBerserk) then
@@ -538,6 +595,12 @@ begin
   begin
     FFireMode := False;
     MsgLog.Add('You need a bow equipped to do that.');
+    Exit;
+  end;
+  if not Self.HasArrows then
+  begin
+    FFireMode := False;
+    MsgLog.Add('You have no arrows left in your quiver.');
     Exit;
   end;
   for I := 0 to Mobs.Count - 1 do

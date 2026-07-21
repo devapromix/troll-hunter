@@ -170,7 +170,7 @@ type
     ivComposite_Bow, ivMaster_Bow, ivWar_Bow, ivDragon_Bow, ivAncient_Bow,
     // Quivers
     ivLight_Quiver, ivLeather_Quiver, ivKnothide_Quiver, ivHunting_Quiver,
-    ivQuickdraw_Quiver, ivRaptorHide_Quiver, ivHeavy_Quiver,
+    ivQuickdraw_Quiver, ivRaptorhide_Quiver, ivHeavy_Quiver,
     // Dark Wood
     ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
     ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
