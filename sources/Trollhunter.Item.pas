@@ -948,39 +948,39 @@ const
 
     // Light Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 150; Level: 1; Defense: (Min: 0; Max: 0);
+    MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 1; ));
-    Price: 60; Color: clDarkYellow; Deep: []; ),
+    Price: 60; Color: clDarkYellow; Deep: []; Value: 150; ),
     // Leather Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 200; Level: 2; Defense: (Min: 0; Max: 0);
+    MaxDurability: 45; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 2; ));
-    Price: 80; Color: clDarkYellow; Deep: [deDark_Wood]; ),
+    Price: 80; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 200; ),
     // Knothide_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 250; Level: 3; Defense: (Min: 0; Max: 0);
+    MaxDurability: 55; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 2; Max: 3; ));
-    Price: 100; Color: clDarkYellow; Deep: [deGray_Cave]; ),
+    Price: 100; Color: clDarkYellow; Deep: [deGray_Cave]; Value: 250; ),
     // Hunting_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 350; Level: 4; Defense: (Min: 0; Max: 0);
+    MaxDurability: 65; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 3; Max: 4; ));
-    Price: 120; Color: clDarkYellow; Deep: [deDeep_Cave]; ),
+    Price: 120; Color: clDarkYellow; Deep: [deDeep_Cave]; Value: 350; ),
     // Quickdraw_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 400; Level: 5; Defense: (Min: 0; Max: 0);
+    MaxDurability: 75; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 4; Max: 5; ));
-    Price: 150; Color: clDarkYellow; Deep: [deBlood_Cave]; ),
+    Price: 150; Color: clDarkYellow; Deep: [deBlood_Cave]; Value: 400; ),
     // Raptorhide_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 450; Level: 6; Defense: (Min: 0; Max: 0);
+    MaxDurability: 85; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 5; Max: 6; ));
-    Price: 200; Color: clDarkYellow; Deep: [deDrom]; ),
+    Price: 200; Color: clDarkYellow; Deep: [deDrom]; Value: 450; ),
     // Heavy_Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
-    MaxDurability: 500; Level: 7; Defense: (Min: 0; Max: 0);
+    MaxDurability: 95; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 6; Max: 7; ));
-    Price: 250; Color: clDarkYellow; Deep: [deDrom]; ),
+    Price: 250; Color: clDarkYellow; Deep: [deDrom]; Value: 500; ),
 
     /// / == Dark _Wood == ////
 
@@ -1860,6 +1860,10 @@ begin
         DamageSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
+    // Arrows (Quiver)
+    if (IT = itQuiver) then
+      T := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
+        ItemBase[TItemEnum(ID)].Value]);
 
     if (AItem.Bonus[0] > 0) then
     begin

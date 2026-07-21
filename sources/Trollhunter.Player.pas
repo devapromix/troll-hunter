@@ -452,7 +452,7 @@ var
 begin
   QIndex := Self.GetQuiverIndex;
   Result := (QIndex >= 0) and
-    (Items_Inventory_GetItem(QIndex).Durability > 0);
+    (Items_Inventory_GetItem(QIndex).Value > 0);
 end;
 
 procedure TPlayer.UseArrow;
@@ -464,14 +464,14 @@ begin
   if (QIndex < 0) then
     Exit;
   FItem := Items_Inventory_GetItem(QIndex);
-  if (FItem.Durability = 0) then
+  if (FItem.Value = 0) then
     Exit;
-  FItem.Durability := Game.EnsureRange(FItem.Durability - 1, UIntMax);
+  FItem.Value := Game.EnsureRange(FItem.Value - 1, UIntMax);
   Items_Inventory_SetItem(QIndex, FItem);
-  if (FItem.Durability <= 25) then
+  if (FItem.Value <= 25) then
     MsgLog.Add(Terminal.Colorize(
       Format('You are running out of arrows (%d left in your quiver).',
-      [FItem.Durability]), clAlarm));
+      [FItem.Value]), clAlarm));
 end;
 
 procedure TPlayer.RangedAttack(Index: Int);
@@ -1341,7 +1341,7 @@ begin
   if (QIndex < 0) then
     Exit;
   FItem := Items_Inventory_GetItem(QIndex);
-  Result := FItem.MaxDurability - FItem.Durability;
+  Result := ItemBase[TItemEnum(FItem.ItemID)].Value - FItem.Value;
 end;
 
 procedure TPlayer.BuyArrows;
@@ -1357,7 +1357,7 @@ begin
   end;
   QIndex := Self.GetQuiverIndex;
   FItem := Items_Inventory_GetItem(QIndex);
-  Cost := FItem.MaxDurability - FItem.Durability;
+  Cost := ItemBase[TItemEnum(FItem.ItemID)].Value - FItem.Value;
   if (Cost = 0) then
   begin
     MsgLog.Add('Your quiver is already full.');
@@ -1367,7 +1367,7 @@ begin
   begin
     if (Items_Inventory_DeleteItemAmount(Ord(ivGold), Cost) > 0) then
     begin
-      FItem.Durability := FItem.MaxDurability;
+      FItem.Value := ItemBase[TItemEnum(FItem.ItemID)].Value;
       Items_Inventory_SetItem(QIndex, FItem);
       MsgLog.Add(Format('You bought %d arrows (-%d gold).', [Cost, Cost]));
     end;
