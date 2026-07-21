@@ -87,7 +87,9 @@ type
     // Mana After Each Kill I - III
     of_Absorption, of_Osmosis, of_Consumption,
     // Extra Gold from Monsters I - III
-    of_the_Thief, of_Plunder, of_Greed
+    of_the_Thief, of_Plunder, of_Greed,
+    // Quiver Capacity I - III
+    of_the_Fletcher, of_Plenty, of_the_Marksman
 
     );
 
@@ -354,25 +356,25 @@ const
     Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35)); ),
 
     // of Craftmanship (Durability I)
-    (Level: (Min: 1; Max: 3); Price: 100; Occurence: SmithTypeItems;
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 10; Max: 20); ),
     // of Durability (Durability II)
-    (Level: (Min: 2; Max: 5); Price: 200; Occurence: SmithTypeItems;
+    (Level: (Min: 2; Max: 5); Price: 200; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 20; Max: 30); ),
     // of Sturdiness (Durability III)
-    (Level: (Min: 3; Max: 7); Price: 300; Occurence: SmithTypeItems;
+    (Level: (Min: 3; Max: 7); Price: 300; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 30; Max: 40); ),
     // of Structure (Durability IV)
-    (Level: (Min: 4; Max: 9); Price: 400; Occurence: SmithTypeItems;
+    (Level: (Min: 4; Max: 9); Price: 400; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 40; Max: 50); ),
     // of Endurance (Durability V)
-    (Level: (Min: 5; Max: 11); Price: 500; Occurence: SmithTypeItems;
+    (Level: (Min: 5; Max: 11); Price: 500; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 50; Max: 60); ),
     // of the Ages (Durability VI)
-    (Level: (Min: 6; Max: 13); Price: 750; Occurence: SmithTypeItems;
+    (Level: (Min: 6; Max: 13); Price: 750; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 60; Max: 70); ),
     // of Permanance (Durability VII)
-    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: SmithTypeItems;
+    (Level: (Min: 7; Max: 15); Price: 1000; Occurence: SmithTypeItems + QuiverTypeItems;
     MaxDurability: (Min: 70; Max: 80); ),
 
     // of the Brute (Strength I)
@@ -398,25 +400,25 @@ const
     Strength: (Min: 26; Max: 30); ),
 
     // of the Mongoose (Dexterity I)
-    (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
+    (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 1; Max: 2); ),
     // of the Fox (Dexterity II)
-    (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
+    (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 3; Max: 5); ),
     // of the Lynx (Dexterity III)
-    (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
+    (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 6; Max: 9); ),
     // of the Falcon (Dexterity IV)
-    (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
+    (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 10; Max: 14); ),
     // of the Panther (Dexterity V)
-    (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
+    (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 15; Max: 20); ),
     // of the Leopard (Dexterity VI)
-    (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
+    (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 21; Max: 25); ),
     // of the Jaguar (Dexterity VII)
-    (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
+    (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems + QuiverTypeItems;
     Dexterity: (Min: 26; Max: 30); ),
 
     // (Willpower I)
@@ -557,6 +559,16 @@ const
     Value: (Min: 11; Max: 25); ),
     // of (Extra Gold from Monsters III),
     (Level: (Min: 9; Max: 15); Price: 250; Occurence: JewelryTypeItems;
+    Value: (Min: 26; Max: 50); ),
+
+    // of the Fletcher (Quiver Capacity I),
+    (Level: (Min: 1; Max: 3); Price: 100; Occurence: QuiverTypeItems;
+    Value: (Min: 1; Max: 10); ),
+    // of Plenty (Quiver Capacity II),
+    (Level: (Min: 4; Max: 8); Price: 200; Occurence: QuiverTypeItems;
+    Value: (Min: 11; Max: 25); ),
+    // of the Marksman (Quiver Capacity III),
+    (Level: (Min: 9; Max: 15); Price: 300; Occurence: QuiverTypeItems;
     Value: (Min: 26; Max: 50); )
 
     );
