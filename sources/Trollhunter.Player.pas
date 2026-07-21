@@ -334,7 +334,6 @@ end;
 
 procedure TPlayer.Attack(Index: Int);
 const
-  // Player's own Dexterity (expressed via own DV) improves melee accuracy
   AccuracyDexDivisor = 2;
 var
   V, Ch: UInt;
@@ -365,7 +364,6 @@ begin
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if Abilities.IsAbility(abBerserk) then
     TargetDV := TargetDV div 2;
-  // Dexterity bonus to accuracy
   AccBonus := Self.Attributes.Attrib[atDV].Value div AccuracyDexDivisor;
   TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
@@ -511,7 +509,6 @@ begin
   if (Mob.Force <> fcEnemy) then
     Exit;
   Dist := Self.GetDist(Mob.X, Mob.Y);
-  // Adjacent enemies cannot be shot; force melee weapon instead
   if (Dist <= 1) then
   begin
     Self.FireModeExit;
@@ -654,7 +651,6 @@ begin
     if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
       (Mobs.Mob[I].MapZone = Map.Current) and
       Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
-      // Adjacent enemies cannot be shot; they must be fought in melee
       (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) and
       (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
       (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <=
@@ -669,7 +665,6 @@ begin
     MsgLog.Add('There is no one in sight to shoot at.');
     Exit;
   end;
-  // Sort targets by distance (nearest first)
   for I := 1 to High(FFireTargets) do
   begin
     J := I;

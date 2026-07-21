@@ -775,12 +775,7 @@ begin
     of_the_Fletcher .. of_the_Marksman:
     begin
       Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
-      // Store the capacity bonus permanently on the item, so it survives
-      // refills (BuyArrows) instead of being lost the first time the
-      // quiver is topped up.
       Items.SetBonus(AItem, btQuiverCap, Value.InRange(255));
-      // Top the quiver up by the rolled amount, capped at the new
-      // (base + bonus) capacity.
       AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
         ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
     end;

@@ -55,7 +55,7 @@ const
   TorchTypeItems = [itTorch];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
-    FlaskTypeItems;
+    FlaskTypeItems + QuiverTypeItems;
   AllwaysIdentTypeItems = JewelryTypeItems + FlaskTypeItems;
   DefenseTypeItems = ArmorTypeItems + JewelryTypeItems;
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
