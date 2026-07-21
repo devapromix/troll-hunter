@@ -2,8 +2,6 @@ unit Trollhunter.Item;
 
 interface
 
-{ TODO -cПредметы : Свет от лампы днем должен быть на 1 пункт больше макс. для героя, а не макс. как сейчас. }
-
 uses
   Trollhunter.Types,
   Trollhunter.Item.Types,
@@ -2386,6 +2384,8 @@ begin
       Result := uint8(AItem.Bonus[2] shr 8);
     btManaAfEachKill:
       Result := uint8(AItem.Bonus[2]);
+    btQuiverCap:
+      Result := uint8(AItem.Bonus[3] shr 24);
     else
       Result := 0;
   end;
@@ -2397,6 +2397,11 @@ var
   V: array [0 .. 3] of uint8;
   I: cardinal;
 begin
+  if (BonusType = btQuiverCap) then
+  begin
+    AItem.Bonus[3] := (cardinal(Value) shl 24);
+    Exit;
+  end;
   if (BonusType in [btStr .. btPer]) then
   begin
     V[0] := GetBonus(AItem, btStr);

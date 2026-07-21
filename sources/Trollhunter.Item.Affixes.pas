@@ -563,13 +563,13 @@ const
 
     // of the Fletcher (Quiver Capacity I),
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: QuiverTypeItems;
-    Value: (Min: 1; Max: 10); ),
+    Value: (Min: 1; Max: 50); ),
     // of Plenty (Quiver Capacity II),
     (Level: (Min: 4; Max: 8); Price: 200; Occurence: QuiverTypeItems;
-    Value: (Min: 11; Max: 25); ),
+    Value: (Min: 51; Max: 100); ),
     // of the Marksman (Quiver Capacity III),
     (Level: (Min: 9; Max: 15); Price: 300; Occurence: QuiverTypeItems;
-    Value: (Min: 26; Max: 50); )
+    Value: (Min: 101; Max: 150); )
 
     );
 
@@ -771,10 +771,24 @@ begin
       Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
       Items.SetBonus(AItem, btExtraGold, Value.InRange(ExtraGoldMax div 3));
     end;
+    // Quiver Capacity
+    of_the_Fletcher .. of_the_Marksman:
+    begin
+      Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+      // Store the capacity bonus permanently on the item, so it survives
+      // refills (BuyArrows) instead of being lost the first time the
+      // quiver is topped up.
+      Items.SetBonus(AItem, btQuiverCap, Value.InRange(255));
+      // Top the quiver up by the rolled amount, capped at the new
+      // (base + bonus) capacity.
+      AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
+        ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
+    end;
   end;
   // Effects
   AItem.Effects := SB.Effects;
-  if (SB.Value.Min > 0) then
+  if (SB.Value.Min > 0) and not
+    (TSuffixEnum(AItem.Identify) in [of_the_Fletcher .. of_the_Marksman]) then
   begin
     Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
     AItem.Value := AItem.Value + Value.InRange(UIntMax);

@@ -83,14 +83,6 @@ const
 
   // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
 
-  { rough / необроблений
-    imperfect / недосконалий
-    common / типовий
-    precious / дорогоцінний
-    flawless / без недоліків
-    perfect / досконалий
-    outworldly / неземний }
-
   { Potion, Flask, Extract, Essence, Elixir }
 
 type
@@ -241,7 +233,7 @@ type
 
 type
   TBonusType = (btLife, btMana, btVis, btExtraGold, btStr, btDex, btWil, btPer,
-    btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill);
+    btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill, btQuiverCap);
 
 type
   TSetOfItem = set of TItemType;

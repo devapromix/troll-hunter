@@ -1368,7 +1368,8 @@ begin
   FItem := Items_Inventory_GetItem(QIndex);
   if (FItem.Durability = 0) then
     Exit;
-  Result := ItemBase[TItemEnum(FItem.ItemID)].Value - FItem.Value;
+  Result := Int(ItemBase[TItemEnum(FItem.ItemID)].Value) +
+    Int(Items.GetBonus(FItem, btQuiverCap)) - Int(FItem.Value);
 end;
 
 procedure TPlayer.BuyArrows;
@@ -1389,7 +1390,8 @@ begin
   end;
   QIndex := Self.GetQuiverIndex;
   FItem := Items_Inventory_GetItem(QIndex);
-  Cost := ItemBase[TItemEnum(FItem.ItemID)].Value - FItem.Value;
+  Cost := (ItemBase[TItemEnum(FItem.ItemID)].Value +
+    Items.GetBonus(FItem, btQuiverCap)) - FItem.Value;
   if (Cost = 0) then
   begin
     MsgLog.Add('Your quiver is already full.');
@@ -1399,7 +1401,8 @@ begin
   begin
     if (Items_Inventory_DeleteItemAmount(Ord(ivGold), Cost) > 0) then
     begin
-      FItem.Value := ItemBase[TItemEnum(FItem.ItemID)].Value;
+      FItem.Value := ItemBase[TItemEnum(FItem.ItemID)].Value +
+        Items.GetBonus(FItem, btQuiverCap);
       Items_Inventory_SetItem(QIndex, FItem);
       MsgLog.Add(Format('You bought %d arrows (-%d gold).', [Cost, Cost]));
     end;

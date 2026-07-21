@@ -7,7 +7,7 @@ uses
   Trollhunter.Creature;
 
 const
-  BonusCount = 3;
+  BonusCount = 4;
 
 type
   Item = record
