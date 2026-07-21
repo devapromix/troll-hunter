@@ -77,6 +77,7 @@ type
     function GetVision: UInt;
     procedure Empty;
     function GetQuiverIndex: Int;
+    function HasQuiver: boolean;
     function HasArrows: boolean;
     procedure UseArrow;
   public
@@ -438,6 +439,11 @@ begin
   end;
 end;
 
+function TPlayer.HasQuiver: boolean;
+begin
+  Result := (Self.GetQuiverIndex >= 0);
+end;
+
 function TPlayer.HasArrows: boolean;
 var
   QIndex: Int;
@@ -496,6 +502,12 @@ begin
   begin
     Self.FireModeExit;
     Self.Attack(Index);
+    Exit;
+  end;
+  if not Self.HasQuiver then
+  begin
+    MsgLog.Add('You need a quiver equipped to do that.');
+    Self.FireModeExit;
     Exit;
   end;
   if not Self.HasArrows then
@@ -595,6 +607,12 @@ begin
   begin
     FFireMode := False;
     MsgLog.Add('You need a bow equipped to do that.');
+    Exit;
+  end;
+  if not Self.HasQuiver then
+  begin
+    FFireMode := False;
+    MsgLog.Add('You need a quiver equipped to do that.');
     Exit;
   end;
   if not Self.HasArrows then
