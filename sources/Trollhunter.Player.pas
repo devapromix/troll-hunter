@@ -77,7 +77,6 @@ type
     function GetVision: UInt;
     procedure Empty;
     function GetQuiverIndex: Int;
-    function HasQuiver: boolean;
     function HasArrows: boolean;
     procedure UseArrow;
   public
@@ -128,6 +127,9 @@ type
     function FireModeTarget: Int;
     function FireRange: UInt;
     procedure ReceiveHealing;
+    function HasQuiver: boolean;
+    function GetArrowsToBuy: Int;
+    procedure BuyArrows;
     procedure Buy(Index: Int);
     procedure PickUp;
     procedure PickUpAmount(Index: Int);
@@ -1322,6 +1324,52 @@ begin
     begin
       Attributes.SetValue(atLife, atMaxLife);
       MsgLog.Add(Format('You feel better (-%d gold).', [Cost]));
+    end;
+  end
+  else
+    MsgLog.Add('You need more gold.');
+  Self.Calc;
+end;
+
+function TPlayer.GetArrowsToBuy: Int;
+var
+  QIndex: Int;
+  FItem: Item;
+begin
+  Result := 0;
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+    Exit;
+  FItem := Items_Inventory_GetItem(QIndex);
+  Result := FItem.MaxDurability - FItem.Durability;
+end;
+
+procedure TPlayer.BuyArrows;
+var
+  QIndex: Int;
+  FItem: Item;
+  Cost: UInt;
+begin
+  if not Self.HasQuiver then
+  begin
+    MsgLog.Add('You need a quiver equipped to do that.');
+    Exit;
+  end;
+  QIndex := Self.GetQuiverIndex;
+  FItem := Items_Inventory_GetItem(QIndex);
+  Cost := FItem.MaxDurability - FItem.Durability;
+  if (Cost = 0) then
+  begin
+    MsgLog.Add('Your quiver is already full.');
+    Exit;
+  end;
+  if (Self.Gold >= Cost) then
+  begin
+    if (Items_Inventory_DeleteItemAmount(Ord(ivGold), Cost) > 0) then
+    begin
+      FItem.Durability := FItem.MaxDurability;
+      Items_Inventory_SetItem(QIndex, FItem);
+      MsgLog.Add(Format('You bought %d arrows (-%d gold).', [Cost, Cost]));
     end;
   end
   else

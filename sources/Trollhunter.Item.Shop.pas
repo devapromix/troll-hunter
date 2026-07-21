@@ -11,7 +11,7 @@ uses
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
     shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
-    shJewelry, shGem, shRunes);
+    shJewelry, shGem, shRunes, shQuivers);
 
 type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
@@ -177,6 +177,8 @@ var
         Result := ItemBase[ID].ItemType in JewelryTypeItems;
       shRunes:
         Result := ItemBase[ID].ItemType in RuneTypeItems;
+      shQuivers:
+        Result := ItemBase[ID].ItemType in QuiverTypeItems;
     else
       Result := False;
     end;

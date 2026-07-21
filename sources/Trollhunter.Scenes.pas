@@ -961,6 +961,8 @@ begin
     Add('Buy items (tavern)');
   if (ntWpnTrader_B in NPCType) then
     Add('Buy items (weapons)');
+  if (ntQvrTrader_B in NPCType) then
+    Add('Buy items (quivers)');
   if (ntGemTrader_C in NPCType) then
     Add('Buy items (gems)');
   if (ntJewTrader_C in NPCType) then
@@ -969,6 +971,17 @@ begin
     Add('Buy items (boots)');
   if (ntSell_C in NPCType) then
     Add('Sell items');
+  // Arrows
+  if (ntArrTrader_C in NPCType) then
+  begin
+    V := Player.GetArrowsToBuy;
+    if (V > 0) then
+      S := ' (' + Items.GetInfo('+', V, 'Arrows') + ' ' +
+        Items.GetPrice(V) + ')'
+    else
+      S := '';
+    Add('Buy arrows' + S);
+  end;
   if (ntRuneTrader_D in NPCType) then
     Add('Buy items (runes)');
   // Quests
@@ -1034,6 +1047,8 @@ begin
         AddShop(shPotions);
       if (ntWpnTrader_B in NPCType) then
         AddShop(shWeapons);
+      if (ntQvrTrader_B in NPCType) then
+        AddShop(shQuivers);
     end;
     TK_C:
     begin
@@ -1045,6 +1060,8 @@ begin
         AddShop(shBoots);
       if (ntGemTrader_C in NPCType) then
         AddShop(shGem);
+      if (ntArrTrader_C in NPCType) then
+        Player.BuyArrows;
     end;
     TK_D:
     begin

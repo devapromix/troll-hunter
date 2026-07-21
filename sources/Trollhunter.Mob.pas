@@ -21,6 +21,7 @@ type
 type
   TNPCType = (ntSell_C, ntJewTrader_C, ntHealer_A, ntBlacksmith_A,
     ntWpnTrader_B, ntSmithTrader_B, ntArmTrader_A, ntGemTrader_C, ntShTrader_A,
+    ntQvrTrader_B, ntArrTrader_C,
     ntHelmTrader_A, ntPotTrader_B, ntHealTrader_B, ntGlovesTrader_B,
     ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
     ntFoodTrader_A, ntRuneTrader_D, ntQuest_D);
@@ -415,10 +416,10 @@ const
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
     Color: clLightestGreen; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C]),
 
-    // Shield Trader
+    // Shields and Quivers Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
-    Color: clLightBlue; NPCType: [ntShTrader_A]),
+    Color: clLightBlue; NPCType: [ntShTrader_A, ntQvrTrader_B, ntArrTrader_C]),
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
