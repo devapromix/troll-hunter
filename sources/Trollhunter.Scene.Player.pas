@@ -186,8 +186,9 @@ begin
     D := ((J - 1) * 2) + Y + 2;
     UI.Bar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
       clDarkGray);
-    Terminal.Print(B, D, Format('%s %d/%d', [Player.Skills.GetName(I),
-      Player.Skills.Skill[I].Value, SkillMax]), TK_ALIGN_CENTER);
+    Terminal.Print(B, D, Format('%s %s %d/%d', [UI.Icon(icAst),
+    Player.Skills.GetName(I), Player.Skills.Skill[I].Value, SkillMax]),
+    TK_ALIGN_CENTER);
   end;
 end;
 

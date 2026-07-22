@@ -155,8 +155,8 @@ type
     ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
     ivCrimson_Talisman, ivDead_Reckoning,
     // Wands
-    ivWand1, ivWand2, ivWand3, ivWand4, ivWand5, ivWand6, ivWand7, ivWand8,
-    ivWand9, ivWand10,
+    ivYew_Wand, ivWater_Wand, ivBone_Wand, ivIvory_Wand, ivGrim_Wand,
+    ivObsidian_Wand, ivGrave_Wand, ivMystic_Wand, ivLich_Wand, ivCelestial_Wand,
     // Daggers
     ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
     ivDagger8, ivDagger9, ivDagger10,

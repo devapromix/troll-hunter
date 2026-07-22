@@ -43,7 +43,7 @@ const
     Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
     Skill: (skStaff, skConcentration, skMeditation);
     Item: (ivHood, ivLight_Clothes, None, None, ivQuarterstaff, None,
-    None, None, None, None); ),
+    ivYew_Wand, None, None, None); ),
     // Ranger
     (Description: 'Ranger'; Strength: (Min: 1; Max: 2; ); Dexterity: (Min: 1;
     Max: 4; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
