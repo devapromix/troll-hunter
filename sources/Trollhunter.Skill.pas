@@ -25,12 +25,16 @@ type
   end;
 
 type
+
+  { TSkills }
+
   TSkills = class(TObject)
   private
     FSkillName: array [TSkillEnum] of string;
     FSkill: array [TSkillEnum] of TSkill;
     function GetSkill(I: TSkillEnum): TSkill;
     procedure SetSkill(I: TSkillEnum; const Value: TSkill);
+    function GetSkillExpMax: UInt;
   public
     constructor Create;
     destructor Destroy; override;
@@ -44,7 +48,6 @@ type
 const
   SkillMin = 5;
   SkillMax = 75;
-  SkillExpMax = 50;
   BeginSkill = 10;
   StartSkill = 5;
   TalentSkill = 1;
@@ -99,9 +102,9 @@ begin
   begin
     FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0,
       AExpValue + 1) + 1;
-    if (Skill[ASkill].Exp >= SkillExpMax) then
+    if (Skill[ASkill].Exp >= GetSkillExpMax) then
     begin
-      FSkill[ASkill].Exp := FSkill[ASkill].Exp - SkillExpMax;
+      FSkill[ASkill].Exp := FSkill[ASkill].Exp - GetSkillExpMax;
       Inc(FSkill[ASkill].Value);
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
@@ -137,6 +140,11 @@ end;
 procedure TSkills.SetSkill(I: TSkillEnum; const Value: TSkill);
 begin
   FSkill[I] := Value;
+end;
+
+function TSkills.GetSkillExpMax: UInt;
+begin
+  Result := 50 + (Ord(Game.Difficulty) * 50 div 3);
 end;
 
 end.
