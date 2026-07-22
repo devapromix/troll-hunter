@@ -40,6 +40,7 @@ begin
   AddOption('R', 'Auto pick up runes', Game.GetOption(apRune));
   AddOption('B', 'Auto pick up books', Game.GetOption(apBook));
   AddOption('K', 'Auto pick up keys', Game.GetOption(apKey));
+  AddOption('A', 'Auto pick up arrows', Game.GetOption(apArrow));
   AddOption('D', 'Show items price in inventory', Game.GetOption(apShPrice));
 
   // Settings
@@ -87,6 +88,8 @@ begin
       Game.ChOption(apRune);
     TK_K:
       Game.ChOption(apKey);
+    TK_A:
+      Game.ChOption(apArrow);
     TK_B:
       Game.ChOption(apBook);
     TK_D:

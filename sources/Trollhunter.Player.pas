@@ -773,6 +773,8 @@ begin
         Exit;
       if ((ItemType in KeyTypeItems) and not Game.GetOption(apKey)) then
         Exit;
+      if ((ItemType in ArrowTypeItems) and not Game.GetOption(apArrow)) then
+        Exit;
       Items.AddItemToInv(Index, True);
       Wait;
     end;

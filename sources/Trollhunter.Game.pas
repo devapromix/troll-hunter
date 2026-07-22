@@ -121,7 +121,8 @@ type
 
 type
   TAPOptionEnum = (apCoin, apFood, apRune, apGem, apBook, apPotion, apFlask,
-    apScroll, apKey, apPlant, apFullscreen, apHdLevOfItem, apShPrice, apMagic);
+    apScroll, apKey, apPlant, apFullscreen, apHdLevOfItem, apShPrice, apMagic,
+    apArrow);
 
 type
   TGame = class(TObject)
