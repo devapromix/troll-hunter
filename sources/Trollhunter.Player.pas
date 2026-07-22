@@ -126,6 +126,9 @@ type
     procedure FireModeSwitch(ADir: Int);
     function FireModeTarget: Int;
     function FireRange: UInt;
+    function RangedMinDamage: UInt;
+    function RangedMaxDamage: UInt;
+    function CanRangedAttack: boolean;
     procedure ReceiveHealing;
     function HasQuiver: boolean;
     function IsQuiverBroken: boolean;
@@ -691,6 +694,24 @@ function TPlayer.FireRange: UInt;
 begin
   Result := 4 + ((FBowLevel + 1) div 2) + Talents.GetLevel(tlLong_Range) +
     Talents.GetLevel(tlElven_Marksman);
+end;
+
+function TPlayer.RangedMinDamage: UInt;
+begin
+  Result := EnsureRange(FBowMinDamage + Attributes.Attrib[atDex].Value div 5,
+    1, UIntMax - 1);
+end;
+
+function TPlayer.RangedMaxDamage: UInt;
+begin
+  Result := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value div 3,
+    2, UIntMax);
+end;
+
+function TPlayer.CanRangedAttack: boolean;
+begin
+  Result := Self.CanFire and Self.HasQuiver and not Self.IsQuiverBroken and
+    Self.HasArrows;
 end;
 
 procedure TPlayer.FireModeExit;

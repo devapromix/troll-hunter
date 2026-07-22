@@ -11,7 +11,7 @@ uses
   Trollhunter.Mob,
   Trollhunter.Game,
   Trollhunter.Attribute;
-  
+
 type
   TScenePlayer = class(TScene)
   private
@@ -44,7 +44,7 @@ uses
   Trollhunter.Player.Helpers,
   BearLibTerminal;
 
-{ TScenePlayer }
+  { TScenePlayer }
 
 constructor TScenePlayer.Create;
 begin
@@ -113,29 +113,40 @@ begin
     Player.Attributes.Attrib[atWil], AttribMax);
   Add('Perception', UI.Icon(icLeaf), 'Perception',
     Player.Attributes.Attrib[atPer], AttribMax);
-  // Damage
-  Add('Min Damage', UI.Icon(icSword), 'Darker Yellow',
-    Player.Attributes.Attrib[atMinDamage].Value, MinDamMax);
-  Add('Max Damage', UI.Icon(icSword), 'Darker Yellow',
-    Player.Attributes.Attrib[atMaxDamage].Value, MaxDamMax);
-  // DV and PV
-  Add('Defensive Value (DV)', UI.Icon(icDex), 'Darkest Green',
-    Player.Attributes.Attrib[atDV].Value, DVMax);
-  Add('Protection Value (PV)', UI.Icon(icShield), 'Darkest Green',
-    Player.Attributes.Attrib[atPV].Value, PVMax);
   // Life and Mana
   Add('Life', UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atLife],
     Player.Attributes.Attrib[atMaxLife].Value);
   Add('Mana', UI.Icon(icMana), 'Mana', Player.Attributes.Attrib[atMana],
     Player.Attributes.Attrib[atMaxMana].Value);
+  // DV and PV
+  Add('Defensive Value (DV)', UI.Icon(icDex), 'Darkest Green',
+    Player.Attributes.Attrib[atDV].Value, DVMax);
+  Add('Protection Value (PV)', UI.Icon(icShield), 'Darkest Green',
+    Player.Attributes.Attrib[atPV].Value, PVMax);
   // Vision radius
   Add('Vision radius', UI.Icon(icVision), 'Vision', Player.Vision, VisionMax);
+  // Damage
+  Add('Min Damage', UI.Icon(icSword), 'Darker Yellow',
+    Player.Attributes.Attrib[atMinDamage].Value, MinDamMax);
+  Add('Max Damage', UI.Icon(icSword), 'Darker Yellow',
+    Player.Attributes.Attrib[atMaxDamage].Value, MaxDamMax);
 end;
 
 procedure TScenePlayer.RenderInfo;
 begin
   Terminal.Print(X, Y + 2, Format(FT, ['Attributes' + ' (2/2)']),
     TK_ALIGN_CENTER);
+
+  // Ranged
+  if Player.CanRangedAttack then
+  begin
+    Add('Min Ranged Damage', UI.Icon(icSword), 'Darker Yellow',
+      Player.RangedMinDamage, MinDamMax);
+    Add('Max Ranged Damage', UI.Icon(icSword), 'Darker Yellow',
+      Player.RangedMaxDamage, MaxDamMax);
+    Add('Range', UI.Icon(icSword) + UI.Icon(icVision), 'Vision',
+      Player.FireRange, VisionMax);
+  end;
 
   Add('Replenish Life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',
     Player.Attributes.Attrib[atReLife].Value, ReLifeMax);
@@ -218,4 +229,4 @@ begin
   end;
 end;
 
-end.  
+end.
