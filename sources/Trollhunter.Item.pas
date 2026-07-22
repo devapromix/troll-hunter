@@ -1645,7 +1645,13 @@ const
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
-    Price: 1200; Color: clDarkGreen; Deep: [deDrom]; )
+    Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ),
+
+    // Arrows
+    (Symbol: '{'; ItemType: itArrow; SlotType: stNone; MaxStack: 999;
+    MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; )
 
     );
 
@@ -1680,6 +1686,7 @@ type
       RareColor: string = ''): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: UInt);
+    procedure LootArrows(const AX, AY: UInt);
     procedure Loot(const AX, AY: UInt; AItemEnum: TItemEnum); overload;
     procedure Loot(const AX, AY: UInt; AIsBoss: boolean); overload;
     property Name[I: TItemEnum]: string read GetName;
@@ -2106,6 +2113,8 @@ begin
         FItem.Amount := Value.Percent(FItem.Amount);
       end;
     end;
+    itArrow:
+      FItem.Amount := Math.RandomRange(5, 16);
   end;
   if ((FItem.Stack = 1) and (IT in WeaponTypeItems + ArmorTypeItems)) then
     FItem.Durability := Math.RandomRange(FItem.MaxDurability div 4,
@@ -2133,6 +2142,9 @@ begin
     // Gold
     if (Math.RandomRange(0, M) >= 6) then
       LootGold(AX, AY);
+    // Arrows
+    if (Math.RandomRange(0, 100) >= 97) then
+      LootArrows(AX, AY);
     { // Potion
       if ((Math.RandomRange(0, M) >= 7) or AIsBoss) then
       Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivLesser_Healing_Potion),
@@ -2535,6 +2547,12 @@ var
 begin
   MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
+  // Arrows never enter the inventory - they go straight into the quiver
+  if (ItemBase[TItemEnum(FItem.ItemID)].ItemType = itArrow) then
+  begin
+    Player.PickUpArrows(MapID, Index, FItem);
+    Exit;
+  end;
   if (FItem.Stack > 1) and (FItem.Amount > 1) and not AFlag then
   begin
     Player.SetAmountScene(False, Index, FItem.Amount);
@@ -2608,6 +2626,11 @@ begin
     if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then
       Loot(X, Y, ivGold);
   end;
+end;
+
+procedure TItems.LootArrows(const AX, AY: UInt);
+begin
+  Loot(AX, AY, ivArrows);
 end;
 
 procedure TItems.RenderInventory(PriceType: TPriceType = ptNone);

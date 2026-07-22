@@ -53,6 +53,7 @@ const
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow];
   TorchTypeItems = [itTorch];
+  ArrowTypeItems = [itArrow];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
     FlaskTypeItems + QuiverTypeItems;
@@ -64,12 +65,15 @@ const
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
     RepairTypeItems + MagicTypeItems;
-  NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems;
+  NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems +
+    ArrowTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
-  NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems;
+  NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems +
+    ArrowTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
-    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems;
+    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems +
+    ArrowTypeItems;
 
   // Silver Sword , Forsworn Sword , Hero Sword
   // Skyforge War Axe , Dragonbone War Axe
@@ -220,7 +224,9 @@ type
     ivChopper, ivDemon_Axe, // Axe
     ivSoul_Reaver, ivHoned_Spear, // Spear
     ivWar_Maul, ivDoom_Hammer, // Mace
-    ivStaff9, ivStaff10 // Staff
+    ivStaff9, ivStaff10, // Staff
+    // Arrows
+    ivArrows
     );
 
 const

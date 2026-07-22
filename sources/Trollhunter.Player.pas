@@ -137,6 +137,7 @@ type
     procedure Buy(Index: Int);
     procedure PickUp;
     procedure PickUpAmount(Index: Int);
+    procedure PickUpArrows(const MapID, Index: Int; AItem: Item);
     procedure Drop(Index: Int);
     procedure DropAmount(Index: Int);
     procedure Use(Index: Int);
@@ -1639,6 +1640,52 @@ begin
     Scenes.SetScene(scDrop);
   end;
   Wait();
+end;
+
+procedure TPlayer.PickUpArrows(const MapID, Index: Int; AItem: Item);
+var
+  QIndex: Int;
+  QItem: Item;
+  Capacity, Space, Picked, Remaining: Int;
+  GroundItem: Item;
+begin
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+  begin
+    MsgLog.Add('You need a quiver equipped to pick up arrows.');
+    Exit;
+  end;
+  QItem := Items_Inventory_GetItem(QIndex);
+  Capacity := ItemBase[TItemEnum(QItem.ItemID)].Value +
+    Items.GetBonus(QItem, btQuiverCap);
+  Space := Math.Max(0, Capacity - QItem.Value);
+  if (Space <= 0) then
+  begin
+    MsgLog.Add('Your quiver is full.');
+    Exit;
+  end;
+  Picked := Math.Min(Space, AItem.Amount);
+  QItem.Value := QItem.Value + Picked;
+  Items_Inventory_SetItem(QIndex, QItem);
+  Remaining := AItem.Amount - Picked;
+  if (Remaining > 0) then
+  begin
+    GroundItem := AItem;
+    GroundItem.Amount := Remaining;
+    Items_Dungeon_SetMapItemXY(MapID, Index, X, Y, GroundItem);
+    MsgLog.Add(Format('You picked up %d arrows (your quiver is full).',
+      [Picked]));
+  end
+  else
+  begin
+    Items_Dungeon_DeleteMapItemXY(MapID, Index, X, Y, GroundItem);
+    if (Picked = 1) then
+      MsgLog.Add('You picked up an arrow.')
+    else
+      MsgLog.Add(Format('You picked up %d arrows.', [Picked]));
+  end;
+  Self.Wait;
+  Self.Calc;
 end;
 
 procedure TPlayer.PickUp();
