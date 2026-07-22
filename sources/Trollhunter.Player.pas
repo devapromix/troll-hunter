@@ -656,8 +656,7 @@ begin
       Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
       (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) and
       (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
-      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <=
-      Math.Min(Self.Vision, Self.FireRange)))) then
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= Self.FireRange))) then
     begin
       SetLength(FFireTargets, Length(FFireTargets) + 1);
       FFireTargets[High(FFireTargets)] := I;
@@ -692,8 +691,8 @@ end;
 
 function TPlayer.FireRange: UInt;
 begin
-  Result := 4 + ((FBowLevel + 1) div 2) + Talents.GetLevel(tlLong_Range) +
-    Talents.GetLevel(tlElven_Marksman);
+  Result := Math.Min(Self.Vision, 4 + ((FBowLevel + 1) div 2) +
+    Talents.GetLevel(tlLong_Range) + Talents.GetLevel(tlElven_Marksman));
 end;
 
 function TPlayer.RangedMinDamage: UInt;
