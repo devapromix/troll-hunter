@@ -2199,7 +2199,7 @@ begin
   Items_Open();
   P := TypeInfo(TItemEnum);
   for I := Low(TItemEnum) to High(TItemEnum) do
-    FItemName[I] := GetEnumName(P, Ord(I)).GetName('iv');
+    FItemName[I] := GetEnumName(P, Ord(I)).GetName('itm');
 end;
 
 destructor TItems.Destroy;
@@ -2213,7 +2213,7 @@ var
   P: Pointer;
 begin
   P := TypeInfo(TItemEnum);
-  Result := TItemEnum(GetEnumValue(P, 'iv' + S));
+  Result := TItemEnum(GetEnumValue(P, 'itm' + S));
 end;
 
 function TItems.GetName(I: TItemEnum): string;

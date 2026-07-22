@@ -34,7 +34,6 @@ type
     FSkill: array [TSkillEnum] of TSkill;
     function GetSkill(I: TSkillEnum): TSkill;
     procedure SetSkill(I: TSkillEnum; const Value: TSkill);
-    function GetSkillExpMax: UInt;
   public
     constructor Create;
     destructor Destroy; override;
@@ -43,6 +42,7 @@ type
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
+    class function GetSkillExpMax: UInt;
   end;
 
 const
@@ -142,7 +142,7 @@ begin
   FSkill[I] := Value;
 end;
 
-function TSkills.GetSkillExpMax: UInt;
+class function TSkills.GetSkillExpMax: UInt;
 begin
   Result := 50 + (Ord(Game.Difficulty) * 50 div 3);
 end;

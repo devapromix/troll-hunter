@@ -20,6 +20,7 @@ uses
   SysUtils,
   BearLibTerminal,
   Trollhunter.Terminal,
+  Trollhunter.Skill,
   Trollhunter.Game,
   Trollhunter.Player,
   Trollhunter.UI,
@@ -89,7 +90,9 @@ begin
   else
     Terminal.Print(DX, 4, 'Gear Decay' + ': ' + Terminal.Colorize(
       'The smith''s hammer wears your gear thin."', 'Yellow'));
-  Terminal.Print(DX, 5, 'Start Gold' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 5, 'Skill Gain' + ': ' + Terminal.Colorize(
+  IntToStr(TSkills.GetSkillExpMax), 'Yellow'));
+  Terminal.Print(DX, 6, 'Start Gold' + ': ' + Terminal.Colorize(
     IntToStr(Player.GetStartGold()), 'Yellow'));
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, S, TK_ALIGN_BOTTOM);

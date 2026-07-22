@@ -2121,13 +2121,13 @@ function TPlayer.GetStartGold: UInt;
 begin
   case Game.Difficulty of
     dfEasy:
-      Result := Round(StartGold * 1.5);
+      Result := 400;
     dfNormal:
       Result := StartGold;
     dfHard:
       Result := Round(StartGold * 0.5);
     dfHell:
-      Result := Round(StartGold * 0.1);
+      Result := 50;
     else
       Result := StartGold;
   end;
