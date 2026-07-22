@@ -121,7 +121,6 @@ type
     procedure Attack(Index: Int);
     procedure RangedAttack(Index: Int);
     function CanFire: boolean;
-    function RangedProjectileSymbol: Char;
     procedure FireModeEnter;
     procedure FireModeExit;
     procedure FireModeSwitch(ADir: Int);
@@ -617,14 +616,6 @@ end;
 function TPlayer.CanFire: boolean;
 begin
   Result := (FWeaponSkill = skBow) or (FWeaponSkill = skWand);
-end;
-
-function TPlayer.RangedProjectileSymbol: Char;
-begin
-  case FWeaponSkill of
-    skWand:
-      Result := '*';
-  end;
 end;
 
 procedure TPlayer.FireModeEnter;

@@ -224,8 +224,9 @@ begin
   SX := Math.Sign(TX - Int(Player.X));
   SY := Math.Sign(TY - Int(Player.Y));
   if Player.WeaponSkill = skWand then
-    Sym := Player.RangedProjectileSymbol
-  else if (SX = 0) then
+    Sym := '*';
+  if Player.WeaponSkill = skBow then
+  if (SX = 0) then
     Sym := '|'
   else if (SY = 0) then
     Sym := '-'
