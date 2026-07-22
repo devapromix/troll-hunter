@@ -909,7 +909,7 @@ begin
     end;
   end;
 
-  Gold := Items_Inventory_GetItemAmount(Ord(ivGold));
+  Gold := Items_Inventory_GetItemAmount(Ord(itmGold));
 
   Attributes.SetValue(atStr, EnsureRange(Round(Skills.Skill[skAthletics].Value *
     1.2) + Round(Skills.Skill[skToughness].Value * 0.2) + FAttrib[atStr] +
@@ -1325,7 +1325,7 @@ begin
   if (Items_Inventory_DeleteItem(Index, FItem) > 0) then
   begin
     Value := FItem.Price div 4;
-    Items.AddItemToInv(ivGold, Value);
+    Items.AddItemToInv(itmGold, Value);
     MsgLog.Add(Format('You sold %s (+%d gold).', [Items.GetNameThe(FItem), Value]));
   end;
   Self.Calc;
@@ -1357,7 +1357,7 @@ var
   FItem: Item;
 begin
   FItem := Shops.Shop[Shops.Current].GetItem(Index);
-  if (Items_Inventory_DeleteItemAmount(Ord(ivGold), FItem.Price) > 0) then
+  if (Items_Inventory_DeleteItemAmount(Ord(itmGold), FItem.Price) > 0) then
   begin
     MsgLog.Add(Format('You bought %s (-%d gold).',
       [Items.GetNameThe(FItem), FItem.Price]));
@@ -1377,7 +1377,7 @@ begin
     .Value) * 1.6);
   if (Self.Gold >= Cost) then
   begin
-    if (Items_Inventory_DeleteItemAmount(Ord(ivGold), Cost) > 0) then
+    if (Items_Inventory_DeleteItemAmount(Ord(itmGold), Cost) > 0) then
     begin
       Attributes.SetValue(atLife, atMaxLife);
       MsgLog.Add(Format('You feel better (-%d gold).', [Cost]));
@@ -1431,7 +1431,7 @@ begin
   end;
   if (Self.Gold >= Cost) then
   begin
-    if (Items_Inventory_DeleteItemAmount(Ord(ivGold), Cost) > 0) then
+    if (Items_Inventory_DeleteItemAmount(Ord(itmGold), Cost) > 0) then
     begin
       FItem.Value := ItemBase[TItemEnum(FItem.ItemID)].Value +
         Items.GetBonus(FItem, btQuiverCap);
@@ -1539,7 +1539,7 @@ begin
         end;
       end;
       FItem.Durability := FItem.MaxDurability;
-      if ((Items_Inventory_DeleteItemAmount(Ord(ivGold), RepairCost) > 0) and
+      if ((Items_Inventory_DeleteItemAmount(Ord(itmGold), RepairCost) > 0) and
         (Items_Inventory_SetItem(Index, FItem) > 0)) then
         MsgLog.Add(Format('You repaired %s (-%d gold).',
           [Items.GetNameThe(FItem), RepairCost]));
@@ -1990,22 +1990,22 @@ begin
   // Add armors
   if Mode.Wizard then
   begin
-    Items.AddItemToInv(ivWinged_Helm, 1, True, False);
-    Items.AddItemToInv(ivPlate_Mail, 1, True, False);
-    Items.AddItemToInv(ivPlated_Gauntlets, 1, True, False);
-    Items.AddItemToInv(ivPlate_Boots, 1, True, False);
+    Items.AddItemToInv(itmWinged_Helm, 1, True, False);
+    Items.AddItemToInv(itmPlate_Mail, 1, True, False);
+    Items.AddItemToInv(itmPlated_Gauntlets, 1, True, False);
+    Items.AddItemToInv(itmPlate_Boots, 1, True, False);
   end
   else
   begin
     if (Game.Difficulty < dfHard) then
     begin
-      Items.AddItemToInv(ivCap, 1, True, True);
-      Items.AddItemToInv(ivQuilted_Armor, 1, True, True);
+      Items.AddItemToInv(itmCap, 1, True, True);
+      Items.AddItemToInv(itmQuilted_Armor, 1, True, True);
     end;
     if (Game.Difficulty < dfNormal) then
     begin
-      Items.AddItemToInv(ivLeather_Gloves, 1, True, True);
-      Items.AddItemToInv(ivShoes, 1, True, True);
+      Items.AddItemToInv(itmLeather_Gloves, 1, True, True);
+      Items.AddItemToInv(itmShoes, 1, True, True);
     end;
   end;
   { // Add weapon
@@ -2038,23 +2038,23 @@ begin
   // Add runes, potions and scrolls
   if Mode.Wizard then
   begin
-    Items.AddItemToInv(ivRune_of_Full_Healing);
-    Items.AddItemToInv(ivPotion_of_Full_Healing, 10);
-    Items.AddItemToInv(ivPotion_of_Full_Mana, 10);
+    Items.AddItemToInv(itmRune_of_Full_Healing);
+    Items.AddItemToInv(itmPotion_of_Full_Healing, 10);
+    Items.AddItemToInv(itmPotion_of_Full_Mana, 10);
     // Items.AddItemToInv(ivAntidote, 10);
-    Items.AddItemToInv(ivScroll_of_Town_Portal, 10);
-    Items.AddItemToInv(ivScroll_of_Identify, 10);
-    Items.AddItemToInv(ivScroll_of_Full_Identify, 5);
-    Items.AddItemToInv(ivScroll_of_Bloodlust, 10);
-    Items.AddItemToInv(ivScroll_of_Enchant_Item, 10);
+    Items.AddItemToInv(itmScroll_of_Town_Portal, 10);
+    Items.AddItemToInv(itmScroll_of_Identify, 10);
+    Items.AddItemToInv(itmScroll_of_Full_Identify, 5);
+    Items.AddItemToInv(itmScroll_of_Bloodlust, 10);
+    Items.AddItemToInv(itmScroll_of_Enchant_Item, 10);
   end
   else
   begin
     // Items.AddItemToInv(ivLesser_Healing_Potion, 5);
     // Items.AddItemToInv(ivLesser_Mana_Potion, 5);
     // Items.AddItemToInv(ivAntidote, 3);
-    Items.AddItemToInv(ivScroll_of_Town_Portal);
-    Items.AddItemToInv(ivScroll_of_Identify);
+    Items.AddItemToInv(itmScroll_of_Town_Portal);
+    Items.AddItemToInv(itmScroll_of_Identify);
   end;
   { Items.AddItemToInv(ivMoonstone_Ring);
     Items.AddItemToInv(ivMoonstone_Ring);
@@ -2091,14 +2091,14 @@ var
 begin
   // Equipment
   for J := Low(ClassProp[HClass].Item) to High(ClassProp[HClass].Item) do
-    if (ClassProp[HClass].Item[J] <> TItemEnum.None) then
+    if (ClassProp[HClass].Item[J] <> TItemEnum.itmNone) then
       Items.AddItemToInv(ClassProp[HClass].Item[J], 1, True, True);
   // Add foods
-  Items.AddItemToInv(ivBread_Ration, IfThen(Mode.Wizard, 9, 5));
-  Items.AddItemToInv(ivTorch, IfThen(Mode.Wizard, 9, 3));
+  Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 5));
+  Items.AddItemToInv(itmTorch, IfThen(Mode.Wizard, 9, 3));
   // Add coins
   LGold := GetStartGold();
-  Items.AddItemToInv(ivGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), LGold));
+  Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), LGold));
   // Calc
   Calc();
   Fill();

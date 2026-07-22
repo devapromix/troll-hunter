@@ -51,7 +51,7 @@ const
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   QuiverTypeItems = [itQuiver];
   MagicWeaponTypeItems = [itStaff, itWand];
-  RangedWeaponItems = [itBow];
+  RangedWeaponItems = [itBow, itWand];
   TorchTypeItems = [itTorch];
   ArrowTypeItems = [itArrow];
 
@@ -75,162 +75,148 @@ const
     KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems +
     ArrowTypeItems;
 
-  // Silver Sword , Forsworn Sword , Hero Sword
-  // Skyforge War Axe , Dragonbone War Axe
-
-  // Hide Boots
-
-  // Hide Shield , Iron Shield , Steel Shield , Dragonscale Shield , Dragonplate Shield
-  // Hide Helmet , Iron Helmet , Steel Helmet , Dragonscale Helmet , Dragonplate Helmet
-  // Bonemold Helmet , Carved Helmet , Shellbug Helmet , Ebony Helmet
-  // Long Bow , Hunting Bow , Imperial Bow , Ancient Bow , Hero Bow , Dragonbone Bow
-
-  // Honed ... , Skyforge ... , Bloodcursed ... , Sunhallowed ...
-
-  { Potion, Flask, Extract, Essence, Elixir }
-
 type
   TItemEnum = (
     // All maps
-    None, ivCorpse, ivGold,
+    itmNone, itmCorpse, itmGold,
     // Flasks
-    ivRuby_Flask, ivAmethyst_Flask, ivBismuth_Flask, ivSilver_Flask,
-    ivAquamarine_Flask, ivSapphire_Flask, ivQuicksilver_Flask, ivTopaz_Flask,
-    ivSulphur_Flask, ivGranite_Flask, ivQuartz_Flask, ivSacred_Flask,
-    ivJade_Flask, ivHallowed_Flask, ivCoruscating_Flask, ivSanctified_Flask,
-    ivDivine_Flask, ivGold_Flask, ivDiamond_Flask, ivEternal_Flask,
+    itmRuby_Flask, itmAmethyst_Flask, itmBismuth_Flask, itmSilver_Flask,
+    itmAquamarine_Flask, itmSapphire_Flask, itmQuicksilver_Flask, itmTopaz_Flask,
+    itmSulphur_Flask, itmGranite_Flask, itmQuartz_Flask, itmSacred_Flask,
+    itmJade_Flask, itmHallowed_Flask, itmCoruscating_Flask, itmSanctified_Flask,
+    itmDitmine_Flask, itmGold_Flask, itmDiamond_Flask, itmEternal_Flask,
     // Potions of Healing
-    ivPotion_of_Minor_Healing, ivPotion_of_Lesser_Healing,
-    ivPotion_of_Greater_Healing, ivPotion_of_Full_Healing,
+    itmPotion_of_Minor_Healing, itmPotion_of_Lesser_Healing,
+    itmPotion_of_Greater_Healing, itmPotion_of_Full_Healing,
     // Potions of Mana
-    ivPotion_of_Minor_Mana, ivPotion_of_Lesser_Mana, ivPotion_of_Greater_Mana,
-    ivPotion_of_Full_Mana,
+    itmPotion_of_Minor_Mana, itmPotion_of_Lesser_Mana, itmPotion_of_Greater_Mana,
+    itmPotion_of_Full_Mana,
     // Stones
-    ivStone_of_Stamina, ivStone_of_Mana, ivStone_of_Recovery,
+    itmStone_of_Stamina, itmStone_of_Mana, itmStone_of_Recovery,
     // Scrolls
-    ivScroll_of_Minor_Healing, ivScroll_of_Lesser_Healing,
-    ivScroll_of_Greater_Healing, ivScroll_of_Full_Healing, ivScroll_of_Hunger,
-    ivScroll_of_Sidestepping, ivScroll_of_Phasing, ivScroll_of_Teleportation,
-    ivScroll_of_Disappearing, ivScroll_of_Town_Portal, ivScroll_of_Bloodlust,
-    ivScroll_of_Identify, ivScroll_of_Full_Identify, ivScroll_of_Enchant_Item,
+    itmScroll_of_Minor_Healing, itmScroll_of_Lesser_Healing,
+    itmScroll_of_Greater_Healing, itmScroll_of_Full_Healing, itmScroll_of_Hunger,
+    itmScroll_of_Sidestepping, itmScroll_of_Phasing, itmScroll_of_Teleportation,
+    itmScroll_of_Disappearing, itmScroll_of_Town_Portal, itmScroll_of_Bloodlust,
+    itmScroll_of_Identify, itmScroll_of_Full_Identify, itmScroll_of_Enchant_Item,
     // Runes
-    ivRune_of_Minor_Healing, ivRune_of_Lesser_Healing,
-    ivRune_of_Greater_Healing, ivRune_of_Full_Healing, ivRune_of_Teleportation,
-    ivRune_of_Town_Portal,
+    itmRune_of_Minor_Healing, itmRune_of_Lesser_Healing,
+    itmRune_of_Greater_Healing, itmRune_of_Full_Healing, itmRune_of_Teleportation,
+    itmRune_of_Town_Portal,
     // Foods and Plants
-    ivBread_Ration, ivValley_Root, ivRat_Pod, ivKobold_Bulb, ivHunk_of_Meat,
+    itmBread_Ration, itmValley_Root, itmRat_Pod, itmKobold_Bulb, itmHunk_of_Meat,
     // Keys
-    ivKey,
+    itmKey,
     // Torch
-    ivTorch, ivOil_Lamp,
+    itmTorch, itmOil_Lamp,
     // Orbs
-    ivLight_Orb, ivLife_Orb, ivMana_Orb,
+    itmLight_Orb, itmLife_Orb, itmMana_Orb,
     // Foods and Plants
-    ivHealing_Herb,
+    itmHealing_Herb,
     // Ruby (Gems)
-    ivChipped_Ruby, ivFlawed_Ruby, ivRuby, ivFlawless_Ruby, ivPerfect_Ruby,
-    ivImperial_Ruby, ivRoyal_Ruby,
+    itmChipped_Ruby, itmFlawed_Ruby, itmRuby, itmFlawless_Ruby, itmPerfect_Ruby,
+    itmImperial_Ruby, itmRoyal_Ruby,
     // Topaz (Gems)
-    ivChipped_Topaz, ivFlawed_Topaz, ivTopaz, ivFlawless_Topaz, ivPerfect_Topaz,
-    ivImperial_Topaz, ivRoyal_Topaz,
+    itmChipped_Topaz, itmFlawed_Topaz, itmTopaz, itmFlawless_Topaz, itmPerfect_Topaz,
+    itmImperial_Topaz, itmRoyal_Topaz,
     // Sapphire (Gems)
-    ivChipped_Sapphire, ivFlawed_Sapphire, ivSapphire, ivFlawless_Sapphire,
-    ivPerfect_Sapphire, ivImperial_Sapphire, ivRoyal_Sapphire,
+    itmChipped_Sapphire, itmFlawed_Sapphire, itmSapphire, itmFlawless_Sapphire,
+    itmPerfect_Sapphire, itmImperial_Sapphire, itmRoyal_Sapphire,
     // Emerald (Gems)
-    ivChipped_Emerald, ivFlawed_Emerald, ivEmerald, ivFlawless_Emerald,
-    ivPerfect_Emerald, ivImperial_Emerald, ivRoyal_Emerald,
+    itmChipped_Emerald, itmFlawed_Emerald, itmEmerald, itmFlawless_Emerald,
+    itmPerfect_Emerald, itmImperial_Emerald, itmRoyal_Emerald,
     // Diamond (Gems)
-    ivChipped_Diamond, ivFlawed_Diamond, ivDiamond, ivFlawless_Diamond,
-    ivPerfect_Diamond, ivImperial_Diamond, ivRoyal_Diamond,
+    itmChipped_Diamond, itmFlawed_Diamond, itmDiamond, itmFlawless_Diamond,
+    itmPerfect_Diamond, itmImperial_Diamond, itmRoyal_Diamond,
     // Rings
-    ivMoonstone_Ring, ivValuable_Ring, ivPrecious_Ring, ivEthreal_Ring,
-    ivExquisite_Ring, ivScarab_Ring, ivCrystal_Ring, ivPrismatic_Ring,
-    ivCitrine_Ring, ivGold_Ring,
+    itmMoonstone_Ring, itmValuable_Ring, itmPrecious_Ring, itmEthreal_Ring,
+    itmExquisite_Ring, itmScarab_Ring, itmCrystal_Ring, itmPrismatic_Ring,
+    itmCitrine_Ring, itmGold_Ring,
     // Amulets
-    ivTurquoise_Amulet, ivOnyx_Amulet, ivViridian_Amulet, iv_Lunar_Amulet,
-    ivJade_Amulet, ivClaw_Amulet, ivAgate_Amulet, ivGothic_Amulet,
-    ivAncient_Amulet, ivAlmighty_Amulet,
+    itmTurquoise_Amulet, itmOnyx_Amulet, itmViridian_Amulet, itm_Lunar_Amulet,
+    itmJade_Amulet, itmClaw_Amulet, itmAgate_Amulet, itmGothic_Amulet,
+    itmAncient_Amulet, itmAlmighty_Amulet,
     // Talismans
-    ivLongtooth_Talisman, ivDark_Eye, ivBlack_Maw_Talisman, ivVoid_Eye,
-    ivBlood_Boil, ivDream_Fragment, ivWinter_Heart, ivTear_of_Purity,
-    ivCrimson_Talisman, ivDead_Reckoning,
+    itmLongtooth_Talisman, itmDark_Eye, itmBlack_Maw_Talisman, itmVoid_Eye,
+    itmBlood_Boil, itmDream_Fragment, itmWinter_Heart, itmTear_of_Purity,
+    itmCrimson_Talisman, itmDead_Reckoning,
     // Wands
-    ivYew_Wand, ivWater_Wand, ivBone_Wand, ivIvory_Wand, ivGrim_Wand,
-    ivObsidian_Wand, ivGrave_Wand, ivMystic_Wand, ivLich_Wand, ivCelestial_Wand,
+    itmYew_Wand, itmWater_Wand, itmBone_Wand, itmIvory_Wand, itmGrim_Wand,
+    itmObsidian_Wand, itmGrave_Wand, itmMystic_Wand, itmLich_Wand, itmCelestial_Wand,
     // Daggers
-    ivDagger1, ivDagger2, ivDagger3, ivDagger4, ivDagger5, ivDagger6, ivDagger7,
-    ivDagger8, ivDagger9, ivDagger10,
+    itmDagger1, itmDagger2, itmDagger3, itmDagger4, itmDagger5, itmDagger6, itmDagger7,
+    itmDagger8, itmDagger9, itmDagger10,
     // Bows
-    ivShort_Bow, ivHunting_Bow, ivLong_Bow, ivNomad_Bow, ivHeavy_Bow,
-    ivComposite_Bow, ivMaster_Bow, ivWar_Bow, ivDragon_Bow, ivAncient_Bow,
+    itmShort_Bow, itmHunting_Bow, itmLong_Bow, itmNomad_Bow, itmHeavy_Bow,
+    itmComposite_Bow, itmMaster_Bow, itmWar_Bow, itmDragon_Bow, itmAncient_Bow,
     // Quivers
-    ivLight_Quiver, ivLeather_Quiver, ivHarpy_Hide_Quiver, ivSilverleaf_Quiver,
-    ivTroll_Hide_Quiver, ivKnothide_Quiver, ivMedium_Quiver, ivHunting_Quiver,
-    ivWar_Quiver, ivRuned_Quiver, ivQuickdraw_Quiver, ivRaptor_Hide_Quiver,
-    ivHeavy_Quiver,
+    itmLight_Quiver, itmLeather_Quiver, itmHarpy_Hide_Quiver, itmSilverleaf_Quiver,
+    itmTroll_Hide_Quiver, itmKnothide_Quiver, itmMedium_Quiver, itmHunting_Quiver,
+    itmWar_Quiver, itmRuned_Quiver, itmQuickdraw_Quiver, itmRaptor_Hide_Quiver,
+    itmHeavy_Quiver,
     // Dark Wood
-    ivCap, ivWar_Cap, ivHood, ivRed_Hat, // Headgear
-    ivQuilted_Armor, ivLeather_Armor, ivLight_Clothes, ivLeather_Apron,
+    itmCap, itmWar_Cap, itmHood, itmRed_Hat, // Headgear
+    itmQuilted_Armor, itmLeather_Armor, itmLight_Clothes, itmLeather_Apron,
     // Body Armor
-    ivLeather_Gloves, ivHide_Gloves, // Gloves
-    ivShoes, ivLeather_Boots, // Boots
-    ivBuckler, ivTarge_Shield, // Shield
-    ivRusty_Sword, ivShort_Sword, // Blade
-    ivHatchet, ivBattle_Axe, // Axe
-    ivShort_Spear, ivSpear, // Spear
-    ivSlag_Hammer, ivSpiked_Cudgel, // Mace
-    ivQuarterstaff, ivStaff2, // Staff
+    itmLeather_Gloves, itmHide_Gloves, // Gloves
+    itmShoes, itmLeather_Boots, // Boots
+    itmBuckler, itmTarge_Shield, // Shield
+    itmRusty_Sword, itmShort_Sword, // Blade
+    itmHatchet, itmBattle_Axe, // Axe
+    itmShort_Spear, itmSpear, // Spear
+    itmSlag_Hammer, itmSpiked_Cudgel, // Mace
+    itmQuarterstaff, itmStaff2, // Staff
     // Gray Cave
-    ivHelm, ivGrand_Helm, ivLeather_Cap, ivMask, // Headgear
-    ivHard_Leather_Armor, ivBattle_Armor, ivFancy_Clothes, ivRobe, // Body Armor
-    ivKobold_Gloves, ivChain_Gloves, // Gloves
-    ivMesh_Boots, ivHeavy_Boots, // Boots
-    ivSmall_Shield, ivKite_Shield, // Shield
-    ivBroad_Sword, ivLong_Sword, // Blade
-    ivMeat_Axe, ivFlesh_Tearer, // Axe
-    ivJavelin, ivFuscina, // Spear
-    ivWarhammer, ivWar_Mace, // Mace
-    ivStaff3, ivStaff4, // Staff
+    itmHelm, itmGrand_Helm, itmLeather_Cap, itmMask, // Headgear
+    itmHard_Leather_Armor, itmBattle_Armor, itmFancy_Clothes, itmRobe, // Body Armor
+    itmKobold_Gloves, itmChain_Gloves, // Gloves
+    itmMesh_Boots, itmHeavy_Boots, // Boots
+    itmSmall_Shield, itmKite_Shield, // Shield
+    itmBroad_Sword, itmLong_Sword, // Blade
+    itmMeat_Axe, itmFlesh_Tearer, // Axe
+    itmJavelin, itmFuscina, // Spear
+    itmWarhammer, itmWar_Mace, // Mace
+    itmStaff3, itmStaff4, // Staff
     // Deep Cave
-    ivGreat_Helm, ivFull_Helm, ivBone_Helmet, ivWizard_Hat, // Headgear
-    ivBrigantine_Armor, ivRing_Mail, ivLight_Furs, ivClean_Robe, // Body Armor
-    ivEtched_Gloves, ivHeavy_Gloves, // Gloves
-    ivGreaves, ivBoneweave_Boots, // Boots
-    ivBone_Shield, ivHeater_Shield, // Shield
-    ivMoon_Blade, ivScimitar, // Blade
-    ivWar_Axe, ivDark_Axe, // Axe
-    ivWar_Spear, ivHarpoon, // Spear
-    ivFlanged_Mace, ivWar_Gavel, // Mace
-    ivStaff5, ivStaff6, // Staff
+    itmGreat_Helm, itmFull_Helm, itmBone_Helmet, itmWizard_Hat, // Headgear
+    itmBrigantine_Armor, itmRing_Mail, itmLight_Furs, itmClean_Robe, // Body Armor
+    itmEtched_Gloves, itmHeavy_Gloves, // Gloves
+    itmGreaves, itmBoneweave_Boots, // Boots
+    itmBone_Shield, itmHeater_Shield, // Shield
+    itmMoon_Blade, itmScimitar, // Blade
+    itmWar_Axe, itmDark_Axe, // Axe
+    itmWar_Spear, itmHarpoon, // Spear
+    itmFlanged_Mace, itmWar_Gavel, // Mace
+    itmStaff5, itmStaff6, // Staff
     // Blood Cave
-    ivHorned_Helmet, ivSpired_Helm, ivDiadem, ivTiara, // Headgear
-    ivChain_Mail, ivScale_Mail, ivThick_Furs, ivHard_Robe, // Body Armor
-    ivBattle_Gauntlets, ivWar_Gauntlets, // Gloves
-    ivChain_Boots, ivWar_Boots, // Boots
-    ivHeavy_Shield, ivLarge_Shield, // Shield
-    ivBastard_Sword, ivGreat_Sword, // Blade
-    ivBerserker_Axe, ivMarauder_Axe, // Axe
-    ivSilvan_Whisper, ivImpaler, // Spear
-    ivBarbarous_Mace, ivAdept_Hammer, // Mace
-    ivStaff7, ivStaff8, // Staff
+    itmHorned_Helmet, itmSpired_Helm, itmDiadem, itmTiara, // Headgear
+    itmChain_Mail, itmScale_Mail, itmThick_Furs, itmHard_Robe, // Body Armor
+    itmBattle_Gauntlets, itmWar_Gauntlets, // Gloves
+    itmChain_Boots, itmWar_Boots, // Boots
+    itmHeavy_Shield, itmLarge_Shield, // Shield
+    itmBastard_Sword, itmGreat_Sword, // Blade
+    itmBerserker_Axe, itmMarauder_Axe, // Axe
+    itmSilvan_Whisper, itmImpaler, // Spear
+    itmBarbarous_Mace, itmAdept_Hammer, // Mace
+    itmStaff7, itmStaff8, // Staff
     // Drom
-    ivCasque, ivWinged_Helm, ivMagic_Helmet, ivCrown, // Headgear
-    ivSplint_Mail, ivPlate_Mail, ivMoloch_Robe, ivBoneweave_Hauberk,
+    itmCasque, itmWinged_Helm, itmMagic_Helmet, itmCrown, // Headgear
+    itmSplint_Mail, itmPlate_Mail, itmMoloch_Robe, itmBoneweave_Hauberk,
     // Body Armor
-    ivTroll_Gauntlets, ivPlated_Gauntlets, // Gloves
-    ivBattle_Boots, ivPlate_Boots, // Boots
-    ivTower_Shield, ivGothic_Shield, // Shield
-    ivRune_Sword, ivTroll_Slayer, // Blade
-    ivChopper, ivDemon_Axe, // Axe
-    ivSoul_Reaver, ivHoned_Spear, // Spear
-    ivWar_Maul, ivDoom_Hammer, // Mace
-    ivStaff9, ivStaff10, // Staff
+    itmTroll_Gauntlets, itmPlated_Gauntlets, // Gloves
+    itmBattle_Boots, itmPlate_Boots, // Boots
+    itmTower_Shield, itmGothic_Shield, // Shield
+    itmRune_Sword, itmTroll_Slayer, // Blade
+    itmChopper, itmDemon_Axe, // Axe
+    itmSoul_Reaver, itmHoned_Spear, // Spear
+    itmWar_Maul, itmDoom_Hammer, // Mace
+    itmStaff9, itmStaff10, // Staff
     // Arrows
-    ivArrows
+    itmArrows
     );
 
 const
-  TavernItems = [ivKey, ivScroll_of_Hunger, ivTorch, ivOil_Lamp, ivLight_Orb];
+  TavernItems = [itmKey, itmScroll_of_Hunger, itmTorch, itmOil_Lamp, itmLight_Orb];
 
 const
   tfBlessed = 1;

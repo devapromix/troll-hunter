@@ -1865,7 +1865,7 @@ begin
       S := S + GetAmount();
   end
   // Corpse
-  else if (TItemEnum(ID) = ivCorpse) then
+  else if (TItemEnum(ID) = itmCorpse) then
     S := ''
   // Light (Torch)
   else if (IT = itTorch) then
@@ -2068,7 +2068,7 @@ begin
       FY := Math.RandomRange(1, UIntMax - 1);
     if (I >= UIntMax) then
     begin
-      ID := Ord(ivGold);
+      ID := Ord(itmGold);
       Break;
     end;
     Inc(I);
@@ -2151,8 +2151,8 @@ begin
       Ord(ivPotion_of_Full_Mana) + 1))); }
     // Scroll
     if ((Math.RandomRange(0, M) >= 8) or AIsBoss) then
-      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(ivScroll_of_Minor_Healing),
-        Ord(ivScroll_of_Town_Portal) + 1)));
+      Loot(AX, AY, TItemEnum(Math.RandomRange(Ord(itmScroll_of_Minor_Healing),
+        Ord(itmScroll_of_Town_Portal) + 1)));
     // Item
     if (Math.RandomRange(0, M) >= 9) then
       Add(Map.Current, AX, AY, -1, AIsBoss);
@@ -2618,19 +2618,19 @@ end;
 
 procedure TItems.LootGold(const AX, AY: UInt);
 begin
-  Loot(AX, AY, ivGold);
+  Loot(AX, AY, itmGold);
   if (Math.RandomRange(0, 4) = 0) then
   begin
     X := Map.EnsureRange(AX + (Math.RandomRange(0, 3) - 1));
     Y := Map.EnsureRange(AY + (Math.RandomRange(0, 3) - 1));
     if (Map.GetTileEnum(X, Y, Map.Current) in SpawnTiles) then
-      Loot(X, Y, ivGold);
+      Loot(X, Y, itmGold);
   end;
 end;
 
 procedure TItems.LootArrows(const AX, AY: UInt);
 begin
-  Loot(AX, AY, ivArrows);
+  Loot(AX, AY, itmArrows);
 end;
 
 procedure TItems.RenderInventory(PriceType: TPriceType = ptNone);

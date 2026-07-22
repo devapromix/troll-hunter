@@ -35,28 +35,28 @@ const
     Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
     Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
     Skill: (skBlade, skAthletics, skBodybuilding);
-    Item: (ivCap, ivQuilted_Armor, None, None, ivRusty_Sword, ivBuckler,
-    None, None, None, None); ),
+    Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
+    itmNone, itmNone, itmNone, itmNone); ),
     // Mage
     (Description: 'Mage'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 0;
     Max: 0; ); Willpower: (Min: 1; Max: 4; ); Perception: (Min: 1; Max: 2; );
     Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
     Skill: (skStaff, skConcentration, skMeditation);
-    Item: (ivHood, ivLight_Clothes, None, None, ivQuarterstaff, None,
-    ivYew_Wand, None, None, None); ),
+    Item: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
+    itmYew_Wand, itmNone, itmNone, itmNone); ),
     // Ranger
     (Description: 'Ranger'; Strength: (Min: 1; Max: 2; ); Dexterity: (Min: 1;
     Max: 4; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
     Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
-    Skill: (skBow, skDodge, skDodge); Item: (ivCap, ivQuilted_Armor, None, None,
-    ivDagger1, None, ivShort_Bow, ivLight_Quiver, None, None); ),
+    Skill: (skBow, skDodge, skDodge); Item: (itmCap, itmQuilted_Armor, itmNone, itmNone,
+    itmDagger1, itmNone, itmShort_Bow, itmLight_Quiver, itmNone, itmNone); ),
     // Thief
     (Description: 'Thief'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1;
     Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
     Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
     Skill: (skDagger, skToughness, skStealth);
-    Item: (ivCap, ivQuilted_Armor, None, None, ivDagger1, None, None,
-    None, None, None); )
+    Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmDagger1, itmNone, itmNone,
+    itmNone, itmNone, itmNone); )
     /// ///
     );
 
@@ -120,7 +120,7 @@ begin
   F := False;
   Result := '';
   for J := Low(ClassProp[I].Item) to High(ClassProp[I].Item) do
-    if (ClassProp[I].Item[J] <> TItemEnum.None) then
+    if (ClassProp[I].Item[J] <> TItemEnum.itmNone) then
     begin
       S := Items.Name[ClassProp[I].Item[J]];
       Utils.AppStr(Result, S, F);

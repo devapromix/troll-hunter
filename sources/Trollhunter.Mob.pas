@@ -855,10 +855,10 @@ begin
   // Gold Finder Talent
   if (Player.Talents.GetLevel(tlGold_Finder) > 0) and
     (Math.RandomRange(0, 99) < Player.Talents.GetLevel(tlGold_Finder) * 5) then
-    Items.Loot(Self.X, Self.Y, ivGold);
+    Items.Loot(Self.X, Self.Y, itmGold);
   // Corpse
   if Game.LCorpses then
-    Items.Loot(Self.X, Self.Y, ivCorpse);
+    Items.Loot(Self.X, Self.Y, itmCorpse);
 end;
 
 function TMob.GetVision: UInt;
