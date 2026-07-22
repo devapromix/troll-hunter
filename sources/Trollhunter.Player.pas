@@ -519,7 +519,11 @@ begin
     Self.Attack(Index);
     Exit;
   end;
-  if (FWeaponSkill <> skWand) then
+  if (FWeaponSkill = skWand) then
+  begin
+
+  end;
+  if (FWeaponSkill = skBow) then
   begin
     if not Self.HasQuiver then
     begin
@@ -592,7 +596,7 @@ begin
     Mob.Attributes.Modify(atLife, -Dam);
     if (FWeaponSkill = skWand) then
       MsgLog.Add(Format('Your charge hits %s (%d).', [The, Dam]))
-    else
+    else if (FWeaponSkill = skBow) then
       MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 15 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
