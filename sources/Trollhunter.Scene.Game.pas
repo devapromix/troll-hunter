@@ -31,6 +31,7 @@ uses
   BearLibTerminal,
   Trollhunter.Quest,
   Trollhunter.Terminal,
+  Trollhunter.Skill,
   Trollhunter.Player,
   Trollhunter.Player.Types,
   Trollhunter.Item.Dungeon,
@@ -222,7 +223,9 @@ begin
   TY := Mobs.Mob[Index].Y;
   SX := Math.Sign(TX - Int(Player.X));
   SY := Math.Sign(TY - Int(Player.Y));
-  if (SX = 0) then
+  if Player.WeaponSkill = skWand then
+    Sym := Player.RangedProjectileSymbol
+  else if (SX = 0) then
     Sym := '|'
   else if (SY = 0) then
     Sym := '-'
@@ -431,7 +434,7 @@ begin
       if Player.CanFire then
         Player.FireModeEnter
       else
-        MsgLog.Add('You need to equip a bow to use ranged fire mode.');
+        MsgLog.Add('You need to equip a bow or wand to use ranged fire mode.');
     end;
     TK_P:
       Scenes.SetScene(scPlayer);

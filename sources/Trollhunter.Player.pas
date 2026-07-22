@@ -121,6 +121,7 @@ type
     procedure Attack(Index: Int);
     procedure RangedAttack(Index: Int);
     function CanFire: boolean;
+    function RangedProjectileSymbol: Char;
     procedure FireModeEnter;
     procedure FireModeExit;
     procedure FireModeSwitch(ADir: Int);
@@ -519,25 +520,28 @@ begin
     Self.Attack(Index);
     Exit;
   end;
-  if not Self.HasQuiver then
+  if (FWeaponSkill <> skWand) then
   begin
-    MsgLog.Add('You need a quiver equipped to do that.');
-    Self.FireModeExit;
-    Exit;
+    if not Self.HasQuiver then
+    begin
+      MsgLog.Add('You need a quiver equipped to do that.');
+      Self.FireModeExit;
+      Exit;
+    end;
+    if Self.IsQuiverBroken then
+    begin
+      MsgLog.Add('Your quiver is broken and can''t hold arrows.');
+      Self.FireModeExit;
+      Exit;
+    end;
+    if not Self.HasArrows then
+    begin
+      MsgLog.Add('You have no arrows left in your quiver.');
+      Self.FireModeExit;
+      Exit;
+    end;
+    Self.UseArrow;
   end;
-  if Self.IsQuiverBroken then
-  begin
-    MsgLog.Add('Your quiver is broken and can''t hold arrows.');
-    Self.FireModeExit;
-    Exit;
-  end;
-  if not Self.HasArrows then
-  begin
-    MsgLog.Add('You have no arrows left in your quiver.');
-    Self.FireModeExit;
-    Exit;
-  end;
-  Self.UseArrow;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if Abilities.IsAbility(abBerserk) then
@@ -587,12 +591,16 @@ begin
     end;
     // Attack
     Mob.Attributes.Modify(atLife, -Dam);
-    MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
+    if (FWeaponSkill = skWand) then
+      MsgLog.Add(Format('Your charge hits %s (%d).', [The, Dam]))
+    else
+      MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
     // Break weapon
     if ((Math.RandomRange(0, 15 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
       BreakItem(stRanged)
     else
-    if ((Math.RandomRange(0, 20 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
+    if (FWeaponSkill <> skWand) and
+      ((Math.RandomRange(0, 20 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
       BreakItem(stQuiver);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
@@ -608,7 +616,15 @@ end;
 
 function TPlayer.CanFire: boolean;
 begin
-  Result := (FWeaponSkill = skBow);
+  Result := (FWeaponSkill = skBow) or (FWeaponSkill = skWand);
+end;
+
+function TPlayer.RangedProjectileSymbol: Char;
+begin
+  case FWeaponSkill of
+    skWand:
+      Result := '*';
+  end;
 end;
 
 procedure TPlayer.FireModeEnter;
@@ -630,26 +646,29 @@ begin
   if not CanFire then
   begin
     FFireMode := False;
-    MsgLog.Add('You need a bow equipped to do that.');
+    MsgLog.Add('You need a bow or wand equipped to do that.');
     Exit;
   end;
-  if not Self.HasQuiver then
+  if (FWeaponSkill <> skWand) then
   begin
-    FFireMode := False;
-    MsgLog.Add('You need a quiver equipped to do that.');
-    Exit;
-  end;
-  if Self.IsQuiverBroken then
-  begin
-    FFireMode := False;
-    MsgLog.Add('Your quiver is broken and can''t hold arrows.');
-    Exit;
-  end;
-  if not Self.HasArrows then
-  begin
-    FFireMode := False;
-    MsgLog.Add('You have no arrows left in your quiver.');
-    Exit;
+    if not Self.HasQuiver then
+    begin
+      FFireMode := False;
+      MsgLog.Add('You need a quiver equipped to do that.');
+      Exit;
+    end;
+    if Self.IsQuiverBroken then
+    begin
+      FFireMode := False;
+      MsgLog.Add('Your quiver is broken and can''t hold arrows.');
+      Exit;
+    end;
+    if not Self.HasArrows then
+    begin
+      FFireMode := False;
+      MsgLog.Add('You have no arrows left in your quiver.');
+      Exit;
+    end;
   end;
   for I := 0 to Mobs.Count - 1 do
     if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
@@ -710,8 +729,8 @@ end;
 
 function TPlayer.CanRangedAttack: boolean;
 begin
-  Result := Self.CanFire and Self.HasQuiver and not Self.IsQuiverBroken and
-    Self.HasArrows;
+  Result := Self.CanFire and ((FWeaponSkill = skWand) or
+    (Self.HasQuiver and not Self.IsQuiverBroken and Self.HasArrows));
 end;
 
 procedure TPlayer.FireModeExit;

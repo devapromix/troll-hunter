@@ -795,52 +795,52 @@ const
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 10; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 3; Max: 4; ));
-    Price: 550; Color: clDarkBlue; Deep: [deDark_Wood]; ),
+    Price: 550; Color: clDarkBlue; Deep: [deDark_Wood]; Value: 100 ),
     // Water Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 12; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6; ); MaxDamage: (Min: 7; Max: 8; ));
-    Price: 600; Color: clDarkBlue; Deep: [deDark_Wood]; ),
+    Price: 600; Color: clDarkBlue; Deep: [deDark_Wood]; Value: 120 ),
     // Bone Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 14; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
-    Price: 650; Color: clDarkBlue; Deep: [deGray_Cave]; ),
+    Damage: (MinDamage: (Min: 9; Max: 10; ); MaxDamage: (Min: 11; Max: 12; ));
+    Price: 650; Color: clDarkBlue; Deep: [deGray_Cave]; Value: 140 ),
     // Ivory Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 16; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 15; Max: 16; ); MaxDamage: (Min: 17; Max: 18; ));
-    Price: 700; Color: clDarkBlue; Deep: [deGray_Cave]; ),
+    Damage: (MinDamage: (Min: 13; Max: 14; ); MaxDamage: (Min: 15; Max: 16; ));
+    Price: 700; Color: clDarkBlue; Deep: [deGray_Cave]; Value: 160 ),
     // Grim Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 18; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 21; Max: 22; ); MaxDamage: (Min: 23; Max: 24; ));
-    Price: 750; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
+    Damage: (MinDamage: (Min: 17; Max: 18; ); MaxDamage: (Min: 19; Max: 20; ));
+    Price: 750; Color: clDarkBlue; Deep: [deDeep_Cave]; Value: 180 ),
     // Obsidian Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 20; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 25; Max: 26; ); MaxDamage: (Min: 27; Max: 28; ));
-    Price: 800; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
+    Damage: (MinDamage: (Min: 21; Max: 22; ); MaxDamage: (Min: 23; Max: 24; ));
+    Price: 800; Color: clDarkBlue; Deep: [deDeep_Cave]; Value: 200 ),
     // Grave Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 22; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 31; Max: 32; ); MaxDamage: (Min: 33; Max: 34; ));
-    Price: 850; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
+    Damage: (MinDamage: (Min: 25; Max: 26; ); MaxDamage: (Min: 27; Max: 28; ));
+    Price: 850; Color: clDarkBlue; Deep: [deBlood_Cave]; Value: 220 ),
     // Mystic Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 24; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 35; Max: 36; ); MaxDamage: (Min: 37; Max: 38; ));
-    Price: 900; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
+    Damage: (MinDamage: (Min: 29; Max: 30; ); MaxDamage: (Min: 31; Max: 32; ));
+    Price: 900; Color: clDarkBlue; Deep: [deBlood_Cave]; Value: 240 ),
     // Lich Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 27; Level: 9; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 41; Max: 42; ); MaxDamage: (Min: 43; Max: 44; ));
-    Price: 950; Color: clDarkBlue; Deep: [deDrom]; ),
+    Damage: (MinDamage: (Min: 33; Max: 34; ); MaxDamage: (Min: 35; Max: 36; ));
+    Price: 950; Color: clDarkBlue; Deep: [deDrom]; Value: 250 ),
     // Celestial Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 30; Level: 10; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 45; Max: 46; ); MaxDamage: (Min: 47; Max: 48; ));
-    Price: 1000; Color: clDarkBlue; Deep: [deDrom]; ),
+    Damage: (MinDamage: (Min: 37; Max: 38; ); MaxDamage: (Min: 39; Max: 40; ));
+    Price: 1000; Color: clDarkBlue; Deep: [deDrom]; Value: 300 ),
 
     // Dagger #1
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
