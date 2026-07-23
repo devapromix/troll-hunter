@@ -32,6 +32,7 @@ uses
   Trollhunter.Quest,
   Trollhunter.Terminal,
   Trollhunter.Skill,
+  Trollhunter.Projectile,
   Trollhunter.Player,
   Trollhunter.Player.Types,
   Trollhunter.Item.Dungeon,
@@ -211,7 +212,7 @@ procedure TSceneGame.FireArrow;
 var
   Index, TX, TY, PX, PY, L, I, AX, AY, SX, SY: Int;
   LR: real;
-  Sym: string;
+  LSymbol: TSymbol;
 begin
   Index := Player.FireModeTarget;
   if (Index < 0) or not Mobs.Mob[Index].Alive then
@@ -223,17 +224,7 @@ begin
   TY := Mobs.Mob[Index].Y;
   SX := Math.Sign(TX - Int(Player.X));
   SY := Math.Sign(TY - Int(Player.Y));
-  if Player.WeaponSkill = skWand then
-    Sym := '*';
-  if Player.WeaponSkill = skBow then
-  if (SX = 0) then
-    Sym := '|'
-  else if (SY = 0) then
-    Sym := '-'
-  else if (SX = SY) then
-    Sym := '\'
-  else
-    Sym := '/';
+  LSymbol := Projectile.GetSymbol(SX, SY, Player.WeaponSkill);
   PX := View.Width div 2;
   PY := View.Height div 2;
   L := Math.Max(Abs(Int(Player.X) - TX), Abs(Int(Player.Y) - TY));
@@ -245,9 +236,9 @@ begin
     AX := Int(Player.X) + Round((TX - Int(Player.X)) * LR);
     AY := Int(Player.Y) + Round((TY - Int(Player.Y)) * LR);
     Self.Render;
-    Terminal.ForegroundColor(clRed);
+    Terminal.ForegroundColor(LSymbol.Color);
     Terminal.Print(AX - Int(Player.X) + PX + View.Left,
-      AY - Int(Player.Y) + PY + View.Top, Sym);
+      AY - Int(Player.Y) + PY + View.Top, LSymbol.Symbol);
     terminal_refresh();
     terminal_delay(15);
   end;
