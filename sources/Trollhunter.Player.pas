@@ -1535,7 +1535,8 @@ begin
   FItem := Items_Inventory_GetItem(Index);
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType <> itWand) then
     Exit;
-  MaxCharges := ItemBase[TItemEnum(FItem.ItemID)].Value;
+  MaxCharges := ItemBase[TItemEnum(FItem.ItemID)].Value +
+    Items.GetBonus(FItem, btWandCap);
   if (FItem.Value >= MaxCharges) then
   begin
     MsgLog.Add(Format('%s is already fully charged.',

@@ -89,7 +89,9 @@ type
     // Extra Gold from Monsters I - III
     of_the_Thief, of_Plunder, of_Greed,
     // Quiver Capacity I - III
-    of_the_Fletcher, of_Plenty, of_the_Marksman
+    of_the_Fletcher, of_Plenty, of_the_Marksman,
+    // Wand Capacity I - III
+    of_the_Channeler, of_the_Conduit, of_the_Reservoir
 
     );
 
@@ -569,7 +571,17 @@ const
     Value: (Min: 51; Max: 100); ),
     // of the Marksman (Quiver Capacity III),
     (Level: (Min: 9; Max: 15); Price: 300; Occurence: QuiverTypeItems;
-    Value: (Min: 101; Max: 150); )
+    Value: (Min: 101; Max: 150); ),
+
+    // of the Channeler (Wand Capacity I),
+    (Level: (Min: 1; Max: 3); Price: 200; Occurence: [itWand];
+    Value: (Min: 20; Max: 30); ),
+    // of the Conduit (Wand Capacity II),
+    (Level: (Min: 4; Max: 8); Price: 400; Occurence: [itWand];
+    Value: (Min: 50; Max: 60); ),
+    // of the Reservoir (Wand Capacity III),
+    (Level: (Min: 9; Max: 15); Price: 600; Occurence: [itWand];
+    Value: (Min: 80; Max: 90); )
 
     );
 
@@ -779,11 +791,20 @@ begin
       AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
         ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
     end;
+    // Wand Capacity
+    of_the_Channeler .. of_the_Reservoir:
+    begin
+      Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+      Items.SetBonus(AItem, btWandCap, Value.InRange(255));
+      AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
+        ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
+    end;
   end;
   // Effects
   AItem.Effects := SB.Effects;
   if (SB.Value.Min > 0) and not
-    (TSuffixEnum(AItem.Identify) in [of_the_Fletcher .. of_the_Marksman]) then
+    (TSuffixEnum(AItem.Identify) in [of_the_Fletcher .. of_the_Marksman,
+    of_the_Channeler .. of_the_Reservoir]) then
   begin
     Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
     AItem.Value := AItem.Value + Value.InRange(UIntMax);

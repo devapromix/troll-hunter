@@ -1910,7 +1910,7 @@ begin
     // Charges (Wand)
     if (IT = itWand) then
       C := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
-        ItemBase[TItemEnum(ID)].Value]);
+        ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btWandCap)]);
 
     if (AItem.Bonus[0] > 0) then
     begin
@@ -2440,6 +2440,8 @@ begin
       Result := uint8(AItem.Bonus[2]);
     btQuiverCap:
       Result := uint8(AItem.Bonus[3] shr 24);
+    btWandCap:
+      Result := uint8(AItem.Bonus[3] shr 16);
     else
       Result := 0;
   end;
@@ -2453,7 +2455,12 @@ var
 begin
   if (BonusType = btQuiverCap) then
   begin
-    AItem.Bonus[3] := (cardinal(Value) shl 24);
+    AItem.Bonus[3] := (AItem.Bonus[3] and $00FFFFFF) or (cardinal(Value) shl 24);
+    Exit;
+  end;
+  if (BonusType = btWandCap) then
+  begin
+    AItem.Bonus[3] := (AItem.Bonus[3] and $FF00FFFF) or (cardinal(Value) shl 16);
     Exit;
   end;
   if (BonusType in [btStr .. btPer]) then

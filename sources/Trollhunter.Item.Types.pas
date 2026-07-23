@@ -228,7 +228,8 @@ type
 
 type
   TBonusType = (btLife, btMana, btVis, btExtraGold, btStr, btDex, btWil, btPer,
-    btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill, btQuiverCap);
+    btReLife, btReMana, btLifeAfEachKill, btManaAfEachKill, btQuiverCap,
+    btWandCap);
 
 type
   TSetOfItem = set of TItemType;
