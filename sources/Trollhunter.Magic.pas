@@ -3,7 +3,8 @@ unit Trollhunter.Magic;
 interface
 
 uses
-  Trollhunter.Types;
+  Trollhunter.Types,
+  Trollhunter.Creature;
 
 type
   TSpellSchool = (
@@ -46,8 +47,10 @@ type
     Name: string;
     School: TSpellSchool;
     Level: UInt;
-    ManaCost: Byte;
+    ManaCost: UInt;
+    Effects: TEffects;
     Description: string;
+    Value: Int;
   end;
 
 const
@@ -58,35 +61,50 @@ const
      School: scArcane;
      Level: 2;
      ManaCost: 25;
-     Description: 'Absorbs damage using mana'),
+     Effects: [];
+     Description: 'Absorbs damage using mana;';
+     Value: 0;
+     ),
 
     // Divine
     (Name: 'Heal';
      School: scDivine;
      Level: 1;
      ManaCost: 15;
-     Description: 'Restores health'),
+     Effects: [efLife];
+     Description: 'Restores health';
+     Value: 35;
+     ),
 
     // Nature
     (Name: 'Regeneration';
      School: scNature;
      Level: 1;
      ManaCost: 22;
-     Description: 'Gradually restores health over time'),
+     Effects: [efRegeneration];
+     Description: 'Gradually restores health over time';
+     Value: 0;
+     ),
 
     // Shadow
     (Name: 'Curse';
      School: scShadow;
      Level: 2;
      ManaCost: 30;
-     Description: 'Weakens the target'),
+     Effects: [];
+     Description: 'Weakens the target';
+     Value: 0;
+     ),
 
     // Elemental
     (Name: 'Fire Arrow';
      School: scElemental;
      Level: 1;
      ManaCost: 2;
-     Description: 'Hurls a flaming arrow at the target')
+     Effects: [];
+     Description: 'Hurls a flaming arrow at the target';
+     Value: 0;
+     )
   );
 
 implementation

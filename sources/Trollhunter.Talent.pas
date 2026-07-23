@@ -171,7 +171,7 @@ const
     Description: 'Increases the amount of gold dropped by monsters'),
 
     // Gold Finder
-    (Level: 1; MaxLevel: 5; Effects: [efGoldFinder]; Classes: AllClasses;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmGoldFinder]; Classes: AllClasses;
     Races: AllRaces;
     Description: 'Increases the chance of finding gold on defeated monsters'),
 

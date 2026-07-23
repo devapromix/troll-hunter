@@ -15,9 +15,9 @@ const
   ExtraGoldMax = 200;
 
 type
-  TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
+  TEffect = (efNone, efLife, efMana, efFood, efTeleportation, efIdentification,
   efAllIdentification, efEnchantItem, efRechargeWand, efCraftStr,
-    efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye,
+    efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal,efRegeneration,
     efCurePoison, efVision, efCureWeak,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,
     efPrmAxe, efPrmSpear,
@@ -26,7 +26,7 @@ type
     efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair,
     efPrmBodybuilding, efPrmMeditation,
     efPrmEnchant_Item, efLight, efBerserk, efPrmStealth, efPrmAwareness,
-    efPrmTreasureHunter, efGoldFinder, efPrmSurvival, efCharges, efDisenchant);
+    efPrmTreasureHunter, efPrmGoldFinder, efPrmSurvival, efCharges, efDisenchant);
 
 const
   CraftEffLow = efCraftStr;

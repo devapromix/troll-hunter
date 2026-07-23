@@ -48,6 +48,7 @@ uses
 procedure TSpellbook.AddSpell(ASpellEnum: TSpellEnum);
 begin
   FSpell[ASpellEnum].Enable := True;
+  FSpell[ASpellEnum].Spell := SpellData[ASpellEnum];
 end;
 
 procedure TSpellbook.Clear;
@@ -55,7 +56,7 @@ var
   I: TSpellEnum;
 begin
   for I := Low(TSpellEnum) to High(TSpellEnum) do
-    FSpell[I].Enable := True;
+    FSpell[I].Enable := False;
 end;
 
 procedure TSpellbook.DoSpell(Index: UInt);
@@ -74,7 +75,7 @@ begin
         begin
           Player.Statictics.Inc(stSpCast);
           Player.Attributes.Modify(atMana, -FSpell[I].Spell.ManaCost);
-          //Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
+          Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
         end
         else
         begin
@@ -104,10 +105,10 @@ begin
 end;
 
 procedure TSpellbook.Start;
-var
-  I: TSpellEnum;
 begin
   Self.Clear;
+  AddSpell(spHeal);
+  AddSpell(spRegeneration);
 end;
 
 initialization

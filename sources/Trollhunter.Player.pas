@@ -2303,6 +2303,12 @@ begin
     Self.Attributes.Modify(atMana, V);
     Skills.DoSkill(skConcentration);
   end;
+  // Regeneration
+  if (efRegeneration in Effects) then
+  begin
+    MsgLog.Add('......');
+
+  end;
   // Charges
   if (efCharges in Effects) then
   begin
@@ -2393,11 +2399,6 @@ begin
     Map.SetTileEnum(X, Y, Map.Current, tePortal);
     Map.SetTileEnum(Game.Spawn.X, Game.Spawn.Y, deDark_Wood, teTownPortal);
     Scenes.SetScene(scGame);
-  end;
-  // Magic Eye
-  if (efMagicEye in Effects) then
-  begin
-
   end;
   // Light
   if (efLight in Effects) then
@@ -2542,7 +2543,7 @@ begin
     MsgLog.Add(Format('Perception +%d', [Value]));
   end;
   // Treasure Hunter or Gold Finder
-  if (efPrmTreasureHunter in Effects) or (efGoldFinder in Effects) then
+  if (efPrmTreasureHunter in Effects) or (efPrmGoldFinder in Effects) then
   begin
     MsgLog.Add('You increased the amount of gold dropped by monsters');
   end;
