@@ -173,7 +173,7 @@ begin
   Items.Render(PX, PY);
   Player.Render(PX, PY);
   Mobs.Render(PX, PY);
-  // Fire mode: highlight the currently selected target
+  // Fire mode
   if Player.FireMode then
   begin
     I := Player.FireModeTarget;
@@ -437,15 +437,9 @@ begin
      TK_B:
      Scenes.SetScene(scSpellbook);
     TK_Y:
-      if Mode.Wizard then
-      begin
-        Quests.Add(qeKillNBears);
-
-      end;
-
-    // if Game.Wizard then Items.DelCorpses;
-    // ShowMessage(IntToStr(Player.GetRealDamage(1000, 250)));
-    // if Game.Wizard then Player.AddExp(LevelExpMax);
+      //CastQuickSpell();
+    MsgLog.Add('Cast Fire Arrow.');
+   // if Game.Wizard then Player.AddExp(LevelExpMax);
     TK_T:
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:

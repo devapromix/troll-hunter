@@ -14,6 +14,9 @@ type
   end;
 
 type
+
+  { TSpellbook }
+
   TSpellbook = class(TObject)
   private
     FSpell: array [TSpellEnum] of TSpell;
@@ -24,6 +27,7 @@ type
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
     procedure Start;
     procedure DoSpell(Index: UInt);
+    function GetQuickSpell: TSpell;
   end;
 
 var
@@ -82,6 +86,11 @@ begin
       end;
       Inc(C);
     end;
+end;
+
+function TSpellbook.GetQuickSpell: TSpell;
+begin
+  //No quick spell selected.
 end;
 
 function TSpellbook.GetSpell(ASpellEnum: TSpellEnum): TSpell;

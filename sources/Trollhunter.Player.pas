@@ -1885,6 +1885,7 @@ begin
         UI.Icon(icShield), Attributes.Attrib[atPV].Value, GetSatiationStr()]));
       Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
         Status.Width);
+      Terminal.Print(Status.Left, Status.Top + 4, 'Quick spell: Fire Arrow')
     end;
     else
     begin

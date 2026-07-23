@@ -14,6 +14,24 @@ type
     scElemental
   );
 
+const
+  CSpellSchoolName: array [TSpellSchool] of string = (
+    'Arcane',
+    'Divine',
+    'Nature',
+    'Shadow',
+    'Elemental'
+  );
+
+const
+  CSpellSchoolColor: array [TSpellSchool] of string = (
+    'lighter yellow',
+    'light blue',
+    'light green',
+    'light gray',
+    'light red'
+  );
+
 type
   TSpellEnum = (
     spManaShield,
@@ -38,7 +56,7 @@ const
     // Arcane
     (Name: 'Mana Shield';
      School: scArcane;
-     Level: 1;
+     Level: 2;
      ManaCost: 25;
      Description: 'Absorbs damage using mana'),
 
@@ -59,7 +77,7 @@ const
     // Shadow
     (Name: 'Curse';
      School: scShadow;
-     Level: 1;
+     Level: 2;
      ManaCost: 30;
      Description: 'Weakens the target'),
 

@@ -797,8 +797,7 @@ begin
   begin
     V := Player.GetArrowsToBuy;
     if (V > 0) then
-      S := ' (' + Items.GetInfo('+', V, 'Arrows') + ' ' +
-        Items.GetPrice(V) + ')'
+      S := ' (' + Items.GetInfo('+', V, 'Arrows') + ' ' + Items.GetPrice(V) + ')'
     else
       S := '';
     Add('Buy arrows' + S);
@@ -1038,35 +1037,49 @@ procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
   V: UInt;
-
-  function IsSpell(I: TSpellEnum): boolean;
-  begin
-    Result := Spellbook.GetSpell(I).Enable;
-    if Mode.Wizard then
-      Result := True;
-  end;
-
+  Spell: TSpellData;
+  IsActive: boolean;
+  LInfo: string;
 begin
-  UI.Title('Spellbook');
+  UI.Title('Spellbook [[Fire Arrow]]');
 
   V := 0;
   Y := 2;
   UI.FromAToZ;
-  for I := Low(TSpellEnum) to High(TSpellEnum) do
-    if IsSpell(I) then
-    begin
-      Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
-      Terminal.ForegroundColor(clGray);
-      Terminal.Print(5, Y, Format('(%s) %s %s',
-        [Items.GetLevel(Spellbook.GetSpell(I).Spell.Level),
-        Spellbook.GetSpellName(I), Items.GetInfo('-',
-        Spellbook.GetSpell(I).Spell.ManaCost, 'Mana')]));
-      Inc(Y);
-      Inc(V);
-    end;
-  MsgLog.Render(2, True);
 
-  AddKey('A-Z', 'Cast spell');
+  for I := Low(TSpellEnum) to High(TSpellEnum) do
+  begin
+    if not Spellbook.GetSpell(I).Enable then
+      Continue;
+
+    if Mode.Wizard then
+      IsActive := True
+    else
+      IsActive := Spellbook.GetSpell(I).Enable;
+    if not IsActive then Continue;
+    Spell := SpellData[I];
+    Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(5, Y, Spell.Name);
+    LInfo := Format('[[Lev %d, %s',
+      [Spell.Level, Items.GetInfo('-', Spell.ManaCost, 'Mana')]);
+    LInfo := LInfo + ']]';
+    Terminal.ForegroundColor(clGray);
+    Terminal.Print(20, Y, LInfo);
+    Terminal.Print(37, Y, Terminal.Colorize('{' + CSpellSchoolName[Spell.School] +
+      '}', CSpellSchoolColor[Spell.School]));
+    Terminal.Print(50, Y, Spell.Description);
+    Inc(Y);
+    Inc(V);
+  end;
+
+  if (V > 0) then
+  begin
+    MsgLog.Render(2, True);
+  end;
+
+  AddKey('A-Z', 'Cast Spell');
+  AddKey('TAB', 'Set Quick Spell');
   AddKey('Esc', 'Close', True);
 end;
 
