@@ -4,38 +4,13 @@ interface
 
 uses
   Trollhunter.Types,
+  Trollhunter.Magic,
   Trollhunter.Creature;
-
-type
-  TSpellEnum = (spHeal, spTownPortal, spCurePoison, spTeleportation,
-    spMagicEye);
-
-type
-  TSpellBase = record
-    Level: UInt;
-    Effects: TEffects;
-    Value: UInt;
-    ManaCost: UInt;
-    Price: UInt;
-  end;
-
-const
-  SpellBase: array [TSpellEnum] of TSpellBase = (
-    // Heal
-    (Level: 1; Effects: [efLife]; Value: 100; ManaCost: 20; Price: 200; ),
-    // Town Portal
-    (Level: 2; Effects: [efTownPortal]; Value: 0; ManaCost: 24; Price: 500; ),
-    // Cure Poison
-    (Level: 2; Effects: [efCurePoison]; Value: 0; ManaCost: 30; Price: 600; ),
-    // Teleportation
-    (Level: 3; Effects: [efTeleportation]; Value: 7; ManaCost: 40; Price: 750; ),
-    // Magic Eye
-    (Level: 3; Effects: [efMagicEye]; Value: 20; ManaCost: 50; Price: 900; ));
 
 type
   TSpell = record
     Enable: boolean;
-    Spell: TSpellBase;
+    Spell: TSpellData;
   end;
 
 type
@@ -95,7 +70,7 @@ begin
         begin
           Player.Statictics.Inc(stSpCast);
           Player.Attributes.Modify(atMana, -FSpell[I].Spell.ManaCost);
-          Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
+          //Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
         end
         else
         begin
@@ -116,18 +91,7 @@ end;
 
 function TSpellbook.GetSpellName(ASpellEnum: TSpellEnum): string;
 begin
-  case ASpellEnum of
-    spHeal:
-      Result := 'Heal';
-    spTownPortal:
-      Result := 'Town portal';
-    spCurePoison:
-      Result := 'Cure poison';
-    spTeleportation:
-      Result := 'Teleportation';
-    spMagicEye:
-      Result := 'Magic eye';
-  end;
+  Result := SpellData[ASpellEnum].Name;
 end;
 
 procedure TSpellbook.Start;
@@ -135,15 +99,6 @@ var
   I: TSpellEnum;
 begin
   Self.Clear;
-  for I := Low(TSpellEnum) to High(TSpellEnum) do
-    with FSpell[I].Spell do
-    begin
-      Level := SpellBase[I].Level;
-      Effects := SpellBase[I].Effects;
-      Value := SpellBase[I].Value;
-      ManaCost := SpellBase[I].ManaCost;
-      Price := SpellBase[I].Price;
-    end;
 end;
 
 initialization

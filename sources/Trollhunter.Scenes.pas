@@ -190,6 +190,7 @@ uses
   Trollhunter.Player,
   BearLibTerminal,
   Trollhunter.Map,
+  Trollhunter.Magic,
   Trollhunter.UI.Log,
   Trollhunter.Item,
   Trollhunter.Calendar,
@@ -1031,7 +1032,7 @@ begin
   end;
 end;
 
-{ TSceneSpells }
+{ TSceneSpellbook }
 
 procedure TSceneSpellbook.Render;
 var

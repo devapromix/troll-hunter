@@ -1640,7 +1640,7 @@ begin
     MsgLog.Add(Format('%s dissolves into pure arcane energy.',
       [Items.GetNameThe(FItem)]));
     if Amount = 1 then
-      MsgLog.Add('You receive %d Arcane Orb.')
+      MsgLog.Add('You receive Arcane Orb.')
     else
       MsgLog.Add(Format('You receive %d Arcane Orbs.', [Amount]));
     Scenes.SetScene(scInv);

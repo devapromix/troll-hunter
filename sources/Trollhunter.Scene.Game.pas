@@ -434,8 +434,8 @@ begin
       Scenes.SetScene(scStatistics);
     TK_O:
       Scenes.SetScene(scOptions);
-    // TK_B:
-    // Scenes.SetScene(scSpellbook);
+     TK_B:
+     Scenes.SetScene(scSpellbook);
     TK_Y:
       if Mode.Wizard then
       begin

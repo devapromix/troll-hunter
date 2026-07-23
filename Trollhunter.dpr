@@ -11,7 +11,7 @@ uses
   Trollhunter.Terminal, Trollhunter.Scenes, Trollhunter.Helpers,
   Trollhunter.Item, Trollhunter.PathFind, Trollhunter.Item.Common,
   Trollhunter.Item.Dungeon, Trollhunter.Item.Inventory,
-  Trollhunter.Scene.LearnedTalents;
+  Trollhunter.Scene.LearnedTalents, Trollhunter.Magic;
 
 var
   Key: UInt = 0;
