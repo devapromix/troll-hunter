@@ -16,7 +16,7 @@ type
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification, scBackground,
-    scEnchant, scClass, scRace, scStash, scStore);
+    scEnchant, scRecharge, scClass, scRace, scStash, scStore);
 
 type
   TScene = class(TObject)
@@ -203,6 +203,7 @@ uses
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes,
   Trollhunter.Scene.Enchant,
+  Trollhunter.Scene.Recharge,
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
   Trollhunter.Scene.Drop,
@@ -379,6 +380,8 @@ begin
         FScene[I] := TSceneQuest.Create;
       scEnchant:
         FScene[I] := TSceneEnchant.Create;
+      scRecharge:
+        FScene[I] := TSceneRecharge.Create;
       scRace:
         FScene[I] := TSceneRace.Create;
       scClass:

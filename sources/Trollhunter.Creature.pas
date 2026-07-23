@@ -8,8 +8,6 @@ uses
   Trollhunter.Ability,
   Trollhunter.Attribute;
 
-{ TODO -cNPC : Нужен кто-то, кто будет идентифицировать предметы за деньги. }
-
 const
   PVMax = 250;
   MaxDamMax = 255;
@@ -18,7 +16,7 @@ const
 
 type
   TEffect = (efLife, efMana, efFood, efTeleportation, efIdentification,
-  efAllIdentification, efEnchantItem, efCraftStr,
+  efAllIdentification, efEnchantItem, efRechargeWand, efCraftStr,
     efCraftDex, efCraftWil, efCraftPer, efCraftAtr, efTownPortal, efMagicEye,
     efCurePoison, efVision, efCureWeak,
     efPrmAthletics, efPrmDodge, efPrmConcentration, efPrmToughness, efPrmBlade,

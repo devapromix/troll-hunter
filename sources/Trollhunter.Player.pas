@@ -137,6 +137,7 @@ type
     function IsQuiverBroken: boolean;
     function GetArrowsToBuy: Int;
     procedure BuyArrows;
+    procedure RechargeWand(Index: Int);
     procedure Buy(Index: Int);
     procedure PickUp;
     procedure PickUpAmount(Index: Int);
@@ -1526,6 +1527,28 @@ begin
   Wait;
 end;
 
+procedure TPlayer.RechargeWand(Index: Int);
+var
+  FItem: Item;
+  MaxCharges: UInt;
+begin
+  FItem := Items_Inventory_GetItem(Index);
+  if (ItemBase[TItemEnum(FItem.ItemID)].ItemType <> itWand) then
+    Exit;
+  MaxCharges := ItemBase[TItemEnum(FItem.ItemID)].Value;
+  if (FItem.Value >= MaxCharges) then
+  begin
+    MsgLog.Add(Format('%s is already fully charged.',
+      [GetCapit(Items.GetNameThe(FItem))]));
+    Exit;
+  end;
+  FItem.Value := MaxCharges;
+  Items_Inventory_SetItem(Index, FItem);
+  MsgLog.Add(Format('You recharge %s.', [Items.GetNameThe(FItem)]));
+  Scenes.SetScene(scInv);
+  Self.Calc;
+end;
+
 procedure TPlayer.RepairItem(Index: Int);
 var
   RepairCost: UInt;
@@ -2266,6 +2289,9 @@ begin
       Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
     Scenes.SetScene(scEnchant);
   end;
+  // Recharge Wand
+  if (efRechargeWand in Effects) then
+    Scenes.SetScene(scRecharge);
   // Repair
   if (efRepair in Effects) then
   begin

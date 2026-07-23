@@ -35,7 +35,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <Units Count="56">
+    <Units Count="57">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -260,6 +260,10 @@
         <Filename Value="sources\Trollhunter.Projectile.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit55>
+      <Unit56>
+        <Filename Value="sources\Trollhunter.Scene.Recharge.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit56>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
