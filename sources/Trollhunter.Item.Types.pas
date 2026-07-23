@@ -111,7 +111,7 @@ type
     // Torch
     itmTorch, itmOil_Lamp,
     // Orbs
-    itmLight_Orb, itmLife_Orb, itmMana_Orb,
+    itmLight_Orb, itmLife_Orb, itmMana_Orb, itmArcaneOrb,
     // Foods and Plants
     itmHealing_Herb,
     // Ruby (Gems)
@@ -214,6 +214,7 @@ type
     itmStaff9, itmStaff10, // Staff
     // Arrows
     itmArrows
+
     );
 
 const

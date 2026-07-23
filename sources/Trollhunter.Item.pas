@@ -421,6 +421,12 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 25; Color: clLightBlue; Deep: [deDark_Wood .. deDrom];
     Effects: [efMana]; Value: 35; ),
+    // Arcane Orb
+    (Symbol: 'o'; ItemType: itOrb; SlotType: stNone; MaxStack: 10;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 65; Color: clLightGreen; Deep: [deDark_Wood .. deDrom];
+    Effects: [efCharges]; Value: 10),
 
     // Healing Herb
     (Symbol: ':'; ItemType: itPlant; SlotType: stNone; MaxStack: 16;
@@ -1658,6 +1664,7 @@ const
     MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; )
+
 
     );
 
