@@ -2197,6 +2197,9 @@ procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0;
 var
   V, VX, VY: UInt;
   Ef: TEffect;
+  WIndex: Int;
+  WItem: Item;
+  MaxCharges: UInt;
 const
   F = '%s +%d.';
 
@@ -2264,6 +2267,25 @@ begin
       Self.Attributes.Attrib[atMana].Value, V)]));
     Self.Attributes.Modify(atMana, V);
     Skills.DoSkill(skConcentration);
+  end;
+  // Charges
+  if (efCharges in Effects) then
+  begin
+    WIndex := Self.GetEquippedIndex(stRanged);
+    if (WIndex < 0) or
+      (ItemBase[TItemEnum(Items_Inventory_GetItem(WIndex).ItemID)]
+      .ItemType <> itWand) then
+      MsgLog.Add('You have no wand equipped.')
+    else
+    begin
+      WItem := Items_Inventory_GetItem(WIndex);
+      MaxCharges := ItemBase[TItemEnum(WItem.ItemID)].Value +
+        Items.GetBonus(WItem, btWandCap);
+      V := Min(MaxCharges - WItem.Value, Value);
+      WItem.Value := WItem.Value + V;
+      Items_Inventory_SetItem(WIndex, WItem);
+      MsgLog.Add(Format('You recharge %s by %d.', [Items.GetNameThe(WItem), V]));
+    end;
   end;
   // Food
   if (efFood in Effects) then
