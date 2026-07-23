@@ -315,6 +315,12 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 500; Color: clDarkBlue; Deep: [deDark_Wood .. deDrom];
     Effects: [efRechargeWand]; Value: 0; ManaCost: 50),
+    // Scroll of Arcane
+    (Symbol: '?'; ItemType: itScroll; SlotType: stNone; MaxStack: 16;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 400; Color: clLightestBlue; Deep: [deDark_Wood .. deDrom];
+    Effects: [efDisenchant]; Value: 0; ManaCost: 30; ),
 
     // Rune of minor healing
     (Symbol: '*'; ItemType: itRune; SlotType: stNone; MaxStack: 3;

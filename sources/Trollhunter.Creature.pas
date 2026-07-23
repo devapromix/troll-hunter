@@ -26,7 +26,7 @@ type
     efPrmPV, efPrmStr, efPrmDex, efPrmWil, efPrmPer, efRepair,
     efPrmBodybuilding, efPrmMeditation,
     efPrmEnchant_Item, efLight, efBerserk, efPrmStealth, efPrmAwareness,
-    efPrmTreasureHunter, efGoldFinder, efPrmSurvival, efCharges);
+    efPrmTreasureHunter, efGoldFinder, efPrmSurvival, efCharges, efDisenchant);
 
 const
   CraftEffLow = efCraftStr;

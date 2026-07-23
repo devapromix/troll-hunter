@@ -151,6 +151,7 @@ type
     procedure UnEquip(Index: Int);
     procedure Sell(Index: Int);
     procedure RepairItem(Index: Int);
+    procedure DisenchantItem(Index: Int);
     procedure IdentItem(Index: Int);
     procedure IdentAllItems;
     procedure CraftItem(Index: Int);
@@ -1616,6 +1617,35 @@ begin
   Self.Calc;
 end;
 
+procedure TPlayer.DisenchantItem(Index: Int);
+var
+  FItem: Item;
+  Amount: UInt;
+begin
+  FItem := Items_Inventory_GetItem(Index);
+  if not (ItemBase[TItemEnum(FItem.ItemID)].ItemType in DisenchantTypeItems) then
+  begin
+    MsgLog.Add('You cannot disenchant this item.');
+    Exit;
+  end;
+  if (FItem.Equipment > 0) then
+  begin
+    MsgLog.Add('You cannot disenchant an equipped item.');
+    Exit;
+  end;
+  Amount := Math.EnsureRange(1 + ItemBase[TItemEnum(FItem.ItemID)].Level div 3,
+    1, 5);
+  if (Items_Inventory_DeleteItem(Index, FItem) > 0) then
+  begin
+    Items.AddItemToInv(itmArcane_Orb, Amount);
+    MsgLog.Add(Format('You disenchant %s into %d Arcane Orb(s).',
+      [Items.GetNameThe(FItem), Amount]));
+    Scenes.SetScene(scInv);
+  end;
+  Self.Calc;
+  Wait;
+end;
+
 procedure TPlayer.BreakItem(Index: Int; Value: UInt = 1);
 var
   FItem: Item;
@@ -2326,6 +2356,9 @@ begin
   // Recharge Wand
   if (efRechargeWand in Effects) then
     Scenes.SetScene(scRecharge);
+  // Disenchant
+  if (efDisenchant in Effects) then
+    Scenes.SetScene(scDisenchant);
   // Repair
   if (efRepair in Effects) then
   begin

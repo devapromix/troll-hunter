@@ -16,7 +16,7 @@ type
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification, scBackground,
-    scEnchant, scRecharge, scClass, scRace, scStash, scStore);
+    scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant);
 
 type
   TScene = class(TObject)
@@ -165,6 +165,13 @@ type
 
 type
   TSceneIdentification = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: UInt); override;
+  end;
+
+type
+  TSceneDisenchant = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -390,6 +397,8 @@ begin
         FScene[I] := TSceneStash.Create;
       scStore:
         FScene[I] := TSceneStore.Create;
+      scDisenchant:
+        FScene[I] := TSceneDisenchant.Create;
     end;
 end;
 
@@ -1091,6 +1100,32 @@ begin
       Scenes.SetScene(scInv);
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
+    else
+      Game.Timer := UIntMax;
+  end;
+end;
+
+{ TSceneDisenchant }
+
+procedure TSceneDisenchant.Render;
+begin
+  UI.Title('Disenchanting items', 1, clDarkestRed);
+
+  UI.FromAToZ();
+  Items.RenderInventory();
+  MsgLog.Render(2, True);
+
+  AddKey('A-Z', 'Select an item to disenchant');
+  AddKey('Esc', 'Close', True);
+end;
+
+procedure TSceneDisenchant.Update(var Key: UInt);
+begin
+  case Key of
+    TK_ESCAPE:
+      Scenes.SetScene(scInv);
+    TK_A .. TK_Z:
+      Player.DisenchantItem(Key - TK_A);
     else
       Game.Timer := UIntMax;
   end;

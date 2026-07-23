@@ -62,6 +62,7 @@ const
   DamageTypeItems = WeaponTypeItems + JewelryTypeItems;
   RepairTypeItems = FlaskTypeItems;
   SmithTypeItems = DefenseTypeItems + DamageTypeItems;
+  DisenchantTypeItems = SmithTypeItems;
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
     RepairTypeItems + MagicTypeItems;
@@ -99,7 +100,7 @@ type
     itmScroll_of_Sidestepping, itmScroll_of_Phasing, itmScroll_of_Teleportation,
     itmScroll_of_Disappearing, itmScroll_of_Town_Portal, itmScroll_of_Bloodlust,
     itmScroll_of_Identify, itmScroll_of_Full_Identify, itmScroll_of_Enchant_Item,
-    itmScroll_of_Recharge,
+    itmScroll_of_Recharge, itmScroll_of_Arcane,
     // Runes
     itmRune_of_Minor_Healing, itmRune_of_Lesser_Healing,
     itmRune_of_Greater_Healing, itmRune_of_Full_Healing, itmRune_of_Teleportation,
