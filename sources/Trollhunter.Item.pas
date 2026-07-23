@@ -1781,7 +1781,7 @@ function TItems.GetItemInfo(AItem: Item; IsManyItems: boolean = False;
   ACount: UInt = 0; IsShort: boolean = False): string;
 var
   ID: Int;
-  S, T, Level, D: string;
+  S, T, Level, D, C: string;
   IT: TItemType;
   V: UInt;
 
@@ -1901,6 +1901,10 @@ begin
     if (IT = itQuiver) then
       T := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
         ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btQuiverCap)]);
+    // Charges (Wand)
+    if (IT = itWand) then
+      C := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
+        ItemBase[TItemEnum(ID)].Value]);
 
     if (AItem.Bonus[0] > 0) then
     begin
@@ -1957,7 +1961,7 @@ begin
         DurabilitySuffixes) then
         D := Terminal.Colorize(D, 'Rare');
     end;
-    S := S + AddItemInfo([Level, T, D]);
+    S := S + AddItemInfo([Level, T, C, D]);
 
     if ((AItem.Identify = 0) or Player.Look) then
       S := '';

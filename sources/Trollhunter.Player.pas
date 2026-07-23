@@ -76,9 +76,12 @@ type
     procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
+    function GetEquippedIndex(ASlot: TSlotType): Int;
     function GetQuiverIndex: Int;
     function HasArrows: boolean;
     procedure UseArrow;
+    function HasCharges: boolean;
+    procedure UseCharge;
   public
     constructor Create;
     destructor Destroy; override;
@@ -425,7 +428,7 @@ begin
   AddTurn;
 end;
 
-function TPlayer.GetQuiverIndex: Int;
+function TPlayer.GetEquippedIndex(ASlot: TSlotType): Int;
 var
   FItem: Item;
   FCount, I: Int;
@@ -436,12 +439,40 @@ begin
   begin
     FItem := Items_Inventory_GetItem(I);
     if (FItem.Equipment > 0) and (ItemBase[TItemEnum(FItem.ItemID)].SlotType =
-      stQuiver) then
+      ASlot) then
     begin
       Result := I;
       Exit;
     end;
   end;
+end;
+
+function TPlayer.GetQuiverIndex: Int;
+begin
+  Result := Self.GetEquippedIndex(stQuiver);
+end;
+
+function TPlayer.HasCharges: boolean;
+var
+  WIndex: Int;
+begin
+  WIndex := Self.GetEquippedIndex(stRanged);
+  Result := (WIndex >= 0) and (Items_Inventory_GetItem(WIndex).Value > 0);
+end;
+
+procedure TPlayer.UseCharge;
+var
+  WIndex: Int;
+  FItem: Item;
+begin
+  WIndex := Self.GetEquippedIndex(stRanged);
+  if (WIndex < 0) then
+    Exit;
+  FItem := Items_Inventory_GetItem(WIndex);
+  if (FItem.Value = 0) then
+    Exit;
+  FItem.Value := Game.EnsureRange(FItem.Value - 1, UIntMax);
+  Items_Inventory_SetItem(WIndex, FItem);
 end;
 
 function TPlayer.HasQuiver: boolean;
@@ -521,7 +552,13 @@ begin
   end;
   if (FWeaponSkill = skWand) then
   begin
-
+    if not Self.HasCharges then
+    begin
+      MsgLog.Add('Your wand has no charges left.');
+      Self.FireModeExit;
+      Exit;
+    end;
+    Self.UseCharge;
   end;
   if (FWeaponSkill = skBow) then
   begin
@@ -664,6 +701,12 @@ begin
       MsgLog.Add('You have no arrows left in your quiver.');
       Exit;
     end;
+  end
+  else if not Self.HasCharges then
+  begin
+    FFireMode := False;
+    MsgLog.Add('Your wand has no charges left.');
+    Exit;
   end;
   for I := 0 to Mobs.Count - 1 do
     if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
@@ -724,7 +767,7 @@ end;
 
 function TPlayer.CanRangedAttack: boolean;
 begin
-  Result := Self.CanFire and ((FWeaponSkill = skWand) or
+  Result := Self.CanFire and (((FWeaponSkill = skWand) and Self.HasCharges) or
     (Self.HasQuiver and not Self.IsQuiverBroken and Self.HasArrows));
 end;
 
@@ -1570,24 +1613,11 @@ end;
 
 procedure TPlayer.BreakItem(ASlot: TSlotType; Value: UInt = 1);
 var
-  FItem: Item;
-  FCount, I: Int;
-  FI: TItemEnum;
+  Index: Int;
 begin
-  FCount := Items_Inventory_GetCount().InRange(ItemMax);
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Inventory_GetItem(I);
-    if (FItem.Equipment > 0) then
-    begin
-      FI := TItemEnum(FItem.ItemID);
-      if (ItemBase[FI].SlotType = ASlot) then
-      begin
-        BreakItem(I, Value);
-        Exit;
-      end;
-    end;
-  end;
+  Index := Self.GetEquippedIndex(ASlot);
+  if (Index >= 0) then
+    BreakItem(Index, Value);
 end;
 
 procedure TPlayer.Drop(Index: Int);
