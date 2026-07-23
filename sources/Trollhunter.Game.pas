@@ -178,8 +178,6 @@ var
 implementation
 
 uses
-  Math,
-  Dialogs,
   BearLibTerminal,
   SysUtils,
   Trollhunter.Player,
@@ -206,14 +204,12 @@ constructor TGame.Create;
 var
   I: UInt;
   J: TAPOptionEnum;
-  IsUseLang: boolean;
 begin
   Randomize;
   Timer := 0;
   Won := False;
   Mode.Game := False;
   Mode.Wizard := False;
-  IsUseLang := False;
   for J := Low(TAPOptionEnum) to High(TAPOptionEnum) do
     FAPOption[J] := True;
   CanClose := False;
@@ -230,8 +226,6 @@ begin
   begin
     if (LowerCase(ParamStr(I)) = '-w') then
       Mode.Wizard := True;
-    if (LowerCase(ParamStr(I)) = '-l') then
-      IsUseLang := True;
   end;
 end;
 

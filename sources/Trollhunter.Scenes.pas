@@ -4,7 +4,6 @@ interface
 
 uses
   Classes,
-  Types,
   Trollhunter.Types,
   Trollhunter.Item.Common,
   Trollhunter.Mob,
@@ -70,13 +69,6 @@ type
     procedure Render; override;
     procedure Update(var Key: UInt); override;
     procedure RenderHeroes();
-  end;
-
-type
-  TSceneSpellbook = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
   end;
 
 type
@@ -196,8 +188,6 @@ uses
   Trollhunter.Calendar,
   Trollhunter.Item.Shop,
   Trollhunter.Spellbook,
-  Trollhunter.Talent,
-  Trollhunter.Skill,
   Trollhunter.UI.Logo,
   Trollhunter.Entity,
   Trollhunter.Creature,
@@ -208,8 +198,6 @@ uses
   Trollhunter.Quest,
   Trollhunter.Item.Affixes,
   Trollhunter.Helpers,
-  Trollhunter.Player.Races,
-  Trollhunter.Player.Classes,
   Trollhunter.Scene.Enchant,
   Trollhunter.Scene.Recharge,
   Trollhunter.Scene.Name,
@@ -221,16 +209,15 @@ uses
   Trollhunter.Scene.Quest,
   Trollhunter.Scene.Background,
   Trollhunter.Item.Types,
-  Trollhunter.Player.Types,
   Trollhunter.Scene.Statistics,
   Trollhunter.Scene.Player,
   Trollhunter.Scene.Options,
-  Trollhunter.Player.Helpers,
   Trollhunter.Scene.Game,
   Trollhunter.Scene.Stash,
   Trollhunter.Scene.Store,
   Trollhunter.Scene.Talents,
   Trollhunter.Scene.LearnedTalents,
+  Trollhunter.Scene.Spellbook,
   Trollhunter.Scene.Help;
 
   { TScene }
@@ -1028,68 +1015,6 @@ begin
     TK_ESCAPE:
       // Close
       Scenes.SetScene(scGame);
-  end;
-end;
-
-{ TSceneSpellbook }
-
-procedure TSceneSpellbook.Render;
-var
-  I: TSpellEnum;
-  V: UInt;
-  Spell: TSpellData;
-  IsActive: boolean;
-  LInfo: string;
-begin
-  UI.Title('Spellbook [[Fire Arrow]]');
-
-  V := 0;
-  Y := 2;
-  UI.FromAToZ;
-
-  for I := Low(TSpellEnum) to High(TSpellEnum) do
-  begin
-    if not Spellbook.GetSpell(I).Enable then
-      Continue;
-
-    if Mode.Wizard then
-      IsActive := True
-    else
-      IsActive := Spellbook.GetSpell(I).Enable;
-    if not IsActive then Continue;
-    Spell := SpellData[I];
-    Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
-    Terminal.ForegroundColor(clWhite);
-    Terminal.Print(5, Y, Spell.Name);
-    LInfo := Format('[[Lev %d, %s',
-      [Spell.Level, Items.GetInfo('-', Spell.ManaCost, 'Mana')]);
-    LInfo := LInfo + ']]';
-    Terminal.ForegroundColor(clGray);
-    Terminal.Print(20, Y, LInfo);
-    Terminal.Print(37, Y, Terminal.Colorize('{' + CSpellSchoolName[Spell.School] +
-      '}', CSpellSchoolColor[Spell.School]));
-    Terminal.Print(50, Y, Spell.Description);
-    Inc(Y);
-    Inc(V);
-  end;
-
-  if (V > 0) then
-  begin
-    MsgLog.Render(2, True);
-  end;
-
-  AddKey('A-Z', 'Cast Spell');
-  AddKey('TAB', 'Set Quick Spell');
-  AddKey('Esc', 'Close', True);
-end;
-
-procedure TSceneSpellbook.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      Scenes.SetScene(scGame);
-    TK_A .. TK_Z:
-      Spellbook.DoSpell(Key - TK_A);
   end;
 end;
 

@@ -45,8 +45,7 @@ type
 implementation
 
 uses
-  Trollhunter.Helpers,
-  dialogs;
+  Trollhunter.Helpers;
 
 { TAttributes }
 

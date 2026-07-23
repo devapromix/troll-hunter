@@ -3,7 +3,6 @@ unit Trollhunter.Player.Races;
 interface
 
 uses
-  Trollhunter.Types,
   Trollhunter.Creature;
 
 type

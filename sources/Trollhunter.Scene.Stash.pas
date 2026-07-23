@@ -22,7 +22,6 @@ uses
   Trollhunter.Player,
   Trollhunter.Item,
   Trollhunter.Item.Common,
-  Trollhunter.Item.Types,
   Trollhunter.Item.Dungeon,
   Trollhunter.Map,
   Trollhunter.Helpers,
@@ -53,8 +52,6 @@ begin
 end;
 
 procedure TSceneStash.Update(var Key: UInt);
-var
-  I, FCount: Int;
 begin
   case Key of
     TK_ESCAPE:

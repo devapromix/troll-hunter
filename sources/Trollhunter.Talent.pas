@@ -221,7 +221,6 @@ implementation
 uses
   SysUtils,
   TypInfo,
-  Trollhunter.Skill,
   Trollhunter.Scenes,
   Trollhunter.Player,
   Trollhunter.Attribute,
