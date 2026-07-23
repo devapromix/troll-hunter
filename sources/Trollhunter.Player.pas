@@ -2039,6 +2039,7 @@ end;
 
 procedure TPlayer.Start();
 begin
+  Items.AddItemToInv(itmArcane_Orb, 10);
   Exit;
   // ShowMessage('');
   // Add armors
@@ -2200,6 +2201,7 @@ var
   WIndex: Int;
   WItem: Item;
   MaxCharges: UInt;
+  RndValue: UInt;
 const
   F = '%s +%d.';
 
@@ -2281,10 +2283,19 @@ begin
       WItem := Items_Inventory_GetItem(WIndex);
       MaxCharges := ItemBase[TItemEnum(WItem.ItemID)].Value +
         Items.GetBonus(WItem, btWandCap);
-      V := Min(MaxCharges - WItem.Value, Value);
-      WItem.Value := WItem.Value + V;
-      Items_Inventory_SetItem(WIndex, WItem);
-      MsgLog.Add(Format('You recharge %s by %d.', [Items.GetNameThe(WItem), V]));
+      if (WItem.Value >= MaxCharges) then
+        MsgLog.Add(Format('%s is already fully charged.',
+          [GetCapit(Items.GetNameThe(WItem))]))
+      else
+      begin
+        RndValue := UInt(Math.EnsureRange(Integer(Value) +
+          Math.RandomRange(-2, 3), 0, MaxInt));
+        V := Min(MaxCharges - WItem.Value, RndValue);
+        WItem.Value := WItem.Value + V;
+        Items_Inventory_SetItem(WIndex, WItem);
+        MsgLog.Add(Format('You recharge %s by %d.',
+          [Items.GetNameThe(WItem), V]));
+      end;
     end;
   end;
   // Food

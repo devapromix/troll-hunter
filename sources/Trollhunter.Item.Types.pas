@@ -111,7 +111,7 @@ type
     // Torch
     itmTorch, itmOil_Lamp,
     // Orbs
-    itmLight_Orb, itmLife_Orb, itmMana_Orb, itmArcaneOrb,
+    itmLight_Orb, itmLife_Orb, itmMana_Orb, itmArcane_Orb,
     // Foods and Plants
     itmHealing_Herb,
     // Ruby (Gems)
