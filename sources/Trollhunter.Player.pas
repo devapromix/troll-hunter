@@ -1633,13 +1633,16 @@ begin
     MsgLog.Add('You cannot disenchant an equipped item.');
     Exit;
   end;
-  Amount := Math.EnsureRange(1 + ItemBase[TItemEnum(FItem.ItemID)].Level div 3,
-    1, 5);
+  Amount := ItemBase[TItemEnum(FItem.ItemID)].Level;
   if (Items_Inventory_DeleteItem(Index, FItem) > 0) then
   begin
     Items.AddItemToInv(itmArcane_Orb, Amount);
-    MsgLog.Add(Format('You disenchant %s into %d Arcane Orb(s).',
-      [Items.GetNameThe(FItem), Amount]));
+    MsgLog.Add(Format('%s dissolves into pure arcane energy.',
+      [Items.GetNameThe(FItem)]));
+    if Amount = 1 then
+      MsgLog.Add('You receive %d Arcane Orb.')
+    else
+      MsgLog.Add(Format('You receive %d Arcane Orbs.', [Amount]));
     Scenes.SetScene(scInv);
   end;
   Self.Calc;
@@ -1773,8 +1776,7 @@ begin
     GroundItem := AItem;
     GroundItem.Amount := Remaining;
     Items_Dungeon_SetMapItemXY(MapID, Index, X, Y, GroundItem);
-    MsgLog.Add(Format('You picked up %d arrows (your quiver is full).',
-      [Picked]));
+    MsgLog.Add(Format('You picked up %d arrows (your quiver is full).', [Picked]));
   end
   else
   begin
@@ -1950,8 +1952,8 @@ begin
     SL.Append(Format(FT, [Game.GetTitle]));
     SL.Append('');
     SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.',
-      ['Difficulty', GetPureText(Game.GetStrDifficulty)]));
+    SL.Append(Format('%s: %s.', ['Difficulty',
+      GetPureText(Game.GetStrDifficulty)]));
     SL.Append('');
     SL.Append(Player.Name);
     SL.Append(AReason);
@@ -2304,8 +2306,7 @@ begin
   if (efCharges in Effects) then
   begin
     WIndex := Self.GetEquippedIndex(stRanged);
-    if (WIndex < 0) or
-      (ItemBase[TItemEnum(Items_Inventory_GetItem(WIndex).ItemID)]
+    if (WIndex < 0) or (ItemBase[TItemEnum(Items_Inventory_GetItem(WIndex).ItemID)]
       .ItemType <> itWand) then
       MsgLog.Add('You have no wand equipped.')
     else
@@ -2318,7 +2319,7 @@ begin
           [GetCapit(Items.GetNameThe(WItem))]))
       else
       begin
-        RndValue := UInt(Math.EnsureRange(Integer(Value) +
+        RndValue := UInt(Math.EnsureRange(integer(Value) +
           Math.RandomRange(-2, 3), 0, MaxInt));
         V := Min(MaxCharges - WItem.Value, RndValue);
         WItem.Value := WItem.Value + V;
