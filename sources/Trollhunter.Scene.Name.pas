@@ -16,11 +16,15 @@ type
 implementation
 
 uses
-  Trollhunter.Terminal,
   Trollhunter.UI,
+  BearLibTerminal,
+  Trollhunter.Terminal,
+  Trollhunter.Attribute,
+  Trollhunter.Statistic,
   Trollhunter.Player,
   Trollhunter.Game,
-  BearLibTerminal;
+  Trollhunter.Scene.Talents,
+  Trollhunter.Map;
 
   { TSceneName }
 
@@ -47,7 +51,19 @@ begin
     begin
       if (Player.Name = '') then
         Player.Name := 'PLAYER';
-      Scenes.SetScene(scBackground, scName);
+      if not Mode.Game then
+      begin
+        Scenes.SetScene(scLoad);
+        Terminal.Refresh;
+        Terminal_Delay(1000);
+        Map.Gen;
+        Mode.Game := True;
+        Player.Talents.DoTalent
+        (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
+        Player.StartEquip;
+        Player.StartSkills;
+        Scenes.SetScene(scGame);
+      end;
     end;
     TK_A .. TK_Z:
     begin

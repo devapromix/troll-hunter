@@ -14,7 +14,7 @@ type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
     scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
-    scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification, scBackground,
+    scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification,
     scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant);
 
 type
@@ -207,7 +207,6 @@ uses
   Trollhunter.Scene.RacesAndClasses,
   Trollhunter.Scene.Difficulty,
   Trollhunter.Scene.Quest,
-  Trollhunter.Scene.Background,
   Trollhunter.Item.Types,
   Trollhunter.Scene.Statistics,
   Trollhunter.Scene.Player,
@@ -282,9 +281,9 @@ end;
 
 procedure TScene.AddLine(AHotKey, AText: string);
 begin
-  Self.Add();
   Terminal.Print(Math.IfThen(X = 1, 5, CX + 5), Y, UI.KeyToStr(AHotKey, AText),
     TK_ALIGN_LEFT);
+  Self.Add();
 end;
 
 procedure TScene.Add(AText: string; AValue: Int);
@@ -369,8 +368,6 @@ begin
         FScene[I] := TSceneLearnedTalents.Create;
       scIdentification:
         FScene[I] := TSceneIdentification.Create;
-      scBackground:
-        FScene[I] := TSceneBackground.Create;
       scQuest:
         FScene[I] := TSceneQuest.Create;
       scEnchant:
@@ -530,10 +527,7 @@ procedure TSceneQuit.Update(var Key: UInt);
 begin
   case Key of
     TK_Y:
-    begin
-      Player.SaveCharacterDump('Quit the game');
       Game.CanClose := True;
-    end;
     TK_ESCAPE, TK_N:
       Scenes.GoBack;
   end;
@@ -562,10 +556,7 @@ procedure TSceneDef.Update(var Key: UInt);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
-    begin
-      Player.SaveCharacterDump(Format('Killed by %s', [Player.Killer]));
       Game.CanClose := True;
-    end;
     TK_SPACE:
       if Mode.Wizard then
       begin
@@ -590,10 +581,7 @@ procedure TSceneWin.Update(var Key: UInt);
 begin
   case Key of
     TK_ENTER, TK_KP_ENTER:
-    begin
-      Player.SaveCharacterDump('Won the game');
       Game.CanClose := True;
-    end;
   end;
 end;
 
@@ -627,14 +615,13 @@ begin
       else
         Scenes.SetScene(scDrop, scInv);
     end;
-    TK_ENTER, TK_KP_ENTER:
-    begin
-
-    end;
     TK_SLASH:
       Scenes.SetScene(scHelp, scInv);
     TK_SPACE:
-      Scenes.SetScene(scPlayer);
+      if Player.IsOnStash then
+        Scenes.SetScene(scStash)
+      else
+        Scenes.SetScene(scPlayer);
     TK_A .. TK_Z:
       Player.UseItem(Key - TK_A);
     else

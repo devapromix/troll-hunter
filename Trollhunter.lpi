@@ -35,7 +35,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <Units Count="59">
+    <Units Count="58">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -69,209 +69,205 @@
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="sources\Trollhunter.Scene.Background.pas"/>
+        <Filename Value="sources\Trollhunter.Item.Types.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="sources\Trollhunter.Item.Types.pas"/>
+        <Filename Value="sources\Trollhunter.Types.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
       <Unit10>
-        <Filename Value="sources\Trollhunter.Types.pas"/>
+        <Filename Value="sources\Trollhunter.Terminal.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="sources\Trollhunter.Terminal.pas"/>
+        <Filename Value="sources\Trollhunter.UI.Log.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="sources\Trollhunter.UI.Log.pas"/>
+        <Filename Value="sources\Trollhunter.UI.Logo.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
       <Unit13>
-        <Filename Value="sources\Trollhunter.UI.Logo.pas"/>
+        <Filename Value="sources\Trollhunter.Item.Affixes.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
       <Unit14>
-        <Filename Value="sources\Trollhunter.Item.Affixes.pas"/>
+        <Filename Value="sources\Trollhunter.UI.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
       <Unit15>
-        <Filename Value="sources\Trollhunter.UI.pas"/>
+        <Filename Value="sources\Trollhunter.Utils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit15>
       <Unit16>
-        <Filename Value="sources\Trollhunter.Utils.pas"/>
+        <Filename Value="sources\Trollhunter.Player.Types.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit16>
       <Unit17>
-        <Filename Value="sources\Trollhunter.Player.Types.pas"/>
+        <Filename Value="sources\Trollhunter.Player.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit17>
       <Unit18>
-        <Filename Value="sources\Trollhunter.Player.pas"/>
+        <Filename Value="sources\Trollhunter.Statistic.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit18>
       <Unit19>
-        <Filename Value="sources\Trollhunter.Statistic.pas"/>
+        <Filename Value="sources\Trollhunter.Player.Races.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit19>
       <Unit20>
-        <Filename Value="sources\Trollhunter.Player.Races.pas"/>
+        <Filename Value="sources\Trollhunter.Player.Classes.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit20>
       <Unit21>
-        <Filename Value="sources\Trollhunter.Player.Classes.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Statistics.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit21>
       <Unit22>
-        <Filename Value="sources\Trollhunter.Scene.Statistics.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Options.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit22>
       <Unit23>
-        <Filename Value="sources\Trollhunter.Scene.Options.pas"/>
+        <Filename Value="sources\Trollhunter.Player.Helpers.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit23>
       <Unit24>
-        <Filename Value="sources\Trollhunter.Player.Helpers.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Help.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit24>
       <Unit25>
-        <Filename Value="sources\Trollhunter.Scene.Help.pas"/>
+        <Filename Value="sources\Trollhunter.Map.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit25>
       <Unit26>
-        <Filename Value="sources\Trollhunter.Map.pas"/>
+        <Filename Value="sources\Trollhunter.Game.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit26>
       <Unit27>
-        <Filename Value="sources\Trollhunter.Game.pas"/>
+        <Filename Value="sources\Trollhunter.Helpers.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="sources\Trollhunter.Helpers.pas"/>
+        <Filename Value="sources\Trollhunter.Scenes.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit28>
       <Unit29>
-        <Filename Value="sources\Trollhunter.Scenes.pas"/>
+        <Filename Value="sources\BearLibTerminal.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit29>
       <Unit30>
-        <Filename Value="sources\BearLibTerminal.pas"/>
+        <Filename Value="sources\Trollhunter.Talent.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit30>
       <Unit31>
-        <Filename Value="sources\Trollhunter.Talent.pas"/>
+        <Filename Value="sources\Trollhunter.Attribute.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit31>
       <Unit32>
-        <Filename Value="sources\Trollhunter.Attribute.pas"/>
+        <Filename Value="sources\Trollhunter.PathFind.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit32>
       <Unit33>
-        <Filename Value="sources\Trollhunter.PathFind.pas"/>
+        <Filename Value="sources\Trollhunter.Item.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit33>
       <Unit34>
-        <Filename Value="sources\Trollhunter.Item.pas"/>
+        <Filename Value="sources\Trollhunter.Ability.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit34>
       <Unit35>
-        <Filename Value="sources\Trollhunter.Ability.pas"/>
+        <Filename Value="sources\Trollhunter.Calendar.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit35>
       <Unit36>
-        <Filename Value="sources\Trollhunter.Calendar.pas"/>
+        <Filename Value="sources\Trollhunter.Creature.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit36>
       <Unit37>
-        <Filename Value="sources\Trollhunter.Creature.pas"/>
+        <Filename Value="sources\Trollhunter.Entity.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit37>
       <Unit38>
-        <Filename Value="sources\Trollhunter.Entity.pas"/>
+        <Filename Value="sources\Trollhunter.Mob.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit38>
       <Unit39>
-        <Filename Value="sources\Trollhunter.Mob.pas"/>
+        <Filename Value="sources\Trollhunter.Quest.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit39>
       <Unit40>
-        <Filename Value="sources\Trollhunter.Quest.pas"/>
+        <Filename Value="sources\Trollhunter.Spellbook.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit40>
       <Unit41>
-        <Filename Value="sources\Trollhunter.Spellbook.pas"/>
+        <Filename Value="sources\Trollhunter.Weather.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit41>
       <Unit42>
-        <Filename Value="sources\Trollhunter.Weather.pas"/>
+        <Filename Value="sources\Trollhunter.Item.Common.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit42>
       <Unit43>
-        <Filename Value="sources\Trollhunter.Item.Common.pas"/>
+        <Filename Value="sources\Trollhunter.Item.Dungeon.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit43>
       <Unit44>
-        <Filename Value="sources\Trollhunter.Item.Dungeon.pas"/>
+        <Filename Value="sources\Trollhunter.Item.Inventory.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit44>
       <Unit45>
-        <Filename Value="sources\Trollhunter.Item.Inventory.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Difficulty.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit45>
       <Unit46>
-        <Filename Value="sources\Trollhunter.Scene.Difficulty.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Drop.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit46>
       <Unit47>
-        <Filename Value="sources\Trollhunter.Scene.Drop.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Items.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit47>
       <Unit48>
-        <Filename Value="sources\Trollhunter.Scene.Items.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Stash.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit48>
       <Unit49>
-        <Filename Value="sources\Trollhunter.Scene.Stash.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Store.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit49>
       <Unit50>
-        <Filename Value="sources\Trollhunter.Scene.Store.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Talents.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit50>
       <Unit51>
-        <Filename Value="sources\Trollhunter.Scene.Talents.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.LearnedTalents.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit51>
       <Unit52>
-        <Filename Value="sources\Trollhunter.Scene.LearnedTalents.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Game.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit52>
       <Unit53>
-        <Filename Value="sources\Trollhunter.Scene.Game.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Player.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit53>
       <Unit54>
-        <Filename Value="sources\Trollhunter.Scene.Player.pas"/>
+        <Filename Value="sources\Trollhunter.Projectile.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit54>
       <Unit55>
-        <Filename Value="sources\Trollhunter.Projectile.pas"/>
+        <Filename Value="sources\Trollhunter.Scene.Recharge.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit55>
       <Unit56>
-        <Filename Value="sources\Trollhunter.Scene.Recharge.pas"/>
+        <Filename Value="sources\Trollhunter.Magic.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit56>
       <Unit57>
-        <Filename Value="sources\Trollhunter.Magic.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit57>
-      <Unit58>
         <Filename Value="sources\Trollhunter.Scene.Spellbook.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit58>
+      </Unit57>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

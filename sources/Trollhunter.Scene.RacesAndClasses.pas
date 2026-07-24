@@ -120,8 +120,8 @@ begin
   inherited Render;
 
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY,
-    Races.GetDescription(Player.HRace), TK_ALIGN_BOTTOM);
+  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background,
+    TK_ALIGN_BOTTOM);
 
   AddKey('Enter', 'Confirm');
   AddKey('Esc', 'Back');
@@ -173,6 +173,8 @@ begin
   PrmAt[atLife] := Player.Attributes.Attrib[atLife].Prm;
   Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min, V.Mana.Max + 1));
   PrmAt[atMana] := Player.Attributes.Attrib[atMana].Prm;
+
+  Player.GenerateBackground();
 end;
 
 procedure TSceneRace.SelRand;

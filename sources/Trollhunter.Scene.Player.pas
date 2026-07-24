@@ -198,9 +198,6 @@ begin
     // Close
     TK_ESCAPE:
       Scenes.SetScene(scGame);
-    // Background
-    TK_TAB:
-      Scenes.SetScene(scBackground, scPlayer);
     // Learned Talents
     TK_T:
       Scenes.SetScene(scLearnedTalents, scPlayer);

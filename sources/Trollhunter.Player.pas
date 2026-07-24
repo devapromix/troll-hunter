@@ -118,7 +118,6 @@ type
     procedure GenerateBackground();
     procedure Spawn;
     function GetSatiationStr: string;
-    function SaveCharacterDump(AReason: string): string;
     procedure Defeat(AKiller: string = '');
     procedure Attack(Index: Int);
     procedure RangedAttack(Index: Int);
@@ -1943,68 +1942,6 @@ begin
   Look := False;
   IsRest := False;
   SatPerTurn := 2;
-end;
-
-function TPlayer.SaveCharacterDump(AReason: string): string;
-var
-  MorgueFileName: string;
-  SL: TStringList;
-
-  function GetDateTime(DateSep: char = '.'; TimeSep: char = ':'): string;
-  begin
-    Result := DateToStr(Date) + '-' + TimeToStr(Time);
-    Result := StringReplace(Result, '.', DateSep, [rfReplaceAll]);
-    Result := StringReplace(Result, ':', TimeSep, [rfReplaceAll]);
-  end;
-
-begin
-  Result := '';
-  if Mode.Wizard then
-    Exit;
-  SL := TStringList.Create;
-  try
-    SL.Append(Format(FT, [Game.GetTitle]));
-    SL.Append('');
-    SL.Append(GetDateTime);
-    SL.Append(Format('%s: %s.', ['Difficulty',
-      GetPureText(Game.GetStrDifficulty)]));
-    SL.Append('');
-    SL.Append(Player.Name);
-    SL.Append(AReason);
-    if IsDead then
-      SL.Append(Format('He scored %d points.', [Statictics.Get(stScore)]))
-    else
-      SL.Append(Format('He has scored %d points so far.',
-        [Statictics.Get(stScore)]));
-    SL.Append('');
-    SL.Append(Format(FT, ['Statistics']));
-    SL.Append(Format('Game time: %d turns.', [Statictics.Get(stTurn)]));
-    SL.Append('');
-    SL.Append(Format(FT, ['Screenshot']));
-    SL.Append(Game.Screenshot);
-    SL.Append(Format(FT, ['Defeated foes']));
-    SL.Append('');
-    SL.Append(Format('Total: %d creatures defeated.', [Statictics.Get(stKills)]));
-    SL.Append('');
-    SL.Append(Format(FT, ['Last messages']));
-    SL.Append('');
-    SL.Append(GetPureText(MsgLog.GetLastMsg(10)));
-    SL.Append(Format(FT, ['Inventory']));
-    SL.Append('');
-    SL.Append(GetPureText(Items.GetInventory));
-    SL.Append(Format('%s: %d', ['Gold', Gold]));
-    ForceDirectories(Utils.GetPath('morgue'));
-    MorgueFileName := Format('%s-%s-character-dump.txt',
-      [Player.Name, GetDateTime('-', '-')]);
-    SL.SaveToFile(Utils.GetPath('morgue') + MorgueFileName
-      {$IFNDEF FPC}
-      ,
-      TEncoding.UTF8
-      {$ENDIF}
-      );
-  finally
-    FreeAndNil(SL);
-  end;
 end;
 
 procedure TPlayer.SetAmountScene(IsDrop: boolean; Index, Amount: Int);

@@ -63,14 +63,14 @@ begin
     scInv:
     begin
       Terminal.Print(CX, 3,
-        Format('To drop an item, press the %s key and then press %s key to drop it.',
+        Format('To drop/store an item, press the %s key and then press %s key to drop/store it.',
         [UI.KeyToStr('TAB'), UI.KeyToStr('A-Z')]), TK_ALIGN_CENTER);
 
       UI.Title('Keybindings', 5);
       X := 1;
       Y := 7;
-      AddLine('Tab', 'Drop an item to the floor');
-      AddLine('Space', 'Character Screen');
+      AddLine('Tab', 'Drop/Store an item');
+      AddLine('Space', 'Character/Stash');
       AddLine('A-Z', 'Use an item');
     end;
     scPlayer:
@@ -81,7 +81,6 @@ begin
       Y := 8;
       AddLine('Right/Left', 'Change tab');
       AddLine('Up/Down', 'Scroll skills');
-      AddLine('Tab', 'Show Background');
       AddLine('T', 'Show Learned Talents');
       AddLine('Space', 'Show Inventory');
     end;
@@ -121,12 +120,13 @@ begin
       Y := 16;
       AddLine('<', 'Go up stairs');
       AddLine('>', 'Go down stairs');
-      AddLine('G', 'Pick up an item from the floor');
-      AddLine('F', 'Drop an item to the floor');
+      AddLine('G', 'Pick up/Open stash');
+      AddLine('F', 'Drop/Store an item');
       AddLine('L', 'Look mode');
       AddLine('R', 'Rest');
       AddLine('M', 'View messages');
-      // AddLine('B', 'Spellbook');
+      AddLine('B', 'Spellbook');
+      AddLine('Y', 'Cast Quick Spell');
       AddLine('T', 'Talents');
       AddLine('N', 'Show Statistics');
       AddLine('O', 'Options');
@@ -134,11 +134,6 @@ begin
       AddLine('P', 'Character Screen');
       AddLine('K', 'Calendar');
       AddLine('?', 'Show this Help Screen');
-
-      UI.Title('Character dump', Terminal.Window.Height - 6);
-      Terminal.Print(CX, Terminal.Window.Height - 4,
-        Format('The game saves a character dump to %s file.',
-        [UI.KeyToStr('*-character-dump.txt')]), TK_ALIGN_CENTER);
     end;
   end;
   Self.AddKey('Esc', 'Close', True);
