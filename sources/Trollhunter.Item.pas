@@ -1669,7 +1669,144 @@ const
     (Symbol: '{'; ItemType: itArrow; SlotType: stNone; MaxStack: 999;
     MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; )
+    Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; ) ,
+
+    // Books
+    // Book of Mana Shield
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 300; Color: clLightestBlue; Deep: [deDark_Wood];
+    Effects: []; Value: 1; ManaCost: 0;),
+    // Book of Heal
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 450; Color: clLightBlue; Deep: [deDark_Wood];
+    Effects: []; Value: 2; ManaCost: 0; ),
+    // Book of Regeneration
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 600; Color: clBlue; Deep: [deDark_Wood];
+    Effects: []; Value: 3; ManaCost: 0; ),
+    // Book of Curse
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 800; Color: clDarkBlue; Deep: [deDark_Wood];
+    Effects: []; Value: 4; ManaCost: 0; ),
+    // Book of Fire Arrow
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1100; Color: clLightestBlue; Deep: [deDark_Wood];
+    Effects: []; Value: 5; ManaCost: 0; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1400; Color: clLightBlue; Deep: [deGray_Cave];
+    Effects: []; Value: 0; ManaCost: 0; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1800; Color: clBlue; Deep: [deGray_Cave];
+    Effects: []; Value: 0; ManaCost: 0; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 2300; Color: clDarkBlue; Deep: [deGray_Cave];
+    Effects: []; Value: 0; ManaCost: 0; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 2800; Color: clLightestBlue; Deep: [deGray_Cave];
+    Effects: []; Value: 0; ManaCost: 0; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 3500; Color: clLightBlue; Deep: [deGray_Cave];
+    Effects: []; Value: 0; ManaCost: 0; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 320; Color: clLightestBlue; Deep: [deDeep_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 480; Color: clLightBlue; Deep: [deDeep_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 650; Color: clBlue; Deep: [deDeep_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 850; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1150; Color: clLightestBlue; Deep: [deDeep_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1450; Color: clLightBlue; Deep: [deBlood_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1850; Color: clBlue; Deep: [deBlood_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 2350; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 2900; Color: clLightestBlue; Deep: [deBlood_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 3600; Color: clLightBlue; Deep: [deBlood_Cave]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 4200; Color: clBlue; Deep: [deDrom]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 4800; Color: clDarkBlue; Deep: [deDrom]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 5500; Color: clLightestBlue; Deep: [deDrom]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 6200; Color: clLightBlue; Deep: [deDrom]; ),
+
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 7000; Color: clBlue; Deep: [deDrom]; )
 
 
     );
