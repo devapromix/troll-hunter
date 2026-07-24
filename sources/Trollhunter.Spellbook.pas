@@ -168,8 +168,6 @@ end;
 procedure TSpellbook.Start;
 begin
   Self.Clear;
-  AddSpell(spHeal);
-  AddSpell(spRegeneration);
 end;
 
 initialization

@@ -119,8 +119,9 @@ type
     procedure Spawn;
     function GetSatiationStr: string;
     procedure Defeat(AKiller: string = '');
-    procedure Attack(Index: Int);
+    procedure MeleeAttack(Index: Int);
     procedure RangedAttack(Index: Int);
+    procedure MagicAttack(Index: Int);
     function CanFire: boolean;
     procedure FireModeEnter;
     procedure FireModeExit;
@@ -244,7 +245,7 @@ begin
       Format(Terminal.Colorize(
       'You are %s of a %s %s. You had a %s upbringing and you ' +
       'are %s the family. You have %s %s eyes, %s %s hair, and %s complexion.',
-      'Yellow'), [SL[cpChild][Random(SL[cpChild].Count - 1)],
+      'Grey'), [SL[cpChild][Random(SL[cpChild].Count - 1)],
       SL[cpClass][Random(SL[cpClass].Count - 1)],
       SL[cpParent][Random(SL[cpParent].Count - 1)],
       SL[cpBackground][Random(SL[cpBackground].Count - 1)],
@@ -339,7 +340,7 @@ begin
   end;
 end;
 
-procedure TPlayer.Attack(Index: Int);
+procedure TPlayer.MeleeAttack(Index: Int);
 const
   AccuracyDexDivisor = 2;
 var
@@ -547,7 +548,7 @@ begin
   if (Dist <= 1) then
   begin
     Self.FireModeExit;
-    Self.Attack(Index);
+    Self.MeleeAttack(Index);
     Exit;
   end;
   if (FWeaponSkill = skWand) then
@@ -652,6 +653,11 @@ begin
   else
     Miss();
   AddTurn;
+end;
+
+procedure TPlayer.MagicAttack(Index: Int);
+begin
+
 end;
 
 function TPlayer.CanFire: boolean;
@@ -1199,7 +1205,7 @@ begin
 
     if not Mobs.GetFreeTile(FX, FY) then
     begin
-      Self.Attack(Mobs.GetIndex(FX, FY));
+      Self.MeleeAttack(Mobs.GetIndex(FX, FY));
     end
     else
     begin

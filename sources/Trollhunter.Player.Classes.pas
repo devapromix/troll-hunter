@@ -31,35 +31,41 @@ type
 const
   ClassProp: array [TClassEnum] of TClassProp = (
     // Warrior
-    (Description: 'Warrior'; Strength: (Min: 1; Max: 4; ); Dexterity: (Min: 1;
-    Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
-    Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
-    Skill: (skBlade, skAthletics, skBodybuilding);
-    Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
-    itmNone, itmNone, itmNone, itmNone); ),
-    // Mage
-    (Description: 'Mage'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 0;
-    Max: 0; ); Willpower: (Min: 1; Max: 4; ); Perception: (Min: 1; Max: 2; );
-    Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
-    Skill: (skStaff, skConcentration, skMeditation);
-    Item: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
-    itmYew_Wand, itmNone, itmNone, itmNone); ),
-    // Ranger
-    (Description: 'Ranger'; Strength: (Min: 1; Max: 2; ); Dexterity: (Min: 1;
-    Max: 4; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
-    Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
-    Skill: (skBow, skDodge, skDodge); Item: (itmCap, itmQuilted_Armor, itmNone, itmNone,
-    itmDagger1, itmNone, itmShort_Bow, itmLight_Quiver, itmNone, itmNone); ),
-    // Thief
-    (Description: 'Thief'; Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1;
-    Max: 2; ); Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
-    Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
-    Skill: (skDagger, skToughness, skStealth);
-    Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmDagger1, itmNone, itmNone,
-    itmNone, itmNone, itmNone); )
-    /// ///
-    );
+    (Description: 'A strong warrior skilled in melee combat. Relies on power, heavy armor and steel to crush enemies.';
+     Strength: (Min: 1; Max: 4; ); Dexterity: (Min: 1; Max: 2; );
+     Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
+     Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
+     Skill: (skBlade, skAthletics, skBodybuilding);
+     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
+     itmNone, itmNone, itmNone, itmNone); ),
 
+    // Mage
+    (Description: 'A powerful mage who wields ancient magic. Weak in close combat but deadly with spells at range.';
+     Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 0; Max: 0; );
+     Willpower: (Min: 1; Max: 4; ); Perception: (Min: 1; Max: 2; );
+     Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
+     Skill: (skStaff, skConcentration, skMeditation);
+     Item: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
+     itmYew_Wand, itmNone, itmNone, itmNone); ),
+
+    // Ranger
+    (Description: 'A skilled hunter and archer. Agile and versatile, excels in forests and open terrain.';
+     Strength: (Min: 1; Max: 2; ); Dexterity: (Min: 1; Max: 4; );
+     Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
+     Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
+     Skill: (skBow, skDodge, skDodge);
+     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmDagger1, itmNone,
+     itmShort_Bow, itmLight_Quiver, itmNone, itmNone); ),
+
+    // Thief
+    (Description: 'A nimble rogue and shadow master. Deadly in stealth, ambushes and quick strikes.';
+     Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1; Max: 2; );
+     Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
+     Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
+     Skill: (skDagger, skToughness, skStealth);
+     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmDagger1, itmNone,
+     itmNone, itmNone, itmNone, itmNone); )
+  );
 type
   TClasses = class(TObject)
   private

@@ -411,8 +411,6 @@ begin
     end;
     TK_I:
       Scenes.SetScene(scInv);
-    TK_M:
-      Scenes.SetScene(scMessages);
     TK_F:
     begin
       if Player.IsDead then

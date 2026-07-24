@@ -12,7 +12,7 @@ uses
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
-    scDrop, scItems, scAmount, scPlayer, scMessages, scStatistics, scDialog,
+    scDrop, scItems, scAmount, scPlayer, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification,
     scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant);
@@ -144,13 +144,6 @@ type
   TSceneAmount = class(TScene)
   public
     MaxAmount: Int;
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
-  TSceneMessages = class(TScene)
-  public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
   end;
@@ -338,8 +331,6 @@ begin
         FScene[I] := TSceneAmount.Create;
       scItems:
         FScene[I] := TSceneItems.Create;
-      scMessages:
-        FScene[I] := TSceneMessages.Create;
       scStatistics:
         FScene[I] := TSceneStatistics.Create;
       scDialog:
@@ -677,24 +668,6 @@ begin
       ChAmount(Player.ItemAmount + 1);
     TK_DOWN, TK_KP_2, TK_X:
       ChAmount(Player.ItemAmount - 1);
-  end;
-end;
-
-{ TSceneMessages }
-
-procedure TSceneMessages.Render;
-begin
-  UI.Title('Last messages');
-  MsgLog.RenderAllMessages;
-  AddKey('Esc', 'Close', True);
-end;
-
-procedure TSceneMessages.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scGame);
   end;
 end;
 

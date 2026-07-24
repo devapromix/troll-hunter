@@ -10,7 +10,6 @@ type
 
 type
   TRaceProp = record
-    Description: string;
     Age: TMinMax;
     Height: TMinMax;
     Weight: TMinMax;
@@ -26,26 +25,25 @@ type
 const
   RaceProp: array [TRaceEnum] of TRaceProp = (
     // Human
-    (Description: 'Humans are the most common of races.';
-    Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;);
+    (Age: (Min: 18; Max: 50;); Height: (Min: 160; Max: 180;);
     Weight: (Min: 70; Max: 110;); Metabolism: (Min: 80; Max: 85;);
     Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 2;);
     Willpower: (Min: 1; Max: 2;); Perception: (Min: 1; Max: 2;);
     Life: (Min: 5; Max: 8;); Mana: (Min: 5; Max: 8;);),
     // Elf
-    (Description: 'Elf'; Age: (Min: 75; Max: 800;); Height: (Min: 190; Max: 250;
+    (Age: (Min: 75; Max: 800;); Height: (Min: 190; Max: 250;
     ); Weight: (Min: 50; Max: 100;); Metabolism: (Min: 60; Max: 65;);
     Strength: (Min: 1; Max: 1;); Dexterity: (Min: 1; Max: 3;);
     Willpower: (Min: 1; Max: 3;); Perception: (Min: 1; Max: 2;);
     Life: (Min: 5; Max: 10;); Mana: (Min: 10; Max: 15;);),
     // Gnome
-    (Description: 'Gnome'; Age: (Min: 20; Max: 160;); Height: (Min: 90;
+    (Age: (Min: 20; Max: 160;); Height: (Min: 90;
     Max: 130;); Weight: (Min: 70; Max: 110;); Metabolism: (Min: 95; Max: 100;);
     Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 2;);
     Willpower: (Min: 1; Max: 3;); Perception: (Min: 1; Max: 3;);
     Life: (Min: 5; Max: 10;); Mana: (Min: 10; Max: 15;);),
     // Dwarf
-    (Description: 'Dwarf'; Age: (Min: 20; Max: 250;); Height: (Min: 100;
+    (Age: (Min: 20; Max: 250;); Height: (Min: 100;
     Max: 150;); Weight: (Min: 80; Max: 120;); Metabolism: (Min: 115; Max: 120;);
     Strength: (Min: 1; Max: 3;); Dexterity: (Min: 1; Max: 3;);
     Willpower: (Min: 1; Max: 1;); Perception: (Min: 1; Max: 2;);
@@ -66,7 +64,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GetName(I: TRaceEnum): string;
-    function GetDescription(I: TRaceEnum): string;
   end;
 
 var
@@ -95,11 +92,6 @@ destructor TRaces.Destroy;
 begin
 
   inherited;
-end;
-
-function TRaces.GetDescription(I: TRaceEnum): string;
-begin
-  Result := RaceProp[I].Description;
 end;
 
 function TRaces.GetName(I: TRaceEnum): string;
