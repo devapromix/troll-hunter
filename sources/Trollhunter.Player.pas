@@ -67,6 +67,7 @@ type
     FTalents: TTalents;
     FSkills: TSkills;
     FFireMode: boolean;
+    FMagicMode: boolean;
     FFireTargets: array of Int;
     FFireIndex: Int;
     FBowLevel: UInt;
@@ -81,6 +82,7 @@ type
     procedure UseArrow;
     function HasCharges: boolean;
     procedure UseCharge;
+    procedure BuildFireTargets(ARange: UInt);
   public
     constructor Create;
     destructor Destroy; override;
@@ -91,6 +93,7 @@ type
     property Look: boolean read FLook write FLook;
     property WeaponSkill: TSkillEnum read FWeaponSkill;
     property FireMode: boolean read FFireMode;
+    property MagicMode: boolean read FMagicMode;
     property FireIndex: Int read FFireIndex;
     property Gold: Int read FGold write FGold;
     property Killer: string read FKiller write FKiller;
@@ -124,6 +127,7 @@ type
     procedure MagicAttack(Index: Int);
     function CanFire: boolean;
     procedure FireModeEnter;
+    procedure MagicFireModeEnter;
     procedure FireModeExit;
     procedure FireModeSwitch(ADir: Int);
     function FireModeTarget: Int;
@@ -656,8 +660,72 @@ begin
 end;
 
 procedure TPlayer.MagicAttack(Index: Int);
-begin
+const
+  RangeAccuracyPenalty = 3;
+  AccuracyWilDivisor = 2;
+var
+  Mob: TMob;
+  Dam, TargetDV, AccBonus, Dist, MMin, MMax: UInt;
+  The: string;
 
+  procedure Miss();
+  begin
+    MsgLog.Add(Format('You miss %s.', [The]));
+    SatPerTurn := Ord(Game.Difficulty) + 3;
+  end;
+
+begin
+  if (Index < 0) then
+    Exit;
+  Mob := Mobs.Mob[Index];
+  if not Mob.Alive then
+    Exit;
+  if (Mob.Force <> fcEnemy) then
+    Exit;
+  if (Self.Attributes.Attrib[atMana].Value < SpellData[spFireArrow].ManaCost)
+  then
+  begin
+    MsgLog.Add('You don''t have enough mana to cast Fire Arrow.');
+    Self.FireModeExit;
+    Exit;
+  end;
+  Self.Attributes.Modify(atMana, -Int(SpellData[spFireArrow].ManaCost));
+  Self.Statictics.Inc(stSpCast);
+  Dist := Self.GetDist(Mob.X, Mob.Y);
+  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
+  TargetDV := Mob.Attributes.Attrib[atDV].Value;
+  if Abilities.IsAbility(abBerserk) then
+    TargetDV := TargetDV div 2;
+  if (Dist > 1) then
+    Inc(TargetDV, (Dist - 1) * RangeAccuracyPenalty);
+  AccBonus := Self.Attributes.Attrib[atWil].Value div AccuracyWilDivisor;
+  TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
+  if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
+  begin
+    MMin := EnsureRange(SpellData[spFireArrow].MinDamage +
+      Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
+    MMax := EnsureRange(SpellData[spFireArrow].MaxDamage +
+      Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
+    Dam := Game.EnsureRange(RandomRange(MMin, MMax + 1), UIntMax);
+    if Abilities.IsAbility(abBloodlust) then
+      Inc(Dam, Dam div 4);
+    if Abilities.IsAbility(abWeak) then
+      Dec(Dam, Dam div 3);
+    Dam := Self.GetRealDamage(Dam, Mob.Attributes.Attrib[atPV].Value);
+    if (Dam = 0) then
+    begin
+      Miss();
+      AddTurn;
+      Exit;
+    end;
+    Mob.Attributes.Modify(atLife, -Dam);
+    MsgLog.Add(Format('Your fire arrow hits %s (%d).', [The, Dam]));
+    if Mob.IsDead then
+      Mob.Defeat;
+  end
+  else
+    Miss();
+  AddTurn;
 end;
 
 function TPlayer.CanFire: boolean;
@@ -665,7 +733,7 @@ begin
   Result := (FWeaponSkill = skBow) or (FWeaponSkill = skWand);
 end;
 
-procedure TPlayer.FireModeEnter;
+procedure TPlayer.BuildFireTargets(ARange: UInt);
 var
   I, J: Int;
   Tmp: Int;
@@ -681,6 +749,48 @@ begin
   PrevTarget := Self.FireModeTarget;
   SetLength(FFireTargets, 0);
   FFireIndex := -1;
+  for I := 0 to Mobs.Count - 1 do
+    if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
+      (Mobs.Mob[I].MapZone = Map.Current) and
+      Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) and
+      (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
+      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= ARange))) then
+    begin
+      SetLength(FFireTargets, Length(FFireTargets) + 1);
+      FFireTargets[High(FFireTargets)] := I;
+    end;
+  if (Length(FFireTargets) = 0) then
+  begin
+    FFireMode := False;
+    MsgLog.Add('There is no one in sight to shoot at.');
+    Exit;
+  end;
+  for I := 1 to High(FFireTargets) do
+  begin
+    J := I;
+    while (J > 0) and (TargetDist(J) < TargetDist(J - 1)) do
+    begin
+      Tmp := FFireTargets[J];
+      FFireTargets[J] := FFireTargets[J - 1];
+      FFireTargets[J - 1] := Tmp;
+      Dec(J);
+    end;
+  end;
+  FFireIndex := 0;
+  if (PrevTarget >= 0) then
+    for I := 0 to High(FFireTargets) do
+      if (FFireTargets[I] = PrevTarget) then
+      begin
+        FFireIndex := I;
+        Break;
+      end;
+  FFireMode := True;
+end;
+
+procedure TPlayer.FireModeEnter;
+begin
+  FMagicMode := False;
   if not CanFire then
   begin
     FFireMode := False;
@@ -714,43 +824,27 @@ begin
     MsgLog.Add('Your wand has no charges left.');
     Exit;
   end;
-  for I := 0 to Mobs.Count - 1 do
-    if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
-      (Mobs.Mob[I].MapZone = Map.Current) and
-      Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
-      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) and
-      (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
-      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= Self.FireRange))) then
-    begin
-      SetLength(FFireTargets, Length(FFireTargets) + 1);
-      FFireTargets[High(FFireTargets)] := I;
-    end;
-  if (Length(FFireTargets) = 0) then
+  Self.BuildFireTargets(Self.FireRange);
+end;
+
+procedure TPlayer.MagicFireModeEnter;
+begin
+  FMagicMode := True;
+  if not (Spellbook.GetQuickSpell.Enable and
+    (Spellbook.GetQuickSpellEnum = spFireArrow)) then
   begin
     FFireMode := False;
-    MsgLog.Add('There is no one in sight to shoot at.');
+    MsgLog.Add('No quick spell selected.');
     Exit;
   end;
-  for I := 1 to High(FFireTargets) do
+  if (Self.Attributes.Attrib[atMana].Value < SpellData[spFireArrow].ManaCost)
+  then
   begin
-    J := I;
-    while (J > 0) and (TargetDist(J) < TargetDist(J - 1)) do
-    begin
-      Tmp := FFireTargets[J];
-      FFireTargets[J] := FFireTargets[J - 1];
-      FFireTargets[J - 1] := Tmp;
-      Dec(J);
-    end;
+    FFireMode := False;
+    MsgLog.Add('You need more mana!');
+    Exit;
   end;
-  FFireIndex := 0;
-  if (PrevTarget >= 0) then
-    for I := 0 to High(FFireTargets) do
-      if (FFireTargets[I] = PrevTarget) then
-      begin
-        FFireIndex := I;
-        Break;
-      end;
-  FFireMode := True;
+  Self.BuildFireTargets(Self.Vision);
 end;
 
 function TPlayer.FireRange: UInt;
@@ -780,6 +874,7 @@ end;
 procedure TPlayer.FireModeExit;
 begin
   FFireMode := False;
+  FMagicMode := False;
   FFireIndex := -1;
   SetLength(FFireTargets, 0);
 end;
@@ -1046,6 +1141,7 @@ begin
   FBowMinDamage := 0;
   FBowMaxDamage := 0;
   FFireMode := False;
+  FMagicMode := False;
   FFireIndex := -1;
   SetLength(FFireTargets, 0);
   Attributes.SetValue(atLev, 1);

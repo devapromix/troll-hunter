@@ -3,7 +3,8 @@ unit Trollhunter.Projectile;
 interface
 
 uses
-  Trollhunter.Skill;
+  Trollhunter.Skill,
+  Trollhunter.Magic;
 
 type
   TSymbol = record
@@ -19,6 +20,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function GetSymbol(const AX, AY: integer; const ASkillEnum: TSkillEnum): TSymbol;
+    function GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
   end;
 
 var
@@ -64,6 +66,15 @@ begin
       Result.Symbol := '\'
     else
       Result.Symbol := '/';
+  end;
+end;
+
+function TProjectile.GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
+begin
+  if ASpellEnum = spFireArrow then
+  begin
+    Result.Color := clRed;
+    Result.Symbol := '~';
   end;
 end;
 

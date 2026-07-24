@@ -18,6 +18,7 @@ type
   TSceneGame = class(TScene)
   private
     procedure FireArrow;
+    procedure CastFireArrow;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -51,7 +52,7 @@ var
   R: UInt;
   T: TTile;
   Min, Max: TPoint;
-  S: string;
+  S, ActionLabel: string;
 
   procedure RenderLook(X, Y: UInt; T: TTile; IsMob: boolean);
   var
@@ -190,11 +191,16 @@ begin
         MobBase[TMobEnum(Mobs.Mob[I].ID)].Symbol);
       Terminal.BackgroundColor(clBackground);
       Terminal.ForegroundColor(clDefault);
+      if Player.MagicMode then
+        ActionLabel := 'cast'
+      else
+        ActionLabel := 'shoot';
       Terminal.Print(Info.Left, Info.Top, Info.Width, Info.Height,
-        Format('%s (%s%d/%d). [<-/->] target, [Enter] shoot, [V/Esc] cancel',
+        Format('%s (%s%d/%d). [<-/->] target, [Enter] %s, [V/Esc] cancel',
         [Mobs.Name[TMobEnum(Mobs.Mob[I].ID)], UI.Icon(icLife),
         Mobs.Mob[I].Attributes.Attrib[atLife].Value,
-        Mobs.Mob[I].Attributes.Attrib[atMaxLife].Value]), TK_ALIGN_TOP);
+        Mobs.Mob[I].Attributes.Attrib[atMaxLife].Value,
+        ActionLabel]), TK_ALIGN_TOP);
     end;
   end;
   // Player info
@@ -249,6 +255,43 @@ begin
   Player.FireModeEnter;
 end;
 
+procedure TSceneGame.CastFireArrow;
+var
+  Index, TX, TY, PX, PY, L, I, AX, AY: Int;
+  LR: real;
+  LSymbol: TSymbol;
+begin
+  Index := Player.FireModeTarget;
+  if (Index < 0) or not Mobs.Mob[Index].Alive then
+  begin
+    Player.FireModeExit;
+    Exit;
+  end;
+  TX := Mobs.Mob[Index].X;
+  TY := Mobs.Mob[Index].Y;
+  LSymbol := Projectile.GetSpellSymbol(spFireArrow);
+  PX := View.Width div 2;
+  PY := View.Height div 2;
+  L := Math.Max(Abs(Int(Player.X) - TX), Abs(Int(Player.Y) - TY));
+  if (L = 0) then
+    L := 1;
+  for I := 1 to L do
+  begin
+    LR := I / L;
+    AX := Int(Player.X) + Round((TX - Int(Player.X)) * LR);
+    AY := Int(Player.Y) + Round((TY - Int(Player.Y)) * LR);
+    Self.Render;
+    Terminal.ForegroundColor(LSymbol.Color);
+    Terminal.Print(AX - Int(Player.X) + PX + View.Left,
+      AY - Int(Player.Y) + PY + View.Top, LSymbol.Symbol);
+    terminal_refresh();
+    terminal_delay(15);
+  end;
+  Player.MagicAttack(Index);
+  if Player.FireMode then
+    Player.MagicFireModeEnter;
+end;
+
 procedure TSceneGame.Update(var Key: UInt);
 begin
   MsgLog.Turn;
@@ -266,7 +309,10 @@ begin
       TK_RIGHT, TK_KP_6, TK_D:
         Player.FireModeSwitch(1);
       TK_RETURN, TK_KP_ENTER:
-        FireArrow;
+        if Player.MagicMode then
+          CastFireArrow
+        else
+          FireArrow;
       TK_V, TK_ESCAPE:
         Player.FireModeExit;
     end;
@@ -443,7 +489,9 @@ begin
         Exit;
       if Spellbook.GetQuickSpell.Enable then
       begin
-        if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
+        if (Spellbook.GetQuickSpellEnum = spFireArrow) then
+          Player.MagicFireModeEnter
+        else if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
         then
         begin
           Player.Statictics.Inc(stSpCast);

@@ -58,6 +58,8 @@ type
     Effects: TEffects;
     Description: string;
     Value: Int;
+    MinDamage: UInt;
+    MaxDamage: UInt;
   end;
 
 const
@@ -121,6 +123,8 @@ const
      Effects: [];
      Description: 'Hurls a flaming arrow at the target';
      Value: 0;
+     MinDamage: 3;
+     MaxDamage: 8;
      ),
 
     // Arcane
