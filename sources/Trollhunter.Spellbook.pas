@@ -21,6 +21,7 @@ type
   private
     FSpell: array [TSpellEnum] of TSpell;
     FQuickSpell: TSpellEnum;
+    FHasQuickSpell: boolean;
     FLastSelectedSpell: TSpellEnum;
   public
     procedure Clear;
@@ -28,6 +29,7 @@ type
     procedure AddSpell(ASpellEnum: TSpellEnum);
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
     procedure SetQuickSpell(ASpellEnum: TSpellEnum);
+    procedure ClearQuickSpell;
     function GetSpellByIndex(Index: UInt): TSpellEnum;
     function GetActiveSpellCount: UInt;
     procedure Start;
@@ -64,6 +66,7 @@ begin
   for I := Low(TSpellEnum) to High(TSpellEnum) do
     FSpell[I].Enable := False;
   FQuickSpell := Low(TSpellEnum);
+  FHasQuickSpell := False;
   FLastSelectedSpell := Low(TSpellEnum);
 end;
 
@@ -130,12 +133,21 @@ end;
 procedure TSpellbook.SetQuickSpell(ASpellEnum: TSpellEnum);
 begin
   if FSpell[ASpellEnum].Enable then
+  begin
     FQuickSpell := ASpellEnum;
+    FHasQuickSpell := True;
+  end;
+end;
+
+procedure TSpellbook.ClearQuickSpell;
+begin
+  FHasQuickSpell := False;
 end;
 
 function TSpellbook.GetQuickSpell: TSpell;
 begin
   Result := FSpell[FQuickSpell];
+  Result.Enable := FHasQuickSpell and FSpell[FQuickSpell].Enable;
 end;
 
 function TSpellbook.GetQuickSpellEnum: TSpellEnum;

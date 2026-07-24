@@ -39,16 +39,14 @@ var
   Spell: TSpellData;
   IsActive: boolean;
   LInfo: string;
-  LQuickSpellName: string;
 begin
-  if Spellbook.GetQuickSpell.Enable then
-    LQuickSpellName := Spellbook.GetQuickSpell.Spell.Name
-  else
-    LQuickSpellName := 'None';
   if FSelecting then
     UI.Title('Select Quick Spell')
+  else if Spellbook.GetQuickSpell.Enable then
+    UI.Title('Spellbook [[' + UI.Icon(icBook) + ' ' +
+      Spellbook.GetQuickSpell.Spell.Name + ']]')
   else
-    UI.Title('Spellbook [[' + LQuickSpellName + ']]');
+    UI.Title('Spellbook');
 
   V := 0;
   Y := 2;
@@ -94,6 +92,7 @@ begin
   begin
     AddKey('A-Z', 'Cast Spell');
     AddKey('TAB', 'Set Quick Spell');
+    AddKey('Backspace', 'Clear Quick Spell');
     AddKey('Esc', 'Close', True);
   end;
 end;
@@ -121,6 +120,8 @@ begin
       Spellbook.DoSpell(Key - TK_A);
     TK_TAB:
       FSelecting := True;
+    TK_BACKSPACE:
+      Spellbook.ClearQuickSpell;
   end;
 end;
 

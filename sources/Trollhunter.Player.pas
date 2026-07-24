@@ -1886,10 +1886,8 @@ begin
       Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
         Status.Width);
       if Spellbook.GetQuickSpell.Enable then
-        S := 'Quick spell: ' + Spellbook.GetQuickSpell.Spell.Name
-      else
-        S := 'Quick spell: None';
-      Terminal.Print(Status.Left, Status.Top + 4, S);
+        Terminal.Print(Status.Left, Status.Top + 4,
+          UI.Icon(icBook) + ' ' + Spellbook.GetQuickSpell.Spell.Name);
     end;
     else
     begin
