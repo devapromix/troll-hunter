@@ -9,6 +9,8 @@ uses
 
 type
   TSceneSpellbook = class(TScene)
+  private
+    FSelecting: boolean;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -43,7 +45,10 @@ begin
     LQuickSpellName := Spellbook.GetQuickSpell.Spell.Name
   else
     LQuickSpellName := 'None';
-  UI.Title('Spellbook [[' + LQuickSpellName + ']]');
+  if FSelecting then
+    UI.Title('Select Quick Spell')
+  else
+    UI.Title('Spellbook [[' + LQuickSpellName + ']]');
 
   V := 0;
   Y := 2;
@@ -80,30 +85,42 @@ begin
     MsgLog.Render(2, True);
   end;
 
-  AddKey('A-Z', 'Cast Spell');
-  AddKey('TAB', 'Set Quick Spell');
-  AddKey('Esc', 'Close', True);
+  if FSelecting then
+  begin
+    AddKey('A-Z', 'Set Quick Spell');
+    AddKey('Esc', 'Cancel', True);
+  end
+  else
+  begin
+    AddKey('A-Z', 'Cast Spell');
+    AddKey('TAB', 'Set Quick Spell');
+    AddKey('Esc', 'Close', True);
+  end;
 end;
 
 procedure TSceneSpellbook.Update(var Key: UInt);
-var
-  LLastSpell: TSpellEnum;
 begin
+  if FSelecting then
+  begin
+    case Key of
+      TK_ESCAPE:
+        FSelecting := False;
+      TK_A .. TK_Z:
+        if (Key - TK_A) < Spellbook.GetActiveSpellCount then
+        begin
+          Spellbook.SetQuickSpell(Spellbook.GetSpellByIndex(Key - TK_A));
+          FSelecting := False;
+        end;
+    end;
+    Exit;
+  end;
   case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
     TK_A .. TK_Z:
       Spellbook.DoSpell(Key - TK_A);
     TK_TAB:
-    begin
-      LLastSpell := Spellbook.GetSpellByIndex(0);
-      for LLastSpell := Low(TSpellEnum) to High(TSpellEnum) do
-        if Spellbook.GetSpell(LLastSpell).Enable then
-        begin
-          Spellbook.SetQuickSpell(LLastSpell);
-          Exit;
-        end;
-    end;
+      FSelecting := True;
   end;
 end;
 

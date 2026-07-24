@@ -29,6 +29,7 @@ type
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
     procedure SetQuickSpell(ASpellEnum: TSpellEnum);
     function GetSpellByIndex(Index: UInt): TSpellEnum;
+    function GetActiveSpellCount: UInt;
     procedure Start;
     procedure DoSpell(Index: UInt);
     function GetQuickSpell: TSpell;
@@ -114,6 +115,16 @@ begin
       Inc(C);
     end;
   Result := Low(TSpellEnum);
+end;
+
+function TSpellbook.GetActiveSpellCount: UInt;
+var
+  I: TSpellEnum;
+begin
+  Result := 0;
+  for I := Low(TSpellEnum) to High(TSpellEnum) do
+    if FSpell[I].Enable then
+      Inc(Result);
 end;
 
 procedure TSpellbook.SetQuickSpell(ASpellEnum: TSpellEnum);

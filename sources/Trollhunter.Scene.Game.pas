@@ -37,6 +37,7 @@ uses
   Trollhunter.Player.Types,
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
+  Trollhunter.Statistic,
   Trollhunter.Item,
   Trollhunter.Map,
   Trollhunter.Spellbook,
