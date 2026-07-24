@@ -207,13 +207,6 @@ begin
     S := Map.Name;
   Terminal.Print(Status.Left + Status.Width - 1, Status.Top, S, TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clDefault);
-  // Quick Spell display
-  if Spellbook.GetQuickSpell.Enable then
-    S := 'Quick: ' + Spellbook.GetQuickSpell.Spell.Name
-  else
-    S := 'Quick: None';
-  Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1, S, TK_ALIGN_RIGHT);
-  Terminal.ForegroundColor(clDefault);
   // Log
   MsgLog.Render;
 end;
