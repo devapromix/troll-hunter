@@ -2306,8 +2306,8 @@ begin
   // Regeneration
   if (efRegeneration in Effects) then
   begin
-    MsgLog.Add('......');
-
+    Abilities.Modify(abRegen, Value);
+    MsgLog.Add('You begin to regenerate.');
   end;
   // Charges
   if (efCharges in Effects) then
