@@ -3,7 +3,6 @@ unit Trollhunter.Player;
 interface
 
 uses
-  Types,
   Trollhunter.Types,
   Trollhunter.Player.Types,
   Trollhunter.Creature,
@@ -185,8 +184,8 @@ uses
   Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Scenes,
+  Trollhunter.Magic,
   Trollhunter.Item,
-  Dialogs,
   Trollhunter.Terminal,
   Trollhunter.UI.Log,
   Trollhunter.Calendar,
@@ -1264,6 +1263,18 @@ begin
       begin
         MsgLog.Add(Format('You read %s.', [Items.GetNameThe(FItem)]));
       end;
+      if (T in BookTypeItems) then
+      begin
+        if Spellbook.GetSpell(TSpellEnum(FItem.Value)).Enable then
+          MsgLog.Add(Format('You already know %s.',
+            [Spellbook.GetSpellName(TSpellEnum(FItem.Value))]))
+        else
+        begin
+          Spellbook.AddSpell(TSpellEnum(FItem.Value));
+          MsgLog.Add(Format('You learn %s.',
+            [Spellbook.GetSpellName(TSpellEnum(FItem.Value))]));
+        end;
+      end;
       if (T in FoodTypeItems + PlantTypeItems) then
       begin
         MsgLog.Add(Format('You ate %s.', [Items.GetNameThe(FItem)]));
@@ -2074,7 +2085,7 @@ end;
 
 procedure TPlayer.Start();
 begin
-  Items.AddItemToInv(itmArcane_Orb, 10);
+  Items.AddItemToInv(itmBook_of_Fire_Arrow, 2);
   Exit;
   // ShowMessage('');
   // Add armors

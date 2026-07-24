@@ -35,6 +35,7 @@ const
 
 type
   TSpellEnum = (
+    spNone,
     spManaShield,
     spHeal,
     spRegeneration,
@@ -62,15 +63,25 @@ type
 const
   SpellData: array[TSpellEnum] of TSpellData = (
 
-    // Arcane
-    (Name: 'Mana Shield';
-     School: scArcane;
-     Level: 2;
-     ManaCost: 25;
-     Effects: [];
-     Description: 'Absorbs damage using mana;';
-     Value: 0;
-     ),
+  // None
+  (Name: '';
+   School: scArcane;
+   Level: 0;
+   ManaCost: 0;
+   Effects: [];
+   Description: '';
+   Value: 0;
+   ),
+
+   // Arcane
+   (Name: 'Mana Shield';
+    School: scArcane;
+    Level: 1;
+    ManaCost: 25;
+    Effects: [];
+    Description: 'Absorbs damage using mana';
+    Value: 0;
+    ),
 
     // Divine
     (Name: 'Heal';
@@ -85,7 +96,7 @@ const
     // Nature
     (Name: 'Regeneration';
      School: scNature;
-     Level: 1;
+     Level: 2;
      ManaCost: 22;
      Effects: [efRegeneration];
      Description: 'Gradually restores health over time';
