@@ -39,7 +39,13 @@ type
     spHeal,
     spRegeneration,
     spCurse,
-    spFireArrow
+    spFireArrow,
+    spTeleport,
+    spTownPortal,
+    spIdentify,
+    spInfusion,
+    spCurePoison,
+    spCureWeakness
   );
 
 type
@@ -103,6 +109,62 @@ const
      ManaCost: 2;
      Effects: [];
      Description: 'Hurls a flaming arrow at the target';
+     Value: 0;
+     ),
+
+    // Arcane
+    (Name: 'Teleport';
+     School: scArcane;
+     Level: 1;
+     ManaCost: 20;
+     Effects: [efTeleportation];
+     Description: 'Teleports you to a random nearby location';
+     Value: 0;
+     ),
+
+    (Name: 'Town Portal';
+     School: scArcane;
+     Level: 1;
+     ManaCost: 25;
+     Effects: [efTownPortal];
+     Description: 'Opens a portal back to town';
+     Value: 0;
+     ),
+
+    (Name: 'Identify';
+     School: scArcane;
+     Level: 1;
+     ManaCost: 10;
+     Effects: [efIdentification];
+     Description: 'Identifies an unknown item';
+     Value: 0;
+     ),
+
+    (Name: 'Infusion';
+     School: scArcane;
+     Level: 1;
+     ManaCost: 30;
+     Effects: [efCraftAtr];
+     Description: 'Imbues an item with a random enchantment';
+     Value: 0;
+     ),
+
+    // Divine
+    (Name: 'Cure Poison';
+     School: scDivine;
+     Level: 1;
+     ManaCost: 15;
+     Effects: [efCurePoison];
+     Description: 'Neutralizes poison in your body';
+     Value: 15;
+     ),
+
+    (Name: 'Cure Weakness';
+     School: scDivine;
+     Level: 1;
+     ManaCost: 12;
+     Effects: [efCureWeak];
+     Description: 'Cures weakness';
      Value: 0;
      )
   );
