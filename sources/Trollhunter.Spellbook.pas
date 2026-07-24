@@ -20,14 +20,19 @@ type
   TSpellbook = class(TObject)
   private
     FSpell: array [TSpellEnum] of TSpell;
+    FQuickSpell: TSpellEnum;
+    FLastSelectedSpell: TSpellEnum;
   public
     procedure Clear;
     function GetSpellName(ASpellEnum: TSpellEnum): string;
     procedure AddSpell(ASpellEnum: TSpellEnum);
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
+    procedure SetQuickSpell(ASpellEnum: TSpellEnum);
+    function GetSpellByIndex(Index: UInt): TSpellEnum;
     procedure Start;
     procedure DoSpell(Index: UInt);
     function GetQuickSpell: TSpell;
+    function GetQuickSpellEnum: TSpellEnum;
   end;
 
 var
@@ -57,6 +62,8 @@ var
 begin
   for I := Low(TSpellEnum) to High(TSpellEnum) do
     FSpell[I].Enable := False;
+  FQuickSpell := Low(TSpellEnum);
+  FLastSelectedSpell := Low(TSpellEnum);
 end;
 
 procedure TSpellbook.DoSpell(Index: UInt);
@@ -70,6 +77,7 @@ begin
     begin
       if (Index = C) then
       begin
+        FLastSelectedSpell := I;
         if (Player.Attributes.Attrib[atMana].Value >= FSpell[I].Spell.ManaCost)
         then
         begin
@@ -89,9 +97,39 @@ begin
     end;
 end;
 
+function TSpellbook.GetSpellByIndex(Index: UInt): TSpellEnum;
+var
+  C: UInt;
+  I: TSpellEnum;
+begin
+  C := 0;
+  for I := Low(TSpellEnum) to High(TSpellEnum) do
+    if FSpell[I].Enable then
+    begin
+      if (Index = C) then
+      begin
+        Result := I;
+        Exit;
+      end;
+      Inc(C);
+    end;
+  Result := Low(TSpellEnum);
+end;
+
+procedure TSpellbook.SetQuickSpell(ASpellEnum: TSpellEnum);
+begin
+  if FSpell[ASpellEnum].Enable then
+    FQuickSpell := ASpellEnum;
+end;
+
 function TSpellbook.GetQuickSpell: TSpell;
 begin
-  //No quick spell selected.
+  Result := FSpell[FQuickSpell];
+end;
+
+function TSpellbook.GetQuickSpellEnum: TSpellEnum;
+begin
+  Result := FQuickSpell;
 end;
 
 function TSpellbook.GetSpell(ASpellEnum: TSpellEnum): TSpell;

@@ -37,8 +37,13 @@ var
   Spell: TSpellData;
   IsActive: boolean;
   LInfo: string;
+  LQuickSpellName: string;
 begin
-  UI.Title('Spellbook [[Fire Arrow]]');
+  if Spellbook.GetQuickSpell.Enable then
+    LQuickSpellName := Spellbook.GetQuickSpell.Spell.Name
+  else
+    LQuickSpellName := 'None';
+  UI.Title('Spellbook [[' + LQuickSpellName + ']]');
 
   V := 0;
   Y := 2;
@@ -81,12 +86,24 @@ begin
 end;
 
 procedure TSceneSpellbook.Update(var Key: UInt);
+var
+  LLastSpell: TSpellEnum;
 begin
   case Key of
     TK_ESCAPE:
       Scenes.SetScene(scGame);
     TK_A .. TK_Z:
       Spellbook.DoSpell(Key - TK_A);
+    TK_TAB:
+    begin
+      LLastSpell := Spellbook.GetSpellByIndex(0);
+      for LLastSpell := Low(TSpellEnum) to High(TSpellEnum) do
+        if Spellbook.GetSpell(LLastSpell).Enable then
+        begin
+          Spellbook.SetQuickSpell(LLastSpell);
+          Exit;
+        end;
+    end;
   end;
 end;
 

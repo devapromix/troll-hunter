@@ -38,7 +38,9 @@ uses
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Item,
-  Trollhunter.Map;
+  Trollhunter.Map,
+  Trollhunter.Spellbook,
+  Trollhunter.Magic;
 
   { TSceneGame }
 
@@ -203,6 +205,13 @@ begin
   else
     S := Map.Name;
   Terminal.Print(Status.Left + Status.Width - 1, Status.Top, S, TK_ALIGN_RIGHT);
+  Terminal.ForegroundColor(clDefault);
+  // Quick Spell display
+  if Spellbook.GetQuickSpell.Enable then
+    S := 'Quick: ' + Spellbook.GetQuickSpell.Spell.Name
+  else
+    S := 'Quick: None';
+  Terminal.Print(Status.Left + Status.Width - 1, Status.Top + 1, S, TK_ALIGN_RIGHT);
   Terminal.ForegroundColor(clDefault);
   // Log
   MsgLog.Render;
@@ -437,9 +446,24 @@ begin
      TK_B:
      Scenes.SetScene(scSpellbook);
     TK_Y:
-      //CastQuickSpell();
-    MsgLog.Add('Cast Fire Arrow.');
-   // if Game.Wizard then Player.AddExp(LevelExpMax);
+    begin
+      if Player.IsDead then
+        Exit;
+      if Spellbook.GetQuickSpell.Enable then
+      begin
+        if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
+        then
+        begin
+          Player.Statictics.Inc(stSpCast);
+          Player.Attributes.Modify(atMana, -Spellbook.GetQuickSpell.Spell.ManaCost);
+          Player.DoEffects(Spellbook.GetQuickSpell.Spell.Effects, Spellbook.GetQuickSpell.Spell.Value);
+        end
+        else
+          MsgLog.Add('You need more mana!');
+      end
+      else
+        MsgLog.Add('No quick spell selected.');
+    end;
     TK_T:
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
