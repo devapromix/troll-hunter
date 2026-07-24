@@ -636,7 +636,7 @@ begin
     TK_SPACE:
       Scenes.SetScene(scPlayer);
     TK_A .. TK_Z:
-      Player.Use(Key - TK_A);
+      Player.UseItem(Key - TK_A);
     else
       Game.Timer := UIntMax;
   end;

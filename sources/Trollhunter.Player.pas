@@ -143,7 +143,7 @@ type
     procedure PickUpArrows(const MapID, Index: Int; AItem: Item);
     procedure Drop(Index: Int);
     procedure DropAmount(Index: Int);
-    procedure Use(Index: Int);
+    procedure UseItem(Index: Int);
     procedure DoEffects(const Effects: TEffects; const Value: UInt = 0;
       const Multiplier: UInt = 1);
     procedure Equip(Index: Int);
@@ -1216,7 +1216,7 @@ begin
   end;
 end;
 
-procedure TPlayer.Use(Index: Int);
+procedure TPlayer.UseItem(Index: Int);
 var
   FItem: Item;
   I: TItemEnum;
