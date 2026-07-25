@@ -35,7 +35,6 @@ const
   MetabolismMax = 135;
   // Inventory
   ItemMax = 26;
-  StartGold = 250;
   // Talents
   MinPrm = 1;
   TalentPrm = 3;
@@ -158,7 +157,6 @@ type
     procedure BreakItem(ASlot: TSlotType; Value: UInt = 1); overload;
     procedure BreakItem(); overload;
     procedure AddExp(Value: UInt = 1);
-    procedure Start;
     procedure DoWeaponSkill;
     procedure Rest(ATurns: UInt);
     procedure Dialog(AMob: TMob);
@@ -168,7 +166,6 @@ type
     procedure Turn;
     procedure StartEquip;
     procedure StartSkills;
-    function GetStartGold: UInt;
     function IsOnStash: boolean;
   end;
 
@@ -2010,57 +2007,9 @@ begin
   IsRest := False;
 end;
 
-procedure TPlayer.Start();
-begin
-  Items.AddItemToInv(itmBook_of_Fire_Arrow, 1);
-  Items.AddItemToInv(itmBook_of_Heal, 1);
-  Items.AddItemToInv(itmBook_of_Verdant_Spear, 1);
-  Exit;
-  // ShowMessage('');
-  // Add armors
-  if Mode.Wizard then
-  begin
-    Items.AddItemToInv(itmWinged_Helm, 1, True, False);
-    Items.AddItemToInv(itmPlate_Mail, 1, True, False);
-    Items.AddItemToInv(itmPlated_Gauntlets, 1, True, False);
-    Items.AddItemToInv(itmPlate_Boots, 1, True, False);
-  end
-  else
-  begin
-    if (Game.Difficulty < dfHard) then
-    begin
-      Items.AddItemToInv(itmCap, 1, True, True);
-      Items.AddItemToInv(itmQuilted_Armor, 1, True, True);
-    end;
-    if (Game.Difficulty < dfNormal) then
-    begin
-      Items.AddItemToInv(itmLeather_Gloves, 1, True, True);
-      Items.AddItemToInv(itmShoes, 1, True, True);
-    end;
-  end;
-  // Add runes, potions and scrolls
-  if Mode.Wizard then
-  begin
-    Items.AddItemToInv(itmRune_of_Full_Healing);
-    Items.AddItemToInv(itmPotion_of_Full_Healing, 10);
-    Items.AddItemToInv(itmPotion_of_Full_Mana, 10);
-    Items.AddItemToInv(itmScroll_of_Town_Portal, 10);
-    Items.AddItemToInv(itmScroll_of_Identify, 10);
-    Items.AddItemToInv(itmScroll_of_Full_Identify, 5);
-    Items.AddItemToInv(itmScroll_of_Bloodlust, 10);
-    Items.AddItemToInv(itmScroll_of_Enchant_Item, 10);
-  end
-  else
-  begin
-    Items.AddItemToInv(itmScroll_of_Town_Portal);
-    Items.AddItemToInv(itmScroll_of_Identify);
-  end;
-end;
-
 procedure TPlayer.StartEquip;
 var
   J: TSlotType;
-  LGold: UInt;
 begin
   // Equipment
   for J := Low(ClassProp[HClass].Item) to High(ClassProp[HClass].Item) do
@@ -2068,13 +2017,18 @@ begin
       Items.AddItemToInv(ClassProp[HClass].Item[J], 1, True, True);
   // Add foods
   Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 5));
-  Items.AddItemToInv(itmTorch, IfThen(Mode.Wizard, 9, 3));
+  Items.AddItemToInv(itmTorch);
   // Add coins
-  LGold := GetStartGold();
-  Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999), LGold));
+  Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999),
+    StartGold));
   // Calc
   Calc();
   Fill();
+  // Wizard
+  if Mode.Wizard then
+  begin
+    Items.AddItemToInv(itmBook_of_Verdant_Spear, 1);
+  end;
 end;
 
 procedure TPlayer.StartSkills;
@@ -2088,22 +2042,6 @@ begin
   // Calc
   Calc();
   Fill();
-end;
-
-function TPlayer.GetStartGold: UInt;
-begin
-  case Game.Difficulty of
-    dfEasy:
-      Result := 400;
-    dfNormal:
-      Result := StartGold;
-    dfHard:
-      Result := Round(StartGold * 0.5);
-    dfHell:
-      Result := 50;
-    else
-      Result := StartGold;
-  end;
 end;
 
 function TPlayer.IsOnStash: boolean;

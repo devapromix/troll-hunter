@@ -3,6 +3,7 @@ unit Trollhunter.Player.Helpers;
 interface
 
 uses
+  Trollhunter.Types,
   Trollhunter.Player;
 
 type
@@ -13,12 +14,14 @@ type
     function FullName: string;
     function GenderStr: string;
     function Satiation: string;
+    function StartGold: UInt;
   end;
 
 implementation
 
 uses
   SysUtils,
+  Trollhunter.Game,
   Trollhunter.Terminal,
   Trollhunter.Attribute,
   Trollhunter.Player.Types,
@@ -30,7 +33,7 @@ uses
 function TPlayerHelper.FullName: string;
 begin
   Result := Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
-    Gender, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)])
+    Player.GenderStr, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)])
 end;
 
 function TPlayerHelper.GenderStr: string;
@@ -70,6 +73,13 @@ begin
       Result := Terminal.Colorize(Result, 'Light Green');
   end;
 
+end;
+
+function TPlayerHelper.StartGold: UInt;
+const
+  CGold: array [TDifficulty] of UInt = (400, 250, 100, 50);
+begin
+  Result := CGold[Game.Difficulty];
 end;
 
 end.

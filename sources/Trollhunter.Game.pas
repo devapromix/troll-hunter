@@ -310,12 +310,7 @@ end;
 procedure TGame.Start;
 begin
   Player.Clear;
-  Player.Start;
-  Player.Calc;
-  Player.Fill;
-  Spellbook.Start;
   Shops.New;
-  // Intro
   MsgLog.Clear;
   MsgLog.Add(Terminal.Colorize(Format('%s %s %s',
     ['Welcome to Elvion!', 'You need to find and kill The King Troll!',

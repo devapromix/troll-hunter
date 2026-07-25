@@ -23,6 +23,7 @@ uses
   Trollhunter.Skill,
   Trollhunter.Game,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
   Trollhunter.UI,
   Trollhunter.Scene.RacesAndClasses;
 
@@ -93,7 +94,7 @@ begin
   Terminal.Print(DX, 5, 'Skill Gain' + ': ' + Terminal.Colorize(
   IntToStr(TSkills.GetSkillExpMax), 'Yellow'));
   Terminal.Print(DX, 6, 'Start Gold' + ': ' + Terminal.Colorize(
-    IntToStr(Player.GetStartGold()), 'Yellow'));
+    IntToStr(Player.StartGold), 'Yellow'));
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, S, TK_ALIGN_BOTTOM);
 

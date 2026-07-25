@@ -32,7 +32,6 @@ type
     procedure ClearQuickSpell;
     function GetSpellByIndex(Index: UInt): TSpellEnum;
     function GetActiveSpellCount: UInt;
-    procedure Start;
     procedure DoSpell(Index: UInt);
     function GetQuickSpell: TSpell;
     function GetQuickSpellEnum: TSpellEnum;
@@ -163,11 +162,6 @@ end;
 function TSpellbook.GetSpellName(ASpellEnum: TSpellEnum): string;
 begin
   Result := SpellData[ASpellEnum].Name;
-end;
-
-procedure TSpellbook.Start;
-begin
-  Self.Clear;
 end;
 
 initialization
