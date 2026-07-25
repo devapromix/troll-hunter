@@ -117,7 +117,6 @@ type
     procedure Clear();
     procedure AddTurn;
     procedure Spawn;
-    function GetSatiationStr: string;
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
     procedure RangedAttack(Index: Int);
@@ -203,6 +202,7 @@ uses
   Trollhunter.Item.Inventory,
   Trollhunter.Helpers,
   Trollhunter.Item.Types,
+  Trollhunter.Player.Helpers,
   Trollhunter.Player.Background,
   Trollhunter.Utils;
 
@@ -1065,8 +1065,6 @@ begin
 end;
 
 procedure TPlayer.Clear();
-var
-  PlayerName: string;
 begin
   inherited Clear();
   Skills.Clear();
@@ -1076,7 +1074,6 @@ begin
   Attributes.SetValue(atSat, SatiatedMax);
   Gold := 0;
   MaxMap := 0;
-  PlayerName := '';
   FWeaponSkill := skNone;
   FBowLevel := 0;
   FBowMinDamage := 0;
@@ -1155,41 +1152,6 @@ begin
   Result := Game.EnsureRange((Attributes.Attrib[atVision].Value -
     Abilities.Ability[abBlinded]) + 3, VisionMax);
   Result := Math.IfThen(Calendar.IsDay, Result, Result div 2);
-end;
-
-function TPlayer.GetSatiationStr: string;
-begin
-  Result := '';
-  case Attributes.Attrib[atSat].Value of
-    0 .. StarvingMax:
-      Result := 'Starving';
-    StarvingMax + 1 .. 1500:
-      Result := 'Near starving';
-    1501 .. 2000:
-      Result := 'Very hungry';
-    2001 .. 2500:
-      Result := 'Hungry';
-    SatiatedMax + 1 .. 10000:
-      Result := 'Full';
-    10001 .. 11000:
-      Result := 'Very full';
-    11001 .. EngorgedMax:
-      Result := 'Engorged';
-  end;
-  if Mode.Wizard then
-  begin
-    if (Result = '') then
-      Result := 'Satiated';
-    Result := Result + Format(' (%d)', [Attributes.Attrib[atSat].Value]);
-  end;
-  case Attributes.Attrib[atSat].Value of
-    0 .. StarvingMax:
-      Result := Terminal.Colorize(Result, 'Light Red');
-    StarvingMax + 1 .. SatiatedMax:
-      Result := Terminal.Colorize(Result, 'Light Yellow');
-    else
-      Result := Terminal.Colorize(Result, 'Light Green');
-  end;
 end;
 
 procedure TPlayer.Move(Dir: TDirectionEnum);
@@ -1920,7 +1882,7 @@ begin
         ' ' + Format('%s%d %s%d %s%d-%d %s%d %s',
         [UI.Icon(icFlag), Statictics.Get(stTurn), UI.Icon(icGold),
         Gold, UI.Icon(icSword), GetDamage.Min, GetDamage.Max,
-        UI.Icon(icShield), Attributes.Attrib[atPV].Value, GetSatiationStr()]));
+        UI.Icon(icShield), Attributes.Attrib[atPV].Value, Satiation]));
       Self.RenderWeather(Status.Left + (Status.Width div 2), Status.Top + 5,
         Status.Width);
       if Spellbook.GetQuickSpell.Enable then
