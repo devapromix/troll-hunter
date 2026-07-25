@@ -24,6 +24,7 @@ uses
   Trollhunter.Player,
   Trollhunter.Game,
   Trollhunter.Player.Name,
+  Trollhunter.Player.Races,
   Trollhunter.Scene.Talents,
   Trollhunter.Map;
 
@@ -52,7 +53,7 @@ begin
     TK_ENTER, TK_KP_ENTER:
     begin
       if (Player.Name = '') then
-        Player.Name := GetRandomPlayerName(Player.Sex);
+        Player.Name := GetRandomPlayerName();
       if not Mode.Game then
       begin
         Scenes.SetScene(scLoad);
@@ -68,7 +69,7 @@ begin
       end;
     end;
     TK_SPACE:
-      Player.Name := GetRandomPlayerName(Player.Sex);
+      Player.Name := GetRandomPlayerName();
     TK_A .. TK_Z:
     begin
       if (Length(Player.Name) < 10) then

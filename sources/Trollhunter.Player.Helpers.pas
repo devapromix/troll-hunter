@@ -8,7 +8,7 @@ uses
 type
   TPlayerHelper = class helper for TPlayer
     function FullName: string;
-    function Gender: string;
+    function GenderStr: string;
   end;
 
 implementation
@@ -27,9 +27,9 @@ begin
     Gender, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)])
 end;
 
-function TPlayerHelper.Gender: string;
+function TPlayerHelper.GenderStr: string;
 begin
-  if (Player.Sex = sxMale) then
+  if (Player.Gender = gdMale) then
     Result := 'Male'
   else
     Result := 'Female';

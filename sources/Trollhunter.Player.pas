@@ -63,7 +63,7 @@ type
     FIsRest: boolean;
     FName: string;
     FStatistics: TStatistics;
-    FSex: TSexEnum;
+    FGender: TGender;
     FTalents: TTalents;
     FSkills: TSkills;
     FFireMode: boolean;
@@ -108,7 +108,7 @@ type
     property HClass: TClassEnum read FClass write FClass;
     property Talents: TTalents read FTalents write FTalents;
     procedure SetAmountScene(IsDrop: boolean; Index, Amount: Int);
-    property Sex: TSexEnum read FSex write FSex;
+    property Gender: TGender read FGender write FGender;
     procedure Render(AX, AY: UInt);
     procedure Move(Dir: TDirectionEnum);
     procedure RenderInfo;
@@ -1076,11 +1076,7 @@ begin
   Attributes.SetValue(atSat, SatiatedMax);
   Gold := 0;
   MaxMap := 0;
-  PlayerName := Trim(Terminal_Get('ini.player.name'));
-  if (PlayerName = '') then
-    Name := GetRandomPlayerName(sxMale)
-  else
-    Name := PlayerName;
+  PlayerName := '';
   FWeaponSkill := skNone;
   FBowLevel := 0;
   FBowMinDamage := 0;

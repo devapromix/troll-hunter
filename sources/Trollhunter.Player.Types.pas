@@ -14,7 +14,7 @@ const
     (X: - 1; Y: - 1), (X: 0; Y: 0));
 
 type
-  TSexEnum = (sxMale, sxFemale);
+  TGender = (gdMale, gdFemale);
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,

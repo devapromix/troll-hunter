@@ -26,6 +26,7 @@ uses
   BearLibTerminal,
   Trollhunter.Game,
   Trollhunter.Player,
+  Trollhunter.Player.Name,
   Trollhunter.Attribute,
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
@@ -140,7 +141,10 @@ begin
     end;
     TK_ENTER, TK_KP_ENTER:
       if Player.Talents.IsPoint and not Mode.Game then
+      begin
+        Player.Name := GetRandomPlayerName();
         Scenes.SetScene(scName);
+      end;
     TK_BACKSPACE:
       if Player.Talents.IsPoint and not Mode.Game and Mode.Wizard and
         (Self.AvailableCount > 0) then

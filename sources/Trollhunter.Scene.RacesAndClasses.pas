@@ -48,6 +48,7 @@ uses
   Trollhunter.UI,
   Trollhunter.Statistic,
   Trollhunter.Skill,
+  Trollhunter.Player.Name,
   Trollhunter.Player.Types,
   Trollhunter.Player.Background,
   Trollhunter.Player.Helpers;
@@ -67,7 +68,7 @@ begin
     Player.Statictics.Get(stHeight), 'Lush'));
   Terminal.Print(DX, 5, 'Weight' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 6, 'Sex' + ': ' + Terminal.Colorize(Player.Gender, 'Lush'));
+  Terminal.Print(DX, 6, 'Gender' + ': ' + Terminal.Colorize(Player.GenderStr, 'Lush'));
   Terminal.Print(DX, 7, 'Metabolism' + ': ' +
     Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 
@@ -176,6 +177,8 @@ begin
   PrmAt[atMana] := Player.Attributes.Attrib[atMana].Prm;
 
   GeneratePlayerBackground();
+
+  Player.Name := GetRandomPlayerName();
 end;
 
 procedure TSceneRace.SelRand;
@@ -195,10 +198,10 @@ begin
   case Key of
     TK_TAB:
     begin
-      if (Player.Sex = sxMale) then
-        Player.Sex := sxFemale
+      if (Player.Gender = gdMale) then
+        Player.Gender := gdFemale
       else
-        Player.Sex := sxMale;
+        Player.Gender := gdMale;
       ReRoll;
     end;
     TK_A .. TK_Z:
