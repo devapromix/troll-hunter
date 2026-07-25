@@ -9,6 +9,7 @@ uses
   Trollhunter.Mob,
   Trollhunter.Item.Common,
   Trollhunter.Skill,
+  Trollhunter.Magic,
   Trollhunter.Statistic,
   Trollhunter.Talent,
   Trollhunter.Player.Races,
@@ -124,7 +125,7 @@ type
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
     procedure RangedAttack(Index: Int);
-    procedure MagicAttack(Index: Int);
+    procedure MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
     function CanFire: boolean;
     procedure FireModeEnter;
     procedure MagicFireModeEnter;
@@ -188,7 +189,6 @@ uses
   Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Scenes,
-  Trollhunter.Magic,
   Trollhunter.Item,
   Trollhunter.Terminal,
   Trollhunter.UI.Log,
@@ -659,7 +659,7 @@ begin
   AddTurn;
 end;
 
-procedure TPlayer.MagicAttack(Index: Int);
+procedure TPlayer.MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
 const
   RangeAccuracyPenalty = 3;
   AccuracyWilDivisor = 2;
@@ -682,14 +682,15 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
-  if (Self.Attributes.Attrib[atMana].Value < SpellData[spFireArrow].ManaCost)
+  if (Self.Attributes.Attrib[atMana].Value < SpellData[ASpellEnum].ManaCost)
   then
   begin
-    MsgLog.Add('You don''t have enough mana to cast Fire Arrow.');
+    MsgLog.Add(Format('You don''t have enough mana to cast %s.',
+      [SpellData[ASpellEnum].Name]));
     Self.FireModeExit;
     Exit;
   end;
-  Self.Attributes.Modify(atMana, -Int(SpellData[spFireArrow].ManaCost));
+  Self.Attributes.Modify(atMana, -Int(SpellData[ASpellEnum].ManaCost));
   Self.Statictics.Inc(stSpCast);
   Dist := Self.GetDist(Mob.X, Mob.Y);
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
@@ -702,9 +703,9 @@ begin
   TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
-    MMin := EnsureRange(SpellData[spFireArrow].MinDamage +
+    MMin := EnsureRange(SpellData[ASpellEnum].MinDamage +
       Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
-    MMax := EnsureRange(SpellData[spFireArrow].MaxDamage +
+    MMax := EnsureRange(SpellData[ASpellEnum].MaxDamage +
       Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
     Dam := Game.EnsureRange(RandomRange(MMin, MMax + 1), UIntMax);
     if Abilities.IsAbility(abBloodlust) then
@@ -719,7 +720,8 @@ begin
       Exit;
     end;
     Mob.Attributes.Modify(atLife, -Dam);
-    MsgLog.Add(Format('Your fire arrow hits %s (%d).', [The, Dam]));
+    MsgLog.Add(Format('Your %s hits %s (%d).',
+      [LowerCase(SpellData[ASpellEnum].Name), The, Dam]));
     if Mob.IsDead then
       Mob.Defeat;
   end
@@ -831,13 +833,13 @@ procedure TPlayer.MagicFireModeEnter;
 begin
   FMagicMode := True;
   if not (Spellbook.GetQuickSpell.Enable and
-    (Spellbook.GetQuickSpellEnum = spFireArrow)) then
+    Spellbook.GetQuickSpell.Spell.IsTargeted) then
   begin
     FFireMode := False;
     MsgLog.Add('No quick spell selected.');
     Exit;
   end;
-  if (Self.Attributes.Attrib[atMana].Value < SpellData[spFireArrow].ManaCost)
+  if (Self.Attributes.Attrib[atMana].Value < Spellbook.GetQuickSpell.Spell.ManaCost)
   then
   begin
     FFireMode := False;
@@ -2150,40 +2152,12 @@ begin
       Items.AddItemToInv(itmShoes, 1, True, True);
     end;
   end;
-  { // Add weapon
-    if Mode.Wizard then
-    begin
-    case Math.RandomRange(0, 4) of
-    0:
-    Items.AddItemToInv(ivTroll_Slayer, 1, True, False);
-    1:
-    Items.AddItemToInv(ivDemon_Axe, 1, True, False);
-    2:
-    Items.AddItemToInv(ivHoned_Spear, 1, True, False);
-    3:
-    Items.AddItemToInv(ivDoom_Hammer, 1, True, False);
-    end;
-    end
-    else
-    begin
-    case Math.RandomRange(0, 4) of
-    0:
-    Items.AddItemToInv(ivRusty_Sword, 1, True, True);
-    1:
-    Items.AddItemToInv(ivHatchet, 1, True, True);
-    2:
-    Items.AddItemToInv(ivShort_Spear, 1, True, True);
-    3:
-    Items.AddItemToInv(ivSlag_Hammer, 1, True, True);
-    end;
-    end; }
   // Add runes, potions and scrolls
   if Mode.Wizard then
   begin
     Items.AddItemToInv(itmRune_of_Full_Healing);
     Items.AddItemToInv(itmPotion_of_Full_Healing, 10);
     Items.AddItemToInv(itmPotion_of_Full_Mana, 10);
-    // Items.AddItemToInv(ivAntidote, 10);
     Items.AddItemToInv(itmScroll_of_Town_Portal, 10);
     Items.AddItemToInv(itmScroll_of_Identify, 10);
     Items.AddItemToInv(itmScroll_of_Full_Identify, 5);
@@ -2192,38 +2166,9 @@ begin
   end
   else
   begin
-    // Items.AddItemToInv(ivLesser_Healing_Potion, 5);
-    // Items.AddItemToInv(ivLesser_Mana_Potion, 5);
-    // Items.AddItemToInv(ivAntidote, 3);
     Items.AddItemToInv(itmScroll_of_Town_Portal);
     Items.AddItemToInv(itmScroll_of_Identify);
   end;
-  { Items.AddItemToInv(ivMoonstone_Ring);
-    Items.AddItemToInv(ivMoonstone_Ring);
-    Items.AddItemToInv(ivMoonstone_Ring);
-    Items.AddItemToInv(ivMoonstone_Ring);
-    Items.AddItemToInv(ivMoonstone_Ring);
-    Items.AddItemToInv(ivMoonstone_Ring);
-    Items.AddItemToInv(ivFlawed_Diamond);
-    Items.AddItemToInv(ivCap, 1, True, True, Ord(of_LifeAfEachKill1));
-  }  { // Flasks
-    D := Math.IfThen(Mode.Wizard, 3, 3);
-    for I := 1 to D do
-    begin
-    Items.AddItemToInv(ivBasalt_Flask0, 1, False, True);
-    end;
-    for I := 1 to D do
-    begin
-    Items.AddItemToInv(ivBasalt_Flask, 1, False, True);
-    end;
-    for I := 1 to D do
-    begin
-    Items.AddItemToInv(ivEternal_Flask, 1, False, True);
-    end;
-    for I := 1 to D do
-    begin
-    Items.AddItemToInv(ivEternal_Flask2, 1, False, True);
-    end; }
 end;
 
 procedure TPlayer.StartEquip;
@@ -2458,7 +2403,6 @@ begin
   if (efLight in Effects) then
   begin
     Abilities.Modify(abLight, Value);
-    // MsgLog.Add(Format('You feel lust for blood (%d).', [Value]));
     Self.Calc;
   end;
   // Berserk

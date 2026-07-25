@@ -18,7 +18,7 @@ type
   TSceneGame = class(TScene)
   private
     procedure FireArrow;
-    procedure CastFireArrow;
+    procedure CastTargetedSpell;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -142,7 +142,6 @@ begin
         if (Player.Look and (Player.LX = X) and (Player.LY = Y)) then
         begin
           Terminal.BackgroundColor(clRed);
-          // Terminal.Print(DX + View.Left, DY + View.Top, ' ');
           RenderLook(X, Y, T, True);
         end;
         if (not Player.Look) and (Player.X = X) and (Player.Y = Y) then
@@ -255,11 +254,12 @@ begin
   Player.FireModeEnter;
 end;
 
-procedure TSceneGame.CastFireArrow;
+procedure TSceneGame.CastTargetedSpell;
 var
   Index, TX, TY, PX, PY, L, I, AX, AY: Int;
   LR: real;
   LSymbol: TSymbol;
+  LSpellEnum: TSpellEnum;
 begin
   Index := Player.FireModeTarget;
   if (Index < 0) or not Mobs.Mob[Index].Alive then
@@ -267,9 +267,10 @@ begin
     Player.FireModeExit;
     Exit;
   end;
+  LSpellEnum := Spellbook.GetQuickSpellEnum;
   TX := Mobs.Mob[Index].X;
   TY := Mobs.Mob[Index].Y;
-  LSymbol := Projectile.GetSpellSymbol(spFireArrow);
+  LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
   PX := View.Width div 2;
   PY := View.Height div 2;
   L := Math.Max(Abs(Int(Player.X) - TX), Abs(Int(Player.Y) - TY));
@@ -287,7 +288,7 @@ begin
     terminal_refresh();
     terminal_delay(15);
   end;
-  Player.MagicAttack(Index);
+  Player.MagicAttack(Index, LSpellEnum);
   if Player.FireMode then
     Player.MagicFireModeEnter;
 end;
@@ -310,7 +311,7 @@ begin
         Player.FireModeSwitch(1);
       TK_RETURN, TK_KP_ENTER:
         if Player.MagicMode then
-          CastFireArrow
+          CastTargetedSpell
         else
           FireArrow;
       TK_V, TK_ESCAPE:
@@ -489,7 +490,7 @@ begin
         Exit;
       if Spellbook.GetQuickSpell.Enable then
       begin
-        if (Spellbook.GetQuickSpellEnum = spFireArrow) then
+        if Spellbook.GetQuickSpell.Spell.IsTargeted then
           Player.MagicFireModeEnter
         else if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
         then

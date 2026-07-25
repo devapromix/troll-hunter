@@ -64,6 +64,7 @@ type
     Value: Int;
     MinDamage: UInt;
     MaxDamage: UInt;
+    IsTargeted: boolean;
   end;
 
 const
@@ -129,6 +130,7 @@ const
      Value: 0;
      MinDamage: 2;
      MaxDamage: 4;
+     IsTargeted: True;
      ),
 
     // Arcane: Teleport
@@ -157,12 +159,12 @@ const
        Level: 4;
        ManaCost: 2;
        Effects: [];
-       Description: 'Conjures a spear of pure nature energy that pierces a distant enemy';
+       Description: 'Conjures a spear of pure nature energy';
        Value: 0;
-       MinDamage: 4;
+       MinDamage: 3;
        MaxDamage: 9;
+       IsTargeted: True;
        ),
-
 
      // Shadow:
 

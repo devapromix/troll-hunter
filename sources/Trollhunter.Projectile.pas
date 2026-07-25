@@ -75,6 +75,11 @@ begin
   begin
     Result.Color := clRed;
     Result.Symbol := '~';
+  end
+  else if ASpellEnum = spVerdantSpear then
+  begin
+    Result.Color := clLightGreen;
+    Result.Symbol := '*';
   end;
 end;
 
