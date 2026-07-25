@@ -1702,36 +1702,36 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1100; Color: clLightestBlue; Deep: [deDark_Wood];
     Effects: []; Value: 5; ManaCost: 0; ),
-
+    // Book of Teleport
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1400; Color: clLightBlue; Deep: [deGray_Cave];
-    Effects: []; Value: 0; ManaCost: 0; ),
-
+    Effects: []; Value: 6; ManaCost: 0; ),
+    // Book of Cure Poison
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1800; Color: clBlue; Deep: [deGray_Cave];
-    Effects: []; Value: 0; ManaCost: 0; ),
-
+    Effects: []; Value: 7; ManaCost: 0; ),
+    // Book of Verdant Spear
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 2300; Color: clDarkBlue; Deep: [deGray_Cave];
-    Effects: []; Value: 0; ManaCost: 0; ),
-
+    Price: 1300; Color: clLightGreen; Deep: [deGray_Cave];
+    Effects: []; Value: 8; ManaCost: 0; ),
+    // Book of
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 2800; Color: clLightestBlue; Deep: [deGray_Cave];
-    Effects: []; Value: 0; ManaCost: 0; ),
-
+    Effects: []; Value: 9; ManaCost: 0; ),
+    // Book of
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 3500; Color: clLightBlue; Deep: [deGray_Cave];
-    Effects: []; Value: 0; ManaCost: 0; ),
+    Effects: []; Value: 10; ManaCost: 0; ),
 
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);

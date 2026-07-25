@@ -217,8 +217,8 @@ type
     itmArrows,
     // Books
     itmBook_of_Mana_Shield, itmBook_of_Heal, itmBook_of_Regeneration,
-    itmBook_of_Curse, itmBook_of_Fire_Arrow, itmBook6, itmBook7,
-    itmBook8, itmBook9, itmBook10, itmBook11, itmBook12, itmBook13, itmBook14,
+    itmBook_of_Curse, itmBook_of_Fire_Arrow, itmBook_of_Teleport,
+    itmBook_of_Cure_Poison, itmBook_of_Verdant_Spear, itmBook9, itmBook10, itmBook11, itmBook12, itmBook13, itmBook14,
     itmBook15, itmBook16, itmBook17, itmBook18, itmBook19, itmBook20, itmBook21,
     itmBook22, itmBook23, itmBook24, itmBook25
 

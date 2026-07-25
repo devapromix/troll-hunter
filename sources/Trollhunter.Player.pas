@@ -2124,7 +2124,9 @@ end;
 
 procedure TPlayer.Start();
 begin
-  Items.AddItemToInv(itmBook_of_Fire_Arrow, 2);
+  Items.AddItemToInv(itmBook_of_Fire_Arrow, 1);
+  Items.AddItemToInv(itmBook_of_Heal, 1);
+  Items.AddItemToInv(itmBook_of_Verdant_Spear, 1);
   Exit;
   // ShowMessage('');
   // Add armors
