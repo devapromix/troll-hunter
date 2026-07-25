@@ -49,6 +49,7 @@ uses
   Trollhunter.Statistic,
   Trollhunter.Skill,
   Trollhunter.Player.Types,
+  Trollhunter.Player.Background,
   Trollhunter.Player.Helpers;
 
 var
@@ -120,7 +121,7 @@ begin
   inherited Render;
 
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, Player.Background,
+  Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, GetPlayerBackground(),
     TK_ALIGN_BOTTOM);
 
   AddKey('Enter', 'Confirm');
@@ -174,7 +175,7 @@ begin
   Player.Attributes.SetPrm(atMana, Math.RandomRange(V.Mana.Min, V.Mana.Max + 1));
   PrmAt[atMana] := Player.Attributes.Attrib[atMana].Prm;
 
-  Player.GenerateBackground();
+  GeneratePlayerBackground();
 end;
 
 procedure TSceneRace.SelRand;
