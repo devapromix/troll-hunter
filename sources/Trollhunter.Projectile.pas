@@ -3,8 +3,10 @@ unit Trollhunter.Projectile;
 interface
 
 uses
+  Trollhunter.Game,
   Trollhunter.Skill,
-  Trollhunter.Magic;
+  Trollhunter.Magic,
+  Trollhunter.Projectile.Types;
 
 type
   TSymbol = record
@@ -13,18 +15,9 @@ type
   end;
 
 type
-  TProjectileEnum = (
-    prNone,
-    prWandBolt,
-    prArrow,
-    prFireArrow,
-    prVerdantSpear
-  );
-
-type
   TProjectileData = record
     Color: cardinal;
-    Symbol: char;
+    Symbol: char; // ignored for prArrow, whose symbol depends on direction
   end;
 
 const
@@ -32,12 +25,13 @@ const
     (Color: 0;            Symbol: #0), // prNone
     (Color: clRed;        Symbol: '*'), // prWandBolt
     (Color: clYellow;     Symbol: '/'), // prArrow
-    (Color: clRed;        Symbol: 'x'), // prFireArrow
+    (Color: clRed;        Symbol: '~'), // prFireArrow
     (Color: clLightGreen; Symbol: '*')  // prVerdantSpear
   );
 
   { TProjectile }
 
+  type
   TProjectile = class
   private
   public
@@ -56,7 +50,6 @@ uses
   Math,
   SysUtils,
   BearLibTerminal,
-  Trollhunter.Game,
   Trollhunter.Map;
 
   { TProjectile }
@@ -81,16 +74,6 @@ begin
   end;
 end;
 
-function SpellToProjectile(const ASpellEnum: TSpellEnum): TProjectileEnum;
-begin
-  case ASpellEnum of
-    spFireArrow:    Result := prFireArrow;
-    spVerdantSpear: Result := prVerdantSpear;
-  else
-    Result := prNone;
-  end;
-end;
-
 function TProjectile.GetSymbol(const AX, AY: integer;
   const ASkillEnum: TSkillEnum): TSymbol;
 var
@@ -100,6 +83,7 @@ begin
   Result.Color := ProjectileData[LProjectileEnum].Color;
   if LProjectileEnum = prArrow then
   begin
+    // Arrow symbol depends on the direction it's flying, not a fixed glyph
     if (AX = 0) then
       Result.Symbol := '|'
     else if (AY = 0) then
@@ -117,7 +101,7 @@ function TProjectile.GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
 var
   LProjectileEnum: TProjectileEnum;
 begin
-  LProjectileEnum := SpellToProjectile(ASpellEnum);
+  LProjectileEnum := SpellData[ASpellEnum].Projectile;
   Result.Color := ProjectileData[LProjectileEnum].Color;
   Result.Symbol := ProjectileData[LProjectileEnum].Symbol;
 end;

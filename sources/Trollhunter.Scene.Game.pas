@@ -36,6 +36,7 @@ uses
   Trollhunter.Projectile,
   Trollhunter.Player,
   Trollhunter.Player.Types,
+  Trollhunter.Projectile.Types,
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Statistic,
@@ -490,7 +491,7 @@ begin
         Exit;
       if Spellbook.GetQuickSpell.Enable then
       begin
-        if Spellbook.GetQuickSpell.Spell.IsTargeted then
+        if Spellbook.GetQuickSpell.Spell.Projectile <> prNone then
           Player.MagicFireModeEnter
         else if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
         then

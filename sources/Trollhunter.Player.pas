@@ -196,6 +196,7 @@ uses
   Trollhunter.Item.Shop,
   BearLibTerminal,
   Trollhunter.Ability,
+  Trollhunter.Projectile.Types,
   Trollhunter.Item.Affixes,
   Trollhunter.Attribute,
   Trollhunter.Spellbook,
@@ -833,7 +834,7 @@ procedure TPlayer.MagicFireModeEnter;
 begin
   FMagicMode := True;
   if not (Spellbook.GetQuickSpell.Enable and
-    Spellbook.GetQuickSpell.Spell.IsTargeted) then
+    (Spellbook.GetQuickSpell.Spell.Projectile <> prNone)) then
   begin
     FFireMode := False;
     MsgLog.Add('No quick spell selected.');

@@ -2714,7 +2714,6 @@ var
 begin
   MapID := Ord(Map.Current);
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
-  // Arrows never enter the inventory - they go straight into the quiver
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType = itArrow) then
   begin
     Player.PickUpArrows(MapID, Index, FItem);

@@ -4,7 +4,8 @@ interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Creature;
+  Trollhunter.Creature,
+  Trollhunter.Projectile.Types;
 
 type
   TSpellSchool = (
@@ -64,7 +65,7 @@ type
     Value: Int;
     MinDamage: UInt;
     MaxDamage: UInt;
-    IsTargeted: boolean;
+    Projectile: TProjectileEnum;
   end;
 
 const
@@ -130,7 +131,7 @@ const
      Value: 0;
      MinDamage: 2;
      MaxDamage: 4;
-     IsTargeted: True;
+     Projectile: prFireArrow;
      ),
 
     // Arcane: Teleport
@@ -163,7 +164,7 @@ const
        Value: 0;
        MinDamage: 3;
        MaxDamage: 9;
-       IsTargeted: True;
+       Projectile: prVerdantSpear;
        ),
 
      // Shadow:
