@@ -198,6 +198,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Spellbook,
   Trollhunter.UI,
+  Trollhunter.Player.Name,
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Helpers,
@@ -311,7 +312,7 @@ begin
   if (Mob.Force <> fcEnemy) then
   begin
     Self.Dialog(Mob);
-    GenRandomNPCText;
+    GenRandomNPCWelcomeText;
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
@@ -1077,7 +1078,7 @@ begin
   MaxMap := 0;
   PlayerName := Trim(Terminal_Get('ini.player.name'));
   if (PlayerName = '') then
-    Name := 'PLAYER'
+    Name := GetRandomPlayerName()
   else
     Name := PlayerName;
   FWeaponSkill := skNone;

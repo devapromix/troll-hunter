@@ -23,6 +23,7 @@ uses
   Trollhunter.Statistic,
   Trollhunter.Player,
   Trollhunter.Game,
+  Trollhunter.Player.Name,
   Trollhunter.Scene.Talents,
   Trollhunter.Map;
 
@@ -36,6 +37,7 @@ begin
     Player.Name + Game.GetCursor, TK_ALIGN_LEFT);
 
   AddKey('Enter', 'Confirm');
+  AddKey('Space', 'Random');
   AddKey('Esc', 'Back', True);
 end;
 
@@ -50,7 +52,7 @@ begin
     TK_ENTER, TK_KP_ENTER:
     begin
       if (Player.Name = '') then
-        Player.Name := 'PLAYER';
+        Player.Name := GetRandomPlayerName();
       if not Mode.Game then
       begin
         Scenes.SetScene(scLoad);
@@ -65,6 +67,8 @@ begin
         Scenes.SetScene(scGame);
       end;
     end;
+    TK_SPACE:
+      Player.Name := GetRandomPlayerName();
     TK_A .. TK_Z:
     begin
       if (Length(Player.Name) < 10) then

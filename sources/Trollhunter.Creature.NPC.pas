@@ -2,7 +2,7 @@ unit Trollhunter.Creature.NPC;
 
 interface
 
-procedure GenRandomNPCText();
+procedure GenRandomNPCWelcomeText();
 
 implementation
 
@@ -12,7 +12,7 @@ uses
   Trollhunter.UI.Log,
   Trollhunter.Scenes;
 
-procedure GenRandomNPCText();
+procedure GenRandomNPCWelcomeText();
 const
   NPCTexts: array[0..29] of string = (
     'What can I do for you?',
