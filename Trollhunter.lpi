@@ -35,7 +35,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <Units Count="60">
+    <Units Count="61">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -276,6 +276,10 @@
         <Filename Value="sources\Trollhunter.Player.Background.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit59>
+      <Unit60>
+        <Filename Value="sources\Trollhunter.Creature.NPC.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit60>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -73,7 +73,6 @@ type
     FBowLevel: UInt;
     FBowMinDamage: UInt;
     FBowMaxDamage: UInt;
-    procedure GenNPCText;
     function GetVision: UInt;
     procedure Empty;
     function GetEquippedIndex(ASlot: TSlotType): Int;
@@ -193,6 +192,7 @@ uses
   Trollhunter.Item.Shop,
   BearLibTerminal,
   Trollhunter.Ability,
+  Trollhunter.Creature.NPC,
   Trollhunter.Projectile.Types,
   Trollhunter.Item.Affixes,
   Trollhunter.Attribute,
@@ -311,7 +311,7 @@ begin
   if (Mob.Force <> fcEnemy) then
   begin
     Self.Dialog(Mob);
-    GenNPCText;
+    GenRandomNPCText;
     Exit;
   end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
@@ -1151,21 +1151,6 @@ begin
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
   NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
   Scenes.SetScene(scDialog);
-end;
-
-procedure TPlayer.GenNPCText;
-var
-  S: string;
-begin
-  case Math.RandomRange(0, 3) of
-    0:
-      S := 'What can I do for you?';
-    1:
-      S := 'What can I get you today?';
-    else
-      S := 'Good day!';
-  end;
-  MsgLog.Add(Format('%s says: "%s"', [NPCName, S]));
 end;
 
 function TPlayer.GetVision: UInt;
