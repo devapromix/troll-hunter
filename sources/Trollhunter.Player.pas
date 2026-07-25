@@ -1078,7 +1078,7 @@ begin
   MaxMap := 0;
   PlayerName := Trim(Terminal_Get('ini.player.name'));
   if (PlayerName = '') then
-    Name := GetRandomPlayerName()
+    Name := GetRandomPlayerName(sxMale)
   else
     Name := PlayerName;
   FWeaponSkill := skNone;

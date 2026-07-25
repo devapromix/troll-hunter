@@ -52,7 +52,7 @@ begin
     TK_ENTER, TK_KP_ENTER:
     begin
       if (Player.Name = '') then
-        Player.Name := GetRandomPlayerName();
+        Player.Name := GetRandomPlayerName(Player.Sex);
       if not Mode.Game then
       begin
         Scenes.SetScene(scLoad);
@@ -68,7 +68,7 @@ begin
       end;
     end;
     TK_SPACE:
-      Player.Name := GetRandomPlayerName();
+      Player.Name := GetRandomPlayerName(Player.Sex);
     TK_A .. TK_Z:
     begin
       if (Length(Player.Name) < 10) then
