@@ -12,6 +12,30 @@ type
     Color: cardinal;
   end;
 
+type
+  TProjectileEnum = (
+    prNone,
+    prWandBolt,
+    prArrow,
+    prFireArrow,
+    prVerdantSpear
+  );
+
+type
+  TProjectileData = record
+    Color: cardinal;
+    Symbol: char;
+  end;
+
+const
+  ProjectileData: array [TProjectileEnum] of TProjectileData = (
+    (Color: 0;            Symbol: #0), // prNone
+    (Color: clRed;        Symbol: '*'), // prWandBolt
+    (Color: clYellow;     Symbol: '/'), // prArrow
+    (Color: clRed;        Symbol: 'x'), // prFireArrow
+    (Color: clLightGreen; Symbol: '*')  // prVerdantSpear
+  );
+
   { TProjectile }
 
   TProjectile = class
@@ -47,40 +71,55 @@ begin
   inherited Destroy;
 end;
 
-function TProjectile.GetSymbol(const AX, AY: integer;
-  const ASkillEnum: TSkillEnum): TSymbol;
+function SkillToProjectile(const ASkillEnum: TSkillEnum): TProjectileEnum;
 begin
-  if ASkillEnum = skWand then
-  begin
-    Result.Color := clRed;
-    Result.Symbol := '*';
-  end;
-  if ASkillEnum = skBow then
-  begin
-    Result.Color := clYellow;
-    if (aX = 0) then
-      Result.Symbol := '|'
-    else if (aY = 0) then
-      Result.Symbol := '-'
-    else if (aX = aY) then
-      Result.Symbol := '\'
-    else
-      Result.Symbol := '/';
+  case ASkillEnum of
+    skWand: Result := prWandBolt;
+    skBow:  Result := prArrow;
+  else
+    Result := prNone;
   end;
 end;
 
-function TProjectile.GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
+function SpellToProjectile(const ASpellEnum: TSpellEnum): TProjectileEnum;
 begin
-  if ASpellEnum = spFireArrow then
-  begin
-    Result.Color := clRed;
-    Result.Symbol := '~';
-  end
-  else if ASpellEnum = spVerdantSpear then
-  begin
-    Result.Color := clLightGreen;
-    Result.Symbol := '*';
+  case ASpellEnum of
+    spFireArrow:    Result := prFireArrow;
+    spVerdantSpear: Result := prVerdantSpear;
+  else
+    Result := prNone;
   end;
+end;
+
+function TProjectile.GetSymbol(const AX, AY: integer;
+  const ASkillEnum: TSkillEnum): TSymbol;
+var
+  LProjectileEnum: TProjectileEnum;
+begin
+  LProjectileEnum := SkillToProjectile(ASkillEnum);
+  Result.Color := ProjectileData[LProjectileEnum].Color;
+  if LProjectileEnum = prArrow then
+  begin
+    if (AX = 0) then
+      Result.Symbol := '|'
+    else if (AY = 0) then
+      Result.Symbol := '-'
+    else if (AX = AY) then
+      Result.Symbol := '\'
+    else
+      Result.Symbol := '/';
+  end
+  else
+    Result.Symbol := ProjectileData[LProjectileEnum].Symbol;
+end;
+
+function TProjectile.GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
+var
+  LProjectileEnum: TProjectileEnum;
+begin
+  LProjectileEnum := SpellToProjectile(ASpellEnum);
+  Result.Color := ProjectileData[LProjectileEnum].Color;
+  Result.Symbol := ProjectileData[LProjectileEnum].Symbol;
 end;
 
 initialization
