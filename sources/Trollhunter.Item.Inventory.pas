@@ -135,6 +135,7 @@ end;
 
 function Items_Inventory_GetItem(Index: Int): Item; stdcall;
 begin
+  Items_Clear_Item(Result);
   if IndexInRange(InvItems, Index) then
     Result := InvItems[Index];
 end;
