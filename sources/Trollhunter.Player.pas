@@ -844,9 +844,13 @@ var
 begin
   if Self.IsDead then
     Exit;
+  if (Items_Inventory_GetCount() >= ItemMax) then
+    Exit;
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y).InRange(ItemMax);
   for Index := FCount - 1 downto 0 do
   begin
+    if (Items_Inventory_GetCount() >= ItemMax) then
+      Exit;
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
     ItemType := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
     if (ItemType in AutoPickupItems) then
