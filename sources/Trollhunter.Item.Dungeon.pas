@@ -49,7 +49,7 @@ procedure Items_Dungeon_MapClear(MapID: Int); stdcall;
 var
   I: Int;
 begin
-  for I := 0 to Length(MapItems) - 1 do
+  for I := Length(MapItems) - 1 downto 0 do
     if HasItem(MapItems, I, MapID) then
       DelItem(MapItems, I);
 end;
@@ -60,7 +60,7 @@ var
 begin
   if HasEmpty(MapItems) then
     Exit;
-  for I := 0 to Length(MapItems) - 1 do
+  for I := Length(MapItems) - 1 downto 0 do
     if HasItem(MapItems, I, MapID, AX, AY) then
       DelItem(MapItems, I);
 end;
