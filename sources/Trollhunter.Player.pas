@@ -1733,6 +1733,16 @@ var
   FItem: Item;
   FCount: Int;
 begin
+  FItem := Items_Inventory_GetItem(Index);
+
+  if (FItem.Stack <= 1) then
+  begin
+    Drop(Index);
+    Exit;
+  end;
+
+  ItemAmount := Math.EnsureRange(ItemAmount, 1, FItem.Amount);
+
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
   if (FCount >= ItemMax) then
   begin
@@ -1743,7 +1753,6 @@ begin
     Exit;
   end;
 
-  FItem := Items_Inventory_GetItem(Index);
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Inventory_SetItem(Index, FItem);
   FItem.X := X;
@@ -1861,6 +1870,15 @@ begin
     Exit;
   end;
   FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
+
+  if (FItem.Stack <= 1) then
+  begin
+    Items.AddItemToInv(Index, True);
+    Exit;
+  end;
+
+  ItemAmount := Math.EnsureRange(ItemAmount, 1, FItem.Amount);
+
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, X, Y, FItem);
   FItem.Amount := ItemAmount;
