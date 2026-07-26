@@ -1402,6 +1402,11 @@ procedure TPlayer.Buy(Index: Int);
 var
   FItem: Item;
 begin
+  if (Items_Inventory_GetCount() >= ItemMax) then
+  begin
+    MsgLog.Add('Your backpack is full!');
+    Exit;
+  end;
   FItem := Shops.Shop[Shops.Current].GetItem(Index);
   if (Items_Inventory_DeleteItemAmount(Ord(itmGold), FItem.Price) > 0) then
   begin
@@ -1409,7 +1414,6 @@ begin
       [Items.GetNameThe(FItem), FItem.Price]));
     Items_Inventory_AppendItem(FItem);
     Self.Calc;
-    // The %s just frowns. Maybe you'll return when you have enough gold?
   end
   else
     MsgLog.Add('You need more gold.');
