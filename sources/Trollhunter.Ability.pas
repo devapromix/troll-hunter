@@ -16,14 +16,14 @@ type
   TAbilities = class(TObject)
   private
     FAbilityName: array [TAbilityEnum] of string;
-    FAbility: array [TAbilityEnum] of UInt;
-    function GetAbility(const I: TAbilityEnum): UInt;
-    procedure SetAbility(const I: TAbilityEnum; const Value: UInt);
+    FAbility: array [TAbilityEnum] of Int;
+    function GetAbility(const I: TAbilityEnum): Int;
+    procedure SetAbility(const I: TAbilityEnum; const Value: Int);
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property Ability[const I: TAbilityEnum]: UInt read GetAbility
+    property Ability[const I: TAbilityEnum]: Int read GetAbility
       write SetAbility;
     function IsAbility(const Value: TAbilityEnum): Boolean;
     procedure Modify(const I: TAbilityEnum; const Value: Int);
@@ -49,6 +49,8 @@ const
 procedure TAbilities.Modify(const I: TAbilityEnum; const Value: Int);
 begin
   FAbility[I] := FAbility[I] + Value;
+  if FAbility[I] < 0 then
+    FAbility[I] := 0;
 end;
 
 procedure TAbilities.Clear;
@@ -76,7 +78,7 @@ begin
   inherited;
 end;
 
-function TAbilities.GetAbility(const I: TAbilityEnum): UInt;
+function TAbilities.GetAbility(const I: TAbilityEnum): Int;
 begin
   Result := FAbility[I]
 end;
@@ -91,7 +93,7 @@ begin
   Result := Ability[Value] > 0;
 end;
 
-procedure TAbilities.SetAbility(const I: TAbilityEnum; const Value: UInt);
+procedure TAbilities.SetAbility(const I: TAbilityEnum; const Value: Int);
 begin
   FAbility[I] := Value;
 end;
