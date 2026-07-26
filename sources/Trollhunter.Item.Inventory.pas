@@ -114,18 +114,18 @@ begin
   Result := IntFalse;
   if (Amount <= 0) or (Items_Inventory_GetItemAmount(ItemID) < Amount) then Exit;
   C := Amount;
-  for I := 0 to Length(InvItems) - 1 do
-    if (InvItems[I].ItemID = ItemID) then
+  for I := Length(InvItems) - 1 downto 0 do
+    if (C <= 0) then
+      Break
+    else if (InvItems[I].ItemID = ItemID) then
     begin
       Result := IntTrue;
       if (InvItems[I].Amount >= C) then
       begin
         InvItems[I].Amount := InvItems[I].Amount - C;
+        C := 0;
         if (InvItems[I].Amount <= 0) then
-        begin
           Items_Inventory_DeleteItem(I, FItem);
-          Exit;
-        end;
       end else begin
         C := C - InvItems[I].Amount;
         Items_Inventory_DeleteItem(I, FItem);
