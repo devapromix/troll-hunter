@@ -151,7 +151,7 @@ begin
   I := GlobalIndex(MapItems, MapID, Index);
   if (I < 0) then
     Exit;
-  if (AItem.Amount <= 0) and (Items_Dungeon_DeleteItem(Index, AItem) = IntTrue) then
+  if (AItem.Amount <= 0) and (Items_Dungeon_DeleteItem(I, AItem) = IntTrue) then
     Exit;
   Result := Items_Dungeon_SetItem(I, AItem);
 end;
