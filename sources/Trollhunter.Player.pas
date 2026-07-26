@@ -1796,25 +1796,26 @@ var
   FCount: Int;
 begin
   Statictics.Inc(stFound);
-  /// / Your backpack is full!
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
   if Player.IsOnStash then
   begin
-    // Stash scene
     Game.Timer := UIntMax;
     Scenes.SetScene(scStash);
   end
   else
   if (FCount > 0) then
   begin
+    if (Items_Inventory_GetCount() >= ItemMax) then
+    begin
+      MsgLog.Add('Your backpack is full!');
+      Exit;
+    end;
     if (FCount = 1) then
     begin
-      // Pickup an item
       Items.AddItemToInv(0);
     end
     else
     begin
-      // Items scene
       Game.Timer := UIntMax;
       Scenes.SetScene(scItems);
     end;
