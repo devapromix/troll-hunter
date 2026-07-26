@@ -1828,6 +1828,11 @@ procedure TPlayer.PickUpAmount(Index: Int);
 var
   FItem: Item;
 begin
+  if (Items_Inventory_GetCount() >= ItemMax) then
+  begin
+    MsgLog.Add('Your backpack is full!');
+    Exit;
+  end;
   FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, X, Y, FItem);
