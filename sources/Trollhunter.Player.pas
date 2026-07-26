@@ -2072,7 +2072,7 @@ begin
       Items.AddItemToInv(ClassProp[HClass].Item[J], 1, True, True);
   // Add foods
   Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 5));
-  Items.AddItemToInv(itmTorch);
+  Items.AddItemToInv(itmTorch, 3);
   // Add coins
   Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999),
     StartGold));

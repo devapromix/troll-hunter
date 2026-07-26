@@ -157,6 +157,23 @@ end;
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall;
 var
   I, J, A: Int;
+
+  procedure Add(AItem: Item); stdcall;
+  var
+    A, J: Int;
+  begin
+    A := AItem.Amount;
+    while (A > 0) do
+    begin
+      J := AItem.Stack;
+      if (A - J < 0) then
+        J := A;
+      Dec(A, J);
+      AItem.Amount := J;
+      AddItem(InvItems, AItem);
+    end;
+  end;
+
 begin
   if (AItem.Stack > 1) then
   begin
@@ -183,8 +200,8 @@ begin
         AItem.Amount := J;
         AddItem(InvItems, AItem);
       end;
-    end else AddItem(InvItems, AItem);
-  end else AddItem(InvItems, AItem);
+    end else Add(AItem);
+  end else Add(AItem);
 end;
 
 function Items_Inventory_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
