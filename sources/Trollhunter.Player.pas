@@ -1685,6 +1685,7 @@ end;
 procedure TPlayer.Drop(Index: Int);
 var
   AItem: Item;
+  FCount: Int;
 
   procedure DeleteItem;
   begin
@@ -1709,6 +1710,17 @@ begin
   AItem := Items_Inventory_GetItem(Index);
   if (AItem.Equipment > 0) then
     Exit;
+
+  if IsOnStash then
+  begin
+    FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
+    if (FCount >= ItemMax) then
+    begin
+      MsgLog.Add('The stash is full!');
+      Exit;
+    end;
+  end;
+
   if not ((AItem.Stack > 1) and (AItem.Amount > 1)) then
     DeleteItem()
   else
@@ -1719,7 +1731,18 @@ end;
 procedure TPlayer.DropAmount(Index: Int);
 var
   FItem: Item;
+  FCount: Int;
 begin
+  if IsOnStash then
+  begin
+    FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
+    if (FCount >= ItemMax) then
+    begin
+      MsgLog.Add('The stash is full!');
+      Exit;
+    end;
+  end;
+
   FItem := Items_Inventory_GetItem(Index);
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Inventory_SetItem(Index, FItem);
