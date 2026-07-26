@@ -1711,14 +1711,14 @@ begin
   if (AItem.Equipment > 0) then
     Exit;
 
-  if IsOnStash then
+  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
+  if (FCount >= ItemMax) then
   begin
-    FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
-    if (FCount >= ItemMax) then
-    begin
-      MsgLog.Add('The stash is full!');
-      Exit;
-    end;
+    if IsOnStash then
+      MsgLog.Add('The stash is full!')
+    else
+      MsgLog.Add('There is no space here.');
+    Exit;
   end;
 
   if not ((AItem.Stack > 1) and (AItem.Amount > 1)) then
@@ -1733,14 +1733,14 @@ var
   FItem: Item;
   FCount: Int;
 begin
-  if IsOnStash then
+  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
+  if (FCount >= ItemMax) then
   begin
-    FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
-    if (FCount >= ItemMax) then
-    begin
-      MsgLog.Add('The stash is full!');
-      Exit;
-    end;
+    if IsOnStash then
+      MsgLog.Add('The stash is full!')
+    else
+      MsgLog.Add('There is no space here.');
+    Exit;
   end;
 
   FItem := Items_Inventory_GetItem(Index);
