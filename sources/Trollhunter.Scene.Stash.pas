@@ -16,6 +16,7 @@ type
 implementation
 
 uses
+  SysUtils,
   BearLibTerminal,
   Trollhunter.UI,
   Trollhunter.UI.Log,
@@ -32,11 +33,13 @@ var
   I, FCount, MapID: Int;
   FItem: Item;
 begin
-  UI.Title('Stash', 1, clDarkestGreen);
-
-  UI.FromAToZ;
   MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
+
+  UI.Title(Format('%s [[%s%d %s%d/%d]]', ['Stash', UI.Icon(icGold),
+    Player.Gold, UI.Icon(icFlag), FCount, ItemMax]), 1, clDarkestGreen);
+
+  UI.FromAToZ;
 
   for I := 0 to FCount - 1 do
   begin
