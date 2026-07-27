@@ -22,6 +22,7 @@ uses
   Trollhunter.UI.Log,
   Trollhunter.Player,
   Trollhunter.Item,
+  Trollhunter.Item.Types,
   Trollhunter.Item.Common,
   Trollhunter.Item.Dungeon,
   Trollhunter.Map,
@@ -30,14 +31,15 @@ uses
 
 procedure TSceneStash.Render;
 var
-  I, FCount, MapID: Int;
+  I, FCount, MapID, FGold: Int;
   FItem: Item;
 begin
   MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y).InRange(ItemMax);
+  FGold := Items_Dungeon_GetMapItemAmountXY(MapID, Ord(itmGold), Player.X, Player.Y);
 
   UI.Title(Format('%s [[%s%d %s%d/%d]]', ['Stash', UI.Icon(icGold),
-    Player.Gold, UI.Icon(icFlag), FCount, ItemMax]), 1, clDarkestGreen);
+    FGold, UI.Icon(icFlag), FCount, ItemMax]), 1, clDarkestGreen);
 
   UI.FromAToZ;
 
