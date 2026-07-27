@@ -566,7 +566,10 @@ begin
     Inc(I);
   until ChMapTile(ID, FX, FY, AZ);
   if (MobBase[TMobEnum(ID)].Boss and IsBoss) then
+  begin
     Add(AZ);
+    Exit;
+  end;
   X := FX;
   Y := FY;
   Self.Clear;
