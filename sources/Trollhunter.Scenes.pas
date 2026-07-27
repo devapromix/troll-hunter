@@ -552,9 +552,9 @@ begin
       else
         Player.PickUpAmount(Player.ItemIndex);
     end;
-    TK_UP, TK_KP_8, TK_W:
+    TK_UP, TK_KP_8:
       ChAmount(Player.ItemAmount + 1);
-    TK_DOWN, TK_KP_2, TK_X:
+    TK_DOWN, TK_KP_2:
       ChAmount(Player.ItemAmount - 1);
   end;
 end;

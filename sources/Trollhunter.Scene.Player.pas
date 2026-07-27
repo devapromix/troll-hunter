@@ -154,9 +154,9 @@ begin
   if Spellbook.GetQuickSpell.Enable and
     (Spellbook.GetQuickSpell.Spell.Projectile <> prNone) then
   begin
-    Add('Min Spell Damage', UI.Icon(icBook), 'Darker Yellow',
+    Add('Min Spell Damage', UI.Icon(icSword) + UI.Icon(icBook), 'Darker Yellow',
       Player.QuickSpellMinDamage, MinDamMax);
-    Add('Max Spell Damage', UI.Icon(icBook), 'Darker Yellow',
+    Add('Max Spell Damage', UI.Icon(icSword) + UI.Icon(icBook), 'Darker Yellow',
       Player.QuickSpellMaxDamage, MaxDamMax);
   end;
 
@@ -198,9 +198,9 @@ begin
     D := ((J - 1) * 2) + Y + 2;
     UI.Bar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
       clDarkGray);
-    Terminal.Print(B, D, Format('%s %s %d/%d', [UI.Icon(icAst),
-    Player.Skills.GetName(I), Player.Skills.Skill[I].Value, SkillMax]),
-    TK_ALIGN_CENTER);
+    Terminal.Print(B, D, Format('%s %s %d/%d',
+      [UI.Icon(icAst), Player.Skills.GetName(I), Player.Skills.Skill[I].Value, SkillMax]),
+      TK_ALIGN_CENTER);
   end;
 end;
 
@@ -214,9 +214,9 @@ begin
     TK_T:
       Scenes.SetScene(scLearnedTalents, scPlayer);
     // Information
-    TK_LEFT, TK_A, TK_KP_4:
+    TK_LEFT, TK_KP_4:
       FRenderInfo := False;
-    TK_RIGHT, TK_D, TK_KP_6:
+    TK_RIGHT, TK_KP_6:
       FRenderInfo := True;
     // Inventory
     TK_SPACE:
@@ -224,12 +224,12 @@ begin
       Game.Timer := UIntMax;
       Scenes.SetScene(scInv);
     end;
-    TK_UP, TK_KP_8, TK_W:
+    TK_UP, TK_KP_8:
     begin
       if (FSkillCursorTop > 0) then
         Dec(FSkillCursorTop);
     end;
-    TK_DOWN, TK_KP_2, TK_X:
+    TK_DOWN, TK_KP_2:
     begin
       if (FSkillCursorTop < Ord(High(TSkillEnum)) - ScrMax) then
         Inc(FSkillCursorTop);

@@ -306,9 +306,9 @@ begin
   if Player.FireMode then
   begin
     case Key of
-      TK_LEFT, TK_KP_4, TK_A:
+      TK_LEFT, TK_KP_4:
         Player.FireModeSwitch(-1);
-      TK_RIGHT, TK_KP_6, TK_D:
+      TK_RIGHT, TK_KP_6:
         Player.FireModeSwitch(1);
       TK_RETURN, TK_KP_ENTER:
         if Player.MagicMode then
@@ -321,23 +321,23 @@ begin
     Exit;
   end;
   case Key of
-    TK_LEFT, TK_KP_4, TK_A:
+    TK_LEFT, TK_KP_4:
       Player.Move(drWest);
-    TK_RIGHT, TK_KP_6, TK_D:
+    TK_RIGHT, TK_KP_6:
       Player.Move(drEast);
-    TK_UP, TK_KP_8, TK_W:
+    TK_UP, TK_KP_8:
       Player.Move(drNorth);
-    TK_DOWN, TK_KP_2, TK_X:
+    TK_DOWN, TK_KP_2:
       Player.Move(drSouth);
-    TK_KP_7, TK_Q:
+    TK_KP_7:
       Player.Move(drNorthWest);
-    TK_KP_9, TK_E:
+    TK_KP_9:
       Player.Move(drNorthEast);
-    TK_KP_1, TK_Z:
+    TK_KP_1:
       Player.Move(drSouthWest);
-    TK_KP_3, TK_C:
+    TK_KP_3:
       Player.Move(drSouthEast);
-    TK_KP_5, TK_S:
+    TK_KP_5:
       Player.Wait;
     TK_L: // Look
     begin
