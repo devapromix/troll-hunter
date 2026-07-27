@@ -167,6 +167,8 @@ type
     procedure StartEquip;
     procedure StartSkills;
     function IsOnStash: boolean;
+    function QuickSpellMinDamage: UInt;
+    function QuickSpellMaxDamage: UInt;
   end;
 
 var
@@ -622,8 +624,7 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
-  if (Self.Attributes.Attrib[atMana].Value < SpellData[ASpellEnum].ManaCost)
-  then
+  if (Self.Attributes.Attrib[atMana].Value < SpellData[ASpellEnum].ManaCost) then
   begin
     MsgLog.Add(Format('You don''t have enough mana to cast %s.',
       [SpellData[ASpellEnum].Name]));
@@ -779,8 +780,8 @@ begin
     MsgLog.Add('No quick spell selected.');
     Exit;
   end;
-  if (Self.Attributes.Attrib[atMana].Value < Spellbook.GetQuickSpell.Spell.ManaCost)
-  then
+  if (Self.Attributes.Attrib[atMana].Value <
+    Spellbook.GetQuickSpell.Spell.ManaCost) then
   begin
     FFireMode := False;
     MsgLog.Add('You need more mana!');
@@ -2452,6 +2453,18 @@ begin
     if (Statictics.Get(stTurn) mod Turns = 0) then
       Attributes.Modify(atMana, Skills.Skill[skMeditation].Value);
   end;
+end;
+
+function TPlayer.QuickSpellMinDamage: UInt;
+begin
+  Result := EnsureRange(Spellbook.GetQuickSpell.Spell.MinDamage +
+    Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
+end;
+
+function TPlayer.QuickSpellMaxDamage: UInt;
+begin
+  Result := EnsureRange(Spellbook.GetQuickSpell.Spell.MaxDamage +
+    Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
 end;
 
 initialization

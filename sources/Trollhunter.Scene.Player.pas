@@ -40,6 +40,8 @@ uses
   Trollhunter.Terminal,
   Trollhunter.Skill,
   Trollhunter.Creature,
+  Trollhunter.Projectile.Types,
+  Trollhunter.Spellbook,
   Trollhunter.Player,
   Trollhunter.Player.Helpers,
   BearLibTerminal;
@@ -146,6 +148,16 @@ begin
       Player.RangedMaxDamage, MaxDamMax);
     Add('Range', UI.Icon(icSword) + UI.Icon(icVision), 'Vision',
       Player.FireRange, VisionMax);
+  end;
+
+  // Quick Spell
+  if Spellbook.GetQuickSpell.Enable and
+    (Spellbook.GetQuickSpell.Spell.Projectile <> prNone) then
+  begin
+    Add('Min Spell Damage', UI.Icon(icBook), 'Darker Yellow',
+      Player.QuickSpellMinDamage, MinDamMax);
+    Add('Max Spell Damage', UI.Icon(icBook), 'Darker Yellow',
+      Player.QuickSpellMaxDamage, MaxDamMax);
   end;
 
   Add('Replenish Life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',
