@@ -1200,7 +1200,8 @@ begin
       if ((Direction[Dir].X <> 0) or (Direction[Dir].Y <> 0)) then
       begin
         SatPerTurn := 2;
-        AutoPickup;
+        if not IsOnStash then
+          AutoPickup;
       end;
       AddTurn;
     end;
