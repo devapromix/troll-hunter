@@ -66,15 +66,14 @@ const
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
     RepairTypeItems + MagicTypeItems;
-  NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + RuneTypeItems +
-    ArrowTypeItems;
+  NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
+    RuneTypeItems + ArrowTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
-  NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems + CoinTypeItems +
-    ArrowTypeItems;
+  NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
+    CoinTypeItems + ArrowTypeItems;
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
-    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems +
-    ArrowTypeItems;
+    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems + ArrowTypeItems;
 
 type
   TItemEnum = (
@@ -145,9 +144,12 @@ type
     // Wands
     itmYew_Wand, itmWater_Wand, itmBone_Wand, itmIvory_Wand, itmGrim_Wand,
     itmObsidian_Wand, itmGrave_Wand, itmMystic_Wand, itmLich_Wand, itmCelestial_Wand,
+    // Staves
+    itmQuarterstaff, itmStaff2, itmStaff3, itmStaff4, itmStaff5, itmStaff6,
+    itmStaff7, itmStaff8, itmStaff9, itmStaff10,
     // Daggers
-    itmDagger1, itmDagger2, itmDagger3, itmDagger4, itmDagger5, itmDagger6, itmDagger7,
-    itmDagger8, itmDagger9, itmDagger10,
+    itmSmall_Dagger, itmDagger, itmKris, itmDirk, itmRondel, itmPoignard, itmKatar,
+    itmBlood_Spike, itmMithril_Blade, itmDivine_Stiletto,
     // Bows
     itmShort_Bow, itmHunting_Bow, itmLong_Bow, itmNomad_Bow, itmHeavy_Bow,
     itmComposite_Bow, itmMaster_Bow, itmWar_Bow, itmDragon_Bow, itmAncient_Bow,
@@ -167,7 +169,6 @@ type
     itmHatchet, itmBattle_Axe, // Axe
     itmShort_Spear, itmSpear, // Spear
     itmSlag_Hammer, itmSpiked_Cudgel, // Mace
-    itmQuarterstaff, itmStaff2, // Staff
     // Gray Cave
     itmHelm, itmGrand_Helm, itmLeather_Cap, itmMask, // Headgear
     itmHard_Leather_Armor, itmBattle_Armor, itmFancy_Clothes, itmRobe, // Body Armor
@@ -178,7 +179,6 @@ type
     itmMeat_Axe, itmFlesh_Tearer, // Axe
     itmJavelin, itmFuscina, // Spear
     itmWarhammer, itmWar_Mace, // Mace
-    itmStaff3, itmStaff4, // Staff
     // Deep Cave
     itmGreat_Helm, itmFull_Helm, itmBone_Helmet, itmWizard_Hat, // Headgear
     itmBrigantine_Armor, itmRing_Mail, itmLight_Furs, itmClean_Robe, // Body Armor
@@ -189,7 +189,6 @@ type
     itmWar_Axe, itmDark_Axe, // Axe
     itmWar_Spear, itmHarpoon, // Spear
     itmFlanged_Mace, itmWar_Gavel, // Mace
-    itmStaff5, itmStaff6, // Staff
     // Blood Cave
     itmHorned_Helmet, itmSpired_Helm, itmDiadem, itmTiara, // Headgear
     itmChain_Mail, itmScale_Mail, itmThick_Furs, itmHard_Robe, // Body Armor
@@ -200,7 +199,6 @@ type
     itmBerserker_Axe, itmMarauder_Axe, // Axe
     itmSilvan_Whisper, itmImpaler, // Spear
     itmBarbarous_Mace, itmAdept_Hammer, // Mace
-    itmStaff7, itmStaff8, // Staff
     // Drom
     itmCasque, itmWinged_Helm, itmMagic_Helmet, itmCrown, // Headgear
     itmSplint_Mail, itmPlate_Mail, itmMoloch_Robe, itmBoneweave_Hauberk,
@@ -212,7 +210,6 @@ type
     itmChopper, itmDemon_Axe, // Axe
     itmSoul_Reaver, itmHoned_Spear, // Spear
     itmWar_Maul, itmDoom_Hammer, // Mace
-    itmStaff9, itmStaff10, // Staff
     // Arrows
     itmArrows,
     // Books

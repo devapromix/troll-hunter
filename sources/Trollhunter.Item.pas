@@ -860,52 +860,104 @@ const
     Damage: (MinDamage: (Min: 37; Max: 38; ); MaxDamage: (Min: 39; Max: 40; ));
     Price: 1000; Color: clDarkBlue; Deep: [deDrom]; Value: 300),
 
-    // Dagger #1
+    // Quarterstaff
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 2; Max: 3; ));
+    Price: 300; Color: clDarkGreen; Deep: [deDark_Wood]; ),
+    // Staff2
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 2; Max: 3; ); MaxDamage: (Min: 4; Max: 5; ));
+    Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ),
+    // Staff3
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 3; Max: 4; ); MaxDamage: (Min: 4; Max: 5; ));
+    Price: 500; Color: clDarkGreen; Deep: [deGray_Cave]; ),
+    // Staff4
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 4; Max: 5; ); MaxDamage: (Min: 6; Max: 7; ));
+    Price: 600; Color: clDarkGreen; Deep: [deGray_Cave]; ),
+    // Staff5
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 6; ); MaxDamage: (Min: 6; Max: 7; ));
+    Price: 700; Color: clDarkGreen; Deep: [deDeep_Cave]; ),
+    // Staff6
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 6; Max: 7; ); MaxDamage: (Min: 8; Max: 9; ));
+    Price: 800; Color: clDarkGreen; Deep: [deDeep_Cave]; ),
+    // Staff7
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 7; Max: 8; ); MaxDamage: (Min: 8; Max: 9; ));
+    Price: 900; Color: clDarkGreen; Deep: [deBlood_Cave]; ),
+    // Staff8
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 8; Max: 9; ); MaxDamage: (Min: 10; Max: 11; ));
+    Price: 1000; Color: clDarkGreen; Deep: [deBlood_Cave]; ),
+    // Staff9
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 9; Max: 10; ); MaxDamage: (Min: 11; Max: 12; ));
+    Price: 1100; Color: clDarkGreen; Deep: [deDrom]; ),
+    // Staff10
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
+    Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ),
+
+
+    // Small_Dagger
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 3; Max: 4; ));
     Price: 125; Color: clDarkBlue; Deep: [deDark_Wood]; ),
-    // Dagger #2
+    // Dagger
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 16; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6; ); MaxDamage: (Min: 7; Max: 8; ));
     Price: 150; Color: clDarkBlue; Deep: [deDark_Wood]; ),
-    // Dagger #3
+    // Kris
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 19; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
     Price: 175; Color: clDarkBlue; Deep: [deGray_Cave]; ),
-    // Dagger #4
+    // Dirk
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 22; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 16; ); MaxDamage: (Min: 17; Max: 18; ));
     Price: 200; Color: clDarkBlue; Deep: [deGray_Cave]; ),
-    // Dagger #5
+    // Rondel
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 25; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 21; Max: 22; ); MaxDamage: (Min: 23; Max: 24; ));
     Price: 225; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
-    // Dagger #6
+    // Poignard
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 28; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 25; Max: 26; ); MaxDamage: (Min: 27; Max: 28; ));
     Price: 250; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
-    // Dagger #7
+    // Katar
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 31; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 31; Max: 32; ); MaxDamage: (Min: 33; Max: 34; ));
     Price: 275; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
-    // Dagger #8
+    // Blood_Spike
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 34; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 35; Max: 36; ); MaxDamage: (Min: 37; Max: 38; ));
     Price: 300; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
-    // Dagger #9
+    // Mithril_Blade
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 37; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 41; Max: 42; ); MaxDamage: (Min: 43; Max: 44; ));
     Price: 325; Color: clDarkBlue; Deep: [deDrom]; ),
-    // Dagger #10
+    // Divine_Stiletto
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 45; Max: 46; ); MaxDamage: (Min: 47; Max: 48; ));
@@ -1146,16 +1198,6 @@ const
     MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 5; ); MaxDamage: (Min: 7; Max: 9; ));
     Price: 220; Color: clDarkRed; Deep: [deDark_Wood]; ),
-    // Quarterstaff
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 2; Max: 3; ));
-    Price: 300; Color: clDarkGreen; Deep: [deDark_Wood]; ),
-    // Staff2
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 2; Max: 3; ); MaxDamage: (Min: 4; Max: 5; ));
-    Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ),
 
     /// / == Gray Cave == ////
 
@@ -1273,16 +1315,6 @@ const
     MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 10; ); MaxDamage: (Min: 17; Max: 19; ));
     Price: 410; Color: clDarkRed; Deep: [deGray_Cave]; ),
-    // Staff3
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 3; Max: 4; ); MaxDamage: (Min: 4; Max: 5; ));
-    Price: 500; Color: clDarkGreen; Deep: [deGray_Cave]; ),
-    // Staff4
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 4; Max: 5; ); MaxDamage: (Min: 6; Max: 7; ));
-    Price: 600; Color: clDarkGreen; Deep: [deGray_Cave]; ),
 
     /// / == Deep Cave == ////
 
@@ -1400,16 +1432,6 @@ const
     MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 15; Max: 18; ); MaxDamage: (Min: 30; Max: 33; ));
     Price: 650; Color: clDarkRed; Deep: [deDeep_Cave]; ),
-    // Staff5
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 5; Max: 6; ); MaxDamage: (Min: 6; Max: 7; ));
-    Price: 700; Color: clDarkGreen; Deep: [deDeep_Cave]; ),
-    // Staff6
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 6; Max: 7; ); MaxDamage: (Min: 8; Max: 9; ));
-    Price: 800; Color: clDarkGreen; Deep: [deDeep_Cave]; ),
 
     /// / == Blood Cave == ////
 
@@ -1527,16 +1549,6 @@ const
     MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 24; Max: 27; ); MaxDamage: (Min: 48; Max: 51; ));
     Price: 850; Color: clDarkRed; Deep: [deBlood_Cave]; ),
-    // Staff7
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 7; Max: 8; ); MaxDamage: (Min: 8; Max: 9; ));
-    Price: 900; Color: clDarkGreen; Deep: [deBlood_Cave]; ),
-    // Staff8
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 8; Max: 9; ); MaxDamage: (Min: 10; Max: 11; ));
-    Price: 1000; Color: clDarkGreen; Deep: [deBlood_Cave]; ),
 
     /// / == Drom == ////
 
@@ -1654,22 +1666,12 @@ const
     MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 36; Max: 40; ); MaxDamage: (Min: 70; Max: 80; ));
     Price: 1000; Color: clDarkRed; Deep: [deDrom]; ),
-    // Staff9
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 9; Max: 10; ); MaxDamage: (Min: 11; Max: 12; ));
-    Price: 1100; Color: clDarkGreen; Deep: [deDrom]; ),
-    // Staff10
-    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
-    Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ),
 
     // Arrows
     (Symbol: '{'; ItemType: itArrow; SlotType: stNone; MaxStack: 999;
     MaxDurability: 0; Level: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; ) ,
+    Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; ),
 
     // Books
     // Book of Mana Shield
@@ -1677,7 +1679,7 @@ const
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 300; Color: clLightestBlue; Deep: [deDark_Wood];
-    Effects: []; Value: 1; ManaCost: 0;),
+    Effects: []; Value: 1; ManaCost: 0; ),
     // Book of Heal
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);

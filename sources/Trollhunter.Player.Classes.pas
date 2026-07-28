@@ -54,7 +54,7 @@ const
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 2; );
      Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
      Skill: (skBow, skDodge, skDodge);
-     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmDagger1, itmNone,
+     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
      itmShort_Bow, itmLight_Quiver, itmNone, itmNone); ),
 
     // Thief
@@ -63,7 +63,7 @@ const
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
      Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
      Skill: (skDagger, skToughness, skStealth);
-     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmDagger1, itmNone,
+     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
      itmNone, itmNone, itmNone, itmNone); )
   );
 type
