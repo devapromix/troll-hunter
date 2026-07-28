@@ -134,19 +134,20 @@ begin
       AddLine('<', 'Go up stairs');
       AddLine('>', 'Go down stairs');
       AddLine('G', 'Pick up / Open stash');
-      AddLine('F', 'Drop / Store an item');
+      AddLine('D', 'Drop / Store');
       AddLine('L', 'Look mode');
       AddLine('R', 'Rest');
       AddLine('M', 'View messages');
       AddLine('B', 'Spellbook');
-      AddLine('Y', 'Cast Quick Spell');
+      AddLine('C', 'Cast quick spell');
       AddLine('T', 'Talents');
-      AddLine('N', 'Show Statistics');
+      AddLine('F', 'Ranged fire mode');
+      AddLine('N', 'Show statistics');
       AddLine('O', 'Options');
-      AddLine('I', 'Show Inventory');
-      AddLine('P', 'Character Screen');
+      AddLine('I', 'Show inventory');
+      AddLine('P', 'Character screen');
       AddLine('K', 'Calendar');
-      AddLine('?', 'Show this Help Screen');
+      AddLine('?', 'Show this help screen');
     end;
   end;
 

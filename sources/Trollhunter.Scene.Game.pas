@@ -19,6 +19,7 @@ type
   private
     procedure FireArrow;
     procedure CastTargetedSpell;
+    procedure CastSpell();
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -294,6 +295,28 @@ begin
     Player.MagicFireModeEnter;
 end;
 
+procedure TSceneGame.CastSpell();
+begin
+  if Player.IsDead then
+    Exit;
+  if Spellbook.GetQuickSpell.Enable then
+  begin
+    if Spellbook.GetQuickSpell.Spell.Projectile <> prNone then
+      Player.MagicFireModeEnter
+    else if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
+    then
+    begin
+      Player.Statictics.Inc(stSpCast);
+      Player.Attributes.Modify(atMana, -Spellbook.GetQuickSpell.Spell.ManaCost);
+      Player.DoEffects(Spellbook.GetQuickSpell.Spell.Effects, Spellbook.GetQuickSpell.Spell.Value);
+    end
+    else
+      MsgLog.Add('You need more mana!');
+  end
+  else
+    MsgLog.Add('No quick spell selected.');
+end;
+
 procedure TSceneGame.Update(var Key: UInt);
 begin
   MsgLog.Turn;
@@ -315,7 +338,7 @@ begin
           CastTargetedSpell
         else
           FireArrow;
-      TK_V, TK_ESCAPE:
+      TK_F, TK_ESCAPE:
         Player.FireModeExit;
     end;
     Exit;
@@ -459,7 +482,7 @@ begin
     end;
     TK_I:
       Scenes.SetScene(scInv);
-    TK_F:
+    TK_D:
     begin
       if Player.IsDead then
         Exit;
@@ -468,7 +491,7 @@ begin
       else
         Scenes.SetScene(scDrop, scGame);
     end;
-    TK_V:
+    TK_F:
     begin
       if Player.IsDead then
         Exit;
@@ -485,27 +508,8 @@ begin
       Scenes.SetScene(scOptions);
      TK_B:
      Scenes.SetScene(scSpellbook);
-    TK_Y:
-    begin
-      if Player.IsDead then
-        Exit;
-      if Spellbook.GetQuickSpell.Enable then
-      begin
-        if Spellbook.GetQuickSpell.Spell.Projectile <> prNone then
-          Player.MagicFireModeEnter
-        else if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
-        then
-        begin
-          Player.Statictics.Inc(stSpCast);
-          Player.Attributes.Modify(atMana, -Spellbook.GetQuickSpell.Spell.ManaCost);
-          Player.DoEffects(Spellbook.GetQuickSpell.Spell.Effects, Spellbook.GetQuickSpell.Spell.Value);
-        end
-        else
-          MsgLog.Add('You need more mana!');
-      end
-      else
-        MsgLog.Add('No quick spell selected.');
-    end;
+    TK_C:
+      CastSpell();
     TK_T:
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
