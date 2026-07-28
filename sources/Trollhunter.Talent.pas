@@ -49,134 +49,134 @@ const
     // Strong
     (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics]; Classes: AllClasses;
     Races: [rcHuman, rcDwarf];
-    Description: 'Increases Athletics skill.'),
+    Description: 'Years of physical training have hardened your muscles'),
 
     // Dextrous
     (Level: 1; MaxLevel: 5; Effects: [efPrmDodge]; Classes: AllClasses; Races: AllRaces;
-    Description: 'Increases Dodge skill.'),
+    Description: 'Quick reflexes let you slip past incoming blows'),
 
     // Mage
-    (Level: 1; MaxLevel: 5; Effects: [efPrmConcentration]; Classes: AllClasses;
+    (Level: 1; MaxLevel: 5; Effects: [efPrmConcentration]; Classes: [clMage];
     Races: AllRaces;
-    Description: 'Increases Concentration skill.'),
+    Description: 'A focused, disciplined mind sharpens your Concentration'),
 
     // Tough
     (Level: 1; MaxLevel: 5; Effects: [efPrmToughness]; Classes: AllClasses;
     Races: AllRaces;
-    Description: 'Increases Toughness skill.'),
+    Description: 'Your body has grown resilient, improving your Toughness'),
 
     // Sword Mastery
-    (Level: 1; MaxLevel: 5; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
-    Description: 'Increases skill with swords.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmBlade]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Countless hours with the blade have sharpened your skill with swords'),
 
     // Axe Training
-    (Level: 1; MaxLevel: 5; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
-    Description: 'Increases skill with axes.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmAxe]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Relentless drilling has honed your skill with axes'),
 
     // Polearm Dominance
-    (Level: 1; MaxLevel: 5; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
-    Description: 'Increases skill with polearms.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmSpear]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Mastery of reach and leverage improves your skill with polearms'),
 
     // Mace Crushing
-    (Level: 1; MaxLevel: 5; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
-    Description: 'Increases skill with maces.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmMace]; Classes: [clWarrior]; Races: AllRaces;
+    Description: 'Brute technique improves your skill with maces'),
 
     // Staff Harmony
-    (Level: 1; MaxLevel: 5; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
-    Description: 'Increases skill with staves.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmStaff]; Classes: [clMage]; Races: AllRaces;
+    Description: 'A deep connection with your staff improves your skill with it'),
 
     // Affinity with Wands
-    (Level: 1; MaxLevel: 5; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
-    Description: 'Increases skill with wands.'),
+    (Level: 2; MaxLevel: 5; Effects: [efPrmWand]; Classes: [clMage]; Races: AllRaces;
+    Description: 'A natural affinity for arcane foci improves your skill with wands'),
 
     // Dagger Precision
-    (Level: 1; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger];
+    (Level: 2; MaxLevel: 5; Effects: [efPrmDagger]; Classes: [clThief, clRanger];
     Races: AllRaces;
-    Description: 'Increases skill with daggers.'),
+    Description: 'Precise, practiced strikes improve your skill with daggers'),
 
     // Bow Archery
-    (Level: 1; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief];
+    (Level: 2; MaxLevel: 5; Effects: [efPrmBow]; Classes: [clRanger, clThief];
     Races: AllRaces;
-    Description: 'Increases skill with bows.'),
+    Description: 'Steady hands and a keen eye improve your skill with bows'),
 
     // Long Range
-    (Level: 1; MaxLevel: 5; Effects: []; Classes: [clRanger];
+    (Level: 3; MaxLevel: 5; Effects: []; Classes: [clRanger];
     Races: AllRaces;
     Description: 'Increases the distance you can hit a target with a bow'),
 
     // Elven Marksman
-    (Level: 1; MaxLevel: 1; Effects: []; Classes: [clRanger]; Races: [rcElf];
+    (Level: 4; MaxLevel: 1; Effects: []; Classes: [clRanger]; Races: [rcElf];
     Description: 'The keen eyes of the elves let their archers strike from further away'),
 
     // Bodybuilding
-    (Level: 1; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
+    (Level: 3; MaxLevel: 5; Effects: [efPrmBodybuilding]; Classes: [clWarrior];
     Races: [rcHuman, rcDwarf];
     Description: 'Relentless training has forged your body into a powerful weapon'),
 
     // Meditation
-    (Level: 1; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage];
+    (Level: 2; MaxLevel: 5; Effects: [efPrmMeditation]; Classes: [clMage];
     Races: AllRaces;
     Description: 'A disciplined mind grants greater control over magical energies'),
 
     // Enchant Item
-    (Level: 1; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage];
+    (Level: 4; MaxLevel: 5; Effects: [efPrmEnchant_Item]; Classes: [clMage];
     Races: [rcHuman, rcElf, rcGnome];
     Description: 'Allows you to create more powerful magical items'),
 
     // Careful
-    (Level: 1; MaxLevel: 3; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
+    (Level: 2; MaxLevel: 3; Effects: [efPrmDV]; Classes: AllClasses; Races: AllRaces;
     Description: 'Your cautious nature helps you avoid enemy attacks. Increases DV'),
 
     // Elven Grace
-    (Level: 1; MaxLevel: 2; Effects: [efPrmDV]; Classes: AllClasses; Races: [rcElf];
+    (Level: 5; MaxLevel: 2; Effects: [efPrmDV]; Classes: AllClasses; Races: [rcElf];
     Description: 'The natural grace of the elves makes you difficult to hit'),
 
     // Iron Skin
-    (Level: 1; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: [rcDwarf];
+    (Level: 3; MaxLevel: 3; Effects: [efPrmPV]; Classes: [clWarrior]; Races: [rcDwarf];
     Description: 'Your skin has become as hard as iron. Increases PV'),
 
     // Hardy
-    (Level: 1; MaxLevel: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
+    (Level: 5; MaxLevel: 5; Effects: [efPrmLife]; Classes: AllClasses; Races: AllRaces;
     Description: 'Your exceptional endurance increases your maximum life'),
 
     // Charged
-    (Level: 1; MaxLevel: 5; Effects: [efPrmMana]; Classes: AllClasses; Races: AllRaces;
+    (Level: 4; MaxLevel: 5; Effects: [efPrmMana]; Classes: AllClasses; Races: AllRaces;
     Description: 'Arcane energy flows through your body. Increases maximum mana'),
 
     // Shadowcraft
-    (Level: 1; MaxLevel: 5; Effects: [efPrmStealth]; Classes: [clThief]; Races: AllRaces;
+    (Level: 3; MaxLevel: 5; Effects: [efPrmStealth]; Classes: [clThief]; Races: AllRaces;
     Description: 'Years of moving unseen have honed your stealth'),
 
     // Agility
-    (Level: 1; MaxLevel: 2; Effects: [efPrmDodge]; Classes: AllClasses;
+    (Level: 6; MaxLevel: 2; Effects: [efPrmDodge]; Classes: AllClasses;
     Races: [rcHuman, rcElf, rcGnome];
     Description: 'Allows you to react swiftly and avoid enemy attacks'),
 
     // Acrobatics
-    (Level: 1; MaxLevel: 3; Effects: [efPrmDodge]; Classes: [clRanger]; Races: AllRaces;
+    (Level: 5; MaxLevel: 3; Effects: [efPrmDodge]; Classes: [clRanger]; Races: AllRaces;
     Description: 'Years of training have made your movements swift and unpredictable'),
 
     // Alertness
-    (Level: 1; MaxLevel: 5; Effects: [efPrmAwareness]; Classes: [clThief, clRanger];
+    (Level: 3; MaxLevel: 5; Effects: [efPrmAwareness]; Classes: [clThief, clRanger];
     Races: AllRaces;
     Description: 'Heightens your senses, making you more aware of your surroundings'),
 
     // Evasion
-    (Level: 1; MaxLevel: 4; Effects: [efPrmDodge]; Classes: [clThief]; Races: [rcElf];
+    (Level: 3; MaxLevel: 4; Effects: [efPrmDodge]; Classes: [clThief]; Races: [rcElf];
     Description: 'Your agility allows you to evade attacks with greater ease'),
 
     // Treasure Hunter
-    (Level: 1; MaxLevel: 5; Effects: [efPrmTreasureHunter]; Classes: AllClasses;
+    (Level: 4; MaxLevel: 5; Effects: [efPrmTreasureHunter]; Classes: AllClasses;
     Races: [rcGnome, rcDwarf];
     Description: 'Increases the amount of gold dropped by monsters'),
 
     // Gold Finder
-    (Level: 1; MaxLevel: 5; Effects: [efPrmGoldFinder]; Classes: AllClasses;
+    (Level: 3; MaxLevel: 5; Effects: [efPrmGoldFinder]; Classes: AllClasses;
     Races: AllRaces;
     Description: 'Increases the chance of finding gold on defeated monsters'),
 
     // Survival
-    (Level: 1; MaxLevel: 5; Effects: [efPrmSurvival];
+    (Level: 4; MaxLevel: 5; Effects: [efPrmSurvival];
     Classes: AllClasses; Races: AllRaces;
     Description: 'Your survival instincts help you make every ration last longer')
     );
@@ -193,6 +193,7 @@ type
     FIsPoint: boolean;
     FTalent: array [0 .. TalentMax - 1] of TTalent;
     FTalentName: array [TTalentEnum] of string;
+    function IndexOf(const ATalent: TTalentEnum): Integer;
     function GetTalent(I: UInt): TTalent;
     procedure SetTalent(I: UInt; const Value: TTalent);
   public
@@ -230,21 +231,20 @@ uses
 
 procedure TTalents.Add(const ATalent: TTalentEnum);
 var
-  I: UInt;
+  LIndex: Integer;
 begin
-  for I := 0 to TalentMax - 1 do
-    if (FTalent[I].Enum = ATalent) then
-    begin
-      FTalent[I].Level := Self.NextLevel(ATalent);
-      Exit;
-    end;
-  for I := 0 to TalentMax - 1 do
-    if (FTalent[I].Enum = tlNone) then
-    begin
-      FTalent[I].Level := Self.NextLevel(ATalent);
-      FTalent[I].Enum := ATalent;
-      Break;
-    end;
+  LIndex := Self.IndexOf(ATalent);
+  if (LIndex >= 0) then
+  begin
+    FTalent[LIndex].Level := Self.NextLevel(ATalent);
+    Exit;
+  end;
+  LIndex := Self.IndexOf(tlNone);
+  if (LIndex >= 0) then
+  begin
+    FTalent[LIndex].Level := Self.NextLevel(ATalent);
+    FTalent[LIndex].Enum := ATalent;
+  end;
 end;
 
 function TTalents.Count: UInt;
@@ -303,6 +303,19 @@ begin
         Break;
       end;
       Inc(K);
+    end;
+end;
+
+function TTalents.IndexOf(const ATalent: TTalentEnum): Integer;
+var
+  LIndex: UInt;
+begin
+  Result := -1;
+  for LIndex := 0 to TalentMax - 1 do
+    if (FTalent[LIndex].Enum = ATalent) then
+    begin
+      Result := LIndex;
+      Exit;
     end;
 end;
 
@@ -382,16 +395,8 @@ begin
 end;
 
 function TTalents.IsTalent(const ATalent: TTalentEnum): boolean;
-var
-  I: UInt;
 begin
-  Result := False;
-  for I := 0 to TalentMax - 1 do
-    if (FTalent[I].Enum = ATalent) then
-    begin
-      Result := True;
-      Exit;
-    end;
+  Result := Self.IndexOf(ATalent) >= 0;
 end;
 
 procedure TTalents.SetTalent(I: UInt; const Value: TTalent);
