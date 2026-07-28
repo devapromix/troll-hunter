@@ -321,11 +321,6 @@ procedure TSceneGame.Update(var Key: UInt);
 begin
   MsgLog.Turn;
   MsgLog.Msg := '';
-  if Game.Won then
-  begin
-    Scenes.SetScene(scWin);
-    Exit;
-  end;
   if Player.FireMode then
   begin
     case Key of
@@ -450,6 +445,11 @@ begin
           Exit;
         end;
         Scenes.SetScene(scDef);
+        Exit;
+      end
+      else if Game.Won then
+      begin
+        Scenes.SetScene(scWin);
         Exit;
       end;
     TK_ESCAPE:
