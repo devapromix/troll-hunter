@@ -1126,7 +1126,7 @@ begin
   Killer := AKiller;
   MsgLog.Add(Terminal.Colorize('You die...', 'Light Red'));
   MsgLog.Add(Terminal.Colorize('Better luck next time!', 'Light Yellow'));
-  if (Game.Difficulty < dfHard) then
+  if (Game.Difficulty < dfNormal) then
     MsgLog.Add(Format('Press %s to try again...', [UI.KeyToStr('SPACE')]))
   else
     MsgLog.Add(Format('Press %s to exit...', [UI.KeyToStr('SPACE')]));

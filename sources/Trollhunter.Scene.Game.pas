@@ -443,7 +443,7 @@ begin
     TK_SPACE:
       if Player.IsDead then
       begin
-        if (Game.Difficulty = dfEasy) or (Game.Difficulty = dfNormal) then
+        if (Game.Difficulty < dfNormal) then
         begin
           Player.Spawn;
           Player.Fill;

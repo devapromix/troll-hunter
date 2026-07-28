@@ -463,10 +463,10 @@ begin
   Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase('Game over!!!'), TK_ALIGN_CENTER);
   if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format('You dead. Press %s', [UI.KeyToStr('ENTER')]),
-      TK_ALIGN_CENTER)
+    Terminal.Print(CX, CY + 3, Format('You dead. Press %s to exit!',
+      [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER)
   else
-    Terminal.Print(CX, CY + 3, Format('You were slain by %s. Press %s',
+    Terminal.Print(CX, CY + 3, Format('You were slain by %s. Press %s to exit!',
       [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
       TK_ALIGN_CENTER);
   if Mode.Wizard then
@@ -496,8 +496,8 @@ begin
   Logo.Render(False);
   Terminal.Print(CX, CY + 1, UpperCase('Congratulations!!!'),
     TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 3, Format('You have won. Press %s', [UI.KeyToStr('ENTER')]),
-    TK_ALIGN_CENTER);
+  Terminal.Print(CX, CY + 3, Format('You have won. Press %s to exit!',
+    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
 end;
 
 procedure TSceneWin.Update(var Key: UInt);
