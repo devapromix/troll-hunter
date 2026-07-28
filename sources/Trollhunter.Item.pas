@@ -2332,6 +2332,8 @@ begin
   for I := Count - 1 downto 0 do
   begin
     FItem := Items_Dungeon_GetMapItem(MapID, I);
+    if (Map.GetTileEnum(FItem.X, FItem.Y, Map.Current) = teStash) then
+      Continue;
     if not Map.InView(FItem.X, FItem.Y) or (not Mode.Wizard and not
       Map.GetFOV(FItem.X, FItem.Y)) then
       Continue;
