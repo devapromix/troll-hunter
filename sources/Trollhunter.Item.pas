@@ -2551,7 +2551,7 @@ begin
         end;
       end;
       else
-        if ((AItem.Price > 0) and Game.GetOption(apShPrice)) then
+        if not Player.IsOnStash and (AItem.Price > 0) and Game.GetOption(apShPrice) then
           S := GetPrice(AItem.Price, True);
     end;
     if Game.Timer > 0 then
