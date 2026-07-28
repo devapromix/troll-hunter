@@ -8,6 +8,8 @@ uses
 
 type
   TSceneHelp = class(TScene)
+  private
+    procedure AddLine(const AText: string); overload;
   public
     constructor Create;
     destructor Destroy; override;
@@ -23,6 +25,7 @@ uses
   SysUtils,
   Trollhunter.UI,
   BearLibTerminal,
+  Trollhunter.Game,
   Trollhunter.Terminal;
 
 constructor TSceneHelp.Create;
@@ -35,6 +38,13 @@ begin
   inherited;
 end;
 
+procedure TSceneHelp.AddLine(const AText: string);
+begin
+  Terminal.ForegroundColor(clLightGray);
+  Terminal.Print(5, Y, AText);
+  Inc(Y);
+end;
+
 procedure TSceneHelp.Render;
 begin
   UI.Title('Help');
@@ -42,85 +52,107 @@ begin
   case Scenes.PrevSceneEnum of
     scClass:
     begin
-      UI.Title('Keybindings', 5);
+      Y := 3;
+      AddLine('The Class Selection screen determines your starting equipment, skills, abilities');
+      AddLine('and preferred combat style. Each class offers a distinct approach to the challenges');
+      AddLine('of Elvion — some excel in melee combat, others in magic, ranged attacks or support roles.');
+      AddLine('');
+      AddLine('As you gain levels you will unlock talents and improve your skills, allowing you to');
+      AddLine('develop a unique build that suits your playstyle. Choose carefully — your class shapes');
+      AddLine('the early and mid game significantly.');
+
+      UI.Title('Keybindings', 12);
       X := 1;
-      Y := 7;
+      Y := 14;
       AddLine('Space',     'Re-roll');
-      AddLine('Backspace', 'Random');
-      AddLine('A-Z',       'Select a class');
+      inherited AddLine('Backspace', 'Random');
+      inherited AddLine('A-Z',       'Select a class');
     end;
 
     scRace:
     begin
-      UI.Title('Keybindings', 5);
+      Y := 3;
+      AddLine('The Race Selection screen lets you choose your character''s race. Each race possesses');
+      AddLine('unique starting attributes, physical traits, strengths, weaknesses and available talents');
+      AddLine('that influence how your hero develops throughout the entire adventure.');
+      AddLine('');
+      AddLine('Your racial choice also affects base statistics such as age, height, weight and metabolism.');
+      AddLine('Once the game begins this decision is permanent and cannot be changed, so pick the race');
+      AddLine('that best matches the kind of hero you want to play.');
+
+      UI.Title('Keybindings', 13);
       X := 1;
-      Y := 7;
-      AddLine('Tab',       'Choose a sex');
-      AddLine('Space',     'Re-roll');
-      AddLine('Backspace', 'Random');
-      AddLine('A-Z',       'Select a race');
+      Y := 15;
+      inherited AddLine('Tab',       'Choose a sex');
+      inherited AddLine('Space',     'Re-roll');
+      inherited AddLine('Backspace', 'Random');
+      inherited AddLine('A-Z',       'Select a race');
     end;
 
     scInv:
     begin
-      Terminal.Print(CX, 3, 'This screen displays all items currently carried by your character.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 4, 'Equippable items are automatically placed into the appropriate equipment slot when used.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 5, 'If the slot is already occupied, the currently equipped item will be replaced.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 6, 'Your inventory has limited capacity. If it is full, you cannot pick up additional', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 7, 'items until at least one slot becomes available.', TK_ALIGN_CENTER);
+      Y := 3;
+      AddLine('This screen displays all items currently carried by your character. Equippable items are');
+      AddLine('automatically placed into the appropriate equipment slot when used. If the slot is already');
+      AddLine('occupied, the currently equipped item will be replaced. Your inventory has limited capacity.');
+      AddLine('If it is full, you cannot pick up additional items until at least one slot becomes available.');
 
       UI.Title('Stash', 9);
-      Terminal.Print(CX, 11, 'While standing on a Stash tile, you can transfer items between', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 12, 'your inventory and your personal stash.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 13, Format('To drop/store an item, press the %s key and then press %s key to drop/store it.',
-        [UI.KeyToStr('TAB'), UI.KeyToStr('A-Z')]), TK_ALIGN_CENTER);
+      Y := 11;
+      AddLine('While standing on a Stash tile, you can transfer items between your inventory and your');
+      AddLine('personal stash.');
+      AddLine(Format('To drop/store an item, press the %s key and then press %s key to drop/store it.',
+        [UI.KeyToStr('TAB'), UI.KeyToStr('A-Z')]));
 
       UI.Title('Keybindings', 15);
       X := 1;
       Y := 17;
-      AddLine('Tab',   'Drop/Store an item');
-      AddLine('Space', 'Character/Stash');
-      AddLine('A-Z',   'Use an item');
+      inherited AddLine('Tab',   'Drop/Store an item');
+      inherited AddLine('Space', 'Character/Stash');
+      inherited AddLine('A-Z',   'Use an item');
     end;
 
     scPlayer:
     begin
-      Terminal.Print(CX, 3, 'The Player screen provides a detailed overview of your character. Here you can inspect', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 4, 'your attributes, combat statistics, skills, talents, resistances, and other important', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 5, 'information that affects your performance throughout the game.', TK_ALIGN_CENTER);
+      Y := 3;
+      AddLine('The Player screen provides a detailed overview of your character. Here you can inspect');
+      AddLine('your attributes, combat statistics, skills, talents, resistances, and other important');
+      AddLine('information that affects your performance throughout the game.');
 
       UI.Title('Skills', 7);
-      Terminal.Print(CX, 9, 'Skills represent your character''s proficiency in various disciplines,', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 10, 'such as weapon mastery, magic, survival, and exploration.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 11, 'Many skills improve automatically as your character advances,', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 12, 'while others are enhanced through talents or equipment.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 13, 'Higher skill levels provide greater bonuses and unlock your character''s full potential.', TK_ALIGN_CENTER);
+      Y := 9;
+      AddLine('Skills represent your character''s proficiency in various disciplines, such as weapon');
+      AddLine('mastery, magic, survival, and exploration. Many skills improve automatically as your');
+      AddLine('character advances, while others are enhanced through talents or equipment. Higher skill');
+      AddLine('levels provide greater bonuses and unlock your character''s full potential.');
 
       UI.Title('Talents', 15);
-      Terminal.Print(CX, 17, 'Talents are permanent upgrades chosen as your character levels up.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 18, 'Each talent grants a unique bonus, such as increasing attributes, improving combat', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 19, 'performance, strengthening magic, or enhancing survival abilities.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 20, 'Choose talents carefully, as they define your character''s long-term development.', TK_ALIGN_CENTER);
+      Y := 17;
+      AddLine('Talents are permanent upgrades chosen as your character levels up. Each talent grants a');
+      AddLine('unique bonus, such as increasing attributes, improving combat performance, strengthening');
+      AddLine('magic, or enhancing survival abilities. Choose talents carefully, as they define your');
+      AddLine('character''s long-term development.');
 
       UI.Title('Keybindings', 22);
       X := 1;
       Y := 24;
-      AddLine('Right/Left', 'Change tab');
-      AddLine('Up/Down',    'Scroll skills');
-      AddLine('T',          'Show Learned Talents');
-      AddLine('Space',      'Show Inventory');
+      inherited AddLine('Right/Left', 'Change tab');
+      inherited AddLine('Up/Down',    'Scroll skills');
+      inherited AddLine('T',          'Show Learned Talents');
+      inherited AddLine('Space',      'Show Inventory');
     end;
 
     scGame:
     begin
-      Terminal.Print(CX, 3, 'Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains.', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 4, 'In the center of this land there is a village named Dork. Its people are in', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 5, 'grave danger as the Troll King and his armies are marching to lay waste on all of', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 6, 'its inhabitants. Unless a hero will rise to take a stand against the forces of evil.', TK_ALIGN_CENTER);
-
-      Terminal.Print(CX, 8, 'You are the hero who departs on a quest to stop the enemies and save your homeland,', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 9, 'Elvion. Survive, gather equipment, fight adversaries and be ready for the final', TK_ALIGN_CENTER);
-      Terminal.Print(CX, 10, 'confrontation. Good luck! You will need it.', TK_ALIGN_CENTER);
+      Y := 3;
+      AddLine('Far away in an uncharted region of the Earth land Elvion lies surrounded by mountains.');
+      AddLine('In the center of this land there is a village named Dork. Its people are in grave danger');
+      AddLine('as the Troll King and his armies are marching to lay waste on all of its inhabitants.');
+      AddLine('Unless a hero will rise to take a stand against the forces of evil.');
+      AddLine('');
+      AddLine('You are the hero who departs on a quest to stop the enemies and save your homeland, Elvion.');
+      AddLine('Survive, gather equipment, fight adversaries and be ready for the final confrontation.');
+      AddLine('Good luck! You will need it.');
 
       UI.Title('Keybindings', 12);
 
@@ -131,23 +163,23 @@ begin
 
       X := 1;
       Y := 16;
-      AddLine('<', 'Go up stairs');
-      AddLine('>', 'Go down stairs');
-      AddLine('G', 'Pick up / Open stash');
-      AddLine('D', 'Drop / Store');
-      AddLine('L', 'Look mode');
-      AddLine('R', 'Rest');
-      AddLine('M', 'View messages');
-      AddLine('B', 'Spellbook');
-      AddLine('C', 'Cast quick spell');
-      AddLine('T', 'Talents');
-      AddLine('F', 'Ranged fire mode');
-      AddLine('N', 'Show statistics');
-      AddLine('O', 'Options');
-      AddLine('I', 'Show inventory');
-      AddLine('P', 'Character screen');
-      AddLine('K', 'Calendar');
-      AddLine('?', 'Show this help screen');
+      inherited AddLine('<', 'Go up stairs');
+      inherited AddLine('>', 'Go down stairs');
+      inherited AddLine('G', 'Pick up / Open stash');
+      inherited AddLine('D', 'Drop / Store');
+      inherited AddLine('L', 'Look mode');
+      inherited AddLine('R', 'Rest');
+      inherited AddLine('M', 'View messages');
+      inherited AddLine('B', 'Spellbook');
+      inherited AddLine('C', 'Cast quick spell');
+      inherited AddLine('T', 'Talents');
+      inherited AddLine('F', 'Ranged fire mode');
+      inherited AddLine('N', 'Show statistics');
+      inherited AddLine('O', 'Options');
+      inherited AddLine('I', 'Show inventory');
+      inherited AddLine('P', 'Character screen');
+      inherited AddLine('K', 'Calendar');
+      inherited AddLine('?', 'Show this help screen');
     end;
   end;
 
