@@ -128,66 +128,67 @@ end;
 procedure TShops.New;
 var
   FItem: Item;
-  I, Max, J: UInt;
+  I, Max: UInt;
   ID: TItemEnum;
   S: TShopEnum;
+  LCandidates: array [0 .. Ord(High(TItemEnum))] of TItemEnum;
+  LCount: UInt;
 
-  function GetItemID(): TItemEnum;
-  begin
-    Result := TItemEnum(Math.RandomRange(Ord(Low(TItemEnum)),
-      Ord(High(TItemEnum)) + 1));
-  end;
-
-  function Check: Boolean;
+  function MatchesShop(const AID: TItemEnum): Boolean;
   var
     Effects: TEffects;
   begin
-    ID := GetItemID();
-    Effects := ItemBase[ID].Effects;
+    Effects := ItemBase[AID].Effects;
     case S of
       shTavern:
-        Result := ID in TavernItems;
+        Result := AID in TavernItems;
       shHealer:
         Result := efLife in Effects;
       shMana:
         Result := (efMana in Effects) and not(efLife in Effects);
       shPotions:
-        Result := ItemBase[ID].ItemType in PotionTypeItems;
+        Result := ItemBase[AID].ItemType in PotionTypeItems;
       shScrolls:
-        Result := ItemBase[ID].ItemType in ScrollTypeItems;
+        Result := ItemBase[AID].ItemType in ScrollTypeItems;
       shArmors:
-        Result := ItemBase[ID].ItemType in ArmorTypeItems;
+        Result := ItemBase[AID].ItemType in ArmorTypeItems;
       shGloves:
-        Result := ItemBase[ID].ItemType in GlovesTypeItems;
+        Result := ItemBase[AID].ItemType in GlovesTypeItems;
       shBoots:
-        Result := ItemBase[ID].ItemType in BootsTypeItems;
+        Result := ItemBase[AID].ItemType in BootsTypeItems;
       shHelms:
-        Result := ItemBase[ID].ItemType in HelmTypeItems;
+        Result := ItemBase[AID].ItemType in HelmTypeItems;
       shShields:
-        Result := ItemBase[ID].ItemType in ShieldTypeItems;
+        Result := ItemBase[AID].ItemType in ShieldTypeItems;
       shWeapons:
-        Result := ItemBase[ID].ItemType in WeaponTypeItems;
+        Result := ItemBase[AID].ItemType in WeaponTypeItems;
       shSmith:
-        Result := ItemBase[ID].ItemType in SmithTypeItems + RepairTypeItems;
+        Result := ItemBase[AID].ItemType in SmithTypeItems + RepairTypeItems;
       shFoods:
-        Result := ItemBase[ID].ItemType in FoodTypeItems + PlantTypeItems;
+        Result := ItemBase[AID].ItemType in FoodTypeItems + PlantTypeItems;
       shGem:
-        Result := ItemBase[ID].ItemType in GemTypeItems;
+        Result := ItemBase[AID].ItemType in GemTypeItems;
       shJewelry:
-        Result := ItemBase[ID].ItemType in JewelryTypeItems;
+        Result := ItemBase[AID].ItemType in JewelryTypeItems;
       shRunes:
-        Result := ItemBase[ID].ItemType in RuneTypeItems;
+        Result := ItemBase[AID].ItemType in RuneTypeItems;
       shQuivers:
-        Result := ItemBase[ID].ItemType in QuiverTypeItems;
+        Result := ItemBase[AID].ItemType in QuiverTypeItems;
       shStaves:
-        Result := ItemBase[ID].ItemType in StaffTypeItems;
+        Result := ItemBase[AID].ItemType in StaffTypeItems;
       shWands:
-        Result := ItemBase[ID].ItemType in WandTypeItems;
+        Result := ItemBase[AID].ItemType in WandTypeItems;
       shBooks:
-        Result := ItemBase[ID].ItemType in BookTypeItems;
+        Result := ItemBase[AID].ItemType in BookTypeItems;
     else
       Result := False;
     end;
+  end;
+
+  function MatchesLevelAndMap(const AID: TItemEnum): Boolean;
+  begin
+    Result := (TMapEnum(Player.MaxMap) in ItemBase[AID].Deep) and
+      (ItemBase[AID].Level <= Player.Attributes.Attrib[atLev].Value);
   end;
 
 begin
@@ -197,16 +198,21 @@ begin
     Max := EnsureRange(Player.Attributes.Attrib[atLev].Value * 4, 4, ItemMax);
     if S = shSmith then
       Max := EnsureRange(Max + 3, 7, ItemMax);
-    for I := 0 to Max - 1 do
-    begin
-      repeat
-        repeat until Check;
-      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
-        //and (ItemBase[TItemEnum(ID)].Level <= Player.Attributes.Attrib[atLev].Value);
-      Items.Make(Ord(ID), FItem);
-      Items.Identify(FItem, True);
-      Shops.Shop[S].Add(FItem);
-    end;
+    LCount := 0;
+    for ID := Low(TItemEnum) to High(TItemEnum) do
+      if MatchesShop(ID) and MatchesLevelAndMap(ID) then
+      begin
+        LCandidates[LCount] := ID;
+        Inc(LCount);
+      end;
+    if LCount > 0 then
+      for I := 0 to Max - 1 do
+      begin
+        ID := LCandidates[Math.RandomRange(0, LCount)];
+        Items.Make(Ord(ID), FItem);
+        Items.Identify(FItem, True);
+        Shops.Shop[S].Add(FItem);
+      end;
   end;
 end;
 
