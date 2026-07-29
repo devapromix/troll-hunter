@@ -865,12 +865,12 @@ const
     MaxDurability: 12; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 2; Max: 3; ));
     Price: 300; Color: clDarkGreen; Deep: [deDark_Wood]; ),
-    // Staff2
+    // Long Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 3; ); MaxDamage: (Min: 4; Max: 5; ));
     Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ),
-    // Staff3
+    // Wonder Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 4; ); MaxDamage: (Min: 4; Max: 5; ));
