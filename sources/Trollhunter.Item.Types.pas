@@ -147,8 +147,9 @@ type
     itmYew_Wand, itmWater_Wand, itmBone_Wand, itmIvory_Wand, itmGrim_Wand,
     itmObsidian_Wand, itmGrave_Wand, itmMystic_Wand, itmLich_Wand, itmCelestial_Wand,
     // Staves
-    itmQuarterstaff, itmLong_Staff, itmWonder_Staff, itmStaff4, itmStaff5, itmStaff6,
-    itmStaff7, itmStaff8, itmStaff9, itmStaff10,
+    itmQuarterstaff, itmLong_Staff, itmWonder_Staff, itmCedar_Staff,
+    itmBattle_Staff, itmWar_Staff, itmJudgment_Staff, itmElven_Staff,
+    itmWizard_Staff, itmRune_Staff, itmGothic_Staff, itmArchon_Staff,
     // Daggers
     itmSmall_Dagger, itmDagger, itmKris, itmDirk, itmRondel, itmPoignard, itmKatar,
     itmBlood_Spike, itmMithril_Blade, itmDivine_Stiletto,

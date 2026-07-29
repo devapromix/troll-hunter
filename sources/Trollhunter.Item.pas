@@ -853,12 +853,12 @@ const
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 27; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 33; Max: 34; ); MaxDamage: (Min: 35; Max: 36; ));
-    Price: 950; Color: clDarkBlue; Deep: [deDrom]; Value: 250),
+    Price: 950; Color: clLightRed; Deep: [deDrom]; Value: 250),
     // Celestial Wand
     (Symbol: '-'; ItemType: itWand; SlotType: stRanged; MaxStack: 1;
     MaxDurability: 30; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 37; Max: 38; ); MaxDamage: (Min: 39; Max: 40; ));
-    Price: 1000; Color: clDarkBlue; Deep: [deDrom]; Value: 300),
+    Price: 1000; Color: clDarkGreen; Deep: [deDrom]; Value: 300; Rare: True),
 
     // Quarterstaff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
@@ -869,47 +869,57 @@ const
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 15; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 2; Max: 3; ); MaxDamage: (Min: 4; Max: 5; ));
-    Price: 400; Color: clDarkGreen; Deep: [deDark_Wood]; ),
+    Price: 400; Color: clDarkYellow; Deep: [deDark_Wood]; ),
     // Wonder Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 18; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 3; Max: 4; ); MaxDamage: (Min: 4; Max: 5; ));
-    Price: 500; Color: clDarkGreen; Deep: [deGray_Cave]; ),
-    // Staff4
+    Price: 500; Color: clYellow; Deep: [deGray_Cave]; ),
+    // Cedar Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 21; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 4; Max: 5; ); MaxDamage: (Min: 6; Max: 7; ));
-    Price: 600; Color: clDarkGreen; Deep: [deGray_Cave]; ),
-    // Staff5
+    Price: 600; Color: clGreen; Deep: [deGray_Cave]; ),
+    // Battle Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 24; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 5; Max: 6; ); MaxDamage: (Min: 6; Max: 7; ));
-    Price: 700; Color: clDarkGreen; Deep: [deDeep_Cave]; ),
-    // Staff6
+    Price: 700; Color: clLightGray; Deep: [deDeep_Cave]; ),
+    // War Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 27; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 6; Max: 7; ); MaxDamage: (Min: 8; Max: 9; ));
-    Price: 800; Color: clDarkGreen; Deep: [deDeep_Cave]; ),
-    // Staff7
+    Price: 800; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
+    // Judgment Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 30; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 7; Max: 8; ); MaxDamage: (Min: 8; Max: 9; ));
-    Price: 900; Color: clDarkGreen; Deep: [deBlood_Cave]; ),
-    // Staff8
+    Price: 900; Color: clLightBlue; Deep: [deBlood_Cave]; ),
+    // Elven Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 33; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 8; Max: 9; ); MaxDamage: (Min: 10; Max: 11; ));
-    Price: 1000; Color: clDarkGreen; Deep: [deBlood_Cave]; ),
-    // Staff9
+    Price: 1000; Color: clLightGreen; Deep: [deBlood_Cave]; ),
+    // Wizard Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 36; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 9; Max: 10; ); MaxDamage: (Min: 11; Max: 12; ));
-    Price: 1100; Color: clDarkGreen; Deep: [deDrom]; ),
-    // Staff10
+    Price: 1100; Color: clWhite; Deep: [deDrom]; ),
+    // Rune Staff
     (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 11; Max: 12; ); MaxDamage: (Min: 13; Max: 14; ));
     Price: 1200; Color: clDarkGreen; Deep: [deDrom]; ),
+    // Gothic Staff
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 50; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 12; Max: 14; ); MaxDamage: (Min: 15; Max: 18; ));
+    Price: 1350; Color: clLightRed; Deep: [deDrom]; Rare: True),
+    // Archon Staff
+    (Symbol: '|'; ItemType: itStaff; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 60; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 13; Max: 15; ); MaxDamage: (Min: 16; Max: 20; ));
+    Price: 1500; Color: clDarkYellow; Deep: [deDrom]; Rare: True),
 
 
     // Small_Dagger
