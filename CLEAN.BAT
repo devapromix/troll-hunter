@@ -1,6 +1,5 @@
 del /s *.~*
 del /s *.dcu
-del /s *.txt
 del /s *.ppu
 del /s *.bak
 del /s *.identcache

@@ -433,7 +433,7 @@ const
 
   procedure AddNPC(AX, AY: UInt);
   var
-    I: UInt;
+    I, LX, LY: Int;
   begin
     repeat
       I := Math.RandomRange(0, 7);
@@ -441,7 +441,14 @@ const
     Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + I);
     BNPC[I] := True;
     if (I = 0) then
-      Mobs.Add(Self.Current, AX + 1, AY, fcNPC, Ord(mbArno_2the_arcane_trader3));
+    begin
+      repeat
+        LX := Math.RandomRange(0, 5) - 2;
+        LY := Math.RandomRange(0, 5) - 2;
+      until (LX <> 0) and (LY <> 0);
+      Mobs.Add(Self.Current, AX + LX, AY + LY, fcNPC,
+        Ord(mbArno_2the_arcane_trader3));
+    end;
   end;
 
   procedure AddHouse(AX, AY, CX, CY, D: UInt; AV: boolean; F: boolean);
