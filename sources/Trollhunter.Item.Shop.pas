@@ -202,7 +202,8 @@ begin
       repeat
         repeat
         until Check;
-      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep) and
+        (ItemBase[TItemEnum(ID)].Level <= Player.Attributes.Attrib[atLev].Value);
       Items.Make(Ord(ID), FItem);
       Items.Identify(FItem, True);
       Shops.Shop[S].Add(FItem);
