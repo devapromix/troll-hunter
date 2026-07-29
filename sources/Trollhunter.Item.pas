@@ -1891,17 +1891,26 @@ uses
 class procedure TItems.CalcItem(var AItem: Item);
 var
   SB: TSuffixBase;
+  LSuffixPrice: UInt;
+  LSuffixRare: boolean;
 begin
   // Suffix
-  SB := SuffixBase[TSuffixEnum(AItem.Identify)];
+  LSuffixPrice := 0;
+  LSuffixRare := False;
+  if (AItem.Identify > 0) then
+  begin
+    SB := SuffixBase[TSuffixEnum(AItem.Identify)];
+    LSuffixPrice := SB.Price;
+    LSuffixRare := SB.Rare;
+  end;
   // Damage
   if (AItem.MinDamage > 0) and (AItem.MinDamage >= AItem.MaxDamage) then
     AItem.MinDamage := AItem.MaxDamage - 1;
   // Flask
   if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in FlaskTypeItems) then
   begin
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price;
-    if not SB.Rare then
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + LSuffixPrice;
+    if not LSuffixRare then
       AItem.Price := AItem.Price + AItem.Value;
     Exit;
   end;
@@ -1921,7 +1930,7 @@ begin
   // Price
   if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in IdentTypeItems) then
   begin
-    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + SB.Price +
+    AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price + LSuffixPrice +
       Round(AItem.MaxDurability * 3.7) + Round(AItem.Defense * 4.8) +
       Round(AItem.MaxDamage * 5.6);
   end
