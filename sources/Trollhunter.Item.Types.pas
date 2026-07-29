@@ -48,6 +48,8 @@ const
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand,
     itBow, itDagger];
+  StaffTypeItems = [itStaff];
+  WandTypeItems = [itWand];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
   QuiverTypeItems = [itQuiver];
   MagicWeaponTypeItems = [itStaff, itWand];

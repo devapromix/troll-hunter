@@ -111,6 +111,12 @@ begin
   end;
   if (ntRuneTrader_D in NPCType) then
     Add('Buy items (runes)');
+  if (ntStaffTrader_A in NPCType) then
+    Add('Buy items (staves)');
+  if (ntWandTrader_B in NPCType) then
+    Add('Buy items (wands)');
+  if (ntBookTrader_C in NPCType) then
+    Add('Buy items (books)');
   // Quests
   {if (ntQuest_D in NPCType) then
     Add('The Hunt (quest)'); }
@@ -157,6 +163,8 @@ begin
         AddShop(shScrolls);
       if (ntArmTrader_A in NPCType) then
         AddShop(shArmors);
+      if (ntStaffTrader_A in NPCType) then
+        AddShop(shStaves);
     end;
     TK_B:
     begin
@@ -176,6 +184,8 @@ begin
         AddShop(shWeapons);
       if (ntQvrTrader_B in NPCType) then
         AddShop(shQuivers);
+      if (ntWandTrader_B in NPCType) then
+        AddShop(shWands);
     end;
     TK_C:
     begin
@@ -189,6 +199,8 @@ begin
         AddShop(shGem);
       if (ntArrTrader_C in NPCType) then
         Player.BuyArrows;
+      if (ntBookTrader_C in NPCType) then
+        AddShop(shBooks);
     end;
     TK_D:
     begin

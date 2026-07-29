@@ -440,6 +440,8 @@ const
     until not BNPC[I];
     Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + I);
     BNPC[I] := True;
+    if (I = 0) then
+      Mobs.Add(Self.Current, AX + 1, AY, fcNPC, Ord(mbArno_2the_arcane_trader3));
   end;
 
   procedure AddHouse(AX, AY, CX, CY, D: UInt; AV: boolean; F: boolean);
