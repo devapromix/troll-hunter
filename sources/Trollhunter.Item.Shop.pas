@@ -128,7 +128,7 @@ end;
 procedure TShops.New;
 var
   FItem: Item;
-  I, Max: UInt;
+  I, Max, J: UInt;
   ID: TItemEnum;
   S: TShopEnum;
 
@@ -200,10 +200,9 @@ begin
     for I := 0 to Max - 1 do
     begin
       repeat
-        repeat
-        until Check;
-      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep) and
-        (ItemBase[TItemEnum(ID)].Level <= Player.Attributes.Attrib[atLev].Value);
+        repeat until Check;
+      until (TMapEnum(Player.MaxMap) in ItemBase[TItemEnum(ID)].Deep);
+        //and (ItemBase[TItemEnum(ID)].Level <= Player.Attributes.Attrib[atLev].Value);
       Items.Make(Ord(ID), FItem);
       Items.Identify(FItem, True);
       Shops.Shop[S].Add(FItem);

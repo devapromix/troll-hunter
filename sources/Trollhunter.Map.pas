@@ -445,8 +445,8 @@ const
       repeat
         LX := Math.RandomRange(0, 5) - 2;
         LY := Math.RandomRange(0, 5) - 2;
-      until ((LX <> 0) and (LY <> 0)) and
-        not (Self.GetTileEnum(AX + LX, AY + LY, Z) in StopTiles);
+      until ((LX <> 0) and (LY <> 0))
+      and (Self.GetTileEnum(AX + LX, AY + LY, Z) in [teWoodenFloor]);
       Mobs.Add(Self.Current, AX + LX, AY + LY, fcNPC,
         Ord(mbArno_2the_arcane_trader3));
     end;
