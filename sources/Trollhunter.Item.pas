@@ -1018,7 +1018,7 @@ const
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
     MaxDurability: 35; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 1; Max: 1; ));
-    Price: 50; Color: clDarkYellow; Deep: []; Value: 100; ),
+    Price: 50; Color: clDarkYellow; Deep: [deDark_Wood]; Value: 100; ),
 
     // Leather Quiver
     (Symbol: '/'; ItemType: itQuiver; SlotType: stQuiver; MaxStack: 1;
