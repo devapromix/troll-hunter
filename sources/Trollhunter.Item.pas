@@ -2528,6 +2528,14 @@ const
     Result := Terminal.Colorize(UI.Icon(icGold) + Price.ToString, 'Light Red');
   end;
 
+  function GetDisplayPrice(const APrice: UInt): UInt;
+  begin
+    if (AItem.Identify = 0) then
+      Result := ItemBase[TItemEnum(AItem.ItemID)].Price div 10
+    else
+      Result := APrice;
+  end;
+
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
@@ -2571,7 +2579,7 @@ begin
       end;
       ptBuy:
       begin
-        S := GetPrice(AItem.Price);
+        S := GetPrice(GetDisplayPrice(AItem.Price));
       end;
       ptRepair:
       begin
@@ -2585,7 +2593,7 @@ begin
       end;
       else
         if not Player.IsOnStash and (AItem.Price > 0) and Game.GetOption(apShPrice) then
-          S := GetPrice(AItem.Price, True);
+          S := GetPrice(GetDisplayPrice(AItem.Price), True);
     end;
     if Game.Timer > 0 then
       Terminal.Print(Status.Left - L, AY + I, S)
