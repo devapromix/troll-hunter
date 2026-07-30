@@ -2961,10 +2961,16 @@ end;
 function TItems.GetName(AItem: Item; IsShort: boolean = False): string;
 var
   LName, S: string;
+  LIsNegativePrefix: boolean;
 begin
   LName := GetName(TItemEnum(AItem.ItemID));
+
+  LIsNegativePrefix := False;
   if (AItem.Prefix > 0) then
+  begin
     LName := Affixes.GetPrefixName(TPrefixEnum(AItem.Prefix)) + ' ' + LName;
+    LIsNegativePrefix := PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent < 0;
+  end;
 
   if (AItem.Identify = 0) or (AItem.Prefix = 0) then
   begin
@@ -2989,7 +2995,12 @@ begin
       else
       begin
         if (AItem.Prefix > 0) then
-          Result := Terminal.Colorize(LName, 'Epic')
+        begin
+          if LIsNegativePrefix then
+            Result := Terminal.Colorize(LName, 'Cursed')
+          else
+            Result := Terminal.Colorize(LName, 'Epic')
+        end
         else
           Result := LName;
       end;
