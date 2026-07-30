@@ -2846,15 +2846,20 @@ end;
 
 function TItems.Identify(var AItem: Item; IsNew: boolean = False;
   IsRare: boolean = False; Index: UInt = 0): boolean;
+const
+  CMaxAffixAttempts = 100;
 var
   I: UInt;
   SB: TSuffixBase;
   PB: TPrefixBase;
+  LAttempts: UInt;
 begin
   Result := False;
   if (AItem.Identify = 0) then
   begin
+    LAttempts := 0;
     repeat
+      Inc(LAttempts);
       // Random suffix
       I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
       if (Index > 0) then
@@ -2888,12 +2893,16 @@ begin
       begin
         AItem.Durability := AItem.MaxDurability;
       end;
-    until (AItem.Identify > 0);
+    until (AItem.Identify > 0) or (LAttempts >= CMaxAffixAttempts);
+    if (AItem.Identify = 0) then
+      AItem.Identify := -1;
     Result := True;
   end;
   if (AItem.Prefix = 0) then
   begin
+    LAttempts := 0;
     repeat
+      Inc(LAttempts);
       I := Math.RandomRange(1, Ord(High(TPrefixEnum)) + 1);
       PB := PrefixBase[TPrefixEnum(I)];
       if ((AItem.Level < PB.Level.Min) or (AItem.Level > PB.Level.Max)) then
@@ -2902,7 +2911,9 @@ begin
         Continue;
       AItem.Prefix := I;
       Affixes.DoPrefix(AItem);
-    until (AItem.Prefix > 0);
+    until (AItem.Prefix > 0) or (LAttempts >= CMaxAffixAttempts);
+    if (AItem.Prefix = 0) then
+      AItem.Prefix := -1;
     Result := True;
   end;
 end;
