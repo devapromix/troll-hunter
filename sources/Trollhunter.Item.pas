@@ -2081,7 +2081,7 @@ begin
         T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage,
           AItem.MaxDamage]);
       if (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent < 0) then
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0) then
         T := Terminal.Colorize(T, 'Light Red')
       else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
         DamageSuffixes) then
@@ -2908,8 +2908,9 @@ begin
       AItem.Prefix := -1;
     Result := True;
   end;
-  LNegativePrefix := (AItem.Prefix > 0) and
-    (PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent < 0);
+  LNegativePrefix := (AItem.Prefix > 0) and(
+    (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0) or
+    (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0));
   // Suffix
   if (AItem.Identify = 0) then
   begin
@@ -2969,7 +2970,8 @@ begin
   if (AItem.Prefix > 0) then
   begin
     LName := Affixes.GetPrefixName(TPrefixEnum(AItem.Prefix)) + ' ' + LName;
-    LIsNegativePrefix := PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent < 0;
+    LIsNegativePrefix := (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0)
+      or (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0);
   end;
 
   if (AItem.Identify = 0) or (AItem.Prefix = 0) then

@@ -600,50 +600,51 @@ type
     Level: TMinMax;
     Price: UInt;
     Occurence: TSetOfItem;
-    ValuePercent: integer;
+    DamagePercent: integer;
+    DurabilityPercent: integer;
     Rare: boolean;
   end;
 
 const
   PrefixBase: array [TPrefixEnum] of TPrefixBase = (
     // None
-    (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; ValuePercent: 0;
-    Rare: False),
+    (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; DamagePercent: 0;
+    DurabilityPercent: 0; Rare: False),
 
     // Crude (Damage I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: WeaponTypeItems;
-    ValuePercent: -20),
+    DamagePercent: -20),
     // Fine (Damage II)
     (Level: (Min: 1; Max: 15); Price: 50; Occurence: WeaponTypeItems;
-    ValuePercent: 20),
+    DamagePercent: 20),
     // Superior (Damage III)
     (Level: (Min: 2; Max: 15); Price: 100; Occurence: WeaponTypeItems;
-    ValuePercent: 35),
+    DamagePercent: 35),
     // Exceptional (Damage IV)
     (Level: (Min: 3; Max: 15); Price: 200; Occurence: WeaponTypeItems;
-    ValuePercent: 50; Rare: True),
+    DamagePercent: 50; Rare: True),
 
     // Fragile (Durability I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: SmithTypeItems;
-    ValuePercent: -20),
+    DurabilityPercent: -20),
     // Reinforced (Durability II)
     (Level: (Min: 1; Max: 15); Price: 50; Occurence: SmithTypeItems;
-    ValuePercent: 20),
+    DurabilityPercent: 20),
     // Solid (Durability III)
     (Level: (Min: 2; Max: 15); Price: 100; Occurence: SmithTypeItems;
-    ValuePercent: 35),
+    DurabilityPercent: 35),
     // Sturdy (Durability IV)
     (Level: (Min: 3; Max: 15); Price: 200; Occurence: SmithTypeItems;
-    ValuePercent: 50),
+    DurabilityPercent: 50),
     // Hardened (Durability V)
     (Level: (Min: 4; Max: 15); Price: 400; Occurence: SmithTypeItems;
-    ValuePercent: 70; Rare: True),
+    DurabilityPercent: 70; Rare: True),
     // Tempered (Durability VI)
     (Level: (Min: 5; Max: 15); Price: 700; Occurence: SmithTypeItems;
-    ValuePercent: 100; Rare: True),
+    DurabilityPercent: 100; Rare: True),
     // Indestructible (Durability VII)
     (Level: (Min: 6; Max: 15); Price: 1000; Occurence: SmithTypeItems;
-    ValuePercent: 150; Rare: True)
+    DurabilityPercent: 150; Rare: True)
     );
 
 type
@@ -892,49 +893,49 @@ end;
 
 procedure TAffixes.DoPrefix(var AItem: Item);
 var
-  LPercent, LDelta: integer;
+  LDamagePercent, LDurabilityPercent, LDelta: integer;
 
-  function GetDelta(const AValue, AFloor: UInt): integer;
+  function GetDelta(const AValue: UInt; const APercent: integer; const AFloor: UInt): integer;
   begin
     Result := 0;
-    if (LPercent < 0) and (AValue <= AFloor) then
+    if (APercent < 0) and (AValue <= AFloor) then
       Exit;
-    Result := AValue * LPercent div 100;
-    if (Result = 0) and (LPercent <> 0) then
-      Result := Math.Sign(LPercent);
+    Result := AValue * APercent div 100;
+    if (Result = 0) and (APercent <> 0) then
+      Result := Math.Sign(APercent);
   end;
 
 begin
-  LPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent;
+  LDamagePercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent;
+  LDurabilityPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent;
 
   // Damage
-  if (AItem.MinDamage > 0) or (AItem.MaxDamage > 0) then
+  if (LDamagePercent <> 0) and ((AItem.MinDamage > 0) or (AItem.MaxDamage > 0)) then
   begin
     AItem.MinDamage := Math.EnsureRange(
-      AItem.MinDamage + GetDelta(AItem.MinDamage, 1), 1, UIntMax - 1);
+      AItem.MinDamage + GetDelta(AItem.MinDamage, LDamagePercent, 1), 1, UIntMax - 1);
     AItem.MaxDamage := Math.EnsureRange(
-      AItem.MaxDamage + GetDelta(AItem.MaxDamage, 2), 2, UIntMax);
+      AItem.MaxDamage + GetDelta(AItem.MaxDamage, LDamagePercent, 2), 2, UIntMax);
   end;
 
   // Durability
-  if (AItem.MaxDurability > 0) then
-    begin
-      LDelta := GetDelta(AItem.MaxDurability, 10);
+  if (LDurabilityPercent <> 0) and (AItem.MaxDurability > 0) then
+  begin
+    LDelta := GetDelta(AItem.MaxDurability, LDurabilityPercent, 10);
 
-      AItem.MaxDurability := Math.EnsureRange(
-        AItem.MaxDurability + LDelta, 10, UIntMax);
+    AItem.MaxDurability := Math.EnsureRange(
+      AItem.MaxDurability + LDelta, 10, UIntMax);
 
-      if LPercent > 0 then
-        AItem.Durability := AItem.MaxDurability
-      else
-      begin
-        AItem.Durability := Math.EnsureRange(
-          AItem.Durability + LDelta, 1, AItem.MaxDurability);
-      end;
-    end;
+    if LDurabilityPercent > 0 then
+      AItem.Durability := AItem.MaxDurability
+    else
+      AItem.Durability := Math.EnsureRange(
+        AItem.Durability + LDelta, 1, AItem.MaxDurability);
+  end;
 
   Trollhunter.Item.TItems.CalcItem(AItem);
 end;
+
 function TAffixes.GetPrefixName(const APrefixEnum: TPrefixEnum): string;
 begin
   Result := FPrefixName[APrefixEnum];
