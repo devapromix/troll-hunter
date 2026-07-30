@@ -2893,7 +2893,10 @@ begin
         Continue;
       // Rare
       if TryRare(SB.Rare) then
+      begin
+        Result := True;
         Exit;
+      end;
 
       AItem.Identify := I;
       Affixes.DoSuffix(AItem);
@@ -2919,7 +2922,10 @@ begin
         Continue;
       // Rare
       if TryRare(PB.Rare) then
+      begin
+        Result := True;
         Exit;
+      end;
 
       AItem.Prefix := I;
       Affixes.DoPrefix(AItem);
