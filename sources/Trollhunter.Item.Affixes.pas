@@ -598,6 +598,7 @@ type
     Price: UInt;
     Occurence: TSetOfItem;
     ValuePercent: integer;
+    Rare: boolean;
   end;
 
 const
@@ -607,15 +608,20 @@ const
 const
   PrefixBase: array [TPrefixEnum] of TPrefixBase = (
     // None
-    (Level: (Min: 1; Max: 1); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 0),
-    // Crude
-    (Level: (Min: 1; Max: 12); Price: 0; Occurence: WeaponTypeItems; ValuePercent: -20),
-    // Fine
-    (Level: (Min: 1; Max: 13); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 20),
-    // Superior
-    (Level: (Min: 2; Max: 14); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 35),
-    // Exceptional
-    (Level: (Min: 3; Max: 15); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 50)
+    (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; ValuePercent: 0;
+    Rare: False),
+    // Crude (Damage I)
+    (Level: (Min: 1; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    ValuePercent: -20),
+    // Fine (Damage II)
+    (Level: (Min: 1; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    ValuePercent: 20),
+    // Superior (Damage III)
+    (Level: (Min: 2; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    ValuePercent: 35),
+    // Exceptional (Damage IV)
+    (Level: (Min: 3; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    ValuePercent: 50; Rare: True)
     );
 
 type
