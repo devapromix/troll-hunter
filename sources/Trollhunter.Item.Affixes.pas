@@ -588,7 +588,8 @@ const
 type
   TPrefixEnum = (pfNone,
     // Damage
-    pfCrude, pfFine, pfSuperior, pfExceptional,
+    pfCrude, pfFine, pfSuperior, pfExquisite, pfExceptional, pfMasterwork,
+    pfLegendary,
     // Durability
     pfFragile, pfReinforced, pfSolid, pfSturdy, pfHardened, pfTempered,
     pfIndestructible,
@@ -624,9 +625,18 @@ const
     // Superior (Damage III)
     (Level: (Min: 2; Max: 15); Price: 100; Occurence: WeaponTypeItems;
     DamagePercent: 35),
-    // Exceptional (Damage IV)
+    // Exquisite (Damage IV)
     (Level: (Min: 3; Max: 15); Price: 200; Occurence: WeaponTypeItems;
-    DamagePercent: 50; Rare: True),
+    DamagePercent: 50),
+    // Exceptional (Damage V)
+    (Level: (Min: 4; Max: 15); Price: 400; Occurence: WeaponTypeItems;
+    DamagePercent: 65; Rare: True),
+    // Masterwork (Damage VI)
+    (Level: (Min: 5; Max: 15); Price: 700; Occurence: WeaponTypeItems;
+    DamagePercent: 80; Rare: True),
+    // Legendary (Damage VII)
+    (Level: (Min: 6; Max: 15); Price: 1000; Occurence: WeaponTypeItems;
+    DamagePercent: 100; Rare: True),
 
     // Fragile (Durability I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: SmithTypeItems;
