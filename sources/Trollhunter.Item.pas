@@ -2839,6 +2839,7 @@ function TItems.Identify(var AItem: Item; IsNew: boolean = False;
 var
   I: UInt;
   SB: TSuffixBase;
+  PB: TPrefixBase;
 begin
   Result := False;
   if (AItem.Identify = 0) then
@@ -2882,8 +2883,16 @@ begin
   end;
   if (AItem.Prefix = 0) then
   begin
-    AItem.Prefix := Math.RandomRange(1, Ord(High(TPrefixEnum)) + 1);
-    Affixes.DoPrefix(AItem);
+    repeat
+      I := Math.RandomRange(1, Ord(High(TPrefixEnum)) + 1);
+      PB := PrefixBase[TPrefixEnum(I)];
+      if ((AItem.Level < PB.Level.Min) or (AItem.Level > PB.Level.Max)) then
+        Continue;
+      if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in PB.Occurence) then
+        Continue;
+      AItem.Prefix := I;
+      Affixes.DoPrefix(AItem);
+    until (AItem.Prefix > 0);
     Result := True;
   end;
 end;

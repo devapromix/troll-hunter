@@ -588,10 +588,30 @@ const
 type
   TPrefixEnum = (pfNone, pfCrude, pfFine, pfSuperior, pfExceptional);
 
+type
+  TPrefixBase = record
+    Level: TMinMax;
+    Occurence: TSetOfItem;
+    DamagePercent: Integer;
+  end;
+
 const
-  PrefixDamagePercent: array [TPrefixEnum] of Integer = (0, -10, 10, 25, 50);
   PrefixName: array [TPrefixEnum] of string = ('', 'Crude', 'Fine',
     'Superior', 'Exceptional');
+
+const
+  PrefixBase: array [TPrefixEnum] of TPrefixBase = (
+    // None
+    (),
+    // Crude
+    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: -10),
+    // Fine
+    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: 10),
+    // Superior
+    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: 25),
+    // Exceptional
+    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: 50)
+    );
 
 type
   TAffixes = class(TObject)
@@ -834,7 +854,7 @@ procedure TAffixes.DoPrefix(var AItem: Item);
 var
   LPercent: Integer;
 begin
-  LPercent := PrefixDamagePercent[TPrefixEnum(AItem.Prefix)];
+  LPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent;
   AItem.MinDamage := Math.EnsureRange(AItem.MinDamage +
     (AItem.MinDamage * LPercent div 100), 1, UIntMax - 1);
   AItem.MaxDamage := Math.EnsureRange(AItem.MaxDamage +
