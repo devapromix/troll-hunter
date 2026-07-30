@@ -2080,7 +2080,10 @@ begin
       if (AItem.MinDamage > 0) then
         T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage,
           AItem.MaxDamage]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
+      if (AItem.Prefix > 0) and
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent < 0) then
+        T := Terminal.Colorize(T, 'Light Red')
+      else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
         DamageSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;

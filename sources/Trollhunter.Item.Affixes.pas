@@ -863,12 +863,23 @@ end;
 procedure TAffixes.DoPrefix(var AItem: Item);
 var
   LPercent: integer;
+
+  function GetDelta(const AValue, AFloor: UInt): integer;
+  begin
+    Result := 0;
+    if (LPercent < 0) and (AValue <= AFloor) then
+      Exit;
+    Result := AValue * LPercent div 100;
+    if (Result = 0) and (LPercent <> 0) then
+      Result := Math.Sign(LPercent);
+  end;
+
 begin
   LPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent;
   AItem.MinDamage := Math.EnsureRange(AItem.MinDamage +
-    (AItem.MinDamage * LPercent div 100), 1, UIntMax - 1);
+    GetDelta(AItem.MinDamage, 1), 1, UIntMax - 1);
   AItem.MaxDamage := Math.EnsureRange(AItem.MaxDamage +
-    (AItem.MaxDamage * LPercent div 100), 2, UIntMax);
+    GetDelta(AItem.MaxDamage, 2), 2, UIntMax);
   Trollhunter.Item.TItems.CalcItem(AItem);
 end;
 
