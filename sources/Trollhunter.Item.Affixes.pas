@@ -602,10 +602,6 @@ type
   end;
 
 const
-  PrefixName: array [TPrefixEnum] of string = ('', 'Crude', 'Fine',
-    'Superior', 'Exceptional');
-
-const
   PrefixBase: array [TPrefixEnum] of TPrefixBase = (
     // None
     (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; ValuePercent: 0;
@@ -628,6 +624,9 @@ type
   TAffixes = class(TObject)
   private
     FSuffixName: array [TSuffixEnum] of string;
+    FPrefixName: array [TPrefixEnum] of string;
+    procedure FillEnumNames(const ATypeInfo: Pointer; const APrefix: string;
+      var ANames: array of string);
   public
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
@@ -657,14 +656,19 @@ begin
   Result := Ord(High(TSuffixEnum)) + 1;
 end;
 
-constructor TAffixes.Create();
+procedure TAffixes.FillEnumNames(const ATypeInfo: Pointer;
+  const APrefix: string; var ANames: array of string);
 var
-  I: TSuffixEnum;
-  P: Pointer;
+  LIndex: integer;
 begin
-  P := TypeInfo(TSuffixEnum);
-  for I := Low(TSuffixEnum) to High(TSuffixEnum) do
-    FSuffixName[I] := GetEnumName(P, Ord(I)).GetName('');
+  for LIndex := Low(ANames) to High(ANames) do
+    ANames[LIndex] := GetEnumName(ATypeInfo, LIndex).GetName(APrefix);
+end;
+
+constructor TAffixes.Create();
+begin
+  FillEnumNames(TypeInfo(TSuffixEnum), '', FSuffixName);
+  FillEnumNames(TypeInfo(TPrefixEnum), 'pf', FPrefixName);
 end;
 
 procedure TAffixes.DoCraft(const Effect: TEffect; const Index: UInt);
@@ -885,7 +889,7 @@ end;
 
 function TAffixes.GetPrefixName(const APrefixEnum: TPrefixEnum): string;
 begin
-  Result := PrefixName[APrefixEnum];
+  Result := FPrefixName[APrefixEnum];
 end;
 
 initialization
