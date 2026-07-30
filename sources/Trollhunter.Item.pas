@@ -2960,41 +2960,40 @@ end;
 
 function TItems.GetName(AItem: Item; IsShort: boolean = False): string;
 var
-  N, S: string;
+  LName, S: string;
 begin
-  N := GetName(TItemEnum(AItem.ItemID));
+  LName := GetName(TItemEnum(AItem.ItemID));
   if (AItem.Prefix > 0) then
-    N := Affixes.GetPrefixName(TPrefixEnum(AItem.Prefix)) + ' ' + N;
+    LName := Affixes.GetPrefixName(TPrefixEnum(AItem.Prefix)) + ' ' + LName;
+
   if (AItem.Identify = 0) or (AItem.Prefix = 0) then
   begin
     if IsShort then
       S := ''
     else
       S := ' [[' + 'Unidentified' + ']]';
-    Result := Terminal.Colorize(N + S, 'Unidentified');
+    Result := Terminal.Colorize(LName + S, 'Unidentified');
   end
   else
     case AItem.Identify of
       1 .. UIntMax:
       begin
-        Result := N + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify));
-        if (AItem.SlotID > 0) then
+        Result := LName + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify));
+        if (AItem.Prefix > 0) then
+          Result := Terminal.Colorize(Result, 'Legendary')
+        else if (AItem.SlotID > 0) then
           Result := Terminal.Colorize(Result, 'Rare')
         else
           Result := Terminal.Colorize(Result, 'Flask');
       end
       else
-        Result := N;
+      begin
+        if (AItem.Prefix > 0) then
+          Result := Terminal.Colorize(LName, 'Epic')
+        else
+          Result := LName;
+      end;
     end;
-  { if ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems then
-    case AItem.Effect of
-    tfCursed:
-    Result := Terminal.Colorize(_('Cursed') + ' ' + GetPureText(Result),
-    'Cursed');
-    tfBlessed:
-    Result := Terminal.Colorize(_('Blessed') + ' ' + GetPureText(Result),
-    'Blessed');
-    end; }
 end;
 
 function TItems.GetNameThe(AItem: Item): string;
