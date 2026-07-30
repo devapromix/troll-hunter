@@ -892,7 +892,7 @@ end;
 
 procedure TAffixes.DoPrefix(var AItem: Item);
 var
-  LPercent: integer;
+  LPercent, LDelta: integer;
 
   function GetDelta(const AValue, AFloor: UInt): integer;
   begin
@@ -918,13 +918,20 @@ begin
 
   // Durability
   if (AItem.MaxDurability > 0) then
-  begin
-    AItem.MaxDurability := Math.EnsureRange(
-      AItem.MaxDurability + GetDelta(AItem.MaxDurability, 10), 10, UIntMax);
+    begin
+      LDelta := GetDelta(AItem.MaxDurability, 10);
 
-    if (AItem.Durability > AItem.MaxDurability) then
-      AItem.Durability := AItem.MaxDurability;
-  end;
+      AItem.MaxDurability := Math.EnsureRange(
+        AItem.MaxDurability + LDelta, 10, UIntMax);
+
+      if LPercent > 0 then
+        AItem.Durability := AItem.MaxDurability
+      else
+      begin
+        AItem.Durability := Math.EnsureRange(
+          AItem.Durability + LDelta, 1, AItem.MaxDurability);
+      end;
+    end;
 
   Trollhunter.Item.TItems.CalcItem(AItem);
 end;
