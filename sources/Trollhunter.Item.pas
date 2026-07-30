@@ -2853,6 +2853,19 @@ var
   SB: TSuffixBase;
   PB: TPrefixBase;
   LAttempts: UInt;
+
+  function TryRare(const ARare: boolean): boolean;
+  begin
+    Result := False;
+    if not IsRare and ARare then
+    begin
+      Identify(AItem, IsNew, Math.RandomRange(0,
+        Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
+      if not Mode.Wizard then
+        Result := True;
+    end;
+  end;
+
 begin
   Result := False;
   if (AItem.Identify = 0) then
@@ -2879,13 +2892,8 @@ begin
       if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in SB.Occurence) then
         Continue;
       // Rare
-      if not IsRare and SB.Rare then
-      begin
-        Identify(AItem, IsNew, Math.RandomRange(0,
-          Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
-        if not Mode.Wizard then
-          Exit;
-      end;
+      if TryRare(SB.Rare) then
+        Exit;
 
       AItem.Identify := I;
       Affixes.DoSuffix(AItem);
@@ -2909,6 +2917,10 @@ begin
         Continue;
       if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in PB.Occurence) then
         Continue;
+      // Rare
+      if TryRare(PB.Rare) then
+        Exit;
+
       AItem.Prefix := I;
       Affixes.DoPrefix(AItem);
     until (AItem.Prefix > 0) or (LAttempts >= CMaxAffixAttempts);
