@@ -2166,12 +2166,12 @@ class procedure TItems.Make(ID: UInt; var AItem: Item);
 var
   I: UInt;
 
-  function IsIdentify(): boolean;
+  function IsIdentify(const AEligible, AAlways: TSetOfItem): boolean;
   begin
     Result := False;
-    if (ItemBase[TItemEnum(ID)].ItemType in IdentTypeItems) then
+    if (ItemBase[TItemEnum(ID)].ItemType in AEligible) then
       Result := (Math.RandomRange(0, 4) = 0) or
-        (ItemBase[TItemEnum(ID)].ItemType in AllwaysIdentTypeItems);
+        (ItemBase[TItemEnum(ID)].ItemType in AAlways);
   end;
 
 begin
@@ -2221,7 +2221,9 @@ begin
   // Price
   CalcItem(AItem);
   // Affix
-  AItem.Identify := Math.IfThen(IsIdentify(), 0, -1);
+  AItem.Identify := Math.IfThen(IsIdentify(IdentTypeItems,
+    AllwaysIdentTypeItems), 0, -1);
+  AItem.Prefix := Math.IfThen(IsIdentify(WeaponTypeItems, []), 0, -1);
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
@@ -2878,6 +2880,12 @@ begin
     until (AItem.Identify > 0);
     Result := True;
   end;
+  if (AItem.Prefix = 0) then
+  begin
+    AItem.Prefix := Math.RandomRange(1, Ord(High(TPrefixEnum)) + 1);
+    Affixes.DoPrefix(AItem);
+    Result := True;
+  end;
 end;
 
 function TItems.GetName(AItem: Item; IsShort: boolean = False): string;
@@ -2885,26 +2893,29 @@ var
   N, S: string;
 begin
   N := GetName(TItemEnum(AItem.ItemID));
-  case AItem.Identify of
-    0:
-    begin
-      if IsShort then
-        S := ''
-      else
-        S := ' [[' + 'Unidentified' + ']]';
-      Result := Terminal.Colorize(N + S, 'Unidentified');
-    end;
-    1 .. UIntMax:
-    begin
-      Result := N + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify));
-      if (AItem.SlotID > 0) then
-        Result := Terminal.Colorize(Result, 'Rare')
-      else
-        Result := Terminal.Colorize(Result, 'Flask');
-    end
+  if (AItem.Prefix > 0) then
+    N := Affixes.GetPrefixName(TPrefixEnum(AItem.Prefix)) + ' ' + N;
+  if (AItem.Identify = 0) or (AItem.Prefix = 0) then
+  begin
+    if IsShort then
+      S := ''
     else
-      Result := N;
-  end;
+      S := ' [[' + 'Unidentified' + ']]';
+    Result := Terminal.Colorize(N + S, 'Unidentified');
+  end
+  else
+    case AItem.Identify of
+      1 .. UIntMax:
+      begin
+        Result := N + ' ' + Affixes.GetSuffixName(TSuffixEnum(AItem.Identify));
+        if (AItem.SlotID > 0) then
+          Result := Terminal.Colorize(Result, 'Rare')
+        else
+          Result := Terminal.Colorize(Result, 'Flask');
+      end
+      else
+        Result := N;
+    end;
   { if ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems then
     case AItem.Effect of
     tfCursed:

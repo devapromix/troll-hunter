@@ -16,6 +16,7 @@ type
     MapID: Int;
     Level: UInt;
     Identify: Int;
+    Prefix: Int;
     Stack: Int;
     Amount: Int;
     MinDamage: Int;
@@ -94,6 +95,7 @@ begin
     MapID := -1;
     Level := 1;
     Identify := -1;
+    Prefix := -1;
     Stack := 1;
     Amount := 1;
     MinDamage := 0;

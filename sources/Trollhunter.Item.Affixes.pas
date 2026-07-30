@@ -586,13 +586,23 @@ const
     );
 
 type
+  TPrefixEnum = (pfNone, pfCrude, pfFine, pfSuperior, pfExceptional);
+
+const
+  PrefixDamagePercent: array [TPrefixEnum] of Integer = (0, -10, 10, 25, 50);
+  PrefixName: array [TPrefixEnum] of string = ('', 'Crude', 'Fine',
+    'Superior', 'Exceptional');
+
+type
   TAffixes = class(TObject)
   private
     FSuffixName: array [TSuffixEnum] of string;
   public
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
+    function GetPrefixName(const APrefixEnum: TPrefixEnum): string;
     procedure DoSuffix(var AItem: Item);
+    procedure DoPrefix(var AItem: Item);
     procedure DoCraft(const Effect: TEffect; const Index: UInt);
     function Amount: UInt;
   end;
@@ -818,6 +828,23 @@ end;
 function TAffixes.GetSuffixName(const SuffixEnum: TSuffixEnum): string;
 begin
   Result := FSuffixName[SuffixEnum];
+end;
+
+procedure TAffixes.DoPrefix(var AItem: Item);
+var
+  LPercent: Integer;
+begin
+  LPercent := PrefixDamagePercent[TPrefixEnum(AItem.Prefix)];
+  AItem.MinDamage := Math.EnsureRange(AItem.MinDamage +
+    (AItem.MinDamage * LPercent div 100), 1, UIntMax - 1);
+  AItem.MaxDamage := Math.EnsureRange(AItem.MaxDamage +
+    (AItem.MaxDamage * LPercent div 100), 2, UIntMax);
+  Trollhunter.Item.TItems.CalcItem(AItem);
+end;
+
+function TAffixes.GetPrefixName(const APrefixEnum: TPrefixEnum): string;
+begin
+  Result := PrefixName[APrefixEnum];
 end;
 
 initialization
