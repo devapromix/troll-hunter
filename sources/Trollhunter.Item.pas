@@ -2872,8 +2872,8 @@ var
     Result := False;
     if not IsRare and ARare then
     begin
-      Identify(AItem, IsNew, Math.RandomRange(0,
-        Math.IfThen(Mode.Wizard, 1, 9)) = 0, Index);
+      Identify(AItem, IsNew, Math.RandomRange(0, Math.IfThen(Mode.Wizard, 1, 9)) =
+        0, Index);
       if not Mode.Wizard then
         Result := True;
     end;
@@ -2994,6 +2994,15 @@ begin
           Result := LName;
       end;
     end;
+  { if ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems then
+    case AItem.Effect of
+    tfCursed:
+    Result := Terminal.Colorize(_('Cursed') + ' ' + GetPureText(Result),
+    'Cursed');
+    tfBlessed:
+    Result := Terminal.Colorize(_('Blessed') + ' ' + GetPureText(Result),
+    'Blessed');
+    end; }
 end;
 
 function TItems.GetNameThe(AItem: Item): string;

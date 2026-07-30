@@ -588,8 +588,11 @@ const
 type
   TPrefixEnum = (pfNone,
     // Damage
-    pfCrude, pfFine, pfSuperior, pfExceptional
-
+    pfCrude, pfFine, pfSuperior, pfExceptional,
+    // Durability
+    pfFragile, pfReinforced, pfSolid, pfSturdy, pfHardened, pfTempered,
+    pfIndestructible
+    //
     );
 
 type
@@ -606,18 +609,41 @@ const
     // None
     (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; ValuePercent: 0;
     Rare: False),
+
     // Crude (Damage I)
-    (Level: (Min: 1; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    (Level: (Min: 1; Max: 15); Price: -50; Occurence: WeaponTypeItems;
     ValuePercent: -20),
     // Fine (Damage II)
-    (Level: (Min: 1; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    (Level: (Min: 1; Max: 15); Price: 50; Occurence: WeaponTypeItems;
     ValuePercent: 20),
     // Superior (Damage III)
-    (Level: (Min: 2; Max: 15); Price: 0; Occurence: WeaponTypeItems;
+    (Level: (Min: 2; Max: 15); Price: 100; Occurence: WeaponTypeItems;
     ValuePercent: 35),
     // Exceptional (Damage IV)
-    (Level: (Min: 3; Max: 15); Price: 0; Occurence: WeaponTypeItems;
-    ValuePercent: 50; Rare: True)
+    (Level: (Min: 3; Max: 15); Price: 200; Occurence: WeaponTypeItems;
+    ValuePercent: 50; Rare: True),
+
+    // Fragile (Durability I)
+    (Level: (Min: 1; Max: 15); Price: -50; Occurence: SmithTypeItems;
+    ValuePercent: -20),
+    // Reinforced (Durability II)
+    (Level: (Min: 1; Max: 15); Price: 50; Occurence: SmithTypeItems;
+    ValuePercent: 20),
+    // Solid (Durability III)
+    (Level: (Min: 2; Max: 15); Price: 100; Occurence: SmithTypeItems;
+    ValuePercent: 35),
+    // Sturdy (Durability IV)
+    (Level: (Min: 3; Max: 15); Price: 200; Occurence: SmithTypeItems;
+    ValuePercent: 50),
+    // Hardened (Durability V)
+    (Level: (Min: 4; Max: 15); Price: 400; Occurence: SmithTypeItems;
+    ValuePercent: 70; Rare: True),
+    // Tempered (Durability VI)
+    (Level: (Min: 5; Max: 15); Price: 700; Occurence: SmithTypeItems;
+    ValuePercent: 100; Rare: True),
+    // Indestructible (Durability VII)
+    (Level: (Min: 6; Max: 15); Price: 1000; Occurence: SmithTypeItems;
+    ValuePercent: 150; Rare: True)
     );
 
 type
@@ -880,13 +906,28 @@ var
 
 begin
   LPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent;
-  AItem.MinDamage := Math.EnsureRange(AItem.MinDamage +
-    GetDelta(AItem.MinDamage, 1), 1, UIntMax - 1);
-  AItem.MaxDamage := Math.EnsureRange(AItem.MaxDamage +
-    GetDelta(AItem.MaxDamage, 2), 2, UIntMax);
+
+  // Damage
+  if (AItem.MinDamage > 0) or (AItem.MaxDamage > 0) then
+  begin
+    AItem.MinDamage := Math.EnsureRange(
+      AItem.MinDamage + GetDelta(AItem.MinDamage, 1), 1, UIntMax - 1);
+    AItem.MaxDamage := Math.EnsureRange(
+      AItem.MaxDamage + GetDelta(AItem.MaxDamage, 2), 2, UIntMax);
+  end;
+
+  // Durability
+  if (AItem.MaxDurability > 0) then
+  begin
+    AItem.MaxDurability := Math.EnsureRange(
+      AItem.MaxDurability + GetDelta(AItem.MaxDurability, 10), 10, UIntMax);
+
+    if (AItem.Durability > AItem.MaxDurability) then
+      AItem.Durability := AItem.MaxDurability;
+  end;
+
   Trollhunter.Item.TItems.CalcItem(AItem);
 end;
-
 function TAffixes.GetPrefixName(const APrefixEnum: TPrefixEnum): string;
 begin
   Result := FPrefixName[APrefixEnum];
