@@ -2864,6 +2864,8 @@ var
   SB: TSuffixBase;
   PB: TPrefixBase;
   LAttempts: UInt;
+  LNegativePrefix: boolean;
+  LNewPrefix: boolean;
 
   function TryRare(const ARare: boolean): boolean;
   begin
@@ -2879,6 +2881,36 @@ var
 
 begin
   Result := False;
+  LNewPrefix := False;
+  // Prefix (лише вибір; Affixes.DoPrefix застосовується наприкінці)
+  if (AItem.Prefix = 0) then
+  begin
+    LNewPrefix := True;
+    LAttempts := 0;
+    repeat
+      Inc(LAttempts);
+      I := Math.RandomRange(1, Ord(High(TPrefixEnum)) + 1);
+      PB := PrefixBase[TPrefixEnum(I)];
+      if ((AItem.Level < PB.Level.Min) or (AItem.Level > PB.Level.Max)) then
+        Continue;
+      if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in PB.Occurence) then
+        Continue;
+      // Rare
+      if TryRare(PB.Rare) then
+      begin
+        Result := True;
+        Exit;
+      end;
+
+      AItem.Prefix := I;
+    until (AItem.Prefix > 0) or (LAttempts >= CMaxAffixAttempts);
+    if (AItem.Prefix = 0) then
+      AItem.Prefix := -1;
+    Result := True;
+  end;
+  LNegativePrefix := (AItem.Prefix > 0) and
+    (PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent < 0);
+  // Suffix
   if (AItem.Identify = 0) then
   begin
     LAttempts := 0;
@@ -2902,6 +2934,8 @@ begin
 
       if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in SB.Occurence) then
         Continue;
+      if LNegativePrefix and SB.Rare then
+        Continue;
       // Rare
       if TryRare(SB.Rare) then
       begin
@@ -2920,31 +2954,8 @@ begin
       AItem.Identify := -1;
     Result := True;
   end;
-  if (AItem.Prefix = 0) then
-  begin
-    LAttempts := 0;
-    repeat
-      Inc(LAttempts);
-      I := Math.RandomRange(1, Ord(High(TPrefixEnum)) + 1);
-      PB := PrefixBase[TPrefixEnum(I)];
-      if ((AItem.Level < PB.Level.Min) or (AItem.Level > PB.Level.Max)) then
-        Continue;
-      if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in PB.Occurence) then
-        Continue;
-      // Rare
-      if TryRare(PB.Rare) then
-      begin
-        Result := True;
-        Exit;
-      end;
-
-      AItem.Prefix := I;
-      Affixes.DoPrefix(AItem);
-    until (AItem.Prefix > 0) or (LAttempts >= CMaxAffixAttempts);
-    if (AItem.Prefix = 0) then
-      AItem.Prefix := -1;
-    Result := True;
-  end;
+  if LNewPrefix and (AItem.Prefix > 0) then
+    Affixes.DoPrefix(AItem);
 end;
 
 function TItems.GetName(AItem: Item; IsShort: boolean = False): string;
