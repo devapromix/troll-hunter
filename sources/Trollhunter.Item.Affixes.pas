@@ -591,7 +591,10 @@ type
     pfCrude, pfFine, pfSuperior, pfExceptional,
     // Durability
     pfFragile, pfReinforced, pfSolid, pfSturdy, pfHardened, pfTempered,
-    pfIndestructible
+    pfIndestructible,
+    // Defense
+    pfCracked, pfStrong, pfStalwart, pfFortified, pfGlorious, pfSaintly,
+    pfDivine
     //
     );
 
@@ -602,6 +605,7 @@ type
     Occurence: TSetOfItem;
     DamagePercent: integer;
     DurabilityPercent: integer;
+    DefensePercent: integer;
     Rare: boolean;
   end;
 
@@ -609,7 +613,7 @@ const
   PrefixBase: array [TPrefixEnum] of TPrefixBase = (
     // None
     (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; DamagePercent: 0;
-    DurabilityPercent: 0; Rare: False),
+    DurabilityPercent: 0; DefensePercent: 0; Rare: False),
 
     // Crude (Damage I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: WeaponTypeItems;
@@ -644,7 +648,30 @@ const
     DurabilityPercent: 100; Rare: True),
     // Indestructible (Durability VII)
     (Level: (Min: 6; Max: 15); Price: 1000; Occurence: SmithTypeItems;
-    DurabilityPercent: 150; Rare: True)
+    DurabilityPercent: 150; Rare: True),
+
+    // Cracked (Defense I)
+    (Level: (Min: 1; Max: 15); Price: -50; Occurence: ArmorTypeItems;
+    DefensePercent: -20),
+    // Strong (Defense II)
+    (Level: (Min: 1; Max: 15); Price: 60; Occurence: ArmorTypeItems;
+    DefensePercent: 20),
+    // Stalwart (Defense III)
+    (Level: (Min: 2; Max: 15); Price: 125; Occurence: ArmorTypeItems;
+    DefensePercent: 35),
+    // Fortified (Defense IV)
+    (Level: (Min: 3; Max: 15); Price: 250; Occurence: ArmorTypeItems;
+    DefensePercent: 50),
+    // Glorious (Defense V)
+    (Level: (Min: 4; Max: 15); Price: 500; Occurence: ArmorTypeItems;
+    DefensePercent: 65; Rare: True),
+    // Saintly (Defense VI)
+    (Level: (Min: 5; Max: 15); Price: 900; Occurence: ArmorTypeItems;
+    DefensePercent: 80; Rare: True),
+    // Divine (Defense VII)
+    (Level: (Min: 6; Max: 15); Price: 1300; Occurence: ArmorTypeItems;
+    DefensePercent: 100; Rare: True)
+
     );
 
 type
