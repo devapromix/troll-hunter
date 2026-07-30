@@ -586,13 +586,18 @@ const
     );
 
 type
-  TPrefixEnum = (pfNone, pfCrude, pfFine, pfSuperior, pfExceptional);
+  TPrefixEnum = (pfNone,
+    // Damage
+    pfCrude, pfFine, pfSuperior, pfExceptional
+
+    );
 
 type
   TPrefixBase = record
     Level: TMinMax;
+    Price: UInt;
     Occurence: TSetOfItem;
-    DamagePercent: Integer;
+    ValuePercent: integer;
   end;
 
 const
@@ -602,15 +607,15 @@ const
 const
   PrefixBase: array [TPrefixEnum] of TPrefixBase = (
     // None
-    (),
+    (Level: (Min: 1; Max: 1); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 0),
     // Crude
-    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: -10),
+    (Level: (Min: 1; Max: 12); Price: 0; Occurence: WeaponTypeItems; ValuePercent: -20),
     // Fine
-    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: 10),
+    (Level: (Min: 1; Max: 13); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 20),
     // Superior
-    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: 25),
+    (Level: (Min: 2; Max: 14); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 35),
     // Exceptional
-    (Level: (Min: 1; Max: 15); Occurence: WeaponTypeItems; DamagePercent: 50)
+    (Level: (Min: 3; Max: 15); Price: 0; Occurence: WeaponTypeItems; ValuePercent: 50)
     );
 
 type
@@ -832,9 +837,8 @@ begin
   end;
   // Effects
   AItem.Effects := SB.Effects;
-  if (SB.Value.Min > 0) and not
-    (TSuffixEnum(AItem.Identify) in [of_the_Fletcher .. of_the_Marksman,
-    of_the_Channeler .. of_the_Reservoir]) then
+  if (SB.Value.Min > 0) and not (TSuffixEnum(AItem.Identify) in
+    [of_the_Fletcher .. of_the_Marksman, of_the_Channeler .. of_the_Reservoir]) then
   begin
     Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
     AItem.Value := AItem.Value + Value.InRange(UIntMax);
@@ -852,9 +856,9 @@ end;
 
 procedure TAffixes.DoPrefix(var AItem: Item);
 var
-  LPercent: Integer;
+  LPercent: integer;
 begin
-  LPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent;
+  LPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].ValuePercent;
   AItem.MinDamage := Math.EnsureRange(AItem.MinDamage +
     (AItem.MinDamage * LPercent div 100), 1, UIntMax - 1);
   AItem.MaxDamage := Math.EnsureRange(AItem.MaxDamage +
