@@ -46,17 +46,20 @@ type
     // Oil I - V
     of_Blacksmith, of_Mastery, of_Sharpness, of_Fortitude, of_Artisanship,
     // Life I - VII
-    of_Hale, of_Life2, of_Life3, of_Life4, of_Life5, of_Life6, of_Life7,
+    of_Hale, of_Lifeblood, of_the_Heart, of_Stalwart, of_Resilience,
+    of_the_Oak, of_the_Eternal,
     // Mana I - VII
-    of_the_Novice, of_Mana2, of_Mana3, of_Mana4, of_Mana5, of_Mana6, of_Mana7,
+    of_the_Novice, of_the_Acolyte, of_the_Scholar, of_the_Mystic,
+    of_the_Arcanist, of_the_Enchanter, of_the_Archon,
     // Life and Mana I - VII
-    of_Atr1, of_Atr2, of_Atr3, of_Atr4, of_Atr5, of_Atr6, of_Atr7,
+    of_Harmony, of_Symbiosis, of_the_Twins, of_the_Duality,
+    of_the_Equilibrium, of_the_Confluence, of_the_Unity,
     // Defense I - VII
-    of_Defense1, of_Defense2, of_Defense3, of_Defense4, of_Defense5,
-    of_Defense6, of_Defense7,
+    of_the_Shield, of_the_Bulwark, of_the_Bastion, of_the_Rampart,
+    of_the_Citadel, of_the_Aegis, of_the_Invincible,
     // Damage I - VII
-    of_Damage1, of_Damage2, of_Damage3, of_Damage4, of_Damage5, of_Damage6,
-    of_Damage7,
+    of_the_Fang, of_the_Claw, of_the_Blade, of_the_Razor,
+    of_the_Slaughter, of_the_Annihilation, of_the_Oblivion,
     // Durability I - VII
     of_Craftsmanship, of_Durability, of_Sturdiness, of_Structure, of_Endurance,
     of_the_Ages, of_Permanence,
@@ -92,12 +95,11 @@ type
     of_the_Fletcher, of_Plenty, of_the_Marksman,
     // Wand Capacity I - III
     of_the_Channeler, of_the_Conduit, of_the_Reservoir
-
-    );
+  );
 
 const
-  DefenseSuffixes = [of_Defense1 .. of_Defense7];
-  DamageSuffixes = [of_Damage1 .. of_Damage7];
+  DefenseSuffixes = [of_the_Shield .. of_the_Invincible];
+  DamageSuffixes = [of_the_Fang .. of_the_Oblivion];
   DurabilitySuffixes = [of_Craftsmanship .. of_Permanence];
   QuiverCapacitySuffixes = [of_the_Fletcher .. of_the_Marksman];
   WandCapacitySuffixes = [of_the_Channeler .. of_the_Reservoir];
@@ -198,7 +200,7 @@ const
     Value: (Min: 20; Max: 24); Effects: [efRepair]; ),
     // of Permanence (Oil V)
     (Level: (Min: 5; Max: 15); Price: 500; Occurence: FlaskTypeItems;
-    Value: (Min: 25; Max: 30); Effects: [efRepair]; ),
+    Value: (Min: 25; Max: 30); Rare: True; Effects: [efRepair]; ),
 
     // (Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
@@ -815,13 +817,13 @@ begin
       // SB.MaxDurability.Max + 1);
     end;
     // Life
-    of_Hale .. of_Life7:
+    of_Hale .. of_the_Eternal:
       SetLife(btLife);
     // Mana
-    of_the_Novice .. of_Mana7, of_the_Eternal_Wanderer .. of_Death:
+    of_the_Novice .. of_the_Archon, of_the_Eternal_Wanderer .. of_Death:
       SetMana(btMana);
     // Life and Mana
-    of_Atr1 .. of_Atr7:
+    of_Harmony .. of_the_Unity:
     begin
       SetLife(btLife);
       SetMana(btMana);
@@ -843,14 +845,14 @@ begin
       for BT := btStr to btPer do
         SetAtr(BT, SB.Level.Min, SB.Level.Max);
     // Defense
-    of_Defense1 .. of_Defense7:
+    of_the_Shield .. of_the_Invincible:
     begin
       if (SB.Defense.Min > 0) then
         AItem.Defense := AItem.Defense + Math.EnsureRange(
           Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1, UIntMax);
     end;
     // Damage
-    of_Damage1 .. of_Damage7:
+    of_the_Fang .. of_the_Oblivion:
     begin
       if (SB.Damage.MinDamage.Min > 0) then
         AItem.MinDamage := AItem.MinDamage +
