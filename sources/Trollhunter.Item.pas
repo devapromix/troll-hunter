@@ -1966,6 +1966,8 @@ end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: boolean = False;
   ACount: UInt = 0; IsShort: boolean = False): string;
+const
+  CBonusColor = 'Bonus';
 var
   ID: Int;
   S, T, Level, D, C: string;
@@ -1985,7 +1987,7 @@ var
     if APrefixPercent < 0 then
       Result := Terminal.Colorize(Result, 'Light Red')
     else if (APrefixPercent > 0) or AIsRareSuffix then
-      Result := Terminal.Colorize(Result, 'Rare');
+      Result := Terminal.Colorize(Result, CBonusColor);
   end;
 
   procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
@@ -2123,46 +2125,46 @@ begin
     begin
       if (Items.GetBonus(AItem, btVis) > 0) then
         Level := Level + ' ' + Items.GetInfo('x', Items.GetBonus(AItem, btVis),
-          'Vision', 'Rare');
+          'Vision', CBonusColor);
       if (Items.GetBonus(AItem, btLife) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btLife),
-          'Life', 'Rare');
+          'Life', CBonusColor);
       if (Items.GetBonus(AItem, btMana) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btMana),
-          'Mana', 'Rare');
+          'Mana', CBonusColor);
       if (Items.GetBonus(AItem, btExtraGold) > 0) then
         Level := Level + ' ' + Items.GetInfo('x',
-          Items.GetBonus(AItem, btExtraGold), 'Gold', 'Rare');
+          Items.GetBonus(AItem, btExtraGold), 'Gold', CBonusColor);
     end;
     if (AItem.Bonus[1] > 0) then
     begin
       if (Items.GetBonus(AItem, btStr) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btStr),
-          'Strength', 'Rare');
+          'Strength', CBonusColor);
       if (Items.GetBonus(AItem, btDex) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btDex),
-          'Dexterity', 'Rare');
+          'Dexterity', CBonusColor);
       if (Items.GetBonus(AItem, btWil) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btWil),
-          'Willpower', 'Rare');
+          'Willpower', CBonusColor);
       if (Items.GetBonus(AItem, btPer) > 0) then
         Level := Level + ' ' + Items.GetInfo('*', Items.GetBonus(AItem, btPer),
-          'Perception', 'Rare');
+          'Perception', CBonusColor);
     end;
     if (AItem.Bonus[2] > 0) then
     begin
       if (Items.GetBonus(AItem, btReLife) > 0) then
         Level := Level + ' ' + Items.GetInfo('@',
-          Items.GetBonus(AItem, btReLife), 'Life', 'Rare');
+          Items.GetBonus(AItem, btReLife), 'Life', CBonusColor);
       if (Items.GetBonus(AItem, btReMana) > 0) then
         Level := Level + ' ' + Items.GetInfo('@',
-          Items.GetBonus(AItem, btReMana), 'Mana', 'Rare');
+          Items.GetBonus(AItem, btReMana), 'Mana', CBonusColor);
       if (Items.GetBonus(AItem, btLifeAfEachKill) > 0) then
         Level := Level + ' ' + Items.GetInfo('x',
-          Items.GetBonus(AItem, btLifeAfEachKill), 'Life', 'Rare');
+          Items.GetBonus(AItem, btLifeAfEachKill), 'Life', CBonusColor);
       if (Items.GetBonus(AItem, btManaAfEachKill) > 0) then
         Level := Level + ' ' + Items.GetInfo('x',
-          Items.GetBonus(AItem, btManaAfEachKill), 'Mana', 'Rare');
+          Items.GetBonus(AItem, btManaAfEachKill), 'Mana', CBonusColor);
     end;
     // Durability
     D := '';
