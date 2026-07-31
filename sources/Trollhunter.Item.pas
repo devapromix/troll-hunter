@@ -2104,12 +2104,20 @@ begin
     end;
     // Arrows (Quiver)
     if (IT = itQuiver) then
+    begin
       T := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
         ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btQuiverCap)]);
+      T := ColorizeStat(T, 0,
+        (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in QuiverCapacitySuffixes));
+    end;
     // Charges (Wand)
     if (IT = itWand) then
+    begin
       C := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
         ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btWandCap)]);
+      C := ColorizeStat(C, 0,
+        (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in WandCapacitySuffixes));
+    end;
 
     if (AItem.Bonus[0] > 0) then
     begin

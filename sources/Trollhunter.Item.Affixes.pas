@@ -99,6 +99,8 @@ const
   DefenseSuffixes = [of_Defense1 .. of_Defense7];
   DamageSuffixes = [of_Damage1 .. of_Damage7];
   DurabilitySuffixes = [of_Craftsmanship .. of_Permanence];
+  QuiverCapacitySuffixes = [of_the_Fletcher .. of_the_Marksman];
+  WandCapacitySuffixes = [of_the_Channeler .. of_the_Reservoir];
 
 const
   SuffixBase: array [TSuffixEnum] of TSuffixBase = (
