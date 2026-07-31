@@ -95,6 +95,20 @@ begin
   IntToStr(TSkills.GetSkillExpMax), 'Yellow'));
   Terminal.Print(DX, 6, 'Start Gold' + ': ' + Terminal.Colorize(
     IntToStr(Player.StartGold), 'Yellow'));
+  case Game.Difficulty of
+    dfEasy:
+      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+        'Merchants stock treasures of every make and marvel.', 'Lush'));
+    dfNormal:
+      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+        'Merchants no longer deal in the rarest of relics.', 'Yellow'));
+    dfHard:
+      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+        'Merchants offer little beyond a maker''s mark.', 'Light Yellow'));
+    dfHell:
+      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+        'Merchants have nothing but plain, unblessed wares.', 'Light Red'));
+  end;
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, S, TK_ALIGN_BOTTOM);
 
