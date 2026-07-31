@@ -1694,7 +1694,7 @@ const
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 250; Color: clLightBlue; Deep: [deDark_Wood];
+    Price: 250; Color: clWhite; Deep: [deDark_Wood];
     Effects: []; Value: 2; ManaCost: 0; ),
     // Book of Regeneration
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
@@ -1706,13 +1706,13 @@ const
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 150; Color: clDarkBlue; Deep: [deDark_Wood];
+    Price: 150; Color: clGray; Deep: [deDark_Wood];
     Effects: []; Value: 4; ManaCost: 0; ),
     // Book of Fire Arrow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 220; Color: clLightestBlue; Deep: [deDark_Wood];
+    Price: 220; Color: clLighterRed; Deep: [deDark_Wood];
     Effects: []; Value: 5; ManaCost: 0; ),
     // Book of Teleport
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;

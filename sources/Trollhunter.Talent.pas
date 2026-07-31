@@ -47,8 +47,8 @@ const
     Description: ''),
 
     // Strong
-    (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics]; Classes: AllClasses;
-    Races: [rcHuman, rcDwarf];
+    (Level: 1; MaxLevel: 5; Effects: [efPrmAthletics];
+    Classes: [clWarrior, clRanger, clThief]; Races: [rcHuman, rcDwarf];
     Description: 'Years of physical training have hardened your muscles'),
 
     // Dextrous
