@@ -2250,7 +2250,7 @@ begin
   // Affix
   AItem.Identify := Math.IfThen(IsIdentify(IdentTypeItems,
     AllwaysIdentTypeItems), 0, -1);
-  AItem.Prefix := Math.IfThen(IsIdentify(WeaponTypeItems, []), 0, -1);
+  AItem.Prefix := Math.IfThen(IsIdentify(PrefixTypeItems, []), 0, -1);
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;

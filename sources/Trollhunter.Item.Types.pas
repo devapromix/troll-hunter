@@ -76,6 +76,7 @@ const
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
     KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems + ArrowTypeItems;
+  PrefixTypeItems = WeaponTypeItems + ArmorTypeItems;
 
 type
   TItemEnum = (
