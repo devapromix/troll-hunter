@@ -190,8 +190,7 @@ var
 
   function MatchesLevelAndMap(const AID: TItemEnum): Boolean;
   begin
-    Result := (TMapEnum(Player.MaxMap) in ItemBase[AID].Deep) and
-      (ItemBase[AID].Level <= Player.Attributes.Attrib[atLev].Value);
+    Result := ItemBase[AID].Level <= Player.Attributes.Attrib[atLev].Value;
   end;
 
   procedure RestrictShopAffixes(var AItem: Item);
