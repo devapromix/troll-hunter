@@ -58,6 +58,7 @@ uses
   Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Helpers,
+  Trollhunter.Game,
   Trollhunter.Item.Types;
 
 { TShop }
@@ -191,6 +192,32 @@ var
       (ItemBase[AID].Level <= Player.Attributes.Attrib[atLev].Value);
   end;
 
+  procedure RestrictShopAffixes(var AItem: Item);
+  var
+    LHasPrefix, LHasSuffix: Boolean;
+  begin
+    LHasPrefix := AItem.Prefix = 0;
+    LHasSuffix := AItem.Identify = 0;
+    case Game.Difficulty of
+      dfHell:
+        begin
+          if LHasPrefix then
+            AItem.Prefix := -1;
+          if LHasSuffix then
+            AItem.Identify := -1;
+        end;
+      dfHard:
+        if LHasSuffix then
+          AItem.Identify := -1;
+      dfNormal:
+        if LHasPrefix and LHasSuffix then
+          if Math.RandomRange(0, 2) = 0 then
+            AItem.Prefix := -1
+          else
+            AItem.Identify := -1;
+    end;
+  end;
+
 begin
   for S := Low(TShopEnum) to High(TShopEnum) do
   begin
@@ -210,6 +237,7 @@ begin
       begin
         ID := LCandidates[Math.RandomRange(0, LCount)];
         Items.Make(Ord(ID), FItem);
+        RestrictShopAffixes(FItem);
         Items.Identify(FItem, True);
         Shops.Shop[S].Add(FItem);
       end;
