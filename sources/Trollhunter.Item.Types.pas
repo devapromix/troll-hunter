@@ -48,6 +48,7 @@ const
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand,
     itBow, itDagger];
+  DaggerTypeItems = [itDagger];
   StaffTypeItems = [itStaff];
   WandTypeItems = [itWand];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
@@ -153,8 +154,8 @@ type
     itmBattle_Staff, itmWar_Staff, itmJudgment_Staff, itmElven_Staff,
     itmWizard_Staff, itmRune_Staff, itmGothic_Staff, itmArchon_Staff,
     // Daggers
-    itmSmall_Dagger, itmDagger, itmKris, itmDirk, itmRondel, itmPoignard, itmKatar,
-    itmBlood_Spike, itmMithril_Blade, itmDivine_Stiletto,
+    itmSmall_Dagger, itmShort_Dagger, itmDagger, itmKris, itmDirk, itmRondel,
+    itmPoignard, itmKatar, itmBlood_Spike, itmMithril_Blade, itmDivine_Stiletto,
     // Bows
     itmShort_Bow, itmHunting_Bow, itmLong_Bow, itmNomad_Bow, itmHeavy_Bow,
     itmComposite_Bow, itmMaster_Bow, itmWar_Bow, itmDragon_Bow, itmAncient_Bow,

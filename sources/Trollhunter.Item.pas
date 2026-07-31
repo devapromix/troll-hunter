@@ -925,8 +925,13 @@ const
     // Small_Dagger
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 1; Max: 1; ); MaxDamage: (Min: 2; Max: 3; ));
+    Price: 100; Color: clWhite; Deep: [deDark_Wood]; ),
+    // Short_Dagger
+    (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 13; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 1; Max: 2; ); MaxDamage: (Min: 3; Max: 4; ));
-    Price: 125; Color: clDarkBlue; Deep: [deDark_Wood]; ),
+    Price: 125; Color: clLighterBlue; Deep: [deDark_Wood]; ),
     // Dagger
     (Symbol: '-'; ItemType: itDagger; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 16; Level: 2; Defense: (Min: 0; Max: 0);
