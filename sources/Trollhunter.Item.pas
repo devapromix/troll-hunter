@@ -2070,7 +2070,10 @@ begin
     begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
+      if (AItem.Prefix > 0) and
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent < 0) then
+        T := Terminal.Colorize(T, 'Light Red')
+      else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
         DefenseSuffixes) then
         T := Terminal.Colorize(T, 'Rare');
     end;
@@ -2147,7 +2150,10 @@ begin
     begin
       D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
         AItem.MaxDurability]);
-      if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
+      if (AItem.Prefix > 0) and
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0) then
+        D := Terminal.Colorize(D, 'Light Red')
+      else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
         DurabilitySuffixes) then
         D := Terminal.Colorize(D, 'Rare');
     end;
