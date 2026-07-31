@@ -26,7 +26,7 @@ type
     ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
     ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
     ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B,
-    ntWpnTrader_C, ntSell_D, ntBowTrader_A, ntIdentify_D);
+    ntWpnTrader_C, ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A);
 
 type
   TMobBase = record
@@ -75,7 +75,7 @@ type
     // NPC
     mbEldan_2the_magic_trader3, mbPetra_2the_trader3, mbBran_2the_blacksmith3,
     mbTarn_2the_tavern_owner3, mbSirius_2the_trader3, mbThor_2the_trader3,
-    mbVirna_2the_healer3, mbArno_2the_arcane_trader3);
+    mbVirna_2the_healer3, mbArno_2the_arcane_trader3, mbGorn_2the_thief3);
 
 
 
@@ -432,8 +432,12 @@ const
     // Arcane Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clBlue;
-    NPCType: [ntStaffTrader_A, ntWandTrader_B, ntBookTrader_C])
+    NPCType: [ntStaffTrader_A, ntWandTrader_B, ntBookTrader_C]),
 
+    // Weapon Trader (Cellar)
+    (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightRed;
+    NPCType: [ntDaggerTrader_A])
     );
 
 type

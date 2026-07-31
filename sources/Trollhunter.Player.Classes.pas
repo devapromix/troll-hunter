@@ -64,7 +64,7 @@ const
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
      Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
      Skill: (skDagger, skToughness, skStealth);
-     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
+     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
      itmNone, itmNone, itmNone, itmNone); )
   );
 type

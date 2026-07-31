@@ -27,7 +27,7 @@ type
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall, teMossyWall];
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3,
-    teUpStairs, teDnStairs, teWater];
+    teUpStairs, teDnStairs, teWater, teUpStoneStairs, teDnStoneStairs];
   VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
     teDoor, teGate, teStash, teUpStoneStairs, teDnStoneStairs, teMossyWall];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
@@ -626,12 +626,19 @@ const
 
   procedure AddCellar;
   var
-    W, H: UInt;
+    W, H, NX, NY: UInt;
   begin
     W := RandomRange(5, 7);
     H := RandomRange(5, 7);
     AddRect(CellarPos.X, CellarPos.Y, W, H, teWoodenFloor, teMossyWall);
     SetTileEnum(CellarPos.X, CellarPos.Y, Z, teUpStoneStairs);
+    // Weapon trader NPC
+    repeat
+      NX := CellarPos.X + Math.RandomRange(0, 3) - 1;
+      NY := CellarPos.Y + Math.RandomRange(0, 3) - 1;
+    until (GetTileEnum(NX, NY, Z) = teWoodenFloor) and
+      ((NX <> CellarPos.X) or (NY <> CellarPos.Y));
+    Mobs.Add(Z, NX, NY, fcNPC, Ord(mbGorn_2the_thief3));
   end;
 
 begin
