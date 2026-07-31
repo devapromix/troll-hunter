@@ -20,9 +20,9 @@ type
 
 type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
-    teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
-    teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal,
-    teStash, teMossyWall);
+    teFloor3, teUpStairs, teDnStairs, teUpStoneStairs, teDnStoneStairs,
+    teWater, teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
+    teDoor, teGate, tePortal, teTownPortal, teStash, teMossyWall);
 
 const
   StopTiles = [teDefaultWall, teStoneWall, teWoodenWall, teMossyWall];
@@ -31,6 +31,8 @@ const
   VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
     teDoor, teGate, teStash];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
+  UpStairsTiles = [teUpStairs, teUpStoneStairs];
+  DnStairsTiles = [teDnStairs, teDnStoneStairs];
 
 var
   Tile: array [TTileEnum, TMapEnum] of TTile;
@@ -154,6 +156,18 @@ begin
   AddTile('>', 'Stairs', $FFDDDD00, teDnStairs, deDeep_Cave);
   AddTile('>', 'Stairs', $FFCCCC00, teDnStairs, deBlood_Cave);
   AddTile('>', 'Stairs', $FFBBBB00, teDnStairs, deDrom);
+  // Up Stone Stairs
+  AddTile('<', 'Stone Stairs', $FF818F95, teUpStoneStairs, deDark_Wood);
+  AddTile('<', 'Stone Stairs', $FF818F95, teUpStoneStairs, deGray_Cave);
+  AddTile('<', 'Stone Stairs', $FF818F95, teUpStoneStairs, deDeep_Cave);
+  AddTile('<', 'Stone Stairs', $FF818F95, teUpStoneStairs, deBlood_Cave);
+  AddTile('<', 'Stone Stairs', $FF818F95, teUpStoneStairs, deDrom);
+  // Down Stone Stairs
+  AddTile('>', 'Stone Stairs', $FF818F95, teDnStoneStairs, deDark_Wood);
+  AddTile('>', 'Stone Stairs', $FF818F95, teDnStoneStairs, deGray_Cave);
+  AddTile('>', 'Stone Stairs', $FF818F95, teDnStoneStairs, deDeep_Cave);
+  AddTile('>', 'Stone Stairs', $FF818F95, teDnStoneStairs, deBlood_Cave);
+  AddTile('>', 'Stone Stairs', $FF818F95, teDnStoneStairs, deDrom);
   // Water
   AddTile('=', 'Water', $FF333388, teWater, deDark_Wood);
   AddTile('=', 'Water', $FF333377, teWater, deGray_Cave);
@@ -604,7 +618,7 @@ const
       until (Self.GetTileEnum(X, Y, Z) = teWoodenFloor) and
         ((X <> CellarPos.X) or (Y <> CellarPos.Y));
       CellarPos := Point(X, Y);
-      SetTileEnum(CellarPos.X, CellarPos.Y, Z, teDnStairs);
+      SetTileEnum(CellarPos.X, CellarPos.Y, Z, teDnStoneStairs);
     end
     else
       CellarPos := Point(AX, AY);
@@ -617,7 +631,7 @@ const
     W := RandomRange(5, 7);
     H := RandomRange(5, 7);
     AddRect(CellarPos.X, CellarPos.Y, W, H, teWoodenFloor, teMossyWall);
-    SetTileEnum(CellarPos.X, CellarPos.Y, Z, teUpStairs);
+    SetTileEnum(CellarPos.X, CellarPos.Y, Z, teUpStoneStairs);
   end;
 
 begin

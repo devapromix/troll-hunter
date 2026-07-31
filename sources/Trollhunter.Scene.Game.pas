@@ -383,7 +383,7 @@ begin
     begin
       if Player.IsDead then
         Exit;
-      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teUpStairs) then
+      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) in UpStairsTiles) then
       begin
         if (Map.Current > Low(TMapEnum)) then
         begin
@@ -420,7 +420,7 @@ begin
         Exit;
       end;
       // Down stairs
-      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) = teDnStairs) then
+      if (Map.GetTileEnum(Player.X, Player.Y, Map.Current) in DnStairsTiles) then
       begin
         if (Map.Current < High(TMapEnum)) then
         begin

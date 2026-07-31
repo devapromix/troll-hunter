@@ -2067,8 +2067,6 @@ procedure TPlayer.Wait;
 begin
   if not Map.GetVis(Map.Current) then
   begin
-    MsgLog.Add(Terminal.Colorize(Format('You have opened a new territory: %s.',
-      [Map.Name]), clAlarm));
     Map.SetVis(Map.Current, True);
     if (Ord(Map.Current) > 0) then
       Statictics.Inc(stScore, Ord(Map.Current) * 15);
