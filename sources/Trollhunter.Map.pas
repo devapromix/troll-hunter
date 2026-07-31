@@ -363,7 +363,7 @@ var
 procedure TMap.Gen;
 var
   GatePos: TPoint;
-  I, X, Y: UInt;
+  I, X, Y, Dir: UInt;
   Z: TMapEnum;
 const
   Pd = 11;
@@ -539,6 +539,7 @@ const
       HP[I] := False;
     // Add gate and stash
     J := Math.RandomRange(4, 8);
+    Dir := J;
     case J of
       4:
       begin
@@ -581,6 +582,25 @@ const
     end;
   end;
 
+  procedure AddCellar(AX, AY: UInt);
+  var
+    W, H: UInt;
+  begin
+    W := RandomRange(5, 7);
+    H := RandomRange(5, 7);
+    case Dir of
+      4:
+      AddRect(AX + 10, AY, W, H, teWoodenFloor, teWoodenWall);
+      5:
+      AddRect(AX - 10, AY, W, H, teWoodenFloor, teWoodenWall);
+      6:
+      AddRect(AX, AY + 10, W, H, teWoodenFloor, teWoodenWall);
+      7:
+      AddRect(AX, AY - 10, W, H, teWoodenFloor, teWoodenWall);
+    end;
+
+  end;
+
 begin
   for I := 0 to 6 do
     BNPC[I] := False;
@@ -606,6 +626,7 @@ begin
       begin
         Self.Clear(Z, teDefaultWall);
         GenCave(9, 49, 4999);
+        AddCellar(Game.Spawn.X, Game.Spawn.Y);
       end;
       deDeep_Cave:
       begin
