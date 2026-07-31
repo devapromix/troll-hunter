@@ -11,7 +11,7 @@ uses
 type
   TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
     shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
-    shJewelry, shGem, shRunes, shQuivers, shStaves, shWands, shBooks);
+    shJewelry, shGem, shRunes, shQuivers, shStaves, shWands, shBooks, shBows);
 
 type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
@@ -181,6 +181,8 @@ var
         Result := ItemBase[AID].ItemType in WandTypeItems;
       shBooks:
         Result := ItemBase[AID].ItemType in BookTypeItems;
+      shBows:
+        Result := ItemBase[AID].ItemType in BowTypeItems;
     else
       Result := False;
     end;

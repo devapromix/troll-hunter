@@ -67,12 +67,14 @@ begin
     Add('Buy items (scrolls)');
   if (ntArmTrader_A in NPCType) then
     Add('Buy items (armors)');
-  if (ntShTrader_A in NPCType) then
+  if (ntShTrader_A in NPCType) or (ntShTrader_B in NPCType) then
     Add('Buy items (shields)');
   if (ntHelmTrader_A in NPCType) then
     Add('Buy items (helms)');
   if (ntFoodTrader_A in NPCType) then
     Add('Buy items (foods)');
+  if (ntBowTrader_A in NPCType) then
+    Add('Buy items (bows)');
   if (ntBlacksmith_A in NPCType) then
     Add('Repair items');
   if (ntSmithTrader_B in NPCType) then
@@ -87,7 +89,8 @@ begin
     Add('Buy items (gloves)');
   if (ntTavTrader_B in NPCType) then
     Add('Buy items (tavern)');
-  if (ntWpnTrader_B in NPCType) then
+  if (ntWpnTrader_A in NPCType) or (ntWpnTrader_B in NPCType) or
+    (ntWpnTrader_C in NPCType) then
     Add('Buy items (weapons)');
   if (ntQvrTrader_B in NPCType) then
     Add('Buy items (quivers)');
@@ -97,7 +100,7 @@ begin
     Add('Buy items (amulets and rings)');
   if (ntBootsTrader_C in NPCType) then
     Add('Buy items (boots)');
-  if (ntSell_C in NPCType) then
+  if (ntSell_C in NPCType) or (ntSell_D in NPCType) then
     Add('Sell items');
   // Arrows
   if (ntArrTrader_C in NPCType) then
@@ -155,8 +158,6 @@ begin
       end;
       if (ntFoodTrader_A in NPCType) then
         AddShop(shFoods);
-      if (ntShTrader_A in NPCType) then
-        AddShop(shShields);
       if (ntHelmTrader_A in NPCType) then
         AddShop(shHelms);
       if (ntScrTrader_A in NPCType) then
@@ -165,6 +166,10 @@ begin
         AddShop(shArmors);
       if (ntStaffTrader_A in NPCType) then
         AddShop(shStaves);
+      if (ntWpnTrader_A in NPCType) then
+        AddShop(shWeapons);
+      if (ntBowTrader_A in NPCType) then
+        AddShop(shBows);
     end;
     TK_B:
     begin
@@ -186,6 +191,8 @@ begin
         AddShop(shQuivers);
       if (ntWandTrader_B in NPCType) then
         AddShop(shWands);
+      if (ntShTrader_B in NPCType) then
+        AddShop(shShields);
     end;
     TK_C:
     begin
@@ -201,11 +208,15 @@ begin
         Player.BuyArrows;
       if (ntBookTrader_C in NPCType) then
         AddShop(shBooks);
+      if (ntWpnTrader_C in NPCType) then
+        AddShop(shWeapons);
     end;
     TK_D:
     begin
       if (ntRuneTrader_D in NPCType) then
         AddShop(shRunes);
+      if (ntSell_D in NPCType) then
+        Scenes.SetScene(scSell);
       if (ntQuest_D in NPCType) then
         AddQuest(qeKillNBears);
     end;

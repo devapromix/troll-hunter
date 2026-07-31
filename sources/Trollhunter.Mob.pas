@@ -25,7 +25,8 @@ type
     ntHelmTrader_A, ntPotTrader_B, ntHealTrader_B, ntGlovesTrader_B,
     ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
     ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
-    ntWandTrader_B, ntBookTrader_C);
+    ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B,
+    ntWpnTrader_C, ntSell_D, ntBowTrader_A);
 
 type
   TMobBase = record
@@ -412,15 +413,16 @@ const
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
     Color: clLightYellow; NPCType: [ntFoodTrader_A, ntTavTrader_B]),
 
-    // Weapons and Armors Trader
+    // Armor, Shields, Weapons and Sell Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
-    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntWpnTrader_B, ntSell_C]),
+    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntShTrader_B,
+    ntWpnTrader_C, ntSell_D]),
 
-    // Shields and Quivers Trader
+    // Bows and Quivers Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
-    Color: clLightBlue; NPCType: [ntShTrader_A, ntQvrTrader_B, ntArrTrader_C]),
+    Color: clLightBlue; NPCType: [ntBowTrader_A, ntQvrTrader_B, ntArrTrader_C]),
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;

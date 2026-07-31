@@ -51,6 +51,7 @@ const
   StaffTypeItems = [itStaff];
   WandTypeItems = [itWand];
   ArmorTypeItems = [itHeadgear, itBodyArmor, itShield, itHands, itFeet];
+  BowTypeItems = [itBow];
   QuiverTypeItems = [itQuiver];
   MagicWeaponTypeItems = [itStaff, itWand];
   RangedWeaponItems = [itBow, itWand];
