@@ -22,10 +22,10 @@ type
   TTileEnum = (teDefaultFloor, teDefaultWall, teRock, teFloor1, teFloor2,
     teFloor3, teUpStairs, teDnStairs, teWater, teStoneWall, teWoodenWall,
     teStoneFloor, teWoodenFloor, teDoor, teGate, tePortal, teTownPortal,
-    teStash);
+    teStash, teMossyWall);
 
 const
-  StopTiles = [teDefaultWall, teStoneWall, teWoodenWall];
+  StopTiles = [teDefaultWall, teStoneWall, teWoodenWall, teMossyWall];
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3,
     teUpStairs, teDnStairs, teWater];
   VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
@@ -214,6 +214,12 @@ begin
   AddTile('=', 'Stash', $FF9999FF, teStash, deDeep_Cave);
   AddTile('=', 'Stash', $FF9999FF, teStash, deBlood_Cave);
   AddTile('=', 'Stash', $FF9999FF, teStash, deDrom);
+  // Mossy Wall
+  AddTile('#', 'Mossy Wall', $FF4A6B4A, teMossyWall, deDark_Wood);
+  AddTile('#', 'Mossy Wall', $FF4A6B4A, teMossyWall, deGray_Cave);
+  AddTile('#', 'Mossy Wall', $FF3D5A3D, teMossyWall, deDeep_Cave);
+  AddTile('#', 'Mossy Wall', $FF4A5A3A, teMossyWall, deBlood_Cave);
+  AddTile('#', 'Mossy Wall', $FF3A5A4A, teMossyWall, deDrom);
 end;
 
 procedure TMap.AddSpot(AX, AY: UInt; ASize: UInt; AZ: TMapEnum;
@@ -363,8 +369,11 @@ var
 procedure TMap.Gen;
 var
   GatePos: TPoint;
+  CellarPos: TPoint;
   I, X, Y, Dir: UInt;
   Z: TMapEnum;
+  HouseCount: UInt;
+  HousePos: array [0 .. 7] of TPoint;
 const
   Pd = 11;
 
@@ -445,8 +454,8 @@ const
       repeat
         LX := Math.RandomRange(0, 5) - 2;
         LY := Math.RandomRange(0, 5) - 2;
-      until ((LX <> 0) and (LY <> 0))
-      and (Self.GetTileEnum(AX + LX, AY + LY, Z) in [teWoodenFloor]);
+      until ((LX <> 0) and (LY <> 0)) and
+        (Self.GetTileEnum(AX + LX, AY + LY, Z) in [teWoodenFloor]);
       Mobs.Add(Self.Current, AX + LX, AY + LY, fcNPC,
         Ord(mbArno_2the_arcane_trader3));
     end;
@@ -568,6 +577,7 @@ const
     HP[J] := True;
     // Add houses
     T := 0;
+    HouseCount := 0;
     while (T < High(House)) do
     begin
       I := Math.RandomRange(0, 8);
@@ -576,29 +586,38 @@ const
       if not HP[I] then
       begin
         AddHouse(X, Y, AX, AY, J, I = (10 - J + 1), (J = 4) or (J = 7));
+        HousePos[HouseCount].X := X;
+        HousePos[HouseCount].Y := Y;
+        Inc(HouseCount);
         HP[I] := True;
         Inc(T);
       end;
     end;
+    // Choose random house for cellar stairs
+    if HouseCount > 0 then
+    begin
+      I := Math.RandomRange(0, HouseCount);
+      CellarPos := HousePos[I];
+      repeat
+        X := CellarPos.X + Math.RandomRange(0, 3) - 1;
+        Y := CellarPos.Y + Math.RandomRange(0, 3) - 1;
+      until (Self.GetTileEnum(X, Y, Z) = teWoodenFloor) and
+        ((X <> CellarPos.X) or (Y <> CellarPos.Y));
+      CellarPos := Point(X, Y);
+      SetTileEnum(CellarPos.X, CellarPos.Y, Z, teDnStairs);
+    end
+    else
+      CellarPos := Point(AX, AY);
   end;
 
-  procedure AddCellar(AX, AY: UInt);
+  procedure AddCellar;
   var
     W, H: UInt;
   begin
     W := RandomRange(5, 7);
     H := RandomRange(5, 7);
-    case Dir of
-      4:
-      AddRect(AX + 10, AY, W, H, teWoodenFloor, teWoodenWall);
-      5:
-      AddRect(AX - 10, AY, W, H, teWoodenFloor, teWoodenWall);
-      6:
-      AddRect(AX, AY + 10, W, H, teWoodenFloor, teWoodenWall);
-      7:
-      AddRect(AX, AY - 10, W, H, teWoodenFloor, teWoodenWall);
-    end;
-
+    AddRect(CellarPos.X, CellarPos.Y, W, H, teWoodenFloor, teMossyWall);
+    SetTileEnum(CellarPos.X, CellarPos.Y, Z, teUpStairs);
   end;
 
 begin
@@ -626,7 +645,7 @@ begin
       begin
         Self.Clear(Z, teDefaultWall);
         GenCave(9, 49, 4999);
-        AddCellar(Game.Spawn.X, Game.Spawn.Y);
+        AddCellar();
       end;
       deDeep_Cave:
       begin
