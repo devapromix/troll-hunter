@@ -2911,7 +2911,6 @@ var
 begin
   Result := False;
   LNewPrefix := False;
-  // Prefix (лише вибір; Affixes.DoPrefix застосовується наприкінці)
   if (AItem.Prefix = 0) then
   begin
     LNewPrefix := True;
@@ -3004,7 +3003,7 @@ begin
     LIsNegativePrefix := Affixes.IsNegativePrefix(TPrefixEnum(AItem.Prefix));
   end;
 
-  if (AItem.Identify = 0) or (AItem.Prefix = 0) then
+  if (AItem.Identify = 0) then
   begin
     if IsShort then
       S := ''
