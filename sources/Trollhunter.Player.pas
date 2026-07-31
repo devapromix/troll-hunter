@@ -35,6 +35,8 @@ const
   MetabolismMax = 135;
   // Inventory
   ItemMax = 26;
+  // Blacksmith
+  CIdentifyAllItemsCost = 100;
   // Talents
   MinPrm = 1;
   TalentPrm = 3;
@@ -151,7 +153,9 @@ type
     procedure RepairItem(Index: Int);
     procedure DisenchantItem(Index: Int);
     procedure IdentItem(Index: Int);
-    procedure IdentAllItems;
+    function IdentAllItems: boolean;
+    function HasUnidentifiedItems: boolean;
+    procedure IdentifyAllItems;
     procedure CraftItem(Index: Int);
     procedure BreakItem(Index: Int; Value: UInt = 1); overload;
     procedure BreakItem(ASlot: TSlotType; Value: UInt = 1); overload;
@@ -1496,13 +1500,12 @@ begin
   Self.Calc;
 end;
 
-procedure TPlayer.IdentAllItems;
+function TPlayer.IdentAllItems: boolean;
 var
   FItem: Item;
   FCount, I: Int;
-  F: boolean;
 begin
-  F := False;
+  Result := False;
   FCount := Items_Inventory_GetCount().InRange(ItemMax);
   for I := 0 to FCount - 1 do
   begin
@@ -1510,11 +1513,41 @@ begin
     if (FItem.Identify = 0) then
     begin
       Self.IdentItem(I);
-      F := True;
+      Result := True;
     end;
   end;
-  if F then
+  if Result then
     Self.Calc;
+end;
+
+function TPlayer.HasUnidentifiedItems: boolean;
+var
+  LCount, LIndex: Int;
+begin
+  Result := False;
+  LCount := Items_Inventory_GetCount().InRange(ItemMax);
+  for LIndex := 0 to LCount - 1 do
+    if (Items_Inventory_GetItem(LIndex).Identify = 0) then
+      Exit(True);
+end;
+
+procedure TPlayer.IdentifyAllItems;
+begin
+  if not Self.HasUnidentifiedItems then
+  begin
+    MsgLog.Add('You have nothing to identify.');
+    Exit;
+  end;
+  if (Self.Gold < CIdentifyAllItemsCost) then
+  begin
+    MsgLog.Add('You need more gold.');
+    Exit;
+  end;
+  if (Items_Inventory_DeleteItemAmount(Ord(itmGold), CIdentifyAllItemsCost) > 0) then
+  begin
+    Self.IdentAllItems;
+    MsgLog.Add(Format('You identify all items (-%d gold).', [CIdentifyAllItemsCost]));
+  end;
 end;
 
 procedure TPlayer.IdentItem(Index: Int);

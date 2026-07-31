@@ -96,6 +96,15 @@ begin
     Add('Buy items (quivers)');
   if (ntGemTrader_C in NPCType) then
     Add('Buy items (gems)');
+  // Identify all items
+  if (ntIdentify_D in NPCType) then
+  begin
+    if Player.HasUnidentifiedItems then
+      S := ' (' + Items.GetPrice(CIdentifyAllItemsCost) + ')'
+    else
+      S := '';
+    Add('Identify all items' + S);
+  end;
   if (ntJewTrader_C in NPCType) then
     Add('Buy items (amulets and rings)');
   if (ntBootsTrader_C in NPCType) then
@@ -219,6 +228,8 @@ begin
         Scenes.SetScene(scSell);
       if (ntQuest_D in NPCType) then
         AddQuest(qeKillNBears);
+      if (ntIdentify_D in NPCType) then
+        Player.IdentifyAllItems;
     end;
   end;
 end;
