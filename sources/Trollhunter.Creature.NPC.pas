@@ -2,7 +2,14 @@ unit Trollhunter.Creature.NPC;
 
 interface
 
+uses
+  Trollhunter.Mob;
+
 procedure GenRandomNPCWelcomeText();
+
+var
+  NPCName: string = '';
+  NPCType: set of TNPCType = [];
 
 implementation
 

@@ -188,7 +188,7 @@ var
     end;
   end;
 
-  function MatchesLevelAndMap(const AID: TItemEnum): Boolean;
+  function MatchesLevel(const AID: TItemEnum): Boolean;
   begin
     Result := ItemBase[AID].Level <= Player.Attributes.Attrib[atLev].Value;
   end;
@@ -228,7 +228,7 @@ begin
       Max := EnsureRange(Max + 3, 7, ItemMax);
     LCount := 0;
     for ID := Low(TItemEnum) to High(TItemEnum) do
-      if MatchesShop(ID) and MatchesLevelAndMap(ID) then
+      if MatchesShop(ID) and MatchesLevel(ID) then
       begin
         LCandidates[LCount] := ID;
         Inc(LCount);

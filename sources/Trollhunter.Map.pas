@@ -29,7 +29,7 @@ const
   FreeTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3,
     teUpStairs, teDnStairs, teWater];
   VillageTiles = [teStoneWall, teWoodenWall, teStoneFloor, teWoodenFloor,
-    teDoor, teGate, teStash];
+    teDoor, teGate, teStash, teUpStoneStairs, teDnStoneStairs, teMossyWall];
   SpawnTiles = [teDefaultFloor, teRock, teFloor1, teFloor2, teFloor3, teWater];
   UpStairsTiles = [teUpStairs, teUpStoneStairs];
   DnStairsTiles = [teDnStairs, teDnStoneStairs];
@@ -715,6 +715,8 @@ begin
     case Current of
       deDark_Wood:
         Result := 'Village Dork';
+      deGray_Cave:
+        Result := 'Cellar';
     end;
     Exit;
   end;

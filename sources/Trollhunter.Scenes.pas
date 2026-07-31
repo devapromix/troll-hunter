@@ -6,7 +6,6 @@ uses
   Classes,
   Trollhunter.Types,
   Trollhunter.Item.Common,
-  Trollhunter.Mob,
   Trollhunter.Game,
   Trollhunter.Attribute;
 
@@ -140,15 +139,12 @@ type
     procedure Update(var Key: UInt); override;
   end;
 
-var
-  NPCName: string = '';
-  NPCType: set of TNPCType = [];
-
 implementation
 
 uses
   SysUtils,
   Math,
+  Trollhunter.Creature.NPC,
   Trollhunter.Terminal,
   Trollhunter.Player,
   BearLibTerminal,
