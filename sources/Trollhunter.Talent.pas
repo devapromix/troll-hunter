@@ -20,7 +20,8 @@ type
     tlDagger_Precision, tlBow_Archery, tlLong_Range, tlElven_Marksman,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlElven_Grace,
     tlIron_Skin, tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics,
-    tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder, tlSurvival);
+    tlAlertness, tlEvasion, tlTreasure_Hunter, tlGold_Finder, tlSurvival,
+    tlPoison_Mastery);
 
 type
   TClassSet = set of TClassEnum;
@@ -178,7 +179,12 @@ const
     // Survival
     (Level: 4; MaxLevel: 5; Effects: [efPrmSurvival];
     Classes: AllClasses; Races: AllRaces;
-    Description: 'Your survival instincts help you make every ration last longer')
+    Description: 'Your survival instincts help you make every ration last longer'),
+
+    // Poison Mastery
+    (Level: 2; MaxLevel: 5; Effects: [];
+    Classes: [clThief]; Races: AllRaces;
+    Description: 'Poisons applied to your daggers last longer and become more effective')
     );
 
 type
