@@ -1971,6 +1971,7 @@ var
   S, T, Level, D, C: string;
   IT: TItemType;
   V: UInt;
+  LDefensePercent, LDamagePercent, LDurabilityPercent: integer;
 
   function GetAmount(): string;
   begin
@@ -1978,12 +1979,12 @@ var
   end;
 
   function ColorizeStat(const AText: string;
-    const AIsNegativePrefix, AIsRareSuffix: boolean): string;
+    const APrefixPercent: integer; const AIsRareSuffix: boolean): string;
   begin
     Result := AText;
-    if AIsNegativePrefix then
+    if APrefixPercent < 0 then
       Result := Terminal.Colorize(Result, 'Light Red')
-    else if AIsRareSuffix then
+    else if (APrefixPercent > 0) or AIsRareSuffix then
       Result := Terminal.Colorize(Result, 'Rare');
   end;
 
@@ -2075,13 +2076,21 @@ begin
       Level := Level + ' ' + S;
       S := '';
     end;
+    LDefensePercent := 0;
+    LDamagePercent := 0;
+    LDurabilityPercent := 0;
+    if (AItem.Prefix > 0) then
+    begin
+      LDefensePercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent;
+      LDamagePercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent;
+      LDurabilityPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent;
+    end;
     // Defense
     if (IT in ArmorTypeItems + JewelryTypeItems) then
     begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
-      T := ColorizeStat(T, (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent < 0),
+      T := ColorizeStat(T, LDefensePercent,
         (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DefenseSuffixes));
     end;
     // Damage
@@ -2090,8 +2099,7 @@ begin
       if (AItem.MinDamage > 0) then
         T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage,
           AItem.MaxDamage]);
-      T := ColorizeStat(T, (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0),
+      T := ColorizeStat(T, LDamagePercent,
         (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes));
     end;
     // Arrows (Quiver)
@@ -2154,8 +2162,7 @@ begin
     begin
       D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
         AItem.MaxDurability]);
-      D := ColorizeStat(D, (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0),
+      D := ColorizeStat(D, LDurabilityPercent,
         (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DurabilitySuffixes));
     end;
     S := S + AddItemInfo([Level, T, C, D]);
