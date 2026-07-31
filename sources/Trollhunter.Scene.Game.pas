@@ -36,6 +36,7 @@ uses
   Trollhunter.Skill,
   Trollhunter.Projectile,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
   Trollhunter.Player.Types,
   Trollhunter.Projectile.Types,
   Trollhunter.Item.Dungeon,
@@ -200,8 +201,8 @@ begin
         Format('%s (%s%d/%d). [<-/->] target, [Enter] %s, [V/Esc] cancel',
         [Mobs.Name[TMobEnum(Mobs.Mob[I].ID)], UI.Icon(icLife),
         Mobs.Mob[I].Attributes.Attrib[atLife].Value,
-        Mobs.Mob[I].Attributes.Attrib[atMaxLife].Value,
-        ActionLabel]), TK_ALIGN_TOP);
+        Mobs.Mob[I].Attributes.Attrib[atMaxLife].Value, ActionLabel]),
+        TK_ALIGN_TOP);
     end;
   end;
   // Player info
@@ -303,12 +304,13 @@ begin
   begin
     if Spellbook.GetQuickSpell.Spell.Projectile <> prNone then
       Player.MagicFireModeEnter
-    else if (Player.Attributes.Attrib[atMana].Value >= Spellbook.GetQuickSpell.Spell.ManaCost)
-    then
+    else if (Player.Attributes.Attrib[atMana].Value >=
+      Spellbook.GetQuickSpell.Spell.ManaCost) then
     begin
       Player.Statictics.Inc(stSpCast);
       Player.Attributes.Modify(atMana, -Spellbook.GetQuickSpell.Spell.ManaCost);
-      Player.DoEffects(Spellbook.GetQuickSpell.Spell.Effects, Spellbook.GetQuickSpell.Spell.Value);
+      Player.DoEffects(Spellbook.GetQuickSpell.Spell.Effects,
+        Spellbook.GetQuickSpell.Spell.Value);
     end
     else
       MsgLog.Add('You need more mana!');
@@ -506,8 +508,13 @@ begin
       Scenes.SetScene(scStatistics);
     TK_O:
       Scenes.SetScene(scOptions);
-     TK_B:
-     Scenes.SetScene(scSpellbook);
+    TK_B:
+    begin
+      if Player.IsMage then
+        Scenes.SetScene(scSpellbook)
+      else
+        MsgLog.Add('You don''t have a spellbook!');
+    end;
     TK_C:
       CastSpell();
     TK_T:

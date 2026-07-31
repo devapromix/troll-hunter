@@ -15,6 +15,7 @@ type
     function GenderStr: string;
     function Satiation: string;
     function StartGold: UInt;
+    function IsMage: Boolean;
   end;
 
 implementation
@@ -80,6 +81,11 @@ const
   CGold: array [TDifficulty] of UInt = (400, 250, 100, 50);
 begin
   Result := CGold[Game.Difficulty];
+end;
+
+function TPlayerHelper.IsMage: Boolean;
+begin
+  Result := Player.HClass = clMage;
 end;
 
 end.
