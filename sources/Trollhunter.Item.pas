@@ -2927,45 +2927,48 @@ begin
   // Suffix
   if (AItem.Identify = 0) then
   begin
-    LAttempts := 0;
-    repeat
-      Inc(LAttempts);
-      // Random suffix
-      I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
-      if (Index > 0) then
-        I := Index;
-      SB := SuffixBase[TSuffixEnum(I)];
-      // Level
-      { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
+    if LNegativePrefix then
+      AItem.Identify := -1
+    else
+    begin
+      LAttempts := 0;
+      repeat
+        Inc(LAttempts);
+        // Random suffix
+        I := Math.RandomRange(1, Ord(High(TSuffixEnum)) + 1);
+        if (Index > 0) then
+          I := Index;
+        SB := SuffixBase[TSuffixEnum(I)];
+        // Level
+        { if (ItemBase[TItemEnum(AItem.ItemID)].ItemType in OilTypeItems) then
+          begin
+          Lev := Player.Attributes.Attrib[atLev].Value;
+          AItem.Level := Math.EnsureRange(Math.RandomRange(Lev - 1,
+          Lev + 2), 1, 15);
+          AItem.Price := AItem.Price * AItem.Level;
+          end; }
+        if ((AItem.Level < SB.Level.Min) or (AItem.Level > SB.Level.Max)) then
+          Continue;
+
+        if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in SB.Occurence) then
+          Continue;
+        // Rare
+        if TryRare(SB.Rare) then
         begin
-        Lev := Player.Attributes.Attrib[atLev].Value;
-        AItem.Level := Math.EnsureRange(Math.RandomRange(Lev - 1,
-        Lev + 2), 1, 15);
-        AItem.Price := AItem.Price * AItem.Level;
-        end; }
-      if ((AItem.Level < SB.Level.Min) or (AItem.Level > SB.Level.Max)) then
-        Continue;
+          Result := True;
+          Exit;
+        end;
 
-      if not (ItemBase[TItemEnum(AItem.ItemID)].ItemType in SB.Occurence) then
-        Continue;
-      if LNegativePrefix and SB.Rare then
-        Continue;
-      // Rare
-      if TryRare(SB.Rare) then
-      begin
-        Result := True;
-        Exit;
-      end;
-
-      AItem.Identify := I;
-      Affixes.DoSuffix(AItem);
-      if IsNew then
-      begin
-        AItem.Durability := AItem.MaxDurability;
-      end;
-    until (AItem.Identify > 0) or (LAttempts >= CMaxAffixAttempts);
-    if (AItem.Identify = 0) then
-      AItem.Identify := -1;
+        AItem.Identify := I;
+        Affixes.DoSuffix(AItem);
+        if IsNew then
+        begin
+          AItem.Durability := AItem.MaxDurability;
+        end;
+      until (AItem.Identify > 0) or (LAttempts >= CMaxAffixAttempts);
+      if (AItem.Identify = 0) then
+        AItem.Identify := -1;
+    end;
     Result := True;
   end;
   if LNewPrefix and (AItem.Prefix > 0) then
