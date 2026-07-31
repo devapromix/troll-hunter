@@ -695,6 +695,7 @@ type
     constructor Create();
     function GetSuffixName(const SuffixEnum: TSuffixEnum): string;
     function GetPrefixName(const APrefixEnum: TPrefixEnum): string;
+    function IsNegativePrefix(const APrefixEnum: TPrefixEnum): boolean;
     procedure DoSuffix(var AItem: Item);
     procedure DoPrefix(var AItem: Item);
     procedure DoCraft(const Effect: TEffect; const Index: UInt);
@@ -930,7 +931,7 @@ end;
 
 procedure TAffixes.DoPrefix(var AItem: Item);
 var
-  LDamagePercent, LDurabilityPercent, LDelta: integer;
+  LDamagePercent, LDurabilityPercent, LDefensePercent, LDelta: integer;
 
   function GetDelta(const AValue: UInt; const APercent: integer; const AFloor: UInt): integer;
   begin
@@ -945,6 +946,7 @@ var
 begin
   LDamagePercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent;
   LDurabilityPercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent;
+  LDefensePercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent;
 
   // Damage
   if (LDamagePercent <> 0) and ((AItem.MinDamage > 0) or (AItem.MaxDamage > 0)) then
@@ -970,12 +972,24 @@ begin
         AItem.Durability + LDelta, 1, AItem.MaxDurability);
   end;
 
+  // Defense
+  if (LDefensePercent <> 0) and (AItem.Defense > 0) then
+    AItem.Defense := Math.EnsureRange(
+      AItem.Defense + GetDelta(AItem.Defense, LDefensePercent, 1), 1, UIntMax);
+
   Trollhunter.Item.TItems.CalcItem(AItem);
 end;
 
 function TAffixes.GetPrefixName(const APrefixEnum: TPrefixEnum): string;
 begin
   Result := FPrefixName[APrefixEnum];
+end;
+
+function TAffixes.IsNegativePrefix(const APrefixEnum: TPrefixEnum): boolean;
+begin
+  Result := (PrefixBase[APrefixEnum].DamagePercent < 0) or
+    (PrefixBase[APrefixEnum].DurabilityPercent < 0) or
+    (PrefixBase[APrefixEnum].DefensePercent < 0);
 end;
 
 initialization

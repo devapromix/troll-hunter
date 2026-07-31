@@ -1694,43 +1694,43 @@ const
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 450; Color: clLightBlue; Deep: [deDark_Wood];
+    Price: 250; Color: clLightBlue; Deep: [deDark_Wood];
     Effects: []; Value: 2; ManaCost: 0; ),
     // Book of Regeneration
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 600; Color: clBlue; Deep: [deDark_Wood];
+    Price: 200; Color: clBlue; Deep: [deDark_Wood];
     Effects: []; Value: 3; ManaCost: 0; ),
     // Book of Curse
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 800; Color: clDarkBlue; Deep: [deDark_Wood];
+    Price: 150; Color: clDarkBlue; Deep: [deDark_Wood];
     Effects: []; Value: 4; ManaCost: 0; ),
     // Book of Fire Arrow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1100; Color: clLightestBlue; Deep: [deDark_Wood];
+    Price: 220; Color: clLightestBlue; Deep: [deDark_Wood];
     Effects: []; Value: 5; ManaCost: 0; ),
     // Book of Teleport
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1400; Color: clLightBlue; Deep: [deGray_Cave];
+    Price: 400; Color: clLightBlue; Deep: [deGray_Cave];
     Effects: []; Value: 6; ManaCost: 0; ),
     // Book of Cure Poison
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1800; Color: clBlue; Deep: [deGray_Cave];
+    Price: 280; Color: clBlue; Deep: [deGray_Cave];
     Effects: []; Value: 7; ManaCost: 0; ),
     // Book of Verdant Spear
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1300; Color: clLightGreen; Deep: [deGray_Cave];
+    Price: 360; Color: clLightGreen; Deep: [deGray_Cave];
     Effects: []; Value: 8; ManaCost: 0; ),
     // Book of
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
@@ -2908,9 +2908,8 @@ begin
       AItem.Prefix := -1;
     Result := True;
   end;
-  LNegativePrefix := (AItem.Prefix > 0) and(
-    (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0) or
-    (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0));
+  LNegativePrefix := (AItem.Prefix > 0) and
+    Affixes.IsNegativePrefix(TPrefixEnum(AItem.Prefix));
   // Suffix
   if (AItem.Identify = 0) then
   begin
@@ -2970,8 +2969,7 @@ begin
   if (AItem.Prefix > 0) then
   begin
     LName := Affixes.GetPrefixName(TPrefixEnum(AItem.Prefix)) + ' ' + LName;
-    LIsNegativePrefix := (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0)
-      or (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0);
+    LIsNegativePrefix := Affixes.IsNegativePrefix(TPrefixEnum(AItem.Prefix));
   end;
 
   if (AItem.Identify = 0) or (AItem.Prefix = 0) then
