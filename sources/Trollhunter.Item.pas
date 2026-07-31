@@ -1977,6 +1977,16 @@ var
     Result := Format('(%dx)', [AItem.Amount]);
   end;
 
+  function ColorizeStat(const AText: string;
+    const AIsNegativePrefix, AIsRareSuffix: boolean): string;
+  begin
+    Result := AText;
+    if AIsNegativePrefix then
+      Result := Terminal.Colorize(Result, 'Light Red')
+    else if AIsRareSuffix then
+      Result := Terminal.Colorize(Result, 'Rare');
+  end;
+
   procedure AddEffect(const AEffect: TEffect; const Sign, Color: string;
   const RareColor: string = '');
   var
@@ -2070,12 +2080,9 @@ begin
     begin
       if (AItem.Defense > 0) then
         T := Format('%s%d', [UI.Icon(icShield), AItem.Defense]);
-      if (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent < 0) then
-        T := Terminal.Colorize(T, 'Light Red')
-      else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
-        DefenseSuffixes) then
-        T := Terminal.Colorize(T, 'Rare');
+      T := ColorizeStat(T, (AItem.Prefix > 0) and
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent < 0),
+        (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DefenseSuffixes));
     end;
     // Damage
     if (IT in WeaponTypeItems + JewelryTypeItems) then
@@ -2083,12 +2090,9 @@ begin
       if (AItem.MinDamage > 0) then
         T := Format('%s%d-%d', [UI.Icon(icSword), AItem.MinDamage,
           AItem.MaxDamage]);
-      if (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0) then
-        T := Terminal.Colorize(T, 'Light Red')
-      else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
-        DamageSuffixes) then
-        T := Terminal.Colorize(T, 'Rare');
+      T := ColorizeStat(T, (AItem.Prefix > 0) and
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].DamagePercent < 0),
+        (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DamageSuffixes));
     end;
     // Arrows (Quiver)
     if (IT = itQuiver) then
@@ -2150,12 +2154,9 @@ begin
     begin
       D := Format('%s%d/%d', [UI.Icon(icHammer), AItem.Durability,
         AItem.MaxDurability]);
-      if (AItem.Prefix > 0) and
-        (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0) then
-        D := Terminal.Colorize(D, 'Light Red')
-      else if (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in
-        DurabilitySuffixes) then
-        D := Terminal.Colorize(D, 'Rare');
+      D := ColorizeStat(D, (AItem.Prefix > 0) and
+        (PrefixBase[TPrefixEnum(AItem.Prefix)].DurabilityPercent < 0),
+        (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in DurabilitySuffixes));
     end;
     S := S + AddItemInfo([Level, T, C, D]);
 
