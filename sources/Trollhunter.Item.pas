@@ -1823,8 +1823,14 @@ const
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 7000; Color: clBlue; Deep: [deDrom]; )
+    Price: 7000; Color: clBlue; Deep: [deDrom]; ),
 
+    // Wyvern Venom
+    (Symbol: '!'; ItemType: itFlask; SlotType: stNone; MaxStack: 8;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 60; Color: clDarkGreen; Deep: [deDark_Wood .. deGray_Cave];
+    Effects: [efPoisonWeapon]; Value: 15; )
 
     );
 
@@ -2058,6 +2064,7 @@ begin
     AddEffect(efTownPortal, '&', 'Portal', 'Dark Green');
     AddEffect(efTeleportation, '&', 'Portal', 'Dark Green');
     AddEffect(efRepair, '+', 'Repair', 'Food');
+    AddEffect(efPoisonWeapon, '+', 'Poison');
     AddEffect(efCraftStr, '&', 'Strength', 'Strength');
     AddEffect(efCraftDex, '&', 'Dexterity', 'Dexterity');
     AddEffect(efCraftWil, '&', 'Willpower', 'Willpower');

@@ -14,7 +14,8 @@ type
     scDrop, scItems, scAmount, scPlayer, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification,
-    scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant);
+    scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant,
+    scPoison);
 
 type
   TScene = class(TObject)
@@ -85,6 +86,13 @@ type
 
 type
   TSceneRepair = class(TScene)
+  public
+    procedure Render; override;
+    procedure Update(var Key: UInt); override;
+  end;
+
+type
+  TScenePoison = class(TScene)
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -352,6 +360,8 @@ begin
         FScene[I] := TSceneStore.Create;
       scDisenchant:
         FScene[I] := TSceneDisenchant.Create;
+      scPoison:
+        FScene[I] := TScenePoison.Create;
     end;
 end;
 
@@ -626,6 +636,32 @@ begin
       Scenes.GoBack();
     TK_A .. TK_Z: // Repairing an item
       Player.RepairItem(Key - TK_A);
+    else
+      Game.Timer := UIntMax;
+  end;
+end;
+
+{ TScenePoison }
+
+procedure TScenePoison.Render;
+begin
+  UI.Title('Poisoning a dagger', 1, clDarkestRed);
+
+  UI.FromAToZ;
+  Items.RenderInventory();
+  MsgLog.Render(2, True);
+
+  AddKey('A-Z', 'Poisoning a dagger');
+  AddKey('Esc', 'Close', True);
+end;
+
+procedure TScenePoison.Update(var Key: UInt);
+begin
+  case Key of
+    TK_ESCAPE:
+      Scenes.GoBack();
+    TK_A .. TK_Z:
+      Player.PoisonItem(Key - TK_A);
     else
       Game.Timer := UIntMax;
   end;

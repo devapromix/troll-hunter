@@ -151,6 +151,7 @@ type
     procedure UnEquip(Index: Int);
     procedure Sell(Index: Int);
     procedure RepairItem(Index: Int);
+    procedure PoisonItem(Index: Int);
     procedure DisenchantItem(Index: Int);
     procedure IdentItem(Index: Int);
     function IdentAllItems: boolean;
@@ -298,6 +299,8 @@ var
   Mob: TMob;
   Dam, Cr, TargetDV, AccBonus: UInt;
   CrStr, The: string;
+  LWeaponIndex: Int;
+  LWeapon: Item;
 
   procedure Miss();
   begin
@@ -364,6 +367,21 @@ begin
     // Attack
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
+    // Poison
+    LWeaponIndex := GetEquippedIndex(stMainHand);
+    if (LWeaponIndex >= 0) then
+    begin
+      LWeapon := Items_Inventory_GetItem(LWeaponIndex);
+      if (ItemBase[TItemEnum(LWeapon.ItemID)].ItemType in DaggerTypeItems) and
+        (LWeapon.Value > 0) then
+      begin
+        Mob.Abilities.Modify(abPoisoned, Skills.Skill[skPoisoning].Value);
+        Skills.DoSkill(skPoisoning);
+        LWeapon.Value := Game.EnsureRange(LWeapon.Value - 1, UIntMax);
+        Items_Inventory_SetItem(LWeaponIndex, LWeapon);
+        MsgLog.Add(Format('You poison %s.', [The]));
+      end;
+    end;
     // Break weapon
     if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
       BreakItem(stMainHand);
@@ -1657,6 +1675,28 @@ begin
   Self.Calc;
 end;
 
+procedure TPlayer.PoisonItem(Index: Int);
+var
+  LItem: Item;
+  LCharges: UInt;
+begin
+  LItem := Items_Inventory_GetItem(Index);
+  if not (ItemBase[TItemEnum(LItem.ItemID)].ItemType in DaggerTypeItems) then
+  begin
+    MsgLog.Add('You can only smear a dagger with poison.');
+    Exit;
+  end;
+  LCharges := Items.Index + Skills.Skill[skPoisoning].Value;
+  LItem.Value := Game.EnsureRange(LItem.Value + LCharges, UIntMax);
+  if (Items_Inventory_SetItem(Index, LItem) > 0) then
+  begin
+    MsgLog.Add(Format('You smear %s with poison (+%d).',
+      [Items.GetNameThe(LItem), LCharges]));
+    Calc;
+  end;
+  Scenes.SetScene(scInv);
+end;
+
 procedure TPlayer.DisenchantItem(Index: Int);
 var
   FItem: Item;
@@ -2285,6 +2325,12 @@ begin
   begin
     Items.Index := Value;
     Scenes.SetScene(scRepair, scInv);
+  end;
+  // Poison Weapon
+  if (efPoisonWeapon in Effects) then
+  begin
+    Items.Index := Value;
+    Scenes.SetScene(scPoison, scInv);
   end;
   // Teleportation
   if (efTeleportation in Effects) then

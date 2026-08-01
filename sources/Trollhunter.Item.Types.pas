@@ -224,7 +224,9 @@ type
     itmBook_of_Cure_Poison, itmBook_of_Verdant_Spear, itmBook9, itmBook10,
     itmBook11, itmBook12, itmBook13, itmBook14,
     itmBook15, itmBook16, itmBook17, itmBook18, itmBook19, itmBook20, itmBook21,
-    itmBook22, itmBook23, itmBook24, itmBook25
+    itmBook22, itmBook23, itmBook24, itmBook25,
+    // Poisons
+    itmWyvern_Venom
 
     );
 
