@@ -1829,8 +1829,14 @@ const
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 90; Color: clDarkGreen; Deep: [deDark_Wood .. deGray_Cave];
-    Effects: [efPoisonWeapon]; Value: 15; )
+    Price: 60; Color: clDarkGreen; Deep: [deDark_Wood .. deGray_Cave];
+    Effects: [efPoisonWeapon]; Value: 15; ),
+    // Blackfang Poison
+    (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 80; Color: clGray; Deep: [deDark_Wood .. deGray_Cave];
+    Effects: [efPoisonWeapon]; Value: 20; )
 
     );
 
