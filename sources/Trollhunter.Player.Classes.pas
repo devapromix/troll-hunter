@@ -47,7 +47,7 @@ const
      Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
      Skill: (skStaff, skConcentration, skMeditation);
      Item: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
-     itmYew_Wand, itmNone, itmNone, itmNone); AddItem: itmBook_of_Fire_Arrow;),
+     itmYew_Wand, itmNone, itmNone, itmNone); AddItem: itmBook_of_Fire_Arrow),
 
     // Ranger
     (Description: 'A skilled hunter and archer. Agile and versatile, excels in forests and open terrain.';
@@ -65,7 +65,7 @@ const
      Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
      Skill: (skDagger, skToughness, skStealth);
      Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
-     itmNone, itmNone, itmNone, itmNone); )
+     itmNone, itmNone, itmNone, itmNone);  AddItem: itmWyvern_Venom)
   );
 type
   TClasses = class(TObject)

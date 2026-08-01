@@ -2144,7 +2144,8 @@ begin
     if (ClassProp[HClass].Item[J] <> TItemEnum.itmNone) then
       Items.AddItemToInv(ClassProp[HClass].Item[J], 1, True, True);
   // Add class items
-  Items.AddItemToInv(ClassProp[HClass].AddItem);
+  if ClassProp[HClass].AddItem <> itmNone then
+    Items.AddItemToInv(ClassProp[HClass].AddItem);
   // Add foods
   Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 5));
   Items.AddItemToInv(itmTorch, 3);
