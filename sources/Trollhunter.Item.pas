@@ -2137,6 +2137,12 @@ begin
       C := ColorizeStat(C, 0,
         (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in WandCapacitySuffixes));
     end;
+    // Venom (Dagger)
+    if (IT in DaggerTypeItems) and (AItem.Value > 0) then
+    begin
+      C := Format('%s%d', [UI.Icon(icSword) + UI.Icon(icDrop), AItem.Value]);
+      C := Terminal.Colorize(C, 'Poison');
+    end;
 
     if (AItem.Bonus[0] > 0) then
     begin
