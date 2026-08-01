@@ -1825,6 +1825,12 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 7000; Color: clBlue; Deep: [deDrom]; ),
 
+    // Vyper Toxin
+    (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 40; Color: clYellow; Deep: [deDark_Wood .. deGray_Cave];
+    Effects: [efPoisonWeapon]; Value: 10; ),
     // Wyvern Venom
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
@@ -1836,8 +1842,19 @@ const
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 80; Color: clGray; Deep: [deDark_Wood .. deGray_Cave];
-    Effects: [efPoisonWeapon]; Value: 20; )
-
+    Effects: [efPoisonWeapon]; Value: 20; ),
+    // Widowmaker Toxin
+    (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
+    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 100; Color: clWhite; Deep: [deDark_Wood .. deDeep_Cave];
+    Effects: [efPoisonWeapon]; Value: 25; ),
+    // Basilisk Venom
+    (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
+    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 120; Color: clOlive; Deep: [deDark_Wood .. deDeep_Cave];
+    Effects: [efPoisonWeapon]; Value: 30; )
     );
 
 type

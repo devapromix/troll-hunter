@@ -231,7 +231,8 @@ type
     itmBook15, itmBook16, itmBook17, itmBook18, itmBook19, itmBook20, itmBook21,
     itmBook22, itmBook23, itmBook24, itmBook25,
     // Poisons
-    itmWyvern_Venom, itmBlackfang_Poison
+    itmVyper_Toxin, itmWyvern_Venom, itmBlackfang_Poison, itmWidowmaker_Toxin,
+    itmBasilisk_Venom
 
     );
 
