@@ -1681,6 +1681,8 @@ var
   LCharges: UInt;
 begin
   LItem := Items_Inventory_GetItem(Index);
+  if (LItem.ItemID < 0) then
+    Exit;
   if not (ItemBase[TItemEnum(LItem.ItemID)].ItemType in DaggerTypeItems) then
   begin
     MsgLog.Add('You can only smear a dagger with poison.');
