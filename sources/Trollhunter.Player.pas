@@ -376,7 +376,10 @@ begin
         (LWeapon.Value > 0) then
       begin
         Mob.Abilities.Modify(abPoisoned, Skills.Skill[skPoisoning].Value);
-        Skills.DoSkill(skPoisoning);
+        if (FClass = clThief) then
+          Skills.DoSkill(skPoisoning, 2)
+        else
+          Skills.DoSkill(skPoisoning);
         LWeapon.Value := Game.EnsureRange(LWeapon.Value - 1, UIntMax);
         Items_Inventory_SetItem(LWeaponIndex, LWeapon);
         MsgLog.Add(Format('You poison %s.', [The]));
@@ -2443,6 +2446,9 @@ begin
   // Bow
   if (efPrmBow in Effects) then
     PrmTalentSkill(skBow);
+  // Poisoning
+  if (efPrmPoisoning in Effects) then
+    PrmTalentSkill(skPoisoning);
   // Bodybuilding
   if (efPrmBodybuilding in Effects) then
     PrmTalentSkill(skBodybuilding);
