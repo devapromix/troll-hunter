@@ -7,12 +7,12 @@ type
     itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant, itBlade,
     itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield,
     itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman,
-    itArrow, itQuiver, itTorch);
+    itArrow, itQuiver, itTorch, itVenom);
 
 const
   ItemGlyph: array [TItemType] of char = (' ', ' ', '%', '`', '$', '.', '!',
     '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '-',
-    ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', '/', 'i');
+    ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', '/', 'i', '!');
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -44,6 +44,7 @@ const
   ShieldTypeItems = [itShield];
   HelmTypeItems = [itHeadgear];
   FlaskTypeItems = [itFlask];
+  VenomTypeItems = [itVenom];
   MagicTypeItems = [itOrb, itStone];
   JewelryTypeItems = [itRing, itAmulet, itTalisman];
   WeaponTypeItems = [itBlade, itAxe, itSpear, itMace, itStaff, itWand,
@@ -67,17 +68,21 @@ const
   RepairTypeItems = FlaskTypeItems;
   SmithTypeItems = DefenseTypeItems + DamageTypeItems;
   DisenchantTypeItems = SmithTypeItems;
+
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
-    RepairTypeItems + MagicTypeItems;
+    RepairTypeItems + MagicTypeItems + VenomTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
     RuneTypeItems + ArrowTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
     CoinTypeItems + ArrowTypeItems;
+
   AutoPickupItems = CoinTypeItems + PotionTypeItems + ScrollTypeItems +
     FoodTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
-    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems + ArrowTypeItems;
+    KeyTypeItems + PlantTypeItems + FlaskTypeItems + MagicTypeItems +
+    ArrowTypeItems + VenomTypeItems;
+
   PrefixTypeItems = WeaponTypeItems + ArmorTypeItems;
 
 type
