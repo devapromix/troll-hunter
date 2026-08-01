@@ -182,7 +182,7 @@ const
     Description: 'Your survival instincts help you make every ration last longer'),
 
     // Poison Mastery
-    (Level: 2; MaxLevel: 5; Effects: [];
+    (Level: 2; MaxLevel: 5; Effects: [efPrmPoisoning];
     Classes: [clThief]; Races: AllRaces;
     Description: 'Poisons applied to your daggers last longer and become more effective')
     );
