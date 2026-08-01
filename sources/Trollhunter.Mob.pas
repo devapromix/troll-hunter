@@ -26,7 +26,8 @@ type
     ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
     ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
     ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B,
-    ntWpnTrader_C, ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A);
+    ntWpnTrader_C, ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A,
+    ntVenomTrader_B);
 
 type
   TMobBase = record
@@ -437,7 +438,7 @@ const
     // Weapon Trader (Cellar)
     (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightRed;
-    NPCType: [ntDaggerTrader_A])
+    NPCType: [ntDaggerTrader_A, ntVenomTrader_B])
     );
 
 type

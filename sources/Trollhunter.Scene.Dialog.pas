@@ -78,6 +78,8 @@ begin
     Add('Buy items (bows)');
   if (ntDaggerTrader_A in NPCType) then
     Add('Buy items (daggers)');
+  if (ntVenomTrader_B in NPCType) then
+    Add('Buy items (venoms)');
   if (ntBlacksmith_A in NPCType) then
     Add('Repair items');
   if (ntSmithTrader_B in NPCType) then
@@ -207,6 +209,8 @@ begin
         AddShop(shWands);
       if (ntShTrader_B in NPCType) then
         AddShop(shShields);
+      if (ntVenomTrader_B in NPCType) then
+        AddShop(shVenoms);
     end;
     TK_C:
     begin
