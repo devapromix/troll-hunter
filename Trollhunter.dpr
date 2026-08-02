@@ -8,7 +8,7 @@ program Trollhunter;
 
 uses
   Dialogs, SysUtils, BearLibTerminal, Trollhunter.Types, Trollhunter.Game,
-  Trollhunter.Terminal, Trollhunter.Scenes;
+  Trollhunter.Terminal, Trollhunter.Scenes, Trollhunter.Scene.Death;
 
 var
   Key: UInt = 0;

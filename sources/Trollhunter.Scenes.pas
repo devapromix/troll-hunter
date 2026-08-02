@@ -10,12 +10,12 @@ uses
   Trollhunter.Attribute;
 
 type
-  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scDef, scInv,
+  TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scInv,
     scDrop, scItems, scAmount, scPlayer, scStatistics, scDialog,
     scQuest, scSell, scRepair, scBuy, scCalendar, scDifficulty, scRest, scName,
     scSpellbook, scOptions, scTalents, scLearnedTalents, scIdentification,
     scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant,
-    scPoison);
+    scPoison, scDeath);
 
 type
   TScene = class(TObject)
@@ -112,13 +112,6 @@ type
   end;
 
 type
-  TSceneDef = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneWin = class(TScene)
   public
     procedure Render; override;
@@ -178,6 +171,7 @@ uses
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
   Trollhunter.Scene.Drop,
+  Trollhunter.Scene.Death,
   Trollhunter.Scene.Items,
   Trollhunter.Scene.RacesAndClasses,
   Trollhunter.Scene.Title,
@@ -304,8 +298,6 @@ begin
         FScene[I] := TSceneQuit.Create;
       scWin:
         FScene[I] := TSceneWin.Create;
-      scDef:
-        FScene[I] := TSceneDef.Create;
       scInv:
         FScene[I] := TSceneInv.Create;
       scDrop:
@@ -362,6 +354,8 @@ begin
         FScene[I] := TSceneDisenchant.Create;
       scPoison:
         FScene[I] := TScenePoison.Create;
+      scDeath:
+        FScene[I] := TSceneDeath.Create;
     end;
 end;
 
@@ -422,7 +416,7 @@ begin
     begin
       if (SceneEnum = scTitle) then
         Game.CanClose := True;
-      if Mode.Game and not (SceneEnum in [scWin, scDef, scQuit]) and
+      if Mode.Game and not (SceneEnum in [scWin, scDeath, scQuit]) and
         not Player.IsDead then
         SetScene(scQuit, SceneEnum);
     end;
@@ -453,39 +447,6 @@ begin
       Game.CanClose := True;
     TK_ESCAPE, TK_N:
       Scenes.GoBack;
-  end;
-end;
-
-{ TSceneDef }
-
-procedure TSceneDef.Render;
-begin
-  Logo.Render(False);
-  Terminal.Print(CX, CY + 1, UpperCase('Game over!!!'), TK_ALIGN_CENTER);
-  if (Player.Killer = '') then
-    Terminal.Print(CX, CY + 3, Format('You dead. Press %s to exit!',
-      [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER)
-  else
-    Terminal.Print(CX, CY + 3, Format('You were slain by %s. Press %s to exit!',
-      [Terminal.Colorize(Player.Killer, clAlarm), UI.KeyToStr('ENTER')]),
-      TK_ALIGN_CENTER);
-  if Mode.Wizard then
-    Terminal.Print(CX, CY + 5, Format('Press %s to continue...',
-      [UI.KeyToStr('SPACE')]), TK_ALIGN_CENTER);
-
-end;
-
-procedure TSceneDef.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ENTER, TK_KP_ENTER:
-      Game.CanClose := True;
-    TK_SPACE:
-      if Mode.Wizard then
-      begin
-        Player.Fill;
-        Scenes.SetScene(scGame);
-      end;
   end;
 end;
 

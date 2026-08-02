@@ -446,7 +446,7 @@ begin
           Player.Fill;
           Exit;
         end;
-        Scenes.SetScene(scDef);
+        Scenes.SetScene(scDeath);
         Exit;
       end
       else if Game.Won then
@@ -521,6 +521,8 @@ begin
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
       Scenes.SetScene(scHelp, scGame);
+    TK_Z:
+      Scenes.SetScene(scDeath, scGame);
   end;
 end;
 
