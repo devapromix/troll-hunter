@@ -112,13 +112,6 @@ type
   end;
 
 type
-  TSceneWin = class(TScene)
-  public
-    procedure Render; override;
-    procedure Update(var Key: UInt); override;
-  end;
-
-type
   TSceneAmount = class(TScene)
   public
     MaxAmount: Int;
@@ -171,6 +164,7 @@ uses
   Trollhunter.Scene.Name,
   Trollhunter.Scene.Rest,
   Trollhunter.Scene.Drop,
+  Trollhunter.Scene.Victory,
   Trollhunter.Scene.Death,
   Trollhunter.Scene.Items,
   Trollhunter.Scene.RacesAndClasses,
@@ -297,7 +291,7 @@ begin
       scQuit:
         FScene[I] := TSceneQuit.Create;
       scWin:
-        FScene[I] := TSceneWin.Create;
+        FScene[I] := TSceneVictory.Create;
       scInv:
         FScene[I] := TSceneInv.Create;
       scDrop:
@@ -447,25 +441,6 @@ begin
       Game.CanClose := True;
     TK_ESCAPE, TK_N:
       Scenes.GoBack;
-  end;
-end;
-
-{ TSceneWin }
-
-procedure TSceneWin.Render;
-begin
-  Logo.Render(False);
-  Terminal.Print(CX, CY + 1, UpperCase('Congratulations!!!'),
-    TK_ALIGN_CENTER);
-  Terminal.Print(CX, CY + 3, Format('You have won. Press %s to exit!',
-    [UI.KeyToStr('ENTER')]), TK_ALIGN_CENTER);
-end;
-
-procedure TSceneWin.Update(var Key: UInt);
-begin
-  case Key of
-    TK_ENTER, TK_KP_ENTER:
-      Game.CanClose := True;
   end;
 end;
 
