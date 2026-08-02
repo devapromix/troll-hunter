@@ -2265,8 +2265,10 @@ begin
   // Regeneration
   if (efRegeneration in Effects) then
   begin
-    Abilities.Modify(abRegen, Value);
-    MsgLog.Add('You begin to regenerate.');
+    V := Value + Skills.Skill[skConcentration].Value;
+    Abilities.Modify(abRegen, V);
+    MsgLog.Add('A soothing green light wraps around you, sealing your wounds.');
+    Skills.DoSkill(skConcentration);
   end;
   // Charges
   if (efCharges in Effects) then

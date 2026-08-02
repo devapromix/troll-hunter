@@ -1853,7 +1853,7 @@ const
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 120; Color: clOlive; Deep: [deDark_Wood .. deDeep_Cave];
+    Price: 120; Color: clDarkYellow; Deep: [deDark_Wood .. deDeep_Cave];
     Effects: [efPoisonWeapon]; Value: 30; )
     );
 

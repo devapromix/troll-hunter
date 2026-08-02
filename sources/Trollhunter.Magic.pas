@@ -108,7 +108,7 @@ const
      ManaCost: 22;
      Effects: [efRegeneration];
      Description: 'Gradually restores health over time';
-     Value: 0;
+     Value: 20;
      ),
 
     // Shadow: Curse
