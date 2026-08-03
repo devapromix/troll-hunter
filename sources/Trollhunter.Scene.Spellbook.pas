@@ -24,6 +24,8 @@ uses
   Trollhunter.UI,
   Trollhunter.UI.Log,
   Trollhunter.Game,
+  Trollhunter.Player,
+  Trollhunter.Attribute,
   Trollhunter.Item,
   Trollhunter.Spell.School,
   Trollhunter.Spellbook,
@@ -38,7 +40,7 @@ var
   LSpell: TSpellData;
   LSpellSchool: TSpellSchoolData;
   IsActive: boolean;
-  LInfo: string;
+  LInfo, LSpellLevel: string;
 begin
   if FSelecting then
     UI.Title('Select Quick Spell')
@@ -66,9 +68,9 @@ begin
     Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, LSpell.Name);
-    LInfo := Format('[[Lev %d, %s',
-      [LSpell.Level, Items.GetInfo('-', LSpell.ManaCost, 'Mana')]);
-    LInfo := LInfo + ']]';
+    LSpellLevel := Game.IfThen(LSpell.Level > Player.Attributes.Attrib[atLev].Value,
+      Items.GetLevel(LSpell.Level), '');
+    LInfo := Items.AddItemInfo([LSpellLevel, Items.GetInfo('-', LSpell.ManaCost, 'Mana')]);
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);
     LSpellSchool := GetSpellSchoolData(LSpell.School);
