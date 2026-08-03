@@ -28,7 +28,7 @@ uses
   Trollhunter.Game,
   Trollhunter.Item,
   Trollhunter.Spellbook,
-  Trollhunter.Magic;
+  Trollhunter.Spell;
 
 { TSceneSpellbook }
 

@@ -1,4 +1,4 @@
-unit Trollhunter.Magic;
+unit Trollhunter.Spell;
 
 interface
 
@@ -80,6 +80,7 @@ const
    Description: '';
    Value: 0;
    ),
+
 
    // Arcane: Mana Shield
    (Name: 'Mana Shield';

@@ -45,7 +45,7 @@ uses
   Trollhunter.Item,
   Trollhunter.Map,
   Trollhunter.Spellbook,
-  Trollhunter.Magic;
+  Trollhunter.Spell;
 
   { TSceneGame }
 
@@ -521,8 +521,8 @@ begin
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
       Scenes.SetScene(scHelp, scGame);
-    //TK_Z:
-    //  Scenes.SetScene(scWin, scGame);
+    TK_Z:
+      Scenes.SetScene(scDeath, scGame);
   end;
 end;
 

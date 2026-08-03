@@ -9,7 +9,7 @@ uses
   Trollhunter.Mob,
   Trollhunter.Item.Common,
   Trollhunter.Skill,
-  Trollhunter.Magic,
+  Trollhunter.Spell,
   Trollhunter.Statistic,
   Trollhunter.Talent,
   Trollhunter.Player.Races,

@@ -72,8 +72,8 @@ var
 
 begin
   LLeft := 4;
-  LTop := CY - (CTrophyHeight div 2);
-  LRight := CX + 6;
+  LTop := CY - (CTrophyHeight div 2) - 1;
+  LRight := CX + 8;
 
   // Trophy
   Terminal.ForegroundColor(clLightestYellow);
@@ -82,18 +82,17 @@ begin
 
   // Victory text
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(LRight, LTop, UpperCase('Victory'), TK_ALIGN_LEFT);
+  Terminal.Print(LRight, LTop + 1, UpperCase('Congratulations! You have won!'), TK_ALIGN_LEFT);
 
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(LRight, LTop + 1, Format('%s has saved Elvion!',
-    [Player.Name]), TK_ALIGN_LEFT);
-  Terminal.Print(LRight, LTop + 2, 'The Troll King is no more.', TK_ALIGN_LEFT);
+  Terminal.Print(LRight, LTop + 3, Format('[color=light green]%s[/color] has saved Elvion!',
+    [UpperCase(Player.Name)]), TK_ALIGN_LEFT);
+  Terminal.Print(LRight, LTop + 4, 'The [color=light red]TROLL KING[/color] is no more.', TK_ALIGN_LEFT);
 
   // Statistics
-  LY := LTop + 4;
+  LY := LTop + 6;
   AddStat('Level', Player.Attributes.Attrib[atLev].Value);
   AddStat('Score', Player.Statictics.Get(stScore));
-  AddStat('Age', Player.Statictics.Get(stAge));
   AddStat('Tiles Moved', Player.Statictics.Get(stTurn));
   AddStat('Monsters Killed', Player.Statictics.Get(stKills));
   AddStat('Items Found', Player.Statictics.Get(stFound));

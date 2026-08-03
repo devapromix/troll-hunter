@@ -5,7 +5,7 @@ interface
 uses
   Trollhunter.Game,
   Trollhunter.Skill,
-  Trollhunter.Magic,
+  Trollhunter.Spell,
   Trollhunter.Projectile.Types;
 
 type

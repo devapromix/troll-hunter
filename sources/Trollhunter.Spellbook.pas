@@ -4,7 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Magic,
+  Trollhunter.Spell,
   Trollhunter.Creature;
 
 type

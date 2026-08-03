@@ -143,7 +143,7 @@ uses
   Trollhunter.Player,
   BearLibTerminal,
   Trollhunter.Map,
-  Trollhunter.Magic,
+  Trollhunter.Spell,
   Trollhunter.UI.Log,
   Trollhunter.Item,
   Trollhunter.Calendar,

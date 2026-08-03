@@ -74,7 +74,7 @@ var
 begin
   LLeft := 4;
   LTop := CY - (CTombstoneHeight div 2);
-  LRight := CX + 6;
+  LRight := CX + 8;
 
   // Tombstone
   Terminal.ForegroundColor(clDarkGray);
@@ -83,24 +83,23 @@ begin
 
   // Epitaph
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(LRight, LTop, UpperCase('Game over'), TK_ALIGN_LEFT);
+  Terminal.Print(LRight, LTop, UpperCase('Game over!'), TK_ALIGN_LEFT);
 
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(LRight, LTop + 1, Format('Here lies %s.', [Player.Name]),
+  Terminal.Print(LRight, LTop + 2, Format('Here lies [color=light green]%s[/color].', [UpperCase(Player.Name)]),
     TK_ALIGN_LEFT);
 
   if (Player.Killer = '') then
     LDeathText := 'Death took them quietly.'
   else
-    LDeathText := Format('Slain by %s.',
-      [Terminal.Colorize(Player.Killer, clAlarm)]);
-  Terminal.Print(LRight, LTop + 2, LDeathText, TK_ALIGN_LEFT);
+    LDeathText := Format('Slain by [color=light red]%s[/color].',
+      [Terminal.Colorize(UpperCase(Player.Killer), clAlarm)]);
+  Terminal.Print(LRight, LTop + 3, LDeathText, TK_ALIGN_LEFT);
 
   // Statistics
-  LY := LTop + 4;
+  LY := LTop + 5;
   AddStat('Level', Player.Attributes.Attrib[atLev].Value);
   AddStat('Score', Player.Statictics.Get(stScore));
-  AddStat('Age', Player.Statictics.Get(stAge));
   AddStat('Tiles Moved', Player.Statictics.Get(stTurn));
   AddStat('Monsters Killed', Player.Statictics.Get(stKills));
   AddStat('Items Found', Player.Statictics.Get(stFound));
