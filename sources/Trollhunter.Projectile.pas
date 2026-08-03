@@ -47,10 +47,7 @@ var
 implementation
 
 uses
-  Math,
-  SysUtils,
-  BearLibTerminal,
-  Trollhunter.Map;
+  SysUtils;
 
   { TProjectile }
 

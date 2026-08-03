@@ -6,8 +6,7 @@ uses
   Classes,
   Trollhunter.Types,
   Trollhunter.Item.Common,
-  Trollhunter.Game,
-  Trollhunter.Attribute;
+  Trollhunter.Game;
 
 type
   TSceneEnum = (scTitle, scLoad, scHelp, scGame, scQuit, scWin, scInv,

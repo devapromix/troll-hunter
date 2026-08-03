@@ -33,7 +33,6 @@ uses
   BearLibTerminal,
   Trollhunter.Quest,
   Trollhunter.Terminal,
-  Trollhunter.Skill,
   Trollhunter.Projectile,
   Trollhunter.Player,
   Trollhunter.Player.Helpers,

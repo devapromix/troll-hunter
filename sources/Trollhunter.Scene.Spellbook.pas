@@ -4,8 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Scenes,
-  Trollhunter.Creature;
+  Trollhunter.Scenes;
 
 type
   TSceneSpellbook = class(TScene)
@@ -19,7 +18,6 @@ type
 implementation
 
 uses
-  Math,
   SysUtils,
   BearLibTerminal,
   Trollhunter.Terminal,

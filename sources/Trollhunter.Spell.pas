@@ -26,7 +26,10 @@ type
 
     spTownPortal,
     spCureWeakness,
+    spBlind,
+
     spIdentify,
+
     spInfusion
     );
 
@@ -61,7 +64,6 @@ const
     Value: 0;
     ),
 
-
     // Arcane: Mana Shield
     (Name: 'Mana Shield';
     School: scArcane;
@@ -71,7 +73,6 @@ const
     Description: 'Absorbs damage using mana';
     Value: 5;
     ),
-
     // Divine: Heal
     (Name: 'Heal';
     School: scDivine;
@@ -81,7 +82,6 @@ const
     Description: 'Restores health';
     Value: 25;
     ),
-
     // Nature: Regeneration
     (Name: 'Regeneration';
     School: scNature;
@@ -91,7 +91,6 @@ const
     Description: 'Gradually restores health over time';
     Value: 20;
     ),
-
     // Shadow: Curse
     (Name: 'Curse';
     School: scShadow;
@@ -101,7 +100,6 @@ const
     Description: 'Weakens the target';
     Value: 15;
     ),
-
     // Elemental: Fire Arrow
     (Name: 'Fire Arrow';
     School: scElemental;
@@ -115,7 +113,6 @@ const
     Projectile: prFireArrow;
     ),
 
-
     // Arcane: Teleport
     (Name: 'Teleport';
     School: scArcane;
@@ -125,7 +122,6 @@ const
     Description: 'Teleports you to a random nearby location';
     Value: 0;
     ),
-
     // Divine: Cure Poison
     (Name: 'Cure Poison';
     School: scDivine;
@@ -135,7 +131,6 @@ const
     Description: 'Neutralizes poison in your body';
     Value: 15;
     ),
-
     // Nature: Verdant Spear
     (Name: 'Verdant Spear';
     School: scNature;
@@ -148,7 +143,6 @@ const
     MaxDamage: 9;
     Projectile: prVerdantSpear;
     ),
-
     // Shadow: Drain Life
     (Name: 'Drain Life';
     School: scShadow;
@@ -161,7 +155,6 @@ const
     MaxDamage: 8;
     Projectile: prFireArrow;
     ),
-
     // Elemental: Ignite
     (Name: 'Ignite';
     School: scElemental;
@@ -175,7 +168,6 @@ const
     Projectile: prFireArrow;
     ),
 
-
     // Arcane: Town Portal
     (Name: 'Town Portal';
     School: scArcane;
@@ -185,7 +177,6 @@ const
     Description: 'Opens a portal back to town';
     Value: 0;
     ),
-
     // Divine: Cure Weakness
     (Name: 'Cure Weakness';
     School: scDivine;
@@ -194,6 +185,15 @@ const
     Effects: [efCureWeak];
     Description: 'Cures weakness';
     Value: 0;
+    ),
+    // Shadow: Blind
+    (Name: 'Blind';
+    School: scShadow;
+    Level: 6;
+    ManaCost: 55;
+    Effects: [];
+    Description: '';
+    Value: 10;
     ),
 
     // Arcane: Identify

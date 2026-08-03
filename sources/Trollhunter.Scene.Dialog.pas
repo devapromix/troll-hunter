@@ -4,7 +4,6 @@ interface
 
 uses
   Classes,
-  Types,
   Trollhunter.UI,
   Trollhunter.UI.Log,
   Trollhunter.Types,

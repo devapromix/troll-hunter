@@ -1737,13 +1737,13 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 360; Color: clLightGreen; Deep: [deGray_Cave];
     Effects: []; Value: 8; ManaCost: 0; ),
-    // Book of
+    // Book of Drain Life
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 2800; Color: clLightestBlue; Deep: [deGray_Cave];
     Effects: []; Value: 9; ManaCost: 0; ),
-    // Book of
+    // Book of Ignite
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
