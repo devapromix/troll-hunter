@@ -74,6 +74,7 @@ type
     FBowLevel: UInt;
     FBowMinDamage: UInt;
     FBowMaxDamage: UInt;
+    FManaShieldPercent: UInt;
     function GetVision: UInt;
     procedure Empty;
     function GetEquippedIndex(ASlot: TSlotType): Int;
@@ -2383,9 +2384,11 @@ begin
   // Mana Shield
   if (efManaShield in Effects) then
   begin
-    V := Skills.Skill[skConcentration].Value + Value;
-    Abilities.Modify(abManaShield, V);
-    MsgLog.Add(Format('A shimmering shield of mana surrounds you (%d).', [V]));
+    V := Skills.Skill[skConcentration].Value;
+    FManaShieldPercent := V + Value;
+    Abilities.Modify(abMana_Shield, V);
+    MsgLog.Add(Format('A shimmering shield of mana surrounds you (%d%%, %d turns).',
+      [FManaShieldPercent, V]));
   end;
   // Bloodlust
   if (efBloodlust in Effects) then
@@ -2533,12 +2536,14 @@ end;
 
 function TPlayer.AbsorbManaShieldDamage(const ADamage: UInt): UInt;
 var
+  LManaDamage: UInt;
   LAbsorbed: UInt;
 begin
   Result := ADamage;
-  if Abilities.IsAbility(abManaShield) then
+  if Abilities.IsAbility(abMana_Shield) then
   begin
-    LAbsorbed := Math.Min(ADamage, Attributes.Attrib[atMana].Value);
+    LManaDamage := (ADamage * FManaShieldPercent) div 100;
+    LAbsorbed := Math.Min(LManaDamage, Attributes.Attrib[atMana].Value);
     if (LAbsorbed > 0) then
     begin
       Attributes.Modify(atMana, -LAbsorbed);

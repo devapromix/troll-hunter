@@ -7,7 +7,7 @@ uses Trollhunter.Types;
 type
   TAbilityEnum = (abPoisoned, abBlinded, abStunned, abBurning, abRegen,
     abSleeping, abBloodlust, abCursed, abDrunk, abDiseased, abWeak, abAfraid,
-    abArmor_Reduction, abLight, abBerserk, abWeightless, abManaShield);
+    abArmor_Reduction, abLight, abBerserk, abWeightless, abMana_Shield);
 
 type
   TSetOfAbility = set of TAbilityEnum;

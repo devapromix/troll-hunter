@@ -64,10 +64,10 @@ const
     (Name: 'Mana Shield';
     School: scArcane;
     Level: 1;
-    ManaCost: 25;
+    ManaCost: 75;
     Effects: [efManaShield];
     Description: 'Absorbs damage using mana';
-    Value: 10;
+    Value: 5;
     ),
 
     // Divine: Heal
