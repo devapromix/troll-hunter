@@ -27,16 +27,18 @@ uses
   Trollhunter.UI.Log,
   Trollhunter.Game,
   Trollhunter.Item,
+  Trollhunter.Spell.School,
   Trollhunter.Spellbook,
   Trollhunter.Spell;
 
-{ TSceneSpellbook }
+  { TSceneSpellbook }
 
 procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
   V: UInt;
-  Spell: TSpellData;
+  LSpell: TSpellData;
+  LSpellSchool: TSpellSchoolData;
   IsActive: boolean;
   LInfo: string;
 begin
@@ -62,18 +64,19 @@ begin
     else
       IsActive := Spellbook.GetSpell(I).Enable;
     if not IsActive then Continue;
-    Spell := SpellData[I];
+    LSpell := SpellData[I];
     Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clWhite);
-    Terminal.Print(5, Y, Spell.Name);
-    LInfo := Format('[[Lev %d, %s',
-      [Spell.Level, Items.GetInfo('-', Spell.ManaCost, 'Mana')]);
+    Terminal.Print(5, Y, LSpell.Name);
+    LInfo := Format('[[Lev %d, %s', [LSpell.Level,
+      Items.GetInfo('-', LSpell.ManaCost, 'Mana')]);
     LInfo := LInfo + ']]';
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);
-    Terminal.Print(37, Y, Terminal.Colorize('{' + CSpellSchoolName[Spell.School] +
-      '}', CSpellSchoolColor[Spell.School]));
-    Terminal.Print(50, Y, Spell.Description);
+    LSpellSchool := GetSpellSchoolData(LSpell.School);
+    Terminal.Print(37, Y, Terminal.Colorize('{' + LSpellSchool.Name +
+      '}', LSpellSchool.Color));
+    Terminal.Print(50, Y, LSpell.Description);
     Inc(Y);
     Inc(V);
   end;

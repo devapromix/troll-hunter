@@ -5,34 +5,8 @@ interface
 uses
   Trollhunter.Types,
   Trollhunter.Creature,
+  Trollhunter.Spell.School,
   Trollhunter.Projectile.Types;
-
-type
-  TSpellSchool = (
-    scArcane,
-    scDivine,
-    scNature,
-    scShadow,
-    scElemental
-  );
-
-const
-  CSpellSchoolName: array [TSpellSchool] of string = (
-    'Arcane',
-    'Divine',
-    'Nature',
-    'Shadow',
-    'Elemental'
-  );
-
-const
-  CSpellSchoolColor: array [TSpellSchool] of string = (
-    'lighter yellow',
-    'light blue',
-    'light green',
-    'light gray',
-    'light red'
-  );
 
 type
   TSpellEnum = (
@@ -57,7 +31,7 @@ type
 type
   TSpellData = record
     Name: string;
-    School: TSpellSchool;
+    School: TSpellSchoolEnum;
     Level: UInt;
     ManaCost: UInt;
     Effects: TEffects;

@@ -35,7 +35,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <Units Count="67">
+    <Units Count="68">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -304,6 +304,10 @@
         <Filename Value="sources\Trollhunter.Spell.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit66>
+      <Unit67>
+        <Filename Value="sources\Trollhunter.Spell.School.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit67>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
