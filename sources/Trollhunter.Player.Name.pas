@@ -11,7 +11,6 @@ function GetRandomPlayerName(): string;
 implementation
 
 uses
-  Math,
   SysUtils,
   Trollhunter.Player,
   Trollhunter.UI.Log;

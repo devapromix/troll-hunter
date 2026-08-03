@@ -21,12 +21,13 @@ type
     spTeleport,
     spCurePoison,
     spVerdantSpear,
+    spDrainLife,
+    spIgnite,
 
     spTownPortal,
     spCureWeakness,
     spIdentify,
-    spInfusion,
-    spIgnite
+    spInfusion
     );
 
 type
@@ -114,6 +115,7 @@ const
     Projectile: prFireArrow;
     ),
 
+
     // Arcane: Teleport
     (Name: 'Teleport';
     School: scArcane;
@@ -147,9 +149,31 @@ const
     Projectile: prVerdantSpear;
     ),
 
-    // Shadow:
+    // Shadow: Drain Life
+    (Name: 'Drain Life';
+    School: scShadow;
+    Level: 4;
+    ManaCost: 35;
+    Effects: [efDrain];
+    Description: 'Drains the life force of the target';
+    Value: 15;
+    MinDamage: 4;
+    MaxDamage: 8;
+    Projectile: prFireArrow;
+    ),
 
-    // Elemental:
+    // Elemental: Ignite
+    (Name: 'Ignite';
+    School: scElemental;
+    Level: 3;
+    ManaCost: 12;
+    Effects: [efBurn];
+    Description: 'Sets the target ablaze';
+    Value: 5;
+    MinDamage: 3;
+    MaxDamage: 7;
+    Projectile: prFireArrow;
+    ),
 
 
     // Arcane: Town Portal
@@ -190,19 +214,6 @@ const
     Effects: [efCraftAtr];
     Description: 'Imbues an item with a random enchantment';
     Value: 0;
-    ),
-
-    // Elemental: Ignite
-    (Name: 'Ignite';
-    School: scElemental;
-    Level: 3;
-    ManaCost: 12;
-    Effects: [efBurn];
-    Description: 'Sets the target ablaze';
-    Value: 5;
-    MinDamage: 3;
-    MaxDamage: 7;
-    Projectile: prFireArrow;
     )
     );
 

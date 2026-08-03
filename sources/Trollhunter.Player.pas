@@ -703,6 +703,13 @@ begin
       V := Skills.Skill[skConcentration].Value + LSpell.Value;
       Mob.Abilities.Modify(abBurning, V);
       MsgLog.Add(Format('%s is engulfed in flames (%d).', [The, V]));
+    end
+    else if (efDrain in LSpell.Effects) then
+    begin
+      V := (Dam * (Skills.Skill[skConcentration].Value + LSpell.Value)) div 100;
+      Attributes.Modify(atLife, V);
+      Skills.DoSkill(skConcentration);
+      MsgLog.Add(Format('You drain %d life from %s.', [V, The]));
     end;
   end
   else
