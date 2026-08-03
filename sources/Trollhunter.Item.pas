@@ -1928,7 +1928,8 @@ uses
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Helpers,
-  Trollhunter.Statistic;
+  Trollhunter.Statistic,
+  Trollhunter.Spell;
 
   { TItems }
 
@@ -2227,6 +2228,9 @@ begin
       S := '';
   end;
   Result := Trim(Format('%s %s', [Items.GetName(AItem), S]));
+  if (IT = itBook) and (AItem.Value > 0) then
+    Result := Result + ' ' + Terminal.Colorize(Format('{%s}',
+      [GetSpellData(TSpellEnum(AItem.Value)).Description]), 'Gray');
   // Map's item
   if (IsManyItems or (ACount > 0)) then
   begin
