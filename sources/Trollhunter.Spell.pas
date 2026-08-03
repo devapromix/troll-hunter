@@ -12,25 +12,35 @@ type
   TSpellEnum = (
     spNone,
 
-    spManaShield,
-    spHeal,
-    spRegeneration,
-    spCurse,
-    spFireArrow,
+    spManaShield,    {Arcane I}
+    spHeal,          {Divine I}
+    spRegeneration,  {Nature I}
+    spCurse,         {Shadow I}
+    spFireArrow,     {Elemental I}
 
-    spTeleport,
-    spCurePoison,
-    spVerdantSpear,
-    spDrainLife,
-    spIgnite,
+    spTeleport,      {Arcane II}
+    spCurePoison,    {Divine II}
+    spVerdantSpear,  {Nature II}
+    spDrainLife,     {Shadow II}
+    spIgnite,        {Elemental II}
 
-    spTownPortal,
-    spCureWeakness,
-    spBlind,
+    spTownPortal,    {Arcane III}
+    spCureWeakness,  {Divine III}
+                     {Nature III}
+    spBlind,         {Shadow III}
+                     {Elemental III}
 
-    spIdentify,
+    spIdentify,      {Arcane IV}
+                     {Divine IV}
+                     {Nature IV}
+                     {Shadow IV}
+                     {Elemental IV}
 
-    spInfusion
+    spInfusion       {Arcane V}
+                     {Divine V}
+                     {Nature V}
+                     {Shadow V}
+                     {Elemental V}
     );
 
 type

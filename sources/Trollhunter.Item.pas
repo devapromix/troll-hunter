@@ -1741,89 +1741,89 @@ const
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 2800; Color: clLightestBlue; Deep: [deGray_Cave];
+    Price: 380; Color: clLightestBlue; Deep: [deGray_Cave];
     Effects: []; Value: 9; ManaCost: 0; ),
     // Elemental Book of Ignite
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 3500; Color: clLightBlue; Deep: [deGray_Cave];
+    Price: 350; Color: clLightBlue; Deep: [deGray_Cave];
     Effects: []; Value: 10; ManaCost: 0; ),
-
+    // Arcane
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 320; Color: clLightestBlue; Deep: [deDeep_Cave]; ),
-
+    Price: 420; Color: clLightestBlue; Deep: [deDeep_Cave]; ),
+    // Divine
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 480; Color: clLightBlue; Deep: [deDeep_Cave]; ),
-
+    // Nature
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 650; Color: clBlue; Deep: [deDeep_Cave]; ),
-
+    Price: 390; Color: clBlue; Deep: [deDeep_Cave]; ),
+    // Shadow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 850; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
-
+    Price: 470; Color: clDarkBlue; Deep: [deDeep_Cave]; ),
+    // Elemental
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1150; Color: clLightestBlue; Deep: [deDeep_Cave]; ),
-
+    Price: 450; Color: clLightestBlue; Deep: [deDeep_Cave]; ),
+    // Arcane
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1450; Color: clLightBlue; Deep: [deBlood_Cave]; ),
-
+    Price: 460; Color: clLightBlue; Deep: [deBlood_Cave]; ),
+    // Divine
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 1850; Color: clBlue; Deep: [deBlood_Cave]; ),
-
+    Price: 550; Color: clBlue; Deep: [deBlood_Cave]; ),
+    // Nature
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 2350; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
-
+    Price: 650; Color: clDarkBlue; Deep: [deBlood_Cave]; ),
+    // Shadow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 2900; Color: clLightestBlue; Deep: [deBlood_Cave]; ),
-
+    Price: 570; Color: clLightestBlue; Deep: [deBlood_Cave]; ),
+    // Elemental
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 3600; Color: clLightBlue; Deep: [deBlood_Cave]; ),
-
+    Price: 600; Color: clLightBlue; Deep: [deBlood_Cave]; ),
+    // Arcane
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 4200; Color: clBlue; Deep: [deDrom]; ),
-
+    Price: 700; Color: clBlue; Deep: [deDrom]; ),
+    // Divine
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 4800; Color: clDarkBlue; Deep: [deDrom]; ),
-
+    Price: 680; Color: clDarkBlue; Deep: [deDrom]; ),
+    // Nature
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 5500; Color: clLightestBlue; Deep: [deDrom]; ),
-
+    Price: 720; Color: clLightestBlue; Deep: [deDrom]; ),
+    // Shadow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 6200; Color: clLightBlue; Deep: [deDrom]; ),
-
+    Price: 750; Color: clLightBlue; Deep: [deDrom]; ),
+    // Elemental
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 7000; Color: clBlue; Deep: [deDrom]; ),
+    Price: 800; Color: clBlue; Deep: [deDrom]; ),
 
     // Vyper Toxin
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;

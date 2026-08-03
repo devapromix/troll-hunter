@@ -1260,7 +1260,7 @@ var
   I: TItemEnum;
   T: TItemType;
 begin
-  if IsDead then
+  if IsDead or (Index < 0) or (Index >= Items_Inventory_GetCount()) then
     Exit;
   FItem := Items_Inventory_GetItem(Index);
   // Unidentified
@@ -1806,7 +1806,7 @@ var
   end;
 
 begin
-  if IsDead then
+  if IsDead or (Index < 0) or (Index >= Items_Inventory_GetCount()) then
     Exit;
   AItem := Items_Inventory_GetItem(Index);
   if (AItem.Equipment > 0) then

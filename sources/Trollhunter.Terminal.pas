@@ -67,7 +67,6 @@ implementation
 uses
   SysUtils,
   Classes,
-  Dialogs,
   Math,
   Trollhunter.Game;
 
