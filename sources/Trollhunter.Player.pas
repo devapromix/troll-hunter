@@ -2184,7 +2184,7 @@ begin
   // Wizard
   if Mode.Wizard then
   begin
-    Items.AddItemToInv(itmBook_of_Verdant_Spear, 1);
+    Items.AddItemToInv(itmNature_Book_of_Verdant_Spear, 1);
   end;
 end;
 

@@ -1688,62 +1688,62 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; ),
 
-    // Books
-    // Book of Mana Shield
+    // Magic Books
+    // Arcane Book of Mana Shield
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 300; Color: clLightestBlue; Deep: [deDark_Wood];
     Effects: []; Value: 1; ManaCost: 0; ),
-    // Book of Heal
+    // Divine Book of Heal
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 250; Color: clWhite; Deep: [deDark_Wood];
     Effects: []; Value: 2; ManaCost: 0; ),
-    // Book of Regeneration
+    // Nature Book of Regeneration
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 200; Color: clBlue; Deep: [deDark_Wood];
     Effects: []; Value: 3; ManaCost: 0; ),
-    // Book of Curse
+    // Shadow Book of Curse
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 150; Color: clGray; Deep: [deDark_Wood];
     Effects: []; Value: 4; ManaCost: 0; ),
-    // Book of Fire Arrow
+    // Elemental Book of Fire Arrow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 220; Color: clLighterRed; Deep: [deDark_Wood];
     Effects: []; Value: 5; ManaCost: 0; ),
-    // Book of Teleport
+    // Arcane Book of Teleport
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 400; Color: clLightBlue; Deep: [deGray_Cave];
     Effects: []; Value: 6; ManaCost: 0; ),
-    // Book of Cure Poison
+    // Divine Book of Cure Poison
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 280; Color: clBlue; Deep: [deGray_Cave];
     Effects: []; Value: 7; ManaCost: 0; ),
-    // Book of Verdant Spear
+    // Nature Book of Verdant Spear
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 360; Color: clLightGreen; Deep: [deGray_Cave];
     Effects: []; Value: 8; ManaCost: 0; ),
-    // Book of Drain Life
+    // Shadow Book of Drain Life
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 2800; Color: clLightestBlue; Deep: [deGray_Cave];
     Effects: []; Value: 9; ManaCost: 0; ),
-    // Book of Ignite
+    // Elemental Book of Ignite
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));

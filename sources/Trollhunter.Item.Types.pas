@@ -224,10 +224,12 @@ type
     // Arrows
     itmArrows,
     // Books
-    itmBook_of_Mana_Shield, itmBook_of_Heal, itmBook_of_Regeneration,
-    itmBook_of_Curse, itmBook_of_Fire_Arrow, itmBook_of_Teleport,
-    itmBook_of_Cure_Poison, itmBook_of_Verdant_Spear, itmBook_of_Drain_Life,
-    itmBook_of_Ignite, itmBook11, itmBook12, itmBook13, itmBook14,
+    itmArcane_Book_of_Mana_Shield, itmDivine_Book_of_Heal,
+    itmNature_Book_of_Regeneration, itmShadow_Book_of_Curse,
+    itmElemental_Book_of_Fire_Arrow, itmArcane_Book_of_Teleport,
+    itmDivine_Book_of_Cure_Poison, itmNature_Book_of_Verdant_Spear,
+    itmShadow_Book_of_Drain_Life, itmElemental_Book_of_Ignite,
+    itmBook11, itmBook12, itmBook13, itmBook14,
     itmBook15, itmBook16, itmBook17, itmBook18, itmBook19, itmBook20, itmBook21,
     itmBook22, itmBook23, itmBook24, itmBook25,
     // Poisons
