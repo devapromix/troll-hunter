@@ -2830,9 +2830,13 @@ end;
 procedure TItems.AddItemToInv(Index: Int = 0; AFlag: boolean = False);
 var
   FItem: Item;
-  MapID: Int;
+  MapID, FCount: Int;
 begin
   MapID := Ord(Map.Current);
+  FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
+  if (Index < 0) or (Index >= FCount) then
+    Exit;
+
   FItem := Items_Dungeon_GetMapItemXY(MapID, Index, Player.X, Player.Y);
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType = itArrow) then
   begin
