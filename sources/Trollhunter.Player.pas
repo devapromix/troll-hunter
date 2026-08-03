@@ -697,6 +697,12 @@ begin
       V := Skills.Skill[skConcentration].Value + LSpell.Value;
       Mob.Abilities.Modify(abWeak, V);
       MsgLog.Add(Format('%s looks weakened (%d).', [The, V]));
+    end
+    else if (efBurn in LSpell.Effects) then
+    begin
+      V := Skills.Skill[skConcentration].Value + LSpell.Value;
+      Mob.Abilities.Modify(abBurning, V);
+      MsgLog.Add(Format('%s is engulfed in flames (%d).', [The, V]));
     end;
   end
   else

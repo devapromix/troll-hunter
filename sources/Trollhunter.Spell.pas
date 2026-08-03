@@ -25,7 +25,8 @@ type
     spTownPortal,
     spCureWeakness,
     spIdentify,
-    spInfusion
+    spInfusion,
+    spIgnite
     );
 
 type
@@ -189,6 +190,19 @@ const
     Effects: [efCraftAtr];
     Description: 'Imbues an item with a random enchantment';
     Value: 0;
+    ),
+
+    // Elemental: Ignite
+    (Name: 'Ignite';
+    School: scElemental;
+    Level: 3;
+    ManaCost: 12;
+    Effects: [efBurn];
+    Description: 'Sets the target ablaze';
+    Value: 5;
+    MinDamage: 3;
+    MaxDamage: 7;
+    Projectile: prFireArrow;
     )
     );
 
