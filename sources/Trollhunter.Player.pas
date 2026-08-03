@@ -634,7 +634,7 @@ const
   AccuracyWilDivisor = 2;
 var
   Mob: TMob;
-  Dam, TargetDV, AccBonus, Dist, MMin, MMax: UInt;
+  Dam, TargetDV, AccBonus, Dist, MMin, MMax, V: UInt;
   The: string;
   LSpell: TSpellData;
 
@@ -691,7 +691,13 @@ begin
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('Your %s hits %s (%d).', [LowerCase(LSpell.Name), The, Dam]));
     if Mob.IsDead then
-      Mob.Defeat;
+      Mob.Defeat
+    else if (efWeaken in LSpell.Effects) then
+    begin
+      V := Skills.Skill[skConcentration].Value + LSpell.Value;
+      Mob.Abilities.Modify(abWeak, V);
+      MsgLog.Add(Format('%s looks weakened (%d).', [The, V]));
+    end;
   end
   else
     Miss();

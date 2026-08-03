@@ -95,9 +95,9 @@ const
     School: scShadow;
     Level: 2;
     ManaCost: 30;
-    Effects: [];
+    Effects: [efWeaken];
     Description: 'Weakens the target';
-    Value: 0;
+    Value: 15;
     ),
 
     // Elemental: Fire Arrow

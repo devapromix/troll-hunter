@@ -789,6 +789,8 @@ begin
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, (Dam div 3));
+    if Abilities.IsAbility(abWeak) then
+      Dec(Dam, Dam div 3);
     // PV
     Dam := GetRealDamage(Dam, Player.Attributes.Attrib[atPV].Value);
     if (Dam = 0) then
