@@ -65,9 +65,9 @@ const
     School: scArcane;
     Level: 1;
     ManaCost: 25;
-    Effects: [];
+    Effects: [efManaShield];
     Description: 'Absorbs damage using mana';
-    Value: 0;
+    Value: 10;
     ),
 
     // Divine: Heal

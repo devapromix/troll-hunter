@@ -147,6 +147,7 @@ type
     procedure UseItem(Index: Int);
     procedure DoEffects(const Effects: TEffects; const Value: UInt = 0;
       const Multiplier: UInt = 1);
+    function AbsorbManaShieldDamage(const ADamage: UInt): UInt;
     procedure Equip(Index: Int);
     procedure UnEquip(Index: Int);
     procedure Sell(Index: Int);
@@ -2379,6 +2380,13 @@ begin
     Abilities.Modify(abBerserk, Value);
     MsgLog.Add(Format('You feel a sudden urge to kill things. (%d).', [Value]));
   end;
+  // Mana Shield
+  if (efManaShield in Effects) then
+  begin
+    V := Skills.Skill[skConcentration].Value + Value;
+    Abilities.Modify(abManaShield, V);
+    MsgLog.Add(Format('A shimmering shield of mana surrounds you (%d).', [V]));
+  end;
   // Bloodlust
   if (efBloodlust in Effects) then
   begin
@@ -2520,6 +2528,23 @@ begin
   if (efPrmSurvival in Effects) then
   begin
     MsgLog.Add('You have mastered the basics of survival');
+  end;
+end;
+
+function TPlayer.AbsorbManaShieldDamage(const ADamage: UInt): UInt;
+var
+  LAbsorbed: UInt;
+begin
+  Result := ADamage;
+  if Abilities.IsAbility(abManaShield) then
+  begin
+    LAbsorbed := Math.Min(ADamage, Attributes.Attrib[atMana].Value);
+    if (LAbsorbed > 0) then
+    begin
+      Attributes.Modify(atMana, -LAbsorbed);
+      Result := ADamage - LAbsorbed;
+      MsgLog.Add(Format('Your mana shield absorbs %d damage.', [LAbsorbed]));
+    end;
   end;
 end;
 

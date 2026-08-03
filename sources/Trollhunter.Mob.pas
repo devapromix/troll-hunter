@@ -797,8 +797,10 @@ begin
       Exit;
     end;
     // Damage
-    Player.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
+    Dam := Player.AbsorbManaShieldDamage(Dam);
+    if (Dam > 0) then
+      Player.Attributes.Modify(atLife, -Dam);
     if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and
       not Mode.Wizard)) then
       Player.BreakItem();
