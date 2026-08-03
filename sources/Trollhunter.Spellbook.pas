@@ -25,7 +25,6 @@ type
     FLastSelectedSpell: TSpellEnum;
   public
     procedure Clear;
-    function GetSpellName(ASpellEnum: TSpellEnum): string;
     procedure AddSpell(ASpellEnum: TSpellEnum);
     function GetSpell(ASpellEnum: TSpellEnum): TSpell;
     procedure SetQuickSpell(ASpellEnum: TSpellEnum);
@@ -55,7 +54,7 @@ uses
 procedure TSpellbook.AddSpell(ASpellEnum: TSpellEnum);
 begin
   FSpell[ASpellEnum].Enable := True;
-  FSpell[ASpellEnum].Spell := SpellData[ASpellEnum];
+  FSpell[ASpellEnum].Spell := GetSpellData(ASpellEnum);
 end;
 
 procedure TSpellbook.Clear;
@@ -157,11 +156,6 @@ end;
 function TSpellbook.GetSpell(ASpellEnum: TSpellEnum): TSpell;
 begin
   Result := FSpell[ASpellEnum];
-end;
-
-function TSpellbook.GetSpellName(ASpellEnum: TSpellEnum): string;
-begin
-  Result := SpellData[ASpellEnum].Name;
 end;
 
 initialization

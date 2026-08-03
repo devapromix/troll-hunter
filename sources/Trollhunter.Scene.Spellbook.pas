@@ -64,12 +64,12 @@ begin
     else
       IsActive := Spellbook.GetSpell(I).Enable;
     if not IsActive then Continue;
-    LSpell := SpellData[I];
+    LSpell := GetSpellData(I);
     Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, LSpell.Name);
-    LInfo := Format('[[Lev %d, %s', [LSpell.Level,
-      Items.GetInfo('-', LSpell.ManaCost, 'Mana')]);
+    LInfo := Format('[[Lev %d, %s',
+      [LSpell.Level, Items.GetInfo('-', LSpell.ManaCost, 'Mana')]);
     LInfo := LInfo + ']]';
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);

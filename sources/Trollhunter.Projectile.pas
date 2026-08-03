@@ -101,7 +101,7 @@ function TProjectile.GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
 var
   LProjectileEnum: TProjectileEnum;
 begin
-  LProjectileEnum := SpellData[ASpellEnum].Projectile;
+  LProjectileEnum := GetSpellData(ASpellEnum).Projectile;
   Result.Color := ProjectileData[LProjectileEnum].Color;
   Result.Symbol := ProjectileData[LProjectileEnum].Symbol;
 end;

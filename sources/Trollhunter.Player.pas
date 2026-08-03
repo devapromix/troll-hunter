@@ -634,6 +634,7 @@ var
   Mob: TMob;
   Dam, TargetDV, AccBonus, Dist, MMin, MMax: UInt;
   The: string;
+  LSpell: TSpellData;
 
   procedure Miss();
   begin
@@ -649,14 +650,14 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
-  if (Self.Attributes.Attrib[atMana].Value < SpellData[ASpellEnum].ManaCost) then
+  LSpell := GetSpellData(ASpellEnum);
+  if (Self.Attributes.Attrib[atMana].Value < LSpell.ManaCost) then
   begin
-    MsgLog.Add(Format('You don''t have enough mana to cast %s.',
-      [SpellData[ASpellEnum].Name]));
+    MsgLog.Add(Format('You don''t have enough mana to cast %s.', [LSpell.Name]));
     Self.FireModeExit;
     Exit;
   end;
-  Self.Attributes.Modify(atMana, -Int(SpellData[ASpellEnum].ManaCost));
+  Self.Attributes.Modify(atMana, -Int(LSpell.ManaCost));
   Self.Statictics.Inc(stSpCast);
   Dist := Self.GetDist(Mob.X, Mob.Y);
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
@@ -669,10 +670,10 @@ begin
   TargetDV := UInt(Math.Max(0, Int(TargetDV) - Int(AccBonus)));
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
-    MMin := EnsureRange(SpellData[ASpellEnum].MinDamage +
-      Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
-    MMax := EnsureRange(SpellData[ASpellEnum].MaxDamage +
-      Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
+    MMin := EnsureRange(LSpell.MinDamage + Attributes.Attrib[atWil].Value div
+      5, 1, UIntMax - 1);
+    MMax := EnsureRange(LSpell.MaxDamage + Attributes.Attrib[atWil].Value div
+      3, 2, UIntMax);
     Dam := Game.EnsureRange(RandomRange(MMin, MMax + 1), UIntMax);
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, Dam div 4);
@@ -686,8 +687,7 @@ begin
       Exit;
     end;
     Mob.Attributes.Modify(atLife, -Dam);
-    MsgLog.Add(Format('Your %s hits %s (%d).',
-      [LowerCase(SpellData[ASpellEnum].Name), The, Dam]));
+    MsgLog.Add(Format('Your %s hits %s (%d).', [LowerCase(LSpell.Name), The, Dam]));
     if Mob.IsDead then
       Mob.Defeat;
   end
@@ -1284,12 +1284,12 @@ begin
       begin
         if Spellbook.GetSpell(TSpellEnum(FItem.Value)).Enable then
           MsgLog.Add(Format('You already know %s.',
-            [Spellbook.GetSpellName(TSpellEnum(FItem.Value))]))
+            [GetSpellData(TSpellEnum(FItem.Value)).Name]))
         else
         begin
           Spellbook.AddSpell(TSpellEnum(FItem.Value));
           MsgLog.Add(Format('You learn %s.',
-            [Spellbook.GetSpellName(TSpellEnum(FItem.Value))]));
+            [GetSpellData(TSpellEnum(FItem.Value)).Name]));
         end;
       end;
       if (T in FoodTypeItems + PlantTypeItems) then
