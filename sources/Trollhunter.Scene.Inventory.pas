@@ -30,7 +30,7 @@ uses
 procedure TSceneInv.Render;
 begin
   UI.Title(Format('%s [[%s%d %s%d/%d]]', ['Inventory', UI.Icon(icGold),
-    Player.Gold, UI.Icon(icFlag), Items_Inventory_GetCount(), ItemMax]));
+    Player.Gold, UI.Icon(icSack), Items_Inventory_GetCount(), ItemMax]));
 
   UI.FromAToZ(ItemMax);
   Items.RenderInventory;

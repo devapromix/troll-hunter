@@ -113,7 +113,7 @@ begin
     AttribMax);
   Add('Willpower', UI.Icon(icBook), 'Willpower',
     Player.Attributes.Attrib[atWil], AttribMax);
-  Add('Perception', UI.Icon(icLeaf), 'Perception',
+  Add('Perception', UI.Icon(icPer), 'Perception',
     Player.Attributes.Attrib[atPer], AttribMax);
   // Life and Mana
   Add('Life', UI.Icon(icLife), 'Life', Player.Attributes.Attrib[atLife],
@@ -142,11 +142,11 @@ begin
   // Ranged
   if Player.CanRangedAttack then
   begin
-    Add('Min Ranged Damage', UI.Icon(icSword), 'Darker Yellow',
+    Add('Min Ranged Damage', UI.Icon(icSword) + UI.Icon(icVision), 'Darker Yellow',
       Player.RangedMinDamage, MinDamMax);
-    Add('Max Ranged Damage', UI.Icon(icSword), 'Darker Yellow',
+    Add('Max Ranged Damage', UI.Icon(icSword) + UI.Icon(icVision), 'Darker Yellow',
       Player.RangedMaxDamage, MaxDamMax);
-    Add('Range', UI.Icon(icSword) + UI.Icon(icVision), 'Vision',
+    Add('Range', UI.Icon(icVision), 'Vision',
       Player.FireRange, VisionMax);
   end;
 
@@ -199,7 +199,7 @@ begin
     UI.Bar(X, 0, D, X - 2, Player.Skills.Skill[I].Value, SkillMax, clDarkRed,
       clDarkGray);
     Terminal.Print(B, D, Format('%s %s %d/%d',
-      [UI.Icon(icAst), Player.Skills.GetName(I), Player.Skills.Skill[I].Value, SkillMax]),
+      [UI.Icon(icStar), Player.Skills.GetName(I), Player.Skills.Skill[I].Value, SkillMax]),
       TK_ALIGN_CENTER);
   end;
 end;

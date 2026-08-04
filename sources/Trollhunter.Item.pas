@@ -2110,7 +2110,7 @@ begin
     S := ''
   // Light (Torch)
   else if (IT = itTorch) then
-    S := S + Format('(%s%d/%d)', [UI.Icon(icFlag), AItem.Value,
+    S := S + Format('(%s%d/%d)', [UI.Icon(icTorch), AItem.Value,
       ItemBase[TItemEnum(ID)].Value])
   else
   begin
@@ -2148,7 +2148,7 @@ begin
     // Arrows (Quiver)
     if (IT = itQuiver) then
     begin
-      T := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
+      T := Format('%s%d/%d', [UI.Icon(icArrow), AItem.Value,
         ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btQuiverCap)]);
       T := ColorizeStat(T, 0,
         (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in QuiverCapacitySuffixes));
@@ -2156,7 +2156,7 @@ begin
     // Charges (Wand)
     if (IT = itWand) then
     begin
-      C := Format('%s%d/%d', [UI.Icon(icFlag), AItem.Value,
+      C := Format('%s%d/%d', [UI.Icon(icCharg), AItem.Value,
         ItemBase[TItemEnum(ID)].Value + Items.GetBonus(AItem, btWandCap)]);
       C := ColorizeStat(C, 0,
         (AItem.Identify > 0) and (TSuffixEnum(AItem.Identify) in WandCapacitySuffixes));
@@ -2571,7 +2571,7 @@ begin
   if (Color = 'Willpower') then
     S := UI.Icon(icBook);
   if (Color = 'Perception') then
-    S := UI.Icon(icLeaf);
+    S := UI.Icon(icPer);
   if (Color = 'Gold') then
   begin
     S := S + UI.Icon(icGold);

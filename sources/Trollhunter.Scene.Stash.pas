@@ -39,7 +39,7 @@ begin
   FGold := Items_Dungeon_GetMapItemAmountXY(MapID, Ord(itmGold), Player.X, Player.Y);
 
   UI.Title(Format('%s [[%s%d %s%d/%d]]', ['Stash', UI.Icon(icGold),
-    FGold, UI.Icon(icFlag), FCount, ItemMax]), 1, clDarkestGreen);
+    FGold, UI.Icon(icSack), FCount, ItemMax]), 1, clDarkestGreen);
 
   UI.FromAToZ;
 
