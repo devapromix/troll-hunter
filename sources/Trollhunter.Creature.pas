@@ -6,6 +6,7 @@ uses
   Trollhunter.Types,
   Trollhunter.Entity,
   Trollhunter.Ability,
+  Trollhunter.StatusEffect,
   Trollhunter.Attribute;
 
 const
@@ -56,7 +57,7 @@ type
 type
   TCreature = class(TEntity)
   private
-    FAbilities: TAbilities;
+    FStatusEffects: TStatusEffects;
     FAttributes: TAttributes;
   public
     Light: Int;
@@ -68,7 +69,7 @@ type
     function GetRealDamage(ADamage, APV: UInt): UInt;
     function IsDead: Boolean;
     function OnTurn: Boolean;
-    property Abilities: TAbilities read FAbilities write FAbilities;
+    property StatusEffects: TStatusEffects read FStatusEffects write FStatusEffects;
     property Attributes: TAttributes read FAttributes write FAttributes;
     procedure Fill;
   end;
@@ -84,7 +85,7 @@ uses
 
 procedure TCreature.Clear;
 begin
-  Abilities.Clear;
+  StatusEffects.Clear;
   Attributes.Clear;
 end;
 
@@ -93,12 +94,12 @@ begin
   inherited;
   Light := 0;
   FAttributes := TAttributes.Create;
-  FAbilities := TAbilities.Create;
+  FStatusEffects := TStatusEffects.Create;
 end;
 
 destructor TCreature.Destroy;
 begin
-  FreeAndNil(FAbilities);
+  FreeAndNil(FStatusEffects);
   FreeAndNil(FAttributes);
   inherited;
 end;
@@ -140,24 +141,24 @@ end;
 
 function TCreature.OnTurn: Boolean;
 var
-  I: TAbilityEnum;
+  I: TStatusEffectEnum;
   Value: UInt;
 begin
   Result := False;
-  for I := Low(TAbilityEnum) to High(TAbilityEnum) do
-    if (Abilities.Ability[I] > 0) then
+  for I := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
+    if (StatusEffects.StatusEffect[I] > 0) then
     begin
-      if (I in [abSleeping]) then
+      if (I in [seSleeping]) then
         Continue;
-      Abilities.Modify(I, -1);
-      if (Abilities.Ability[I] = 0) then
+      StatusEffects.Modify(I, -1);
+      if (StatusEffects.StatusEffect[I] = 0) then
         Result := True;
-      if (I in [abPoisoned, abBurning]) and not IsDead then
+      if (I in [sePoisoned, seBurning]) and not IsDead then
       begin
         case I of
-          abPoisoned:
+          sePoisoned:
             Value := 1;
-          abBurning:
+          seBurning:
             Value := Math.RandomRange(1, 3);
         else
           Value := 0;

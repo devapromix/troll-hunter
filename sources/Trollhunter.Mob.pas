@@ -8,6 +8,7 @@ uses
   Trollhunter.Map,
   Trollhunter.Entity,
   Trollhunter.Creature,
+  Trollhunter.StatusEffect,
   Trollhunter.Ability;
 
 type
@@ -21,13 +22,11 @@ type
 type
   TNPCType = (ntSell_C, ntJewTrader_C, ntHealer_A, ntBlacksmith_A,
     ntWpnTrader_B, ntSmithTrader_B, ntArmTrader_A, ntGemTrader_C, ntShTrader_A,
-    ntQvrTrader_B, ntArrTrader_C,
-    ntHelmTrader_A, ntPotTrader_B, ntHealTrader_B, ntGlovesTrader_B,
-    ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B, ntScrTrader_A,
-    ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
-    ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B,
-    ntWpnTrader_C, ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A,
-    ntVenomTrader_B);
+    ntQvrTrader_B, ntArrTrader_C, ntHelmTrader_A, ntPotTrader_B, ntHealTrader_B,
+    ntGlovesTrader_B, ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B,
+    ntScrTrader_A, ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
+    ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B, ntWpnTrader_C,
+    ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A, ntVenomTrader_B);
 
 type
   TMobBase = record
@@ -42,7 +41,7 @@ type
     Damage: TDamage;
     Color: cardinal;
     NPCType: set of TNPCType;
-    Abilities: TSetOfAbility;
+    StatusEffects: TSetOfStatusEffect;
   end;
 
 type
@@ -108,338 +107,338 @@ const
 
     // Big Rat
     (Symbol: 'r'; Boss: False; Maps: [deDark_Wood]; MaxLife: 5; Level: 1; PV: 0;
-    DV: 4; MaxCount: 9; Damage: (Min: 1; Max: 2; ); Color: $FF249988;
-    NPCType: []; Abilities: [abDiseased]; ),
+    DV: 4; MaxCount: 9; Damage: (Min: 1; Max: 2;); Color: $FF249988;
+    NPCType: []; StatusEffects: [seDiseased];),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDark_Wood]; MaxLife: 7; Level: 1; PV: 0;
-    DV: 5; MaxCount: 7; Damage: (Min: 1; Max: 3; ); Color: $FF33FF66;
-    NPCType: []; Abilities: [abPoisoned, abDiseased]; ),
+    DV: 5; MaxCount: 7; Damage: (Min: 1; Max: 3;); Color: $FF33FF66;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased];),
     // Giant Gecko
     (Symbol: 'g'; Boss: False; Maps: [deDark_Wood]; MaxLife: 8; Level: 1; PV: 2;
-    DV: 6; MaxCount: 5; Damage: (Min: 2; Max: 3; ); Color: $FF993377;
-    NPCType: []; Abilities: [abPoisoned, abStunned, abBlinded]; ),
+    DV: 6; MaxCount: 5; Damage: (Min: 2; Max: 3;); Color: $FF993377;
+    NPCType: []; StatusEffects: [sePoisoned, seStunned, seBlinded];),
     // Jackal
     (Symbol: 'j'; Boss: False; Maps: [deDark_Wood]; MaxLife: 9; Level: 1; PV: 4;
-    DV: 7; MaxCount: 4; Damage: (Min: 2; Max: 3; ); Color: $FF9955FF;
-    NPCType: []; Abilities: []; ),
+    DV: 7; MaxCount: 4; Damage: (Min: 2; Max: 3;); Color: $FF9955FF;
+    NPCType: []; StatusEffects: [];),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDark_Wood]; MaxLife: 10; Level: 2;
-    PV: 5; DV: 8; MaxCount: 1; Damage: (Min: 4; Max: 5; ); Color: $FF444444;
-    NPCType: []; Abilities: [abStunned, abAfraid, abArmor_Reduction]; ),
+    PV: 5; DV: 8; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF444444;
+    NPCType: []; StatusEffects: [seStunned, seAfraid, seArmor_Reduction];),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDark_Wood]; MaxLife: 14; Level: 2;
-    PV: 5; DV: 9; MaxCount: 1; Damage: (Min: 2; Max: 5; ); Color: $FFAAAAAA;
-    NPCType: []; Abilities: [abStunned, abAfraid, abArmor_Reduction]; ),
+    PV: 5; DV: 9; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FFAAAAAA;
+    NPCType: []; StatusEffects: [seStunned, seAfraid, seArmor_Reduction];),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDark_Wood]; MaxLife: 18; Level: 2;
-    PV: 3; DV: 9; MaxCount: 1; Damage: (Min: 1; Max: 3; ); Color: $FF339955;
-    NPCType: []; Abilities: [abPoisoned, abDiseased, abDrunk]; ),
+    PV: 3; DV: 9; MaxCount: 1; Damage: (Min: 1; Max: 3;); Color: $FF339955;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seDrunk];),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDark_Wood]; MaxLife: 22; Level: 3;
-    PV: 4; DV: 10; MaxCount: 4; Damage: (Min: 2; Max: 4; ); Color: $FF666666;
-    NPCType: []; Abilities: []; ),
+    PV: 4; DV: 10; MaxCount: 4; Damage: (Min: 2; Max: 4;); Color: $FF666666;
+    NPCType: []; StatusEffects: [];),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDark_Wood]; MaxLife: 23; Level: 3;
-    PV: 5; DV: 12; MaxCount: 3; Damage: (Min: 3; Max: 4; ); Color: $FFCC9988;
-    NPCType: []; Abilities: [abBurning]; ),
+    PV: 5; DV: 12; MaxCount: 3; Damage: (Min: 3; Max: 4;); Color: $FFCC9988;
+    NPCType: []; StatusEffects: [seBurning];),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGray_Cave]; MaxLife: 25; Level: 3;
-    PV: 5; DV: 12; MaxCount: 7; Damage: (Min: 1; Max: 4; ); Color: $FF777700;
-    NPCType: []; Abilities: [abBloodlust, abCursed]; ),
+    PV: 5; DV: 12; MaxCount: 7; Damage: (Min: 1; Max: 4;); Color: $FF777700;
+    NPCType: []; StatusEffects: [seBloodlust, seCursed];),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGray_Cave]; MaxLife: 25; Level: 3;
-    PV: 6; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4; ); Color: $FF777700;
-    NPCType: []; Abilities: [abBloodlust, abCursed]; ),
+    PV: 6; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4;); Color: $FF777700;
+    NPCType: []; StatusEffects: [seBloodlust, seCursed];),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGray_Cave]; MaxLife: 30; Level: 3;
-    PV: 7; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4; ); Color: $FF777700;
-    NPCType: []; Abilities: [abBurning, abBloodlust, abCursed]; ),
+    PV: 7; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4;); Color: $FF777700;
+    NPCType: []; StatusEffects: [seBurning, seBloodlust, seCursed];),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGray_Cave]; MaxLife: 32; Level: 4;
-    PV: 4; DV: 14; MaxCount: 3; Damage: (Min: 2; Max: 4; ); Color: $FF777700;
-    NPCType: []; Abilities: [abCursed]; ),
+    PV: 4; DV: 14; MaxCount: 3; Damage: (Min: 2; Max: 4;); Color: $FF777700;
+    NPCType: []; StatusEffects: [seCursed];),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGray_Cave]; MaxLife: 35; Level: 4;
-    PV: 5; DV: 15; MaxCount: 1; Damage: (Min: 2; Max: 5; ); Color: $FF777700;
-    NPCType: []; Abilities: [abPoisoned, abStunned, abBurning, abAfraid,
-    abDrunk]; ),
+    PV: 5; DV: 15; MaxCount: 1; Damage: (Min: 2; Max: 5;); Color: $FF777700;
+    NPCType: []; StatusEffects: [sePoisoned, seStunned, seBurning, seAfraid,
+    seDrunk];),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGray_Cave]; MaxLife: 38; Level: 4;
-    PV: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3; ); Color: $FF777700;
-    NPCType: []; Abilities: [abBlinded, abDiseased]; ),
+    PV: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3;); Color: $FF777700;
+    NPCType: []; StatusEffects: [seBlinded, seDiseased];),
     // Worm
     (Symbol: 'w'; Boss: False; Maps: [deGray_Cave]; MaxLife: 40; Level: 5;
-    PV: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5; ); Color: $FF777700;
-    NPCType: []; Abilities: [abBlinded, abDiseased, abAfraid]; ),
+    PV: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5;); Color: $FF777700;
+    NPCType: []; StatusEffects: [seBlinded, seDiseased, seAfraid];),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGray_Cave]; MaxLife: 42; Level: 5;
-    PV: 7; DV: 18; MaxCount: 1; Damage: (Min: 3; Max: 5; ); Color: $FF7777CC;
-    NPCType: []; Abilities: [abPoisoned, abArmor_Reduction]; ),
+    PV: 7; DV: 18; MaxCount: 1; Damage: (Min: 3; Max: 5;); Color: $FF7777CC;
+    NPCType: []; StatusEffects: [sePoisoned, seArmor_Reduction];),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGray_Cave]; MaxLife: 43; Level: 5;
-    PV: 9; DV: 20; MaxCount: 1; Damage: (Min: 4; Max: 5; ); Color: $FF299AFF;
-    NPCType: []; Abilities: [abBurning, abBlinded]; ),
+    PV: 9; DV: 20; MaxCount: 1; Damage: (Min: 4; Max: 5;); Color: $FF299AFF;
+    NPCType: []; StatusEffects: [seBurning, seBlinded];),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 45; Level: 5;
-    PV: 10; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5; ); Color: $FF992233;
-    NPCType: []; Abilities: [abPoisoned, abDiseased, abAfraid, abDrunk]; ),
+    PV: 10; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5;); Color: $FF992233;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seAfraid, seDrunk];),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 48; Level: 5;
-    PV: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5; ); Color: $FF992233;
-    NPCType: []; Abilities: [abPoisoned, abDiseased, abDrunk]; ),
+    PV: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5;); Color: $FF992233;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seDrunk];),
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 50; Level: 5;
-    PV: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6; ); Color: $FF992233;
-    NPCType: []; Abilities: [abPoisoned, abDiseased]; ),
+    PV: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6;); Color: $FF992233;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased];),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 55; Level: 6;
-    PV: 9; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7; ); Color: $FF992233;
-    NPCType: []; Abilities: [abPoisoned, abDiseased]; ),
+    PV: 9; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7;); Color: $FF992233;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased];),
     // Scarab
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 60; Level: 6;
-    PV: 15; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6; ); Color: $FF992233;
-    NPCType: []; Abilities: [abPoisoned, abDiseased]; ),
+    PV: 15; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6;); Color: $FF992233;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased];),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 65; Level: 6;
-    PV: 12; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 7; ); Color: $FF992233;
-    NPCType: []; Abilities: [abPoisoned, abDiseased, abAfraid]; ),
+    PV: 12; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 7;); Color: $FF992233;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seAfraid];),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
-    PV: 25; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5; ); Color: $FF992233;
-    NPCType: []; Abilities: [abBurning, abBlinded]; ),
+    PV: 25; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5;); Color: $FF992233;
+    NPCType: []; StatusEffects: [seBurning, seBlinded];),
     // Dire Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
-    PV: 10; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7; ); Color: $FF888888;
-    NPCType: []; Abilities: [abStunned, abAfraid]; ),
+    PV: 10; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7;); Color: $FF888888;
+    NPCType: []; StatusEffects: [seStunned, seAfraid];),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 72; Level: 7;
-    PV: 10; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8; ); Color: $FF992233;
-    NPCType: []; Abilities: [abBurning, abCursed]; ),
+    PV: 10; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8;); Color: $FF992233;
+    NPCType: []; StatusEffects: [seBurning, seCursed];),
     // Faun
     (Symbol: 'f'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 73; Level: 7;
-    PV: 10; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9; ); Color: $FF992233;
-    NPCType: []; Abilities: [abBlinded, abArmor_Reduction]; ),
+    PV: 10; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9;); Color: $FF992233;
+    NPCType: []; StatusEffects: [seBlinded, seArmor_Reduction];),
 
     // == Blood Cave == //
 
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 75; Level: 7;
-    PV: 25; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8; ); Color: $FF00AA00;
-    NPCType: []; Abilities: [abBloodlust, abCursed]; ),
+    PV: 25; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8;); Color: $FF00AA00;
+    NPCType: []; StatusEffects: [seBloodlust, seCursed];),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 75; Level: 7;
-    PV: 30; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9; ); Color: $FF116610;
-    NPCType: []; Abilities: [abBloodlust, abCursed]; ),
+    PV: 30; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9;); Color: $FF116610;
+    NPCType: []; StatusEffects: [seBloodlust, seCursed];),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 78; Level: 7;
-    PV: 45; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10; ); Color: $FF445544;
-    NPCType: []; Abilities: [abBloodlust, abCursed]; ),
+    PV: 45; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seBloodlust, seCursed];),
     // Hobgoblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 75; Level: 7;
-    PV: 50; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10; ); Color: $FF55AA55;
-    NPCType: []; Abilities: [abBloodlust, abCursed]; ),
+    PV: 50; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10;); Color: $FF55AA55;
+    NPCType: []; StatusEffects: [seBloodlust, seCursed];),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 80; Level: 7;
-    PV: 100; DV: 34; MaxCount: 1; Damage: (Min: 8; Max: 10; ); Color: $FF445544;
-    NPCType: []; Abilities: [abPoisoned, abBurning, abBlinded, abAfraid]; ),
+    PV: 100; DV: 34; MaxCount: 1; Damage: (Min: 8; Max: 10;); Color: $FF445544;
+    NPCType: []; StatusEffects: [sePoisoned, seBurning, seBlinded, seAfraid];),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 82; Level: 8;
-    PV: 30; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11; ); Color: $FF445544;
-    NPCType: []; Abilities: [abDiseased, abAfraid]; ),
+    PV: 30; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seDiseased, seAfraid];),
     // Werewolf
     (Symbol: 'w'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 8;
-    PV: 35; DV: 35; MaxCount: 2; Damage: (Min: 10; Max: 12; ); Color: $FF777733;
-    NPCType: []; Abilities: [abDiseased, abPoisoned, abAfraid]; ),
+    PV: 35; DV: 35; MaxCount: 2; Damage: (Min: 10; Max: 12;); Color: $FF777733;
+    NPCType: []; StatusEffects: [seDiseased, sePoisoned, seAfraid];),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 85; Level: 8;
-    PV: 50; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14; ); Color: $FF445544;
-    NPCType: []; Abilities: [abStunned, abBurning, abBloodlust, abAfraid]; ),
+    PV: 50; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seStunned, seBurning, seBloodlust, seAfraid];),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 88; Level: 8;
-    PV: 60; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15; ); Color: $FF445544;
-    NPCType: []; Abilities: [abBloodlust]; ),
+    PV: 60; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seBloodlust];),
     // Orc Brute
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 8;
-    PV: 70; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 15; ); Color: $FF445544;
-    NPCType: []; Abilities: [abBloodlust]; ),
+    PV: 70; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 15;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seBloodlust];),
     // Orc Warrior
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 9;
-    PV: 80; DV: 39; MaxCount: 4; Damage: (Min: 11; Max: 15; ); Color: $FF445544;
-    NPCType: []; Abilities: [abBloodlust]; ),
+    PV: 80; DV: 39; MaxCount: 4; Damage: (Min: 11; Max: 15;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seBloodlust];),
     // Orc Warlord
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 9;
-    PV: 30; DV: 40; MaxCount: 3; Damage: (Min: 11; Max: 15; ); Color: $FF445544;
-    NPCType: []; Abilities: [abBurning, abBloodlust, abArmor_Reduction]; ),
+    PV: 30; DV: 40; MaxCount: 3; Damage: (Min: 11; Max: 15;); Color: $FF445544;
+    NPCType: []; StatusEffects: [seBurning, seBloodlust, seArmor_Reduction];),
 
     // == Drom == //
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; PV: 58;
-    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 16; ); Color: $FF00BB00;
-    NPCType: []; Abilities: [abPoisoned, abDiseased]; ),
+    DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 16;); Color: $FF00BB00;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased];),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; PV: 55;
-    DV: 43; MaxCount: 3; Damage: (Min: 15; Max: 17; ); Color: $FF559977;
-    NPCType: []; Abilities: [abStunned, abBloodlust]; ),
+    DV: 43; MaxCount: 3; Damage: (Min: 15; Max: 17;); Color: $FF559977;
+    NPCType: []; StatusEffects: [seStunned, seBloodlust];),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; PV: 50;
-    DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 17; ); Color: $FF223333;
-    NPCType: []; Abilities: [abPoisoned, abDiseased]; ),
+    DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 17;); Color: $FF223333;
+    NPCType: []; StatusEffects: [sePoisoned, seDiseased];),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10; PV: 65;
-    DV: 44; MaxCount: 5; Damage: (Min: 12; Max: 16; ); Color: $FF223333;
-    NPCType: []; Abilities: [abPoisoned, abBlinded, abBloodlust, abDrunk]; ),
+    DV: 44; MaxCount: 5; Damage: (Min: 12; Max: 16;); Color: $FF223333;
+    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seBloodlust, seDrunk];),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10; PV: 45;
-    DV: 45; MaxCount: 3; Damage: (Min: 14; Max: 18; ); Color: $FF773333;
-    NPCType: []; Abilities: [abBurning, abBloodlust, abCursed, abDiseased,
-    abArmor_Reduction]; ),
+    DV: 45; MaxCount: 3; Damage: (Min: 14; Max: 18;); Color: $FF773333;
+    NPCType: []; StatusEffects: [seBurning, seBloodlust, seCursed, seDiseased,
+    seArmor_Reduction];),
     // Vulture
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 50;
-    DV: 45; MaxCount: 2; Damage: (Min: 15; Max: 19; ); Color: $FFAA3333;
-    NPCType: []; Abilities: [abBurning, abBloodlust, abCursed, abDiseased]; ),
+    DV: 45; MaxCount: 2; Damage: (Min: 15; Max: 19;); Color: $FFAA3333;
+    NPCType: []; StatusEffects: [seBurning, seBloodlust, seCursed,
+    seDiseased];),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 120;
-    DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23; ); Color: $FF223333;
-    NPCType: []; Abilities: [abStunned, abAfraid]; ),
+    DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23;); Color: $FF223333;
+    NPCType: []; StatusEffects: [seStunned, seAfraid];),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 25;
-    DV: 46; MaxCount: 9; Damage: (Min: 10; Max: 14; ); Color: $FF223333;
-    NPCType: []; Abilities: [abDiseased]; ),
+    DV: 46; MaxCount: 9; Damage: (Min: 10; Max: 14;); Color: $FF223333;
+    NPCType: []; StatusEffects: [seDiseased];),
     // Wraith
     (Symbol: 'w'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 19;
-    DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 15; ); Color: $FF22FFFF;
-    NPCType: []; Abilities: [abBurning, abBlinded, abCursed, abDiseased,
-    abAfraid]; ),
+    DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 15;); Color: $FF22FFFF;
+    NPCType: []; StatusEffects: [seBurning, seBlinded, seCursed, seDiseased,
+    seAfraid];),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 20;
-    DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25; ); Color: $FF223333;
-    NPCType: []; Abilities: [abBlinded, abCursed, abAfraid, abDrunk,
-    abArmor_Reduction]; ),
+    DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;); Color: $FF223333;
+    NPCType: []; StatusEffects: [seBlinded, seCursed, seAfraid, seDrunk,
+    seArmor_Reduction];),
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 10;
-    DV: 49; MaxCount: 1; Damage: (Min: 23; Max: 30; ); Color: $FF223333;
-    NPCType: []; Abilities: [abBurning, abBlinded]; ),
+    DV: 49; MaxCount: 1; Damage: (Min: 23; Max: 30;); Color: $FF223333;
+    NPCType: []; StatusEffects: [seBurning, seBlinded];),
     // Troll Brute
     (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 85;
-    DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30; ); Color: $FF223333;
-    NPCType: []; Abilities: [abStunned, abBloodlust]; ),
+    DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30;); Color: $FF223333;
+    NPCType: []; StatusEffects: [seStunned, seBloodlust];),
 
     // == Bosses == //
 
     // Black Hound
     (Symbol: 'h'; Boss: True; Maps: [deDark_Wood]; MaxLife: 45; Level: 3;
-    PV: 30; DV: 25; MaxCount: 1; Damage: (Min: 8; Max: 10; ); Color: $FFCC8899;
-    NPCType: []; Abilities: [abBurning, abBlinded]; ),
+    PV: 30; DV: 25; MaxCount: 1; Damage: (Min: 8; Max: 10;); Color: $FFCC8899;
+    NPCType: []; StatusEffects: [seBurning, seBlinded];),
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDark_Wood]; MaxLife: 50; Level: 3;
-    PV: 45; DV: 30; MaxCount: 1; Damage: (Min: 9; Max: 11; ); Color: $FF66DD99;
-    NPCType: []; Abilities: [abPoisoned, abStunned, abBlinded, abDiseased,
-    abAfraid, abDrunk]; ),
+    PV: 45; DV: 30; MaxCount: 1; Damage: (Min: 9; Max: 11;); Color: $FF66DD99;
+    NPCType: []; StatusEffects: [sePoisoned, seStunned, seBlinded, seDiseased,
+    seAfraid, seDrunk];),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDark_Wood]; MaxLife: 55; Level: 3;
-    PV: 55; DV: 30; MaxCount: 1; Damage: (Min: 10; Max: 12; ); Color: $FF44FF77;
-    NPCType: []; Abilities: [abPoisoned, abBlinded, abDiseased, abDrunk]; ),
+    PV: 55; DV: 30; MaxCount: 1; Damage: (Min: 10; Max: 12;); Color: $FF44FF77;
+    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seDrunk];),
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGray_Cave]; MaxLife: 60; Level: 5;
-    PV: 60; DV: 32; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: $FFAA77CC;
-    NPCType: []; Abilities: [abStunned, abBurning, abBloodlust, abCursed,
-    abArmor_Reduction]; ),
+    PV: 60; DV: 32; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: $FFAA77CC;
+    NPCType: []; StatusEffects: [seStunned, seBurning, seBloodlust, seCursed,
+    seArmor_Reduction];),
     // Swamp Worm
     (Symbol: 'w'; Boss: True; Maps: [deGray_Cave]; MaxLife: 63; Level: 5;
-    PV: 80; DV: 35; MaxCount: 1; Damage: (Min: 12; Max: 18; ); Color: $FF6699BB;
-    NPCType: []; Abilities: [abPoisoned, abBlinded, abDiseased, abAfraid,
-    abDrunk]; ),
+    PV: 80; DV: 35; MaxCount: 1; Damage: (Min: 12; Max: 18;); Color: $FF6699BB;
+    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seAfraid,
+    seDrunk];),
     // Giant Slug
     (Symbol: 's'; Boss: True; Maps: [deGray_Cave]; MaxLife: 67; Level: 5;
-    PV: 90; DV: 38; MaxCount: 1; Damage: (Min: 14; Max: 20; ); Color: $FFCCAADD;
-    NPCType: []; Abilities: [abPoisoned, abBlinded, abDiseased, abAfraid,
-    abDrunk]; ),
+    PV: 90; DV: 38; MaxCount: 1; Damage: (Min: 14; Max: 20;); Color: $FFCCAADD;
+    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seAfraid,
+    seDrunk];),
     // Centaur
     (Symbol: 'c'; Boss: True; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
-    PV: 55; DV: 40; MaxCount: 1; Damage: (Min: 18; Max: 23; ); Color: $FF77CCAA;
-    NPCType: []; Abilities: []; ),
+    PV: 55; DV: 40; MaxCount: 1; Damage: (Min: 18; Max: 23;); Color: $FF77CCAA;
+    NPCType: []; StatusEffects: [seAfraid];),
     // Satyr
     (Symbol: 's'; Boss: True; Maps: [deDeep_Cave]; MaxLife: 75; Level: 7;
-    PV: 45; DV: 45; MaxCount: 1; Damage: (Min: 20; Max: 25; ); Color: $FF3388AA;
-    NPCType: []; Abilities: [abBurning, abBlinded]; ),
+    PV: 45; DV: 45; MaxCount: 1; Damage: (Min: 20; Max: 25;); Color: $FF3388AA;
+    NPCType: []; StatusEffects: [seBurning, seBlinded];),
     // Titan
     (Symbol: 't'; Boss: True; Maps: [deDeep_Cave]; MaxLife: 95; Level: 8;
-    PV: 150; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25; ); Color: $FFAABB77;
-    NPCType: []; Abilities: [abStunned, abBurning, abAfraid]; ),
+    PV: 150; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25;); Color: $FFAABB77;
+    NPCType: []; StatusEffects: [seStunned, seBurning, seAfraid];),
     // Hill Giant
     (Symbol: 'g'; Boss: True; Maps: [deBlood_Cave]; MaxLife: 96; Level: 9;
-    PV: 160; DV: 50; MaxCount: 1; Damage: (Min: 23; Max: 25; ); Color: $FF2233FF;
-    NPCType: []; Abilities: [abStunned, abBurning, abAfraid]; ),
+    PV: 160; DV: 50; MaxCount: 1; Damage: (Min: 23; Max: 25;); Color: $FF2233FF;
+    NPCType: []; StatusEffects: [seStunned, seBurning, seAfraid];),
     // Stone Giant
     (Symbol: 'g'; Boss: True; Maps: [deBlood_Cave]; MaxLife: 99; Level: 9;
-    PV: 180; DV: 54; MaxCount: 1; Damage: (Min: 24; Max: 25; ); Color: $FF22FF33;
-    NPCType: []; Abilities: [abStunned, abAfraid]; ),
+    PV: 180; DV: 54; MaxCount: 1; Damage: (Min: 24; Max: 25;); Color: $FF22FF33;
+    NPCType: []; StatusEffects: [seStunned, seAfraid];),
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBlood_Cave]; MaxLife: 100; Level: 10;
-    PV: 190; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30; ); Color: $FF223333;
-    NPCType: []; Abilities: [abStunned, abBloodlust, abAfraid,
-    abArmor_Reduction]; ),
+    PV: 190; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30;); Color: $FF223333;
+    NPCType: []; StatusEffects: [seStunned, seBloodlust, seAfraid,
+    seArmor_Reduction];),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15; PV: 200;
-    DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75; ); Color: $FFDD7711;
-    NPCType: []; Abilities: [abBurning, abBloodlust, abAfraid,
-    abArmor_Reduction]; ),
+    DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75;); Color: $FFDD7711;
+    NPCType: []; StatusEffects: [seBurning, seBloodlust, seAfraid,
+    seArmor_Reduction];),
 
     // == NPC == //
 
     // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clBlue;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clBlue;
     NPCType: [ntScrTrader_A, ntPotManaTrader_B, ntJewTrader_C, ntRuneTrader_D]),
 
     // Armor Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clWhite;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clWhite;
     NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C, ntQuest_D]),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clRed;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clRed;
     NPCType: [ntBlacksmith_A, ntSmithTrader_B, ntGemTrader_C, ntIdentify_D]),
 
     // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;);
     Color: clLightYellow; NPCType: [ntFoodTrader_A, ntTavTrader_B]),
 
     // Armor, Shields, Weapons and Sell Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;);
     Color: clLightestGreen; NPCType: [ntArmTrader_A, ntShTrader_B,
     ntWpnTrader_C, ntSell_D]),
 
     // Bows and Quivers Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;);
     Color: clLightBlue; NPCType: [ntBowTrader_A, ntQvrTrader_B, ntArrTrader_C]),
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clGreen;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clGreen;
     NPCType: [ntHealer_A, ntHealTrader_B]),
 
     // Arcane Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clBlue;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clBlue;
     NPCType: [ntStaffTrader_A, ntWandTrader_B, ntBookTrader_C]),
 
     // Weapon Trader (Cellar)
     (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
-    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightRed;
-    NPCType: [ntDaggerTrader_A, ntVenomTrader_B])
-    );
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15;); Color: clLightRed;
+    NPCType: [ntDaggerTrader_A, ntVenomTrader_B]));
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);
@@ -590,14 +589,14 @@ begin
   Boss := False;
   Alive := True;
   Force := AForce;
-  Abilities.Modify(abSleeping, 1);
+  StatusEffects.Modify(seSleeping, 1);
   // Color
   FColor := MobBase[TMobEnum(ID)].Color;
   // Life
   V := Game.EnsureRange(IfThen(MobBase[TMobEnum(ID)].Boss,
     (MobBase[TMobEnum(ID)].Level + Ord(Game.Difficulty)) * 25, 0), UIntMax);
-  Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife +
-    V, MobBase[TMobEnum(ID)].MaxLife + (Ord(Game.Difficulty) *
+  Attributes.SetValue(atMaxLife, Math.RandomRange(MobBase[TMobEnum(ID)].MaxLife
+    + V, MobBase[TMobEnum(ID)].MaxLife + (Ord(Game.Difficulty) *
     MobBase[TMobEnum(ID)].Level) + V));
   Self.Fill;
   // DV
@@ -606,13 +605,14 @@ begin
     5, DVMax - 10));
   // PV
   V := MobBase[TMobEnum(ID)].PV + (Ord(Game.Difficulty) * 10);
-  Attributes.SetValue(atPV, Game.EnsureRange(Math.RandomRange(V, V * 2), PVMax - 10));
+  Attributes.SetValue(atPV, Game.EnsureRange(Math.RandomRange(V, V * 2),
+    PVMax - 10));
   // Boss
   if MobBase[TMobEnum(ID)].Boss then
   begin
     if Mode.Wizard then
-      Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)),
-        X, Y, Ord(AZ)]));
+      Game.Log(Format('%s [%d:%d:%d]', [Mobs.GetName(TMobEnum(ID)), X, Y,
+        Ord(AZ)]));
     Boss := True;
     IsBoss := True;
     // PV
@@ -645,67 +645,67 @@ begin
     Game.ShowEffects := False;
 
     // Bloodlust (10%)
-    if (abBloodlust in MobBase[TMobEnum(ID)].Abilities) and
+    if (seBloodlust in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(L + 5, L + 15), UIntMax);
-      Abilities.Modify(abBloodlust, Dam);
+      StatusEffects.Modify(seBloodlust, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s feel lust for blood (%d).',
-        Abilities.GetColor(abBloodlust)), [The, Dam]));
+        StatusEffects.GetColor(seBloodlust)), [The, Dam]));
       Exit;
     end;
 
     // Drunk (5%)
-    if (abDrunk in MobBase[TMobEnum(ID)].Abilities) and
+    if (seDrunk in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.RandomRange(7, L + 10);
-      Player.Abilities.Modify(abBlinded, Dam);
+      Player.StatusEffects.Modify(seBlinded, Dam);
       MsgLog.Add(Format(Terminal.Colorize('You are drunk (%d).',
-        Abilities.GetColor(abDrunk)), [Dam]));
+        StatusEffects.GetColor(seDrunk)), [Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Blinded (5%)
-    if (abBlinded in MobBase[TMobEnum(ID)].Abilities) and
+    if (seBlinded in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Math.RandomRange(1, L);
-      Player.Abilities.Modify(abBlinded, Dam);
+      Player.StatusEffects.Modify(seBlinded, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s blinded you (%d).',
-        Abilities.GetColor(abBlinded)), [The, Dam]));
+        StatusEffects.GetColor(seBlinded)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Stunned (5%)
-    if (abStunned in MobBase[TMobEnum(ID)].Abilities) and
+    if (seStunned in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(1, L), UIntMax);
-      Player.Abilities.Modify(abStunned, Dam);
+      Player.StatusEffects.Modify(seStunned, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s is stuns you (%d).',
-        Abilities.GetColor(abStunned)), [The, Dam]));
+        StatusEffects.GetColor(seStunned)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Weak (20%)
-    if (abWeak in MobBase[TMobEnum(ID)].Abilities) and
+    if (seWeak in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(10, L * 10), UIntMax);
-      Player.Abilities.Modify(abWeak, Dam);
+      Player.StatusEffects.Modify(seWeak, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s has weakened you (%d).',
-        Abilities.GetColor(abWeak)), [The, Dam]));
+        StatusEffects.GetColor(seWeak)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Diseased (20%)
-    if (abDiseased in MobBase[TMobEnum(ID)].Abilities) and
+    if (seDiseased in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 5) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
@@ -713,50 +713,50 @@ begin
         L * (Ord(Game.Difficulty) + 9)), UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
         Dam := Game.EnsureRange(Dam * 3, UIntMax);
-      Player.Abilities.Modify(abDiseased, Dam);
+      Player.StatusEffects.Modify(seDiseased, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s has infected you (%d).',
-        Abilities.GetColor(abDiseased)), [The, Dam]));
+        StatusEffects.GetColor(seDiseased)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Poisoned (10%)
-    if (abPoisoned in MobBase[TMobEnum(ID)].Abilities) and
+    if (sePoisoned in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(L * 5, L * 15), UIntMax);
-      Player.Abilities.Modify(abPoisoned, Dam);
+      Player.StatusEffects.Modify(sePoisoned, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s is poisoning you (%d).',
-        Abilities.GetColor(abPoisoned)), [The, Dam]));
+        StatusEffects.GetColor(sePoisoned)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Afraid (10%)
-    if (abAfraid in MobBase[TMobEnum(ID)].Abilities) and
+    if (seAfraid in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(L * 10, L * 20), UIntMax);
-      Player.Abilities.Modify(abAfraid, Dam);
+      Player.StatusEffects.Modify(seAfraid, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s scared you (%d).',
-        Abilities.GetColor(abAfraid)), [The, Dam]));
+        StatusEffects.GetColor(seAfraid)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Armor Reduction (10%)
-    if (abArmor_Reduction in MobBase[TMobEnum(ID)].Abilities) and
+    if (seArmor_Reduction in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(L * 3, L * 7), UIntMax);
-      Player.Abilities.Modify(abArmor_Reduction, Dam);
-      // MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'), Abilities.GetColor(abArmor_Reduction)), [The, Dam]));
+      Player.StatusEffects.Modify(seArmor_Reduction, Dam);
+      // MsgLog.Add(Format(Terminal.Colorize(_('%s scared you (%d).'), StatusEffects.GetColor(abArmor_Reduction)), [The, Dam]));
       Game.ShowEffects := True;
       Player.Calc;
       Exit;
     end;
     // Cursed (10%)
-    if (abCursed in MobBase[TMobEnum(ID)].Abilities) and
+    if (seCursed in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 10) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
@@ -764,21 +764,21 @@ begin
         L * (Ord(Game.Difficulty) + 5)), UIntMax);
       if MobBase[TMobEnum(ID)].Boss then
         Dam := Game.EnsureRange(Dam * 3, UIntMax);
-      Player.Abilities.Modify(abCursed, Dam);
+      Player.StatusEffects.Modify(seCursed, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s has cursed you (%d).',
-        Abilities.GetColor(abCursed)), [The, Dam]));
+        StatusEffects.GetColor(seCursed)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
     // Burning (5%)
-    if (abBurning in MobBase[TMobEnum(ID)].Abilities) and
+    if (seBurning in MobBase[TMobEnum(ID)].StatusEffects) and
       (Math.RandomRange(0, 20) = 0) then
     begin
       L := MobBase[TMobEnum(ID)].Level;
       Dam := Game.EnsureRange(Math.RandomRange(L + 2, L + 5), UIntMax);
-      Player.Abilities.Modify(abBurning, Dam);
+      Player.StatusEffects.Modify(seBurning, Dam);
       MsgLog.Add(Format(Terminal.Colorize('%s has burnt you (%d).',
-        Abilities.GetColor(abBurning)), [The, Dam]));
+        StatusEffects.GetColor(seBurning)), [The, Dam]));
       Game.ShowEffects := True;
       Exit;
     end;
@@ -786,10 +786,10 @@ begin
     Dam := Game.EnsureRange(RandomRange(MobBase[TMobEnum(ID)].Damage.Min +
       Ord(Game.Difficulty), MobBase[TMobEnum(ID)].Damage.Max +
       (Ord(Game.Difficulty) * 3)), UIntMax);
-    // Abilities
-    if Abilities.IsAbility(abBloodlust) then
+    // StatusEffects
+    if StatusEffects.IsStatusEffect(seBloodlust) then
       Inc(Dam, (Dam div 3));
-    if Abilities.IsAbility(abWeak) then
+    if StatusEffects.IsStatusEffect(seWeak) then
       Dec(Dam, Dam div 3);
     // PV
     Dam := GetRealDamage(Dam, Player.Attributes.Attrib[atPV].Value);
@@ -830,8 +830,8 @@ begin
   case Math.RandomRange(0, 2) of
     0:
       S := Format('You kill %s.', [The]);
-    else
-      S := Format('%s dies.', [GetCapit(The)]);
+  else
+    S := Format('%s dies.', [GetCapit(The)]);
   end;
   if Boss then
     S := Terminal.Colorize(S, clAlarm);
@@ -852,7 +852,8 @@ begin
   Player.Statictics.Inc(stScore, MobBase[TMobEnum(ID)].Level * V);
   Self.DropItems;
   // Boss
-  if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mbTroll_King)) then
+  if (Boss and (Map.Current = FinalDungeon) and (TMobEnum(ID) = mbTroll_King))
+  then
   begin
     if not Mode.Wizard then
       Game.Won := True;
@@ -883,8 +884,8 @@ end;
 
 function TMob.GetVision: UInt;
 begin
-  Result := EnsureRange(VisionMax - (Player.Skills.Skill[skStealth].Value div 6),
-    3, VisionMax);
+  Result := EnsureRange(VisionMax - (Player.Skills.Skill[skStealth]
+    .Value div 6), 3, VisionMax);
 end;
 
 procedure TMob.Process;
@@ -902,11 +903,11 @@ begin
   Dist := GetDist(Player.X, Player.Y);
   if (Dist > GetVision) then
     Exit;
-  if Abilities.IsAbility(abSleeping) then
+  if StatusEffects.IsStatusEffect(seSleeping) then
   begin
     if (Math.RandomRange(0, 99) <= 15) then
     begin
-      Abilities.Ability[abSleeping] := 0;
+      StatusEffects.StatusEffect[seSleeping] := 0;
       Player.Skills.DoSkill(skStealth);
       if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
       begin
@@ -973,46 +974,46 @@ begin
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NY := -1;
-      end;
+        begin
+          NY := -1;
+        end;
       1:
-      begin
-        NY := +1;
-      end;
+        begin
+          NY := +1;
+        end;
       2:
-      begin
-        NX := +1;
-        NY := -1;
-      end;
+        begin
+          NX := +1;
+          NY := -1;
+        end;
       3:
-      begin
-        NX := +1;
-        NY := +1;
-      end;
+        begin
+          NX := +1;
+          NY := +1;
+        end;
     end;
   end;
   if (AX > PX) then
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NY := -1;
-      end;
+        begin
+          NY := -1;
+        end;
       1:
-      begin
-        NY := +1;
-      end;
+        begin
+          NY := +1;
+        end;
       2:
-      begin
-        NX := -1;
-        NY := +1;
-      end;
+        begin
+          NX := -1;
+          NY := +1;
+        end;
       3:
-      begin
-        NX := -1;
-        NY := -1;
-      end;
+        begin
+          NX := -1;
+          NY := -1;
+        end;
     end;
   end;
 
@@ -1020,53 +1021,53 @@ begin
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NX := +1;
-      end;
+        begin
+          NX := +1;
+        end;
       1:
-      begin
-        NX := -1;
-      end;
+        begin
+          NX := -1;
+        end;
       2:
-      begin
-        NX := -1;
-        NY := +1;
-      end;
+        begin
+          NX := -1;
+          NY := +1;
+        end;
       3:
-      begin
-        NX := +1;
-        NY := +1;
-      end;
+        begin
+          NX := +1;
+          NY := +1;
+        end;
     end;
   end;
   if (AY > PY) then
   begin
     case Math.RandomRange(0, 4) of
       0:
-      begin
-        NX := +1;
-      end;
+        begin
+          NX := +1;
+        end;
       1:
-      begin
-        NX := -1;
-      end;
+        begin
+          NX := -1;
+        end;
       2:
-      begin
-        NX := -1;
-        NY := -1;
-      end;
+        begin
+          NX := -1;
+          NY := -1;
+        end;
       3:
-      begin
-        NX := +1;
-        NY := -1;
-      end;
+        begin
+          NX := +1;
+          NY := -1;
+        end;
     end;
   end;
 
   FX := Map.EnsureRange(X + NX);
   FY := Map.EnsureRange(Y + NY);
-  if Mobs.GetFreeTile(FX, FY) and (Map.GetTileEnum(FX, FY, Map.Current) in
-    FreeTiles) then
+  if Mobs.GetFreeTile(FX, FY) and (Map.GetTileEnum(FX, FY, Map.Current)
+    in FreeTiles) then
   begin
     X := FX;
     Y := FY;
@@ -1254,10 +1255,10 @@ end;
 
 initialization
 
-  Mobs := TMobs.Create;
+Mobs := TMobs.Create;
 
 finalization
 
-  FreeAndNil(Mobs);
+FreeAndNil(Mobs);
 
 end.

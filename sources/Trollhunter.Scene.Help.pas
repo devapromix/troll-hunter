@@ -159,7 +159,7 @@ begin
       Terminal.Print(CX, 14, Format('%s: %s, %s   %s: %s   %s: %s',
         ['Move', UI.KeyToStr('arrow keys'), UI.KeyToStr('numpad'),
          'Wait', UI.KeyToStr('5'),
-         'Effects', UI.KeyToStr('TAB')]), TK_ALIGN_CENTER);
+         'Status Effects', UI.KeyToStr('TAB')]), TK_ALIGN_CENTER);
 
       X := 1;
       Y := 16;
