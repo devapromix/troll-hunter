@@ -16,6 +16,7 @@ type
     function Satiation: string;
     function StartGold: UInt;
     function IsMage: Boolean;
+    function HasSpellbook: Boolean;
   end;
 
 implementation
@@ -86,6 +87,11 @@ end;
 function TPlayerHelper.IsMage: Boolean;
 begin
   Result := Player.HClass = clMage;
+end;
+
+function TPlayerHelper.HasSpellbook: Boolean;
+begin
+  Result := Self.GetEquippedIndex(stSpellbook) >= 0;
 end;
 
 end.

@@ -83,7 +83,6 @@ type
     FManaShieldPercent: UInt;
     function GetVision: UInt;
     procedure Empty;
-    function GetEquippedIndex(ASlot: TSlotType): Int;
     function GetQuiverIndex: Int;
     function HasArrows: boolean;
     procedure UseArrow;
@@ -125,6 +124,7 @@ type
     procedure Clear();
     procedure AddTurn;
     procedure Spawn;
+    function GetEquippedIndex(ASlot: TSlotType): Int;
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
     procedure RangedAttack(Index: Int);

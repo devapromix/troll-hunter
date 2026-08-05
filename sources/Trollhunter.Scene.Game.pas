@@ -494,10 +494,10 @@ begin
       Scenes.SetScene(scOptions);
     TK_B:
     begin
-      if (Items_Inventory_GetItemCount(Ord(itmSpellbook)) > 0) then
+      if Player.HasSpellbook then
         Scenes.SetScene(scSpellbook)
       else
-        MsgLog.Add('You don''t have a spellbook!');
+        MsgLog.Add('You don''t have a spellbook equipped!');
     end;
     TK_C:
       CastSpell();
