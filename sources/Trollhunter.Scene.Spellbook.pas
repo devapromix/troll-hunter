@@ -29,6 +29,7 @@ uses
   Trollhunter.Item,
   Trollhunter.Spell.School,
   Trollhunter.Spellbook,
+  Trollhunter.Projectile.Types,
   Trollhunter.Spell;
 
   { TSceneSpellbook }
@@ -40,7 +41,7 @@ var
   LSpell: TSpellData;
   LSpellSchool: TSpellSchoolData;
   IsActive: boolean;
-  LInfo, LSpellLevel: string;
+  LInfo, LSpellLevel, LDamage: string;
 begin
   if FSelecting then
     UI.Title('Select Quick Spell')
@@ -70,7 +71,11 @@ begin
     Terminal.Print(5, Y, LSpell.Name);
     LSpellLevel := Game.IfThen(LSpell.Level > Player.Attributes.Attrib[atLev].Value,
       Items.GetLevel(LSpell.Level), '');
-    LInfo := Items.AddItemInfo([LSpellLevel, Items.GetInfo('-',
+    LDamage := '';
+    if (LSpell.Projectile <> prNone) then
+      LDamage := Format('%s%d-%d', [UI.Icon(icSword), Player.SpellMinDamage(I),
+        Player.SpellMaxDamage(I)]);
+    LInfo := Items.AddItemInfo([LSpellLevel, LDamage, Items.GetInfo('-',
       LSpell.ManaCost, 'Mana')]);
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);

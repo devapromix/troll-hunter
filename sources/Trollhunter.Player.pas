@@ -174,6 +174,8 @@ type
     procedure StartEquip;
     procedure StartSkills;
     function IsOnStash: boolean;
+    function SpellMinDamage(ASpellEnum: TSpellEnum): UInt;
+    function SpellMaxDamage(ASpellEnum: TSpellEnum): UInt;
     function QuickSpellMinDamage: UInt;
     function QuickSpellMaxDamage: UInt;
   end;
@@ -2603,16 +2605,26 @@ begin
   end;
 end;
 
+function TPlayer.SpellMinDamage(ASpellEnum: TSpellEnum): UInt;
+begin
+  Result := EnsureRange(Spellbook.GetSpell(ASpellEnum).Spell.MinDamage +
+    Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
+end;
+
+function TPlayer.SpellMaxDamage(ASpellEnum: TSpellEnum): UInt;
+begin
+  Result := EnsureRange(Spellbook.GetSpell(ASpellEnum).Spell.MaxDamage +
+    Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
+end;
+
 function TPlayer.QuickSpellMinDamage: UInt;
 begin
-  Result := EnsureRange(Spellbook.GetQuickSpell.Spell.MinDamage +
-    Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
+  Result := SpellMinDamage(Spellbook.GetQuickSpellEnum);
 end;
 
 function TPlayer.QuickSpellMaxDamage: UInt;
 begin
-  Result := EnsureRange(Spellbook.GetQuickSpell.Spell.MaxDamage +
-    Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
+  Result := SpellMaxDamage(Spellbook.GetQuickSpellEnum);
 end;
 
 initialization
