@@ -270,7 +270,7 @@ begin
     Player.FireModeExit;
     Exit;
   end;
-  LSpellEnum := Spellbook.GetQuickSpellEnum;
+  LSpellEnum := Spellbook.GetLastSelectedSpell;
   TX := Mobs.Mob[Index].X;
   TY := Mobs.Mob[Index].Y;
   LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
@@ -300,23 +300,7 @@ procedure TSceneGame.CastSpell();
 begin
   if Player.IsDead then
     Exit;
-  if Spellbook.GetQuickSpell.Enable then
-  begin
-    if Spellbook.GetQuickSpell.Spell.Projectile <> prNone then
-      Player.MagicFireModeEnter
-    else if (Player.Attributes.Attrib[atMana].Value >=
-      Spellbook.GetQuickSpell.Spell.ManaCost) then
-    begin
-      Player.Statictics.Inc(stSpCast);
-      Player.Attributes.Modify(atMana, -Spellbook.GetQuickSpell.Spell.ManaCost);
-      Player.DoEffects(Spellbook.GetQuickSpell.Spell.Effects,
-        Spellbook.GetQuickSpell.Spell.Value);
-    end
-    else
-      MsgLog.Add('You need more mana!');
-  end
-  else
-    MsgLog.Add('No quick spell selected.');
+  Spellbook.DoQuickSpell;
 end;
 
 procedure TSceneGame.Update(var Key: UInt);

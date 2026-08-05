@@ -23,6 +23,7 @@ type
     FQuickSpell: TSpellEnum;
     FHasQuickSpell: boolean;
     FLastSelectedSpell: TSpellEnum;
+    procedure CastSpell(ASpellEnum: TSpellEnum);
   public
     procedure Clear;
     procedure AddSpell(ASpellEnum: TSpellEnum);
@@ -32,8 +33,10 @@ type
     function GetSpellByIndex(Index: UInt): TSpellEnum;
     function GetActiveSpellCount: UInt;
     procedure DoSpell(Index: UInt);
+    procedure DoQuickSpell;
     function GetQuickSpell: TSpell;
     function GetQuickSpellEnum: TSpellEnum;
+    function GetLastSelectedSpell: TSpellEnum;
   end;
 
 var
@@ -46,6 +49,7 @@ uses
   Trollhunter.Player,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
+  Trollhunter.Projectile.Types,
   Trollhunter.UI,
   Trollhunter.Attribute;
 
@@ -68,6 +72,29 @@ begin
   FLastSelectedSpell := Low(TSpellEnum);
 end;
 
+procedure TSpellbook.CastSpell(ASpellEnum: TSpellEnum);
+begin
+  FLastSelectedSpell := ASpellEnum;
+  if (FSpell[ASpellEnum].Spell.Projectile <> prNone) then
+  begin
+    Player.MagicFireModeEnter;
+    Exit;
+  end;
+  if (Player.Attributes.Attrib[atMana].Value >= FSpell[ASpellEnum].Spell.ManaCost)
+  then
+  begin
+    Player.Statictics.Inc(stSpCast);
+    Player.Attributes.Modify(atMana, -FSpell[ASpellEnum].Spell.ManaCost);
+    Player.DoEffects(FSpell[ASpellEnum].Spell.Effects, FSpell[ASpellEnum].Spell.Value);
+  end
+  else
+  begin
+    MsgLog.Add('You need more mana!');
+    Player.Calc;
+    Player.Wait;
+  end;
+end;
+
 procedure TSpellbook.DoSpell(Index: UInt);
 var
   C: UInt;
@@ -79,24 +106,19 @@ begin
     begin
       if (Index = C) then
       begin
-        FLastSelectedSpell := I;
-        if (Player.Attributes.Attrib[atMana].Value >= FSpell[I].Spell.ManaCost)
-        then
-        begin
-          Player.Statictics.Inc(stSpCast);
-          Player.Attributes.Modify(atMana, -FSpell[I].Spell.ManaCost);
-          Player.DoEffects(FSpell[I].Spell.Effects, FSpell[I].Spell.Value);
-        end
-        else
-        begin
-          MsgLog.Add('You need more mana!');
-          Player.Calc;
-          Player.Wait;
-        end;
+        CastSpell(I);
         Exit;
       end;
       Inc(C);
     end;
+end;
+
+procedure TSpellbook.DoQuickSpell;
+begin
+  if GetQuickSpell.Enable then
+    CastSpell(FQuickSpell)
+  else
+    MsgLog.Add('No quick spell selected.');
 end;
 
 function TSpellbook.GetSpellByIndex(Index: UInt): TSpellEnum;
@@ -151,6 +173,11 @@ end;
 function TSpellbook.GetQuickSpellEnum: TSpellEnum;
 begin
   Result := FQuickSpell;
+end;
+
+function TSpellbook.GetLastSelectedSpell: TSpellEnum;
+begin
+  Result := FLastSelectedSpell;
 end;
 
 function TSpellbook.GetSpell(ASpellEnum: TSpellEnum): TSpell;

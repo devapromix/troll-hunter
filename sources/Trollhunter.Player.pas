@@ -819,15 +819,15 @@ end;
 procedure TPlayer.MagicFireModeEnter;
 begin
   FMagicMode := True;
-  if not (Spellbook.GetQuickSpell.Enable and
-    (Spellbook.GetQuickSpell.Spell.Projectile <> prNone)) then
+  if not (Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Enable and
+    (Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Spell.Projectile <> prNone)) then
   begin
     FFireMode := False;
     MsgLog.Add('No quick spell selected.');
     Exit;
   end;
   if (Self.Attributes.Attrib[atMana].Value <
-    Spellbook.GetQuickSpell.Spell.ManaCost) then
+    Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Spell.ManaCost) then
   begin
     FFireMode := False;
     MsgLog.Add('You need more mana!');
