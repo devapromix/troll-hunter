@@ -570,9 +570,9 @@ begin
   begin
     CrStr := '';
     RMin := EnsureRange(FBowMinDamage + Attributes.Attrib[atDex]
-      .Value div 5, 1, UIntMax - 1);
+      .Value div 7, 1, UIntMax - 1);
     RMax := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value div
-      3, 2, UIntMax);
+      5, 2, UIntMax);
     Dam := Game.EnsureRange(RandomRange(RMin, RMax + 1), UIntMax);
     // Abilities
     if Abilities.IsAbility(abBloodlust) then
@@ -675,9 +675,9 @@ begin
   if (TargetDV < Math.RandomRange(0, 100)) and not Abilities.IsAbility(abCursed) then
   begin
     MMin := EnsureRange(LSpell.MinDamage + Attributes.Attrib[atWil].Value div
-      5, 1, UIntMax - 1);
+      7, 1, UIntMax - 1);
     MMax := EnsureRange(LSpell.MaxDamage + Attributes.Attrib[atWil].Value div
-      3, 2, UIntMax);
+      5, 2, UIntMax);
     Dam := Game.EnsureRange(RandomRange(MMin, MMax + 1), UIntMax);
     if Abilities.IsAbility(abBloodlust) then
       Inc(Dam, Dam div 4);

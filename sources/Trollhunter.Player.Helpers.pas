@@ -15,7 +15,6 @@ type
     function GenderStr: string;
     function Satiation: string;
     function StartGold: UInt;
-    function IsMage: boolean;
     function HasSpellbook: boolean;
     function HasQuiver: boolean;
   end;
@@ -83,11 +82,6 @@ const
   CGold: array [TDifficulty] of UInt = (400, 250, 100, 50);
 begin
   Result := CGold[Game.Difficulty];
-end;
-
-function TPlayerHelper.IsMage: boolean;
-begin
-  Result := Player.HClass = clMage;
 end;
 
 function TPlayerHelper.HasSpellbook: boolean;
