@@ -797,8 +797,8 @@ begin
     MsgLog.Add('No quick spell selected.');
     Exit;
   end;
-  if (Self.Attributes.Attrib[atMana].Value <
-    Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Spell.ManaCost) then
+  if (Self.Attributes.Attrib[atMana].Value < Spellbook.GetSpell(
+    Spellbook.GetLastSelectedSpell).Spell.ManaCost) then
   begin
     FFireMode := False;
     MsgLog.Add('You need more mana!');
@@ -2117,6 +2117,8 @@ procedure TPlayer.Rest(ATurns: UInt);
 var
   T: UInt;
 begin
+  if Player.IsDead then
+    Exit;
   IsRest := True;
   MsgLog.Add(Format('Start rest (%d turns)!', [ATurns]));
   for T := 1 to ATurns do
@@ -2125,17 +2127,19 @@ begin
       Break;
     Wait();
   end;
-  MsgLog.Add(Format('Finish rest (%d turns)!', [T - 1]));
   Abilities.Ability[abWeak] := 0;
   if (Math.RandomRange(0, 9) = 0) then
     Abilities.Ability[abDrunk] := 0;
   IsRest := False;
+  if Player.IsDead then
+    Exit;
+  MsgLog.Add(Format('Finish rest (%d turns)!', [T - 1]));
 end;
 
 procedure TPlayer.StartEquip;
 var
   J: TSlotType;
-  I: Integer;
+  I: integer;
 begin
   // Equipment
   for J := Low(ClassProp[HClass].EquipItem) to High(ClassProp[HClass].EquipItem) do
