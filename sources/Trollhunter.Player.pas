@@ -83,7 +83,6 @@ type
     FManaShieldPercent: UInt;
     function GetVision: UInt;
     procedure Empty;
-    function GetQuiverIndex: Int;
     function HasArrows: boolean;
     procedure UseArrow;
     function HasCharges: boolean;
@@ -140,7 +139,6 @@ type
     function RangedMaxDamage: UInt;
     function CanRangedAttack: boolean;
     procedure ReceiveHealing;
-    function HasQuiver: boolean;
     function IsQuiverBroken: boolean;
     function GetArrowsToBuy: Int;
     procedure BuyArrows;
@@ -158,6 +156,7 @@ type
     procedure Equip(Index: Int);
     procedure UnEquip(Index: Int);
     procedure Sell(Index: Int);
+    function GetQuiverIndex: Int;
     procedure RepairItem(Index: Int);
     procedure PoisonItem(Index: Int);
     procedure DisenchantItem(Index: Int);
@@ -455,11 +454,6 @@ begin
     Exit;
   FItem.Value := Game.EnsureRange(FItem.Value - 1, UIntMax);
   Items_Inventory_SetItem(WIndex, FItem);
-end;
-
-function TPlayer.HasQuiver: boolean;
-begin
-  Result := (Self.GetQuiverIndex >= 0);
 end;
 
 function TPlayer.IsQuiverBroken: boolean;

@@ -15,8 +15,9 @@ type
     function GenderStr: string;
     function Satiation: string;
     function StartGold: UInt;
-    function IsMage: Boolean;
-    function HasSpellbook: Boolean;
+    function IsMage: boolean;
+    function HasSpellbook: boolean;
+    function HasQuiver: boolean;
   end;
 
 implementation
@@ -30,12 +31,12 @@ uses
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
 
-{ TPlayerHelper }
+  { TPlayerHelper }
 
 function TPlayerHelper.FullName: string;
 begin
   Result := Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
-    Player.GenderStr, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)])
+    Player.GenderStr, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)]);
 end;
 
 function TPlayerHelper.GenderStr: string;
@@ -84,14 +85,19 @@ begin
   Result := CGold[Game.Difficulty];
 end;
 
-function TPlayerHelper.IsMage: Boolean;
+function TPlayerHelper.IsMage: boolean;
 begin
   Result := Player.HClass = clMage;
 end;
 
-function TPlayerHelper.HasSpellbook: Boolean;
+function TPlayerHelper.HasSpellbook: boolean;
 begin
   Result := Self.GetEquippedIndex(stSpellbook) >= 0;
+end;
+
+function TPlayerHelper.HasQuiver: boolean;
+begin
+  Result := (Self.GetQuiverIndex >= 0);
 end;
 
 end.
