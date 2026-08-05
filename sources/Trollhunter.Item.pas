@@ -1689,7 +1689,7 @@ const
     Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; ),
 
     // Spellbook
-    (Symbol: '?'; ItemType: itSpellbook; SlotType: stNone; MaxStack: 1;
+    (Symbol: '?'; ItemType: itSpellbook; SlotType: stSpellbook; MaxStack: 1;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 300; Color: clWhite; Deep: [deDark_Wood .. deDrom];
@@ -2503,7 +2503,8 @@ end;
 function TItems.GetSlotName(const SlotType: TSlotType): string;
 const
   SlotName: array [TSlotType] of string = ('', 'Head', 'Torso', 'Hands', 'Feet',
-    'Main Hand', 'Off-Hand', 'Ranged', 'Quiver', 'Neck', 'Finger', 'In Hands');
+    'Main Hand', 'Off-Hand', 'Ranged', 'Quiver', 'Neck', 'Finger', 'Spellbook',
+    'In Hands');
 begin
   Result := Terminal.Colorize(Format('{%s}', [SlotName[SlotType]]),
     Terminal.GetColorFromIni('Equip'));

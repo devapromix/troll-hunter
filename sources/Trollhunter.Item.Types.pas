@@ -70,8 +70,7 @@ const
     RepairTypeItems + MagicTypeItems + VenomTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
     RuneTypeItems + ArrowTypeItems;
-  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems +
-    SpellbookTypeItems;
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
     CoinTypeItems + ArrowTypeItems;
 

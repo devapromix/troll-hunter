@@ -25,7 +25,7 @@ type
     Life: TMinMax;
     Mana: TMinMax;
     Skill: array [TClassSkillEnum] of TSkillEnum;
-    EquipItem: array [stHead .. stFinger] of TItemEnum;
+    EquipItem: array [stHead .. stSpellbook] of TItemEnum;
     ClassItem: array of TItemEnum;
   end;
 
@@ -38,7 +38,7 @@ const
      Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
      Skill: (skBlade, skAthletics, skBodybuilding);
      EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
-     itmNone, itmNone, itmNone, itmNone); ),
+     itmNone, itmNone, itmNone, itmNone, itmNone); ),
 
     // Mage
     (Description: 'A powerful mage who wields ancient magic. Weak in close combat but deadly with spells at range.';
@@ -47,8 +47,8 @@ const
      Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
      Skill: (skStaff, skConcentration, skMeditation);
      EquipItem: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
-     itmYew_Wand, itmNone, itmNone, itmNone);
-     ClassItem: [itmSpellbook, itmElemental_Book_of_Fire_Arrow]),
+     itmYew_Wand, itmNone, itmNone, itmSpellbook, itmNone);
+     ClassItem: [itmElemental_Book_of_Fire_Arrow]),
 
     // Ranger
     (Description: 'A skilled hunter and archer. Agile and versatile, excels in forests and open terrain.';
@@ -57,7 +57,7 @@ const
      Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
      Skill: (skBow, skDodge, skAwareness);
      EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
-     itmShort_Bow, itmLight_Quiver, itmNone, itmNone); ),
+     itmShort_Bow, itmLight_Quiver, itmNone, itmNone, itmNone); ),
 
     // Thief
     (Description: 'A nimble rogue and shadow master. Deadly in stealth, ambushes and quick strikes.';
@@ -66,7 +66,7 @@ const
      Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
      Skill: (skDagger, skToughness, skStealth);
      EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
-     itmNone, itmNone, itmNone, itmNone);  ClassItem: [itmWyvern_Venom])
+     itmNone, itmNone, itmNone, itmNone, itmNone);  ClassItem: [itmWyvern_Venom])
   );
 type
   TClasses = class(TObject)

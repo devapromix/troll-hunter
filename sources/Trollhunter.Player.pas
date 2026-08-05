@@ -1294,13 +1294,7 @@ begin
     Self.Calc;
     Exit;
   end;
-  if (T in SpellbookTypeItems) then
-  begin
-    Scenes.SetScene(scSpellbook);
-    Self.Calc;
-    Wait;
-  end
-  else if (T in NotEquipTypeItems) then
+  if (T in NotEquipTypeItems) then
   begin
     if (T in UseTypeItems) then
     begin

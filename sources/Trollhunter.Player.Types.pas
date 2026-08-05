@@ -18,7 +18,7 @@ type
 
 type
   TSlotType = (stNone, stHead, stTorso, stHands, stFeet, stMainHand, stOffHand,
-    stRanged, stQuiver, stNeck, stFinger, stTorch);
+    stRanged, stQuiver, stNeck, stFinger, stSpellbook, stTorch);
 
 implementation
 
