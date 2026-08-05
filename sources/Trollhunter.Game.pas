@@ -172,12 +172,15 @@ type
     procedure ChScreen;
   end;
 
+  function IfWizard(const ATrue, AFalse: Int): Int;
+
 var
   Game: TGame;
 
 implementation
 
 uses
+  Math,
   BearLibTerminal,
   SysUtils,
   Trollhunter.Player,
@@ -320,6 +323,11 @@ end;
 function TGame.GetTitle: string;
 begin
   Result := 'Trollhunter';
+end;
+
+function IfWizard(const ATrue, AFalse: Int): Int;
+begin
+  Result := IfThen(Mode.Wizard, ATrue, AFalse);
 end;
 
 initialization

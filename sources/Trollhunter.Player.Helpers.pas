@@ -207,10 +207,10 @@ begin
     if ClassProp[HClass].ClassItem[I] <> itmNone then
       Items.AddItemToInv(ClassProp[HClass].ClassItem[I]);
   // Add foods
-  Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 3));
-  Items.AddItemToInv(itmTorch, IfThen(Mode.Wizard, 3, 1));
+  Items.AddItemToInv(itmBread_Ration, IfWizard(9, 3));
+  Items.AddItemToInv(itmTorch, IfWizard(3, 1));
   // Add coins
-  Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999),
+  Items.AddItemToInv(itmGold, IfWizard(RandomRange(3333, 9999),
     StartGold));
   // Calc
   Calc();

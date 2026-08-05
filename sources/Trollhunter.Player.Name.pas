@@ -12,167 +12,124 @@ implementation
 
 uses
   SysUtils,
-  Trollhunter.Player,
-  Trollhunter.UI.Log;
+  Trollhunter.Player;
 
 function GetRandomPlayerName(): string;
 const
   // Human
-  HumanPrefix: array[0..24] of string = (
-    'Al','Ar','Bal','Bel','Bor','Cal','Cor','Dar','Dor','El',
-    'Gar','Hal','Jar','Kel','Lor','Mal','Nar','Per','Rav','Tal',
-    'Tor','Val','Var','Yor','Zar'
+  HumanPrefix: array[0..20] of string = (
+    'Al', 'Ar', 'Bal', 'Bel', 'Bor', 'Cal', 'Cor', 'Dan', 'Dar', 'Dor', 'El',
+    'Gar', 'Hal', 'Jar', 'Kel', 'Lor', 'Mal', 'Nar', 'Tal', 'Val', 'Zar'
   );
-  HumanMiddle: array[0..14] of string = (
-    'a','e','i','o','u','an','ar','en','er','in','on','or','el','ir','ul'
+  HumanMaleSuffix: array[0..14] of string = (
+    'ric', 'dor', 'mar', 'nar', 'rin', 'lan', 'gar', 'ian', 'ion',
+    'ald', 'orn', 'vik', 'tur', 'mir', 'kan'
   );
-  HumanMaleSuffix: array[0..19] of string = (
-    'd','n','r','ric','dor','mar','nar','rin','lan','gar',
-    'ian','ion','ald','orn','vik','tur','rak','mir','kan','wyn'
-  );
-  HumanFemaleSuffix: array[0..19] of string = (
-    'a','ia','elle','ina','ira','lyn','ria','ssa','tha','wen',
-    'ara','essa','ora','eth','lia','mira','nna','ris','yra','una'
-  );
-  HumanMaleEnding: array[0..9] of string = (
-    '','','n','r','s','or','ar','on','us','as'
-  );
-  HumanFemaleEnding: array[0..9] of string = (
-    '','','a','ia','ra','na','la','elle','ine','ara'
+  HumanFemaleSuffix: array[0..14] of string = (
+    'ia', 'elle', 'ina', 'ira', 'lyn', 'ria', 'ssa', 'tha', 'wen',
+    'ara', 'essa', 'ora', 'eth', 'lia', 'mira'
   );
 
   // Elf
-  ElfPrefix: array[0..24] of string = (
-    'Ae','Ara','Cele','Elen','Fae','Gal','Ili','Lae','Loth','Mae',
-    'Nim','Quel','Sil','Thal','Ther','Ael','Eir','Fing','Leg','Mir',
-    'Ril','Syl','Tel','Vael','Yen'
+  ElfPrefix: array[0..19] of string = (
+    'Ae', 'Ara', 'Cele', 'Elen', 'Fae', 'Gal', 'Ili', 'Lae', 'Loth', 'Mae',
+    'Nim', 'Quel', 'Sil', 'Thal', 'Ther', 'Ael', 'Eir', 'Leg', 'Mir', 'Syl'
   );
-  ElfMiddle: array[0..14] of string = (
-    'ae','ei','ia','ie','il','el','en','an','ar','or','ith','eth','ion','yr','wen'
+  ElfMaleSuffix: array[0..14] of string = (
+    'ion', 'iel', 'las', 'dil', 'dir', 'rond', 'nor', 'mir', 'thal',
+    'dor', 'wen', 'rin', 'orn', 'thar', 'ven'
   );
-  ElfMaleSuffix: array[0..19] of string = (
-    'ion','iel','las','dil','dir','rond','nor','mir','thal','dor',
-    'wen','rin','las','orn','iel','ion','dil','thar','ven','yr'
-  );
-  ElfFemaleSuffix: array[0..19] of string = (
-    'iel','wen','lith','riel','siel','eth','iel','ina','ara','elle',
-    'yssa','thia','wen','riel','lith','essa','ora','via','yana','etha'
-  );
-  ElfMaleEnding: array[0..9] of string = (
-    '','','ion','iel','las','dir','nor','mir','thal','orn'
-  );
-  ElfFemaleEnding: array[0..9] of string = (
-    '','','iel','wen','lith','riel','eth','ara','elle','yssa'
+  ElfFemaleSuffix: array[0..14] of string = (
+    'iel', 'wen', 'lith', 'riel', 'siel', 'eth', 'ina', 'ara', 'elle',
+    'yssa', 'thia', 'essa', 'ora', 'via', 'yana'
   );
 
   // Gnome
-  GnomePrefix: array[0..24] of string = (
-    'Bim','Cob','Dim','Fiz','Gim','Hob','Jix','Kip','Lim','Nix',
-    'Pim','Quib','Rix','Spro','Tib','Wib','Zim','Bok','Dab','Fen',
-    'Glib','Klick','Nibble','Pip','Tock'
+  GnomePrefix: array[0..19] of string = (
+    'Bim', 'Cob', 'Dim', 'Fiz', 'Gim', 'Hob', 'Jix', 'Kip', 'Lim', 'Nix',
+    'Pim', 'Quib', 'Rix', 'Spro', 'Tib', 'Wib', 'Zim', 'Bok', 'Fen', 'Pip'
   );
-  GnomeMiddle: array[0..9] of string = (
-    'i','o','u','ee','oo','ix','ib','op','in','el'
+  GnomeMaleSuffix: array[0..14] of string = (
+    'ble', 'kin', 'wick', 'bert', 'nol', 'gle', 'rick', 'bin',
+    'wig', 'nock', 'nub', 'tock', 'zap', 'fix', 'nix'
   );
-  GnomeMaleSuffix: array[0..19] of string = (
-    'ble','kin','wick','wick','bert','nold','wick','gle','rick','wick',
-    'bin','wig','nock','wick','bert','gle','rick','bin','wick','nub'
-  );
-  GnomeFemaleSuffix: array[0..19] of string = (
-    'bie','nie','sie','mie','vie','kie','lie','pie','tie','wie',
-    'ella','ina','ette','ie','y','bie','nie','sie','mie','vie'
-  );
-  GnomeMaleEnding: array[0..9] of string = (
-    '','','kin','wick','bert','gle','rick','bin','nock','nub'
-  );
-  GnomeFemaleEnding: array[0..9] of string = (
-    '','','bie','nie','sie','ella','ina','ette','ie','y'
+  GnomeFemaleSuffix: array[0..14] of string = (
+    'bie', 'nie', 'sie', 'mie', 'vie', 'kie', 'lie', 'pie',
+    'tie', 'wie', 'ella', 'ina', 'ette', 'ie', 'y'
   );
 
   // Dwarf
-  DwarfPrefix: array[0..24] of string = (
-    'Bal','Bor','Dur','Thr','Grim','Thor','Kar','Bro','Durin','Gim',
-    'Khaz','Nor','Thrain','Ul','Vor','Bar','Dain','Grom','Krag','Mor',
-    'Rur','Skor','Thok','Urist','Zog'
+  DwarfPrefix: array[0..19] of string = (
+    'Bal', 'Bor', 'Dur', 'Thr', 'Grim', 'Thor', 'Kar', 'Bro', 'Gim', 'Khaz',
+    'Nor', 'Ul', 'Vor', 'Bar', 'Dain', 'Grom', 'Krag', 'Mor', 'Rur', 'Thok'
   );
-  DwarfMiddle: array[0..9] of string = (
-    'a','o','u','ar','or','ur','in','ak','ok','uk'
+  DwarfMaleSuffix: array[0..14] of string = (
+    'in', 'or', 'un', 'ak', 'ok', 'rum', 'dor', 'gar', 'gor',
+    'kan', 'kor', 'nar', 'nir', 'rok', 'dur'
   );
-  DwarfMaleSuffix: array[0..19] of string = (
-    'in','or','un','ak','ok','grim','dor','gar','gor','kan',
-    'kor','nar','nir','rok','thor','tur','var','vik','zor','dur'
-  );
-  DwarfFemaleSuffix: array[0..19] of string = (
-    'a','ina','ora','una','dis','hild','run','thra','bera','dora',
-    'gund','hild','ilda','kasa','mila','nara','olda','risa','saga','tora'
-  );
-  DwarfMaleEnding: array[0..9] of string = (
-    '','','in','or','un','ak','ok','grim','dor','gar'
-  );
-  DwarfFemaleEnding: array[0..9] of string = (
-    '','','a','ina','ora','dis','hild','run','bera','ilda'
+  DwarfFemaleSuffix: array[0..14] of string = (
+    'a', 'ina', 'ora', 'una', 'dis', 'hild', 'run', 'thra',
+    'bera', 'dora', 'gund', 'ilda', 'kasa', 'mila', 'nara'
   );
 
 var
-  S: string;
+  Prefix, Suffix: string;
 begin
   case Player.HRace of
     rcHuman:
       begin
-        S := HumanPrefix[Random(Length(HumanPrefix))];
-        if Random(3) = 0 then
-          S := S + HumanMiddle[Random(Length(HumanMiddle))];
+        Prefix := HumanPrefix[Random(Length(HumanPrefix))];
         if Player.Gender = gdMale then
-          S := S + HumanMaleSuffix[Random(Length(HumanMaleSuffix))] +
-               HumanMaleEnding[Random(Length(HumanMaleEnding))]
+          Suffix := HumanMaleSuffix[Random(Length(HumanMaleSuffix))]
         else
-          S := S + HumanFemaleSuffix[Random(Length(HumanFemaleSuffix))] +
-               HumanFemaleEnding[Random(Length(HumanFemaleEnding))];
+        begin
+          Suffix := HumanFemaleSuffix[Random(Length(HumanFemaleSuffix))];
+        end;
       end;
+
     rcElf:
       begin
-        S := ElfPrefix[Random(Length(ElfPrefix))];
-        if Random(2) = 0 then
-          S := S + ElfMiddle[Random(Length(ElfMiddle))];
+        Prefix := ElfPrefix[Random(Length(ElfPrefix))];
         if Player.Gender = gdMale then
-          S := S + ElfMaleSuffix[Random(Length(ElfMaleSuffix))] +
-               ElfMaleEnding[Random(Length(ElfMaleEnding))]
+          Suffix := ElfMaleSuffix[Random(Length(ElfMaleSuffix))]
         else
-          S := S + ElfFemaleSuffix[Random(Length(ElfFemaleSuffix))] +
-               ElfFemaleEnding[Random(Length(ElfFemaleEnding))];
+        begin
+          Suffix := ElfFemaleSuffix[Random(Length(ElfFemaleSuffix))];
+        end;
       end;
+
     rcGnome:
       begin
-        S := GnomePrefix[Random(Length(GnomePrefix))];
-        if Random(4) = 0 then
-          S := S + GnomeMiddle[Random(Length(GnomeMiddle))];
+        Prefix := GnomePrefix[Random(Length(GnomePrefix))];
         if Player.Gender = gdMale then
-          S := S + GnomeMaleSuffix[Random(Length(GnomeMaleSuffix))] +
-               GnomeMaleEnding[Random(Length(GnomeMaleEnding))]
+          Suffix := GnomeMaleSuffix[Random(Length(GnomeMaleSuffix))]
         else
-          S := S + GnomeFemaleSuffix[Random(Length(GnomeFemaleSuffix))] +
-               GnomeFemaleEnding[Random(Length(GnomeFemaleEnding))];
+        begin
+          Suffix := GnomeFemaleSuffix[Random(Length(GnomeFemaleSuffix))];
+        end;
       end;
+
     rcDwarf:
       begin
-        S := DwarfPrefix[Random(Length(DwarfPrefix))];
-        if Random(3) = 0 then
-          S := S + DwarfMiddle[Random(Length(DwarfMiddle))];
+        Prefix := DwarfPrefix[Random(Length(DwarfPrefix))];
         if Player.Gender = gdMale then
-          S := S + DwarfMaleSuffix[Random(Length(DwarfMaleSuffix))] +
-               DwarfMaleEnding[Random(Length(DwarfMaleEnding))]
+          Suffix := DwarfMaleSuffix[Random(Length(DwarfMaleSuffix))]
         else
-          S := S + DwarfFemaleSuffix[Random(Length(DwarfFemaleSuffix))] +
-               DwarfFemaleEnding[Random(Length(DwarfFemaleEnding))];
+        begin
+          Suffix := DwarfFemaleSuffix[Random(Length(DwarfFemaleSuffix))];
+        end;
       end;
   else
-    S := 'Nameless';
+    begin
+      Result := 'Nameless';
+      Exit;
+    end;
   end;
 
-  if Length(S) > 0 then
-    S[1] := UpCase(S[1]);
+  Result := Prefix + Suffix;
 
-  Result := S;
+  if Length(Result) > 0 then
+    Result[1] := UpCase(Result[1]);
 end;
 
 end.
