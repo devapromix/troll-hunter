@@ -70,7 +70,8 @@ begin
     Terminal.Print(5, Y, LSpell.Name);
     LSpellLevel := Game.IfThen(LSpell.Level > Player.Attributes.Attrib[atLev].Value,
       Items.GetLevel(LSpell.Level), '');
-    LInfo := Items.AddItemInfo([LSpellLevel, Items.GetInfo('-', LSpell.ManaCost, 'Mana')]);
+    LInfo := Items.AddItemInfo([LSpellLevel, Items.GetInfo('-',
+      LSpell.ManaCost, 'Mana')]);
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);
     LSpellSchool := GetSpellSchoolData(LSpell.School);
@@ -120,7 +121,11 @@ begin
     TK_ESCAPE:
       Scenes.SetScene(scGame);
     TK_A .. TK_Z:
+    begin
       Spellbook.DoSpell(Key - TK_A);
+      if Player.FireMode then
+        Scenes.SetScene(scGame);
+    end;
     TK_TAB:
       FSelecting := True;
     TK_BACKSPACE:
