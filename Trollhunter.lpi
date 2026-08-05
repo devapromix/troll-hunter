@@ -147,6 +147,7 @@
       <Unit27>
         <Filename Value="sources\Trollhunter.Helpers.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Trollhunter.Player.Helpers"/>
       </Unit27>
       <Unit28>
         <Filename Value="sources\Trollhunter.Scenes.pas"/>

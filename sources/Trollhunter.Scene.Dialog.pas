@@ -28,6 +28,7 @@ uses
   Trollhunter.Item.Shop,
   Trollhunter.Attribute,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
   Trollhunter.Terminal;
 
 { TSceneDialog }

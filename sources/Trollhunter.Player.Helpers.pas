@@ -21,6 +21,7 @@ type
     function IsQuiverBroken: boolean;
     function HasArrows: boolean;
     function HasCharges: boolean;
+    function GetArrowsToBuy: Int;
   end;
 
 implementation
@@ -30,6 +31,8 @@ uses
   Trollhunter.Game,
   Trollhunter.Terminal,
   Trollhunter.Attribute,
+  Trollhunter.Item,
+  Trollhunter.Item.Types,
   Trollhunter.Item.Common,
   Trollhunter.Item.Inventory,
   Trollhunter.UI,
@@ -135,6 +138,22 @@ var
 begin
   WIndex := Self.GetEquippedIndex(stRanged);
   Result := (WIndex >= 0) and (Items_Inventory_GetItem(WIndex).Value > 0);
+end;
+
+function TPlayerHelper.GetArrowsToBuy: Int;
+var
+  QIndex: Int;
+  FItem: Item;
+begin
+  Result := 0;
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+    Exit;
+  FItem := Items_Inventory_GetItem(QIndex);
+  if (FItem.Durability = 0) then
+    Exit;
+  Result := Int(ItemBase[TItemEnum(FItem.ItemID)].Value) +
+    Int(Items.GetBonus(FItem, btQuiverCap)) - Int(FItem.Value);
 end;
 
 end.

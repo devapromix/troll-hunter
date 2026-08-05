@@ -137,7 +137,6 @@ type
     function RangedMaxDamage: UInt;
     function CanRangedAttack: boolean;
     procedure ReceiveHealing;
-    function GetArrowsToBuy: Int;
     procedure BuyArrows;
     procedure RechargeWand(Index: Int);
     procedure Buy(Index: Int);
@@ -1455,22 +1454,6 @@ begin
   else
     MsgLog.Add('You need more gold.');
   Self.Calc;
-end;
-
-function TPlayer.GetArrowsToBuy: Int;
-var
-  QIndex: Int;
-  FItem: Item;
-begin
-  Result := 0;
-  QIndex := Self.GetQuiverIndex;
-  if (QIndex < 0) then
-    Exit;
-  FItem := Items_Inventory_GetItem(QIndex);
-  if (FItem.Durability = 0) then
-    Exit;
-  Result := Int(ItemBase[TItemEnum(FItem.ItemID)].Value) +
-    Int(Items.GetBonus(FItem, btQuiverCap)) - Int(FItem.Value);
 end;
 
 procedure TPlayer.BuyArrows;
