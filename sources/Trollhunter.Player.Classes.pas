@@ -26,7 +26,7 @@ type
     Mana: TMinMax;
     Skill: array [TClassSkillEnum] of TSkillEnum;
     Item: array [stHead .. stFinger] of TItemEnum;
-    AddItem: TItemEnum;
+    ClassItem: array of TItemEnum;
   end;
 
 const
@@ -48,7 +48,7 @@ const
      Skill: (skStaff, skConcentration, skMeditation);
      Item: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
      itmYew_Wand, itmNone, itmNone, itmNone);
-     AddItem: itmElemental_Book_of_Fire_Arrow),
+     ClassItem: [itmElemental_Book_of_Fire_Arrow]),
 
     // Ranger
     (Description: 'A skilled hunter and archer. Agile and versatile, excels in forests and open terrain.';
@@ -66,7 +66,7 @@ const
      Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
      Skill: (skDagger, skToughness, skStealth);
      Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
-     itmNone, itmNone, itmNone, itmNone);  AddItem: itmWyvern_Venom)
+     itmNone, itmNone, itmNone, itmNone);  ClassItem: [itmWyvern_Venom])
   );
 type
   TClasses = class(TObject)
@@ -123,6 +123,7 @@ function TClasses.GetItems(I: TClassEnum): string;
 var
   J: TSlotType;
   F: boolean;
+  Z: Integer;
 
   procedure Add(AName: string);
   begin
@@ -139,7 +140,8 @@ begin
       Add(Items.Name[ClassProp[I].Item[J]]);
       F := True;
     end;
-  Add(Items.Name[ClassProp[I].AddItem]);
+  for Z := 0 to Length(ClassProp[I].ClassItem) -1 do
+    Add(Items.Name[ClassProp[I].ClassItem[Z]]);
 end;
 
 function TClasses.GetName(I: TClassEnum): string;

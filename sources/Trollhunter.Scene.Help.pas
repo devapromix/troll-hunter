@@ -170,7 +170,7 @@ begin
       inherited AddLine('L', 'Look mode');
       inherited AddLine('R', 'Rest');
       inherited AddLine('M', 'View messages');
-      inherited AddLine('B', 'Spellbook');
+      inherited AddLine('B', 'Spellbook (only Mage)');
       inherited AddLine('C', 'Cast quick spell');
       inherited AddLine('T', 'Talents');
       inherited AddLine('F', 'Ranged fire mode');

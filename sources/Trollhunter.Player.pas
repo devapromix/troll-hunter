@@ -2164,14 +2164,16 @@ end;
 procedure TPlayer.StartEquip;
 var
   J: TSlotType;
+  I: Integer;
 begin
   // Equipment
   for J := Low(ClassProp[HClass].Item) to High(ClassProp[HClass].Item) do
     if (ClassProp[HClass].Item[J] <> TItemEnum.itmNone) then
       Items.AddItemToInv(ClassProp[HClass].Item[J], 1, True, True);
   // Add class items
-  if ClassProp[HClass].AddItem <> itmNone then
-    Items.AddItemToInv(ClassProp[HClass].AddItem);
+  for I := 0 to Length(ClassProp[HClass].ClassItem) - 1 do
+    if ClassProp[HClass].ClassItem[I] <> itmNone then
+      Items.AddItemToInv(ClassProp[HClass].ClassItem[I]);
   // Add foods
   Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 5));
   Items.AddItemToInv(itmTorch, 3);
