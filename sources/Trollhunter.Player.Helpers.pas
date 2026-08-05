@@ -13,6 +13,7 @@ type
   TPlayerHelper = class helper for TPlayer
     function FullName: string;
     function GenderStr: string;
+    function GenderIcon: string;
     function Satiation: string;
     function StartGold: UInt;
     function HasSpellbook: boolean;
@@ -31,6 +32,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Item.Common,
   Trollhunter.Item.Inventory,
+  Trollhunter.UI,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
@@ -39,16 +41,24 @@ uses
 
 function TPlayerHelper.FullName: string;
 begin
-  Result := Format('%s, %s (%s), %s', [Player.Name, Races.GetName(Player.HRace),
-    Player.GenderStr, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)]);
+  Result := Format('%s, %s %s, %s', [Player.Name, Races.GetName(Player.HRace),
+    Player.GenderIcon, Trollhunter.Player.Classes.Classes.GetName(Player.HClass)]);
 end;
 
 function TPlayerHelper.GenderStr: string;
 begin
   if (Player.Gender = gdMale) then
-    Result := 'Male'
+    Result := 'Male ' + UI.Icon(icMale)
   else
-    Result := 'Female';
+    Result := 'Female ' + UI.Icon(icFemale);
+end;
+
+function TPlayerHelper.GenderIcon: string;
+begin
+  if (Player.Gender = gdMale) then
+    Result := UI.Icon(icMale)
+  else
+    Result := UI.Icon(icFemale);
 end;
 
 function TPlayerHelper.Satiation: string;
