@@ -239,6 +239,7 @@ procedure TSceneClass.Render;
 var
   I: UInt;
   C: TClassEnum;
+  ItemsSize: TSize;
 
   procedure Add(const AName: string);
   var
@@ -265,8 +266,8 @@ begin
 
   inherited Render;
 
-  Terminal.Print(DX, 17, 'Items' + ': ' + Terminal.Colorize(
-    Classes.GetItems(Player.HClass), 'Lush'));
+  ItemsSize := Terminal.Print(DX, 17, CX + 15, 2, 'Items' + ': ' + Terminal.Colorize(
+    Classes.GetItems(Player.HClass), 'Lush'), TK_ALIGN_TOP);
 
   Terminal.Print(DX, 19, 'Skills' + ': ' + Terminal.Colorize(
     Classes.GetSkills(Player.HClass), 'Lush'));

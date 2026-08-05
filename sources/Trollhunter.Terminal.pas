@@ -45,8 +45,8 @@ type
     procedure Print(AX, AY: Int; AText: string; Align: Int); overload;
     procedure Print(AX, AY: Int; AText: string; AForegroundColor: cardinal;
       ABackgroundColor: cardinal); overload;
-    procedure Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
-      Align: UInt); overload;
+    function Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
+      Align: UInt): TSize; overload;
     function Pick(const AX, AY: UInt): UInt;
     property char: TEntSize read FChar write FChar;
     property Window: TEntSize read FWindow write FWindow;
@@ -67,7 +67,7 @@ implementation
 uses
   SysUtils,
   Classes,
-  Math,
+   Math,
   Trollhunter.Game;
 
   { TTerminal }
@@ -204,10 +204,10 @@ begin
   Result := terminal_pick(AX, AY, 0);
 end;
 
-procedure TTerminal.Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
-  Align: UInt);
+function TTerminal.Print(ALeft, ATop, AWidth, AHeight: Int; AText: string;
+  Align: UInt): TSize;
 begin
-  terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
+  Result := terminal_print(ALeft, ATop, AWidth, AHeight, Align, AText);
 end;
 
 procedure TTerminal.Print(AX, AY: Int; AText: string; AForegroundColor: cardinal;
