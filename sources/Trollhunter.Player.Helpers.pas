@@ -17,6 +17,9 @@ type
     function StartGold: UInt;
     function HasSpellbook: boolean;
     function HasQuiver: boolean;
+    function IsQuiverBroken: boolean;
+    function HasArrows: boolean;
+    function HasCharges: boolean;
   end;
 
 implementation
@@ -26,6 +29,8 @@ uses
   Trollhunter.Game,
   Trollhunter.Terminal,
   Trollhunter.Attribute,
+  Trollhunter.Item.Common,
+  Trollhunter.Item.Inventory,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
@@ -92,6 +97,34 @@ end;
 function TPlayerHelper.HasQuiver: boolean;
 begin
   Result := (Self.GetQuiverIndex >= 0);
+end;
+
+function TPlayerHelper.IsQuiverBroken: boolean;
+var
+  QIndex: Int;
+begin
+  QIndex := Self.GetQuiverIndex;
+  Result := (QIndex >= 0) and (Items_Inventory_GetItem(QIndex).Durability = 0);
+end;
+
+function TPlayerHelper.HasArrows: boolean;
+var
+  QIndex: Int;
+  FItem: Item;
+begin
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+    Exit(False);
+  FItem := Items_Inventory_GetItem(QIndex);
+  Result := (FItem.Durability > 0) and (FItem.Value > 0);
+end;
+
+function TPlayerHelper.HasCharges: boolean;
+var
+  WIndex: Int;
+begin
+  WIndex := Self.GetEquippedIndex(stRanged);
+  Result := (WIndex >= 0) and (Items_Inventory_GetItem(WIndex).Value > 0);
 end;
 
 end.

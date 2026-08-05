@@ -83,11 +83,6 @@ type
     FManaShieldPercent: UInt;
     function GetVision: UInt;
     procedure Empty;
-    function HasArrows: boolean;
-    procedure UseArrow;
-    function HasCharges: boolean;
-    procedure UseCharge;
-    procedure BuildFireTargets(ARange: UInt);
   public
     constructor Create;
     destructor Destroy; override;
@@ -126,6 +121,9 @@ type
     function GetEquippedIndex(ASlot: TSlotType): Int;
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
+    procedure UseArrow;
+    procedure UseCharge;
+    procedure BuildFireTargets(ARange: UInt);
     procedure RangedAttack(Index: Int);
     procedure MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
     function CanFire: boolean;
@@ -139,7 +137,6 @@ type
     function RangedMaxDamage: UInt;
     function CanRangedAttack: boolean;
     procedure ReceiveHealing;
-    function IsQuiverBroken: boolean;
     function GetArrowsToBuy: Int;
     procedure BuyArrows;
     procedure RechargeWand(Index: Int);
@@ -433,14 +430,6 @@ begin
   Result := Self.GetEquippedIndex(stQuiver);
 end;
 
-function TPlayer.HasCharges: boolean;
-var
-  WIndex: Int;
-begin
-  WIndex := Self.GetEquippedIndex(stRanged);
-  Result := (WIndex >= 0) and (Items_Inventory_GetItem(WIndex).Value > 0);
-end;
-
 procedure TPlayer.UseCharge;
 var
   WIndex: Int;
@@ -454,26 +443,6 @@ begin
     Exit;
   FItem.Value := Game.EnsureRange(FItem.Value - 1, UIntMax);
   Items_Inventory_SetItem(WIndex, FItem);
-end;
-
-function TPlayer.IsQuiverBroken: boolean;
-var
-  QIndex: Int;
-begin
-  QIndex := Self.GetQuiverIndex;
-  Result := (QIndex >= 0) and (Items_Inventory_GetItem(QIndex).Durability = 0);
-end;
-
-function TPlayer.HasArrows: boolean;
-var
-  QIndex: Int;
-  FItem: Item;
-begin
-  QIndex := Self.GetQuiverIndex;
-  if (QIndex < 0) then
-    Exit(False);
-  FItem := Items_Inventory_GetItem(QIndex);
-  Result := (FItem.Durability > 0) and (FItem.Value > 0);
 end;
 
 procedure TPlayer.UseArrow;
