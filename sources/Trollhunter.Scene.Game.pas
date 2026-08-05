@@ -42,6 +42,7 @@ uses
   Trollhunter.Item.Inventory,
   Trollhunter.Statistic,
   Trollhunter.Item,
+  Trollhunter.Item.Types,
   Trollhunter.Map,
   Trollhunter.Spellbook,
   Trollhunter.Spell;
@@ -509,7 +510,7 @@ begin
       Scenes.SetScene(scOptions);
     TK_B:
     begin
-      if Player.IsMage then
+      if (Items_Inventory_GetItemCount(Ord(itmSpellbook)) > 0) then
         Scenes.SetScene(scSpellbook)
       else
         MsgLog.Add('You don''t have a spellbook!');

@@ -7,12 +7,7 @@ type
     itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant, itBlade,
     itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield,
     itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman,
-    itArrow, itQuiver, itTorch, itVenom);
-
-const
-  ItemGlyph: array [TItemType] of char = (' ', ' ', '%', '`', '$', '.', '!',
-    '!', 'o', '8', '?', '?', '*', ',', '&', '\', '/', '|', '_', '~', '-', '-',
-    ')', '+', '^', '&', '%', '%', '=', '"', '"', '{', '/', 'i', '!');
+    itArrow, itQuiver, itTorch, itVenom, itSpellbook);
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -59,6 +54,7 @@ const
   RangedWeaponItems = [itBow, itWand];
   TorchTypeItems = [itTorch];
   ArrowTypeItems = [itArrow];
+  SpellbookTypeItems = [itSpellbook];
 
   IdentTypeItems = WeaponTypeItems + ArmorTypeItems + JewelryTypeItems +
     FlaskTypeItems + QuiverTypeItems;
@@ -74,7 +70,8 @@ const
     RepairTypeItems + MagicTypeItems + VenomTypeItems;
   NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
     RuneTypeItems + ArrowTypeItems;
-  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
+  NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems +
+    SpellbookTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
     CoinTypeItems + ArrowTypeItems;
 
@@ -223,6 +220,8 @@ type
     itmWar_Maul, itmDoom_Hammer, // Mace
     // Arrows
     itmArrows,
+    // Spellbook
+    itmSpellbook,
     // Books
     itmArcane_Book_of_Mana_Shield, itmDivine_Book_of_Heal,
     itmNature_Book_of_Regeneration, itmShadow_Book_of_Curse,

@@ -25,7 +25,7 @@ type
     Life: TMinMax;
     Mana: TMinMax;
     Skill: array [TClassSkillEnum] of TSkillEnum;
-    Item: array [stHead .. stFinger] of TItemEnum;
+    EquipItem: array [stHead .. stFinger] of TItemEnum;
     ClassItem: array of TItemEnum;
   end;
 
@@ -37,7 +37,7 @@ const
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
      Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
      Skill: (skBlade, skAthletics, skBodybuilding);
-     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
+     EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
      itmNone, itmNone, itmNone, itmNone); ),
 
     // Mage
@@ -46,9 +46,9 @@ const
      Willpower: (Min: 1; Max: 4; ); Perception: (Min: 1; Max: 2; );
      Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
      Skill: (skStaff, skConcentration, skMeditation);
-     Item: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
+     EquipItem: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
      itmYew_Wand, itmNone, itmNone, itmNone);
-     ClassItem: [itmElemental_Book_of_Fire_Arrow]),
+     ClassItem: [itmSpellbook, itmElemental_Book_of_Fire_Arrow]),
 
     // Ranger
     (Description: 'A skilled hunter and archer. Agile and versatile, excels in forests and open terrain.';
@@ -56,7 +56,7 @@ const
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 2; );
      Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
      Skill: (skBow, skDodge, skAwareness);
-     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
+     EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
      itmShort_Bow, itmLight_Quiver, itmNone, itmNone); ),
 
     // Thief
@@ -65,7 +65,7 @@ const
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
      Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
      Skill: (skDagger, skToughness, skStealth);
-     Item: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
+     EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
      itmNone, itmNone, itmNone, itmNone);  ClassItem: [itmWyvern_Venom])
   );
 type
@@ -134,10 +134,10 @@ var
 begin
   F := False;
   Result := '';
-  for J := Low(ClassProp[I].Item) to High(ClassProp[I].Item) do
-    if (ClassProp[I].Item[J] <> TItemEnum.itmNone) then
+  for J := Low(ClassProp[I].EquipItem) to High(ClassProp[I].EquipItem) do
+    if (ClassProp[I].EquipItem[J] <> TItemEnum.itmNone) then
     begin
-      Add(Items.Name[ClassProp[I].Item[J]]);
+      Add(Items.Name[ClassProp[I].EquipItem[J]]);
       F := True;
     end;
   for Z := 0 to Length(ClassProp[I].ClassItem) -1 do

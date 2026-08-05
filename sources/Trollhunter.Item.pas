@@ -1688,6 +1688,13 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1; Color: clDarkYellow; Deep: [deDark_Wood .. deDrom]; ),
 
+    // Spellbook
+    (Symbol: '?'; ItemType: itSpellbook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 300; Color: clWhite; Deep: [deDark_Wood .. deDrom];
+    Effects: []; Value: 0; ManaCost: 0; ),
+
     // Magic Books
     // Arcane Book of Mana Shield
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
