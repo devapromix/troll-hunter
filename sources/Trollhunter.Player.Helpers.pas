@@ -22,6 +22,7 @@ type
     function HasArrows: boolean;
     function HasCharges: boolean;
     function GetArrowsToBuy: Int;
+    procedure UseArrow;
   end;
 
 implementation
@@ -36,6 +37,7 @@ uses
   Trollhunter.Item.Common,
   Trollhunter.Item.Inventory,
   Trollhunter.UI,
+  Trollhunter.UI.Log,
   Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
@@ -154,6 +156,25 @@ begin
     Exit;
   Result := Int(ItemBase[TItemEnum(FItem.ItemID)].Value) +
     Int(Items.GetBonus(FItem, btQuiverCap)) - Int(FItem.Value);
+end;
+
+procedure TPlayerHelper.UseArrow;
+var
+  QIndex: Int;
+  FItem: Item;
+begin
+  QIndex := Self.GetQuiverIndex;
+  if (QIndex < 0) then
+    Exit;
+  FItem := Items_Inventory_GetItem(QIndex);
+  if (FItem.Durability = 0) or (FItem.Value = 0) then
+    Exit;
+  FItem.Value := Game.EnsureRange(FItem.Value - 1, UIntMax);
+  Items_Inventory_SetItem(QIndex, FItem);
+  if (FItem.Value <= 25) then
+    MsgLog.Add(Terminal.Colorize(
+      Format('You are running out of arrows (%d left in your quiver).',
+      [FItem.Value]), clAlarm));
 end;
 
 end.
