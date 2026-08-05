@@ -171,8 +171,6 @@ type
     procedure AutoPickup();
     procedure RenderWeather(const AX, AY, AWidth: UInt);
     procedure Turn;
-    procedure StartEquip;
-    procedure StartSkills;
     function IsOnStash: boolean;
     function SpellMinDamage(ASpellEnum: TSpellEnum): UInt;
     function SpellMaxDamage(ASpellEnum: TSpellEnum): UInt;
@@ -2097,48 +2095,6 @@ begin
   if Player.IsDead then
     Exit;
   MsgLog.Add(Format('Finish rest (%d turns)!', [T - 1]));
-end;
-
-procedure TPlayer.StartEquip;
-var
-  J: TSlotType;
-  I: integer;
-begin
-  // Equipment
-  for J := Low(ClassProp[HClass].EquipItem) to High(ClassProp[HClass].EquipItem) do
-    if (ClassProp[HClass].EquipItem[J] <> TItemEnum.itmNone) then
-      Items.AddItemToInv(ClassProp[HClass].EquipItem[J], 1, True, True);
-  // Add class items
-  for I := 0 to Length(ClassProp[HClass].ClassItem) - 1 do
-    if ClassProp[HClass].ClassItem[I] <> itmNone then
-      Items.AddItemToInv(ClassProp[HClass].ClassItem[I]);
-  // Add foods
-  Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 5));
-  Items.AddItemToInv(itmTorch, 3);
-  // Add coins
-  Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999),
-    StartGold));
-  // Calc
-  Calc();
-  Fill();
-  // Wizard
-  if Mode.Wizard then
-  begin
-    Items.AddItemToInv(itmNature_Book_of_Verdant_Spear, 1);
-  end;
-end;
-
-procedure TPlayer.StartSkills;
-var
-  I: TClassSkillEnum;
-begin
-  // Skills
-  for I := Low(TClassSkillEnum) to High(TClassSkillEnum) do
-    Skills.Modify(ClassProp[Player.HClass].Skill[I],
-      Trollhunter.Player.Classes.Classes.GetSkillBeginValue(I));
-  // Calc
-  Calc();
-  Fill();
 end;
 
 function TPlayer.IsOnStash: boolean;

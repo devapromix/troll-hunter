@@ -23,11 +23,14 @@ type
     function HasCharges: boolean;
     function GetArrowsToBuy: Int;
     procedure UseArrow;
+    procedure StartSkills;
+    procedure StartItems;
   end;
 
 implementation
 
 uses
+  Math,
   SysUtils,
   Trollhunter.Game,
   Trollhunter.Terminal,
@@ -175,6 +178,48 @@ begin
     MsgLog.Add(Terminal.Colorize(
       Format('You are running out of arrows (%d left in your quiver).',
       [FItem.Value]), clAlarm));
+end;
+
+procedure TPlayerHelper.StartSkills;
+var
+  I: TClassSkillEnum;
+begin
+  // Skills
+  for I := Low(TClassSkillEnum) to High(TClassSkillEnum) do
+    Skills.Modify(ClassProp[Player.HClass].Skill[I],
+      Trollhunter.Player.Classes.Classes.GetSkillBeginValue(I));
+  // Calc
+  Calc();
+  Fill();
+end;
+
+procedure TPlayerHelper.StartItems;
+var
+  J: TSlotType;
+  I: integer;
+begin
+  // Equipment
+  for J := Low(ClassProp[HClass].EquipItem) to High(ClassProp[HClass].EquipItem) do
+    if (ClassProp[HClass].EquipItem[J] <> TItemEnum.itmNone) then
+      Items.AddItemToInv(ClassProp[HClass].EquipItem[J], 1, True, True);
+  // Add class items
+  for I := 0 to Length(ClassProp[HClass].ClassItem) - 1 do
+    if ClassProp[HClass].ClassItem[I] <> itmNone then
+      Items.AddItemToInv(ClassProp[HClass].ClassItem[I]);
+  // Add foods
+  Items.AddItemToInv(itmBread_Ration, IfThen(Mode.Wizard, 9, 3));
+  Items.AddItemToInv(itmTorch, IfThen(Mode.Wizard, 3, 1));
+  // Add coins
+  Items.AddItemToInv(itmGold, IfThen(Mode.Wizard, RandomRange(3333, 9999),
+    StartGold));
+  // Calc
+  Calc();
+  Fill();
+  // Wizard
+  if Mode.Wizard then
+  begin
+    Items.AddItemToInv(itmNature_Book_of_Verdant_Spear, 1);
+  end;
 end;
 
 end.

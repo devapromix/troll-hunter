@@ -2888,19 +2888,19 @@ end;
 function TItems.GetInventory: string;
 var
   SL: TStringList;
-  I, FCount: Int;
-  FItem: Item;
+  I, LCount: Int;
+  LItem: Item;
   S: string;
 begin
   Result := '';
   SL := TStringList.Create;
   try
-    FCount := Items_Inventory_GetCount().InRange(ItemMax);
-    for I := 0 to FCount - 1 do
+    LCount := Items_Inventory_GetCount().InRange(ItemMax);
+    for I := 0 to LCount - 1 do
     begin
-      FItem := Items_Inventory_GetItem(I);
-      S := Game.IfThen(FItem.Amount > 1, Format(' (%dx)', [FItem.Amount]), '');
-      S := GetCapit(GetDescAn(Trim(Items.GetName(FItem, True) + S)));
+      LItem := Items_Inventory_GetItem(I);
+      S := Game.IfThen(LItem.Amount > 1, Format(' (%dx)', [LItem.Amount]), '');
+      S := GetCapit(GetDescAn(Trim(Items.GetName(LItem, True) + S)));
       SL.Append(S);
     end;
     Result := SL.Text;

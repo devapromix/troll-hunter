@@ -22,6 +22,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Statistic,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
   Trollhunter.Game,
   Trollhunter.Player.Name,
   Trollhunter.Player.Races,
@@ -63,7 +64,7 @@ begin
         Mode.Game := True;
         Player.Talents.DoTalent
         (TSceneTalents(Scenes.GetScene(scTalents)).Talent);
-        Player.StartEquip;
+        Player.StartItems;
         Player.StartSkills;
         Scenes.SetScene(scGame);
       end;
