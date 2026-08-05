@@ -143,9 +143,9 @@ begin
   if Player.CanRangedAttack then
   begin
     Add('Min Ranged Damage', UI.Icon(icSword) + UI.Icon(icVision), 'Darker Yellow',
-      Player.RangedMinDamage, MinDamMax);
+      Player.RangedMinDamage, RangedMinDamageMax);
     Add('Max Ranged Damage', UI.Icon(icSword) + UI.Icon(icVision), 'Darker Yellow',
-      Player.RangedMaxDamage, MaxDamMax);
+      Player.RangedMaxDamage, RangedMaxDamageMax);
     Add('Range', UI.Icon(icVision), 'Vision',
       Player.FireRange, VisionMax);
   end;
@@ -155,9 +155,9 @@ begin
     (Spellbook.GetQuickSpell.Spell.Projectile <> prNone) then
   begin
     Add('Min Spell Damage', UI.Icon(icSword) + UI.Icon(icBook), 'Darker Yellow',
-      Player.QuickSpellMinDamage, MinDamMax);
+      Player.QuickSpellMinDamage, SpellMinDamageMax);
     Add('Max Spell Damage', UI.Icon(icSword) + UI.Icon(icBook), 'Darker Yellow',
-      Player.QuickSpellMaxDamage, MaxDamMax);
+      Player.QuickSpellMaxDamage, SpellMaxDamageMax);
   end;
 
   Add('Replenish Life', UI.Icon(icElixir) + UI.Icon(icLife), 'Life',

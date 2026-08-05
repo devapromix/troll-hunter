@@ -35,6 +35,12 @@ const
   MetabolismMax = 135;
   // Inventory
   ItemMax = 26;
+  // Ranged damage
+  RangedMinDamageMax = 90;
+  RangedMaxDamageMax = 100;
+  // Spell damage
+  SpellMinDamageMax = 79;
+  SpellMaxDamageMax = 110;
   // Blacksmith
   CIdentifyAllItemsCost = 100;
   // Talents
@@ -847,13 +853,13 @@ end;
 function TPlayer.RangedMinDamage: UInt;
 begin
   Result := EnsureRange(FBowMinDamage + Attributes.Attrib[atDex].Value div 5,
-    1, UIntMax - 1);
+    1, RangedMinDamageMax);
 end;
 
 function TPlayer.RangedMaxDamage: UInt;
 begin
   Result := EnsureRange(FBowMaxDamage + Attributes.Attrib[atDex].Value div 3,
-    2, UIntMax);
+    2, RangedMaxDamageMax);
 end;
 
 function TPlayer.CanRangedAttack: boolean;
@@ -2608,13 +2614,13 @@ end;
 function TPlayer.SpellMinDamage(ASpellEnum: TSpellEnum): UInt;
 begin
   Result := EnsureRange(Spellbook.GetSpell(ASpellEnum).Spell.MinDamage +
-    Attributes.Attrib[atWil].Value div 5, 1, UIntMax - 1);
+    Attributes.Attrib[atWil].Value div 5, 1, SpellMinDamageMax);
 end;
 
 function TPlayer.SpellMaxDamage(ASpellEnum: TSpellEnum): UInt;
 begin
   Result := EnsureRange(Spellbook.GetSpell(ASpellEnum).Spell.MaxDamage +
-    Attributes.Attrib[atWil].Value div 3, 2, UIntMax);
+    Attributes.Attrib[atWil].Value div 3, 2, SpellMaxDamageMax);
 end;
 
 function TPlayer.QuickSpellMinDamage: UInt;
