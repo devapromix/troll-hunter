@@ -157,8 +157,23 @@ begin
 end;
 
 procedure TAbility.Stealth;
+const
+  CStealthTurns = 15;
 begin
+  if Player.StatusEffects.IsStatusEffect(seStealth) then
+  begin
+    Player.StatusEffects.StatusEffect[seStealth] := 0;
+    MsgLog.Add('You step out of the shadows.');
+    Exit;
+  end;
 
+  if not TrySpendMana(abStealth) then
+    Exit;
+
+  Player.StatusEffects.Modify(seStealth, CStealthTurns);
+  MsgLog.Add('You hide in the shadows.');
+
+  Player.Wait;
 end;
 
 initialization

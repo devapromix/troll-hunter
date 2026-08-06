@@ -122,6 +122,7 @@ type
     function GetEquippedIndex(ASlot: TSlotType): Int;
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
+    procedure BreakStealth;
     procedure UseCharge;
     procedure BuildFireTargets(ARange: UInt);
     procedure RangedAttack(Index: Int);
@@ -303,6 +304,15 @@ begin
   end;
 end;
 
+procedure TPlayer.BreakStealth;
+begin
+  if StatusEffects.IsStatusEffect(seStealth) then
+  begin
+    StatusEffects.StatusEffect[seStealth] := 0;
+    MsgLog.Add('You are no longer hidden in the shadows.');
+  end;
+end;
+
 procedure TPlayer.MeleeAttack(Index: Int);
 const
   AccuracyDexDivisor = 2;
@@ -333,6 +343,7 @@ begin
     GenRandomNPCWelcomeText;
     Exit;
   end;
+  BreakStealth;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if StatusEffects.IsStatusEffect(seBerserk) then
@@ -478,6 +489,7 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
+  BreakStealth;
   Dist := Self.GetDist(Mob.X, Mob.Y);
   if (Dist <= 1) then
   begin
@@ -625,6 +637,7 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
+  BreakStealth;
   LSpell := GetSpellData(ASpellEnum);
   if (Self.Attributes.Attrib[atMana].Value < LSpell.ManaCost) then
   begin

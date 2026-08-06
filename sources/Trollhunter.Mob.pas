@@ -802,7 +802,10 @@ begin
     MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
     Dam := Player.AbsorbManaShieldDamage(Dam);
     if (Dam > 0) then
+    begin
+      Player.BreakStealth;
       Player.Attributes.Modify(atLife, -Dam);
+    end;
     if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and
       not Mode.Wizard)) then
       Player.BreakItem();
@@ -900,6 +903,8 @@ begin
   NX := 0;
   NY := 0;
   if (Force = fcNPC) then
+    Exit;
+  if Player.StatusEffects.IsStatusEffect(seStealth) then
     Exit;
   Dist := GetDist(Player.X, Player.Y);
   if (Dist > GetVision) then
