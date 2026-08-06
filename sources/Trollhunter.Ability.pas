@@ -6,6 +6,9 @@ uses
   Trollhunter.Types,
   Trollhunter.Item.Types;
 
+{ #todo : Hotkeys 1-9 for abilities. }
+{ #todo : Scene with abilities. }
+
 type
   TAbilityEnum = (abFind_Item, abConjure_Mana_Orb, abCripling_Blow, abStealth);
 
@@ -58,6 +61,7 @@ uses
   Trollhunter.Item,
   Trollhunter.Item.Common,
   Trollhunter.Item.Dungeon,
+  Trollhunter.StatusEffect,
   Trollhunter.Terminal,
   Trollhunter.UI.Log;
 
@@ -140,8 +144,18 @@ begin
 end;
 
 procedure TAbility.CriplingBlow;
+const
+  CAimingTurns = 10;
 begin
+  if not TrySpendMana(abCripling_Blow) then
+    Exit;
 
+  Player.StatusEffects.Modify(seAiming, CAimingTurns);
+  MsgLog.Add(Terminal.Colorize(
+    'You take aim, ready to cripple your next target with an arrow.',
+    Player.StatusEffects.GetColor(seAiming)));
+
+  Player.Wait;
 end;
 
 procedure TAbility.Stealth;

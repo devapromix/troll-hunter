@@ -8,15 +8,16 @@ uses
   Trollhunter.Player.Classes,
   Trollhunter.Player.Races;
 
+{ #todo : Grants an ability. }
+
 const
   TalentMax = 30;
   TalentLevelStep = 5;
 
 type
   TTalentEnum = (tlNone,
-    tlStrong, tlDextrous, tlMage, tlTough,
-    tlSword_Mastery, tlAxe_Training, tlPolearm_Dominance,
-    tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
+    tlStrong, tlDextrous, tlMage, tlTough, tlSword_Mastery, tlAxe_Training,
+    tlPolearm_Dominance, tlMace_Crushing, tlStaff_Harmony, tlAffinity_with_Wands,
     tlDagger_Precision, tlBow_Archery, tlLong_Range, tlElven_Marksman,
     tlBodybuilding, tlMeditation, tlEnchant_Item, tlCareful, tlElven_Grace,
     tlIron_Skin, tlHardy, tlCharged, tlShadowcraft, tlAgility, tlAcrobatics,

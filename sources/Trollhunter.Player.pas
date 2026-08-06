@@ -227,6 +227,8 @@ begin
 end;
 
 procedure TPlayer.AddTurn;
+var
+  LWasAiming: boolean;
 begin
   if IsDead then
     Exit;
@@ -242,8 +244,13 @@ begin
   if (Attributes.Attrib[atSat].Value < StarvingMax) then
     Attributes.Modify(atLife, -1);
   Turn;
+  LWasAiming := StatusEffects.IsStatusEffect(seAiming);
   if OnTurn() then
     Calc;
+  if LWasAiming and not StatusEffects.IsStatusEffect(seAiming) then
+    MsgLog.Add(Terminal.Colorize(
+      'You lower your bow - the aiming effect fades away.',
+      StatusEffects.GetColor(seAiming)));
   if IsDead then
     Defeat;
   Mobs.Process;
@@ -450,6 +457,7 @@ procedure TPlayer.RangedAttack(Index: Int);
 const
   RangeAccuracyPenalty = 3;
   AccuracyDexDivisor = 2;
+  CSlowedTurns = 10;
 var
   V, Ch: UInt;
   Mob: TMob;
@@ -562,7 +570,19 @@ begin
     if (FWeaponSkill = skWand) then
       MsgLog.Add(Format('Your charge hits %s (%d).', [The, Dam]))
     else if (FWeaponSkill = skBow) then
+    begin
       MsgLog.Add(Format('Your arrow hits %s (%d).', [The, Dam]));
+      if StatusEffects.IsStatusEffect(seAiming) then
+      begin
+        Mob.StatusEffects.Modify(seSlowed, CSlowedTurns);
+        MsgLog.Add(Terminal.Colorize(
+          Format('%s is crippled and now moves twice as slow.', [GetCapit(The)]),
+          Mob.StatusEffects.GetColor(seSlowed)));
+        StatusEffects.StatusEffect[seAiming] := 0;
+        MsgLog.Add(Terminal.Colorize('Your aim steadies - the effect fades.',
+          StatusEffects.GetColor(seAiming)));
+      end;
+    end;
     // Break weapon
     if ((Math.RandomRange(0, 15 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
     then

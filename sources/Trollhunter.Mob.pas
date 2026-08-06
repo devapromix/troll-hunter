@@ -893,6 +893,7 @@ var
   NX, NY: Int;
   The: string;
   Dist: UInt;
+  LSkipMove, LWasSlowed: boolean;
 begin
   // Exit;
 
@@ -920,22 +921,35 @@ begin
   end;
   if (Dist <= 2) and Player.IsRest then
     Player.IsRest := False;
-  // A*
-  if not PathFind(UIntMax + 1, UIntMax + 1, X, Y, Player.X, Player.Y,
-    @MyCallback, NX, NY) then
-    Exit;
-  if (NX = Int(Player.X)) and (NY = Int(Player.Y)) then
+  // Cripling Blow
+  LSkipMove := StatusEffects.IsStatusEffect(seSlowed) and
+    Odd(StatusEffects.StatusEffect[seSlowed]);
+  if not LSkipMove then
   begin
-    Self.Attack();
-  end
-  else if (Mobs.GetFreeTile(NX, NY)) then
-  begin
-    X := NX;
-    Y := NY;
-  end
-  else
-    Self.Walk(X, Y, Player.X, Player.Y);
+    // A*
+    if not PathFind(UIntMax + 1, UIntMax + 1, X, Y, Player.X, Player.Y,
+      @MyCallback, NX, NY) then
+      Exit;
+    if (NX = Int(Player.X)) and (NY = Int(Player.Y)) then
+    begin
+      Self.Attack();
+    end
+    else if (Mobs.GetFreeTile(NX, NY)) then
+    begin
+      X := NX;
+      Y := NY;
+    end
+    else
+      Self.Walk(X, Y, Player.X, Player.Y);
+  end;
+  LWasSlowed := StatusEffects.IsStatusEffect(seSlowed);
   OnTurn();
+  if LWasSlowed and not StatusEffects.IsStatusEffect(seSlowed) then
+  begin
+    The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+    MsgLog.Add(Terminal.Colorize(Format('%s is no longer slowed.', [The]),
+      StatusEffects.GetColor(seSlowed)));
+  end;
   if Self.IsDead then
     Self.Defeat;
 end;
