@@ -28,6 +28,7 @@ uses
   Trollhunter.Game,
   Trollhunter.Player,
   Trollhunter.Player.Classes,
+  Trollhunter.Ability,
   Trollhunter.Terminal;
 
 constructor TSceneHelp.Create;
@@ -183,9 +184,11 @@ begin
       inherited AddLine('K', 'Calendar');
       case Player.HClass of
         clWarrior:
-          inherited AddLine('A', 'Ability "Find item"');
+          inherited AddLine('A', Format('Ability "%s"',
+            [AbilityBase[abFind_Item].Name]));
         clMage:
-          inherited AddLine('A', 'Ability "Conjure Mana Orb"');
+          inherited AddLine('A', Format('Ability "%s"',
+            [AbilityBase[abConjure_Mana_Orb].Name]));
         clRanger:
           inherited AddLine('A', 'Ability "Crippling Blow"');
         clThief:

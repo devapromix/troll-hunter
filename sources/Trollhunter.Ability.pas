@@ -21,7 +21,6 @@ const
     (Name: 'Find item'; ManaCost: 12;),
     // Mage - Conjure Mana Orb
     (Name: 'Conjure Mana Orb'; ManaCost: 65;)
-    //
     );
 
 type
@@ -29,9 +28,11 @@ type
   { TAbility }
 
   TAbility = class
+  private
+    function TrySpendMana(AAbility: TAbilityEnum): boolean;
   public
-    procedure UseAbility();
-    procedure FindItem();
+    procedure UseAbility;
+    procedure FindItem;
     procedure ConjureManaOrb;
   end;
 
@@ -56,7 +57,7 @@ uses
 
   { TAbility }
 
-procedure TAbility.UseAbility();
+procedure TAbility.UseAbility;
 begin
   if Player.IsDead then
     Exit;
@@ -74,6 +75,15 @@ begin
 
     end;
   end;
+end;
+
+function TAbility.TrySpendMana(AAbility: TAbilityEnum): boolean;
+begin
+  Result := Player.Attributes.Attrib[atMana].Value >= AbilityBase[AAbility].ManaCost;
+  if Result then
+    Player.Attributes.Modify(atMana, -AbilityBase[AAbility].ManaCost)
+  else
+    MsgLog.Add('You don''t have enough mana to use this ability.');
 end;
 
 procedure TAbility.FindItem;
@@ -100,14 +110,10 @@ begin
     Exit;
   end;
 
-  if (Player.Attributes.Attrib[atMana].Value < AbilityBase[abFind_Item].ManaCost) then
-  begin
-    MsgLog.Add('You don''t have enough mana to use this ability.');
+  if not TrySpendMana(abFind_Item) then
     Exit;
-  end;
 
   Items_Dungeon_DeleteMapItemXY(Ord(Map.Current), I, Player.X, Player.Y, LItem);
-  Player.Attributes.Modify(atMana, -AbilityBase[abFind_Item].ManaCost);
 
   if (Math.RandomRange(0, 5) = 0) then
   begin
@@ -122,14 +128,9 @@ end;
 
 procedure TAbility.ConjureManaOrb;
 begin
-  if (Player.Attributes.Attrib[atMana].Value <
-    AbilityBase[abConjure_Mana_Orb].ManaCost) then
-  begin
-    MsgLog.Add('You don''t have enough mana to use this ability.');
+  if not TrySpendMana(abConjure_Mana_Orb) then
     Exit;
-  end;
 
-  Player.Attributes.Modify(atMana, -AbilityBase[abConjure_Mana_Orb].ManaCost);
   Items.Loot(Player.X, Player.Y, itmMana_Orb);
   MsgLog.Add('You have conjured a mana orb.');
 
