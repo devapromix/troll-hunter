@@ -25,9 +25,9 @@ const
     // Mage - Conjure Mana Orb
     (Name: 'Conjure Mana Orb'; ManaCost: 65;),
     // Ranger - Cripling Blow
-    (Name: 'Cripling Blow'; ManaCost: 35;),
+    (Name: 'Cripling Blow'; ManaCost:15;),
     // Thief - Stealth
-    (Name: 'Stealth'; ManaCost: 55;)
+    (Name: 'Stealth'; ManaCost: 35;)
     );
 
 type
@@ -124,7 +124,7 @@ begin
   if (Math.RandomRange(0, 5) = 0) then
   begin
     Items.Add(Map.Current, Player.X, Player.Y);
-    MsgLog.Add(Terminal.Colorize('You found something.', clAlarm));
+    MsgLog.Add('You found something.');
   end
   else
     MsgLog.Add('You didn''t find anything.');
@@ -151,9 +151,7 @@ begin
     Exit;
 
   Player.StatusEffects.Modify(seAiming, CAimingTurns);
-  MsgLog.Add(Terminal.Colorize(
-    'You take aim, ready to cripple your next target with an arrow.',
-    Player.StatusEffects.GetColor(seAiming)));
+  MsgLog.Add('Your aim sharpens.');
 
   Player.Wait;
 end;
