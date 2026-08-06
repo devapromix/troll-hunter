@@ -26,6 +26,8 @@ uses
   Trollhunter.UI,
   BearLibTerminal,
   Trollhunter.Game,
+  Trollhunter.Player,
+  Trollhunter.Player.Classes,
   Trollhunter.Terminal;
 
 constructor TSceneHelp.Create;
@@ -179,6 +181,16 @@ begin
       inherited AddLine('I', 'Show inventory');
       inherited AddLine('P', 'Character screen');
       inherited AddLine('K', 'Calendar');
+      case Player.HClass of
+        clWarrior:
+          inherited AddLine('A', 'Ability "Find item"');
+        clMage:
+          inherited AddLine('A', 'Ability "Conjure Mana Orb"');
+        clRanger:
+          inherited AddLine('A', 'Ability "Crippling Blow"');
+        clThief:
+          inherited AddLine('A', 'Ability "Invisibility"');
+      end;
       inherited AddLine('?', 'Show this help screen');
     end;
   end;

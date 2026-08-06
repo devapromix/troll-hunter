@@ -15,6 +15,9 @@ uses
   Trollhunter.Attribute;
 
 type
+
+  { TSceneGame }
+
   TSceneGame = class(TScene)
   private
     procedure FireArrow;
@@ -44,6 +47,7 @@ uses
   Trollhunter.Item,
   Trollhunter.Item.Types,
   Trollhunter.Map,
+  Trollhunter.Ability,
   Trollhunter.Spellbook,
   Trollhunter.Spell;
 
@@ -501,6 +505,8 @@ begin
     end;
     TK_C:
       CastSpell();
+    TK_A:
+      Ability.UseAbility();
     TK_T:
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
