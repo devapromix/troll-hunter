@@ -947,8 +947,7 @@ begin
   if LWasSlowed and not StatusEffects.IsStatusEffect(seSlowed) then
   begin
     The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-    MsgLog.Add(Terminal.Colorize(Format('%s is no longer slowed.', [The]),
-      StatusEffects.GetColor(seSlowed)));
+    MsgLog.Add(Format('The slowing magic fades from %s.', [The]));
   end;
   if Self.IsDead then
     Self.Defeat;

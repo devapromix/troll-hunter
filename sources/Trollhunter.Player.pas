@@ -576,11 +576,9 @@ begin
       begin
         Mob.StatusEffects.Modify(seSlowed, CSlowedTurns);
         MsgLog.Add(Terminal.Colorize(
-          Format('%s is crippled and now moves twice as slow.', [GetCapit(The)]),
+          Format('%s is crippled.', [GetCapit(The)]),
           Mob.StatusEffects.GetColor(seSlowed)));
         StatusEffects.StatusEffect[seAiming] := 0;
-        MsgLog.Add(Terminal.Colorize('Your aim steadies - the effect fades.',
-          StatusEffects.GetColor(seAiming)));
       end;
     end;
     // Break weapon
