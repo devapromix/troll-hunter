@@ -7,7 +7,7 @@ uses
   Trollhunter.Item.Types;
 
 type
-  TAbilityEnum = (abFind_Item);
+  TAbilityEnum = (abFind_Item, abConjure_Mana_Orb);
 
 type
   TAbilityBase = record
@@ -18,7 +18,10 @@ type
 const
   AbilityBase: array [TAbilityEnum] of TAbilityBase = (
     // Warrior - Find Item
-    (Name: 'Find item'; ManaCost: 12; )
+    (Name: 'Find item'; ManaCost: 12;),
+    // Mage - Conjure Mana Orb
+    (Name: 'Conjure Mana Orb'; ManaCost: 65;)
+    //
     );
 
 type
@@ -29,6 +32,7 @@ type
   public
     procedure UseAbility();
     procedure FindItem();
+    procedure ConjureManaOrb;
   end;
 
 var
@@ -60,9 +64,7 @@ begin
     clWarrior:
       FindItem;
     clMage:
-    begin
-
-    end;
+      ConjureManaOrb;
     clRanger:
     begin
 
@@ -114,6 +116,22 @@ begin
   end
   else
     MsgLog.Add('You didn''t find anything.');
+
+  Player.Wait;
+end;
+
+procedure TAbility.ConjureManaOrb;
+begin
+  if (Player.Attributes.Attrib[atMana].Value <
+    AbilityBase[abConjure_Mana_Orb].ManaCost) then
+  begin
+    MsgLog.Add('You don''t have enough mana to use this ability.');
+    Exit;
+  end;
+
+  Player.Attributes.Modify(atMana, -AbilityBase[abConjure_Mana_Orb].ManaCost);
+  Items.Loot(Player.X, Player.Y, itmMana_Orb);
+  MsgLog.Add('You have conjured a mana orb.');
 
   Player.Wait;
 end;
