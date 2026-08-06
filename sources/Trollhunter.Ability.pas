@@ -7,7 +7,7 @@ uses
   Trollhunter.Item.Types;
 
 type
-  TAbilityEnum = (abFind_Item, abConjure_Mana_Orb);
+  TAbilityEnum = (abFind_Item, abConjure_Mana_Orb, abCripling_Blow, abStealth);
 
 type
   TAbilityBase = record
@@ -20,7 +20,11 @@ const
     // Warrior - Find Item
     (Name: 'Find item'; ManaCost: 12;),
     // Mage - Conjure Mana Orb
-    (Name: 'Conjure Mana Orb'; ManaCost: 65;)
+    (Name: 'Conjure Mana Orb'; ManaCost: 65;),
+    // Ranger - Cripling Blow
+    (Name: 'Cripling Blow'; ManaCost: 35;),
+    // Thief - Stealth
+    (Name: 'Stealth'; ManaCost: 55;)
     );
 
 type
@@ -34,6 +38,8 @@ type
     procedure UseAbility;
     procedure FindItem;
     procedure ConjureManaOrb;
+    procedure CriplingBlow;
+    procedure Stealth;
   end;
 
 var
@@ -67,13 +73,9 @@ begin
     clMage:
       ConjureManaOrb;
     clRanger:
-    begin
-
-    end;
+      CriplingBlow;
     clThief:
-    begin
-
-    end;
+      Stealth;
   end;
 end;
 
@@ -135,6 +137,16 @@ begin
   MsgLog.Add('You have conjured a mana orb.');
 
   Player.Wait;
+end;
+
+procedure TAbility.CriplingBlow;
+begin
+
+end;
+
+procedure TAbility.Stealth;
+begin
+
 end;
 
 initialization

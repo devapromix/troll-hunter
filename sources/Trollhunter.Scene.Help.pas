@@ -28,7 +28,6 @@ uses
   Trollhunter.Game,
   Trollhunter.Player,
   Trollhunter.Player.Classes,
-  Trollhunter.Ability,
   Trollhunter.Terminal;
 
 constructor TSceneHelp.Create;
@@ -182,18 +181,7 @@ begin
       inherited AddLine('I', 'Show inventory');
       inherited AddLine('P', 'Character screen');
       inherited AddLine('K', 'Calendar');
-      case Player.HClass of
-        clWarrior:
-          inherited AddLine('A', Format('Ability "%s"',
-            [AbilityBase[abFind_Item].Name]));
-        clMage:
-          inherited AddLine('A', Format('Ability "%s"',
-            [AbilityBase[abConjure_Mana_Orb].Name]));
-        clRanger:
-          inherited AddLine('A', 'Ability "Crippling Blow"');
-        clThief:
-          inherited AddLine('A', 'Ability "Invisibility"');
-      end;
+      inherited AddLine('A', Format('Ability "%s"', [Classes.GetAbility(Player.HClass)]));
       inherited AddLine('?', 'Show this help screen');
     end;
   end;

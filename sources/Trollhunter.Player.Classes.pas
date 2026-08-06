@@ -6,6 +6,7 @@ uses
   Trollhunter.Types,
   Trollhunter.Item.Types,
   Trollhunter.Player.Types,
+  Trollhunter.Ability,
   Trollhunter.Creature,
   Trollhunter.Skill;
 
@@ -24,6 +25,7 @@ type
     Perception: TMinMax;
     Life: TMinMax;
     Mana: TMinMax;
+    Ability: TAbilityEnum;
     Skill: array [TClassSkillEnum] of TSkillEnum;
     EquipItem: array [stHead .. stSpellbook] of TItemEnum;
     ClassItem: array of TItemEnum;
@@ -35,7 +37,7 @@ const
     (Description: 'A strong warrior skilled in melee combat. Relies on power, heavy armor and steel to crush enemies.';
      Strength: (Min: 1; Max: 4; ); Dexterity: (Min: 1; Max: 2; );
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 0; Max: 0; );
-     Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; );
+     Life: (Min: 10; Max: 15; ); Mana: (Min: 0; Max: 0; ); Ability: abFind_Item;
      Skill: (skBlade, skAthletics, skBodybuilding);
      EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmRusty_Sword, itmBuckler,
      itmNone, itmNone, itmNone, itmNone, itmNone); ),
@@ -44,7 +46,7 @@ const
     (Description: 'A powerful mage who wields ancient magic. Weak in close combat but deadly with spells at range.';
      Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 0; Max: 0; );
      Willpower: (Min: 1; Max: 4; ); Perception: (Min: 1; Max: 2; );
-     Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; );
+     Life: (Min: 0; Max: 0; ); Mana: (Min: 15; Max: 25; ); Ability: abConjure_Mana_Orb;
      Skill: (skStaff, skConcentration, skMeditation);
      EquipItem: (itmHood, itmLight_Clothes, itmNone, itmNone, itmQuarterstaff, itmNone,
      itmYew_Wand, itmNone, itmNone, itmSpellbook, itmNone);
@@ -54,7 +56,7 @@ const
     (Description: 'A skilled hunter and archer. Agile and versatile, excels in forests and open terrain.';
      Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1; Max: 4; );
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 2; );
-     Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; );
+     Life: (Min: 5; Max: 10; ); Mana: (Min: 1; Max: 5; ); Ability: abCripling_Blow;
      Skill: (skBow, skDodge, skAwareness);
      EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmSmall_Dagger, itmNone,
      itmShort_Bow, itmLight_Quiver, itmNone, itmNone, itmNone); ),
@@ -63,12 +65,15 @@ const
     (Description: 'A nimble rogue and shadow master. Deadly in stealth, ambushes and quick strikes.';
      Strength: (Min: 0; Max: 0; ); Dexterity: (Min: 1; Max: 2; );
      Willpower: (Min: 0; Max: 0; ); Perception: (Min: 1; Max: 4; );
-     Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; );
+     Life: (Min: 5; Max: 7; ); Mana: (Min: 5; Max: 7; ); Ability: abStealth;
      Skill: (skDagger, skToughness, skStealth);
      EquipItem: (itmCap, itmQuilted_Armor, itmNone, itmNone, itmShort_Dagger, itmNone,
      itmNone, itmNone, itmNone, itmNone, itmNone);  ClassItem: [itmWyvern_Venom])
   );
 type
+
+  { TClasses }
+
   TClasses = class(TObject)
   private
     FSkills: TSkills;
@@ -79,6 +84,7 @@ type
     function GetName(I: TClassEnum): string;
     function GetDescription(I: TClassEnum): string;
     function GetSkills(I: TClassEnum): string;
+    function GetAbility(I: TClassEnum): string;
     function GetItems(I: TClassEnum): string;
     function GetSkillBeginValue(ClassSkillEnum: TClassSkillEnum): UInt;
   end;
@@ -174,6 +180,11 @@ begin
     Utils.AppStr(Result, S, F);
     F := True;
   end;
+end;
+
+function TClasses.GetAbility(I: TClassEnum): string;
+begin
+  Result := AbilityBase[ClassProp[I].Ability].Name;
 end;
 
 initialization

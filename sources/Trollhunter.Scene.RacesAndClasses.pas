@@ -272,8 +272,11 @@ begin
   Terminal.Print(DX, 19, 'Skills' + ': ' + Terminal.Colorize(
     Classes.GetSkills(Player.HClass), 'Lush'));
 
+  Terminal.Print(DX, 21, 'Ability' + ': ' + Terminal.Colorize(
+    Classes.GetAbility(Player.HClass), 'Lush'));
+
   Terminal.ForegroundColor(clGray);
-  Terminal.Print(DX, CY - (CY div 2), CX, CY,
+  Terminal.Print(DX, CY - (CY div 2) + 2, CX, CY,
     Classes.GetDescription(Player.HClass), TK_ALIGN_BOTTOM);
 
   AddKey('Enter', 'Confirm');
