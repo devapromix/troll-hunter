@@ -35,7 +35,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <Units Count="69">
+    <Units Count="70">
       <Unit0>
         <Filename Value="Trollhunter.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -312,6 +312,10 @@
         <Filename Value="sources\Trollhunter.StatusEffect.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit68>
+      <Unit69>
+        <Filename Value="sources\Trollhunter.Effect.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit69>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

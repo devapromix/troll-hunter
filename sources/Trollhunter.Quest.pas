@@ -7,14 +7,14 @@ uses
   Trollhunter.Creature,
   Trollhunter.Mob;
 
-{ TODO -cУбить существо : Убить уникального босса на локации (от первой до предпоследней). }
-{ TODO -cУбить существо : Убить N существ на локации (от первой до последней). }
-{ TODO -cПринести предмет : Собрать N предметов с существ на локации (от первой до последней). }
-{ TODO -cПринести предмет : Найти уникальный предмет на локации (от первой до последней). }
-{ TODO -cПосетить локацию : Посетить определенную локацию (от первой до последней). }
-{ TODO -cПоговорить с НПЦ : Поговорить с определенным НПЦ (от первой до последней). }
-{ TODO -cТаймер : Доставить предмет определенному НПЦ в указанной локации за отведенный отрезок времени (от первой до последней). }
-{ TODO -cТаймер : Убить N существ в указанной локации за отведенный отрезок времени (от первой до последней). }
+{ TODO -cKill Creature : Kill the unique boss in a location (from the first to the penultimate). }
+{ TODO -cKill Creature : Kill N creatures in a location (from the first to the last). }
+{ TODO -cCollect Item : Collect N items from creatures in a location (from the first to the last). }
+{ TODO -cFind Item : Find a unique item in a location (from the first to the last). }
+{ TODO -cVisit Location : Visit a specific location (from the first to the last). }
+{ TODO -cTalk to NPC : Talk to a specific NPC (from the first to the last). }
+{ TODO -cTimed Quest : Deliver an item to a specific NPC in the specified location within the time limit (from the first to the last). }
+{ TODO -cTimed Quest : Kill N creatures in the specified location within the time limit (from the first to the last). }
 
 type
   TQuestType = (qtKillMobs);

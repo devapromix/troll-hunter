@@ -10,6 +10,7 @@ uses
   Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Player,
+  Trollhunter.Effect,
   Trollhunter.Entity,
   Trollhunter.Creature;
 

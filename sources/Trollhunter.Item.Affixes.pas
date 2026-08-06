@@ -4,6 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
+  Trollhunter.Effect,
   Trollhunter.Creature,
   Trollhunter.Item.Types,
   Trollhunter.Item.Common;

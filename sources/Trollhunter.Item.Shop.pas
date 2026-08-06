@@ -56,6 +56,7 @@ uses
   SysUtils,
   Math,
   Trollhunter.Map,
+  Trollhunter.Effect,
   Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Helpers,

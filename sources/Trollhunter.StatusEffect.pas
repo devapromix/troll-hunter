@@ -2,7 +2,8 @@ unit Trollhunter.StatusEffect;
 
 interface
 
-uses Trollhunter.Types;
+uses
+  Trollhunter.Types;
 
 type
   TStatusEffectEnum = (sePoisoned, seBlinded, seStunned, seBurning, seRegen,
