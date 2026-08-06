@@ -1979,15 +1979,21 @@ begin
 end;
 
 procedure TPlayer.Render(AX, AY: UInt);
+var
+  LColor: Cardinal;
 begin
   if IsDead then
     Terminal.Print(AX + View.Left, AY + View.Top, '%', clCorpse)
   else
   begin
-    if Look then
-      Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer)
+    if StatusEffects.IsStatusEffect(seStealth) then
+      LColor := clDarkGray
     else
-      Terminal.Print(AX + View.Left, AY + View.Top, '@', clPlayer, clBkPlayer);
+      LColor := clPlayer;
+    if Look then
+      Terminal.Print(AX + View.Left, AY + View.Top, '@', LColor)
+    else
+      Terminal.Print(AX + View.Left, AY + View.Top, '@', LColor, clBkPlayer);
   end;
 end;
 
