@@ -912,10 +912,9 @@ begin
     Exit;
   if StatusEffects.IsStatusEffect(seSleeping) then
   begin
-    if (Math.RandomRange(0, 99) <= 15) then
+    if (Math.RandomRange(0, 100) <= 15) then
     begin
       StatusEffects.StatusEffect[seSleeping] := 0;
-      Player.Skills.DoSkill(skStealth);
       if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
       begin
         The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));

@@ -122,6 +122,7 @@ type
     function GetEquippedIndex(ASlot: TSlotType): Int;
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
+    procedure Backstab(Index: Int);
     procedure BreakStealth;
     procedure UseCharge;
     procedure BuildFireTargets(ARange: UInt);
@@ -313,9 +314,47 @@ begin
   end;
 end;
 
+procedure TPlayer.Backstab(Index: Int);
+const
+  CBackstabDamageMultiplier = 2;
+var
+  Dam: UInt;
+  Mob: TMob;
+  The: string;
+begin
+  Mob := Mobs.Mob[Index];
+  The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
+  Dam := Game.EnsureRange(RandomRange(Self.GetDamage.Min,
+    GetDamage.Max + 1), UIntMax);
+  if StatusEffects.IsStatusEffect(seBloodlust) then
+    Inc(Dam, Dam div 4);
+  if StatusEffects.IsStatusEffect(seWeak) then
+    Dec(Dam, Dam div 3);
+  Dam := Dam * CBackstabDamageMultiplier;
+  Dam := Self.GetRealDamage(Dam, Mob.Attributes.Attrib[atPV].Value);
+  if (Dam = 0) then
+  begin
+    MsgLog.Add(Format('You miss %s.', [The]));
+    SatPerTurn := Ord(Game.Difficulty) + 3;
+    AddTurn;
+    Exit;
+  end;
+  Mob.Attributes.Modify(atLife, -Dam);
+  MsgLog.Add(Format('You backstab %s (%d).', [The, Dam]));
+  Skills.DoSkill(skStealth);
+  Skills.DoSkill(skDagger);
+  if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
+  then
+    BreakItem(stMainHand);
+  if Mob.IsDead then
+    Mob.Defeat;
+  AddTurn;
+end;
+
 procedure TPlayer.MeleeAttack(Index: Int);
 const
   AccuracyDexDivisor = 2;
+  CStealthDamageBonusDivisor = 4;
 var
   V, Ch: UInt;
   Mob: TMob;
@@ -323,6 +362,7 @@ var
   CrStr, The: string;
   LWeaponIndex: Int;
   LWeapon: Item;
+  LWasStealthed: boolean;
 
   procedure Miss();
   begin
@@ -343,7 +383,13 @@ begin
     GenRandomNPCWelcomeText;
     Exit;
   end;
+  LWasStealthed := StatusEffects.IsStatusEffect(seStealth);
   BreakStealth;
+  if LWasStealthed and (FWeaponSkill = skDagger) then
+  begin
+    Backstab(Index);
+    Exit;
+  end;
   The := GetDescThe(Mobs.Name[TMobEnum(Mob.ID)]);
   TargetDV := Mob.Attributes.Attrib[atDV].Value;
   if StatusEffects.IsStatusEffect(seBerserk) then
@@ -362,6 +408,8 @@ begin
       Inc(Dam, Dam div 4);
     if StatusEffects.IsStatusEffect(seWeak) then
       Dec(Dam, Dam div 3);
+    if LWasStealthed then
+      Inc(Dam, Dam div CStealthDamageBonusDivisor);
     // Critical hits...     .
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
@@ -469,11 +517,13 @@ const
   RangeAccuracyPenalty = 3;
   AccuracyDexDivisor = 2;
   CSlowedTurns = 10;
+  CStealthDamageBonusDivisor = 4;
 var
   V, Ch: UInt;
   Mob: TMob;
   Dam, Cr, TargetDV, AccBonus, Dist, RMin, RMax: UInt;
   CrStr, The: string;
+  LWasStealthed: boolean;
 
   procedure Miss();
   begin
@@ -489,6 +539,7 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
+  LWasStealthed := StatusEffects.IsStatusEffect(seStealth);
   BreakStealth;
   Dist := Self.GetDist(Mob.X, Mob.Y);
   if (Dist <= 1) then
@@ -551,6 +602,8 @@ begin
       Inc(Dam, Dam div 4);
     if StatusEffects.IsStatusEffect(seWeak) then
       Dec(Dam, Dam div 3);
+    if LWasStealthed then
+      Inc(Dam, Dam div CStealthDamageBonusDivisor);
     // Critical hits...
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
@@ -617,11 +670,13 @@ procedure TPlayer.MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
 const
   RangeAccuracyPenalty = 3;
   AccuracyWilDivisor = 2;
+  CStealthDamageBonusDivisor = 4;
 var
   Mob: TMob;
   Dam, TargetDV, AccBonus, Dist, MMin, MMax, V: UInt;
   The: string;
   LSpell: TSpellData;
+  LWasStealthed: boolean;
 
   procedure Miss();
   begin
@@ -637,6 +692,7 @@ begin
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
+  LWasStealthed := StatusEffects.IsStatusEffect(seStealth);
   BreakStealth;
   LSpell := GetSpellData(ASpellEnum);
   if (Self.Attributes.Attrib[atMana].Value < LSpell.ManaCost) then
@@ -669,6 +725,8 @@ begin
       Inc(Dam, Dam div 4);
     if StatusEffects.IsStatusEffect(seWeak) then
       Dec(Dam, Dam div 3);
+    if LWasStealthed then
+      Inc(Dam, Dam div CStealthDamageBonusDivisor);
     Dam := Self.GetRealDamage(Dam, Mob.Attributes.Attrib[atPV].Value);
     if (Dam = 0) then
     begin
