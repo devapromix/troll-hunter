@@ -360,7 +360,7 @@ begin
   if (Dam = 0) then
   begin
     MsgLog.Add(Format('You miss %s.', [The]));
-    SatPerTurn := Ord(Game.Difficulty) + 3;
+    SatPerTurn := Ord(Game.Difficulty) + 9;
     AddTurn;
     Exit;
   end;
@@ -368,8 +368,8 @@ begin
   MsgLog.Add(Format('You backstab %s (%d).', [The, Dam]));
   ApplyWeaponPoison(Mob, The);
   Skills.DoSkill(skStealth);
-  Skills.DoSkill(skDagger, 2);
-  if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
+  Skills.DoSkill(skDagger);
+  if ((Math.RandomRange(0, 7 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
   then
     BreakItem(stMainHand);
   if Mob.IsDead then
