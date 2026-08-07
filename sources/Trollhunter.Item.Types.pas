@@ -227,13 +227,20 @@ type
     itmElemental_Book_of_Fire_Arrow, itmArcane_Book_of_Teleport,
     itmDivine_Book_of_Cure_Poison, itmNature_Book_of_Verdant_Spear,
     itmShadow_Book_of_Drain_Life, itmElemental_Book_of_Ignite,
-    itmBook11, itmBook12, itmBook13, itmBook14,
-    itmBook15, itmBook16, itmBook17, itmBook18, itmBook19, itmBook20, itmBook21,
-    itmBook22, itmBook23, itmBook24, itmBook25,
+    {itmBook11, itmBook12,
+    itmBook13, itmBook14,
+    itmBook15, itmBook16,
+    itmBook17, itmBook18,
+    itmBook19, itmBook20,
+    itmBook21, itmBook22,
+    itmBook23, itmBook24,
+    itmBook25,}
     // Poisons
-    itmVyper_Toxin, itmWyvern_Venom, itmBlackfang_Poison, itmWidowmaker_Toxin,
-    itmBasilisk_Venom
-
+    itmViper_Toxin, itmWyvern_Venom, itmBlackfang_Poison,
+    itmWidowmaker_Toxin, itmBasilisk_Venom,
+    itmToxic_Extract, itmSpider_Venom,
+    itmDeadly_Poison,  itmManticore_Venom,
+    itmHydra_Venom, itmVoid_Poison, itmBlack_Ichor
     );
 
 const

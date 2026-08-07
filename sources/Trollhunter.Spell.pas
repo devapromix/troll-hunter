@@ -74,7 +74,7 @@ const
     Value: 0;
     ),
 
-    // Arcane: Mana Shield
+    // Arcane I: Mana Shield
     (Name: 'Mana Shield';
     School: scArcane;
     Level: 1;
@@ -83,7 +83,7 @@ const
     Description: 'Absorbs damage using mana';
     Value: 5;
     ),
-    // Divine: Heal
+    // Divine I: Heal
     (Name: 'Heal';
     School: scDivine;
     Level: 1;
@@ -92,7 +92,7 @@ const
     Description: 'Restores health';
     Value: 25;
     ),
-    // Nature: Regeneration
+    // Nature I: Regeneration
     (Name: 'Regeneration';
     School: scNature;
     Level: 2;
@@ -101,7 +101,7 @@ const
     Description: 'Gradually restores health over time';
     Value: 20;
     ),
-    // Shadow: Curse
+    // Shadow I: Curse
     (Name: 'Curse';
     School: scShadow;
     Level: 2;
@@ -110,7 +110,7 @@ const
     Description: 'Weakens the target';
     Value: 15;
     ),
-    // Elemental: Fire Arrow
+    // Elemental I: Fire Arrow
     (Name: 'Fire Arrow';
     School: scElemental;
     Level: 1;
@@ -123,7 +123,7 @@ const
     Projectile: prFireArrow;
     ),
 
-    // Arcane: Teleport
+    // Arcane II: Teleport
     (Name: 'Teleport';
     School: scArcane;
     Level: 4;
@@ -132,7 +132,7 @@ const
     Description: 'Teleports you to a random nearby location';
     Value: 0;
     ),
-    // Divine: Cure Poison
+    // Divine II: Cure Poison
     (Name: 'Cure Poison';
     School: scDivine;
     Level: 3;
@@ -141,7 +141,7 @@ const
     Description: 'Neutralizes poison in your body';
     Value: 15;
     ),
-    // Nature: Verdant Spear
+    // Nature II: Verdant Spear
     (Name: 'Verdant Spear';
     School: scNature;
     Level: 4;
@@ -153,7 +153,7 @@ const
     MaxDamage: 9;
     Projectile: prVerdantSpear;
     ),
-    // Shadow: Drain Life
+    // Shadow II: Drain Life
     (Name: 'Drain Life';
     School: scShadow;
     Level: 4;
@@ -165,7 +165,7 @@ const
     MaxDamage: 8;
     Projectile: prFireArrow;
     ),
-    // Elemental: Ignite
+    // Elemental II: Ignite
     (Name: 'Ignite';
     School: scElemental;
     Level: 3;
@@ -178,7 +178,7 @@ const
     Projectile: prFireArrow;
     ),
 
-    // Arcane: Town Portal
+    // Arcane III: Town Portal
     (Name: 'Town Portal';
     School: scArcane;
     Level: 6;
@@ -187,7 +187,7 @@ const
     Description: 'Opens a portal back to town';
     Value: 0;
     ),
-    // Divine: Cure Weakness
+    // Divine III: Cure Weakness
     (Name: 'Cure Weakness';
     School: scDivine;
     Level: 5;
@@ -196,7 +196,7 @@ const
     Description: 'Cures weakness';
     Value: 0;
     ),
-    // Shadow: Blind
+    // Shadow III: Blind
     (Name: 'Blind';
     School: scShadow;
     Level: 6;
@@ -206,7 +206,7 @@ const
     Value: 10;
     ),
 
-    // Arcane: Identify
+    // Arcane IV: Identify
     (Name: 'Identify';
     School: scArcane;
     Level: 8;
@@ -216,7 +216,7 @@ const
     Value: 0;
     ),
 
-    // Arcane: Infusion
+    // Arcane V: Infusion
     (Name: 'Infusion';
     School: scArcane;
     Level: 10;
