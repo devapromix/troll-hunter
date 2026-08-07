@@ -123,6 +123,7 @@ type
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
     procedure Backstab(Index: Int);
+    procedure ApplyWeaponPoison(AMob: TMob; const AThe: string);
     procedure BreakStealth;
     procedure UseCharge;
     procedure BuildFireTargets(ARange: UInt);
@@ -314,6 +315,30 @@ begin
   end;
 end;
 
+procedure TPlayer.ApplyWeaponPoison(AMob: TMob; const AThe: string);
+const
+  CThiefPoisonSkillBonus = 2;
+var
+  LWeaponIndex: Int;
+  LWeapon: Item;
+begin
+  LWeaponIndex := GetEquippedIndex(stMainHand);
+  if (LWeaponIndex < 0) then
+    Exit;
+  LWeapon := Items_Inventory_GetItem(LWeaponIndex);
+  if not ((ItemBase[TItemEnum(LWeapon.ItemID)].ItemType in DaggerTypeItems) and
+    (LWeapon.Value > 0)) then
+    Exit;
+  AMob.StatusEffects.Modify(sePoisoned, Skills.Skill[skPoisoning].Value);
+  if (FClass = clThief) then
+    Skills.DoSkill(skPoisoning, CThiefPoisonSkillBonus)
+  else
+    Skills.DoSkill(skPoisoning);
+  LWeapon.Value := Game.EnsureRange(LWeapon.Value - 1, UIntMax);
+  Items_Inventory_SetItem(LWeaponIndex, LWeapon);
+  MsgLog.Add(Format('You poison %s.', [AThe]));
+end;
+
 procedure TPlayer.Backstab(Index: Int);
 const
   CBackstabDamageMultiplier = 2;
@@ -341,8 +366,9 @@ begin
   end;
   Mob.Attributes.Modify(atLife, -Dam);
   MsgLog.Add(Format('You backstab %s (%d).', [The, Dam]));
+  ApplyWeaponPoison(Mob, The);
   Skills.DoSkill(skStealth);
-  Skills.DoSkill(skDagger);
+  Skills.DoSkill(skDagger, 2);
   if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
   then
     BreakItem(stMainHand);
@@ -360,8 +386,6 @@ var
   Mob: TMob;
   Dam, Cr, TargetDV, AccBonus: UInt;
   CrStr, The: string;
-  LWeaponIndex: Int;
-  LWeapon: Item;
   LWasStealthed: boolean;
 
   procedure Miss();
@@ -440,23 +464,7 @@ begin
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('You hit %s (%d).', [The, Dam]));
     // Poison
-    LWeaponIndex := GetEquippedIndex(stMainHand);
-    if (LWeaponIndex >= 0) then
-    begin
-      LWeapon := Items_Inventory_GetItem(LWeaponIndex);
-      if (ItemBase[TItemEnum(LWeapon.ItemID)].ItemType in DaggerTypeItems) and
-        (LWeapon.Value > 0) then
-      begin
-        Mob.StatusEffects.Modify(sePoisoned, Skills.Skill[skPoisoning].Value);
-        if (FClass = clThief) then
-          Skills.DoSkill(skPoisoning, 2)
-        else
-          Skills.DoSkill(skPoisoning);
-        LWeapon.Value := Game.EnsureRange(LWeapon.Value - 1, UIntMax);
-        Items_Inventory_SetItem(LWeaponIndex, LWeapon);
-        MsgLog.Add(Format('You poison %s.', [The]));
-      end;
-    end;
+    ApplyWeaponPoison(Mob, The);
     // Break weapon
     if ((Math.RandomRange(0, 10 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard)
     then
