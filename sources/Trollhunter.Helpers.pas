@@ -42,7 +42,9 @@ type
 
 implementation
 
-uses SysUtils, Math;
+uses
+  SysUtils,
+  Math;
 
   { IntHelper }
 

@@ -19,18 +19,18 @@ type
   private
     FStatusEffectName: array [TStatusEffectEnum] of string;
     FStatusEffect: array [TStatusEffectEnum] of Int;
-    function GetStatusEffect(const I: TStatusEffectEnum): Int;
-    procedure SetStatusEffect(const I: TStatusEffectEnum; const Value: Int);
+    function GetStatusEffect(const AStatusEffect: TStatusEffectEnum): Int;
+    procedure SetStatusEffect(const AStatusEffect: TStatusEffectEnum; const Value: Int);
   public
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    property StatusEffect[const I: TStatusEffectEnum]: Int read GetStatusEffect
-      write SetStatusEffect;
-    function IsStatusEffect(const Value: TStatusEffectEnum): Boolean;
-    procedure Modify(const I: TStatusEffectEnum; const Value: Int);
-    function GetName(const Value: TStatusEffectEnum): string;
-    function GetColor(const Value: TStatusEffectEnum): string;
+    property StatusEffect[const AStatusEffect: TStatusEffectEnum]: Int
+      read GetStatusEffect write SetStatusEffect;
+    function IsStatusEffect(const AStatusEffect: TStatusEffectEnum): boolean;
+    procedure Modify(const AStatusEffect: TStatusEffectEnum; const Value: Int);
+    function GetName(const AStatusEffect: TStatusEffectEnum): string;
+    function GetColor(const AStatusEffect: TStatusEffectEnum): string;
   end;
 
 implementation
@@ -40,20 +40,21 @@ uses
   TypInfo,
   Trollhunter.Helpers;
 
-{ TStatusEffect }
+  { TStatusEffect }
 
 const
   StatusEffectColor: array [TStatusEffectEnum] of string = ('Lighter Green', 'White',
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green',
     'Light Yellow', 'Lighter Yellow', 'Light Red', 'Light Blue', 'Lighter Blue',
-    'Light Green', 'Light Blue', 'White');
+    'Light Green', 'Lighter Blue', 'White');
 
-procedure TStatusEffects.Modify(const I: TStatusEffectEnum; const Value: Int);
+procedure TStatusEffects.Modify(const AStatusEffect: TStatusEffectEnum;
+  const Value: Int);
 begin
-  FStatusEffect[I] := FStatusEffect[I] + Value;
-  if FStatusEffect[I] < 0 then
-    FStatusEffect[I] := 0;
+  FStatusEffect[AStatusEffect] := FStatusEffect[AStatusEffect] + Value;
+  if FStatusEffect[AStatusEffect] < 0 then
+    FStatusEffect[AStatusEffect] := 0;
 end;
 
 procedure TStatusEffects.Clear;
@@ -66,13 +67,13 @@ end;
 
 constructor TStatusEffects.Create;
 var
-  I: TStatusEffectEnum;
+  LStatusEffect: TStatusEffectEnum;
   P: Pointer;
 begin
   Self.Clear;
   P := TypeInfo(TStatusEffectEnum);
-  for I := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
-    FStatusEffectName[I] := GetEnumName(P, Ord(I)).GetName('ab');
+  for LStatusEffect := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
+    FStatusEffectName[LStatusEffect] := GetEnumName(P, Ord(LStatusEffect)).GetName('se');
 end;
 
 destructor TStatusEffects.Destroy;
@@ -81,29 +82,29 @@ begin
   inherited;
 end;
 
-function TStatusEffects.GetStatusEffect(const I: TStatusEffectEnum): Int;
+function TStatusEffects.GetStatusEffect(const AStatusEffect: TStatusEffectEnum): Int;
 begin
-  Result := FStatusEffect[I]
+  Result := FStatusEffect[AStatusEffect];
 end;
 
-function TStatusEffects.GetColor(const Value: TStatusEffectEnum): string;
+function TStatusEffects.GetColor(const AStatusEffect: TStatusEffectEnum): string;
 begin
-  Result := StatusEffectColor[Value];
+  Result := StatusEffectColor[AStatusEffect];
 end;
 
-function TStatusEffects.IsStatusEffect(const Value: TStatusEffectEnum): Boolean;
+function TStatusEffects.IsStatusEffect(const AStatusEffect: TStatusEffectEnum): boolean;
 begin
-  Result := StatusEffect[Value] > 0;
+  Result := StatusEffect[AStatusEffect] > 0;
 end;
 
-procedure TStatusEffects.SetStatusEffect(const I: TStatusEffectEnum; const Value: Int);
+procedure TStatusEffects.SetStatusEffect(const AStatusEffect: TStatusEffectEnum; const Value: Int);
 begin
-  FStatusEffect[I] := Value;
+  FStatusEffect[AStatusEffect] := Value;
 end;
 
-function TStatusEffects.GetName(const Value: TStatusEffectEnum): string;
+function TStatusEffects.GetName(const AStatusEffect: TStatusEffectEnum): string;
 begin
-  Result := FStatusEffectName[Value];
+  Result := FStatusEffectName[AStatusEffect];
 end;
 
 end.
