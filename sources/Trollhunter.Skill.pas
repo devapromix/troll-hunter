@@ -7,13 +7,12 @@ uses
 
 type
   TSkillEnum = (
-
     skNone,
-
+    //
     skStealth,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness, skAwareness,
-
+    //
     skBodybuilding, skMeditation, skEnchant_Item, skPoisoning,
     // Weapon skills
     skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow);

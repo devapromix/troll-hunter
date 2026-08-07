@@ -4,8 +4,7 @@ interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Effect,
-  Trollhunter.Creature;
+  Trollhunter.Effect;
 
 const
   BonusCount = 4;
