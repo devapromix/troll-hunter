@@ -31,12 +31,12 @@ const
     CTrophy: array [0..22] of string = (
       '                 _________________',
       '                ''.__===========__.''',
-      '          .---.--\:            /-.---.',
-      '         /    /   \:          /   \   \',
-      '        |    |     \:        /  .  |   |',
-      '        |    |      \:      /      |   |',
-      '        |    |       \:    /       |   |',
-      '         \    \   ,   \:  /       /   /',
+      '          .---.--\:            /--.---.',
+      '         /    /   \:          /    \   \',
+      '        |    |     \:        /  .   |   |',
+      '        |    |      \:      /       |   |',
+      '        |    |       \:    /        |   |',
+      '         \    \   ,   \:  /        /   /',
       '          ''----\       \:/       /---''',
       '                \       :       /',
       '                 \     .:.     /',
@@ -70,6 +70,15 @@ var
     Inc(LY);
   end;
 
+  procedure AddStrStat(const AText, AValue: string);
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(LRight, LY, AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clGreen);
+    Terminal.Print(LRight + 20, LY, AValue, TK_ALIGN_LEFT);
+    Inc(LY);
+  end;
+
 begin
   LLeft := 4;
   LTop := CY - (CTrophyHeight div 2) - 1;
@@ -93,6 +102,7 @@ begin
   LY := LTop + 6;
   AddStat('Level', Player.Attributes.Attrib[atLev].Value);
   AddStat('Score', Player.Statictics.Get(stScore));
+  AddStrStat('Difficulty', Game.GetStrDifficulty);
   AddStat('Tiles Moved', Player.Statictics.Get(stTurn));
   AddStat('Monsters Killed', Player.Statictics.Get(stKills));
   AddStat('Items Found', Player.Statictics.Get(stFound));

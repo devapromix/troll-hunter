@@ -71,6 +71,15 @@ var
     Inc(LY);
   end;
 
+  procedure AddStrStat(const AText, AValue: string);
+  begin
+    Terminal.ForegroundColor(clWhite);
+    Terminal.Print(LRight, LY, AText + ':', TK_ALIGN_LEFT);
+    Terminal.ForegroundColor(clGreen);
+    Terminal.Print(LRight + 20, LY, AValue, TK_ALIGN_LEFT);
+    Inc(LY);
+  end;
+
 begin
   LLeft := 4;
   LTop := CY - (CTombstoneHeight div 2);
@@ -100,6 +109,7 @@ begin
   LY := LTop + 5;
   AddStat('Level', Player.Attributes.Attrib[atLev].Value);
   AddStat('Score', Player.Statictics.Get(stScore));
+  AddStrStat('Difficulty', Game.GetStrDifficulty);
   AddStat('Tiles Moved', Player.Statictics.Get(stTurn));
   AddStat('Monsters Killed', Player.Statictics.Get(stKills));
   AddStat('Items Found', Player.Statictics.Get(stFound));

@@ -46,7 +46,6 @@ var
 
 begin
   UI.Title(NPCName + ' ' + UI.GoldLeft(Player.Gold));
-
   UI.FromAToZ;
   Y := 1;
 

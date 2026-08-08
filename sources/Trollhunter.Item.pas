@@ -1862,7 +1862,7 @@ const
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 120; Color: clDarkYellow; Deep: [deDark_Wood .. deDeep_Cave];
+    Price: 120; Color: clLightGreen; Deep: [deDark_Wood .. deDeep_Cave];
     Effects: [efPoisonWeapon]; Value: 30; ),
     // Toxic Extract
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
@@ -1874,37 +1874,37 @@ const
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 160; Color: clDarkYellow; Deep: [deDeep_Cave .. deBlood_Cave];
+    Price: 160; Color: clWhite; Deep: [deDeep_Cave .. deBlood_Cave];
     Effects: [efPoisonWeapon]; Value: 40; ),
     // Deadly Poison
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 180; Color: clDarkYellow; Deep: [deBlood_Cave .. deDrom];
+    Price: 180; Color: clLightGray; Deep: [deBlood_Cave .. deDrom];
     Effects: [efPoisonWeapon]; Value: 45; ),
     // Manticore Venom
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 7; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 200; Color: clDarkYellow; Deep: [deBlood_Cave .. deDrom];
+    Price: 200; Color: clRed; Deep: [deBlood_Cave .. deDrom];
     Effects: [efPoisonWeapon]; Value: 50; ),
     // Hydra Venom
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 8; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 220; Color: clDarkYellow; Deep: [deDrom];
+    Price: 220; Color: clGreen; Deep: [deDrom];
     Effects: [efPoisonWeapon]; Value: 55; ),
     // Void Poison
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 9; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 250; Color: clDarkYellow; Deep: [deDrom];
+    Price: 250; Color: clDarkBlue; Deep: [deDrom];
     Effects: [efPoisonWeapon]; Value: 60; ),
     // Black Ichor
     (Symbol: '!'; ItemType: itVenom; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 10; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 300; Color: clDarkYellow; Deep: [deDrom];
+    Price: 300; Color: clDarkGray; Deep: [deDrom];
     Effects: [efPoisonWeapon]; Value: 75; Rare: True)
     );
 
