@@ -8,6 +8,8 @@ uses
 
 type
   TSceneDeath = class(TScene)
+  private
+    FScreenshotTaken: boolean;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -81,6 +83,12 @@ var
   end;
 
 begin
+  if not FScreenshotTaken and not Mode.Wizard then
+  begin
+    Terminal.SaveTextScreenshot(Player.Name);
+    FScreenshotTaken := True;
+  end;
+
   LLeft := 4;
   LTop := CY - (CTombstoneHeight div 2);
   LRight := CX + 8;
@@ -140,6 +148,7 @@ begin
     TK_SPACE:
       if Mode.Wizard then
       begin
+        FScreenshotTaken := False;
         Player.Fill;
         Scenes.SetScene(scGame);
       end;

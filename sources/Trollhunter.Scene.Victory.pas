@@ -8,6 +8,8 @@ uses
 
 type
   TSceneVictory = class(TScene)
+  private
+    FScreenshotTaken: boolean;
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -31,12 +33,12 @@ const
     CTrophy: array [0..22] of string = (
       '                 _________________',
       '                ''.__===========__.''',
-      '          .---.--\:            /--.---.',
-      '         /    /   \:          /    \   \',
-      '        |    |     \:        /  .   |   |',
-      '        |    |      \:      /       |   |',
-      '        |    |       \:    /        |   |',
-      '         \    \   ,   \:  /        /   /',
+      '          .---.--\:            /-.---.',
+      '         /    /   \:          /   \   \',
+      '        |    |     \:        /  .  |   |',
+      '        |    |      \:      /      |   |',
+      '        |    |       \:    /       |   |',
+      '         \    \   ,   \:  /       /   /',
       '          ''----\       \:/       /---''',
       '                \       :       /',
       '                 \     .:.     /',
@@ -80,6 +82,12 @@ var
   end;
 
 begin
+  if not FScreenshotTaken and not Mode.Wizard then
+  begin
+    Terminal.SaveTextScreenshot(Player.Name);
+    FScreenshotTaken := True;
+  end;
+
   LLeft := 4;
   LTop := CY - (CTrophyHeight div 2) - 1;
   LRight := CX + 8;

@@ -55,6 +55,7 @@ type
     function Colorize(const AStr, AColor: string): string; overload;
     function Colorize(const ANum: Int; const AColor: string): string; overload;
     function GetTextScreenshot: string;
+    function SaveTextScreenshot(const AName: string): string;
     function SetEntSize(ALeft, ATop, AWidth, AHeight: UInt): TEntSize;
     function GetColor(Color: Int): cardinal;
   end;
@@ -155,6 +156,25 @@ end;
 function TTerminal.GetColorFromIni(AKey: string): string;
 begin
   Result := LowerCase(terminal_get('ini.colors.' + LowerCase(AKey)));
+end;
+
+function TTerminal.SaveTextScreenshot(const AName: string): string;
+var
+  LDir: string;
+  LFileName: string;
+  LList: TStringList;
+begin
+  LDir := ExtractFilePath(ParamStr(0)) + 'Screenshots';
+  ForceDirectories(LDir);
+  LFileName := Format('%s-%s', [AName, FormatDateTime('dd-mm-yyyy-hh-nn', Now)]);
+  Result := IncludeTrailingPathDelimiter(LDir) + LFileName + '.txt';
+  LList := TStringList.Create;
+  try
+    LList.Text := GetTextScreenshot;
+    LList.SaveToFile(Result);
+  finally
+    LList.Free;
+  end;
 end;
 
 procedure TTerminal.Init;
