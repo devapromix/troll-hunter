@@ -35,7 +35,7 @@ uses
 
 procedure TSceneDialog.Render;
 var
-  V: Int;
+  LValue: Int;
   S: string;
 
   procedure Add(S: string);
@@ -53,11 +53,11 @@ begin
   // Heal
   if (ntHealer_A in NPCType) then
   begin
-    V := Player.Attributes.Attrib[atMaxLife].Value -
+    LValue := Player.Attributes.Attrib[atMaxLife].Value -
       Player.Attributes.Attrib[atLife].Value;
-    if (V > 0) then
-      S := ' (' + Items.GetInfo('+', V, 'Life') + ' ' +
-        Items.GetPrice(Round(V * 1.6)) + ')'
+    if (LValue > 0) then
+      S := ' (' + Items.GetIcon(LValue, 'Life') + ' ' +
+        Items.GetPrice(Round(LValue * 1.6)) + ')'
     else
       S := '';
     Add('Heal me, please' + S);
@@ -84,7 +84,7 @@ begin
   if (ntSmithTrader_B in NPCType) then
     Add('What do you have for sale?');
   if (ntHealTrader_B in NPCType) then
-    Add('What healing potions do you have?');
+    Add('What healing items do you have?');
   if (ntPotManaTrader_B in NPCType) then
     Add('Got any mana potions?');
   if (ntPotTrader_B in NPCType) then
@@ -118,9 +118,9 @@ begin
   // Arrows
   if (ntArrTrader_C in NPCType) then
   begin
-    V := Player.GetArrowsToBuy;
-    if (V > 0) then
-      S := ' (' + Items.GetInfo('+', V, 'Arrows') + ' ' + Items.GetPrice(V) + ')'
+    LValue := Player.GetArrowsToBuy;
+    if (LValue > 0) then
+      S := ' (' + Items.GetIcon(LValue, 'Arrow') + ' ' + Items.GetPrice(LValue) + ')'
     else
       S := '';
     Add('I need more arrows' + S);

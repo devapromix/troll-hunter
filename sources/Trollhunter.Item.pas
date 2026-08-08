@@ -1909,6 +1909,9 @@ const
     );
 
 type
+
+  { TItems }
+
   TItems = class(TEntity)
   private
     FItemName: array [TItemEnum] of string;
@@ -1937,6 +1940,7 @@ type
     function GetLevel(L: UInt): string;
     function GetInfo(Sign: string; Value: UInt; Color: string;
       RareColor: string = ''): string;
+    function GetIcon(AValue: UInt; AIcon: string): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: UInt);
     procedure LootArrows(const AX, AY: UInt);
@@ -2612,6 +2616,8 @@ begin
     S := UI.Icon(icFlag);
   if (Color = 'Poison') then
     S := UI.Icon(icDrop);
+  if (Color = 'Arrow') then
+    S := UI.Icon(icArrow);
   if (Color = 'Vision') then
     S := S + UI.Icon(icVision);
   if (Color = 'Repair') then
@@ -2639,6 +2645,11 @@ begin
   if (Value > 0) then
     Result := Trim(Terminal.Colorize(Format('%s%s%d%s',
       [S, Sign, Value, P]), Color));
+end;
+
+function TItems.GetIcon(AValue: UInt; AIcon: string): string;
+begin
+  Result :=  Items.GetInfo('', AValue, AIcon);
 end;
 
 function TItems.RenderInvItem(const AX, AY, I: Int; AItem: Item;
