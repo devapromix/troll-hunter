@@ -23,6 +23,9 @@ uses
   Trollhunter.Game,
   Trollhunter.Terminal,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
+  Trollhunter.Player.Races,
+  Trollhunter.Player.Classes,
   Trollhunter.Statistic,
   Trollhunter.Attribute,
   Trollhunter.UI;
@@ -97,7 +100,7 @@ begin
   Terminal.Print(LRight, LTop, UpperCase('Game over!'), TK_ALIGN_LEFT);
 
   Terminal.ForegroundColor(clDefault);
-  Terminal.Print(LRight, LTop + 2, Format('Here lies [color=light green]%s[/color].', [UpperCase(Player.Name)]),
+  Terminal.Print(LRight, LTop + 2, Format('Here lies [color=light green]%s[/color].', [UpperCase(Player.FullName)]),
     TK_ALIGN_LEFT);
 
   if (Player.Killer = '') then
@@ -112,6 +115,8 @@ begin
   AddStat('Level', Player.Attributes.Attrib[atLev].Value);
   AddStat('Score', Player.Statictics.Get(stScore));
   AddStrStat('Difficulty', Game.GetStrDifficulty);
+  AddStrStat('Race and Class', Races.GetName(Player.HRace) + ' ' +
+    Trollhunter.Player.Classes.Classes.GetName(Player.HClass));
   AddStat('Tiles Moved', Player.Statictics.Get(stTurn));
   AddStat('Monsters Killed', Player.Statictics.Get(stKills));
   AddStat('Items Found', Player.Statictics.Get(stFound));
@@ -123,7 +128,6 @@ begin
   AddStat('Items Repaired', Player.Statictics.Get(stItRep));
   AddStat('Items Identified', Player.Statictics.Get(stItIdent));
   AddStat('Items Crafted', Player.Statictics.Get(stItCrafted));
-  AddStat('Coins Looted', Player.Statictics.Get(stCoinsLooted));
   AddStat('Gold', Player.Gold);
 
   Terminal.ForegroundColor(clDefault);

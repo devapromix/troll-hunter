@@ -23,6 +23,8 @@ uses
   Trollhunter.Game,
   Trollhunter.Terminal,
   Trollhunter.Player,
+  Trollhunter.Player.Races,
+  Trollhunter.Player.Classes,
   Trollhunter.Statistic,
   Trollhunter.Attribute,
   Trollhunter.UI;
@@ -105,6 +107,8 @@ begin
   AddStat('Level', Player.Attributes.Attrib[atLev].Value);
   AddStat('Score', Player.Statictics.Get(stScore));
   AddStrStat('Difficulty', Game.GetStrDifficulty);
+  AddStrStat('Race and Class', Races.GetName(Player.HRace) + ' ' +
+    Trollhunter.Player.Classes.Classes.GetName(Player.HClass));
   AddStat('Tiles Moved', Player.Statictics.Get(stTurn));
   AddStat('Monsters Killed', Player.Statictics.Get(stKills));
   AddStat('Items Found', Player.Statictics.Get(stFound));
@@ -116,7 +120,6 @@ begin
   AddStat('Items Repaired', Player.Statictics.Get(stItRep));
   AddStat('Items Identified', Player.Statictics.Get(stItIdent));
   AddStat('Items Crafted', Player.Statictics.Get(stItCrafted));
-  AddStat('Coins Looted', Player.Statictics.Get(stCoinsLooted));
   AddStat('Gold', Player.Gold);
 
   Terminal.ForegroundColor(clDefault);
