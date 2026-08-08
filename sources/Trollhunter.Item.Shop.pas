@@ -234,7 +234,7 @@ begin
       Max := EnsureRange(Max + 3, 7, ItemMax);
     LCount := 0;
     for ID := Low(TItemEnum) to High(TItemEnum) do
-      if MatchesShop(ID) and MatchesLevel(ID) then
+      if MatchesShop(ID) and MatchesLevel(ID) and not ItemBase[ID].Rare then
       begin
         LCandidates[LCount] := ID;
         Inc(LCount);
