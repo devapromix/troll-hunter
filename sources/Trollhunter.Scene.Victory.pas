@@ -82,12 +82,6 @@ var
   end;
 
 begin
-  if not FScreenshotTaken and not Mode.Wizard then
-  begin
-    Terminal.SaveTextScreenshot(Player.Name);
-    FScreenshotTaken := True;
-  end;
-
   LLeft := 4;
   LTop := CY - (CTrophyHeight div 2) - 1;
   LRight := CX + 8;
@@ -128,6 +122,12 @@ begin
   Terminal.ForegroundColor(clDefault);
   Terminal.Print(LRight, LY + 1, Format('Press %s to exit!',
     [UI.KeyToStr('ENTER')]), TK_ALIGN_LEFT);
+
+  if not FScreenshotTaken and not Mode.Wizard then
+  begin
+    Terminal.SaveTextScreenshot(Player.Name);
+    FScreenshotTaken := True;
+  end;
 end;
 
 procedure TSceneVictory.Update(var Key: UInt);

@@ -134,10 +134,10 @@ var
 begin
   SL := TStringList.Create;
   try
-    for Y := 0 to View.Height - 1 do
+    for Y := 0 to Screen.Height - 1 do
     begin
       S := '';
-      for X := 0 to View.Width - 1 do
+      for X := 0 to Screen.Width - 1 do
       begin
         C := Terminal.Pick(X, Y);
         if (C >= 32) and (C < 126) then

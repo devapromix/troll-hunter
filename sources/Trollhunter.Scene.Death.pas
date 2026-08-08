@@ -83,12 +83,6 @@ var
   end;
 
 begin
-  if not FScreenshotTaken and not Mode.Wizard then
-  begin
-    Terminal.SaveTextScreenshot(Player.Name);
-    FScreenshotTaken := True;
-  end;
-
   LLeft := 4;
   LTop := CY - (CTombstoneHeight div 2);
   LRight := CX + 8;
@@ -138,6 +132,12 @@ begin
   if Mode.Wizard then
     Terminal.Print(LRight, LY + 2, Format('Press %s to continue...',
       [UI.KeyToStr('SPACE')]), TK_ALIGN_LEFT);
+
+  if not FScreenshotTaken and not Mode.Wizard then
+  begin
+    Terminal.SaveTextScreenshot(Player.Name);
+    FScreenshotTaken := True;
+  end;
 end;
 
 procedure TSceneDeath.Update(var Key: UInt);
