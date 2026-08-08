@@ -60,46 +60,46 @@ begin
         Items.GetPrice(Round(V * 1.6)) + ')'
     else
       S := '';
-    Add('Receive healing' + S);
+    Add('Heal me, please' + S);
   end;
   // Shops
   if (ntScrTrader_A in NPCType) then
-    Add('Buy items (scrolls)');
+    Add('What scrolls do you have?');
   if (ntArmTrader_A in NPCType) then
-    Add('Buy items (armors)');
+    Add('Show me your armor');
   if (ntShTrader_A in NPCType) or (ntShTrader_B in NPCType) then
-    Add('Buy items (shields)');
+    Add('Got any shields?');
   if (ntHelmTrader_A in NPCType) then
-    Add('Buy items (helms)');
+    Add('What helmets do you have?');
   if (ntFoodTrader_A in NPCType) then
-    Add('Buy items (foods)');
+    Add('What food do you have?');
   if (ntBowTrader_A in NPCType) then
-    Add('Buy items (bows)');
+    Add('Show me your bows');
   if (ntDaggerTrader_A in NPCType) then
-    Add('Buy items (daggers)');
+    Add('Got any daggers?');
   if (ntVenomTrader_B in NPCType) then
-    Add('Buy items (venoms)');
+    Add('What venoms do you sell?');
   if (ntBlacksmith_A in NPCType) then
-    Add('Repair items');
+    Add('Can you repair my gear?');
   if (ntSmithTrader_B in NPCType) then
-    Add('Buy items (blacksmith)');
+    Add('What do you have for sale?');
   if (ntHealTrader_B in NPCType) then
-    Add('Buy items (healing)');
+    Add('What healing potions do you have?');
   if (ntPotManaTrader_B in NPCType) then
-    Add('Buy items (items of mana)');
+    Add('Got any mana potions?');
   if (ntPotTrader_B in NPCType) then
-    Add('Buy items (potions)');
+    Add('What potions do you have?');
   if (ntGlovesTrader_B in NPCType) then
-    Add('Buy items (gloves)');
+    Add('Show me your gloves');
   if (ntTavTrader_B in NPCType) then
-    Add('Buy items (tavern)');
+    Add('What''s on the menu?');
   if (ntWpnTrader_A in NPCType) or (ntWpnTrader_B in NPCType) or
     (ntWpnTrader_C in NPCType) then
-    Add('Buy items (weapons)');
+    Add('Show me your weapons');
   if (ntQvrTrader_B in NPCType) then
-    Add('Buy items (quivers)');
+    Add('Got any quivers?');
   if (ntGemTrader_C in NPCType) then
-    Add('Buy items (gems)');
+    Add('What gems do you have?');
   // Identify all items
   if (ntIdentify_D in NPCType) then
   begin
@@ -107,14 +107,14 @@ begin
       S := ' (' + Items.GetPrice(CIdentifyAllItemsCost) + ')'
     else
       S := '';
-    Add('Identify all items' + S);
+    Add('Can you identify my items?' + S);
   end;
   if (ntJewTrader_C in NPCType) then
-    Add('Buy items (amulets and rings)');
+    Add('Show me your jewelry');
   if (ntBootsTrader_C in NPCType) then
-    Add('Buy items (boots)');
+    Add('What boots do you have?');
   if (ntSell_C in NPCType) or (ntSell_D in NPCType) then
-    Add('Sell items');
+    Add('I want to sell something');
   // Arrows
   if (ntArrTrader_C in NPCType) then
   begin
@@ -123,16 +123,16 @@ begin
       S := ' (' + Items.GetInfo('+', V, 'Arrows') + ' ' + Items.GetPrice(V) + ')'
     else
       S := '';
-    Add('Buy arrows' + S);
+    Add('I need more arrows' + S);
   end;
   if (ntRuneTrader_D in NPCType) then
-    Add('Buy items (runes)');
+    Add('What runes do you have?');
   if (ntStaffTrader_A in NPCType) then
-    Add('Buy items (staves)');
+    Add('Show me your staves');
   if (ntWandTrader_B in NPCType) then
-    Add('Buy items (wands)');
+    Add('Got any wands?');
   if (ntBookTrader_C in NPCType) then
-    Add('Buy items (books)');
+    Add('What books do you have?');
   // Quests
   {if (ntQuest_D in NPCType) then
     Add('The Hunt (quest)'); }
