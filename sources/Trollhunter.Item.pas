@@ -2141,6 +2141,8 @@ begin
 
     AddEffect(efMana, '+', 'Mana');
     AddEffect(efLife, '+', 'Life');
+    AddEffect(efLight, '+', 'Light');
+    AddEffect(efCharges, '+', 'Charges');
     AddEffect(efFood, '+', 'Food');
     AddEffect(efCurePoison, '+', 'Poison');
     AddEffect(efBloodlust, '+', 'Poison', 'Blood');
@@ -2608,6 +2610,8 @@ begin
   end;
   if (Color = 'Life') then
     S := S + UI.Icon(icLife);
+  if (Color = 'Light') then
+    S := S + UI.Icon(icTorch);
   if (Color = 'Mana') then
   begin
     if not AIgnoreAvailability and
@@ -2629,6 +2633,8 @@ begin
     S := S + UI.Icon(icVision);
   if (Color = 'Repair') then
     S := UI.Icon(icHammer);
+  if (Color = 'Charges') then
+    S := UI.Icon(icCharg);
   if (Color = 'Strength') then
     S := UI.Icon(icStr);
   if (Color = 'Dexterity') then
