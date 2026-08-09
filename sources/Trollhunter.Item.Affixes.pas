@@ -363,31 +363,31 @@ const
 
     // of Craftmanship (Durability I)
     (Level: (Min: 1; Max: 3); Price: 100;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 10;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 10;
     Max: 20);),
     // of Durability (Durability II)
     (Level: (Min: 2; Max: 5); Price: 200;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 20;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 20;
     Max: 30);),
     // of Sturdiness (Durability III)
     (Level: (Min: 3; Max: 7); Price: 300;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 30;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 30;
     Max: 40);),
     // of Structure (Durability IV)
     (Level: (Min: 4; Max: 9); Price: 400;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 40;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 40;
     Max: 50);),
     // of Endurance (Durability V)
     (Level: (Min: 5; Max: 11); Price: 500;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 50;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 50;
     Max: 60);),
     // of the Ages (Durability VI)
     (Level: (Min: 6; Max: 13); Price: 750;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 60;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 60;
     Max: 70);),
     // of Permanance (Durability VII)
     (Level: (Min: 7; Max: 15); Price: 1000;
-    Occurence: SmithTypeItems + QuiverTypeItems; MaxDurability: (Min: 70;
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 70;
     Max: 80);),
 
     // of the Brute (Strength I)
