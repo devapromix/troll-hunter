@@ -26,7 +26,8 @@ const
     (Color: clRed;        Symbol: '*'), // prWandBolt
     (Color: clYellow;     Symbol: '/'), // prArrow
     (Color: clRed;        Symbol: '~'), // prFireArrow
-    (Color: clLightGreen; Symbol: '*')  // prVerdantSpear
+    (Color: clLightGreen; Symbol: '*'), // prVerdantSpear
+    (Color: clWhite;      Symbol: '\')  // prLightningBolt
   );
 
   { TProjectile }

@@ -8,7 +8,8 @@ type
     prWandBolt,
     prArrow,
     prFireArrow,
-    prVerdantSpear
+    prVerdantSpear,
+    prLightningBolt
   );
 
 implementation

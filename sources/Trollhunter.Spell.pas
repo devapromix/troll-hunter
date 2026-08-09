@@ -26,9 +26,9 @@ type
 
     spTownPortal,    {Arcane III}
     spCureWeakness,  {Divine III}
-                     {Nature III}
+    spNatureEye,     {Nature III}
     spBlind,         {Shadow III}
-                     {Elemental III}
+    spLightningBolt, {Elemental III}
 
     spIdentify,      {Arcane IV}
                      {Divine IV}
@@ -196,6 +196,15 @@ const
     Description: 'Cures weakness';
     Value: 0;
     ),
+    // Nature III: Nature's Eye
+    (Name: 'Nature''s Eye';
+    School: scNature;
+    Level: 6;
+    ManaCost: 30;
+    Effects: [efVision];
+    Description: 'Reveals nearby creatures and terrain';
+    Value: 5;
+    ),
     // Shadow III: Blind
     (Name: 'Blind';
     School: scShadow;
@@ -204,6 +213,18 @@ const
     Effects: [];
     Description: '';
     Value: 10;
+    ),
+    // Elemental III: Lightning Bolt
+    (Name: 'Lightning Bolt';
+    School: scElemental;
+    Level: 6;
+    ManaCost: 20;
+    Effects: [];
+    Description: 'Strikes the target with a bolt of lightning';
+    Value: 0;
+    MinDamage: 6;
+    MaxDamage: 12;
+    Projectile: prLightningBolt;
     ),
 
     // Arcane IV: Identify
