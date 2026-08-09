@@ -221,17 +221,22 @@ type
     itmArrows,
     // Spellbook
     itmSpellbook,
-    // Books
+    // Magic Books I
     itmArcane_Book_of_Mana_Shield, itmDivine_Book_of_Heal,
     itmNature_Book_of_Regeneration, itmShadow_Book_of_Curse,
-    itmElemental_Book_of_Fire_Arrow, itmArcane_Book_of_Teleport,
+    itmElemental_Book_of_Fire_Arrow,
+    // Magic Books II
+    itmArcane_Book_of_Teleport,
     itmDivine_Book_of_Cure_Poison, itmNature_Book_of_Verdant_Spear,
     itmShadow_Book_of_Drain_Life, itmElemental_Book_of_Ignite,
-    {itmBook11, itmBook12,
-    itmBook13, itmBook14,
-    itmBook15, itmBook16,
-    itmBook17, itmBook18,
+    // Magic Books III
+    itmArcane_Book_of_Town_Portal, itmDivine_Book_of_Cure_Weakness,
+    itmNature_Book_of_Natures_Eye, itmShadow_Book_of_Blind,
+    itmElemental_Book_of_Lightning_Bolt,
+    // Magic Books IV
+    {itmBook16, itmBook17, itmBook18,
     itmBook19, itmBook20,
+    // Magic Books V
     itmBook21, itmBook22,
     itmBook23, itmBook24,
     itmBook25,}

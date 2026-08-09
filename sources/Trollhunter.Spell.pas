@@ -191,7 +191,7 @@ const
     (Name: 'Cure Weakness';
     School: scDivine;
     Level: 5;
-    ManaCost: 40;
+    ManaCost: 45;
     Effects: [efCureWeak];
     Description: 'Cures weakness';
     Value: 0;
@@ -200,7 +200,7 @@ const
     (Name: 'Nature''s Eye';
     School: scNature;
     Level: 6;
-    ManaCost: 30;
+    ManaCost: 35;
     Effects: [efVision];
     Description: 'Reveals nearby creatures and terrain';
     Value: 5;
@@ -211,18 +211,18 @@ const
     Level: 6;
     ManaCost: 55;
     Effects: [];
-    Description: '';
+    Description: 'Blinds the target';
     Value: 10;
     ),
     // Elemental III: Lightning Bolt
     (Name: 'Lightning Bolt';
     School: scElemental;
     Level: 6;
-    ManaCost: 20;
+    ManaCost: 3;
     Effects: [];
     Description: 'Strikes the target with a bolt of lightning';
     Value: 0;
-    MinDamage: 6;
+    MinDamage: 4;
     MaxDamage: 12;
     Projectile: prLightningBolt;
     ),
