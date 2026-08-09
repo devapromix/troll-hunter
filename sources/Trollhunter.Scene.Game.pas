@@ -511,8 +511,8 @@ begin
       Scenes.SetScene(scTalents, scGame);
     TK_SLASH:
       Scenes.SetScene(scHelp, scGame);
-    TK_Z:
-      Scenes.SetScene(scDeath, scGame);
+//    TK_Z:
+//      Scenes.SetScene(scWin, scGame);
   end;
 end;
 

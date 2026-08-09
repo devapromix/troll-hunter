@@ -210,15 +210,14 @@ begin
   Items.AddItemToInv(itmBread_Ration, IfWizard(9, 3));
   Items.AddItemToInv(itmTorch, IfWizard(3, 1));
   // Add coins
-  Items.AddItemToInv(itmGold, IfWizard(RandomRange(3333, 9999),
-    StartGold));
+  Items.AddItemToInv(itmGold, IfWizard(RandomRange(3333, 9999), StartGold));
   // Calc
   Calc();
   Fill();
   // Wizard
   if Mode.Wizard then
   begin
-    Items.AddItemToInv(itmNature_Book_of_Verdant_Spear, 1);
+    //Items.AddItemToInv(itmNature_Book_of_Verdant_Spear, 1);
   end;
 end;
 
