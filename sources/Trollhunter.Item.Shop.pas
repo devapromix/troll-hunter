@@ -63,6 +63,33 @@ uses
   Trollhunter.Game,
   Trollhunter.Item.Types;
 
+const
+  CShopItemTypes: array [TShopEnum] of TSetOfItem = (
+    PotionTypeItems,                    // shPotions
+    ScrollTypeItems,                    // shScrolls
+    [],                                 // shHealer  (перевірка за Effects)
+    [],                                 // shMana    (перевірка за Effects)
+    SmithTypeItems + RepairTypeItems,   // shSmith
+    ArmorTypeItems,                     // shArmors
+    GlovesTypeItems,                    // shGloves
+    FoodTypeItems + PlantTypeItems,     // shFoods
+    WeaponTypeItems,                    // shWeapons
+    BootsTypeItems,                     // shBoots
+    [],                                 // shTavern  (перевірка за TavernItems)
+    ShieldTypeItems,                    // shShields
+    HelmTypeItems,                      // shHelms
+    JewelryTypeItems,                   // shJewelry
+    GemTypeItems,                       // shGem
+    RuneTypeItems,                      // shRunes
+    QuiverTypeItems,                    // shQuivers
+    StaffTypeItems,                     // shStaves
+    WandTypeItems,                      // shWands
+    BookTypeItems,                      // shBooks
+    BowTypeItems,                       // shBows
+    DaggerTypeItems,                    // shDaggers
+    VenomTypeItems                      // shVenoms
+  );
+
 { TShop }
 
 procedure TShop.Add(const AItem: Item);
@@ -138,59 +165,17 @@ var
   LCount: UInt;
 
   function MatchesShop(const AID: TItemEnum): Boolean;
-  var
-    Effects: TEffects;
   begin
-    Effects := ItemBase[AID].Effects;
     case S of
       shTavern:
         Result := AID in TavernItems;
       shHealer:
-        Result := efLife in Effects;
+        Result := efLife in ItemBase[AID].Effects;
       shMana:
-        Result := (efMana in Effects) and not(efLife in Effects);
-      shPotions:
-        Result := ItemBase[AID].ItemType in PotionTypeItems;
-      shScrolls:
-        Result := ItemBase[AID].ItemType in ScrollTypeItems;
-      shArmors:
-        Result := ItemBase[AID].ItemType in ArmorTypeItems;
-      shGloves:
-        Result := ItemBase[AID].ItemType in GlovesTypeItems;
-      shBoots:
-        Result := ItemBase[AID].ItemType in BootsTypeItems;
-      shHelms:
-        Result := ItemBase[AID].ItemType in HelmTypeItems;
-      shShields:
-        Result := ItemBase[AID].ItemType in ShieldTypeItems;
-      shWeapons:
-        Result := ItemBase[AID].ItemType in WeaponTypeItems;
-      shSmith:
-        Result := ItemBase[AID].ItemType in SmithTypeItems + RepairTypeItems;
-      shFoods:
-        Result := ItemBase[AID].ItemType in FoodTypeItems + PlantTypeItems;
-      shGem:
-        Result := ItemBase[AID].ItemType in GemTypeItems;
-      shJewelry:
-        Result := ItemBase[AID].ItemType in JewelryTypeItems;
-      shRunes:
-        Result := ItemBase[AID].ItemType in RuneTypeItems;
-      shQuivers:
-        Result := ItemBase[AID].ItemType in QuiverTypeItems;
-      shStaves:
-        Result := ItemBase[AID].ItemType in StaffTypeItems;
-      shWands:
-        Result := ItemBase[AID].ItemType in WandTypeItems;
-      shBooks:
-        Result := ItemBase[AID].ItemType in BookTypeItems;
-      shBows:
-        Result := ItemBase[AID].ItemType in BowTypeItems;
-      shDaggers:
-        Result := ItemBase[AID].ItemType in DaggerTypeItems;
-      shVenoms:
-        Result := ItemBase[AID].ItemType in VenomTypeItems;
+        Result := (efMana in ItemBase[AID].Effects) and
+          not(efLife in ItemBase[AID].Effects);
     else
-      Result := False;
+      Result := ItemBase[AID].ItemType in CShopItemTypes[S];
     end;
   end;
 
@@ -229,9 +214,7 @@ begin
   for S := Low(TShopEnum) to High(TShopEnum) do
   begin
     Shops.Shop[S].Clear;
-    Max := EnsureRange(Player.Attributes.Attrib[atLev].Value * 4, 4, ItemMax);
-    if S = shSmith then
-      Max := EnsureRange(Max + 3, 7, ItemMax);
+    Max := EnsureRange(3 + Player.Attributes.Attrib[atLev].Value, 4, ItemMax);
     LCount := 0;
     for ID := Low(TItemEnum) to High(TItemEnum) do
       if MatchesShop(ID) and MatchesLevel(ID) and not ItemBase[ID].Rare then
