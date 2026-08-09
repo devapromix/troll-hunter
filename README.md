@@ -36,4 +36,4 @@ You may need to set "executable" bit in Linux.
 Copyright (C) 2017-2026 by Serhii Tkach (Apromix).
 
 Trollhunter is open source, written in pascal, the full source is available at:
-https://github.com/devapromix-roguelikes/troll-hunter
+https://github.com/devapromix/troll-hunter

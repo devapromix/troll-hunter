@@ -1927,7 +1927,7 @@ type
       IsRare: boolean = False);
     function GetItemEnum(AItemID: Int): TItemEnum;
     function GetItemInfo(AItem: Item; IsManyItems: boolean = False;
-      ACount: UInt = 0; IsShort: boolean = False): string;
+      ACount: UInt = 0; IsShort: boolean = False; AIsShop: boolean = False): string;
     function RenderInvItem(const AX, AY, I: Int; AItem: Item;
       IsAdvInfo: boolean = False; IsRender: boolean = True;
       PriceType: TPriceType = ptNone): string;
@@ -1939,7 +1939,7 @@ type
     function GetPrice(Price: UInt; F: boolean = False): string;
     function GetLevel(L: UInt): string;
     function GetInfo(Sign: string; Value: UInt; Color: string;
-      RareColor: string = ''): string;
+      RareColor: string = ''; AIgnoreAvailability: boolean = False): string;
     function GetIcon(AValue: UInt; AIcon: string): string;
     procedure RenderInventory(PriceType: TPriceType = ptNone);
     procedure LootGold(const AX, AY: UInt);
@@ -2060,7 +2060,7 @@ begin
 end;
 
 function TItems.GetItemInfo(AItem: Item; IsManyItems: boolean = False;
-  ACount: UInt = 0; IsShort: boolean = False): string;
+  ACount: UInt = 0; IsShort: boolean = False; AIsShop: boolean = False): string;
 const
   CBonusColor = 'Bonus';
 var
@@ -2130,7 +2130,7 @@ begin
     begin
       V := ItemBase[TItemEnum(ID)].ManaCost;
       if (V > 0) then
-        S := S + Items.GetInfo('-', V, 'Mana') + ' ';
+        S := S + Items.GetInfo('-', V, 'Mana', '', AIsShop) + ' ';
     end;
 
     AddEffect(efMana, '+', 'Mana');
@@ -2581,7 +2581,7 @@ begin
 end;
 
 function TItems.GetInfo(Sign: string; Value: UInt; Color: string;
-  RareColor: string = ''): string;
+  RareColor: string = ''; AIgnoreAvailability: boolean = False): string;
 var
   S, P: string;
 begin
@@ -2604,7 +2604,8 @@ begin
     S := S + UI.Icon(icLife);
   if (Color = 'Mana') then
   begin
-    if ((Player.Attributes.Attrib[atMana].Value < Value) and (Sign <> '+')) then
+    if not AIgnoreAvailability and
+      ((Player.Attributes.Attrib[atMana].Value < Value) and (Sign <> '+')) then
       Color := 'NoMana';
     S := S + UI.Icon(icMana);
   end;
@@ -2698,9 +2699,9 @@ begin
       S := GetSlotName(D.SlotType);
   end;
   if (S <> '') then
-    S := Items.GetItemInfo(AItem, False, 0, True) + ' ' + S
+    S := Items.GetItemInfo(AItem, False, 0, True, PriceType = ptBuy) + ' ' + S
   else
-    S := Trim(Items.GetItemInfo(AItem, False, 0, True));
+    S := Trim(Items.GetItemInfo(AItem, False, 0, True, PriceType = ptBuy));
 
   if IsRender then
   begin
