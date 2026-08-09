@@ -187,24 +187,27 @@ var
 
   procedure RestrictShopAffixes(var AItem: Item);
   var
-    LHasPrefix, LHasSuffix: Boolean;
+    LHasPrefix, LHasSuffix, LProtectSuffix: Boolean;
   begin
     LHasPrefix := AItem.Prefix = 0;
     LHasSuffix := AItem.Identify = 0;
+    LProtectSuffix := ItemBase[ID].ItemType in JewelryTypeItems;
     case Game.Difficulty of
       dfHell:
         begin
           if LHasPrefix then
             AItem.Prefix := -1;
-          if LHasSuffix then
+          if LHasSuffix and not LProtectSuffix then
             AItem.Identify := -1;
         end;
       dfHard:
-        if LHasSuffix then
+        if LHasSuffix and not LProtectSuffix then
           AItem.Identify := -1;
       dfNormal:
         if LHasPrefix and LHasSuffix then
-          if Math.RandomRange(0, 2) = 0 then
+          if LProtectSuffix then
+            AItem.Prefix := -1
+          else if Math.RandomRange(0, 2) = 0 then
             AItem.Prefix := -1
           else
             AItem.Identify := -1;
