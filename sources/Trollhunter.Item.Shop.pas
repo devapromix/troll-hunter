@@ -114,7 +114,7 @@ end;
 
 function TShop.GetItem(const Index: UInt): Item;
 begin
-  Result := FItemsStore[Index.InRange(ItemMax)];
+  Result := FItemsStore[Index.InRange(FCount)];
 end;
 
 { TShops }
@@ -163,6 +163,7 @@ var
   S: TShopEnum;
   LCandidates: array [0 .. Ord(High(TItemEnum))] of TItemEnum;
   LCount: UInt;
+  LPlayerLevel: UInt;
 
   function MatchesShop(const AID: TItemEnum): Boolean;
   begin
@@ -181,7 +182,7 @@ var
 
   function MatchesLevel(const AID: TItemEnum): Boolean;
   begin
-    Result := ItemBase[AID].Level <= Player.Attributes.Attrib[atLev].Value;
+    Result := ItemBase[AID].Level <= LPlayerLevel;
   end;
 
   procedure RestrictShopAffixes(var AItem: Item);
@@ -211,10 +212,11 @@ var
   end;
 
 begin
+  LPlayerLevel := Player.Attributes.Attrib[atLev].Value;
+  Max := EnsureRange(3 + LPlayerLevel, 4, ItemMax);
   for S := Low(TShopEnum) to High(TShopEnum) do
   begin
     Shops.Shop[S].Clear;
-    Max := EnsureRange(3 + Player.Attributes.Attrib[atLev].Value, 4, ItemMax);
     LCount := 0;
     for ID := Low(TItemEnum) to High(TItemEnum) do
       if MatchesShop(ID) and MatchesLevel(ID) and not ItemBase[ID].Rare then
