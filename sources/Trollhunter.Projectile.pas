@@ -23,13 +23,13 @@ type
 
 const
   ProjectileData: array [TProjectileEnum] of TProjectileData = (
-    (Color: 0;            Symbol: #0), // prNone
-    (Color: clRed;        Symbol: '*'), // prWandBolt
-    (Color: clYellow;     Symbol: '/'), // prArrow
-    (Color: clRed;        Symbol: '~'), // prFireArrow
-    (Color: clLightGreen; Symbol: '*'), // prVerdantSpear
-    (Color: clWhite;      Symbol: '-'), // prLightning
-    (Color: clGray;       Symbol: '+')  // prDarkArrow
+    (Color: 0;             Symbol: #0), // prNone
+    (Color: clRed;         Symbol: '*'), // prWandBolt
+    (Color: clYellow;      Symbol: '/'), // prArrow
+    (Color: clRed;         Symbol: '~'), // prFireArrow
+    (Color: clLightGreen;  Symbol: '*'), // prVerdantSpear
+    (Color: clLightYellow; Symbol: '-'), // prLightning
+    (Color: clGray;        Symbol: '+')  // prDarkArrow
   );
 
   { TProjectile }

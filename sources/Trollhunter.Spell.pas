@@ -3,6 +3,7 @@ unit Trollhunter.Spell;
 interface
 
 uses
+  Trollhunter.UI,
   Trollhunter.Types,
   Trollhunter.Effect,
   Trollhunter.Spell.School,
@@ -51,6 +52,7 @@ type
     ManaCost: UInt;
     Effects: TEffects;
     Description: string;
+    Icon: TIconEnum;
     Value: Int;
     MinDamage: UInt;
     MaxDamage: UInt;
@@ -71,7 +73,11 @@ const
     ManaCost: 0;
     Effects: [];
     Description: '';
+    Icon: icCharg;
     Value: 0;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
 
     // Arcane I: Mana Shield
@@ -81,7 +87,11 @@ const
     ManaCost: 75;
     Effects: [efManaShield];
     Description: 'Absorbs damage using mana';
+    Icon: icCharg;
     Value: 5;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Divine I: Heal
     (Name: 'Heal';
@@ -90,7 +100,11 @@ const
     ManaCost: 20;
     Effects: [efLife];
     Description: 'Restores health';
+    Icon: icCharg;
     Value: 25;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Nature I: Regeneration
     (Name: 'Regeneration';
@@ -99,7 +113,11 @@ const
     ManaCost: 22;
     Effects: [efRegeneration];
     Description: 'Gradually restores health over time';
+    Icon: icCharg;
     Value: 20;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Shadow I: Curse
     (Name: 'Curse';
@@ -108,7 +126,11 @@ const
     ManaCost: 30;
     Effects: [efWeaken];
     Description: 'Weakens the target';
+    Icon: icCharg;
     Value: 15;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Elemental I: Fire Arrow
     (Name: 'Fire Arrow';
@@ -117,6 +139,7 @@ const
     ManaCost: 1;
     Effects: [];
     Description: 'Hurls a flaming arrow at the target';
+    Icon: icCharg;
     Value: 0;
     MinDamage: 2;
     MaxDamage: 4;
@@ -130,7 +153,11 @@ const
     ManaCost: 45;
     Effects: [efTeleportation];
     Description: 'Teleports you to a random nearby location';
+    Icon: icCharg;
     Value: 0;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Divine II: Cure Poison
     (Name: 'Cure Poison';
@@ -139,7 +166,11 @@ const
     ManaCost: 35;
     Effects: [efCurePoison];
     Description: 'Neutralizes poison in your body';
+    Icon: icCharg;
     Value: 15;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Nature II: Verdant Spear
     (Name: 'Verdant Spear';
@@ -148,6 +179,7 @@ const
     ManaCost: 2;
     Effects: [];
     Description: 'Conjures a spear of pure nature energy';
+    Icon: icCharg;
     Value: 0;
     MinDamage: 3;
     MaxDamage: 9;
@@ -160,6 +192,7 @@ const
     ManaCost: 35;
     Effects: [efDrain];
     Description: 'Drains the life force of the target';
+    Icon: icCharg;
     Value: 15;
     MinDamage: 4;
     MaxDamage: 8;
@@ -172,6 +205,7 @@ const
     ManaCost: 12;
     Effects: [efBurn];
     Description: 'Sets the target ablaze';
+    Icon: icCharg;
     Value: 5;
     MinDamage: 3;
     MaxDamage: 7;
@@ -185,7 +219,11 @@ const
     ManaCost: 75;
     Effects: [efTownPortal];
     Description: 'Opens a portal back to town';
+    Icon: icCharg;
     Value: 0;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Divine III: Cure Weakness
     (Name: 'Cure Weakness';
@@ -194,7 +232,11 @@ const
     ManaCost: 45;
     Effects: [efCureWeak];
     Description: 'Cures weakness';
+    Icon: icCharg;
     Value: 0;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Nature III: Nature's Eye
     (Name: 'Nature''s Eye';
@@ -203,7 +245,11 @@ const
     ManaCost: 35;
     Effects: [efVision];
     Description: 'Reveals nearby creatures and terrain';
+    Icon: icCharg;
     Value: 5;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Shadow III: Blind
     (Name: 'Blind';
@@ -212,15 +258,20 @@ const
     ManaCost: 55;
     Effects: [];
     Description: 'Blinds the target';
+    Icon: icCharg;
     Value: 10;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
     // Elemental III: Lightning
-    (Name: 'Lightning Bolt';
+    (Name: 'Lightning';
     School: scElemental;
     Level: 6;
     ManaCost: 3;
     Effects: [];
     Description: 'Strikes the target with a lightning';
+    Icon: icCharg;
     Value: 0;
     MinDamage: 1;
     MaxDamage: 12;
@@ -234,7 +285,11 @@ const
     ManaCost: 80;
     Effects: [efIdentification];
     Description: 'Identifies an unknown item';
+    Icon: icCharg;
     Value: 0;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     ),
 
     // Arcane V: Infusion
@@ -244,7 +299,11 @@ const
     ManaCost: 100;
     Effects: [efCraftAtr];
     Description: 'Imbues an item with a random enchantment';
+    Icon: icCharg;
     Value: 0;
+    MinDamage: 0;
+    MaxDamage: 0;
+    Projectile: prNone;
     )
     );
 
