@@ -49,6 +49,7 @@ uses SysUtils,
   Trollhunter.Player,
   Trollhunter.Creature,
   Trollhunter.Attribute,
+  Trollhunter.Weather,
   Trollhunter.Helpers;
 
   { TCalendar }
@@ -137,6 +138,7 @@ begin
   // Clear Items
   if (FHour = 0) and (Random(4) = 0) then
     Items.ClearAllGroundItems;
+  Weather.Turn();
 end;
 
 procedure TCalendar.OnMonth();

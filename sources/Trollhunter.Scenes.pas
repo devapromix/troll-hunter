@@ -146,6 +146,7 @@ uses
   Trollhunter.UI.Log,
   Trollhunter.Item,
   Trollhunter.Calendar,
+  Trollhunter.Weather,
   Trollhunter.Item.Shop,
   Trollhunter.Spellbook,
   Trollhunter.UI.Logo,
@@ -643,8 +644,16 @@ begin
   Add('Month', Calendar.Month, Calendar.GetMonthName);
   Add('Year', Calendar.Year);
   Add('Map', Map.Name);
-  Add('Wind', '');
-  Add('Weather', '');
+  if (Map.Current = deDark_Wood) then
+  begin
+    Add('Wind', Weather.GetWindName);
+    Add('Weather', Weather.GetWeatherName);
+  end
+  else
+  begin
+    Add('Wind', 'Unknown', 'Underground');
+    Add('Weather', 'Unknown', 'Underground');
+  end;
 
   AddKey('Esc', 'Close', True);
 end;
