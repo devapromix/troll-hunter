@@ -7,6 +7,7 @@ uses
   Types,
   Trollhunter.UI,
   Trollhunter.UI.Log,
+  Trollhunter.Spell,
   Trollhunter.Types,
   Trollhunter.Projectile,
   Trollhunter.Item.Common,
@@ -25,7 +26,8 @@ type
     procedure CastTargetedSpell;
     procedure CastSpell();
     procedure RenderProjectileFly(const ATX, ATY: Int; const ASymbol: TSymbol);
-    procedure RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol);
+    procedure RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol;
+      const AIndex: Int; const ASpellEnum: TSpellEnum);
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -50,8 +52,7 @@ uses
   Trollhunter.Item.Types,
   Trollhunter.Map,
   Trollhunter.Ability,
-  Trollhunter.Spellbook,
-  Trollhunter.Spell;
+  Trollhunter.Spellbook;
 
   { TSceneGame }
 
@@ -249,7 +250,8 @@ begin
   end;
 end;
 
-procedure TSceneGame.RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol);
+procedure TSceneGame.RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol;
+  const AIndex: Int; const ASpellEnum: TSpellEnum);
 const
   CBranchLen = 2;
 var
@@ -258,6 +260,23 @@ var
   LPath: array of TPoint;
   LBranchAttach: array of Int;
   LBranchPoint: array of TPoint;
+  LHitList: array of Int;
+
+  procedure HitIfMob(const AX, AY: Int);
+  var
+    LHitIndex, K: Int;
+  begin
+    LHitIndex := Mobs.GetIndex(AX, AY);
+    if (LHitIndex < 0) or (LHitIndex = AIndex) or not Mobs.Mob[LHitIndex].Alive then
+      Exit;
+    for K := 0 to High(LHitList) do
+      if (LHitList[K] = LHitIndex) then
+        Exit;
+    SetLength(LHitList, Length(LHitList) + 1);
+    LHitList[High(LHitList)] := LHitIndex;
+    Player.MagicSplashAttack(LHitIndex, ASpellEnum);
+  end;
+
 begin
   PX := View.Width div 2;
   PY := View.Height div 2;
@@ -315,6 +334,11 @@ begin
     terminal_refresh();
     terminal_delay(15);
   end;
+
+  for I := 1 to L do
+    HitIfMob(LPath[I].X, LPath[I].Y);
+  for J := 0 to LBranchCount - 1 do
+    HitIfMob(LBranchPoint[J].X, LBranchPoint[J].Y);
 end;
 
 procedure TSceneGame.FireArrow;
@@ -355,7 +379,7 @@ begin
   TY := Mobs.Mob[Index].Y;
   LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
   if (GetSpellData(LSpellEnum).Projectile = prLightning) then
-    RenderLightning(TX, TY, LSymbol)
+    RenderLightning(TX, TY, LSymbol, Index, LSpellEnum)
   else
     RenderProjectileFly(TX, TY, LSymbol);
   Player.MagicAttack(Index, LSpellEnum);

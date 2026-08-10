@@ -129,6 +129,7 @@ type
     procedure BuildFireTargets(ARange: UInt);
     procedure RangedAttack(Index: Int);
     procedure MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
+    procedure MagicSplashAttack(Index: Int; ASpellEnum: TSpellEnum);
     function CanFire: boolean;
     procedure FireModeEnter;
     procedure MagicFireModeEnter;
@@ -770,6 +771,33 @@ begin
   else
     Miss();
   AddTurn;
+end;
+
+procedure TPlayer.MagicSplashAttack(Index: Int; ASpellEnum: TSpellEnum);
+var
+  LMob: TMob;
+  LDam, LMin, LMax, LPercent: UInt;
+  LSpell: TSpellData;
+  LThe: string;
+begin
+  if (Index < 0) then
+    Exit;
+  LMob := Mobs.Mob[Index];
+  if not LMob.Alive or (LMob.Force <> fcEnemy) then
+    Exit;
+  LSpell := GetSpellData(ASpellEnum);
+  LThe := GetDescThe(Mobs.Name[TMobEnum(LMob.ID)]);
+  LPercent := EnsureRange(Skills.Skill[skConcentration].Value, SkillMin, SkillMax);
+  LMin := EnsureRange((LSpell.MinDamage * LPercent) div 100, 1, UIntMax - 1);
+  LMax := EnsureRange((LSpell.MaxDamage * LPercent) div 100, 2, UIntMax);
+  LDam := Game.EnsureRange(RandomRange(LMin, LMax + 1), UIntMax);
+  LDam := Self.GetRealDamage(LDam, LMob.Attributes.Attrib[atPV].Value);
+  if (LDam = 0) then
+    Exit;
+  LMob.Attributes.Modify(atLife, -LDam);
+  MsgLog.Add(Format('The lightning arcs to %s (%d).', [LThe, LDam]));
+  if LMob.IsDead then
+    LMob.Defeat;
 end;
 
 function TPlayer.CanFire: boolean;
