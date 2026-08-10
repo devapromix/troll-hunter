@@ -302,11 +302,16 @@ begin
     Terminal.ForegroundColor(ASymbol.Color);
     for J := 1 to I do
       Terminal.Print(LPath[J].X - Int(Player.X) + PX + View.Left,
-        LPath[J].Y - Int(Player.Y) + PY + View.Top, ASymbol.Symbol);
+        LPath[J].Y - Int(Player.Y) + PY + View.Top,
+        Projectile.GetDirSymbol(Math.Sign(LPath[J].X - LPath[J - 1].X),
+        Math.Sign(LPath[J].Y - LPath[J - 1].Y)));
     for J := 0 to LBranchCount - 1 do
       if (LBranchAttach[J] <= I) then
         Terminal.Print(LBranchPoint[J].X - Int(Player.X) + PX + View.Left,
-          LBranchPoint[J].Y - Int(Player.Y) + PY + View.Top, ASymbol.Symbol);
+          LBranchPoint[J].Y - Int(Player.Y) + PY + View.Top,
+          Projectile.GetDirSymbol(
+          Math.Sign(LBranchPoint[J].X - LPath[LBranchAttach[J]].X),
+          Math.Sign(LBranchPoint[J].Y - LPath[LBranchAttach[J]].Y)));
     terminal_refresh();
     terminal_delay(15);
   end;

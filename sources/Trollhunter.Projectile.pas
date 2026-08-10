@@ -4,6 +4,7 @@ interface
 
 uses
   Trollhunter.Game,
+  Trollhunter.Types,
   Trollhunter.Skill,
   Trollhunter.Spell,
   Trollhunter.Projectile.Types;
@@ -41,6 +42,7 @@ const
     destructor Destroy; override;
     function GetSymbol(const AX, AY: integer; const ASkillEnum: TSkillEnum): TSymbol;
     function GetSpellSymbol(const ASpellEnum: TSpellEnum): TSymbol;
+    function GetDirSymbol(const AX, AY: Int): char;
   end;
 
 var
@@ -73,6 +75,18 @@ begin
   end;
 end;
 
+function TProjectile.GetDirSymbol(const AX, AY: Int): char;
+begin
+  if (AX = 0) then
+    Result := '|'
+  else if (AY = 0) then
+    Result := '-'
+  else if (AX = AY) then
+    Result := '\'
+  else
+    Result := '/';
+end;
+
 function TProjectile.GetSymbol(const AX, AY: integer;
   const ASkillEnum: TSkillEnum): TSymbol;
 var
@@ -81,16 +95,7 @@ begin
   LProjectileEnum := SkillToProjectile(ASkillEnum);
   Result.Color := ProjectileData[LProjectileEnum].Color;
   if LProjectileEnum = prArrow then
-  begin
-    if (AX = 0) then
-      Result.Symbol := '|'
-    else if (AY = 0) then
-      Result.Symbol := '-'
-    else if (AX = AY) then
-      Result.Symbol := '\'
-    else
-      Result.Symbol := '/';
-  end
+    Result.Symbol := GetDirSymbol(AX, AY)
   else
     Result.Symbol := ProjectileData[LProjectileEnum].Symbol;
 end;
