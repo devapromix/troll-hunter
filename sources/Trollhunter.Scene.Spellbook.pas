@@ -67,7 +67,10 @@ begin
     if not IsActive then Continue;
     LSpell := GetSpellData(I);
     Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
-    Terminal.ForegroundColor(clWhite);
+    if Spellbook.GetQuickSpell.Enable and (Spellbook.GetQuickSpellEnum = I) then
+      Terminal.ForegroundColor(clWhite)
+    else
+      Terminal.ForegroundColor(clLighterGray);
     Terminal.Print(5, Y, LSpell.Name);
     LSpellSchool := GetSpellSchoolData(LSpell.School);
     LSpellLevel := Game.IfThen(LSpell.Level > Player.Attributes.Attrib[atLev].Value,
@@ -79,7 +82,7 @@ begin
         Player.SpellMaxDamage(I)]);
     LManaCost := Items.GetInfo('-', LSpell.ManaCost, 'Mana');
     if (Player.Attributes.Attrib[atMana].Value < LSpell.ManaCost) then
-      LManaCost := Terminal.Colorize(LManaCost, 'Red');
+      LManaCost := Terminal.Colorize(LManaCost, 'NoMana');
     LInfo := Items.AddItemInfo([LSpellLevel, LSpellIcon, LDamage, LManaCost]);
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);
