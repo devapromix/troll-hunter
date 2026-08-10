@@ -28,7 +28,7 @@ type
     spCureWeakness,  {Divine III}
     spNatureEye,     {Nature III}
     spBlind,         {Shadow III}
-    spLightningBolt, {Elemental III}
+    spLightning,     {Elemental III}
 
     spIdentify,      {Arcane IV}
                      {Divine IV}
@@ -163,7 +163,7 @@ const
     Value: 15;
     MinDamage: 4;
     MaxDamage: 8;
-    Projectile: prFireArrow;
+    Projectile: prDarkArrow;
     ),
     // Elemental II: Ignite
     (Name: 'Ignite';
@@ -214,17 +214,17 @@ const
     Description: 'Blinds the target';
     Value: 10;
     ),
-    // Elemental III: Lightning Bolt
+    // Elemental III: Lightning
     (Name: 'Lightning Bolt';
     School: scElemental;
     Level: 6;
     ManaCost: 3;
     Effects: [];
-    Description: 'Strikes the target with a bolt of lightning';
+    Description: 'Strikes the target with a lightning';
     Value: 0;
-    MinDamage: 4;
+    MinDamage: 1;
     MaxDamage: 12;
-    Projectile: prLightningBolt;
+    Projectile: prLightning;
     ),
 
     // Arcane IV: Identify

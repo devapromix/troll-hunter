@@ -9,7 +9,8 @@ type
     prArrow,
     prFireArrow,
     prVerdantSpear,
-    prLightningBolt
+    prLightning,
+    prDarkArrow
   );
 
 implementation

@@ -1781,7 +1781,7 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 470; Color: clLightGray; Deep: [deDeep_Cave];
     Effects: []; Value: 14; ManaCost: 0; ),
-    // Elemental Book of Lightning Bolt
+    // Elemental Book of Lightning
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
     MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));

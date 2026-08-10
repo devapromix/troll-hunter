@@ -17,7 +17,7 @@ type
 type
   TProjectileData = record
     Color: cardinal;
-    Symbol: char; // ignored for prArrow, whose symbol depends on direction
+    Symbol: char;
   end;
 
 const
@@ -27,7 +27,8 @@ const
     (Color: clYellow;     Symbol: '/'), // prArrow
     (Color: clRed;        Symbol: '~'), // prFireArrow
     (Color: clLightGreen; Symbol: '*'), // prVerdantSpear
-    (Color: clWhite;      Symbol: '\')  // prLightningBolt
+    (Color: clWhite;      Symbol: '-'), // prLightning
+    (Color: clGray;       Symbol: '+')  // prDarkArrow
   );
 
   { TProjectile }
@@ -81,7 +82,6 @@ begin
   Result.Color := ProjectileData[LProjectileEnum].Color;
   if LProjectileEnum = prArrow then
   begin
-    // Arrow symbol depends on the direction it's flying, not a fixed glyph
     if (AX = 0) then
       Result.Symbol := '|'
     else if (AY = 0) then

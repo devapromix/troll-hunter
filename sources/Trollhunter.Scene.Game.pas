@@ -8,6 +8,7 @@ uses
   Trollhunter.UI,
   Trollhunter.UI.Log,
   Trollhunter.Types,
+  Trollhunter.Projectile,
   Trollhunter.Item.Common,
   Trollhunter.Mob,
   Trollhunter.Game,
@@ -23,6 +24,8 @@ type
     procedure FireArrow;
     procedure CastTargetedSpell;
     procedure CastSpell();
+    procedure RenderProjectileFly(const ATX, ATY: Int; const ASymbol: TSymbol);
+    procedure RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol);
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -36,7 +39,6 @@ uses
   BearLibTerminal,
   Trollhunter.Quest,
   Trollhunter.Terminal,
-  Trollhunter.Projectile,
   Trollhunter.Player,
   Trollhunter.Player.Helpers,
   Trollhunter.Player.Types,
@@ -223,10 +225,96 @@ begin
   MsgLog.Render;
 end;
 
+procedure TSceneGame.RenderProjectileFly(const ATX, ATY: Int; const ASymbol: TSymbol);
+var
+  PX, PY, L, I, AX, AY: Int;
+  LR: real;
+begin
+  PX := View.Width div 2;
+  PY := View.Height div 2;
+  L := Math.Max(Abs(Int(Player.X) - ATX), Abs(Int(Player.Y) - ATY));
+  if (L = 0) then
+    L := 1;
+  for I := 1 to L do
+  begin
+    LR := I / L;
+    AX := Int(Player.X) + Round((ATX - Int(Player.X)) * LR);
+    AY := Int(Player.Y) + Round((ATY - Int(Player.Y)) * LR);
+    Self.Render;
+    Terminal.ForegroundColor(ASymbol.Color);
+    Terminal.Print(AX - Int(Player.X) + PX + View.Left,
+      AY - Int(Player.Y) + PY + View.Top, ASymbol.Symbol);
+    terminal_refresh();
+    terminal_delay(15);
+  end;
+end;
+
+procedure TSceneGame.RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol);
+const
+  CBranchLen = 2;
+var
+  L, I, J, PX, PY, LBranchCount, LDX, LDY, LPX, LPY, LSign: Int;
+  LR: real;
+  LPath: array of TPoint;
+  LBranchAttach: array of Int;
+  LBranchPoint: array of TPoint;
+begin
+  PX := View.Width div 2;
+  PY := View.Height div 2;
+  L := Math.Max(Abs(Int(Player.X) - ATX), Abs(Int(Player.Y) - ATY));
+  if (L = 0) then
+    L := 1;
+  SetLength(LPath, L + 1);
+  LPath[0] := Point(Int(Player.X), Int(Player.Y));
+  for I := 1 to L do
+  begin
+    LR := I / L;
+    LPath[I].X := Int(Player.X) + Round((ATX - Int(Player.X)) * LR);
+    LPath[I].Y := Int(Player.Y) + Round((ATY - Int(Player.Y)) * LR);
+    if (I < L) then
+      if (RandomRange(0, 2) = 0) then
+        Inc(LPath[I].X, RandomRange(-1, 2))
+      else
+        Inc(LPath[I].Y, RandomRange(-1, 2));
+  end;
+
+  LBranchCount := RandomRange(2, 4);
+  SetLength(LBranchAttach, LBranchCount);
+  SetLength(LBranchPoint, LBranchCount);
+  for J := 0 to LBranchCount - 1 do
+  begin
+    I := RandomRange(1, L);
+    LDX := LPath[I].X - LPath[I - 1].X;
+    LDY := LPath[I].Y - LPath[I - 1].Y;
+    if (RandomRange(0, 2) = 0) then
+      LSign := 1
+    else
+      LSign := -1;
+    LPX := LPath[I].X + LSign * (-LDY) * RandomRange(1, CBranchLen + 1);
+    LPY := LPath[I].Y + LSign * LDX * RandomRange(1, CBranchLen + 1);
+    LBranchAttach[J] := I;
+    LBranchPoint[J] := Point(LPX, LPY);
+  end;
+
+  for I := 1 to L do
+  begin
+    Self.Render;
+    Terminal.ForegroundColor(ASymbol.Color);
+    for J := 1 to I do
+      Terminal.Print(LPath[J].X - Int(Player.X) + PX + View.Left,
+        LPath[J].Y - Int(Player.Y) + PY + View.Top, ASymbol.Symbol);
+    for J := 0 to LBranchCount - 1 do
+      if (LBranchAttach[J] <= I) then
+        Terminal.Print(LBranchPoint[J].X - Int(Player.X) + PX + View.Left,
+          LBranchPoint[J].Y - Int(Player.Y) + PY + View.Top, ASymbol.Symbol);
+    terminal_refresh();
+    terminal_delay(15);
+  end;
+end;
+
 procedure TSceneGame.FireArrow;
 var
-  Index, TX, TY, PX, PY, L, I, AX, AY, SX, SY: Int;
-  LR: real;
+  Index, TX, TY, SX, SY: Int;
   LSymbol: TSymbol;
 begin
   Index := Player.FireModeTarget;
@@ -240,31 +328,14 @@ begin
   SX := Math.Sign(TX - Int(Player.X));
   SY := Math.Sign(TY - Int(Player.Y));
   LSymbol := Projectile.GetSymbol(SX, SY, Player.WeaponSkill);
-  PX := View.Width div 2;
-  PY := View.Height div 2;
-  L := Math.Max(Abs(Int(Player.X) - TX), Abs(Int(Player.Y) - TY));
-  if (L = 0) then
-    L := 1;
-  for I := 1 to L do
-  begin
-    LR := I / L;
-    AX := Int(Player.X) + Round((TX - Int(Player.X)) * LR);
-    AY := Int(Player.Y) + Round((TY - Int(Player.Y)) * LR);
-    Self.Render;
-    Terminal.ForegroundColor(LSymbol.Color);
-    Terminal.Print(AX - Int(Player.X) + PX + View.Left,
-      AY - Int(Player.Y) + PY + View.Top, LSymbol.Symbol);
-    terminal_refresh();
-    terminal_delay(15);
-  end;
+  RenderProjectileFly(TX, TY, LSymbol);
   Player.RangedAttack(Index);
   Player.FireModeEnter;
 end;
 
 procedure TSceneGame.CastTargetedSpell;
 var
-  Index, TX, TY, PX, PY, L, I, AX, AY: Int;
-  LR: real;
+  Index, TX, TY: Int;
   LSymbol: TSymbol;
   LSpellEnum: TSpellEnum;
 begin
@@ -278,23 +349,10 @@ begin
   TX := Mobs.Mob[Index].X;
   TY := Mobs.Mob[Index].Y;
   LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
-  PX := View.Width div 2;
-  PY := View.Height div 2;
-  L := Math.Max(Abs(Int(Player.X) - TX), Abs(Int(Player.Y) - TY));
-  if (L = 0) then
-    L := 1;
-  for I := 1 to L do
-  begin
-    LR := I / L;
-    AX := Int(Player.X) + Round((TX - Int(Player.X)) * LR);
-    AY := Int(Player.Y) + Round((TY - Int(Player.Y)) * LR);
-    Self.Render;
-    Terminal.ForegroundColor(LSymbol.Color);
-    Terminal.Print(AX - Int(Player.X) + PX + View.Left,
-      AY - Int(Player.Y) + PY + View.Top, LSymbol.Symbol);
-    terminal_refresh();
-    terminal_delay(15);
-  end;
+  if (GetSpellData(LSpellEnum).Projectile = prLightning) then
+    RenderLightning(TX, TY, LSymbol)
+  else
+    RenderProjectileFly(TX, TY, LSymbol);
   Player.MagicAttack(Index, LSpellEnum);
   if Player.FireMode then
     Player.MagicFireModeEnter;

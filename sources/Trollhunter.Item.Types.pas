@@ -232,7 +232,7 @@ type
     // Magic Books III
     itmArcane_Book_of_Town_Portal, itmDivine_Book_of_Cure_Weakness,
     itmNature_Book_of_Natures_Eye, itmShadow_Book_of_Blind,
-    itmElemental_Book_of_Lightning_Bolt,
+    itmElemental_Book_of_Lightning,
     // Magic Books IV
     {itmBook16, itmBook17, itmBook18,
     itmBook19, itmBook20,
