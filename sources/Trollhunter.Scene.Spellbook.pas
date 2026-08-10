@@ -41,7 +41,7 @@ var
   LSpell: TSpellData;
   LSpellSchool: TSpellSchoolData;
   IsActive: boolean;
-  LInfo, LSpellLevel, LDamage: string;
+  LInfo, LSpellLevel, LDamage, LSpellIcon: string;
 begin
   if FSelecting then
     UI.Title('Select Quick Spell')
@@ -69,17 +69,18 @@ begin
     Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
     Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, LSpell.Name);
+    LSpellSchool := GetSpellSchoolData(LSpell.School);
     LSpellLevel := Game.IfThen(LSpell.Level > Player.Attributes.Attrib[atLev].Value,
       Items.GetLevel(LSpell.Level), '');
+    LSpellIcon := Terminal.Colorize(UI.Icon(LSpell.Icon), LSpellSchool.Color);
     LDamage := '';
     if (LSpell.Projectile <> prNone) then
       LDamage := Format('%s%d-%d', [UI.Icon(icSword), Player.SpellMinDamage(I),
         Player.SpellMaxDamage(I)]);
-    LInfo := Items.AddItemInfo([LSpellLevel, LDamage, Items.GetInfo('-',
+    LInfo := Items.AddItemInfo([LSpellLevel, LSpellIcon, LDamage, Items.GetInfo('-',
       LSpell.ManaCost, 'Mana')]);
     Terminal.ForegroundColor(clGray);
     Terminal.Print(20, Y, LInfo);
-    LSpellSchool := GetSpellSchoolData(LSpell.School);
     Terminal.Print(37, Y, Terminal.Colorize('{' + LSpellSchool.Name +
       '}', LSpellSchool.Color));
     Terminal.Print(50, Y, LSpell.Description);
