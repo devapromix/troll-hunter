@@ -4,12 +4,14 @@ interface
 
 uses
   Trollhunter.Types,
+  Trollhunter.Spell,
   Trollhunter.Scenes;
 
 type
   TSceneSpellbook = class(TScene)
   private
     FSelecting: boolean;
+    procedure RenderSpellInfo(const ASpellEnum: TSpellEnum; const ASpell: TSpellData);
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -29,19 +31,41 @@ uses
   Trollhunter.Item,
   Trollhunter.Spell.School,
   Trollhunter.Spellbook,
-  Trollhunter.Projectile.Types,
-  Trollhunter.Spell;
+  Trollhunter.Projectile.Types;
 
   { TSceneSpellbook }
+
+procedure TSceneSpellbook.RenderSpellInfo(const ASpellEnum: TSpellEnum;
+  const ASpell: TSpellData);
+var
+  LSpellSchool: TSpellSchoolData;
+  LInfo, LSpellLevel, LDamage, LSpellIcon, LManaCost: string;
+begin
+  LSpellSchool := GetSpellSchoolData(ASpell.School);
+  LSpellLevel := Game.IfThen(ASpell.Level > Player.Attributes.Attrib[atLev].Value,
+    Items.GetLevel(ASpell.Level), '');
+  LSpellIcon := Terminal.Colorize(UI.Icon(ASpell.Icon), LSpellSchool.Color);
+  LDamage := '';
+  if (ASpell.Projectile <> prNone) then
+    LDamage := Format('%s%d-%d', [UI.Icon(icSword), Player.SpellMinDamage(ASpellEnum),
+      Player.SpellMaxDamage(ASpellEnum)]);
+  LManaCost := Items.GetInfo('-', ASpell.ManaCost, 'Mana');
+  if (Player.Attributes.Attrib[atMana].Value < ASpell.ManaCost) then
+    LManaCost := Terminal.Colorize(LManaCost, 'NoMana');
+  LInfo := Items.AddItemInfo([LSpellLevel, LSpellIcon, LDamage, LManaCost]);
+  Terminal.ForegroundColor(clGray);
+  Terminal.Print(20, Y, LInfo);
+  Terminal.Print(37, Y, Terminal.Colorize('{' + LSpellSchool.Name +
+    '}', LSpellSchool.Color));
+  Terminal.Print(50, Y, ASpell.Description);
+end;
 
 procedure TSceneSpellbook.Render;
 var
   I: TSpellEnum;
   V: UInt;
   LSpell: TSpellData;
-  LSpellSchool: TSpellSchoolData;
-  IsActive: boolean;
-  LInfo, LSpellLevel, LDamage, LSpellIcon, LManaCost: string;
+  IsActive, IsQuickSpell: boolean;
 begin
   if FSelecting then
     UI.Title('Select Quick Spell')
@@ -66,29 +90,16 @@ begin
       IsActive := Spellbook.GetSpell(I).Enable;
     if not IsActive then Continue;
     LSpell := GetSpellData(I);
-    Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A'))));
-    if Spellbook.GetQuickSpell.Enable and (Spellbook.GetQuickSpellEnum = I) then
-      Terminal.ForegroundColor(clWhite)
+    IsQuickSpell := Spellbook.GetQuickSpell.Enable and
+      (Spellbook.GetQuickSpellEnum = I);
+    Terminal.Print(1, Y, UI.KeyToStr(Chr(V + Ord('A')), '',
+      Game.IfThen(IsQuickSpell, 'QuickSpell', 'Key')));
+    if IsQuickSpell then
+      Terminal.ForegroundColor(clLightYellow)
     else
-      Terminal.ForegroundColor(clLighterGray);
+      Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, LSpell.Name);
-    LSpellSchool := GetSpellSchoolData(LSpell.School);
-    LSpellLevel := Game.IfThen(LSpell.Level > Player.Attributes.Attrib[atLev].Value,
-      Items.GetLevel(LSpell.Level), '');
-    LSpellIcon := Terminal.Colorize(UI.Icon(LSpell.Icon), LSpellSchool.Color);
-    LDamage := '';
-    if (LSpell.Projectile <> prNone) then
-      LDamage := Format('%s%d-%d', [UI.Icon(icSword), Player.SpellMinDamage(I),
-        Player.SpellMaxDamage(I)]);
-    LManaCost := Items.GetInfo('-', LSpell.ManaCost, 'Mana');
-    if (Player.Attributes.Attrib[atMana].Value < LSpell.ManaCost) then
-      LManaCost := Terminal.Colorize(LManaCost, 'NoMana');
-    LInfo := Items.AddItemInfo([LSpellLevel, LSpellIcon, LDamage, LManaCost]);
-    Terminal.ForegroundColor(clGray);
-    Terminal.Print(20, Y, LInfo);
-    Terminal.Print(37, Y, Terminal.Colorize('{' + LSpellSchool.Name +
-      '}', LSpellSchool.Color));
-    Terminal.Print(50, Y, LSpell.Description);
+    RenderSpellInfo(I, LSpell);
     Inc(Y);
     Inc(V);
   end;
