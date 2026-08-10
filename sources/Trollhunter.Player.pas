@@ -199,6 +199,7 @@ uses
   Trollhunter.Terminal,
   Trollhunter.UI.Log,
   Trollhunter.Calendar,
+  Trollhunter.Weather,
   Trollhunter.Item.Shop,
   BearLibTerminal,
   Trollhunter.Ability,
@@ -2138,10 +2139,20 @@ var
 begin
   if (Map.Current <> deDark_Wood) then
     Exit;
-  if Calendar.IsDay then
-    Add(UI.Icon(icSun), 'Light Yellow', 'Lightest Blue')
+  case Weather.Weather of
+    wtCloudy:
+      if Calendar.IsDay then
+        Add(UI.Icon(icSunnyAndCloudy), 'Light Gray', 'Lightest Blue')
+      else
+        Add(UI.Icon(icCloudy), 'Light Gray', 'Darker Gray');
+    wtRain:
+      Add(UI.Icon(icRain), 'Light Blue', 'Darker Gray');
   else
-    Add(UI.Icon(icMoon), 'Light White', 'Darker Gray');
+    if Calendar.IsDay then
+      Add(UI.Icon(icSun), 'Light Yellow', 'Lightest Blue')
+    else
+      Add(UI.Icon(icMoon), 'Light White', 'Darker Gray');
+  end;
   Left := Round(Calendar.Hour / 24 * AWidth);
   SunOrMoon := Terminal.Colorize(SunOrMoonGlyph, SunOrMoonGlyphColor);
   SkyBef := Terminal.Colorize(StringOfChar('_', Left), SkyColor);

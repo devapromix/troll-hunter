@@ -6,7 +6,7 @@ type
   TWindEnum = (wdNone, wdN, wdNE, wdE, wdSE, wdS, wdSW, wdW, wdNW);
 
 type
-  TWeatherEnum = (wtClear, wtCloudy, wtRain);
+  TWeatherEnum = (wtClear, wtSunnyAndCloudy, wtCloudy, wtRain);
 
 type
   TWeather = class(TObject)
@@ -41,7 +41,8 @@ end;
 
 function TWeather.GetWeatherName: string;
 const
-  CWeatherName: array [TWeatherEnum] of string = ('Sunny', 'Cloudy', 'Rain');
+  CWeatherName: array [TWeatherEnum] of string =
+    ('Clear', 'Sunny and Cloudy','Cloudy', 'Rain');
 begin
   Result := CWeatherName[FWeather];
 end;
