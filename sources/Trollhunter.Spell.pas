@@ -87,7 +87,7 @@ const
     ManaCost: 75;
     Effects: [efManaShield];
     Description: 'Absorbs damage using mana';
-    Icon: icCharg;
+    Icon: icShield;
     Value: 5;
     MinDamage: 0;
     MaxDamage: 0;
@@ -100,7 +100,7 @@ const
     ManaCost: 20;
     Effects: [efLife];
     Description: 'Restores health';
-    Icon: icCharg;
+    Icon: icLife;
     Value: 25;
     MinDamage: 0;
     MaxDamage: 0;
@@ -113,7 +113,7 @@ const
     ManaCost: 22;
     Effects: [efRegeneration];
     Description: 'Gradually restores health over time';
-    Icon: icCharg;
+    Icon: icLife;
     Value: 20;
     MinDamage: 0;
     MaxDamage: 0;
@@ -126,7 +126,7 @@ const
     ManaCost: 30;
     Effects: [efWeaken];
     Description: 'Weakens the target';
-    Icon: icCharg;
+    Icon: icMana;
     Value: 15;
     MinDamage: 0;
     MaxDamage: 0;
@@ -153,7 +153,7 @@ const
     ManaCost: 45;
     Effects: [efTeleportation];
     Description: 'Teleports you to a random nearby location';
-    Icon: icCharg;
+    Icon: icFlag;
     Value: 0;
     MinDamage: 0;
     MaxDamage: 0;
@@ -166,7 +166,7 @@ const
     ManaCost: 35;
     Effects: [efCurePoison];
     Description: 'Neutralizes poison in your body';
-    Icon: icCharg;
+    Icon: icDrop;
     Value: 15;
     MinDamage: 0;
     MaxDamage: 0;
@@ -192,7 +192,7 @@ const
     ManaCost: 35;
     Effects: [efDrain];
     Description: 'Drains the life force of the target';
-    Icon: icCharg;
+    Icon: icLife;
     Value: 15;
     MinDamage: 4;
     MaxDamage: 8;
@@ -205,7 +205,7 @@ const
     ManaCost: 12;
     Effects: [efBurn];
     Description: 'Sets the target ablaze';
-    Icon: icCharg;
+    Icon: icFire;
     Value: 5;
     MinDamage: 3;
     MaxDamage: 7;
@@ -219,7 +219,7 @@ const
     ManaCost: 75;
     Effects: [efTownPortal];
     Description: 'Opens a portal back to town';
-    Icon: icCharg;
+    Icon: icStar;
     Value: 0;
     MinDamage: 0;
     MaxDamage: 0;
@@ -232,7 +232,7 @@ const
     ManaCost: 45;
     Effects: [efCureWeak];
     Description: 'Cures weakness';
-    Icon: icCharg;
+    Icon: icLife;
     Value: 0;
     MinDamage: 0;
     MaxDamage: 0;
@@ -245,7 +245,7 @@ const
     ManaCost: 35;
     Effects: [efVision];
     Description: 'Reveals nearby creatures and terrain';
-    Icon: icCharg;
+    Icon: icVision;
     Value: 5;
     MinDamage: 0;
     MaxDamage: 0;
@@ -258,7 +258,7 @@ const
     ManaCost: 55;
     Effects: [];
     Description: 'Blinds the target';
-    Icon: icCharg;
+    Icon: icVision;
     Value: 10;
     MinDamage: 0;
     MaxDamage: 0;
@@ -271,7 +271,7 @@ const
     ManaCost: 3;
     Effects: [];
     Description: 'Strikes the target with a lightning';
-    Icon: icCharg;
+    Icon: icLightning;
     Value: 0;
     MinDamage: 1;
     MaxDamage: 12;
@@ -285,7 +285,7 @@ const
     ManaCost: 80;
     Effects: [efIdentification];
     Description: 'Identifies an unknown item';
-    Icon: icCharg;
+    Icon: icQuestion;
     Value: 0;
     MinDamage: 0;
     MaxDamage: 0;
