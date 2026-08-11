@@ -171,6 +171,8 @@ type
     procedure AddExp(Value: UInt = 1);
     procedure DoWeaponSkill;
     procedure Rest(ATurns: UInt);
+    procedure RestUntilHealed;
+    function HasVisibleEnemy: boolean;
     procedure Dialog(AMob: TMob);
     procedure RnItem(FItem: Item; const Index: Int);
     procedure AutoPickup();
@@ -2223,19 +2225,71 @@ begin
   Move(drOrigin);
 end;
 
+function TPlayer.HasVisibleEnemy: boolean;
+var
+  I: Int;
+begin
+  Result := False;
+  for I := 0 to Mobs.Count - 1 do
+    if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
+      (Mobs.Mob[I].MapZone = Map.Current) and
+      Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
+      (Mode.Wizard or Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y)) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
 procedure TPlayer.Rest(ATurns: UInt);
 var
   T: UInt;
+  LLifeBefore: Int;
+  LInterruptReason: string;
 begin
   if Player.IsDead then
     Exit;
   IsRest := True;
+  LInterruptReason := '';
+  T := 0;
   MsgLog.Add(Format('Start rest (%d turns)!', [ATurns]));
-  for T := 1 to ATurns do
+  while (T < ATurns) and IsRest do
   begin
-    if not IsRest then
-      Break;
+    Inc(T);
+    LLifeBefore := Attributes.Attrib[atLife].Value;
     Wait();
+
+    if IsDead then
+    begin
+      IsRest := False;
+      Exit;
+    end;
+
+    if (Attributes.Attrib[atLife].Value < LLifeBefore) then
+    begin
+      LInterruptReason := 'you are hurt';
+      Break;
+    end;
+    if HasVisibleEnemy then
+    begin
+      LInterruptReason := 'an enemy appears';
+      Break;
+    end;
+    if StatusEffects.IsStatusEffect(seStunned) or
+      StatusEffects.IsStatusEffect(seBurning) or
+      StatusEffects.IsStatusEffect(sePoisoned) then
+    begin
+      LInterruptReason := 'something is wrong';
+      Break;
+    end;
+    if (Attributes.Attrib[atSat].Value < StarvingMax) then
+    begin
+      LInterruptReason := 'you are starving';
+      Break;
+    end;
+    if (Attributes.Attrib[atLife].Value >= Attributes.Attrib[atMaxLife].Value)
+      and (Attributes.Attrib[atMana].Value >= Attributes.Attrib[atMaxMana].Value) then
+      Break; // fully rested - normal completion, not an interruption
   end;
   StatusEffects.StatusEffect[seWeak] := 0;
   if (Math.RandomRange(0, 9) = 0) then
@@ -2243,7 +2297,26 @@ begin
   IsRest := False;
   if Player.IsDead then
     Exit;
-  MsgLog.Add(Format('Finish rest (%d turns)!', [T - 1]));
+  if (LInterruptReason <> '') then
+    MsgLog.Add(Format('Rest interrupted after %d turns (%s)!',
+      [T, LInterruptReason]))
+  else
+    MsgLog.Add(Format('Finish rest (%d turns)!', [T]));
+end;
+
+procedure TPlayer.RestUntilHealed;
+const
+  CMaxRestTurns = 10000;
+begin
+  if Player.IsDead then
+    Exit;
+  if (Attributes.Attrib[atLife].Value >= Attributes.Attrib[atMaxLife].Value)
+    and (Attributes.Attrib[atMana].Value >= Attributes.Attrib[atMaxMana].Value) then
+  begin
+    MsgLog.Add('You are already fully rested.');
+    Exit;
+  end;
+  Rest(CMaxRestTurns);
 end;
 
 function TPlayer.IsOnStash: boolean;

@@ -41,6 +41,9 @@ begin
   Inc(Y);
   Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + 'Rest for 1000 turns',
     TK_ALIGN_LEFT);
+  Inc(Y);
+  Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' +
+    'Rest until healed or disturbed', TK_ALIGN_LEFT);
 
   MsgLog.Render(2, True);
 
@@ -52,6 +55,8 @@ begin
   case Key of
     TK_A, TK_B, TK_C:
       Player.Rest(StrToInt('1' + StringOfChar('0', Key - TK_A + 1)));
+    TK_D:
+      Player.RestUntilHealed;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
   end;
