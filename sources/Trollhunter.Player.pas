@@ -119,7 +119,6 @@ type
     procedure Clear();
     procedure AddTurn;
     procedure Spawn;
-    function GetEquippedIndex(ASlot: TSlotType): Int;
     procedure Defeat(AKiller: string = '');
     procedure MeleeAttack(Index: Int);
     procedure Backstab(Index: Int);
@@ -156,7 +155,6 @@ type
     procedure Equip(Index: Int);
     procedure UnEquip(Index: Int);
     procedure Sell(Index: Int);
-    function GetQuiverIndex: Int;
     procedure RepairItem(Index: Int);
     procedure PoisonItem(Index: Int);
     procedure DisenchantItem(Index: Int);
@@ -480,30 +478,6 @@ begin
   else
     Miss();
   AddTurn;
-end;
-
-function TPlayer.GetEquippedIndex(ASlot: TSlotType): Int;
-var
-  FItem: Item;
-  FCount, I: Int;
-begin
-  Result := -1;
-  FCount := Items_Inventory_GetCount().InRange(ItemMax);
-  for I := 0 to FCount - 1 do
-  begin
-    FItem := Items_Inventory_GetItem(I);
-    if (FItem.Equipment > 0) and (ItemBase[TItemEnum(FItem.ItemID)].SlotType =
-      ASlot) then
-    begin
-      Result := I;
-      Exit;
-    end;
-  end;
-end;
-
-function TPlayer.GetQuiverIndex: Int;
-begin
-  Result := Self.GetEquippedIndex(stQuiver);
 end;
 
 procedure TPlayer.UseCharge;

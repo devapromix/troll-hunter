@@ -4,13 +4,16 @@ interface
 
 uses
   Trollhunter.Types,
-  Trollhunter.Player;
+  Trollhunter.Player.Types,
+Trollhunter.Player;
 
 type
 
   { TPlayerHelper }
 
   TPlayerHelper = class helper for TPlayer
+    function GetEquippedIndex(ASlot: TSlotType): Int;
+    function GetQuiverIndex: Int;
     function FullName: string;
     function GenderStr: string;
     function GenderIcon: string;
@@ -34,6 +37,7 @@ uses
   SysUtils,
   Trollhunter.Game,
   Trollhunter.Terminal,
+  Trollhunter.Helpers,
   Trollhunter.Attribute,
   Trollhunter.Item,
   Trollhunter.Item.Types,
@@ -41,11 +45,34 @@ uses
   Trollhunter.Item.Inventory,
   Trollhunter.UI,
   Trollhunter.UI.Log,
-  Trollhunter.Player.Types,
   Trollhunter.Player.Races,
   Trollhunter.Player.Classes;
 
   { TPlayerHelper }
+
+function TPlayerHelper.GetEquippedIndex(ASlot: TSlotType): Int;
+var
+  FItem: Item;
+  FCount, I: Int;
+begin
+  Result := -1;
+  FCount := Items_Inventory_GetCount().InRange(ItemMax);
+  for I := 0 to FCount - 1 do
+  begin
+    FItem := Items_Inventory_GetItem(I);
+    if (FItem.Equipment > 0) and (ItemBase[TItemEnum(FItem.ItemID)].SlotType =
+      ASlot) then
+    begin
+      Result := I;
+      Exit;
+    end;
+  end;
+end;
+
+function TPlayerHelper.GetQuiverIndex: Int;
+begin
+  Result := Self.GetEquippedIndex(stQuiver);
+end;
 
 function TPlayerHelper.FullName: string;
 begin

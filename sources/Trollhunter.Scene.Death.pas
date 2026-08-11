@@ -31,7 +31,6 @@ uses
   Trollhunter.UI;
 
 const
-  CTombstoneWidth = 50;
   CTombstoneHeight = 23;
   CTombstone: array [0..CTombstoneHeight - 1] of string = (
     '                   _____  _____',
