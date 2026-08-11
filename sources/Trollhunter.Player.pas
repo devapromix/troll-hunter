@@ -527,6 +527,7 @@ const
   AccuracyDexDivisor = 2;
   CSlowedTurns = 10;
   CStealthDamageBonusDivisor = 4;
+  CRangedCritMultiplier = 2;
 var
   V, Ch: UInt;
   Mob: TMob;
@@ -613,23 +614,14 @@ begin
       Dec(Dam, Dam div 3);
     if LWasStealthed then
       Inc(Dam, Dam div CStealthDamageBonusDivisor);
-    // Critical hits...
+    // Critical hit (ranged weapons only ever land a "good hit")
     Ch := Math.RandomRange(0, 100);
     Cr := Skills.Skill[FWeaponSkill].Value;
-    if ((Ch < Cr) and not StatusEffects.IsStatusEffect(seWeak)) then
+    if (Ch < Cr) and not StatusEffects.IsStatusEffect(seWeak) then
     begin
-      if (Ch > (Cr div 10)) then
-      begin
-        V := 2;
-        CrStr := 'It was a good hit!';
-      end
-      else
-      begin
-        V := 3;
-        CrStr := 'It was an excellent hit!';
-      end;
+      V := CRangedCritMultiplier;
       Dam := Dam * V;
-      CrStr := CrStr + Format(' (%dx)', [V]);
+      CrStr := Format('It was a good hit! (%dx)', [V]);
     end;
     // PV
     Dam := Self.GetRealDamage(Dam, Mob.Attributes.Attrib[atPV].Value);
