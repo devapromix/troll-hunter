@@ -2246,13 +2246,17 @@ var
   T: UInt;
   LLifeBefore: Int;
   LInterruptReason: string;
+  LInterruptColor: string;
 begin
   if Player.IsDead then
     Exit;
   IsRest := True;
   LInterruptReason := '';
+  LInterruptColor := clAlarm;
   T := 0;
-  MsgLog.Add(Format('Start rest (%d turns)!', [ATurns]));
+  MsgLog.Add(Terminal.Colorize(
+    'You settle down and let your thoughts drift into a quiet rest...',
+    'Light Green'));
   while (T < ATurns) and IsRest do
   begin
     Inc(T);
@@ -2267,29 +2271,32 @@ begin
 
     if (Attributes.Attrib[atLife].Value < LLifeBefore) then
     begin
-      LInterruptReason := 'you are hurt';
+      LInterruptReason := 'A sudden pain jolts you awake!';
       Break;
     end;
     if HasVisibleEnemy then
     begin
-      LInterruptReason := 'an enemy appears';
+      LInterruptReason := 'A shadow stirs nearby - you snap awake, weapon in hand!';
       Break;
     end;
     if StatusEffects.IsStatusEffect(seStunned) or
       StatusEffects.IsStatusEffect(seBurning) or
       StatusEffects.IsStatusEffect(sePoisoned) then
     begin
-      LInterruptReason := 'something is wrong';
+      LInterruptReason := 'Your body screams in protest - rest is impossible like this!';
       Break;
     end;
     if (Attributes.Attrib[atSat].Value < StarvingMax) then
     begin
-      LInterruptReason := 'you are starving';
+      LInterruptReason := 'Hunger gnaws at your belly, banishing all thought of rest!';
       Break;
     end;
     if (Attributes.Attrib[atLife].Value >= Attributes.Attrib[atMaxLife].Value)
       and (Attributes.Attrib[atMana].Value >= Attributes.Attrib[atMaxMana].Value) then
+    begin
+      LInterruptColor := 'Light Green';
       Break; // fully rested - normal completion, not an interruption
+    end;
   end;
   StatusEffects.StatusEffect[seWeak] := 0;
   if (Math.RandomRange(0, 9) = 0) then
@@ -2298,10 +2305,11 @@ begin
   if Player.IsDead then
     Exit;
   if (LInterruptReason <> '') then
-    MsgLog.Add(Format('Rest interrupted after %d turns (%s)!',
-      [T, LInterruptReason]))
+    MsgLog.Add(Terminal.Colorize(LInterruptReason, LInterruptColor))
   else
-    MsgLog.Add(Format('Finish rest (%d turns)!', [T]));
+    MsgLog.Add(Terminal.Colorize(Format(
+      'You rise, refreshed and steady once more (%d turns passed).',
+      [T]), 'Light Green'));
 end;
 
 procedure TPlayer.RestUntilHealed;
