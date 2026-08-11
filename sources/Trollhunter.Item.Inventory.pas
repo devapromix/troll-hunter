@@ -22,6 +22,7 @@ function Items_Inventory_DeleteItemAmount(ItemID, Amount: Int): Int; stdcall;
 
 function Items_Inventory_SetItem(Index: Int; AItem: Item): Int; stdcall;
 function Items_Inventory_GetItem(Index: Int): Item; stdcall;
+function Items_Inventory_IndexInRange(Index: Int): Boolean; stdcall;
 
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall;
 function Items_Inventory_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
@@ -138,6 +139,11 @@ begin
   Items_Clear_Item(Result);
   if IndexInRange(InvItems, Index) then
     Result := InvItems[Index];
+end;
+
+function Items_Inventory_IndexInRange(Index: Int): Boolean; stdcall;
+begin
+  Result := IndexInRange(InvItems, Index);
 end;
 
 function Items_Inventory_SetItem(Index: Int; AItem: Item): Int; stdcall;

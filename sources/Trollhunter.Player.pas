@@ -1212,6 +1212,7 @@ procedure TPlayer.CraftItem(Index: Int);
 var
   FItem: Item;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > -1)) then
     Exit;
@@ -1332,7 +1333,7 @@ var
   I: TItemEnum;
   T: TItemType;
 begin
-  if IsDead or (Index < 0) or (Index >= Items_Inventory_GetCount()) then
+  if IsDead or not Items_Inventory_IndexInRange(Index) then
     Exit;
   FItem := Items_Inventory_GetItem(Index);
   // Unidentified
@@ -1443,6 +1444,7 @@ var
   FItem: Item;
   I: Int;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   // Need level
   FItem := Items_Inventory_GetItem(Index);
   if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
@@ -1485,6 +1487,7 @@ var
   Value: Int;
   FItem: Item;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Equipment > 0) or Items.ChItem(FItem)) then
     Exit;
@@ -1653,6 +1656,7 @@ procedure TPlayer.IdentItem(Index: Int);
 var
   FItem: Item;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
@@ -1672,6 +1676,7 @@ var
   FItem: Item;
   MaxCharges: UInt;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType <> itWand) then
     Exit;
@@ -1695,6 +1700,7 @@ var
   RepairCost: UInt;
   FItem: Item;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Identify = 0) or (FItem.Amount > 1)) then
     Exit;
@@ -1785,6 +1791,7 @@ var
   FItem: Item;
   Amount: UInt;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if not (ItemBase[TItemEnum(FItem.ItemID)].ItemType in DisenchantTypeItems) then
   begin
@@ -1816,6 +1823,7 @@ procedure TPlayer.BreakItem(Index: Int; Value: UInt = 1);
 var
   FItem: Item;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
@@ -1863,7 +1871,7 @@ var
   end;
 
 begin
-  if IsDead or (Index < 0) or (Index >= Items_Inventory_GetCount()) then
+  if IsDead or not Items_Inventory_IndexInRange(Index) then
     Exit;
   AItem := Items_Inventory_GetItem(Index);
   if (AItem.Equipment > 0) then
@@ -1891,6 +1899,7 @@ var
   FItem: Item;
   FCount: Int;
 begin
+  if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
 
   if (FItem.Stack <= 1) then
