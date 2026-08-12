@@ -165,6 +165,11 @@ type
     itmTroll_Hide_Quiver, itmKnothide_Quiver, itmMedium_Quiver, itmHunting_Quiver,
     itmWar_Quiver, itmRuned_Quiver, itmQuickdraw_Quiver, itmRaptor_Hide_Quiver,
     itmHeavy_Quiver,
+    // Swords
+    itmRusty_Sword, itmShort_Sword, itmBroad_Sword, itmLong_Sword,
+    itmElven_Sword, itmMoon_Blade, itmScimitar, itmBastard_Sword, itmGreat_Sword,
+    itmRune_Sword, itmTroll_Slayer, 
+
     // Dark Wood
     itmCap, itmWar_Cap, itmHood, itmRed_Hat, // Headgear
     itmQuilted_Armor, itmLeather_Armor, itmLight_Clothes, itmLeather_Apron,
@@ -172,7 +177,6 @@ type
     itmLeather_Gloves, itmHide_Gloves, // Gloves
     itmShoes, itmLeather_Boots, // Boots
     itmBuckler, itmTarge_Shield, // Shield
-    itmRusty_Sword, itmShort_Sword, // Blade
     itmHatchet, itmBattle_Axe, // Axe
     itmShort_Spear, itmSpear, // Spear
     itmSlag_Hammer, itmSpiked_Cudgel, // Mace
@@ -182,7 +186,6 @@ type
     itmKobold_Gloves, itmChain_Gloves, // Gloves
     itmMesh_Boots, itmHeavy_Boots, // Boots
     itmSmall_Shield, itmKite_Shield, // Shield
-    itmBroad_Sword, itmLong_Sword, // Blade
     itmMeat_Axe, itmFlesh_Tearer, // Axe
     itmJavelin, itmFuscina, // Spear
     itmWarhammer, itmWar_Mace, // Mace
@@ -192,7 +195,6 @@ type
     itmEtched_Gloves, itmHeavy_Gloves, // Gloves
     itmGreaves, itmBoneweave_Boots, // Boots
     itmBone_Shield, itmHeater_Shield, // Shield
-    itmMoon_Blade, itmScimitar, // Blade
     itmWar_Axe, itmDark_Axe, // Axe
     itmWar_Spear, itmHarpoon, // Spear
     itmFlanged_Mace, itmWar_Gavel, // Mace
@@ -202,7 +204,6 @@ type
     itmBattle_Gauntlets, itmWar_Gauntlets, // Gloves
     itmChain_Boots, itmWar_Boots, // Boots
     itmHeavy_Shield, itmLarge_Shield, // Shield
-    itmBastard_Sword, itmGreat_Sword, // Blade
     itmBerserker_Axe, itmMarauder_Axe, // Axe
     itmSilvan_Whisper, itmImpaler, // Spear
     itmBarbarous_Mace, itmAdept_Hammer, // Mace
@@ -213,7 +214,6 @@ type
     itmTroll_Gauntlets, itmPlated_Gauntlets, // Gloves
     itmBattle_Boots, itmPlate_Boots, // Boots
     itmTower_Shield, itmGothic_Shield, // Shield
-    itmRune_Sword, itmTroll_Slayer, // Blade
     itmChopper, itmDemon_Axe, // Axe
     itmSoul_Reaver, itmHoned_Spear, // Spear
     itmWar_Maul, itmDoom_Hammer, // Mace

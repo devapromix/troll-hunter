@@ -1098,6 +1098,63 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 6; Max: 7; ));
     Price: 300; Color: clDarkYellow; Deep: [deDrom]; Value: 500; ),
 
+    // Rusty Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 3; Max: 5; ); MaxDamage: (Min: 6; Max: 9; ));
+    Price: 185; Color: clDarkRed; Deep: [deDark_Wood]; ),
+    // Short Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 5; Max: 7; ); MaxDamage: (Min: 10; Max: 12; ));
+    Price: 210; Color: clWhite; Deep: [deDark_Wood]; ),
+    // Broad Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 11; Max: 14; ); MaxDamage: (Min: 19; Max: 21; ));
+    Price: 345; Color: clDarkRed; Deep: [deGray_Cave]; ),
+    // Long Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 14; Max: 18; ); MaxDamage: (Min: 23; Max: 26; ));
+    Price: 385; Color: clDarkRed; Deep: [deGray_Cave]; ),
+    // Elven Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 55; Level: 4; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 15; Max: 20; ); MaxDamage: (Min: 25; Max: 30; ));
+    Price: 520; Color: clLighterGreen; Deep: [deGray_Cave .. deDeep_Cave];
+    Rare: True;),
+    // Moon Blade
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 17; Max: 20; ); MaxDamage: (Min: 27; Max: 31; ));
+    Price: 570; Color: clDarkRed; Deep: [deDeep_Cave]; ),
+    // Scimitar
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 21; Max: 25; ); MaxDamage: (Min: 35; Max: 38; ));
+    Price: 600; Color: clDarkRed; Deep: [deDeep_Cave]; ),
+    // Bastard Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 24; Max: 27; ); MaxDamage: (Min: 39; Max: 43; ));
+    Price: 770; Color: clDarkRed; Deep: [deBlood_Cave]; ),
+    // Great Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 27; Max: 30; ); MaxDamage: (Min: 44; Max: 48; ));
+    Price: 820; Color: clDarkRed; Deep: [deBlood_Cave]; ),
+    // Rune Sword
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 30; Max: 33; ); MaxDamage: (Min: 50; Max: 54; ));
+    Price: 930; Color: clDarkRed; Deep: [deDrom]; ),
+    // Troll Slayer,
+    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
+    MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 33; Max: 37; ); MaxDamage: (Min: 55; Max: 60; ));
+    Price: 990; Color: clDarkRed; Deep: [deDrom]; ),
+
     /// / == Dark _Wood == ////
 
     // Cap
@@ -1174,16 +1231,6 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 200; Color: clLightBlue; Deep: [deDark_Wood]; ),
 
-    // Rusty Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 3; Max: 5; ); MaxDamage: (Min: 6; Max: 9; ));
-    Price: 185; Color: clDarkRed; Deep: [deDark_Wood]; ),
-    // Short Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 35; Level: 2; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 5; Max: 7; ); MaxDamage: (Min: 10; Max: 12; ));
-    Price: 210; Color: clWhite; Deep: [deDark_Wood]; ),
     // Hatchet
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 30; Level: 1; Defense: (Min: 0; Max: 0);
@@ -1291,16 +1338,6 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 380; Color: clLightBlue; Deep: [deGray_Cave]; ),
 
-    // Broad Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 11; Max: 14; ); MaxDamage: (Min: 19; Max: 21; ));
-    Price: 345; Color: clDarkRed; Deep: [deGray_Cave]; ),
-    // Long Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 45; Level: 4; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 14; Max: 18; ); MaxDamage: (Min: 23; Max: 26; ));
-    Price: 385; Color: clDarkRed; Deep: [deGray_Cave]; ),
     // Meat Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 40; Level: 3; Defense: (Min: 0; Max: 0);
@@ -1408,16 +1445,6 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 590; Color: clLightBlue; Deep: [deDeep_Cave]; ),
 
-    // Moon Blade
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 17; Max: 20; ); MaxDamage: (Min: 27; Max: 31; ));
-    Price: 570; Color: clDarkRed; Deep: [deDeep_Cave]; ),
-    // Scimitar
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 55; Level: 6; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 21; Max: 25; ); MaxDamage: (Min: 35; Max: 38; ));
-    Price: 600; Color: clDarkRed; Deep: [deDeep_Cave]; ),
     // War Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 50; Level: 5; Defense: (Min: 0; Max: 0);
@@ -1525,16 +1552,6 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 860; Color: clLightBlue; Deep: [deBlood_Cave]; ),
 
-    // Bastard Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 24; Max: 27; ); MaxDamage: (Min: 39; Max: 43; ));
-    Price: 770; Color: clDarkRed; Deep: [deBlood_Cave]; ),
-    // Great Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 65; Level: 8; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 27; Max: 30; ); MaxDamage: (Min: 44; Max: 48; ));
-    Price: 820; Color: clDarkRed; Deep: [deBlood_Cave]; ),
     // Berserker Axe
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 60; Level: 7; Defense: (Min: 0; Max: 0);
@@ -1642,16 +1659,6 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1000; Color: clLightBlue; Deep: [deDrom]; ),
 
-    // Rune Sword
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 30; Max: 33; ); MaxDamage: (Min: 50; Max: 54; ));
-    Price: 930; Color: clDarkRed; Deep: [deDrom]; ),
-    // Troll Slayer,
-    (Symbol: '/'; ItemType: itBlade; SlotType: stMainHand; MaxStack: 1;
-    MaxDurability: 75; Level: 10; Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 33; Max: 37; ); MaxDamage: (Min: 55; Max: 60; ));
-    Price: 990; Color: clDarkRed; Deep: [deDrom]; ),
     // Chopper
     (Symbol: '('; ItemType: itAxe; SlotType: stMainHand; MaxStack: 1;
     MaxDurability: 70; Level: 9; Defense: (Min: 0; Max: 0);
