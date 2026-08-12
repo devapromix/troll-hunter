@@ -53,10 +53,11 @@ begin
     Add('Bosses', 13);
     Add('NPCs', 7);
     Add('Items', Ord(Length(ItemBase)));
+    Add('Prefixes', Affixes.PrefixAmount);
+    Add('Suffixes', Affixes.SuffixAmount);
     Add('Shops', Shops.Count);
     Add('Quests', Quests.Amount);
     Add('Talents', Player.Talents.Amount);
-    Add('Affixes', Affixes.Amount);
     Add('Item Types', Ord(High(TItemType)));
     Add('Skills', Ord(High(TSkillEnum)));
   end

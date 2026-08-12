@@ -760,7 +760,8 @@ type
     procedure DoSuffix(var AItem: Item);
     procedure DoPrefix(var AItem: Item);
     procedure DoCraft(const Effect: TEffect; const Index: UInt);
-    function Amount: UInt;
+    function PrefixAmount: UInt;
+    function SuffixAmount: UInt;
   end;
 
 var
@@ -777,7 +778,12 @@ uses
   Trollhunter.Helpers,
   Trollhunter.Item;
 
-function TAffixes.Amount: UInt;
+function TAffixes.PrefixAmount: UInt;
+begin
+  Result := Ord(High(TPrefixEnum)) + 1;
+end;
+
+function TAffixes.SuffixAmount: UInt;
 begin
   Result := Ord(High(TSuffixEnum)) + 1;
 end;
