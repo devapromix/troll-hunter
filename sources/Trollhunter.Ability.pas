@@ -8,6 +8,7 @@ uses
 
 { #todo : Hotkeys 1-9 for abilities. }
 { #todo : Scene with abilities. }
+{ #todo : Talents with abilities. }
 
 type
   TAbilityEnum = (abFind_Item, abConjure_Mana_Orb, abCripling_Blow, abStealth);
@@ -145,7 +146,7 @@ end;
 
 procedure TAbility.CriplingBlow;
 const
-  CAimingTurns = 10;
+  CAimingTurns = 18;
 begin
   if not TrySpendMana(abCripling_Blow) then
     Exit;
