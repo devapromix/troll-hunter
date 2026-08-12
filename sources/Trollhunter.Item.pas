@@ -2007,6 +2007,7 @@ var
   PB: TPrefixBase;
   LSuffixPrice: UInt;
   LPrefixPrice: UInt;
+  LPrefixPricePercent: integer;
   LSuffixRare: boolean;
   LBothAffixesBonus: UInt;
 begin
@@ -2021,10 +2022,12 @@ begin
   end;
   // Prefix
   LPrefixPrice := 0;
+  LPrefixPricePercent := 0;
   if (AItem.Prefix > 0) then
   begin
     PB := PrefixBase[TPrefixEnum(AItem.Prefix)];
     LPrefixPrice := PB.Price;
+    LPrefixPricePercent := PB.PricePercent;
   end;
   // Suffix and Prefix together
   LBothAffixesBonus := 0;
@@ -2040,6 +2043,7 @@ begin
       LPrefixPrice + LBothAffixesBonus;
     if not LSuffixRare then
       AItem.Price := AItem.Price + AItem.Value;
+    AItem.Price := AItem.Price + (AItem.Price * LPrefixPricePercent div 100);
     Exit;
   end;
   { // Oil
@@ -2064,6 +2068,7 @@ begin
   end
   else
     AItem.Price := ItemBase[TItemEnum(AItem.ItemID)].Price;
+  AItem.Price := AItem.Price + (AItem.Price * LPrefixPricePercent div 100);
 end;
 
 function TItems.ChItem(AItem: Item): boolean;

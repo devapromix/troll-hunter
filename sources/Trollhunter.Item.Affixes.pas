@@ -619,8 +619,9 @@ type
     pfIndestructible,
     // Defense
     pfCracked, pfStrong, pfStalwart, pfFortified, pfGlorious,
-    pfSaintly, pfDivine
-
+    pfSaintly, pfDivine,
+    // Price
+    pfSilver, pfGolden, pfMithril
     );
 
 type
@@ -631,80 +632,116 @@ type
     DamagePercent: integer;
     DurabilityPercent: integer;
     DefensePercent: integer;
+    PricePercent: integer;
     Rare: boolean;
   end;
 
 const
   PrefixBase: array [TPrefixEnum] of TPrefixBase = (
     // None
-    (Level: (Min: 1; Max: 1); Price: 0; Occurence: []; DamagePercent: 0;
-    DurabilityPercent: 0; DefensePercent: 0; Rare: False),
+    (Level: (Min: 1; Max: 1); Price: 0; Occurence: [];
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
 
     // Crude (Damage I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: WeaponTypeItems;
-    DamagePercent: -20),
+    DamagePercent: -20; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Fine (Damage II)
     (Level: (Min: 1; Max: 15); Price: 50; Occurence: WeaponTypeItems;
-    DamagePercent: 20),
+    DamagePercent: 20; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Superior (Damage III)
     (Level: (Min: 2; Max: 15); Price: 100; Occurence: WeaponTypeItems;
-    DamagePercent: 35),
+    DamagePercent: 35; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Exquisite (Damage IV)
     (Level: (Min: 3; Max: 15); Price: 200; Occurence: WeaponTypeItems;
-    DamagePercent: 50),
+    DamagePercent: 50; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Exceptional (Damage V)
     (Level: (Min: 4; Max: 15); Price: 400; Occurence: WeaponTypeItems;
-    DamagePercent: 65; Rare: True),
+    DamagePercent: 65; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: True),
     // Masterwork (Damage VI)
     (Level: (Min: 5; Max: 15); Price: 700; Occurence: WeaponTypeItems;
-    DamagePercent: 80; Rare: True),
+    DamagePercent: 80; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: True),
     // Legendary (Damage VII)
     (Level: (Min: 6; Max: 15); Price: 1000; Occurence: WeaponTypeItems;
-    DamagePercent: 100; Rare: True),
+    DamagePercent: 100; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 0; Rare: True),
 
     // Fragile (Durability I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: SmithTypeItems;
-    DurabilityPercent: -20),
+    DamagePercent: 0; DurabilityPercent: -20; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Reinforced (Durability II)
     (Level: (Min: 1; Max: 15); Price: 50; Occurence: SmithTypeItems;
-    DurabilityPercent: 20),
+    DamagePercent: 0; DurabilityPercent: 20; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Solid (Durability III)
     (Level: (Min: 2; Max: 15); Price: 100; Occurence: SmithTypeItems;
-    DurabilityPercent: 35),
+    DamagePercent: 0; DurabilityPercent: 35; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Sturdy (Durability IV)
     (Level: (Min: 3; Max: 15); Price: 200; Occurence: SmithTypeItems;
-    DurabilityPercent: 50),
+    DamagePercent: 0; DurabilityPercent: 50; DefensePercent: 0;
+    PricePercent: 0; Rare: False),
     // Hardened (Durability V)
     (Level: (Min: 4; Max: 15); Price: 400; Occurence: SmithTypeItems;
-    DurabilityPercent: 70; Rare: True),
+    DamagePercent: 0; DurabilityPercent: 70; DefensePercent: 0;
+    PricePercent: 0; Rare: True),
     // Tempered (Durability VI)
     (Level: (Min: 5; Max: 15); Price: 700; Occurence: SmithTypeItems;
-    DurabilityPercent: 100; Rare: True),
+    DamagePercent: 0; DurabilityPercent: 100; DefensePercent: 0;
+    PricePercent: 0; Rare: True),
     // Indestructible (Durability VII)
     (Level: (Min: 6; Max: 15); Price: 1000; Occurence: SmithTypeItems;
-    DurabilityPercent: 150; Rare: True),
+    DamagePercent: 0; DurabilityPercent: 150; DefensePercent: 0;
+    PricePercent: 0; Rare: True),
 
     // Cracked (Defense I)
     (Level: (Min: 1; Max: 15); Price: -50; Occurence: ArmorTypeItems;
-    DefensePercent: -20),
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: -20;
+    PricePercent: 0; Rare: False),
     // Strong (Defense II)
     (Level: (Min: 1; Max: 15); Price: 60; Occurence: ArmorTypeItems;
-    DefensePercent: 20),
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 20;
+    PricePercent: 0; Rare: False),
     // Stalwart (Defense III)
     (Level: (Min: 2; Max: 15); Price: 125; Occurence: ArmorTypeItems;
-    DefensePercent: 35),
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 35;
+    PricePercent: 0; Rare: False),
     // Fortified (Defense IV)
     (Level: (Min: 3; Max: 15); Price: 250; Occurence: ArmorTypeItems;
-    DefensePercent: 50),
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 50;
+    PricePercent: 0; Rare: False),
     // Glorious (Defense V)
     (Level: (Min: 4; Max: 15); Price: 500; Occurence: ArmorTypeItems;
-    DefensePercent: 65; Rare: True),
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 65;
+    PricePercent: 0; Rare: True),
     // Saintly (Defense VI)
     (Level: (Min: 5; Max: 15); Price: 900; Occurence: ArmorTypeItems;
-    DefensePercent: 80; Rare: True),
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 80;
+    PricePercent: 0; Rare: True),
     // Divine (Defense VII)
     (Level: (Min: 6; Max: 15); Price: 1300; Occurence: ArmorTypeItems;
-    DefensePercent: 100; Rare: True)
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 100;
+    PricePercent: 0; Rare: True),
+
+    // Silver (Price I)
+    (Level: (Min: 1; Max: 15); Price: 150; Occurence: SmithTypeItems;
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 25; Rare: True),
+    // Golden (Price II)
+    (Level: (Min: 5; Max: 15); Price: 400; Occurence: SmithTypeItems;
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 45; Rare: True),
+    // Mithril (Price III)
+    (Level: (Min: 9; Max: 15); Price: 800; Occurence: SmithTypeItems;
+    DamagePercent: 0; DurabilityPercent: 0; DefensePercent: 0;
+    PricePercent: 70; Rare: True)
 
     );
 
