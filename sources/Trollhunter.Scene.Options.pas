@@ -8,6 +8,11 @@ uses
 
 type
   TSceneOptions = class(TScene)
+  private
+    procedure RenderOptions;
+    procedure UpdateOptions(const Key: UInt);
+    procedure RenderWizard;
+    procedure UpdateWizard(const Key: UInt);
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -15,16 +20,18 @@ type
 
 implementation
 
-{ TSceneOptions }
-
 uses
   Trollhunter.Game,
   Trollhunter.UI,
   BearLibTerminal, Trollhunter.Item.Shop;
 
-procedure TSceneOptions.Render;
+var
+  Wizard: boolean = False;
+
+{ TSceneOptions }
+
+procedure TSceneOptions.RenderOptions;
 begin
-  Y := 1;
   // Options
   Title('Options');
 
@@ -46,25 +53,9 @@ begin
   // Settings
   Title('Settings', False);
   AddOption('W', 'Fullscreen', Game.GetOption(apFullscreen), clLightBlue);
-
-  // Wizard mode
-  if Mode.Wizard then
-  begin
-    Title('Wizard Mode', False);
-
-    AddOption('Z', 'Turn Wizard Mode Off', Mode.Wizard, clRed);
-    AddOption('M', 'Show map', Game.ShowMap);
-    AddOption('T', 'Reload all shops', False);
-    // AddOption('J', _(''), False);
-    AddOption('L', 'Leave corpses', Game.LCorpses);
-    AddOption('I', 'Show ID of items', Game.ShowID);
-    AddOption('N', 'Hide level of an item', Game.GetOption(apHdLevOfItem));
-  end;
-
-  AddKey('Esc', 'Back', True);
 end;
 
-procedure TSceneOptions.Update(var Key: UInt);
+procedure TSceneOptions.UpdateOptions(const Key: UInt);
 begin
   case Key of
     // Options
@@ -100,29 +91,71 @@ begin
         Game.ChOption(apFullscreen);
         Game.ChScreen;
       end;
-    // Wizard mode
-    TK_Z:
+  end;
+end;
+
+procedure TSceneOptions.RenderWizard;
+begin
+  Title('Wizard Mode');
+
+  AddOption('X', 'Turn Wizard Mode Off', Mode.Wizard, clRed);
+  AddOption('M', 'Show map', Game.ShowMap);
+  AddOption('T', 'Reload all shops', False);
+  AddOption('L', 'Leave corpses', Game.LCorpses);
+  AddOption('I', 'Show ID of items', Game.ShowID);
+  AddOption('N', 'Hide level of an item', Game.GetOption(apHdLevOfItem));
+end;
+
+procedure TSceneOptions.UpdateWizard(const Key: UInt);
+begin
+  case Key of
+    TK_X:
       Mode.Wizard := False;
     TK_M:
-      if Mode.Wizard then
-        Game.ShowMap := not Game.ShowMap;
+      Game.ShowMap := not Game.ShowMap;
     TK_L:
-      if Mode.Wizard then
-        Game.LCorpses := not Game.LCorpses;
+      Game.LCorpses := not Game.LCorpses;
     TK_T:
-      if Mode.Wizard then
       begin
         Shops.New;
         Scenes.SetScene(scGame);
       end;
     TK_I:
-      if Mode.Wizard then
-        Game.ShowID := not Game.ShowID;
+      Game.ShowID := not Game.ShowID;
     TK_N:
+      Game.ChOption(apHdLevOfItem);
+  end;
+end;
+
+procedure TSceneOptions.Render;
+begin
+  Y := 1;
+  if Mode.Wizard and Wizard then
+    RenderWizard
+  else
+    RenderOptions;
+
+  AddKey('Esc', 'Back', not Mode.Wizard);
+  if Mode.Wizard then
+    if Wizard then
+      AddKey('Z', 'Back', True)
+    else
+      AddKey('Z', 'Wizard Mode', True);
+end;
+
+procedure TSceneOptions.Update(var Key: UInt);
+begin
+  case Key of
+    TK_Z:
       if Mode.Wizard then
-        Game.ChOption(apHdLevOfItem);
+        Wizard := not Wizard;
     TK_ESCAPE:
       Scenes.SetScene(scGame);
+  else
+    if Mode.Wizard and Wizard then
+      UpdateWizard(Key)
+    else
+      UpdateOptions(Key);
   end
 end;
 
