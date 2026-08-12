@@ -61,6 +61,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Helpers,
   Trollhunter.Game,
+  Trollhunter.Item.Affixes,
   Trollhunter.Item.Types;
 
 const
@@ -156,6 +157,8 @@ begin
 end;
 
 procedure TShops.New;
+const
+  CMaxShopAffixAttempts = 30;
 var
   FItem: Item;
   I, Max: UInt;
@@ -164,6 +167,7 @@ var
   LCandidates: array [0 .. Ord(High(TItemEnum))] of TItemEnum;
   LCount: UInt;
   LPlayerLevel: UInt;
+  LAttempts: UInt;
 
   function MatchesShop(const AID: TItemEnum): Boolean;
   begin
@@ -214,6 +218,13 @@ var
     end;
   end;
 
+  function HasRareAffix(const AItem: Item): Boolean;
+  begin
+    Result := ((AItem.Prefix > 0) and
+      PrefixBase[TPrefixEnum(AItem.Prefix)].Rare) or
+      ((AItem.Identify > 0) and SuffixBase[TSuffixEnum(AItem.Identify)].Rare);
+  end;
+
 begin
   LPlayerLevel := Player.Attributes.Attrib[atLev].Value;
   Max := EnsureRange(3 + LPlayerLevel, 4, ItemMax);
@@ -230,10 +241,14 @@ begin
     if LCount > 0 then
       for I := 0 to Max - 1 do
       begin
-        ID := LCandidates[Math.RandomRange(0, LCount)];
-        Items.Make(Ord(ID), FItem);
-        RestrictShopAffixes(FItem);
-        Items.Identify(FItem, True);
+        LAttempts := 0;
+        repeat
+          ID := LCandidates[Math.RandomRange(0, LCount)];
+          Items.Make(Ord(ID), FItem);
+          RestrictShopAffixes(FItem);
+          Items.Identify(FItem, True);
+          Inc(LAttempts);
+        until not HasRareAffix(FItem) or (LAttempts >= CMaxShopAffixAttempts);
         Shops.Shop[S].Add(FItem);
       end;
   end;
