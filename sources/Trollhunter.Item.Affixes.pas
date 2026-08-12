@@ -34,7 +34,7 @@ type
     // None
     None,
     // Vision I
-    of_Radiance,
+    of_Radiance, of_the_Sun,
     // Potions, Antidote, Elixirs, Extracts
     of_Minor_Healing, of_Healing, of_Minor_Mana, of_Mana, of_Rejuvenation,
     of_Fortifying, of_Antidote, of_Soothing, of_Poultice, of_Berserk,
@@ -110,493 +110,502 @@ const
     (),
     // of Radiance (Vision I)
     (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems),
+    // of the Sun (Vision II)
+    (Level: (Min: 1; Max: 15); Price: 1000; Occurence: JewelryTypeItems; Rare: True),
 
     // of Minor Healing (Flask I)
     (Level: (Min: 1; Max: 1); Price: 0; Occurence: FlaskTypeItems;
-    Effects: [efLife];),
+    Effects: [efLife]; ),
     // of Healing (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efLife];),
+    Value: (Min: 1; Max: 9); Effects: [efLife]; ),
     // of Minor Mana (Flask I)
     (Level: (Min: 1; Max: 1); Price: 0; Occurence: FlaskTypeItems;
-    Effects: [efMana];),
+    Effects: [efMana]; ),
     // of Mana (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 0; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efMana];),
+    Value: (Min: 1; Max: 9); Effects: [efMana]; ),
     // of Rejuvenation (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 45; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efLife, efMana];),
+    Value: (Min: 1; Max: 9); Effects: [efLife, efMana]; ),
     // of Fortifying (Flask I)
     (Level: (Min: 1; Max: 1); Price: 75; Occurence: FlaskTypeItems;
-    Value: (Min: 0; Max: 0); Effects: [efCureWeak];),
+    Value: (Min: 0; Max: 0); Effects: [efCureWeak]; ),
     // of Antidote (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 65; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efCurePoison];),
+    Value: (Min: 1; Max: 9); Effects: [efCurePoison]; ),
     // of Soothing (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 20; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efFood];),
+    Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efFood]; ),
     // of Poultice (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 45; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efCurePoison];),
+    Value: (Min: 1; Max: 9); Effects: [efLife, efMana, efCurePoison]; ),
     // of Berserk (Flask I - XII)
     (Level: (Min: 1; Max: 15); Price: 25; Occurence: FlaskTypeItems;
-    Value: (Min: 1; Max: 9); Effects: [efBerserk];),
+    Value: (Min: 1; Max: 9); Effects: [efBerserk]; ),
 
     // (Perma Life I)
     (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;
-    PrmValue: 1; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 1; Rare: True; Effects: [efPrmLife]; ),
     // (Perma Life II)
     (Level: (Min: 2; Max: 5); Price: 3000; Occurence: FlaskTypeItems;
-    PrmValue: 2; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 2; Rare: True; Effects: [efPrmLife]; ),
     // (Perma Life III)
     (Level: (Min: 3; Max: 7); Price: 4000; Occurence: FlaskTypeItems;
-    PrmValue: 3; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 3; Rare: True; Effects: [efPrmLife]; ),
     // (Perma Life IV)
     (Level: (Min: 4; Max: 9); Price: 5000; Occurence: FlaskTypeItems;
-    PrmValue: 4; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 4; Rare: True; Effects: [efPrmLife]; ),
     // of the Greatwolf (Perma Life V)
     (Level: (Min: 5; Max: 11); Price: 6000; Occurence: FlaskTypeItems;
-    PrmValue: 5; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 5; Rare: True; Effects: [efPrmLife]; ),
     // of the Ogre (Perma Life VI)
     (Level: (Min: 6; Max: 13); Price: 7000; Occurence: FlaskTypeItems;
-    PrmValue: 6; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 6; Rare: True; Effects: [efPrmLife]; ),
     // of the Troll (Perma Life VII)
     (Level: (Min: 7; Max: 15); Price: 8000; Occurence: FlaskTypeItems;
-    PrmValue: 7; Rare: True; Effects: [efPrmLife];),
+    PrmValue: 7; Rare: True; Effects: [efPrmLife]; ),
 
     // (Perma Mana I)
     (Level: (Min: 1; Max: 3); Price: 2000; Occurence: FlaskTypeItems;
-    PrmValue: 1; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 1; Rare: True; Effects: [efPrmMana]; ),
     // (Perma Mana II)
     (Level: (Min: 1; Max: 5); Price: 3000; Occurence: FlaskTypeItems;
-    PrmValue: 2; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 2; Rare: True; Effects: [efPrmMana]; ),
     // (Perma Mana III)
     (Level: (Min: 1; Max: 7); Price: 4000; Occurence: FlaskTypeItems;
-    PrmValue: 3; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 3; Rare: True; Effects: [efPrmMana]; ),
     // (Perma Mana IV)
     (Level: (Min: 1; Max: 9); Price: 5000; Occurence: FlaskTypeItems;
-    PrmValue: 4; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 4; Rare: True; Effects: [efPrmMana]; ),
     // (Perma Mana V)
     (Level: (Min: 1; Max: 11); Price: 6000; Occurence: FlaskTypeItems;
-    PrmValue: 5; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 5; Rare: True; Effects: [efPrmMana]; ),
     // (Perma Mana VI)
     (Level: (Min: 1; Max: 13); Price: 7000; Occurence: FlaskTypeItems;
-    PrmValue: 6; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 6; Rare: True; Effects: [efPrmMana]; ),
     // of the Unicorn (Perma Mana VII)
     (Level: (Min: 1; Max: 15); Price: 8000; Occurence: FlaskTypeItems;
-    PrmValue: 7; Rare: True; Effects: [efPrmMana];),
+    PrmValue: 7; Rare: True; Effects: [efPrmMana]; ),
 
     // of Blacksmith (Oil I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: FlaskTypeItems;
-    Value: (Min: 5; Max: 9); Effects: [efRepair];),
+    Value: (Min: 5; Max: 9); Effects: [efRepair]; ),
     // of Mastery (Oil II)
     (Level: (Min: 2; Max: 6); Price: 200; Occurence: FlaskTypeItems;
-    Value: (Min: 10; Max: 14); Effects: [efRepair];),
+    Value: (Min: 10; Max: 14); Effects: [efRepair]; ),
     // of Sharpness (Oil III)
     (Level: (Min: 3; Max: 9); Price: 300; Occurence: FlaskTypeItems;
-    Value: (Min: 15; Max: 19); Effects: [efRepair];),
+    Value: (Min: 15; Max: 19); Effects: [efRepair]; ),
     // of Fortitude (Oil VI)
     (Level: (Min: 4; Max: 12); Price: 400; Occurence: FlaskTypeItems;
-    Value: (Min: 20; Max: 24); Effects: [efRepair];),
+    Value: (Min: 20; Max: 24); Effects: [efRepair]; ),
     // of Permanence (Oil V)
     (Level: (Min: 5; Max: 15); Price: 500; Occurence: FlaskTypeItems;
-    Value: (Min: 25; Max: 30); Rare: True; Effects: [efRepair];),
+    Value: (Min: 25; Max: 30); Rare: True; Effects: [efRepair]; ),
 
     // (Life I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 1; Max: 4);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 1; Max: 4); ),
     // (Life II)
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 5; Max: 8);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 5; Max: 8); ),
     // (Life III)
     (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 9; Max: 12);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 9; Max: 12); ),
     // (Life IV)
     (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 13; Max: 16);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 13; Max: 16); ),
     // (Life V)
     (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 17; Max: 20);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 17; Max: 20); ),
     // (Life VI)
     (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 21; Max: 25);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 21; Max: 25); ),
     // (Life VII)
     (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 26; Max: 30);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 26; Max: 30); ),
 
     // (Mana I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 1; Max: 4);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 1; Max: 4); ),
     // (Mana II)
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 5; Max: 8);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 5; Max: 8); ),
     // (Mana III)
     (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 9; Max: 12);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 9; Max: 12); ),
     // (Mana IV)
     (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 13; Max: 16);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 13; Max: 16); ),
     // (Mana V)
     (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 17; Max: 20);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 17; Max: 20); ),
     // (Mana VI)
     (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 21; Max: 25);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 21; Max: 25); ),
     // (Mana VII)
     (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 0; Max: 0); Mana: (Min: 26; Max: 30);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 0; Max: 0); Mana: (Min: 26; Max: 30); ),
 
     // (Life and Mana I)
     (Level: (Min: 1; Max: 3); Price: 150; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 1; Max: 3); Mana: (Min: 1; Max: 3);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 1; Max: 3); Mana: (Min: 1; Max: 3); ),
     // (Life and Mana II)
     (Level: (Min: 2; Max: 5); Price: 300; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 4; Max: 6); Mana: (Min: 4; Max: 6);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 4; Max: 6); Mana: (Min: 4; Max: 6); ),
     // (Life and Mana III)
     (Level: (Min: 3; Max: 7); Price: 500; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 7; Max: 9); Mana: (Min: 7; Max: 9); ),
     // (Life and Mana IV)
     (Level: (Min: 4; Max: 9); Price: 700; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 10; Max: 12); Mana: (Min: 10; Max: 12);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 10; Max: 12); Mana: (Min: 10; Max: 12); ),
     // (Life and Mana V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 13; Max: 17); Mana: (Min: 13; Max: 17);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 13; Max: 17); Mana: (Min: 13; Max: 17); ),
     // (Life and Mana VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 18; Max: 23); Mana: (Min: 18; Max: 23);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 18; Max: 23); Mana: (Min: 18; Max: 23); ),
     // (Life and Mana VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: DefenseTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 0; Max: 0;); MaxDamage: (Min: 0; Max: 0;));
-    Life: (Min: 24; Max: 30); Mana: (Min: 23; Max: 30);),
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Life: (Min: 24; Max: 30); Mana: (Min: 23; Max: 30); ),
 
     // (Defense I)
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 1; Max: 4);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 1; Max: 4); ),
     // (Defense II)
     (Level: (Min: 2; Max: 5); Price: 200; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 5; Max: 8);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 5; Max: 8); ),
     // (Defense III)
     (Level: (Min: 3; Max: 7); Price: 300; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 9; Max: 12);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 9; Max: 12); ),
     // (Defense IV)
     (Level: (Min: 4; Max: 9); Price: 400; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 11; Max: 16);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 11; Max: 16); ),
     // (Defense V)
     (Level: (Min: 5; Max: 11); Price: 500; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 17; Max: 20);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 17; Max: 20); ),
     // (Defense VI)
     (Level: (Min: 6; Max: 13); Price: 750; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 20; Max: 25);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 20; Max: 25); ),
     // (Defense VII)
     (Level: (Min: 7; Max: 15); Price: 1000; Occurence: DefenseTypeItems;
-    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 25; Max: 30);),
+    MaxDurability: (Min: 0; Max: 0); Defense: (Min: 25; Max: 30); ),
 
     // (Damage I)
     (Level: (Min: 1; Max: 3); Price: 250; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 1; Max: 3); MaxDamage: (Min: 3; Max: 5));),
+    Damage: (MinDamage: (Min: 1; Max: 3); MaxDamage: (Min: 3; Max: 5)); ),
     // (Damage II)
     (Level: (Min: 2; Max: 5); Price: 500; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 3; Max: 6); MaxDamage: (Min: 6; Max: 10));),
+    Damage: (MinDamage: (Min: 3; Max: 6); MaxDamage: (Min: 6; Max: 10)); ),
     // (Damage III)
     (Level: (Min: 3; Max: 7); Price: 800; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 6; Max: 9); MaxDamage: (Min: 9; Max: 15));),
+    Damage: (MinDamage: (Min: 6; Max: 9); MaxDamage: (Min: 9; Max: 15)); ),
     // (Damage IV)
     (Level: (Min: 4; Max: 9); Price: 1000; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 9; Max: 12); MaxDamage: (Min: 12; Max: 20));),
+    Damage: (MinDamage: (Min: 9; Max: 12); MaxDamage: (Min: 12; Max: 20)); ),
     // (Damage V)
     (Level: (Min: 5; Max: 11); Price: 1500; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 12; Max: 15); MaxDamage: (Min: 15; Max: 25));),
+    Damage: (MinDamage: (Min: 12; Max: 15); MaxDamage: (Min: 15; Max: 25)); ),
     // (Damage VI)
     (Level: (Min: 6; Max: 13); Price: 2000; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 15; Max: 18); MaxDamage: (Min: 18; Max: 30));),
+    Damage: (MinDamage: (Min: 15; Max: 18); MaxDamage: (Min: 18; Max: 30)); ),
     // (Damage VII)
     (Level: (Min: 7; Max: 15); Price: 2500; Occurence: DamageTypeItems;
     MaxDurability: (Min: 0; Max: 0); Defense: (Min: 0; Max: 0);
-    Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35));),
+    Damage: (MinDamage: (Min: 18; Max: 20); MaxDamage: (Min: 21; Max: 35)); ),
 
     // of Craftmanship (Durability I)
     (Level: (Min: 1; Max: 3); Price: 100;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 10;
-    Max: 20);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 10;
+    Max: 20); ),
     // of Durability (Durability II)
     (Level: (Min: 2; Max: 5); Price: 200;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 20;
-    Max: 30);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 20;
+    Max: 30); ),
     // of Sturdiness (Durability III)
     (Level: (Min: 3; Max: 7); Price: 300;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 30;
-    Max: 40);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 30;
+    Max: 40); ),
     // of Structure (Durability IV)
     (Level: (Min: 4; Max: 9); Price: 400;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 40;
-    Max: 50);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 40;
+    Max: 50); ),
     // of Endurance (Durability V)
     (Level: (Min: 5; Max: 11); Price: 500;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 50;
-    Max: 60);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 50;
+    Max: 60); ),
     // of the Ages (Durability VI)
     (Level: (Min: 6; Max: 13); Price: 750;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 60;
-    Max: 70);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 60;
+    Max: 70); ),
     // of Permanance (Durability VII)
     (Level: (Min: 7; Max: 15); Price: 1000;
-    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems; MaxDurability: (Min: 70;
-    Max: 80);),
+    Occurence: (SmithTypeItems - JewelryTypeItems) + QuiverTypeItems;
+    MaxDurability: (Min: 70;
+    Max: 80); ),
 
     // of the Brute (Strength I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
-    Strength: (Min: 1; Max: 2);),
+    Strength: (Min: 1; Max: 2); ),
     // of the Lion (Strength II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
-    Strength: (Min: 3; Max: 5);),
+    Strength: (Min: 3; Max: 5); ),
     // of the Bear (Strength III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
-    Strength: (Min: 6; Max: 9);),
+    Strength: (Min: 6; Max: 9); ),
     // of the Leviathan (Strength IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
-    Strength: (Min: 10; Max: 14);),
+    Strength: (Min: 10; Max: 14); ),
     // of the Goliath (Strength V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
-    Strength: (Min: 15; Max: 20);),
+    Strength: (Min: 15; Max: 20); ),
     // of the Titan (Strength VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
-    Strength: (Min: 21; Max: 25);),
+    Strength: (Min: 21; Max: 25); ),
     // of the Gods (Strength VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
-    Strength: (Min: 26; Max: 30);),
+    Strength: (Min: 26; Max: 30); ),
 
     // of the Mongoose (Dexterity I)
     (Level: (Min: 1; Max: 3); Price: 200;
-    Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 1; Max: 2);),
+    Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 1; Max: 2); ),
     // of the Fox (Dexterity II)
     (Level: (Min: 2; Max: 5); Price: 400;
-    Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 3; Max: 5);),
+    Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 3; Max: 5); ),
     // of the Lynx (Dexterity III)
     (Level: (Min: 3; Max: 7); Price: 600;
-    Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 6; Max: 9);),
+    Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 6; Max: 9); ),
     // of the Falcon (Dexterity IV)
     (Level: (Min: 4; Max: 9); Price: 800;
     Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 10;
-    Max: 14);),
+    Max: 14); ),
     // of the Panther (Dexterity V)
     (Level: (Min: 5; Max: 11); Price: 1000;
     Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 15;
-    Max: 20);),
+    Max: 20); ),
     // of the Leopard (Dexterity VI)
     (Level: (Min: 6; Max: 13); Price: 1500;
     Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 21;
-    Max: 25);),
+    Max: 25); ),
     // of the Jaguar (Dexterity VII)
     (Level: (Min: 7; Max: 15); Price: 2000;
     Occurence: SmithTypeItems + QuiverTypeItems; Dexterity: (Min: 26;
-    Max: 30);),
+    Max: 30); ),
 
     // (Willpower I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
-    Willpower: (Min: 1; Max: 2);),
+    Willpower: (Min: 1; Max: 2); ),
     // (Willpower II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
-    Willpower: (Min: 3; Max: 5);),
+    Willpower: (Min: 3; Max: 5); ),
     // (Willpower III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
-    Willpower: (Min: 6; Max: 9);),
+    Willpower: (Min: 6; Max: 9); ),
     // (Willpower IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
-    Willpower: (Min: 10; Max: 14);),
+    Willpower: (Min: 10; Max: 14); ),
     // (Willpower V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
-    Willpower: (Min: 15; Max: 20);),
+    Willpower: (Min: 15; Max: 20); ),
     // (Willpower VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
-    Willpower: (Min: 21; Max: 25);),
+    Willpower: (Min: 21; Max: 25); ),
     // (Willpower VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
-    Willpower: (Min: 26; Max: 30);),
+    Willpower: (Min: 26; Max: 30); ),
 
     // (Perception I)
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: SmithTypeItems;
-    Perception: (Min: 1; Max: 2);),
+    Perception: (Min: 1; Max: 2); ),
     // (Perception II)
     (Level: (Min: 2; Max: 5); Price: 400; Occurence: SmithTypeItems;
-    Perception: (Min: 3; Max: 5);),
+    Perception: (Min: 3; Max: 5); ),
     // (Perception III)
     (Level: (Min: 3; Max: 7); Price: 600; Occurence: SmithTypeItems;
-    Perception: (Min: 6; Max: 9);),
+    Perception: (Min: 6; Max: 9); ),
     // (Perception IV)
     (Level: (Min: 4; Max: 9); Price: 800; Occurence: SmithTypeItems;
-    Perception: (Min: 10; Max: 14);),
+    Perception: (Min: 10; Max: 14); ),
     // (Perception V)
     (Level: (Min: 5; Max: 11); Price: 1000; Occurence: SmithTypeItems;
-    Perception: (Min: 15; Max: 20);),
+    Perception: (Min: 15; Max: 20); ),
     // (Perception VI)
     (Level: (Min: 6; Max: 13); Price: 1500; Occurence: SmithTypeItems;
-    Perception: (Min: 21; Max: 25);),
+    Perception: (Min: 21; Max: 25); ),
     // (Perception VII)
     (Level: (Min: 7; Max: 15); Price: 2000; Occurence: SmithTypeItems;
-    Perception: (Min: 26; Max: 30);),
+    Perception: (Min: 26; Max: 30); ),
 
     // of the Sky (Additional All Attributes I)
-    (Level: (Min: 1; Max: 3); Price: 400; Occurence: JewelryTypeItems;),
+    (Level: (Min: 1; Max: 3); Price: 400; Occurence: JewelryTypeItems; ),
     // of the Meteor (Additional All Attributes II)
-    (Level: (Min: 2; Max: 5); Price: 800; Occurence: JewelryTypeItems;),
+    (Level: (Min: 2; Max: 5); Price: 800; Occurence: JewelryTypeItems; ),
     // of the Comet (Additional All Attributes III)
-    (Level: (Min: 3; Max: 7); Price: 1200; Occurence: JewelryTypeItems;),
+    (Level: (Min: 3; Max: 7); Price: 1200; Occurence: JewelryTypeItems; ),
     // of the Heavens (Additional All Attributes IV)
-    (Level: (Min: 4; Max: 9); Price: 1600; Occurence: JewelryTypeItems;),
+    (Level: (Min: 4; Max: 9); Price: 1600; Occurence: JewelryTypeItems; ),
     // of the Galaxy (Additional All Attributes V)
-    (Level: (Min: 5; Max: 11); Price: 2000; Occurence: JewelryTypeItems;),
+    (Level: (Min: 5; Max: 11); Price: 2000; Occurence: JewelryTypeItems; ),
     // of the Universe (Additional All Attributes VI)
-    (Level: (Min: 6; Max: 13); Price: 2500; Occurence: JewelryTypeItems;),
+    (Level: (Min: 6; Max: 13); Price: 2500; Occurence: JewelryTypeItems; ),
     // of the Infinite (Additional All Attributes VII)
-    (Level: (Min: 7; Max: 15); Price: 3000; Occurence: JewelryTypeItems;),
+    (Level: (Min: 7; Max: 15); Price: 3000; Occurence: JewelryTypeItems; ),
 
     // of the Eternal Wanderer (Staves and Wands I)
     (Level: (Min: 1; Max: 3); Price: 600; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 5; Max: 10);),
+    Mana: (Min: 5; Max: 10); ),
     // of Sorcery (Staves and Wands II)
     (Level: (Min: 2; Max: 5); Price: 900; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 15; Max: 20);),
+    Mana: (Min: 15; Max: 20); ),
     // of Meditation (Staves and Wands III)
     (Level: (Min: 3; Max: 7); Price: 1200; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 25; Max: 30);),
+    Mana: (Min: 25; Max: 30); ),
     // of Power (Staves and Wands IV)
     (Level: (Min: 4; Max: 9); Price: 1500; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 35; Max: 40);),
+    Mana: (Min: 35; Max: 40); ),
     // of Balance (Staves and Wands V)
     (Level: (Min: 5; Max: 11); Price: 1800; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 45; Max: 50);),
+    Mana: (Min: 45; Max: 50); ),
     // of Dominance (Staves and Wands VI)
     (Level: (Min: 6; Max: 13); Price: 2100; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 55; Max: 60);),
+    Mana: (Min: 55; Max: 60); ),
     // of Death (Staves and Wands VII)
     (Level: (Min: 7; Max: 15); Price: 2400; Occurence: MagicWeaponTypeItems;
-    Mana: (Min: 65; Max: 70);),
+    Mana: (Min: 65; Max: 70); ),
 
     // of the Lizard (Replenish Life I)
     (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 1; Max: 3);),
+    Life: (Min: 1; Max: 3); ),
     // of the Starfish (Replenish Life II)
     (Level: (Min: 4; Max: 8); Price: 150;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 4; Max: 6);),
+    Life: (Min: 4; Max: 6); ),
     // of the Phoenix (Replenish Life III)
     (Level: (Min: 9; Max: 15); Price: 200;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Life: (Min: 7; Max: 10);),
+    Life: (Min: 7; Max: 10); ),
 
     // of Regeneration (Regeneration Mana I)
     (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 1; Max: 4);),
+    Mana: (Min: 1; Max: 4); ),
     // of the Newt (Regeneration Mana II)
     (Level: (Min: 4; Max: 8); Price: 150;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 5; Max: 9);),
+    Mana: (Min: 5; Max: 9); ),
     // of the Flatworm (Regeneration Mana III)
     (Level: (Min: 9; Max: 15); Price: 200;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 10; Max: 15);),
+    Mana: (Min: 10; Max: 15); ),
 
     // of Success (Life After Each Kill I),
     (Level: (Min: 1; Max: 3); Price: 100;
-    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 1; Max: 2);),
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 1; Max: 2); ),
     // of Victory (Life After Each Kill II),
     (Level: (Min: 4; Max: 8); Price: 150;
-    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 3; Max: 4);),
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 3; Max: 4); ),
     // of Triumph (Life After Each Kill III),
     (Level: (Min: 9; Max: 15); Price: 200;
-    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 5; Max: 6);),
+    Occurence: JewelryTypeItems + SmithTypeItems; Life: (Min: 5; Max: 6); ),
 
     // of Absorption (Mana After Each Kill I),
     (Level: (Min: 1; Max: 3); Price: 100;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 1; Max: 3);),
+    Mana: (Min: 1; Max: 3); ),
     // of Osmosis (Mana After Each Kill II),
     (Level: (Min: 4; Max: 8); Price: 150;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 4; Max: 6);),
+    Mana: (Min: 4; Max: 6); ),
     // of Consumption (Mana After Each Kill III),
     (Level: (Min: 9; Max: 15); Price: 200;
     Occurence: JewelryTypeItems + MagicWeaponTypeItems;
-    Mana: (Min: 7; Max: 9);),
+    Mana: (Min: 7; Max: 9); ),
 
     // of (Extra Gold from Monsters I),
     (Level: (Min: 1; Max: 3); Price: 150; Occurence: JewelryTypeItems;
-    Value: (Min: 1; Max: 10);),
+    Value: (Min: 1; Max: 10); ),
     // of (Extra Gold from Monsters II),
     (Level: (Min: 4; Max: 8); Price: 200; Occurence: JewelryTypeItems;
-    Value: (Min: 11; Max: 25);),
+    Value: (Min: 11; Max: 25); ),
     // of (Extra Gold from Monsters III),
     (Level: (Min: 9; Max: 15); Price: 250; Occurence: JewelryTypeItems;
-    Value: (Min: 26; Max: 50);),
+    Value: (Min: 26; Max: 50); ),
 
     // of the Fletcher (Quiver Capacity I),
     (Level: (Min: 1; Max: 3); Price: 100; Occurence: QuiverTypeItems;
-    Value: (Min: 1; Max: 50);),
+    Value: (Min: 1; Max: 50); ),
     // of Plenty (Quiver Capacity II),
     (Level: (Min: 4; Max: 8); Price: 200; Occurence: QuiverTypeItems;
-    Value: (Min: 51; Max: 100);),
+    Value: (Min: 51; Max: 100); ),
     // of the Marksman (Quiver Capacity III),
     (Level: (Min: 9; Max: 15); Price: 300; Occurence: QuiverTypeItems;
-    Value: (Min: 101; Max: 150);),
+    Value: (Min: 101; Max: 150); ),
 
     // of the Channeler (Wand Capacity I),
     (Level: (Min: 1; Max: 3); Price: 200; Occurence: [itWand];
-    Value: (Min: 20; Max: 30);),
+    Value: (Min: 20; Max: 30); ),
     // of the Conduit (Wand Capacity II),
     (Level: (Min: 4; Max: 8); Price: 400; Occurence: [itWand];
-    Value: (Min: 50; Max: 60);),
+    Value: (Min: 50; Max: 60); ),
     // of the Reservoir (Wand Capacity III),
     (Level: (Min: 9; Max: 15); Price: 600; Occurence: [itWand];
-    Value: (Min: 80; Max: 90);)
+    Value: (Min: 80; Max: 90); )
 
     );
 
@@ -611,7 +620,7 @@ type
     // Defense
     pfCracked, pfStrong, pfStalwart, pfFortified, pfGlorious,
     pfSaintly, pfDivine
-    //
+
     );
 
 type
@@ -632,8 +641,8 @@ const
     DurabilityPercent: 0; DefensePercent: 0; Rare: False),
 
     // Crude (Damage I)
-    (Level: (Min: 1; Max: 15); Price: - 50; Occurence: WeaponTypeItems;
-    DamagePercent: - 20),
+    (Level: (Min: 1; Max: 15); Price: -50; Occurence: WeaponTypeItems;
+    DamagePercent: -20),
     // Fine (Damage II)
     (Level: (Min: 1; Max: 15); Price: 50; Occurence: WeaponTypeItems;
     DamagePercent: 20),
@@ -654,8 +663,8 @@ const
     DamagePercent: 100; Rare: True),
 
     // Fragile (Durability I)
-    (Level: (Min: 1; Max: 15); Price: - 50; Occurence: SmithTypeItems;
-    DurabilityPercent: - 20),
+    (Level: (Min: 1; Max: 15); Price: -50; Occurence: SmithTypeItems;
+    DurabilityPercent: -20),
     // Reinforced (Durability II)
     (Level: (Min: 1; Max: 15); Price: 50; Occurence: SmithTypeItems;
     DurabilityPercent: 20),
@@ -676,8 +685,8 @@ const
     DurabilityPercent: 150; Rare: True),
 
     // Cracked (Defense I)
-    (Level: (Min: 1; Max: 15); Price: - 50; Occurence: ArmorTypeItems;
-    DefensePercent: - 20),
+    (Level: (Min: 1; Max: 15); Price: -50; Occurence: ArmorTypeItems;
+    DefensePercent: -20),
     // Strong (Defense II)
     (Level: (Min: 1; Max: 15); Price: 60; Occurence: ArmorTypeItems;
     DefensePercent: 20),
@@ -736,8 +745,8 @@ begin
   Result := Ord(High(TSuffixEnum)) + 1;
 end;
 
-procedure TAffixes.FillEnumNames(const ATypeInfo: Pointer;
-  const APrefix: string; var ANames: array of string);
+procedure TAffixes.FillEnumNames(const ATypeInfo: Pointer; const APrefix: string;
+  var ANames: array of string);
 var
   LIndex: integer;
 begin
@@ -807,26 +816,31 @@ begin
   case TSuffixEnum(AItem.Identify) of
     // Vision
     of_Radiance:
-      begin
-        Value := Items.GetBonus(AItem, btVis) + 1;
-        Items.SetBonus(AItem, btVis, Value);
-      end;
+    begin
+      Value := Items.GetBonus(AItem, btVis) + 1;
+      Items.SetBonus(AItem, btVis, Value);
+    end;
+    of_the_Sun:
+    begin
+      Value := Items.GetBonus(AItem, btVis) + 2;
+      Items.SetBonus(AItem, btVis, Value);
+    end;
     // Healing
     of_Healing:
-      begin
+    begin
 
-      end;
+    end;
     // Oil
     of_Blacksmith .. of_Artisanship:
-      begin
-        // Cursed or Blessed
-        // AItem.Effect := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
-        // Repair Durability
-        // AItem.Durability := Math.RandomRange(SB.MaxDurability.Min,
-        // SB.MaxDurability.Max + 1);
-        // AItem.Value := Math.RandomRange(SB.MaxDurability.Min,
-        // SB.MaxDurability.Max + 1);
-      end;
+    begin
+      // Cursed or Blessed
+      // AItem.Effect := Math.RandomRange(tfCursed * 5, tfBlessed * 5 + 1);
+      // Repair Durability
+      // AItem.Durability := Math.RandomRange(SB.MaxDurability.Min,
+      // SB.MaxDurability.Max + 1);
+      // AItem.Value := Math.RandomRange(SB.MaxDurability.Min,
+      // SB.MaxDurability.Max + 1);
+    end;
     // Life
     of_Hale .. of_the_Eternal:
       SetLife(btLife);
@@ -835,10 +849,10 @@ begin
       SetMana(btMana);
     // Life and Mana
     of_Harmony .. of_the_Unity:
-      begin
-        SetLife(btLife);
-        SetMana(btMana);
-      end;
+    begin
+      SetLife(btLife);
+      SetMana(btMana);
+    end;
     // Strength
     of_the_Brute .. of_the_Gods:
       SetAtr(btStr, SB.Strength.Min, SB.Strength.Max);
@@ -857,39 +871,39 @@ begin
         SetAtr(BT, SB.Level.Min, SB.Level.Max);
     // Defense
     of_the_Shield .. of_the_Invincible:
-      begin
-        if (SB.Defense.Min > 0) then
-          AItem.Defense := AItem.Defense + Math.EnsureRange
-            (Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1, UIntMax);
-      end;
+    begin
+      if (SB.Defense.Min > 0) then
+        AItem.Defense := AItem.Defense + Math.EnsureRange(
+          Math.RandomRange(SB.Defense.Min, SB.Defense.Max + 1), 1, UIntMax);
+    end;
     // Damage
     of_the_Fang .. of_the_Oblivion:
-      begin
-        if (SB.Damage.MinDamage.Min > 0) then
-          AItem.MinDamage := AItem.MinDamage +
-            Math.EnsureRange(Math.RandomRange(SB.Damage.MinDamage.Min,
-            SB.Damage.MinDamage.Max + 1), 1, UIntMax - 1);
-        if (SB.Damage.MaxDamage.Min > 0) then
-          AItem.MaxDamage := AItem.MaxDamage +
-            Math.EnsureRange(Math.RandomRange(SB.Damage.MaxDamage.Min,
-            SB.Damage.MaxDamage.Max + 1), 2, UIntMax);
-      end;
+    begin
+      if (SB.Damage.MinDamage.Min > 0) then
+        AItem.MinDamage := AItem.MinDamage +
+          Math.EnsureRange(Math.RandomRange(SB.Damage.MinDamage.Min,
+          SB.Damage.MinDamage.Max + 1), 1, UIntMax - 1);
+      if (SB.Damage.MaxDamage.Min > 0) then
+        AItem.MaxDamage := AItem.MaxDamage +
+          Math.EnsureRange(Math.RandomRange(SB.Damage.MaxDamage.Min,
+          SB.Damage.MaxDamage.Max + 1), 2, UIntMax);
+    end;
     // Durability
     of_Craftsmanship .. of_Permanence:
+    begin
+      if (SB.MaxDurability.Min > 0) then
       begin
-        if (SB.MaxDurability.Min > 0) then
-        begin
-          AItem.MaxDurability := AItem.MaxDurability +
-            Math.EnsureRange(Math.RandomRange(SB.MaxDurability.Min,
-            SB.MaxDurability.Max + 1), 1, UIntMax);
-          case Game.Difficulty of
-            dfEasy:
-              AItem.Durability := AItem.MaxDurability;
-            dfHell:
-              AItem.Durability := Math.RandomRange(0, 5) + 1;
-          end;
+        AItem.MaxDurability :=
+          AItem.MaxDurability + Math.EnsureRange(
+          Math.RandomRange(SB.MaxDurability.Min, SB.MaxDurability.Max + 1), 1, UIntMax);
+        case Game.Difficulty of
+          dfEasy:
+            AItem.Durability := AItem.MaxDurability;
+          dfHell:
+            AItem.Durability := Math.RandomRange(0, 5) + 1;
         end;
       end;
+    end;
     // Replenish Life
     of_the_Lizard .. of_the_Phoenix:
       SetLife(btReLife);
@@ -904,32 +918,31 @@ begin
       SetMana(btManaAfEachKill);
     // Extra Gold from Monsters
     of_the_Thief .. of_Greed:
-      begin
-        Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
-        Items.SetBonus(AItem, btExtraGold, Value.InRange(ExtraGoldMax div 3));
-      end;
+    begin
+      Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+      Items.SetBonus(AItem, btExtraGold, Value.InRange(ExtraGoldMax div 3));
+    end;
     // Quiver Capacity
     of_the_Fletcher .. of_the_Marksman:
-      begin
-        Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
-        Items.SetBonus(AItem, btQuiverCap, Value.InRange(255));
-        AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
-          ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
-      end;
+    begin
+      Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+      Items.SetBonus(AItem, btQuiverCap, Value.InRange(255));
+      AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
+        ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
+    end;
     // Wand Capacity
     of_the_Channeler .. of_the_Reservoir:
-      begin
-        Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
-        Items.SetBonus(AItem, btWandCap, Value.InRange(255));
-        AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
-          ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
-      end;
+    begin
+      Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
+      Items.SetBonus(AItem, btWandCap, Value.InRange(255));
+      AItem.Value := Math.EnsureRange(AItem.Value + Value, 0,
+        ItemBase[TItemEnum(AItem.ItemID)].Value + Value);
+    end;
   end;
   // Effects
   AItem.Effects := SB.Effects;
-  if (SB.Value.Min > 0) and not(TSuffixEnum(AItem.Identify)
-    in [of_the_Fletcher .. of_the_Marksman,
-    of_the_Channeler .. of_the_Reservoir]) then
+  if (SB.Value.Min > 0) and not (TSuffixEnum(AItem.Identify) in
+    [of_the_Fletcher .. of_the_Marksman, of_the_Channeler .. of_the_Reservoir]) then
   begin
     Value := Math.RandomRange(SB.Value.Min, SB.Value.Max + 1);
     AItem.Value := AItem.Value + Value.InRange(UIntMax);
@@ -950,7 +963,7 @@ var
   LDamagePercent, LDurabilityPercent, LDefensePercent, LDelta: integer;
 
   function GetDelta(const AValue: UInt; const APercent: integer;
-    const AFloor: UInt): integer;
+  const AFloor: UInt): integer;
   begin
     Result := 0;
     if (APercent < 0) and (AValue <= AFloor) then
@@ -966,8 +979,7 @@ begin
   LDefensePercent := PrefixBase[TPrefixEnum(AItem.Prefix)].DefensePercent;
 
   // Damage
-  if (LDamagePercent <> 0) and ((AItem.MinDamage > 0) or (AItem.MaxDamage > 0))
-  then
+  if (LDamagePercent <> 0) and ((AItem.MinDamage > 0) or (AItem.MaxDamage > 0)) then
   begin
     AItem.MinDamage := Math.EnsureRange(AItem.MinDamage +
       GetDelta(AItem.MinDamage, LDamagePercent, 1), 1, UIntMax - 1);
@@ -980,20 +992,20 @@ begin
   begin
     LDelta := GetDelta(AItem.MaxDurability, LDurabilityPercent, 10);
 
-    AItem.MaxDurability := Math.EnsureRange(AItem.MaxDurability + LDelta,
-      10, UIntMax);
+    AItem.MaxDurability := Math.EnsureRange(AItem.MaxDurability +
+      LDelta, 10, UIntMax);
 
     if LDurabilityPercent > 0 then
       AItem.Durability := AItem.MaxDurability
     else
-      AItem.Durability := Math.EnsureRange(AItem.Durability + LDelta, 1,
-        AItem.MaxDurability);
+      AItem.Durability := Math.EnsureRange(AItem.Durability + LDelta,
+        1, AItem.MaxDurability);
   end;
 
   // Defense
   if (LDefensePercent <> 0) and (AItem.Defense > 0) then
-    AItem.Defense := Math.EnsureRange(AItem.Defense + GetDelta(AItem.Defense,
-      LDefensePercent, 1), 1, UIntMax);
+    AItem.Defense := Math.EnsureRange(AItem.Defense +
+      GetDelta(AItem.Defense, LDefensePercent, 1), 1, UIntMax);
 
   Trollhunter.Item.TItems.CalcItem(AItem);
 end;
@@ -1012,10 +1024,10 @@ end;
 
 initialization
 
-Affixes := TAffixes.Create;
+  Affixes := TAffixes.Create;
 
 finalization
 
-FreeAndNil(Affixes);
+  FreeAndNil(Affixes);
 
 end.
