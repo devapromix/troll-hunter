@@ -2393,7 +2393,7 @@ begin
   if (efEnchantItem in Effects) then
   begin
     Affixes.DoCraft(TEffect(Math.RandomRange(0, 4) + Ord(efCraftStr)),
-      Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 10, 0, 7));
+      Math.EnsureRange(Player.Skills.Skill[skEnchant_Item].Value div 11, 0, 6));
     Scenes.SetScene(scEnchant);
   end;
   // Recharge Wand
