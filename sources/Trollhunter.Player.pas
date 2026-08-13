@@ -167,8 +167,6 @@ type
     procedure BreakItem(ASlot: TSlotType; Value: UInt = 1); overload;
     procedure BreakItem(); overload;
     procedure AddExp(Value: UInt = 1);
-    procedure DoWeaponSkill;
-    procedure DoAwarenessSkill;
     procedure Rest(ATurns: UInt);
     procedure RestUntilHealed;
     function HasVisibleEnemy: boolean;
@@ -259,71 +257,6 @@ begin
   if IsDead then
     Defeat;
   Mobs.Process;
-end;
-
-procedure TPlayer.DoAwarenessSkill;
-const
-  CBaseAwarenessSkillExp = 3;
-  CRangerAwarenessSkillBonus = 2;
-  CGnomeAwarenessSkillBonus = 1;
-var
-  LExpValue: UInt;
-begin
-  LExpValue := Math.EnsureRange(CBaseAwarenessSkillExp - Ord(Game.Difficulty),
-    1, CBaseAwarenessSkillExp);
-  if (FClass = clRanger) then
-    Inc(LExpValue, CRangerAwarenessSkillBonus);
-  if (FRace = rcGnome) then
-    Inc(LExpValue, CGnomeAwarenessSkillBonus);
-  Skills.DoSkill(skAwareness, LExpValue);
-end;
-
-procedure TPlayer.DoWeaponSkill;
-begin
-  DoAwarenessSkill;
-  case FWeaponSkill of
-    skBlade:
-    begin
-      Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skAthletics, 2);
-      Skills.DoSkill(skDodge, 2);
-      SatPerTurn := Ord(Game.Difficulty) + 5;
-    end;
-    skAxe:
-    begin
-      Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skAthletics, 3);
-      Skills.DoSkill(skDodge);
-      SatPerTurn := Ord(Game.Difficulty) + 6;
-    end;
-    skSpear, skDagger:
-    begin
-      Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skAthletics);
-      Skills.DoSkill(skDodge, 3);
-      SatPerTurn := Ord(Game.Difficulty) + 4;
-    end;
-    skMace:
-    begin
-      Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skAthletics, 4);
-      SatPerTurn := Ord(Game.Difficulty) + 7;
-    end;
-    skStaff, skWand:
-    begin
-      Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skDodge);
-      Skills.DoSkill(skConcentration, 3);
-      SatPerTurn := Ord(Game.Difficulty) + 8;
-    end;
-    skBow:
-    begin
-      Skills.DoSkill(FWeaponSkill, 2);
-      Skills.DoSkill(skDodge, 3);
-      Skills.DoSkill(skAthletics);
-      SatPerTurn := Ord(Game.Difficulty) + 4;
-    end;
-  end;
 end;
 
 procedure TPlayer.BreakStealth;
@@ -489,7 +422,7 @@ begin
       BreakItem(stMainHand);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
-    DoWeaponSkill;
+    Skills.DoWeaponSkill;
     // Victory
     if Mob.IsDead then
       Mob.Defeat;
@@ -648,7 +581,7 @@ begin
       BreakItem(stQuiver);
     if (CrStr <> '') then
       MsgLog.Add(Terminal.Colorize(CrStr, clAlarm));
-    DoWeaponSkill;
+    Skills.DoWeaponSkill;
     // Victory
     if Mob.IsDead then
       Mob.Defeat;
@@ -727,7 +660,7 @@ begin
     end;
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('Your %s hits %s (%d).', [LowerCase(LSpell.Name), The, Dam]));
-    DoAwarenessSkill;
+    Skills.DoAwarenessSkill;
     if Mob.IsDead then
       Mob.Defeat
     else if (efWeaken in LSpell.Effects) then

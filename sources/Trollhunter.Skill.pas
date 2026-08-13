@@ -39,6 +39,8 @@ type
     procedure Clear;
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
+    procedure DoWeaponSkill;
+    procedure DoAwarenessSkill;
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
     class function GetSkillExpMax: UInt;
@@ -62,7 +64,9 @@ uses
   Trollhunter.Game,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  Trollhunter.Player.Classes,
+  Trollhunter.Player.Races;
 
   { TSkills }
 
@@ -107,15 +111,83 @@ begin
       Inc(FSkill[ASkill].Value);
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
+      // Add message {!!!}
       MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
         [GetName(ASkill), FSkill[ASkill].Value]), clAlarm));
+      // Add exp
       Player.AddExp();
+      // Add scores
       if (FSkill[ASkill].Value = SkillMax) then
         Player.Statictics.Inc(stScore, 50);
       Player.Calc;
     end;
   end;
 
+end;
+
+procedure TSkills.DoAwarenessSkill;
+const
+  CBaseAwarenessSkillExp = 3;
+  CRangerAwarenessSkillBonus = 2;
+  CGnomeAwarenessSkillBonus = 1;
+var
+  LExpValue: UInt;
+begin
+  LExpValue := Math.EnsureRange(CBaseAwarenessSkillExp - Ord(Game.Difficulty),
+    1, CBaseAwarenessSkillExp);
+  if (Player.HClass = clRanger) then
+    Inc(LExpValue, CRangerAwarenessSkillBonus);
+  if (Player.HRace = rcGnome) then
+    Inc(LExpValue, CGnomeAwarenessSkillBonus);
+  Self.DoSkill(skAwareness, LExpValue);
+end;
+
+procedure TSkills.DoWeaponSkill;
+begin
+  Self.DoAwarenessSkill;
+  case Player.WeaponSkill of
+    skBlade:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkill(skAthletics, 2);
+      Self.DoSkill(skDodge, 2);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 5;
+    end;
+    skAxe:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkill(skAthletics, 3);
+      Self.DoSkill(skDodge);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 6;
+    end;
+    skSpear, skDagger:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkill(skAthletics);
+      Self.DoSkill(skDodge, 3);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 4;
+    end;
+    skMace:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkill(skAthletics, 4);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 7;
+    end;
+    skStaff, skWand:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkill(skDodge);
+      Self.DoSkill(skConcentration, 3);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 8;
+    end;
+    skBow:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkill(skDodge, 3);
+      Self.DoSkill(skAthletics);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 4;
+    end;
+  end;
 end;
 
 function TSkills.GetName(I: TSkillEnum): string;
