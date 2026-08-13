@@ -128,7 +128,8 @@ end;
 procedure TSkills.DoAwarenessSkill;
 const
   CBaseAwarenessSkillExp = 3;
-  CRangerAwarenessSkillBonus = 2;
+  CRangerAwarenessSkillBonus = 1;
+  CThiefAwarenessSkillBonus = 2;
   CGnomeAwarenessSkillBonus = 1;
 var
   LExpValue: UInt;
@@ -137,6 +138,8 @@ begin
     1, CBaseAwarenessSkillExp);
   if (Player.HClass = clRanger) then
     Inc(LExpValue, CRangerAwarenessSkillBonus);
+  if (Player.HClass = clThief) then
+    Inc(LExpValue, CThiefAwarenessSkillBonus);
   if (Player.HRace = rcGnome) then
     Inc(LExpValue, CGnomeAwarenessSkillBonus);
   Self.DoSkill(skAwareness, LExpValue);
