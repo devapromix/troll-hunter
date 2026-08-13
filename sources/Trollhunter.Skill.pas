@@ -172,17 +172,25 @@ begin
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics, 3);
-      Self.DoSkill(skDodge);
+      Self.DoSkillChance(skDodge, 75);
       Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 6;
     end;
-    skSpear, skDagger:
+    skSpear:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skAthletics);
-      Self.DoSkill(skDodge, 3);
-      Self.DoSkillChance(skBodybuilding, 5);
+      Self.DoSkillChance(skAthletics, 15);
+      Self.DoSkill(skDodge, 2);
+      Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 4;
+    end;
+    skDagger:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkillChance(skAthletics, 10);
+      Self.DoSkill(skDodge, 3);
+      Self.DoSkillChance(skBodybuilding, 4);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 3;
     end;
     skMace:
     begin
@@ -191,19 +199,27 @@ begin
       Self.DoSkillChance(skBodybuilding, 12);
       Player.SatPerTurn := Ord(Game.Difficulty) + 7;
     end;
-    skStaff, skWand:
+    skStaff:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skDodge);
+      Self.DoSkillChance(skDodge, 25);
       Self.DoSkill(skConcentration, 2);
       Self.DoSkillChance(skMeditation, 5);
       Player.SatPerTurn := Ord(Game.Difficulty) + 8;
+    end;
+    skWand:
+    begin
+      Self.DoSkill(Player.WeaponSkill, 2);
+      Self.DoSkillChance(skDodge, 5);
+      Self.DoSkill(skConcentration);
+      Self.DoSkillChance(skMeditation);
+      Player.SatPerTurn := Ord(Game.Difficulty) + 6;
     end;
     skBow:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skDodge, 3);
-      Self.DoSkill(skAthletics);
+      Self.DoSkillChance(skAthletics, 60);
       Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
