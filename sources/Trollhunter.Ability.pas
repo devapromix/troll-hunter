@@ -9,6 +9,23 @@ uses
 { #todo : Hotkeys 1-9 for abilities. }
 { #todo : Scene with abilities. }
 { #todo : Talents with abilities. }
+{ TODO -cMage : Arcane Focus
+  Mage active ability.
+
+  - Grants the Arcane Focus status effect for 70 turns.
+  - While active, the caster regenerates additional mana at the end of each turn.
+  - Mana regeneration may scale with the skill level
+    (e.g. +1...+5 MP per turn).
+  - Recasting the ability refreshes the duration instead of stacking.
+  - When the effect expires, the bonus mana regeneration ends.
+
+  Possible upgrades:
+  - Increase duration.
+  - Increase mana regenerated per turn.
+  - Reduce spell mana costs while Arcane Focus is active.
+  - Chance for spells to consume no mana.
+  - Temporarily increase maximum mana while the effect lasts.
+}
 
 type
   TAbilityEnum = (abFind_Item, abConjure_Mana_Orb, abCripling_Blow, abStealth);

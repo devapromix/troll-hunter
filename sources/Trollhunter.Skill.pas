@@ -39,6 +39,7 @@ type
     procedure Clear;
     property Skill[I: TSkillEnum]: TSkill read GetSkill write SetSkill;
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
+    procedure DoSkillChance(ASkill: TSkillEnum; AChance: UInt = 1);
     procedure DoWeaponSkill;
     procedure DoAwarenessSkill;
     procedure Modify(I: TSkillEnum; Value: Int);
@@ -126,6 +127,12 @@ begin
 
 end;
 
+procedure TSkills.DoSkillChance(ASkill: TSkillEnum; AChance: UInt);
+begin
+  if Utils.Chance(AChance) then
+    DoSkill(ASkill);
+end;
+
 procedure TSkills.DoAwarenessSkill;
 const
   CBaseAwarenessSkillExp = 3;
@@ -158,6 +165,7 @@ begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics, 2);
       Self.DoSkill(skDodge, 2);
+      Self.DoSkillChance(skBodybuilding, 8);
       Player.SatPerTurn := Ord(Game.Difficulty) + 5;
     end;
     skAxe:
@@ -165,6 +173,7 @@ begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics, 3);
       Self.DoSkill(skDodge);
+      Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 6;
     end;
     skSpear, skDagger:
@@ -172,19 +181,22 @@ begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics);
       Self.DoSkill(skDodge, 3);
+      Self.DoSkillChance(skBodybuilding, 5);
       Player.SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
     skMace:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics, 4);
+      Self.DoSkillChance(skBodybuilding, 12);
       Player.SatPerTurn := Ord(Game.Difficulty) + 7;
     end;
     skStaff, skWand:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skDodge);
-      Self.DoSkill(skConcentration, 3);
+      Self.DoSkill(skConcentration, 2);
+      Self.DoSkillChance(skMeditation, 5);
       Player.SatPerTurn := Ord(Game.Difficulty) + 8;
     end;
     skBow:
@@ -192,6 +204,7 @@ begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skDodge, 3);
       Self.DoSkill(skAthletics);
+      Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
   end;
