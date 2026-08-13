@@ -66,7 +66,8 @@ uses
   Trollhunter.Statistic,
   Trollhunter.Helpers,
   Trollhunter.Player.Classes,
-  Trollhunter.Player.Races;
+  Trollhunter.Player.Races,
+  Trollhunter.Utils;
 
   { TSkills }
 
@@ -131,9 +132,12 @@ const
   CRangerAwarenessSkillBonus = 1;
   CThiefAwarenessSkillBonus = 2;
   CGnomeAwarenessSkillBonus = 1;
+  CHellAwarenessFailChance = 25; {25%}
 var
   LExpValue: UInt;
 begin
+  if (Game.Difficulty = dfHell) and Utils.Chance(CHellAwarenessFailChance) then
+    Exit;
   LExpValue := Math.EnsureRange(CBaseAwarenessSkillExp - Ord(Game.Difficulty),
     1, CBaseAwarenessSkillExp);
   if (Player.HClass = clRanger) then
