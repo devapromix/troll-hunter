@@ -168,6 +168,7 @@ type
     procedure BreakItem(); overload;
     procedure AddExp(Value: UInt = 1);
     procedure DoWeaponSkill;
+    procedure DoAwarenessSkill;
     procedure Rest(ATurns: UInt);
     procedure RestUntilHealed;
     function HasVisibleEnemy: boolean;
@@ -260,8 +261,26 @@ begin
   Mobs.Process;
 end;
 
+procedure TPlayer.DoAwarenessSkill;
+const
+  CBaseAwarenessSkillExp = 3;
+  CRangerAwarenessSkillBonus = 2;
+  CGnomeAwarenessSkillBonus = 1;
+var
+  LExpValue: UInt;
+begin
+  LExpValue := Math.EnsureRange(CBaseAwarenessSkillExp - Ord(Game.Difficulty),
+    1, CBaseAwarenessSkillExp);
+  if (FClass = clRanger) then
+    Inc(LExpValue, CRangerAwarenessSkillBonus);
+  if (FRace = rcGnome) then
+    Inc(LExpValue, CGnomeAwarenessSkillBonus);
+  Skills.DoSkill(skAwareness, LExpValue);
+end;
+
 procedure TPlayer.DoWeaponSkill;
 begin
+  DoAwarenessSkill;
   case FWeaponSkill of
     skBlade:
     begin
@@ -708,6 +727,7 @@ begin
     end;
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('Your %s hits %s (%d).', [LowerCase(LSpell.Name), The, Dam]));
+    DoAwarenessSkill;
     if Mob.IsDead then
       Mob.Defeat
     else if (efWeaken in LSpell.Effects) then

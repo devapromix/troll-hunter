@@ -107,12 +107,9 @@ begin
       Inc(FSkill[ASkill].Value);
       FSkill[ASkill].Value := EnsureRange(FSkill[ASkill].Value, SkillMin,
         SkillMax);
-      // Add message {!!!}
       MsgLog.Add(Terminal.Colorize(Format('Your skill %s has raised to %d!',
         [GetName(ASkill), FSkill[ASkill].Value]), clAlarm));
-      // Add exp
       Player.AddExp();
-      // Add scores
       if (FSkill[ASkill].Value = SkillMax) then
         Player.Statictics.Inc(stScore, 50);
       Player.Calc;

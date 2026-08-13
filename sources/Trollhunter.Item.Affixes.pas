@@ -9,6 +9,8 @@ uses
   Trollhunter.Item.Types,
   Trollhunter.Item.Common;
 
+{ #todo : Add pref Deft for daggers and bows }
+
 type
   TSuffixBase = record
     Level: TMinMax;
