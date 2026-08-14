@@ -43,6 +43,7 @@ type
     procedure DoWeaponSkill;
     procedure TryAwarenessSkill;
     procedure TryDodgeSkill;
+    procedure TryAthleticsSkill;
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
     class function GetSkillExpMax: UInt;
@@ -69,6 +70,15 @@ const
     (Value: 0; Chance: 15),   // skStaff
     (Value: 0; Chance: 5),    // skWand
     (Value: 3; Chance: 0));   // skBow
+  CAthleticsSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
+    (Value: 2; Chance: 0),    // skBlade
+    (Value: 3; Chance: 0),    // skAxe
+    (Value: 0; Chance: 15),   // skSpear
+    (Value: 0; Chance: 10),   // skDagger
+    (Value: 4; Chance: 0),    // skMace
+    (Value: 0; Chance: 2),    // skStaff
+    (Value: 0; Chance: 2),    // skWand
+    (Value: 0; Chance: 60));  // skBow
 
 implementation
 
@@ -182,66 +192,63 @@ begin
         Self.DoSkill(skDodge, Value);
 end;
 
+procedure TSkills.TryAthleticsSkill;
+begin
+  if Player.WeaponSkill in [skBlade .. skBow] then
+    with CAthleticsSkill[Player.WeaponSkill] do
+      if Chance <> 0 then
+        Self.DoSkillChance(skAthletics, Chance)
+      else
+        Self.DoSkill(skAthletics, Value);
+end;
+
 procedure TSkills.DoWeaponSkill;
 begin
   Self.TryAwarenessSkill;
   Self.TryDodgeSkill;
+  Self.TryAthleticsSkill;
   case Player.WeaponSkill of
     skBlade:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skAthletics, 2);
       Self.DoSkillChance(skBodybuilding, 8);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 5;
     end;
     skAxe:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skAthletics, 3);
       Self.DoSkillChance(skBodybuilding, 10);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 6;
     end;
     skSpear:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkillChance(skAthletics, 15);
       Self.DoSkillChance(skBodybuilding, 10);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
     skDagger:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkillChance(skAthletics, 10);
       Self.DoSkillChance(skBodybuilding, 4);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 3;
     end;
     skMace:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skAthletics, 4);
       Self.DoSkillChance(skBodybuilding, 12);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 7;
     end;
     skStaff:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skConcentration, 2);
       Self.DoSkillChance(skMeditation, 5);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 8;
     end;
     skWand:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skConcentration);
       Self.DoSkillChance(skMeditation);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 6;
     end;
     skBow:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkillChance(skAthletics, 60);
       Self.DoSkillChance(skBodybuilding, 10);
-      Player.SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
   end;
 end;
