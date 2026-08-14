@@ -118,21 +118,21 @@ end;
 
 function TTerminal.GetColorFromIni(AKey: string; ADefault: string): cardinal;
 var
-  S: string;
+  LS: string;
 begin
-  S := GetColorFromIni(AKey);
-  if (S = '') then
-    S := ADefault;
-  Result := color_from_name(S);
+  LS := GetColorFromIni(AKey);
+  if (LS = '') then
+    LS := ADefault;
+  Result := color_from_name(LS);
 end;
 
 function TTerminal.GetTextScreenshot: string;
 var
-  SL: TStringList;
+  LSL: TStringList;
   X, Y, C: UInt;
   S: string;
 begin
-  SL := TStringList.Create;
+  LSL := TStringList.Create;
   try
     for Y := 0 to Screen.Height - 1 do
     begin
@@ -145,11 +145,11 @@ begin
         else
           S := S + ' ';
       end;
-      SL.Append(S);
+      LSL.Append(S);
     end;
-    Result := SL.Text;
+    Result := LSL.Text;
   finally
-    SL.Free;
+    LSL.Free;
   end;
 end;
 
@@ -179,17 +179,17 @@ end;
 
 procedure TTerminal.Init;
 var
-  Value: TEntSize;
-  Wizard: string;
+  LValue: TEntSize;
+  LWizard: string;
 begin
-  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 100),
+  LValue.Width := EnsureRange(StrToIntDef(terminal_get('ini.screen.width'), 100),
     100, UIntMax);
-  Value.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'), 30),
+  LValue.Height := EnsureRange(StrToIntDef(terminal_get('ini.screen.height'), 30),
     30, UIntMax div 2);
-  Screen := SetEntSize(0, 0, Value.Width, Value.Height);
-  Value.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'),
+  Screen := SetEntSize(0, 0, LValue.Width, LValue.Height);
+  LValue.Width := EnsureRange(StrToIntDef(terminal_get('ini.panel.width'),
     35), 35, 50);
-  Panel := SetEntSize(0, 0, Value.Width, 4);
+  Panel := SetEntSize(0, 0, LValue.Width, 4);
   View := SetEntSize(1, 1, Screen.Width - Panel.Width - 3, Screen.Height - 2);
   Status := SetEntSize(View.Width + 2, 1, Panel.Width, Panel.Height);
   Log := SetEntSize(View.Width + 2, Status.Height + 4, Panel.Width,
@@ -198,11 +198,11 @@ begin
 
   FWindow.Width := Screen.Width;
   FWindow.Height := Screen.Height;
-  Wizard := '';
+  LWizard := '';
   if Mode.Wizard then
-    Wizard := '[WIZARD]';
+    LWizard := '[WIZARD]';
   terminal_set(Format('window: size=%dx%d, title=%s',
-    [Screen.Width, Screen.Height, Format(Trim('%s %s'), [Game.GetTitle, Wizard])]));
+    [Screen.Width, Screen.Height, Format(Trim('%s %s'), [Game.GetTitle, LWizard])]));
   FChar.Width := terminal_state(TK_CELL_WIDTH);
   FChar.Height := terminal_state(TK_CELL_HEIGHT);
   terminal_set(Format('icon font: Icons.ttf, size=%dx%d, codepage=437;',
