@@ -8,11 +8,11 @@ uses
 type
   TSkillEnum = (
     skNone,
-    //
+
     skStealth,
     // Attributes skills
     skAthletics, skDodge, skConcentration, skToughness, skAwareness,
-    //
+
     skBodybuilding, skMeditation, skEnchant_Item, skPoisoning,
     // Weapon skills
     skBlade, skAxe, skSpear, skMace, skDagger, skStaff, skWand, skBow);
@@ -44,6 +44,7 @@ type
     procedure TryAwarenessSkill;
     procedure TryDodgeSkill;
     procedure TryAthleticsSkill;
+    procedure TryConcentrationSkill;
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
     class function GetSkillExpMax: UInt;
@@ -61,24 +62,6 @@ const
   BeginSkill = 10;
   StartSkill = 5;
   TalentSkill = 1;
-  CDodgeSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
-    (Value: 2; Chance: 0),    // skBlade
-    (Value: 0; Chance: 30),   // skAxe
-    (Value: 3; Chance: 0),    // skSpear
-    (Value: 0; Chance: 35),   // skMace
-    (Value: 3; Chance: 0),    // skDagger
-    (Value: 0; Chance: 15),   // skStaff
-    (Value: 0; Chance: 5),    // skWand
-    (Value: 3; Chance: 0));   // skBow
-  CAthleticsSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
-    (Value: 2; Chance: 0),    // skBlade
-    (Value: 3; Chance: 0),    // skAxe
-    (Value: 0; Chance: 15),   // skSpear
-    (Value: 0; Chance: 10),   // skDagger
-    (Value: 4; Chance: 0),    // skMace
-    (Value: 0; Chance: 2),    // skStaff
-    (Value: 0; Chance: 2),    // skWand
-    (Value: 0; Chance: 60));  // skBow
 
 implementation
 
@@ -95,6 +78,35 @@ uses
   Trollhunter.Player.Classes,
   Trollhunter.Player.Races,
   Trollhunter.Utils;
+
+const
+  CAthleticsSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
+    (Value: 2; Chance: 0),    // skBlade
+    (Value: 3; Chance: 0),    // skAxe
+    (Value: 0; Chance: 15),   // skSpear
+    (Value: 0; Chance: 10),   // skDagger
+    (Value: 4; Chance: 0),    // skMace
+    (Value: 0; Chance: 2),    // skStaff
+    (Value: 0; Chance: 2),    // skWand
+    (Value: 0; Chance: 60));  // skBow
+  CDodgeSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
+    (Value: 2; Chance: 0),    // skBlade
+    (Value: 0; Chance: 30),   // skAxe
+    (Value: 3; Chance: 0),    // skSpear
+    (Value: 0; Chance: 15),   // skMace
+    (Value: 3; Chance: 0),    // skDagger
+    (Value: 0; Chance: 5),    // skStaff
+    (Value: 0; Chance: 5),    // skWand
+    (Value: 3; Chance: 0));   // skBow
+  CConcentrationSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
+    (Value: 0; Chance: 0),    // skBlade
+    (Value: 0; Chance: 0),    // skAxe
+    (Value: 0; Chance: 0),    // skSpear
+    (Value: 0; Chance: 0),    // skDagger
+    (Value: 0; Chance: 0),    // skMace
+    (Value: 2; Chance: 0),    // skStaff
+    (Value: 1; Chance: 0),    // skWand
+    (Value: 0; Chance: 0));   // skBow
 
   { TSkills }
 
@@ -129,6 +141,8 @@ end;
 
 procedure TSkills.DoSkill(ASkill: TSkillEnum; AExpValue: UInt);
 begin
+  if AExpValue = 0 then
+    Exit;
   if (Skill[ASkill].Value < SkillMax) and (ASkill <> skNone) then
   begin
     FSkill[ASkill].Exp := FSkill[ASkill].Exp + Math.RandomRange(0,
@@ -150,7 +164,6 @@ begin
       Player.Calc;
     end;
   end;
-
 end;
 
 procedure TSkills.DoSkillChance(ASkill: TSkillEnum; AChance: UInt);
@@ -202,52 +215,54 @@ begin
         Self.DoSkill(skAthletics, Value);
 end;
 
+procedure TSkills.TryConcentrationSkill;
+begin
+  if Player.WeaponSkill in [skBlade .. skBow] then
+    with CConcentrationSkill[Player.WeaponSkill] do
+      if Chance <> 0 then
+        Self.DoSkillChance(skConcentration, Chance)
+      else
+        Self.DoSkill(skConcentration, Value);
+end;
+
 procedure TSkills.DoWeaponSkill;
 begin
-  Self.TryAwarenessSkill;
-  Self.TryDodgeSkill;
+  Self.DoSkill(Player.WeaponSkill, 2);
   Self.TryAthleticsSkill;
+  Self.TryConcentrationSkill;
+  Self.TryDodgeSkill;
+  Self.TryAwarenessSkill;
   case Player.WeaponSkill of
     skBlade:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skBodybuilding, 8);
     end;
     skAxe:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skBodybuilding, 10);
     end;
     skSpear:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skBodybuilding, 10);
     end;
     skDagger:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skBodybuilding, 4);
     end;
     skMace:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skBodybuilding, 12);
     end;
     skStaff:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skConcentration, 2);
       Self.DoSkillChance(skMeditation, 5);
     end;
     skWand:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skConcentration);
       Self.DoSkillChance(skMeditation);
     end;
     skBow:
     begin
-      Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skBodybuilding, 10);
     end;
   end;
