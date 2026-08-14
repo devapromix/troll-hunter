@@ -45,6 +45,8 @@ type
     procedure TryDodgeSkill;
     procedure TryAthleticsSkill;
     procedure TryConcentrationSkill;
+    procedure TryBodybuildingSkill;
+    procedure TryMeditationSkill;
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
     class function GetSkillExpMax: UInt;
@@ -107,6 +109,8 @@ const
     (Value: 2; Chance: 0),    // skStaff
     (Value: 1; Chance: 0),    // skWand
     (Value: 0; Chance: 0));   // skBow
+  CBodybuildingSkill: array [skBlade .. skBow] of UInt = (8, 10, 10, 4, 12, 0, 0, 10);
+  CMeditationSkill: array [skBlade .. skBow] of UInt = (0, 0, 0, 0, 0, 5, 1, 0);
 
   { TSkills }
 
@@ -212,6 +216,8 @@ begin
         Inc(LChance)
       else
         Inc(LValue, CElfDodgeSkillBonus);
+    if (Player.HRace = rcDwarf) and (LChance = 0) and (LValue >= 2) then
+      Dec(LValue);
   end;
   if LChance <> 0 then
     Self.DoSkillChance(skDodge, LChance)
@@ -220,23 +226,29 @@ begin
 end;
 
 procedure TSkills.TryAthleticsSkill;
+const
+  CDwarfAthleticsSkillBonus = 1;
 var
-  LValue: UInt;
+  LValue, LChance: UInt;
 begin
   if not (Player.WeaponSkill in [skBlade .. skBow]) then
     Exit;
   with CAthleticsSkill[Player.WeaponSkill] do
   begin
-    if Chance <> 0 then
-    begin
-      Self.DoSkillChance(skAthletics, Chance);
-      Exit;
-    end;
     LValue := Value;
+    LChance := Chance;
   end;
-  if (Player.HRace = rcElf) and (LValue >= 2) then
+  if (Player.HRace = rcElf) and (LChance = 0) and (LValue >= 2) then
     Dec(LValue);
-  Self.DoSkill(skAthletics, LValue);
+  if (Player.HRace = rcDwarf) then
+    if (LChance <> 0) then
+      Inc(LChance, CDwarfAthleticsSkillBonus)
+    else
+      Inc(LValue, CDwarfAthleticsSkillBonus);
+  if LChance <> 0 then
+    Self.DoSkillChance(skAthletics, LChance)
+  else
+    Self.DoSkill(skAthletics, LValue);
 end;
 
 procedure TSkills.TryConcentrationSkill;
@@ -249,6 +261,18 @@ begin
         Self.DoSkill(skConcentration, Value);
 end;
 
+procedure TSkills.TryBodybuildingSkill;
+begin
+  if Player.WeaponSkill in [skBlade .. skBow] then
+    Self.DoSkillChance(skBodybuilding, CBodybuildingSkill[Player.WeaponSkill]);
+end;
+
+procedure TSkills.TryMeditationSkill;
+begin
+  if Player.WeaponSkill in [skBlade .. skBow] then
+    Self.DoSkillChance(skMeditation, CMeditationSkill[Player.WeaponSkill]);
+end;
+
 procedure TSkills.DoWeaponSkill;
 begin
   Self.DoSkill(Player.WeaponSkill, 2);
@@ -256,40 +280,8 @@ begin
   Self.TryConcentrationSkill;
   Self.TryDodgeSkill;
   Self.TryAwarenessSkill;
-  case Player.WeaponSkill of
-    skBlade:
-    begin
-      Self.DoSkillChance(skBodybuilding, 8);
-    end;
-    skAxe:
-    begin
-      Self.DoSkillChance(skBodybuilding, 10);
-    end;
-    skSpear:
-    begin
-      Self.DoSkillChance(skBodybuilding, 10);
-    end;
-    skDagger:
-    begin
-      Self.DoSkillChance(skBodybuilding, 4);
-    end;
-    skMace:
-    begin
-      Self.DoSkillChance(skBodybuilding, 12);
-    end;
-    skStaff:
-    begin
-      Self.DoSkillChance(skMeditation, 5);
-    end;
-    skWand:
-    begin
-      Self.DoSkillChance(skMeditation);
-    end;
-    skBow:
-    begin
-      Self.DoSkillChance(skBodybuilding, 10);
-    end;
-  end;
+  Self.TryBodybuildingSkill;
+  Self.TryMeditationSkill;
 end;
 
 function TSkills.GetName(I: TSkillEnum): string;
