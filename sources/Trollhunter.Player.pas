@@ -320,7 +320,7 @@ begin
   Mob.Attributes.Modify(atLife, -Dam);
   MsgLog.Add(Format('You backstab %s (%d).', [The, Dam]));
   ApplyWeaponPoison(Mob, The);
-  Skills.DoSkill(skStealth);
+  Skills.DoSkillChance(skStealth, 75);
   Skills.DoSkill(skDagger);
   if ((Math.RandomRange(0, 7 - Ord(Game.Difficulty)) = 0) and not Mode.Wizard) then
     BreakItem(stMainHand);

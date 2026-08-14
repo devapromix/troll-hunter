@@ -53,21 +53,6 @@ type
     class function GetSkillExpMax: UInt;
   end;
 
-type
-  TSkillInfo = record
-    Value: UInt;
-    Chance: UInt;
-  end;
-
-type
-  TWeaponSkillInfo = record
-    Athletics: TSkillInfo;
-    Dodge: TSkillInfo;
-    Concentration: TSkillInfo;
-    Bodybuilding: TSkillInfo;
-    Meditation: TSkillInfo;
-  end;
-
 const
   SkillMin = 5;
   SkillMax = 75;
@@ -92,14 +77,29 @@ uses
   Trollhunter.Player.Races,
   Trollhunter.Utils;
 
+type
+  TSkillInfo = record
+    Value: UInt;
+    Chance: UInt;
+  end;
+
+type
+  TWeaponSkillInfo = record
+    Athletics: TSkillInfo;
+    Dodge: TSkillInfo;
+    Concentration: TSkillInfo;
+    Bodybuilding: TSkillInfo;
+    Meditation: TSkillInfo;
+  end;
+
 const
   CWeaponSkillTable: array [skBlade .. skBow] of TWeaponSkillInfo = (
     // Blade
-    (Athletics: (Value: 2; Chance: 100); Dodge: (Value: 2; Chance: 100);
-     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 8);
+    (Athletics: (Value: 2; Chance: 100); Dodge: (Value: 2; Chance: 90);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 15);
      Meditation: (Value: 0; Chance: 0)),
     // Axe
-    (Athletics: (Value: 3; Chance: 100); Dodge: (Value: 1; Chance: 30);
+    (Athletics: (Value: 3; Chance: 90); Dodge: (Value: 1; Chance: 30);
      Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 10);
      Meditation: (Value: 0; Chance: 0)),
     // Spear
@@ -107,24 +107,24 @@ const
      Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 10);
      Meditation: (Value: 0; Chance: 0)),
     // Mace
-    (Athletics: (Value: 1; Chance: 10); Dodge: (Value: 1; Chance: 15);
+    (Athletics: (Value: 3; Chance: 80); Dodge: (Value: 1; Chance: 25);
      Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 4);
      Meditation: (Value: 0; Chance: 0)),
     // Dagger
-    (Athletics: (Value: 4; Chance: 100); Dodge: (Value: 3; Chance: 100);
+    (Athletics: (Value: 1; Chance: 40); Dodge: (Value: 3; Chance: 100);
      Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 12);
      Meditation: (Value: 0; Chance: 0)),
     // Staff
-    (Athletics: (Value: 1; Chance: 2); Dodge: (Value: 1; Chance: 5);
+    (Athletics: (Value: 1; Chance: 7); Dodge: (Value: 1; Chance: 5);
      Concentration: (Value: 2; Chance: 100); Bodybuilding: (Value: 0; Chance: 0);
      Meditation: (Value: 1; Chance: 5)),
     // Wand
-    (Athletics: (Value: 1; Chance: 2); Dodge: (Value: 1; Chance: 5);
-     Concentration: (Value: 1; Chance: 100); Bodybuilding: (Value: 0; Chance: 0);
+    (Athletics: (Value: 1; Chance: 1); Dodge: (Value: 1; Chance: 5);
+     Concentration: (Value: 1; Chance: 90); Bodybuilding: (Value: 0; Chance: 0);
      Meditation: (Value: 1; Chance: 1)),
     // Bow
     (Athletics: (Value: 1; Chance: 60); Dodge: (Value: 3; Chance: 100);
-     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 10);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 1; Chance: 20);
      Meditation: (Value: 0; Chance: 0))
   );
 

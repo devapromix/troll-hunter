@@ -806,7 +806,7 @@ begin
       MsgLog.Add(Format('%s hits you (%d).', [The, Dam]));
       if (Dam >= Max(1, Player.Attributes.Attrib[atMaxLife].Value div 10)) and
         not Player.IsDead and (RandomRange(0, 10) = 0) then
-        Player.Skills.DoSkill(skToughness);
+        Player.Skills.DoSkillChance(skToughness, 90);
     end;
     if (((Math.RandomRange(0, 9 - Ord(Game.Difficulty)) = 0) and
       not Mode.Wizard)) then
