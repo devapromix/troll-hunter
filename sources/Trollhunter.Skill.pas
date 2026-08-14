@@ -41,10 +41,17 @@ type
     procedure DoSkill(ASkill: TSkillEnum; AExpValue: UInt = 1);
     procedure DoSkillChance(ASkill: TSkillEnum; AChance: UInt = 1);
     procedure DoWeaponSkill;
-    procedure DoAwarenessSkill;
+    procedure TryAwarenessSkill;
+    procedure TryDodgeSkill;
     procedure Modify(I: TSkillEnum; Value: Int);
     function GetName(I: TSkillEnum): string;
     class function GetSkillExpMax: UInt;
+  end;
+
+type
+  TDodgeSkillInfo = record
+    Value: UInt;
+    Chance: UInt;
   end;
 
 const
@@ -53,6 +60,15 @@ const
   BeginSkill = 10;
   StartSkill = 5;
   TalentSkill = 1;
+  CDodgeSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
+    (Value: 2; Chance: 0),    // skBlade
+    (Value: 0; Chance: 30),   // skAxe
+    (Value: 3; Chance: 0),    // skSpear
+    (Value: 0; Chance: 35),   // skMace
+    (Value: 3; Chance: 0),    // skDagger
+    (Value: 0; Chance: 15),   // skStaff
+    (Value: 0; Chance: 5),    // skWand
+    (Value: 3; Chance: 0));   // skBow
 
 implementation
 
@@ -133,7 +149,7 @@ begin
     DoSkill(ASkill);
 end;
 
-procedure TSkills.DoAwarenessSkill;
+procedure TSkills.TryAwarenessSkill;
 const
   CBaseAwarenessSkillExp = 3;
   CRangerAwarenessSkillBonus = 1;
@@ -156,15 +172,25 @@ begin
   Self.DoSkill(skAwareness, LExpValue);
 end;
 
+procedure TSkills.TryDodgeSkill;
+begin
+  if Player.WeaponSkill in [skBlade .. skBow] then
+    with CDodgeSkill[Player.WeaponSkill] do
+      if Chance <> 0 then
+        Self.DoSkillChance(skDodge, Chance)
+      else
+        Self.DoSkill(skDodge, Value);
+end;
+
 procedure TSkills.DoWeaponSkill;
 begin
-  Self.DoAwarenessSkill;
+  Self.TryAwarenessSkill;
+  Self.TryDodgeSkill;
   case Player.WeaponSkill of
     skBlade:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics, 2);
-      Self.DoSkill(skDodge, 2);
       Self.DoSkillChance(skBodybuilding, 8);
       Player.SatPerTurn := Ord(Game.Difficulty) + 5;
     end;
@@ -172,7 +198,6 @@ begin
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkill(skAthletics, 3);
-      Self.DoSkillChance(skDodge, 75);
       Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 6;
     end;
@@ -180,7 +205,6 @@ begin
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skAthletics, 15);
-      Self.DoSkill(skDodge, 2);
       Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 4;
     end;
@@ -188,7 +212,6 @@ begin
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
       Self.DoSkillChance(skAthletics, 10);
-      Self.DoSkill(skDodge, 3);
       Self.DoSkillChance(skBodybuilding, 4);
       Player.SatPerTurn := Ord(Game.Difficulty) + 3;
     end;
@@ -202,7 +225,6 @@ begin
     skStaff:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkillChance(skDodge, 25);
       Self.DoSkill(skConcentration, 2);
       Self.DoSkillChance(skMeditation, 5);
       Player.SatPerTurn := Ord(Game.Difficulty) + 8;
@@ -210,7 +232,6 @@ begin
     skWand:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkillChance(skDodge, 5);
       Self.DoSkill(skConcentration);
       Self.DoSkillChance(skMeditation);
       Player.SatPerTurn := Ord(Game.Difficulty) + 6;
@@ -218,7 +239,6 @@ begin
     skBow:
     begin
       Self.DoSkill(Player.WeaponSkill, 2);
-      Self.DoSkill(skDodge, 3);
       Self.DoSkillChance(skAthletics, 60);
       Self.DoSkillChance(skBodybuilding, 10);
       Player.SatPerTurn := Ord(Game.Difficulty) + 4;

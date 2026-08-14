@@ -660,7 +660,7 @@ begin
     end;
     Mob.Attributes.Modify(atLife, -Dam);
     MsgLog.Add(Format('Your %s hits %s (%d).', [LowerCase(LSpell.Name), The, Dam]));
-    Skills.DoAwarenessSkill;
+    Skills.TryAwarenessSkill;
     if Mob.IsDead then
       Mob.Defeat
     else if (efWeaken in LSpell.Effects) then
