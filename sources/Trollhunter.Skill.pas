@@ -196,23 +196,47 @@ begin
 end;
 
 procedure TSkills.TryDodgeSkill;
+const
+  CElfDodgeSkillBonus = 1;
+var
+  LValue, LChance: UInt;
 begin
-  if Player.WeaponSkill in [skBlade .. skBow] then
-    with CDodgeSkill[Player.WeaponSkill] do
-      if Chance <> 0 then
-        Self.DoSkillChance(skDodge, Chance)
+  if not (Player.WeaponSkill in [skBlade .. skBow]) then
+    Exit;
+  with CDodgeSkill[Player.WeaponSkill] do
+  begin
+    LValue := Value;
+    LChance := Chance;
+    if (Player.HRace = rcElf) then
+      if (LChance <> 0) then
+        Inc(LChance)
       else
-        Self.DoSkill(skDodge, Value);
+        Inc(LValue, CElfDodgeSkillBonus);
+  end;
+  if LChance <> 0 then
+    Self.DoSkillChance(skDodge, LChance)
+  else
+    Self.DoSkill(skDodge, LValue);
 end;
 
 procedure TSkills.TryAthleticsSkill;
+var
+  LValue: UInt;
 begin
-  if Player.WeaponSkill in [skBlade .. skBow] then
-    with CAthleticsSkill[Player.WeaponSkill] do
-      if Chance <> 0 then
-        Self.DoSkillChance(skAthletics, Chance)
-      else
-        Self.DoSkill(skAthletics, Value);
+  if not (Player.WeaponSkill in [skBlade .. skBow]) then
+    Exit;
+  with CAthleticsSkill[Player.WeaponSkill] do
+  begin
+    if Chance <> 0 then
+    begin
+      Self.DoSkillChance(skAthletics, Chance);
+      Exit;
+    end;
+    LValue := Value;
+  end;
+  if (Player.HRace = rcElf) and (LValue >= 2) then
+    Dec(LValue);
+  Self.DoSkill(skAthletics, LValue);
 end;
 
 procedure TSkills.TryConcentrationSkill;
