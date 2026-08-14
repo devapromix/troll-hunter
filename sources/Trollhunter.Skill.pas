@@ -53,9 +53,18 @@ type
   end;
 
 type
-  TDodgeSkillInfo = record
+  TSkillInfo = record
     Value: UInt;
     Chance: UInt;
+  end;
+
+type
+  TWeaponSkillInfo = record
+    Athletics: TSkillInfo;
+    Dodge: TSkillInfo;
+    Concentration: TSkillInfo;
+    Bodybuilding: TSkillInfo;
+    Meditation: TSkillInfo;
   end;
 
 const
@@ -82,35 +91,40 @@ uses
   Trollhunter.Utils;
 
 const
-  CAthleticsSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
-    (Value: 2; Chance: 0),    // skBlade
-    (Value: 3; Chance: 0),    // skAxe
-    (Value: 0; Chance: 15),   // skSpear
-    (Value: 0; Chance: 10),   // skDagger
-    (Value: 4; Chance: 0),    // skMace
-    (Value: 0; Chance: 2),    // skStaff
-    (Value: 0; Chance: 2),    // skWand
-    (Value: 0; Chance: 60));  // skBow
-  CDodgeSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
-    (Value: 2; Chance: 0),    // skBlade
-    (Value: 0; Chance: 30),   // skAxe
-    (Value: 3; Chance: 0),    // skSpear
-    (Value: 0; Chance: 15),   // skMace
-    (Value: 3; Chance: 0),    // skDagger
-    (Value: 0; Chance: 5),    // skStaff
-    (Value: 0; Chance: 5),    // skWand
-    (Value: 3; Chance: 0));   // skBow
-  CConcentrationSkill: array [skBlade .. skBow] of TDodgeSkillInfo = (
-    (Value: 0; Chance: 0),    // skBlade
-    (Value: 0; Chance: 0),    // skAxe
-    (Value: 0; Chance: 0),    // skSpear
-    (Value: 0; Chance: 0),    // skDagger
-    (Value: 0; Chance: 0),    // skMace
-    (Value: 2; Chance: 0),    // skStaff
-    (Value: 1; Chance: 0),    // skWand
-    (Value: 0; Chance: 0));   // skBow
-  CBodybuildingSkill: array [skBlade .. skBow] of UInt = (8, 10, 10, 4, 12, 0, 0, 10);
-  CMeditationSkill: array [skBlade .. skBow] of UInt = (0, 0, 0, 0, 0, 5, 1, 0);
+  CWeaponSkillTable: array [skBlade .. skBow] of TWeaponSkillInfo = (
+    // Blade
+    (Athletics: (Value: 2; Chance: 0); Dodge: (Value: 2; Chance: 0);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 0; Chance: 8);
+     Meditation: (Value: 0; Chance: 0)),
+    // Axe
+    (Athletics: (Value: 3; Chance: 0); Dodge: (Value: 0; Chance: 30);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 0; Chance: 10);
+     Meditation: (Value: 0; Chance: 0)),
+    // Spear
+    (Athletics: (Value: 0; Chance: 15); Dodge: (Value: 3; Chance: 0);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 0; Chance: 10);
+     Meditation: (Value: 0; Chance: 0)),
+    // Mace
+    (Athletics: (Value: 0; Chance: 10); Dodge: (Value: 0; Chance: 15);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 0; Chance: 4);
+     Meditation: (Value: 0; Chance: 0)),
+    // Dagger
+    (Athletics: (Value: 4; Chance: 0); Dodge: (Value: 3; Chance: 0);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 0; Chance: 12);
+     Meditation: (Value: 0; Chance: 0)),
+    // Staff
+    (Athletics: (Value: 0; Chance: 2); Dodge: (Value: 0; Chance: 5);
+     Concentration: (Value: 2; Chance: 0); Bodybuilding: (Value: 0; Chance: 0);
+     Meditation: (Value: 0; Chance: 5)),
+    // Wand
+    (Athletics: (Value: 0; Chance: 2); Dodge: (Value: 0; Chance: 5);
+     Concentration: (Value: 1; Chance: 0); Bodybuilding: (Value: 0; Chance: 0);
+     Meditation: (Value: 0; Chance: 1)),
+    // Bow
+    (Athletics: (Value: 0; Chance: 60); Dodge: (Value: 3; Chance: 0);
+     Concentration: (Value: 0; Chance: 0); Bodybuilding: (Value: 0; Chance: 10);
+     Meditation: (Value: 0; Chance: 0))
+  );
 
   { TSkills }
 
@@ -207,7 +221,7 @@ var
 begin
   if not (Player.WeaponSkill in [skBlade .. skBow]) then
     Exit;
-  with CDodgeSkill[Player.WeaponSkill] do
+  with CWeaponSkillTable[Player.WeaponSkill].Dodge do
   begin
     LValue := Value;
     LChance := Chance;
@@ -233,7 +247,7 @@ var
 begin
   if not (Player.WeaponSkill in [skBlade .. skBow]) then
     Exit;
-  with CAthleticsSkill[Player.WeaponSkill] do
+  with CWeaponSkillTable[Player.WeaponSkill].Athletics do
   begin
     LValue := Value;
     LChance := Chance;
@@ -254,7 +268,7 @@ end;
 procedure TSkills.TryConcentrationSkill;
 begin
   if Player.WeaponSkill in [skBlade .. skBow] then
-    with CConcentrationSkill[Player.WeaponSkill] do
+    with CWeaponSkillTable[Player.WeaponSkill].Concentration do
       if Chance <> 0 then
         Self.DoSkillChance(skConcentration, Chance)
       else
@@ -264,13 +278,21 @@ end;
 procedure TSkills.TryBodybuildingSkill;
 begin
   if Player.WeaponSkill in [skBlade .. skBow] then
-    Self.DoSkillChance(skBodybuilding, CBodybuildingSkill[Player.WeaponSkill]);
+    with CWeaponSkillTable[Player.WeaponSkill].Bodybuilding do
+      if Chance <> 0 then
+        Self.DoSkillChance(skBodybuilding, Chance)
+      else
+        Self.DoSkill(skBodybuilding, Value);
 end;
 
 procedure TSkills.TryMeditationSkill;
 begin
   if Player.WeaponSkill in [skBlade .. skBow] then
-    Self.DoSkillChance(skMeditation, CMeditationSkill[Player.WeaponSkill]);
+    with CWeaponSkillTable[Player.WeaponSkill].Meditation do
+      if Chance <> 0 then
+        Self.DoSkillChance(skMeditation, Chance)
+      else
+        Self.DoSkill(skMeditation, Value);
 end;
 
 procedure TSkills.DoWeaponSkill;
