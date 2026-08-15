@@ -2684,6 +2684,7 @@ var
   S: string;
   D: TItemBase;
   RepairCost: UInt;
+  LColor: string;
 const
   T = '------';
   L = Length(T) + 1;
@@ -2704,8 +2705,11 @@ const
 begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
-  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '',
-    Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key')));
+  if (AItem.ItemID = Ord(itmGold)) then
+    LColor := 'white'
+  else
+    LColor := Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key');
+  Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '', LColor));
 
   if IsRender then
   begin
