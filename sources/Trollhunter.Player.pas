@@ -286,7 +286,7 @@ begin
   if (FClass = clThief) then
     Skills.DoSkill(skPoisoning, CThiefPoisonSkillBonus)
   else
-    Skills.DoSkill(skPoisoning);
+    Skills.DoSkillChance(skPoisoning, 90);
   LWeapon.Value := Game.EnsureRange(LWeapon.Value - 1, UIntMax);
   Items_Inventory_SetItem(LWeaponIndex, LWeapon);
   MsgLog.Add(Format('You poison %s.', [AThe]));
