@@ -62,30 +62,30 @@ procedure TVScene.Render;
 begin
   DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(DX, 3, 'Age' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 2, 'Age' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(DX, 4, 'Height' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 3, 'Height' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(DX, 5, 'Weight' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 4, 'Weight' + ': ' + Terminal.Colorize(
     Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 6, 'Gender' + ': ' + Terminal.Colorize(Player.GenderStr, 'Lush'));
-  Terminal.Print(DX, 7, 'Metabolism' + ': ' +
+  Terminal.Print(DX, 5, 'Gender' + ': ' + Terminal.Colorize(Player.GenderStr, 'Lush'));
+  Terminal.Print(DX, 6, 'Metabolism' + ': ' +
     Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
 
   // Attributes
-  Terminal.Print(DX, 9, 'Strength' + ': ' +
+  Terminal.Print(DX, 8, 'Strength' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(DX, 10, 'Dexterity' + ': ' +
+  Terminal.Print(DX, 9, 'Dexterity' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(DX, 11, 'Willpower' + ': ' +
+  Terminal.Print(DX, 10, 'Willpower' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(DX, 12, 'Perception' + ': ' +
+  Terminal.Print(DX, 11, 'Perception' + ': ' +
     Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
 
   // Life and Mana
-  Terminal.Print(DX, 14, 'Life' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 13, 'Life' + ': ' + Terminal.Colorize(
     Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(DX, 15, 'Mana' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 14, 'Mana' + ': ' + Terminal.Colorize(
     Player.Attributes.Attrib[atMana].Prm, 'Lush'));
 end;
 
@@ -115,7 +115,7 @@ var
 begin
   UI.Title('Choose a race');
   I := 0;
-  Y := 3;
+  Y := 2;
   for R := Low(TRaceEnum) to High(TRaceEnum) do
     Add(Races.GetName(R));
 
@@ -260,19 +260,19 @@ var
 begin
   UI.Title('Choose a class');
   I := 0;
-  Y := 3;
+  Y := 2;
   for C := Low(TClassEnum) to High(TClassEnum) do
     Add(Trollhunter.Player.Classes.Classes.GetName(C));
 
   inherited Render;
 
-  ItemsSize := Terminal.Print(DX, 17, CX + 15, 2, 'Items' + ': ' + Terminal.Colorize(
+  ItemsSize := Terminal.Print(DX, 16, CX + 15, 2, 'Inventory' + ': ' + Terminal.Colorize(
     Classes.GetItems(Player.HClass), 'Lush'), TK_ALIGN_TOP);
 
-  Terminal.Print(DX, 19, 'Skills' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 18, 'Skills' + ': ' + Terminal.Colorize(
     Classes.GetSkills(Player.HClass), 'Lush'));
 
-  Terminal.Print(DX, 21, 'Ability' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 20, 'Ability' + ': ' + Terminal.Colorize(
     Classes.GetAbility(Player.HClass), 'Lush'));
 
   Terminal.ForegroundColor(clGray);
