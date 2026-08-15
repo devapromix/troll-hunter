@@ -32,7 +32,7 @@ const
 
   // Elf
   ElfPrefix: array[0..19] of string = (
-    'Ae', 'Ara', 'Cele', 'Elen', 'Fae', 'Gal', 'Ili', 'Lae', 'Loth', 'Mae',
+    'Ae', 'Ara', 'Cele', 'Elen', 'Far', 'Gal', 'Ili', 'Lae', 'Loth', 'Mae',
     'Nim', 'Quel', 'Sil', 'Thal', 'Ther', 'Ael', 'Eir', 'Leg', 'Mir', 'Syl'
   );
   ElfMaleSuffix: array[0..14] of string = (

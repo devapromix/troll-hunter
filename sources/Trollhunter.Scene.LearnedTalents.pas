@@ -44,8 +44,7 @@ begin
       with Player.Talents do
       begin
         C := Chr(V + Ord('A'));
-        Terminal.ForegroundColor(clWhite);
-        Terminal.Print(1, Y, '[[' + C + ']]');
+        Terminal.Print(1, Y, UI.KeyToStr(C, False));
         Terminal.Print(5, Y, GetLevelName(Talent[I].Enum, Talent[I].Level));
         Terminal.ForegroundColor(clGray);
         Terminal.Print(30, Y, GetDescription(Talent[I].Enum));

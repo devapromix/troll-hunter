@@ -15,13 +15,17 @@ type
     icSunnyAndCloudy, icCloudy);
 
 type
+
+  { UI }
+
   UI = class(TObject)
     class procedure Bar(const X, LM, Y, Wd: UInt; const Cur, Max: UInt;
       const AColor, ADarkColor: cardinal);
     class procedure Title(const S: string; AY: UInt = 1; BGColor: cardinal = 0);
     class procedure FromAToZ(const Max: UInt = 0);
     class function KeyToStr(AKey: string; AStr: string = '';
-      AColor: string = 'Key'): string;
+      AColor: string = 'Key'): string; overload;
+    class function KeyToStr(AKey: string; AFlag: Boolean): string; overload;
     class function GoldLeft(const Value: cardinal): string;
     class function Icon(const AIcon: TIconEnum; const AColor: string = ''): string;
   end;
@@ -95,6 +99,14 @@ class function UI.KeyToStr(AKey, AStr, AColor: string): string;
 begin
   Result := Trim(Terminal.Colorize(Format(F, [UpperCase(AKey)]),
     Terminal.GetColorFromIni(AColor)) + ' ' + AStr);
+end;
+
+class function UI.KeyToStr(AKey: string; AFlag: Boolean): string;
+begin
+  if AFlag then
+    Result := UI.KeyToStr(AKey)
+  else
+    Result := UI.KeyToStr(AKey, '', 'white');
 end;
 
 {class procedure UI.RenderTile(const S: string);

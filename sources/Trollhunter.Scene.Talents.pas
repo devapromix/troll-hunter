@@ -43,13 +43,7 @@ var
     C: char;
   begin
     C := Chr(V + Ord('A'));
-    if F then
-      Terminal.Print(1, Y, UI.KeyToStr(C))
-    else
-    begin
-      Terminal.ForegroundColor(clWhite);
-      Terminal.Print(1, Y, '[[' + C + ']]');
-    end;
+    Terminal.Print(1, Y, UI.KeyToStr(C, F));
     if IsMenu and (V = Self.FTalent) then
       Terminal.ForegroundColor(clYellow)
     else
