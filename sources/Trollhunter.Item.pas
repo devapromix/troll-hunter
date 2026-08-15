@@ -2706,7 +2706,7 @@ begin
   Result := '';
   D := ItemBase[TItemEnum(AItem.ItemID)];
   if (AItem.ItemID = Ord(itmGold)) then
-    LColor := 'white'
+    LColor := 'Inactive'
   else
     LColor := Game.IfThen(AItem.Equipment > 0, 'Equip', 'Key');
   Terminal.Print(AX - 4, AY + I, UI.KeyToStr(Chr(I + Ord('A')), '', LColor));

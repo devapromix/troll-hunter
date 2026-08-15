@@ -106,7 +106,7 @@ begin
   if AFlag then
     Result := UI.KeyToStr(AKey)
   else
-    Result := UI.KeyToStr(AKey, '', 'white');
+    Result := UI.KeyToStr(AKey, '', 'Inactive');
 end;
 
 {class procedure UI.RenderTile(const S: string);

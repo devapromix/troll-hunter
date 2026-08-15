@@ -34,7 +34,7 @@ begin
 
   V := 0;
   Y := 2;
-  UI.FromAToZ;
+  UI.FromAToZ(ItemMax);
   Terminal.ForegroundColor(clWhite);
 
   for I := 0 to TalentMax - 1 do

@@ -65,7 +65,10 @@ begin
 
   V := 0;
   Y := 2;
-  UI.FromAToZ;
+  if IsMenu then
+    UI.FromAToZ
+  else
+    UI.FromAToZ(ItemMax);
 
   Terminal.ForegroundColor(clGray);
   for T := Succ(Low(TTalentEnum)) to High(TTalentEnum) do
