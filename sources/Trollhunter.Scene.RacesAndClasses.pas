@@ -59,34 +59,37 @@ var
   { TVScene }
 
 procedure TVScene.Render;
+var
+  LY: UInt;
+
+  procedure Add(const ALabel, AValue: string);
+  begin
+    Terminal.Print(DX, LY, ALabel + ': ' + Terminal.Colorize(AValue, 'Lush'));
+    Inc(LY);
+  end;
+
 begin
   DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
-  Terminal.Print(DX, 2, 'Age' + ': ' + Terminal.Colorize(
-    Player.Statictics.Get(stAge), 'Lush'));
-  Terminal.Print(DX, 3, 'Height' + ': ' + Terminal.Colorize(
-    Player.Statictics.Get(stHeight), 'Lush'));
-  Terminal.Print(DX, 4, 'Weight' + ': ' + Terminal.Colorize(
-    Player.Statictics.Get(stWeight), 'Lush'));
-  Terminal.Print(DX, 5, 'Gender' + ': ' + Terminal.Colorize(Player.GenderStr, 'Lush'));
-  Terminal.Print(DX, 6, 'Metabolism' + ': ' +
-    Terminal.Colorize(Player.Statictics.Get(stMetabolism), 'Lush'));
+  LY := 2;
+
+  Add('Age', Player.Statictics.Get(stAge));
+  Add('Height', Player.Statictics.Get(stHeight));
+  Add('Weight', Player.Statictics.Get(stWeight));
+  Add('Gender', Player.GenderStr);
+  Add('Metabolism', Player.Statictics.Get(stMetabolism));
 
   // Attributes
-  Terminal.Print(DX, 8, 'Strength' + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atStr].Prm, 'Lush'));
-  Terminal.Print(DX, 9, 'Dexterity' + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atDex].Prm, 'Lush'));
-  Terminal.Print(DX, 10, 'Willpower' + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atWil].Prm, 'Lush'));
-  Terminal.Print(DX, 11, 'Perception' + ': ' +
-    Terminal.Colorize(Player.Attributes.Attrib[atPer].Prm, 'Lush'));
+  Inc(LY);
+  Add('Strength', Player.Attributes.Attrib[atStr].Prm);
+  Add('Dexterity', Player.Attributes.Attrib[atDex].Prm);
+  Add('Willpower', Player.Attributes.Attrib[atWil].Prm);
+  Add('Perception', Player.Attributes.Attrib[atPer].Prm);
 
   // Life and Mana
-  Terminal.Print(DX, 13, 'Life' + ': ' + Terminal.Colorize(
-    Player.Attributes.Attrib[atLife].Prm, 'Lush'));
-  Terminal.Print(DX, 14, 'Mana' + ': ' + Terminal.Colorize(
-    Player.Attributes.Attrib[atMana].Prm, 'Lush'));
+  Inc(LY);
+  Add('Life', Player.Attributes.Attrib[atLife].Prm);
+  Add('Mana', Player.Attributes.Attrib[atMana].Prm);
 end;
 
 { TSceneRace }
@@ -266,7 +269,7 @@ begin
 
   inherited Render;
 
-  ItemsSize := Terminal.Print(DX, 16, CX + 15, 2, 'Inventory' + ': ' + Terminal.Colorize(
+  ItemsSize := Terminal.Print(DX, 16, CX + 15, 2, 'Items' + ': ' + Terminal.Colorize(
     Classes.GetItems(Player.HClass), 'Lush'), TK_ALIGN_TOP);
 
   Terminal.Print(DX, 18, 'Skills' + ': ' + Terminal.Colorize(
