@@ -62,7 +62,13 @@ procedure TVScene.Render;
 var
   LY: UInt;
 
-  procedure Add(const ALabel, AValue: string);
+  procedure Add(const ALabel, AValue: string); overload;
+  begin
+    Terminal.Print(DX, LY, ALabel + ': ' + Terminal.Colorize(AValue, 'Lush'));
+    Inc(LY);
+  end;
+
+  procedure Add(const ALabel: string; const AValue: Int); overload;
   begin
     Terminal.Print(DX, LY, ALabel + ': ' + Terminal.Colorize(AValue, 'Lush'));
     Inc(LY);
@@ -253,6 +259,8 @@ var
     Terminal.Print(1, Y, UI.KeyToStr(L));
     if (C = Player.HClass) then
       Terminal.ForegroundColor(clYellow)
+    else if not (C in RaceProp[Player.HRace].RecommendedClasses) then
+      Terminal.ForegroundColor(clLightGray)
     else
       Terminal.ForegroundColor(clWhite);
     Terminal.Print(5, Y, AName);
@@ -312,12 +320,22 @@ end;
 
 procedure TSceneClass.SelRand;
 var
-  C: TClassEnum;
+  C, LClass: TClassEnum;
+  LClasses: array of TClassEnum;
 begin
   C := Player.HClass;
+  SetLength(LClasses, 0);
+  for LClass := Low(TClassEnum) to High(TClassEnum) do
+    if (LClass in RaceProp[Player.HRace].RecommendedClasses) then
+    begin
+      SetLength(LClasses, Length(LClasses) + 1);
+      LClasses[High(LClasses)] := LClass;
+    end;
+  if (Length(LClasses) = 0) then
+    Exit;
   repeat
-    Player.HClass := TClassEnum(Math.RandomRange(0, Ord(High(TClassEnum)) + 1));
-  until (C <> Player.HClass);
+    Player.HClass := LClasses[Math.RandomRange(0, Length(LClasses))];
+  until (C <> Player.HClass) or (Length(LClasses) = 1);
 end;
 
 procedure TSceneClass.Update(var Key: UInt);

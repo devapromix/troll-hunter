@@ -3,7 +3,8 @@ unit Trollhunter.Player.Races;
 interface
 
 uses
-  Trollhunter.Creature;
+  Trollhunter.Creature,
+  Trollhunter.Player.Classes;
 
 type
   TRaceEnum = (rcHuman, rcElf, rcGnome, rcDwarf);
@@ -20,6 +21,7 @@ type
     Perception: TMinMax;
     Life: TMinMax;
     Mana: TMinMax;
+    RecommendedClasses: set of TClassEnum;
   end;
 
 const
@@ -29,25 +31,29 @@ const
     Weight: (Min: 70; Max: 110;); Metabolism: (Min: 80; Max: 85;);
     Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 2;);
     Willpower: (Min: 1; Max: 2;); Perception: (Min: 1; Max: 2;);
-    Life: (Min: 5; Max: 8;); Mana: (Min: 5; Max: 8;);),
+    Life: (Min: 5; Max: 8;); Mana: (Min: 5; Max: 8;);
+    RecommendedClasses: [clWarrior, clMage, clRanger, clThief];),
     // Elf
     (Age: (Min: 75; Max: 800;); Height: (Min: 190; Max: 250;
     ); Weight: (Min: 50; Max: 100;); Metabolism: (Min: 60; Max: 65;);
     Strength: (Min: 1; Max: 1;); Dexterity: (Min: 1; Max: 3;);
     Willpower: (Min: 1; Max: 3;); Perception: (Min: 1; Max: 2;);
-    Life: (Min: 5; Max: 10;); Mana: (Min: 10; Max: 15;);),
+    Life: (Min: 5; Max: 10;); Mana: (Min: 10; Max: 15;);
+    RecommendedClasses: [clMage, clRanger];),
     // Gnome
     (Age: (Min: 20; Max: 160;); Height: (Min: 90;
     Max: 130;); Weight: (Min: 70; Max: 110;); Metabolism: (Min: 95; Max: 100;);
     Strength: (Min: 1; Max: 2;); Dexterity: (Min: 1; Max: 2;);
     Willpower: (Min: 1; Max: 3;); Perception: (Min: 1; Max: 3;);
-    Life: (Min: 5; Max: 10;); Mana: (Min: 10; Max: 15;);),
+    Life: (Min: 5; Max: 10;); Mana: (Min: 10; Max: 15;);
+    RecommendedClasses: [clMage, clThief];),
     // Dwarf
     (Age: (Min: 20; Max: 250;); Height: (Min: 100;
     Max: 150;); Weight: (Min: 80; Max: 120;); Metabolism: (Min: 115; Max: 120;);
     Strength: (Min: 1; Max: 3;); Dexterity: (Min: 1; Max: 3;);
     Willpower: (Min: 1; Max: 1;); Perception: (Min: 1; Max: 2;);
-    Life: (Min: 10; Max: 15;); Mana: (Min: 5; Max: 10;);)
+    Life: (Min: 10; Max: 15;); Mana: (Min: 5; Max: 10;);
+    RecommendedClasses: [clWarrior, clRanger];)
     /// ///
     );
 
