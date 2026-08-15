@@ -57,7 +57,7 @@ var
 begin
   UI.Title('Choose a difficulty');
   I := 0;
-  Y := 3;
+  Y := 2;
   for D := Low(TDifficulty) to High(TDifficulty) do
     case D of
       dfEasy:
@@ -77,36 +77,36 @@ begin
   DX := CX - (CX div 2);
   Terminal.ForegroundColor(clWhite);
   if Game.Difficulty = dfEasy then
-    Terminal.Print(DX, 3, 'Permadeath' + ': ' +
+    Terminal.Print(DX, 2, 'Permadeath' + ': ' +
       Terminal.Colorize('Fall, and rise to hunt again.', 'Lush'))
   else
-    Terminal.Print(DX, 3, 'Permadeath' + ': ' + Terminal.Colorize(
+    Terminal.Print(DX, 2, 'Permadeath' + ': ' + Terminal.Colorize(
       'Fall once, and your hunt ends forever."', 'Light Red'));
   if Game.Difficulty = dfEasy then
-    Terminal.Print(DX, 4, 'Gear Decay' + ': ' +
+    Terminal.Print(DX, 3, 'Gear Decay' + ': ' +
       Terminal.Colorize('Your gear mends like new.', 'Lush'))
   else if Game.Difficulty = dfHell then
-    Terminal.Print(DX, 4, 'Gear Decay' + ': ' + Terminal.Colorize(
+    Terminal.Print(DX, 3, 'Gear Decay' + ': ' + Terminal.Colorize(
       'Your gear crumbles faster than it can be fixed."', 'Light Red'))
   else
-    Terminal.Print(DX, 4, 'Gear Decay' + ': ' + Terminal.Colorize(
+    Terminal.Print(DX, 3, 'Gear Decay' + ': ' + Terminal.Colorize(
       'The smith''s hammer wears your gear thin."', 'Yellow'));
-  Terminal.Print(DX, 5, 'Skill Gain' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 4, 'Skill Gain' + ': ' + Terminal.Colorize(
   IntToStr(TSkills.GetSkillExpMax), 'Yellow'));
-  Terminal.Print(DX, 6, 'Start Gold' + ': ' + Terminal.Colorize(
+  Terminal.Print(DX, 5, 'Start Gold' + ': ' + Terminal.Colorize(
     IntToStr(Player.StartGold), 'Yellow'));
   case Game.Difficulty of
     dfEasy:
-      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+      Terminal.Print(DX, 6, 'Trader''s Wares' + ': ' + Terminal.Colorize(
         'Merchants stock treasures of every make and marvel.', 'Lush'));
     dfNormal:
-      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+      Terminal.Print(DX, 6, 'Trader''s Wares' + ': ' + Terminal.Colorize(
         'Merchants no longer deal in the rarest of relics.', 'Yellow'));
     dfHard:
-      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+      Terminal.Print(DX, 6, 'Trader''s Wares' + ': ' + Terminal.Colorize(
         'Merchants offer little beyond a maker''s mark.', 'Light Yellow'));
     dfHell:
-      Terminal.Print(DX, 7, 'Trader''s Wares' + ': ' + Terminal.Colorize(
+      Terminal.Print(DX, 6, 'Trader''s Wares' + ': ' + Terminal.Colorize(
         'Merchants have nothing but plain, unblessed wares.', 'Light Red'));
   end;
   Terminal.ForegroundColor(clGray);
