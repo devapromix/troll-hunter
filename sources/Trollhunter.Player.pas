@@ -202,7 +202,7 @@ uses
   Trollhunter.Item.Shop,
   BearLibTerminal,
   Trollhunter.Ability,
-  Trollhunter.Creature.NPC,
+  Trollhunter.Dialog,
   Trollhunter.Projectile.Types,
   Trollhunter.Item.Affixes,
   Trollhunter.Attribute,

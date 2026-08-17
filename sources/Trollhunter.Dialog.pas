@@ -1,4 +1,4 @@
-unit Trollhunter.Creature.NPC;
+unit Trollhunter.Dialog;
 
 interface
 
@@ -6,6 +6,7 @@ uses
   Trollhunter.Mob;
 
 procedure GenRandomNPCWelcomeText();
+function AskAbout(const ATopic: string): string;
 
 var
   NPCName: string = '';
@@ -16,12 +17,11 @@ implementation
 uses
   Math,
   SysUtils,
-  Trollhunter.UI.Log,
-  Trollhunter.Scenes;
+  Trollhunter.UI.Log;
 
 procedure GenRandomNPCWelcomeText();
 const
-  NPCTexts: array[0..29] of string = (
+  CNPCTexts: array [0 .. 29] of string = (
     'What can I do for you?',
     'What can I get you today?',
     'Good day!',
@@ -55,7 +55,22 @@ const
   );
 begin
   MsgLog.Add(Format('%s says: "%s"',
-    [NPCName, NPCTexts[Math.RandomRange(0, Length(NPCTexts))]]));
+    [NPCName, CNPCTexts[Math.RandomRange(0, Length(CNPCTexts))]]));
+end;
+
+function AskAbout(const ATopic: string): string;
+const
+  CTemplates: array [0 .. 3] of string = (
+    'What %s do you have?',
+    'Show me your %s',
+    'Got any %s?',
+    'What %s do you sell?'
+  );
+var
+  LIndex: Integer;
+begin
+  LIndex := Math.RandomRange(0, Length(CTemplates));
+  Result := Format(CTemplates[LIndex], [ATopic]);
 end;
 
 end.

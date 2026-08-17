@@ -24,7 +24,7 @@ uses
   Trollhunter.Mob,
   Trollhunter.Quest,
   Trollhunter.Item,
-  Trollhunter.Creature.NPC,
+  Trollhunter.Dialog,
   Trollhunter.Item.Shop,
   Trollhunter.Attribute,
   Trollhunter.Player,

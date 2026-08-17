@@ -130,7 +130,7 @@ implementation
 uses
   SysUtils,
   Math,
-  Trollhunter.Creature.NPC,
+  Trollhunter.Dialog,
   Trollhunter.Terminal,
   Trollhunter.Player,
   BearLibTerminal,
