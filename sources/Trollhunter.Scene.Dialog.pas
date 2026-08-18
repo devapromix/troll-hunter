@@ -63,42 +63,42 @@ begin
   end;
   // Shops
   if (ntScrTrader_A in NPCType) then
-    Add('What scrolls do you have?');
+    Add(AskAbout('scrolls'));
   if (ntArmTrader_A in NPCType) then
-    Add('Show me your armor');
+    Add(AskAbout('armor'));
   if (ntShTrader_A in NPCType) or (ntShTrader_B in NPCType) then
-    Add('Got any shields?');
+    Add(AskAbout('shields'));
   if (ntHelmTrader_A in NPCType) then
-    Add('What helmets do you have?');
+    Add(AskAbout('helmets'));
   if (ntFoodTrader_A in NPCType) then
-    Add('What food do you have?');
+    Add(AskAbout('food'));
   if (ntBowTrader_A in NPCType) then
-    Add('Show me your bows');
+    Add(AskAbout('bows'));
   if (ntDaggerTrader_A in NPCType) then
-    Add('Got any daggers?');
+    Add(AskAbout('daggers'));
   if (ntVenomTrader_B in NPCType) then
-    Add('What venoms do you sell?');
+    Add(AskAbout('venoms'));
   if (ntBlacksmith_A in NPCType) then
     Add('Can you repair my gear?');
   if (ntSmithTrader_B in NPCType) then
     Add('What do you have for sale?');
   if (ntHealTrader_B in NPCType) then
-    Add('What healing items do you have?');
+    Add(AskAbout('healing items'));
   if (ntPotManaTrader_B in NPCType) then
-    Add('Got any mana potions?');
+    Add(AskAbout('mana potions'));
   if (ntPotTrader_B in NPCType) then
-    Add('What potions do you have?');
+    Add(AskAbout('potions'));
   if (ntGlovesTrader_B in NPCType) then
-    Add('Show me your gloves');
+    Add(AskAbout('gloves'));
   if (ntTavTrader_B in NPCType) then
     Add('What''s on the menu?');
   if (ntWpnTrader_A in NPCType) or (ntWpnTrader_B in NPCType) or
     (ntWpnTrader_C in NPCType) then
-    Add('Show me your weapons');
+    Add(AskAbout('weapons'));
   if (ntQvrTrader_B in NPCType) then
-    Add('Got any quivers?');
+    Add(AskAbout('quivers'));
   if (ntGemTrader_C in NPCType) then
-    Add('What gems do you have?');
+    Add(AskAbout('gems'));
   // Identify all items
   if (ntIdentify_D in NPCType) then
   begin
@@ -109,9 +109,9 @@ begin
     Add('Can you identify my items?' + S);
   end;
   if (ntJewTrader_C in NPCType) then
-    Add('Show me your jewelry');
+    Add(AskAbout('jewelry'));
   if (ntBootsTrader_C in NPCType) then
-    Add('What boots do you have?');
+    Add(AskAbout('boots'));
   if (ntSell_C in NPCType) or (ntSell_D in NPCType) then
     Add('I want to sell something');
   // Arrows
@@ -125,13 +125,13 @@ begin
     Add('I need more arrows' + S);
   end;
   if (ntRuneTrader_D in NPCType) then
-    Add('What runes do you have?');
+    Add(AskAbout('runes'));
   if (ntStaffTrader_A in NPCType) then
-    Add('Show me your staves');
+    Add(AskAbout('staves'));
   if (ntWandTrader_B in NPCType) then
-    Add('Got any wands?');
+    Add(AskAbout('wands'));
   if (ntBookTrader_C in NPCType) then
-    Add('What books do you have?');
+    Add(AskAbout('books'));
   // Quests
   {if (ntQuest_D in NPCType) then
     Add('The Hunt (quest)'); }
