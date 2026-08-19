@@ -235,6 +235,10 @@ begin
       Items.AddItemToInv(ClassProp[HClass].ClassItem[I]);
   // Add foods
   Items.AddItemToInv(itmBread_Ration, IfWizard(9, 3));
+  // Add potions
+  Items.AddItemToInv(itmPotion_of_Minor_Healing, IfWizard(8, 3));
+  Items.AddItemToInv(itmPotion_of_Minor_Mana, IfWizard(8, IfThen(HClass = clMage, 3, 1)));
+  // Torch
   Items.AddItemToInv(itmTorch, IfWizard(3, 1));
   // Add coins
   Items.AddItemToInv(itmGold, IfWizard(RandomRange(3333, 9999), StartGold));

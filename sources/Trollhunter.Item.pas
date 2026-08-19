@@ -204,19 +204,19 @@ const
     Price: 160; Color: clDarkBlue; Deep: [deBlood_Cave .. deDrom];
     Effects: [efMana]; Value: 240; ),
 
-    // Stone of
+    // Stone of Stamina
     (Symbol: '8'; ItemType: itStone; SlotType: stNone; MaxStack: 32;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 25; Color: clRed; Deep: [deDark_Wood .. deDrom]; Effects: [efLife];
     Value: 25; ),
-    // Stone of
+    // Stone of Mana
     (Symbol: '8'; ItemType: itStone; SlotType: stNone; MaxStack: 32;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 20; Color: clBlue; Deep: [deDark_Wood .. deDrom]; Effects: [efMana];
     Value: 25; ),
-    // Stone of
+    // Stone of Recovery
     (Symbol: '8'; ItemType: itStone; SlotType: stNone; MaxStack: 32;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
