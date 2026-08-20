@@ -221,6 +221,12 @@ begin
 end;
 
 procedure TPlayerHelper.StartItems;
+const
+  CFoodCount: array [TDifficulty] of UInt = (5, 3, 2, 1);
+  CPotionCount: array [TDifficulty] of UInt = (5, 3, 2, 1);
+  CManaPotionCount: array [TDifficulty] of UInt = (2, 1, 1, 0);
+  CManaPotionCountMage: array [TDifficulty] of UInt = (5, 3, 2, 1);
+  CTorchCount: array [TDifficulty] of UInt = (2, 1, 1, 1);
 var
   J: TSlotType;
   I: integer;
@@ -234,12 +240,13 @@ begin
     if ClassProp[HClass].ClassItem[I] <> itmNone then
       Items.AddItemToInv(ClassProp[HClass].ClassItem[I]);
   // Add foods
-  Items.AddItemToInv(itmBread_Ration, IfWizard(9, 3));
+  Items.AddItemToInv(itmBread_Ration, IfWizard(9, CFoodCount[Game.Difficulty]));
   // Add potions
-  Items.AddItemToInv(itmPotion_of_Minor_Healing, IfWizard(8, 3));
-  Items.AddItemToInv(itmPotion_of_Minor_Mana, IfWizard(8, IfThen(HClass = clMage, 3, 1)));
+  Items.AddItemToInv(itmPotion_of_Minor_Healing, IfWizard(8, CPotionCount[Game.Difficulty]));
+  Items.AddItemToInv(itmPotion_of_Minor_Mana, IfWizard(8, IfThen(HClass = clMage,
+    CManaPotionCountMage[Game.Difficulty], CManaPotionCount[Game.Difficulty])));
   // Torch
-  Items.AddItemToInv(itmTorch, IfWizard(3, 1));
+  Items.AddItemToInv(itmTorch, IfWizard(3, CTorchCount[Game.Difficulty]));
   // Add coins
   Items.AddItemToInv(itmGold, IfWizard(RandomRange(3333, 9999), StartGold));
   // Calc
