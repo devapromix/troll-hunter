@@ -109,6 +109,20 @@ begin
       Terminal.Print(DX, 6, 'Trader''s Wares' + ': ' + Terminal.Colorize(
         'Merchants have nothing but plain, unblessed wares.', 'Light Red'));
   end;
+  case Game.Difficulty of
+    dfEasy:
+      Terminal.Print(DX, 7, 'Supplies' + ': ' + Terminal.Colorize(
+        'Your pack overflows with potions and provisions.', 'Lush'));
+    dfNormal:
+      Terminal.Print(DX, 7, 'Supplies' + ': ' + Terminal.Colorize(
+        'You set out with a modest stock of potions and food.', 'Yellow'));
+    dfHard:
+      Terminal.Print(DX, 7, 'Supplies' + ': ' + Terminal.Colorize(
+        'Your provisions are thin, rationed with care.', 'Light Yellow'));
+    dfHell:
+      Terminal.Print(DX, 7, 'Supplies' + ': ' + Terminal.Colorize(
+        'You carry barely enough to see the first night through.', 'Light Red'));
+  end;
   Terminal.ForegroundColor(clGray);
   Terminal.Print(CX - (CX div 2), CY - (CY div 2), CX, CY, S, TK_ALIGN_BOTTOM);
 
