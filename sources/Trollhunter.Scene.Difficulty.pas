@@ -81,16 +81,16 @@ begin
       Terminal.Colorize('Fall, and rise to hunt again.', 'Lush'))
   else
     Terminal.Print(DX, 2, 'Permadeath' + ': ' + Terminal.Colorize(
-      'Fall once, and your hunt ends forever."', 'Light Red'));
+      'Fall once, and your hunt ends forever.', 'Light Red'));
   if Game.Difficulty = dfEasy then
     Terminal.Print(DX, 3, 'Gear Decay' + ': ' +
       Terminal.Colorize('Your gear mends like new.', 'Lush'))
   else if Game.Difficulty = dfHell then
     Terminal.Print(DX, 3, 'Gear Decay' + ': ' + Terminal.Colorize(
-      'Your gear crumbles faster than it can be fixed."', 'Light Red'))
+      'Your gear crumbles faster than it can be fixed.', 'Light Red'))
   else
     Terminal.Print(DX, 3, 'Gear Decay' + ': ' + Terminal.Colorize(
-      'The smith''s hammer wears your gear thin."', 'Yellow'));
+      'The smith''s hammer wears your gear thin.', 'Yellow'));
   Terminal.Print(DX, 4, 'Skill Gain' + ': ' + Terminal.Colorize(
   IntToStr(TSkills.GetSkillExpMax), 'Yellow'));
   Terminal.Print(DX, 5, 'Start Gold' + ': ' + Terminal.Colorize(

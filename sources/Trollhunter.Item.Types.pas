@@ -7,7 +7,7 @@ type
     itFlask, itOrb, itStone, itScroll, itBook, itRune, itFood, itPlant, itBlade,
     itAxe, itSpear, itMace, itStaff, itWand, itDagger, itBow, itShield,
     itHeadgear, itBodyArmor, itHands, itFeet, itRing, itAmulet, itTalisman,
-    itArrow, itQuiver, itTorch, itVenom, itSpellbook);
+    itArrow, itQuiver, itTorch, itVenom, itSpellbook, itTrophy);
 
   // From Angband:
   // !   A potion (or flask)    /   A pole-arm
@@ -68,7 +68,7 @@ const
   UseTypeItems = PotionTypeItems + ScrollTypeItems + FoodTypeItems +
     PlantTypeItems + RuneTypeItems + BookTypeItems + GemTypeItems +
     RepairTypeItems + MagicTypeItems + VenomTypeItems;
-  NotDropTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
+  NotDropTypeItems = [itNone, itTrophy] + KeyTypeItems + CorpseTypeItems +
     RuneTypeItems + ArrowTypeItems;
   NotEquipTypeItems = UseTypeItems + NotDropTypeItems + CoinTypeItems;
   NotInfoTypeItems = [itNone] + KeyTypeItems + CorpseTypeItems +
@@ -168,7 +168,7 @@ type
     // Swords
     itmRusty_Sword, itmShort_Sword, itmBroad_Sword, itmLong_Sword,
     itmElven_Sword, itmMoon_Blade, itmScimitar, itmBastard_Sword, itmGreat_Sword,
-    itmRune_Sword, itmTroll_Slayer, 
+    itmRune_Sword, itmTroll_Slayer,
 
     // Dark Wood
     itmCap, itmWar_Cap, itmHood, itmRed_Hat, // Headgear
@@ -245,7 +245,9 @@ type
     itmWidowmaker_Toxin, itmBasilisk_Venom,
     itmToxic_Extract, itmSpider_Venom,
     itmDeadly_Poison,  itmManticore_Venom,
-    itmHydra_Venom, itmVoid_Poison, itmBlack_Ichor
+    itmHydra_Venom, itmVoid_Poison, itmBlack_Ichor,
+    // Trophies
+    itmBig_Tooth
     );
 
 const

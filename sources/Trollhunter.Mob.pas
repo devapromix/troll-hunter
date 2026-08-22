@@ -9,6 +9,7 @@ uses
   Trollhunter.Entity,
   Trollhunter.Creature,
   Trollhunter.StatusEffect,
+  Trollhunter.Item.Types,
   Trollhunter.Ability;
 
 type
@@ -42,6 +43,7 @@ type
     Color: cardinal;
     NPCType: set of TNPCType;
     StatusEffects: TSetOfStatusEffect;
+    Trophy: TItemEnum;
   end;
 
 type
@@ -120,7 +122,7 @@ const
     // Jackal
     (Symbol: 'j'; Boss: False; Maps: [deDark_Wood]; MaxLife: 9; Level: 1; PV: 4;
     DV: 7; MaxCount: 4; Damage: (Min: 2; Max: 3; ); Color: $FF9955FF;
-    NPCType: []; StatusEffects: []; ),
+    NPCType: []; StatusEffects: []; Trophy: itmBig_Tooth; ),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDark_Wood]; MaxLife: 10; Level: 2;
     PV: 5; DV: 8; MaxCount: 1; Damage: (Min: 4; Max: 5; ); Color: $FF444444;
@@ -136,11 +138,11 @@ const
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDark_Wood]; MaxLife: 22; Level: 3;
     PV: 4; DV: 10; MaxCount: 4; Damage: (Min: 2; Max: 4; ); Color: $FF666666;
-    NPCType: []; StatusEffects: []; ),
+    NPCType: []; StatusEffects: []; Trophy: itmBig_Tooth; ),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDark_Wood]; MaxLife: 23; Level: 3;
     PV: 5; DV: 12; MaxCount: 3; Damage: (Min: 3; Max: 4; ); Color: $FFCC9988;
-    NPCType: []; StatusEffects: [seBurning]; ),
+    NPCType: []; StatusEffects: [seBurning]; Trophy: itmBig_Tooth; ),
 
     // == Gray Cave == //
 
@@ -215,7 +217,7 @@ const
     // Dire Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
     PV: 10; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7; ); Color: $FF888888;
-    NPCType: []; StatusEffects: [seStunned, seAfraid]; ),
+    NPCType: []; StatusEffects: [seStunned, seAfraid]; Trophy: itmBig_Tooth; ),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 72; Level: 7;
     PV: 10; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8; ); Color: $FF992233;
@@ -250,11 +252,12 @@ const
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 82; Level: 8;
     PV: 30; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seDiseased, seAfraid]; ),
+    NPCType: []; StatusEffects: [seDiseased, seAfraid]; Trophy: itmBig_Tooth; ),
     // Werewolf
     (Symbol: 'w'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 8;
     PV: 35; DV: 35; MaxCount: 2; Damage: (Min: 10; Max: 12; ); Color: $FF777733;
-    NPCType: []; StatusEffects: [seDiseased, sePoisoned, seAfraid]; ),
+    NPCType: []; StatusEffects: [seDiseased, sePoisoned, seAfraid];
+    Trophy: itmBig_Tooth; ),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 85; Level: 8;
     PV: 50; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14; ); Color: $FF445544;
@@ -329,14 +332,14 @@ const
     // Troll Brute
     (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 85;
     DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seStunned, seBloodlust]; ),
+    NPCType: []; StatusEffects: [seStunned, seBloodlust]; Trophy: itmBig_Tooth; ),
 
     // == Bosses == //
 
     // Black Hound
     (Symbol: 'h'; Boss: True; Maps: [deDark_Wood]; MaxLife: 45; Level: 3;
     PV: 30; DV: 25; MaxCount: 1; Damage: (Min: 8; Max: 10; ); Color: $FFCC8899;
-    NPCType: []; StatusEffects: [seBurning, seBlinded]; ),
+    NPCType: []; StatusEffects: [seBurning, seBlinded]; Trophy: itmBig_Tooth; ),
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDark_Wood]; MaxLife: 50; Level: 3;
     PV: 45; DV: 30; MaxCount: 1; Damage: (Min: 9; Max: 11; ); Color: $FF66DD99;
@@ -390,7 +393,7 @@ const
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15; PV: 200;
     DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75; ); Color: $FFDD7711;
     NPCType: []; StatusEffects: [seBurning, seBloodlust, seAfraid,
-    seArmor_Reduction]; ),
+    seArmor_Reduction]; Trophy: itmBig_Tooth; ),
 
     // == NPC == //
 
@@ -521,8 +524,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.PathFind,
   Trollhunter.Quest,
-  Trollhunter.Helpers,
-  Trollhunter.Item.Types;
+  Trollhunter.Helpers;
 
 function MyCallback(X, Y: Int): boolean; stdcall;
 begin
@@ -874,6 +876,8 @@ begin
 end;
 
 procedure TMob.DropItems;
+const
+  CTrophyChance = 10;
 begin
   // Add Loot
   Items.Loot(Self.X, Self.Y, Boss);
@@ -881,6 +885,10 @@ begin
   if (Player.Talents.GetLevel(tlGold_Finder) > 0) and
     (Math.RandomRange(0, 99) < Player.Talents.GetLevel(tlGold_Finder) * 5) then
     Items.Loot(Self.X, Self.Y, itmGold);
+  // Trophy
+  if (MobBase[TMobEnum(ID)].Trophy <> itmNone) and
+    (Math.RandomRange(0, 100) < CTrophyChance) then
+    Items.Loot(Self.X, Self.Y, MobBase[TMobEnum(ID)].Trophy);
   // Corpse
   if Game.LCorpses then
     Items.Loot(Self.X, Self.Y, itmCorpse);
