@@ -9,12 +9,6 @@ uses
   Trollhunter.Item;
 
 type
-  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
-    shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
-    shJewelry, shGem, shRunes, shQuivers, shStaves, shWands, shBooks, shBows,
-    shDaggers, shVenoms);
-
-type
   TItemsStore = array [0 .. ItemMax - 1] of Item;
 
 type

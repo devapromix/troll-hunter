@@ -3,14 +3,16 @@ unit Trollhunter.Dialog;
 interface
 
 uses
-  Trollhunter.Mob;
+  Trollhunter.Types;
 
 procedure GenRandomNPCWelcomeText();
 function AskAbout(const ATopic: string): string;
+function GetShopQuestion(const AShop: TShopEnum): string;
 
 var
   NPCName: string = '';
-  NPCType: set of TNPCType = [];
+  NPCShops: set of TShopEnum = [];
+  NPCActions: set of TNPCActionEnum = [];
 
 implementation
 
@@ -71,6 +73,25 @@ var
 begin
   LIndex := Math.RandomRange(0, Length(CTemplates));
   Result := Format(CTemplates[LIndex], [ATopic]);
+end;
+
+function GetShopQuestion(const AShop: TShopEnum): string;
+const
+  CShopTopics: array [TShopEnum] of string = (
+    'potions', 'scrolls', 'healing items', 'mana potions', '', 'armor',
+    'gloves', 'food', 'weapons', 'boots', '', 'shields', 'helmets',
+    'jewelry', 'gems', 'runes', 'quivers', 'staves', 'wands', 'books',
+    'bows', 'daggers', 'venoms'
+  );
+begin
+  case AShop of
+    shSmith:
+      Result := 'What do you have for sale?';
+    shTavern:
+      Result := 'What''s on the menu?';
+  else
+    Result := AskAbout(CShopTopics[AShop]);
+  end;
 end;
 
 end.

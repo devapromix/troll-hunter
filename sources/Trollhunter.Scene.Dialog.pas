@@ -21,7 +21,6 @@ implementation
 uses
   SysUtils,
   BearLibTerminal,
-  Trollhunter.Mob,
   Trollhunter.Quest,
   Trollhunter.Item,
   Trollhunter.Dialog,
@@ -31,227 +30,157 @@ uses
   Trollhunter.Player.Helpers,
   Trollhunter.Terminal;
 
+const
+  CLetters: array [0 .. 25] of char = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+    'X', 'Y', 'Z');
+  CLetterKeys: array [0 .. 25] of UInt = (TK_A, TK_B, TK_C, TK_D, TK_E, TK_F,
+    TK_G, TK_H, TK_I, TK_J, TK_K, TK_L, TK_M, TK_N, TK_O, TK_P, TK_Q, TK_R,
+    TK_S, TK_T, TK_U, TK_V, TK_W, TK_X, TK_Y, TK_Z);
+
 { TSceneDialog }
 
 procedure TSceneDialog.Render;
 var
+  LIndex: Int;
+  LAction: TNPCActionEnum;
+  LShop: TShopEnum;
   LValue: Int;
   S: string;
 
-  procedure Add(const ALetter: char; const S: string);
+  procedure Add(const AText: string);
   begin
     Inc(Y);
-    Terminal.Print(1, Y, UI.KeyToStr(ALetter) + ' ' + S, TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, UI.KeyToStr(CLetters[LIndex]) + ' ' + AText,
+      TK_ALIGN_LEFT);
+    Inc(LIndex);
+  end;
+
+  function GetActionLabel(const AAction: TNPCActionEnum): string;
+  begin
+    case AAction of
+      naHeal:
+        begin
+          LValue := Player.Attributes.Attrib[atMaxLife].Value -
+            Player.Attributes.Attrib[atLife].Value;
+          if (LValue > 0) then
+            S := ' (' + Items.GetIcon(LValue, 'Life') + ' ' +
+              Items.GetPrice(Round(LValue * 1.6)) + ')'
+          else
+            S := '';
+          Result := 'Heal me, please' + S;
+        end;
+      naRepair:
+        Result := 'Can you repair my gear?';
+      naSell:
+        Result := 'I want to sell something';
+      naBuyArrows:
+        begin
+          LValue := Player.GetArrowsToBuy;
+          if (LValue > 0) then
+            S := ' (' + Items.GetIcon(LValue, 'Arrow') + ' ' +
+              Items.GetPrice(LValue) + ')'
+          else
+            S := '';
+          Result := 'I need more arrows' + S;
+        end;
+      naIdentify:
+        begin
+          if Player.HasUnidentifiedItems then
+            S := ' (' + Items.GetPrice(CIdentifyAllItemsCost) + ')'
+          else
+            S := '';
+          Result := 'Can you identify my items?' + S;
+        end;
+    end;
   end;
 
 begin
   UI.Title(NPCName + ' ' + UI.GoldLeft(Player.Gold));
   UI.FromAToZ;
   Y := 1;
+  LIndex := 0;
 
-  // Heal
-  if (ntHealer_A in NPCType) then
-  begin
-    LValue := Player.Attributes.Attrib[atMaxLife].Value -
-      Player.Attributes.Attrib[atLife].Value;
-    if (LValue > 0) then
-      S := ' (' + Items.GetIcon(LValue, 'Life') + ' ' +
-        Items.GetPrice(Round(LValue * 1.6)) + ')'
-    else
-      S := '';
-    Add('A', 'Heal me, please' + S);
-  end;
-  // Shops
-  if (ntScrTrader_A in NPCType) then
-    Add('A', AskAbout('scrolls'));
-  if (ntArmTrader_A in NPCType) then
-    Add('A', AskAbout('armor'));
-  if (ntShTrader_A in NPCType) then
-    Add('A', AskAbout('shields'))
-  else if (ntShTrader_B in NPCType) then
-    Add('B', AskAbout('shields'));
-  if (ntHelmTrader_A in NPCType) then
-    Add('A', AskAbout('helmets'));
-  if (ntFoodTrader_A in NPCType) then
-    Add('A', AskAbout('food'));
-  if (ntBowTrader_A in NPCType) then
-    Add('A', AskAbout('bows'));
-  if (ntDaggerTrader_A in NPCType) then
-    Add('A', AskAbout('daggers'));
-  if (ntVenomTrader_B in NPCType) then
-    Add('B', AskAbout('venoms'));
-  if (ntBlacksmith_A in NPCType) then
-    Add('A', 'Can you repair my gear?');
-  if (ntSmithTrader_B in NPCType) then
-    Add('B', 'What do you have for sale?');
-  if (ntHealTrader_B in NPCType) then
-    Add('B', AskAbout('healing items'));
-  if (ntPotManaTrader_B in NPCType) then
-    Add('B', AskAbout('mana potions'));
-  if (ntPotTrader_B in NPCType) then
-    Add('B', AskAbout('potions'));
-  if (ntGlovesTrader_B in NPCType) then
-    Add('B', AskAbout('gloves'));
-  if (ntTavTrader_B in NPCType) then
-    Add('B', 'What''s on the menu?');
-  if (ntWpnTrader_A in NPCType) then
-    Add('A', AskAbout('weapons'))
-  else if (ntWpnTrader_B in NPCType) then
-    Add('B', AskAbout('weapons'))
-  else if (ntWpnTrader_C in NPCType) then
-    Add('C', AskAbout('weapons'));
-  if (ntQvrTrader_B in NPCType) then
-    Add('B', AskAbout('quivers'));
-  if (ntGemTrader_A in NPCType) then
-    Add('A', AskAbout('gems'))
-  else if (ntGemTrader_C in NPCType) then
-    Add('C', AskAbout('gems'));
-  // Identify all items
-  if (ntIdentify_D in NPCType) then
-  begin
-    if Player.HasUnidentifiedItems then
-      S := ' (' + Items.GetPrice(CIdentifyAllItemsCost) + ')'
-    else
-      S := '';
-    Add('D', 'Can you identify my items?' + S);
-  end;
-  if (ntJewTrader_C in NPCType) then
-    Add('C', AskAbout('jewelry'));
-  if (ntBootsTrader_C in NPCType) then
-    Add('C', AskAbout('boots'));
-  if (ntSell_C in NPCType) then
-    Add('C', 'I want to sell something')
-  else if (ntSell_D in NPCType) then
-    Add('D', 'I want to sell something');
-  // Arrows
-  if (ntArrTrader_C in NPCType) then
-  begin
-    LValue := Player.GetArrowsToBuy;
-    if (LValue > 0) then
-      S := ' (' + Items.GetIcon(LValue, 'Arrow') + ' ' + Items.GetPrice(LValue) + ')'
-    else
-      S := '';
-    Add('C', 'I need more arrows' + S);
-  end;
-  if (ntRuneTrader_D in NPCType) then
-    Add('D', AskAbout('runes'));
-  if (ntStaffTrader_A in NPCType) then
-    Add('A', AskAbout('staves'));
-  if (ntWandTrader_B in NPCType) then
-    Add('B', AskAbout('wands'));
-  if (ntBookTrader_C in NPCType) then
-    Add('C', AskAbout('books'));
-  // Quests
-  {if (ntQuest_D in NPCType) then
-    Add('D', 'The Hunt (quest)'); }
+  for LAction := Low(TNPCActionEnum) to High(TNPCActionEnum) do
+    if (LAction in NPCActions) then
+      Add(GetActionLabel(LAction));
+
+  for LShop := Low(TShopEnum) to High(TShopEnum) do
+    if (LShop in NPCShops) then
+      Add(GetShopQuestion(LShop));
+
+  { if (naQuest in NPCActions) then
+      Add('The Hunt (quest)'); }
+
   MsgLog.Render(2, True);
 
   AddKey('Esc', 'Close', True);
 end;
 
 procedure TSceneDialog.Update(var Key: UInt);
+var
+  LIndex: Int;
+  LAction: TNPCActionEnum;
+  LShop: TShopEnum;
 
-  procedure AddShop(AShop: TShopEnum);
+  function KeyMatches: Boolean;
+  begin
+    Result := (Key = CLetterKeys[LIndex]);
+    Inc(LIndex);
+  end;
+
+  procedure DoAction(const AAction: TNPCActionEnum);
+  begin
+    case AAction of
+      naHeal:
+        Player.ReceiveHealing;
+      naRepair:
+        begin
+          Items.Index := 0;
+          Scenes.SetScene(scRepair, scDialog);
+        end;
+      naSell:
+        Scenes.SetScene(scSell);
+      naBuyArrows:
+        Player.BuyArrows;
+      naIdentify:
+        Player.IdentifyAllItems;
+      { naQuest:
+          begin
+            Quests.Current := qeKillNBears;
+            Scenes.SetScene(scQuest, scDialog);
+          end; }
+    end;
+  end;
+
+  procedure DoShop(const AShop: TShopEnum);
   begin
     Shops.Current := AShop;
     Scenes.SetScene(scBuy, scDialog);
   end;
 
-  procedure AddQuest(AQuest: TQuestEnum);
+begin
+  if (Key = TK_ESCAPE) then
   begin
-    Quests.Current := AQuest;
-    Scenes.SetScene(scQuest, scDialog);
+    Scenes.SetScene(scGame);
+    Exit;
   end;
 
-begin
-  case Key of
-    TK_ESCAPE:
-      // Close
-      Scenes.SetScene(scGame);
-    TK_A:
+  LIndex := 0;
+
+  for LAction := Low(TNPCActionEnum) to High(TNPCActionEnum) do
+    if (LAction in NPCActions) and KeyMatches then
     begin
-      if (ntHealer_A in NPCType) then
-        Player.ReceiveHealing;
-      if (ntBlacksmith_A in NPCType) then
-      begin
-        Items.Index := 0;
-        Scenes.SetScene(scRepair, scDialog);
-      end;
-      if (ntFoodTrader_A in NPCType) then
-        AddShop(shFoods);
-      if (ntHelmTrader_A in NPCType) then
-        AddShop(shHelms);
-      if (ntScrTrader_A in NPCType) then
-        AddShop(shScrolls);
-      if (ntArmTrader_A in NPCType) then
-        AddShop(shArmors);
-      if (ntShTrader_A in NPCType) then
-        AddShop(shShields);
-      if (ntGemTrader_A in NPCType) then
-        AddShop(shGem);
-      if (ntStaffTrader_A in NPCType) then
-        AddShop(shStaves);
-      if (ntWpnTrader_A in NPCType) then
-        AddShop(shWeapons);
-      if (ntBowTrader_A in NPCType) then
-        AddShop(shBows);
-      if (ntDaggerTrader_A in NPCType) then
-        AddShop(shDaggers);
+      DoAction(LAction);
+      Exit;
     end;
-    TK_B:
+
+  for LShop := Low(TShopEnum) to High(TShopEnum) do
+    if (LShop in NPCShops) and KeyMatches then
     begin
-      if (ntSmithTrader_B in NPCType) then
-        AddShop(shSmith);
-      if (ntGlovesTrader_B in NPCType) then
-        AddShop(shGloves);
-      if (ntTavTrader_B in NPCType) then
-        AddShop(shTavern);
-      if (ntHealTrader_B in NPCType) then
-        AddShop(shHealer);
-      if (ntPotManaTrader_B in NPCType) then
-        AddShop(shMana);
-      if (ntPotTrader_B in NPCType) then
-        AddShop(shPotions);
-      if (ntWpnTrader_B in NPCType) then
-        AddShop(shWeapons);
-      if (ntQvrTrader_B in NPCType) then
-        AddShop(shQuivers);
-      if (ntWandTrader_B in NPCType) then
-        AddShop(shWands);
-      if (ntShTrader_B in NPCType) then
-        AddShop(shShields);
-      if (ntVenomTrader_B in NPCType) then
-        AddShop(shVenoms);
+      DoShop(LShop);
+      Exit;
     end;
-    TK_C:
-    begin
-      if (ntSell_C in NPCType) then
-        Scenes.SetScene(scSell);
-      if (ntJewTrader_C in NPCType) then
-        AddShop(shJewelry);
-      if (ntBootsTrader_C in NPCType) then
-        AddShop(shBoots);
-      if (ntGemTrader_C in NPCType) then
-        AddShop(shGem);
-      if (ntArrTrader_C in NPCType) then
-        Player.BuyArrows;
-      if (ntBookTrader_C in NPCType) then
-        AddShop(shBooks);
-      if (ntWpnTrader_C in NPCType) then
-        AddShop(shWeapons);
-    end;
-    TK_D:
-    begin
-      if (ntRuneTrader_D in NPCType) then
-        AddShop(shRunes);
-      if (ntSell_D in NPCType) then
-        Scenes.SetScene(scSell);
-      if (ntQuest_D in NPCType) then
-        AddQuest(qeKillNBears);
-      if (ntIdentify_D in NPCType) then
-        Player.IdentifyAllItems;
-    end;
-  end;
 end;
 
 end.

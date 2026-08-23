@@ -9,6 +9,14 @@ type
 const
   UIntMax = High(Byte);
 
+type
+  TShopEnum = (shPotions, shScrolls, shHealer, shMana, shSmith, shArmors,
+    shGloves, shFoods, shWeapons, shBoots, shTavern, shShields, shHelms,
+    shJewelry, shGem, shRunes, shQuivers, shStaves, shWands, shBooks, shBows,
+    shDaggers, shVenoms);
+
+  TNPCActionEnum = (naHeal, naRepair, naSell, naBuyArrows, naIdentify);
+
 implementation
 
 end.

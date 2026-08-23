@@ -1191,7 +1191,8 @@ procedure TPlayer.Dialog(AMob: TMob);
 begin
   Game.Timer := UIntMax;
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
-  NPCType := MobBase[TMobEnum(AMob.ID)].NPCType;
+  NPCShops := MobBase[TMobEnum(AMob.ID)].NPCShops;
+  NPCActions := MobBase[TMobEnum(AMob.ID)].NPCActions;
   Scenes.SetScene(scDialog);
 end;
 

@@ -21,16 +21,6 @@ type
     msColossal);
 
 type
-  TNPCType = (ntSell_C, ntJewTrader_C, ntHealer_A, ntBlacksmith_A,
-    ntWpnTrader_B, ntSmithTrader_B, ntArmTrader_A, ntGemTrader_C, ntShTrader_A,
-    ntQvrTrader_B, ntArrTrader_C, ntHelmTrader_A, ntPotTrader_B, ntHealTrader_B,
-    ntGlovesTrader_B, ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B,
-    ntScrTrader_A, ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
-    ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B, ntWpnTrader_C,
-    ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A, ntVenomTrader_B,
-    ntGemTrader_A);
-
-type
   TMobBase = record
     Symbol: char;
     Boss: boolean;
@@ -42,7 +32,8 @@ type
     MaxCount: UInt;
     Damage: TDamage;
     Color: cardinal;
-    NPCType: set of TNPCType;
+    NPCShops: set of TShopEnum;
+    NPCActions: set of TNPCActionEnum;
     StatusEffects: TSetOfStatusEffect;
     Trophy: TItemEnum;
   end;
@@ -112,289 +103,289 @@ const
     // Big Rat
     (Symbol: 'r'; Boss: False; Maps: [deDark_Wood]; MaxLife: 5; Level: 1; PV: 0;
     DV: 4; MaxCount: 9; Damage: (Min: 1; Max: 2; ); Color: $FF249988;
-    NPCType: []; StatusEffects: [seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seDiseased]; ),
     // Spiny Frog
     (Symbol: 'f'; Boss: False; Maps: [deDark_Wood]; MaxLife: 7; Level: 1; PV: 0;
     DV: 5; MaxCount: 7; Damage: (Min: 1; Max: 3; ); Color: $FF33FF66;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased]; ),
     // Giant Gecko
     (Symbol: 'g'; Boss: False; Maps: [deDark_Wood]; MaxLife: 8; Level: 1; PV: 2;
     DV: 6; MaxCount: 5; Damage: (Min: 2; Max: 3; ); Color: $FF993377;
-    NPCType: []; StatusEffects: [sePoisoned, seStunned, seBlinded]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seStunned, seBlinded]; ),
     // Jackal
     (Symbol: 'j'; Boss: False; Maps: [deDark_Wood]; MaxLife: 9; Level: 1; PV: 4;
     DV: 7; MaxCount: 4; Damage: (Min: 2; Max: 3; ); Color: $FF9955FF;
-    NPCType: []; StatusEffects: []; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: []; Trophy: itmBig_Tooth; ),
     // Black Bear
     (Symbol: 'b'; Boss: False; Maps: [deDark_Wood]; MaxLife: 10; Level: 2;
     PV: 5; DV: 8; MaxCount: 1; Damage: (Min: 4; Max: 5; ); Color: $FF444444;
-    NPCType: []; StatusEffects: [seStunned, seAfraid, seArmor_Reduction]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seAfraid, seArmor_Reduction]; ),
     // Grizzly Bear
     (Symbol: 'b'; Boss: False; Maps: [deDark_Wood]; MaxLife: 14; Level: 2;
     PV: 5; DV: 9; MaxCount: 1; Damage: (Min: 2; Max: 5; ); Color: $FFAAAAAA;
-    NPCType: []; StatusEffects: [seStunned, seAfraid, seArmor_Reduction]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seAfraid, seArmor_Reduction]; ),
     // Anaconda
     (Symbol: 's'; Boss: False; Maps: [deDark_Wood]; MaxLife: 18; Level: 2;
     PV: 3; DV: 9; MaxCount: 1; Damage: (Min: 1; Max: 3; ); Color: $FF339955;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seDrunk]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased, seDrunk]; ),
     // Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDark_Wood]; MaxLife: 22; Level: 3;
     PV: 4; DV: 10; MaxCount: 4; Damage: (Min: 2; Max: 4; ); Color: $FF666666;
-    NPCType: []; StatusEffects: []; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: []; Trophy: itmBig_Tooth; ),
     // Hound
     (Symbol: 'h'; Boss: False; Maps: [deDark_Wood]; MaxLife: 23; Level: 3;
     PV: 5; DV: 12; MaxCount: 3; Damage: (Min: 3; Max: 4; ); Color: $FFCC9988;
-    NPCType: []; StatusEffects: [seBurning]; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning]; Trophy: itmBig_Tooth; ),
 
     // == Gray Cave == //
 
     // Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGray_Cave]; MaxLife: 25; Level: 3;
     PV: 5; DV: 12; MaxCount: 7; Damage: (Min: 1; Max: 4; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust, seCursed]; ),
     // Big Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGray_Cave]; MaxLife: 25; Level: 3;
     PV: 6; DV: 12; MaxCount: 5; Damage: (Min: 2; Max: 4; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust, seCursed]; ),
     // Red Kobold
     (Symbol: 'k'; Boss: False; Maps: [deGray_Cave]; MaxLife: 30; Level: 3;
     PV: 7; DV: 13; MaxCount: 5; Damage: (Min: 3; Max: 4; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [seBurning, seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBloodlust, seCursed]; ),
     // Gnoll
     (Symbol: 'g'; Boss: False; Maps: [deGray_Cave]; MaxLife: 32; Level: 4;
     PV: 4; DV: 14; MaxCount: 3; Damage: (Min: 2; Max: 4; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seCursed]; ),
     // Basilisk
     (Symbol: 'b'; Boss: False; Maps: [deGray_Cave]; MaxLife: 35; Level: 4;
     PV: 5; DV: 15; MaxCount: 1; Damage: (Min: 2; Max: 5; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [sePoisoned, seStunned, seBurning, seAfraid,
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seStunned, seBurning, seAfraid,
     seDrunk]; ),
     // Wisp
     (Symbol: 'w'; Boss: False; Maps: [deGray_Cave]; MaxLife: 38; Level: 4;
     PV: 5; DV: 16; MaxCount: 3; Damage: (Min: 2; Max: 3; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [seBlinded, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBlinded, seDiseased]; ),
     // Worm
     (Symbol: 'w'; Boss: False; Maps: [deGray_Cave]; MaxLife: 40; Level: 5;
     PV: 5; DV: 18; MaxCount: 3; Damage: (Min: 3; Max: 5; ); Color: $FF777700;
-    NPCType: []; StatusEffects: [seBlinded, seDiseased, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBlinded, seDiseased, seAfraid]; ),
     // Naga
     (Symbol: 'n'; Boss: False; Maps: [deGray_Cave]; MaxLife: 42; Level: 5;
     PV: 7; DV: 18; MaxCount: 1; Damage: (Min: 3; Max: 5; ); Color: $FF7777CC;
-    NPCType: []; StatusEffects: [sePoisoned, seArmor_Reduction]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seArmor_Reduction]; ),
     // Fire Vortex
     (Symbol: 'v'; Boss: False; Maps: [deGray_Cave]; MaxLife: 43; Level: 5;
     PV: 9; DV: 20; MaxCount: 1; Damage: (Min: 4; Max: 5; ); Color: $FF299AFF;
-    NPCType: []; StatusEffects: [seBurning, seBlinded]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBlinded]; ),
 
     // == Deep Cave == //
 
     // Scorpion
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 45; Level: 5;
     PV: 10; DV: 21; MaxCount: 7; Damage: (Min: 3; Max: 5; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seAfraid, seDrunk]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased, seAfraid, seDrunk]; ),
     // Wasp
     (Symbol: 'w'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 48; Level: 5;
     PV: 5; DV: 21; MaxCount: 5; Damage: (Min: 4; Max: 5; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seDrunk]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased, seDrunk]; ),
     // Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 50; Level: 5;
     PV: 6; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 6; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased]; ),
     // Soldier Ant
     (Symbol: 'a'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 55; Level: 6;
     PV: 9; DV: 22; MaxCount: 9; Damage: (Min: 2; Max: 7; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased]; ),
     // Scarab
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 60; Level: 6;
     PV: 15; DV: 23; MaxCount: 7; Damage: (Min: 3; Max: 6; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased]; ),
     // Big Spider
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 65; Level: 6;
     PV: 12; DV: 25; MaxCount: 4; Damage: (Min: 1; Max: 7; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased, seAfraid]; ),
     // Fire Crab
     (Symbol: 's'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
     PV: 25; DV: 26; MaxCount: 8; Damage: (Min: 3; Max: 5; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [seBurning, seBlinded]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBlinded]; ),
     // Dire Wolf
     (Symbol: 'w'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
     PV: 10; DV: 26; MaxCount: 3; Damage: (Min: 6; Max: 7; ); Color: $FF888888;
-    NPCType: []; StatusEffects: [seStunned, seAfraid]; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seAfraid]; Trophy: itmBig_Tooth; ),
     // Pan
     (Symbol: 'p'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 72; Level: 7;
     PV: 10; DV: 28; MaxCount: 1; Damage: (Min: 7; Max: 8; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [seBurning, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seCursed]; ),
     // Faun
     (Symbol: 'f'; Boss: False; Maps: [deDeep_Cave]; MaxLife: 73; Level: 7;
     PV: 10; DV: 30; MaxCount: 1; Damage: (Min: 7; Max: 9; ); Color: $FF992233;
-    NPCType: []; StatusEffects: [seBlinded, seArmor_Reduction]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBlinded, seArmor_Reduction]; ),
 
     // == Blood Cave == //
 
     // Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 75; Level: 7;
     PV: 25; DV: 31; MaxCount: 9; Damage: (Min: 6; Max: 8; ); Color: $FF00AA00;
-    NPCType: []; StatusEffects: [seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust, seCursed]; ),
     // Dark Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 75; Level: 7;
     PV: 30; DV: 32; MaxCount: 7; Damage: (Min: 7; Max: 9; ); Color: $FF116610;
-    NPCType: []; StatusEffects: [seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust, seCursed]; ),
     // Black Goblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 78; Level: 7;
     PV: 45; DV: 32; MaxCount: 5; Damage: (Min: 8; Max: 10; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust, seCursed]; ),
     // Hobgoblin
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 75; Level: 7;
     PV: 50; DV: 33; MaxCount: 9; Damage: (Min: 7; Max: 10; ); Color: $FF55AA55;
-    NPCType: []; StatusEffects: [seBloodlust, seCursed]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust, seCursed]; ),
     // Gargoyle
     (Symbol: 'g'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 80; Level: 7;
     PV: 100; DV: 34; MaxCount: 1; Damage: (Min: 8; Max: 10; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [sePoisoned, seBurning, seBlinded, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seBurning, seBlinded, seAfraid]; ),
     // Warg
     (Symbol: 'w'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 82; Level: 8;
     PV: 30; DV: 35; MaxCount: 4; Damage: (Min: 9; Max: 11; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seDiseased, seAfraid]; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seDiseased, seAfraid]; Trophy: itmBig_Tooth; ),
     // Werewolf
     (Symbol: 'w'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 8;
     PV: 35; DV: 35; MaxCount: 2; Damage: (Min: 10; Max: 12; ); Color: $FF777733;
-    NPCType: []; StatusEffects: [seDiseased, sePoisoned, seAfraid];
+    NPCShops: []; NPCActions: []; StatusEffects: [seDiseased, sePoisoned, seAfraid];
     Trophy: itmBig_Tooth; ),
     // Draconian
     (Symbol: 'd'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 85; Level: 8;
     PV: 50; DV: 35; MaxCount: 1; Damage: (Min: 10; Max: 14; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seStunned, seBurning, seBloodlust, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBurning, seBloodlust, seAfraid]; ),
     // Orc
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 88; Level: 8;
     PV: 60; DV: 35; MaxCount: 5; Damage: (Min: 10; Max: 15; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seBloodlust]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust]; ),
     // Orc Brute
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 8;
     PV: 70; DV: 38; MaxCount: 5; Damage: (Min: 11; Max: 15; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seBloodlust]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust]; ),
     // Orc Warrior
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 9;
     PV: 80; DV: 39; MaxCount: 4; Damage: (Min: 11; Max: 15; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seBloodlust]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBloodlust]; ),
     // Orc Warlord
     (Symbol: 'o'; Boss: False; Maps: [deBlood_Cave]; MaxLife: 90; Level: 9;
     PV: 30; DV: 40; MaxCount: 3; Damage: (Min: 11; Max: 15; ); Color: $FF445544;
-    NPCType: []; StatusEffects: [seBurning, seBloodlust, seArmor_Reduction]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBloodlust, seArmor_Reduction]; ),
 
     // == Drom == //
 
     // Zombie
     (Symbol: 'z'; Boss: False; Maps: [deDrom]; MaxLife: 90; Level: 9; PV: 58;
     DV: 42; MaxCount: 9; Damage: (Min: 15; Max: 16; ); Color: $FF00BB00;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased]; ),
     // Ogre
     (Symbol: 'o'; Boss: False; Maps: [deDrom]; MaxLife: 92; Level: 9; PV: 55;
     DV: 43; MaxCount: 3; Damage: (Min: 15; Max: 17; ); Color: $FF559977;
-    NPCType: []; StatusEffects: [seStunned, seBloodlust]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBloodlust]; ),
     // Mummy
     (Symbol: 'm'; Boss: False; Maps: [deDrom]; MaxLife: 95; Level: 9; PV: 50;
     DV: 44; MaxCount: 5; Damage: (Min: 15; Max: 17; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [sePoisoned, seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seDiseased]; ),
     // Ghoul
     (Symbol: 'g'; Boss: False; Maps: [deDrom]; MaxLife: 97; Level: 10; PV: 65;
     DV: 44; MaxCount: 5; Damage: (Min: 12; Max: 16; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seBloodlust, seDrunk]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seBlinded, seBloodlust, seDrunk]; ),
     // Vampire
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 98; Level: 10; PV: 45;
     DV: 45; MaxCount: 3; Damage: (Min: 14; Max: 18; ); Color: $FF773333;
-    NPCType: []; StatusEffects: [seBurning, seBloodlust, seCursed, seDiseased,
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBloodlust, seCursed, seDiseased,
     seArmor_Reduction]; ),
     // Vulture
     (Symbol: 'v'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 50;
     DV: 45; MaxCount: 2; Damage: (Min: 15; Max: 19; ); Color: $FFAA3333;
-    NPCType: []; StatusEffects: [seBurning, seBloodlust, seCursed,
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBloodlust, seCursed,
     seDiseased]; ),
     // Cyclops
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 120;
     DV: 46; MaxCount: 1; Damage: (Min: 19; Max: 23; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seStunned, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seAfraid]; ),
     // Skeleton
     (Symbol: 'c'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 25;
     DV: 46; MaxCount: 9; Damage: (Min: 10; Max: 14; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seDiseased]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seDiseased]; ),
     // Wraith
     (Symbol: 'w'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 19;
     DV: 47; MaxCount: 9; Damage: (Min: 12; Max: 15; ); Color: $FF22FFFF;
-    NPCType: []; StatusEffects: [seBurning, seBlinded, seCursed, seDiseased,
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBlinded, seCursed, seDiseased,
     seAfraid]; ),
     // Lich
     (Symbol: 'l'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 20;
     DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seBlinded, seCursed, seAfraid, seDrunk,
+    NPCShops: []; NPCActions: []; StatusEffects: [seBlinded, seCursed, seAfraid, seDrunk,
     seArmor_Reduction]; ),
     // Phantom
     (Symbol: 'p'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 10;
     DV: 49; MaxCount: 1; Damage: (Min: 23; Max: 30; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seBurning, seBlinded]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBlinded]; ),
     // Troll Brute
     (Symbol: 't'; Boss: False; Maps: [deDrom]; MaxLife: 100; Level: 10; PV: 85;
     DV: 50; MaxCount: 1; Damage: (Min: 25; Max: 30; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seStunned, seBloodlust]; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBloodlust]; Trophy: itmBig_Tooth; ),
 
     // == Bosses == //
 
     // Black Hound
     (Symbol: 'h'; Boss: True; Maps: [deDark_Wood]; MaxLife: 45; Level: 3;
     PV: 30; DV: 25; MaxCount: 1; Damage: (Min: 8; Max: 10; ); Color: $FFCC8899;
-    NPCType: []; StatusEffects: [seBurning, seBlinded]; Trophy: itmBig_Tooth; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBlinded]; Trophy: itmBig_Tooth; ),
     // Giant Newt
     (Symbol: 'n'; Boss: True; Maps: [deDark_Wood]; MaxLife: 50; Level: 3;
     PV: 45; DV: 30; MaxCount: 1; Damage: (Min: 9; Max: 11; ); Color: $FF66DD99;
-    NPCType: []; StatusEffects: [sePoisoned, seStunned, seBlinded, seDiseased,
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seStunned, seBlinded, seDiseased,
     seAfraid, seDrunk]; ),
     // Iguana
     (Symbol: 'i'; Boss: True; Maps: [deDark_Wood]; MaxLife: 55; Level: 3;
     PV: 55; DV: 30; MaxCount: 1; Damage: (Min: 10; Max: 12; ); Color: $FF44FF77;
-    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seDrunk]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seDrunk]; ),
     // Kobold King
     (Symbol: 'k'; Boss: True; Maps: [deGray_Cave]; MaxLife: 60; Level: 5;
     PV: 60; DV: 32; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: $FFAA77CC;
-    NPCType: []; StatusEffects: [seStunned, seBurning, seBloodlust, seCursed,
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBurning, seBloodlust, seCursed,
     seArmor_Reduction]; ),
     // Swamp Worm
     (Symbol: 'w'; Boss: True; Maps: [deGray_Cave]; MaxLife: 63; Level: 5;
     PV: 80; DV: 35; MaxCount: 1; Damage: (Min: 12; Max: 18; ); Color: $FF6699BB;
-    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seAfraid,
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seAfraid,
     seDrunk]; ),
     // Giant Slug
     (Symbol: 's'; Boss: True; Maps: [deGray_Cave]; MaxLife: 67; Level: 5;
     PV: 90; DV: 38; MaxCount: 1; Damage: (Min: 14; Max: 20; ); Color: $FFCCAADD;
-    NPCType: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seAfraid,
+    NPCShops: []; NPCActions: []; StatusEffects: [sePoisoned, seBlinded, seDiseased, seAfraid,
     seDrunk]; ),
     // Centaur
     (Symbol: 'c'; Boss: True; Maps: [deDeep_Cave]; MaxLife: 70; Level: 7;
     PV: 55; DV: 40; MaxCount: 1; Damage: (Min: 18; Max: 23; ); Color: $FF77CCAA;
-    NPCType: []; StatusEffects: [seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seAfraid]; ),
     // Satyr
     (Symbol: 's'; Boss: True; Maps: [deDeep_Cave]; MaxLife: 75; Level: 7;
     PV: 45; DV: 45; MaxCount: 1; Damage: (Min: 20; Max: 25; ); Color: $FF3388AA;
-    NPCType: []; StatusEffects: [seBurning, seBlinded]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBlinded]; ),
     // Titan
     (Symbol: 't'; Boss: True; Maps: [deDeep_Cave]; MaxLife: 95; Level: 8;
     PV: 150; DV: 48; MaxCount: 1; Damage: (Min: 22; Max: 25; ); Color: $FFAABB77;
-    NPCType: []; StatusEffects: [seStunned, seBurning, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBurning, seAfraid]; ),
     // Hill Giant
     (Symbol: 'g'; Boss: True; Maps: [deBlood_Cave]; MaxLife: 96; Level: 9;
     PV: 160; DV: 50; MaxCount: 1; Damage: (Min: 23; Max: 25; ); Color: $FF2233FF;
-    NPCType: []; StatusEffects: [seStunned, seBurning, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBurning, seAfraid]; ),
     // Stone Giant
     (Symbol: 'g'; Boss: True; Maps: [deBlood_Cave]; MaxLife: 99; Level: 9;
     PV: 180; DV: 54; MaxCount: 1; Damage: (Min: 24; Max: 25; ); Color: $FF22FF33;
-    NPCType: []; StatusEffects: [seStunned, seAfraid]; ),
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seAfraid]; ),
     // Two-Headed Ogre
     (Symbol: 'o'; Boss: True; Maps: [deBlood_Cave]; MaxLife: 100; Level: 10;
     PV: 190; DV: 57; MaxCount: 1; Damage: (Min: 25; Max: 30; ); Color: $FF223333;
-    NPCType: []; StatusEffects: [seStunned, seBloodlust, seAfraid,
+    NPCShops: []; NPCActions: []; StatusEffects: [seStunned, seBloodlust, seAfraid,
     seArmor_Reduction]; ),
     // Troll King
     (Symbol: 't'; Boss: True; Maps: [deDrom]; MaxLife: 200; Level: 15; PV: 200;
     DV: 60; MaxCount: 1; Damage: (Min: 50; Max: 75; ); Color: $FFDD7711;
-    NPCType: []; StatusEffects: [seBurning, seBloodlust, seAfraid,
+    NPCShops: []; NPCActions: []; StatusEffects: [seBurning, seBloodlust, seAfraid,
     seArmor_Reduction]; Trophy: itmBig_Tooth; ),
 
     // == NPC == //
@@ -402,53 +393,53 @@ const
     // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clBlue;
-    NPCType: [ntScrTrader_A, ntPotManaTrader_B, ntJewTrader_C, ntRuneTrader_D]),
+    NPCShops: [shScrolls, shMana, shJewelry, shRunes]; NPCActions: []),
 
     // Armor Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clWhite;
-    NPCType: [ntHelmTrader_A, ntGlovesTrader_B, ntBootsTrader_C, ntQuest_D]),
+    NPCShops: [shHelms, shGloves, shBoots]; NPCActions: []),
 
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clRed;
-    NPCType: [ntBlacksmith_A, ntSmithTrader_B, ntIdentify_D]),
+    NPCShops: [shSmith]; NPCActions: [naRepair, naIdentify]),
 
     // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
-    Color: clLightYellow; NPCType: [ntFoodTrader_A, ntTavTrader_B]),
+    Color: clLightYellow; NPCShops: [shFoods, shTavern]; NPCActions: []),
 
     // Armor, Shields, Weapons and Sell Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
-    Color: clLightestGreen; NPCType: [ntArmTrader_A, ntShTrader_B,
-    ntWpnTrader_C, ntSell_D]),
+    Color: clLightestGreen; NPCShops: [shArmors, shShields, shWeapons];
+    NPCActions: [naSell]),
 
     // Bows and Quivers Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; );
-    Color: clLightBlue; NPCType: [ntBowTrader_A, ntQvrTrader_B, ntArrTrader_C]),
+    Color: clLightBlue; NPCShops: [shBows, shQuivers]; NPCActions: [naBuyArrows]),
 
     // Healer
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clGreen;
-    NPCType: [ntHealer_A, ntHealTrader_B]),
+    NPCShops: [shHealer]; NPCActions: [naHeal]),
 
     // Arcane Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clBlue;
-    NPCType: [ntStaffTrader_A, ntWandTrader_B, ntBookTrader_C]),
+    NPCShops: [shStaves, shWands, shBooks]; NPCActions: []),
 
     // Weapon Trader (Cellar)
     (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightRed;
-    NPCType: [ntDaggerTrader_A, ntVenomTrader_B]),
+    NPCShops: [shDaggers, shVenoms]; NPCActions: []),
 
     // General Buyer (Cellar)
     (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightGray;
-    NPCType: [ntSell_C, ntGemTrader_A]));
+    NPCShops: [shGem]; NPCActions: [naSell]));
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);
