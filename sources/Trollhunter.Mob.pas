@@ -77,7 +77,8 @@ type
     // NPC
     mbEldan_2the_magic_trader3, mbPetra_2the_trader3, mbBran_2the_blacksmith3,
     mbTarn_2the_tavern_owner3, mbSirius_2the_trader3, mbThor_2the_trader3,
-    mbVirna_2the_healer3, mbArno_2the_arcane_trader3, mbGorn_2the_thief3);
+    mbVirna_2the_healer3, mbArno_2the_arcane_trader3, mbGorn_2the_thief3,
+    mbFenn_2the_pawnbroker3);
 
 
 
@@ -441,7 +442,12 @@ const
     // Weapon Trader (Cellar)
     (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightRed;
-    NPCType: [ntDaggerTrader_A, ntVenomTrader_B]));
+    NPCType: [ntDaggerTrader_A, ntVenomTrader_B]),
+
+    // General Buyer (Cellar)
+    (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
+    PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightGray;
+    NPCType: [ntSell_C]));
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);

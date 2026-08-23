@@ -624,21 +624,30 @@ const
       CellarPos := Point(AX, AY);
   end;
 
+  procedure AddCellarNPC(AMob: TMobEnum);
+  var
+    NX, NY: UInt;
+  begin
+    repeat
+      NX := CellarPos.X + Math.RandomRange(0, 3) - 1;
+      NY := CellarPos.Y + Math.RandomRange(0, 3) - 1;
+    until (GetTileEnum(NX, NY, Z) = teWoodenFloor) and
+      ((NX <> CellarPos.X) or (NY <> CellarPos.Y));
+    Mobs.Add(Z, NX, NY, fcNPC, Ord(AMob));
+  end;
+
   procedure AddCellar;
   var
-    W, H, NX, NY: UInt;
+    W, H: UInt;
   begin
     W := RandomRange(5, 7);
     H := RandomRange(5, 7);
     AddRect(CellarPos.X, CellarPos.Y, W, H, teWoodenFloor, teMossyWall);
     SetTileEnum(CellarPos.X, CellarPos.Y, Z, teUpStoneStairs);
     // Weapon trader NPC
-    repeat
-      NX := CellarPos.X + Math.RandomRange(0, 3) - 1;
-      NY := CellarPos.Y + Math.RandomRange(0, 3) - 1;
-    until (GetTileEnum(NX, NY, Z) = teWoodenFloor) and
-      ((NX <> CellarPos.X) or (NY <> CellarPos.Y));
-    Mobs.Add(Z, NX, NY, fcNPC, Ord(mbGorn_2the_thief3));
+    AddCellarNPC(mbGorn_2the_thief3);
+    // General buyer NPC
+    AddCellarNPC(mbFenn_2the_pawnbroker3);
   end;
 
 begin
