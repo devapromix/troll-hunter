@@ -1193,6 +1193,7 @@ begin
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
   NPCShops := MobBase[TMobEnum(AMob.ID)].NPCShops;
   NPCActions := MobBase[TMobEnum(AMob.ID)].NPCActions;
+  PrepareNPCShopQuestions;
   Scenes.SetScene(scDialog);
 end;
 

@@ -8,11 +8,13 @@ uses
 procedure GenRandomNPCWelcomeText();
 function AskAbout(const ATopic: string): string;
 function GetShopQuestion(const AShop: TShopEnum): string;
+procedure PrepareNPCShopQuestions();
 
 var
   NPCName: string = '';
   NPCShops: set of TShopEnum = [];
   NPCActions: set of TNPCActionEnum = [];
+  NPCShopQuestion: array [TShopEnum] of string;
 
 implementation
 
@@ -92,6 +94,15 @@ begin
   else
     Result := AskAbout(CShopTopics[AShop]);
   end;
+end;
+
+procedure PrepareNPCShopQuestions();
+var
+  LShop: TShopEnum;
+begin
+  for LShop := Low(TShopEnum) to High(TShopEnum) do
+    if (LShop in NPCShops) then
+      NPCShopQuestion[LShop] := GetShopQuestion(LShop);
 end;
 
 end.

@@ -107,7 +107,7 @@ begin
 
   for LShop := Low(TShopEnum) to High(TShopEnum) do
     if (LShop in NPCShops) then
-      Add(GetShopQuestion(LShop));
+      Add(NPCShopQuestion[LShop]);
 
   { if (naQuest in NPCActions) then
       Add('The Hunt (quest)'); }
