@@ -27,7 +27,8 @@ type
     ntGlovesTrader_B, ntBootsTrader_C, ntTavTrader_B, ntPotManaTrader_B,
     ntScrTrader_A, ntFoodTrader_A, ntRuneTrader_D, ntQuest_D, ntStaffTrader_A,
     ntWandTrader_B, ntBookTrader_C, ntWpnTrader_A, ntShTrader_B, ntWpnTrader_C,
-    ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A, ntVenomTrader_B);
+    ntSell_D, ntBowTrader_A, ntIdentify_D, ntDaggerTrader_A, ntVenomTrader_B,
+    ntGemTrader_A);
 
 type
   TMobBase = record
@@ -411,7 +412,7 @@ const
     // Blacksmith
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clRed;
-    NPCType: [ntBlacksmith_A, ntSmithTrader_B, ntGemTrader_C, ntIdentify_D]),
+    NPCType: [ntBlacksmith_A, ntSmithTrader_B, ntIdentify_D]),
 
     // Tavern Owner
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
@@ -447,7 +448,7 @@ const
     // General Buyer (Cellar)
     (Symbol: '@'; Boss: False; Maps: [deGray_Cave]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clLightGray;
-    NPCType: [ntSell_C]));
+    NPCType: [ntSell_C, ntGemTrader_A]));
 
 type
   TForce = (fcAlly, fcEnemy, fcNPC);

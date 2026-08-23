@@ -38,10 +38,10 @@ var
   LValue: Int;
   S: string;
 
-  procedure Add(S: string);
+  procedure Add(const ALetter: char; const S: string);
   begin
     Inc(Y);
-    Terminal.Print(1, Y, UI.KeyToStr(Chr(Y + 95)) + ' ' + S, TK_ALIGN_LEFT);
+    Terminal.Print(1, Y, UI.KeyToStr(ALetter) + ' ' + S, TK_ALIGN_LEFT);
   end;
 
 begin
@@ -59,46 +59,53 @@ begin
         Items.GetPrice(Round(LValue * 1.6)) + ')'
     else
       S := '';
-    Add('Heal me, please' + S);
+    Add('A', 'Heal me, please' + S);
   end;
   // Shops
   if (ntScrTrader_A in NPCType) then
-    Add(AskAbout('scrolls'));
+    Add('A', AskAbout('scrolls'));
   if (ntArmTrader_A in NPCType) then
-    Add(AskAbout('armor'));
-  if (ntShTrader_A in NPCType) or (ntShTrader_B in NPCType) then
-    Add(AskAbout('shields'));
+    Add('A', AskAbout('armor'));
+  if (ntShTrader_A in NPCType) then
+    Add('A', AskAbout('shields'))
+  else if (ntShTrader_B in NPCType) then
+    Add('B', AskAbout('shields'));
   if (ntHelmTrader_A in NPCType) then
-    Add(AskAbout('helmets'));
+    Add('A', AskAbout('helmets'));
   if (ntFoodTrader_A in NPCType) then
-    Add(AskAbout('food'));
+    Add('A', AskAbout('food'));
   if (ntBowTrader_A in NPCType) then
-    Add(AskAbout('bows'));
+    Add('A', AskAbout('bows'));
   if (ntDaggerTrader_A in NPCType) then
-    Add(AskAbout('daggers'));
+    Add('A', AskAbout('daggers'));
   if (ntVenomTrader_B in NPCType) then
-    Add(AskAbout('venoms'));
+    Add('B', AskAbout('venoms'));
   if (ntBlacksmith_A in NPCType) then
-    Add('Can you repair my gear?');
+    Add('A', 'Can you repair my gear?');
   if (ntSmithTrader_B in NPCType) then
-    Add('What do you have for sale?');
+    Add('B', 'What do you have for sale?');
   if (ntHealTrader_B in NPCType) then
-    Add(AskAbout('healing items'));
+    Add('B', AskAbout('healing items'));
   if (ntPotManaTrader_B in NPCType) then
-    Add(AskAbout('mana potions'));
+    Add('B', AskAbout('mana potions'));
   if (ntPotTrader_B in NPCType) then
-    Add(AskAbout('potions'));
+    Add('B', AskAbout('potions'));
   if (ntGlovesTrader_B in NPCType) then
-    Add(AskAbout('gloves'));
+    Add('B', AskAbout('gloves'));
   if (ntTavTrader_B in NPCType) then
-    Add('What''s on the menu?');
-  if (ntWpnTrader_A in NPCType) or (ntWpnTrader_B in NPCType) or
-    (ntWpnTrader_C in NPCType) then
-    Add(AskAbout('weapons'));
+    Add('B', 'What''s on the menu?');
+  if (ntWpnTrader_A in NPCType) then
+    Add('A', AskAbout('weapons'))
+  else if (ntWpnTrader_B in NPCType) then
+    Add('B', AskAbout('weapons'))
+  else if (ntWpnTrader_C in NPCType) then
+    Add('C', AskAbout('weapons'));
   if (ntQvrTrader_B in NPCType) then
-    Add(AskAbout('quivers'));
-  if (ntGemTrader_C in NPCType) then
-    Add(AskAbout('gems'));
+    Add('B', AskAbout('quivers'));
+  if (ntGemTrader_A in NPCType) then
+    Add('A', AskAbout('gems'))
+  else if (ntGemTrader_C in NPCType) then
+    Add('C', AskAbout('gems'));
   // Identify all items
   if (ntIdentify_D in NPCType) then
   begin
@@ -106,14 +113,16 @@ begin
       S := ' (' + Items.GetPrice(CIdentifyAllItemsCost) + ')'
     else
       S := '';
-    Add('Can you identify my items?' + S);
+    Add('D', 'Can you identify my items?' + S);
   end;
   if (ntJewTrader_C in NPCType) then
-    Add(AskAbout('jewelry'));
+    Add('C', AskAbout('jewelry'));
   if (ntBootsTrader_C in NPCType) then
-    Add(AskAbout('boots'));
-  if (ntSell_C in NPCType) or (ntSell_D in NPCType) then
-    Add('I want to sell something');
+    Add('C', AskAbout('boots'));
+  if (ntSell_C in NPCType) then
+    Add('C', 'I want to sell something')
+  else if (ntSell_D in NPCType) then
+    Add('D', 'I want to sell something');
   // Arrows
   if (ntArrTrader_C in NPCType) then
   begin
@@ -122,19 +131,19 @@ begin
       S := ' (' + Items.GetIcon(LValue, 'Arrow') + ' ' + Items.GetPrice(LValue) + ')'
     else
       S := '';
-    Add('I need more arrows' + S);
+    Add('C', 'I need more arrows' + S);
   end;
   if (ntRuneTrader_D in NPCType) then
-    Add(AskAbout('runes'));
+    Add('D', AskAbout('runes'));
   if (ntStaffTrader_A in NPCType) then
-    Add(AskAbout('staves'));
+    Add('A', AskAbout('staves'));
   if (ntWandTrader_B in NPCType) then
-    Add(AskAbout('wands'));
+    Add('B', AskAbout('wands'));
   if (ntBookTrader_C in NPCType) then
-    Add(AskAbout('books'));
+    Add('C', AskAbout('books'));
   // Quests
   {if (ntQuest_D in NPCType) then
-    Add('The Hunt (quest)'); }
+    Add('D', 'The Hunt (quest)'); }
   MsgLog.Render(2, True);
 
   AddKey('Esc', 'Close', True);
@@ -176,6 +185,10 @@ begin
         AddShop(shScrolls);
       if (ntArmTrader_A in NPCType) then
         AddShop(shArmors);
+      if (ntShTrader_A in NPCType) then
+        AddShop(shShields);
+      if (ntGemTrader_A in NPCType) then
+        AddShop(shGem);
       if (ntStaffTrader_A in NPCType) then
         AddShop(shStaves);
       if (ntWpnTrader_A in NPCType) then
