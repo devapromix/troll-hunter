@@ -82,7 +82,7 @@ const
   CShopTopics: array [TShopEnum] of string = (
     'potions', 'scrolls', 'healing items', 'mana potions', '', 'armor',
     'gloves', 'food', 'weapons', 'boots', '', 'shields', 'helmets',
-    'jewelry', 'gems', 'runes', 'quivers', 'staves', 'wands', 'books',
+    'jewelry', 'gems', 'quivers', 'staves', 'wands', 'books',
     'bows', 'daggers', 'venoms'
   );
 begin

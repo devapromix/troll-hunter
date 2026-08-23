@@ -75,7 +75,6 @@ const
     HelmTypeItems,                      // shHelms
     JewelryTypeItems,                   // shJewelry
     GemTypeItems,                       // shGem
-    RuneTypeItems,                      // shRunes
     QuiverTypeItems,                    // shQuivers
     StaffTypeItems,                     // shStaves
     WandTypeItems,                      // shWands

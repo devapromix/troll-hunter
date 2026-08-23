@@ -393,7 +393,7 @@ const
     // Magic Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
     PV: 50; DV: 50; MaxCount: 1; Damage: (Min: 10; Max: 15; ); Color: clBlue;
-    NPCShops: [shScrolls, shMana, shJewelry, shRunes]; NPCActions: []),
+    NPCShops: [shScrolls, shMana, shJewelry]; NPCActions: []),
 
     // Armor Trader
     (Symbol: '@'; Boss: False; Maps: [deDark_Wood]; MaxLife: 100; Level: 10;
