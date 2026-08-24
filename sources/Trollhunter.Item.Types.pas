@@ -247,7 +247,7 @@ type
     itmDeadly_Poison,  itmManticore_Venom,
     itmHydra_Venom, itmVoid_Poison, itmBlack_Ichor,
     // Trophies
-    itmBig_Tooth
+    itmBig_Tooth, itmVenom_Sac
     );
 
 const

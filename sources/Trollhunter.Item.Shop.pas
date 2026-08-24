@@ -62,15 +62,15 @@ const
   CShopItemTypes: array [TShopEnum] of TSetOfItem = (
     PotionTypeItems,                    // shPotions
     ScrollTypeItems,                    // shScrolls
-    [],                                 // shHealer  (перевірка за Effects)
-    [],                                 // shMana    (перевірка за Effects)
+    [],                                 // shHealer
+    [],                                 // shMana
     SmithTypeItems + RepairTypeItems,   // shSmith
     ArmorTypeItems,                     // shArmors
     GlovesTypeItems,                    // shGloves
     FoodTypeItems + PlantTypeItems,     // shFoods
     WeaponTypeItems,                    // shWeapons
     BootsTypeItems,                     // shBoots
-    [],                                 // shTavern  (перевірка за TavernItems)
+    [],                                 // shTavern
     ShieldTypeItems,                    // shShields
     HelmTypeItems,                      // shHelms
     JewelryTypeItems,                   // shJewelry

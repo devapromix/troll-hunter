@@ -1919,11 +1919,17 @@ const
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 300; Color: clDarkGray; Deep: [deDrom];
     Effects: [efPoisonWeapon]; Value: 75; Rare: True),
+
     // Big Tooth
     (Symbol: '~'; ItemType: itTrophy; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 5; Color: clWhite; Deep: [deDark_Wood .. deDrom])
+    Price: 5; Color: clWhite; Deep: [deDark_Wood .. deDrom]),
+    // Venom Sac
+    (Symbol: '~'; ItemType: itTrophy; SlotType: stNone; MaxStack: 20;
+    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 8; Color: clLightGreen; Deep: [deDark_Wood .. deDrom])
     );
 
 type
