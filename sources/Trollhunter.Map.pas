@@ -456,25 +456,34 @@ const
 
   procedure AddNPC(AX, AY: UInt);
   var
-    I, LX, LY: Int;
+    I, NX, NY, LX, LY: Int;
   begin
     repeat
       I := Math.RandomRange(0, 7);
     until not BNPC[I];
-    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + I);
+
+    // Place the main NPC on a random walkable tile inside the house.
+    repeat
+      NX := Int(AX) + Math.RandomRange(-4, 5);
+      NY := Int(AY) + Math.RandomRange(-4, 5);
+    until Self.GetTileEnum(NX, NY, Z) = teWoodenFloor;
+
+    Mobs.Add(Self.Current, NX, NY, fcNPC,
+      Ord(mbEldan_2the_magic_trader3) + I);
     BNPC[I] := True;
+
+    // The arcane trader also gets a random, separate tile in the same house.
     if (I = 0) then
     begin
       repeat
-        LX := Math.RandomRange(0, 5) - 2;
-        LY := Math.RandomRange(0, 5) - 2;
-      until ((LX <> 0) and (LY <> 0)) and
-        (Self.GetTileEnum(AX + LX, AY + LY, Z) in [teWoodenFloor]);
-      Mobs.Add(Self.Current, AX + LX, AY + LY, fcNPC,
+        LX := Int(AX) + Math.RandomRange(-4, 5);
+        LY := Int(AY) + Math.RandomRange(-4, 5);
+      until (Self.GetTileEnum(LX, LY, Z) = teWoodenFloor) and
+        ((LX <> NX) or (LY <> NY));
+      Mobs.Add(Self.Current, LX, LY, fcNPC,
         Ord(mbArno_2the_arcane_trader3));
     end;
   end;
-
 
   procedure AddVillage(AX, AY: UInt);
   var
