@@ -43,7 +43,7 @@ begin
       IsRender := False;
     end;
 
-    terminal_delay(10);
+    terminal_delay(20);
   until Game.CanClose;
 
 end.

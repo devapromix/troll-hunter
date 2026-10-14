@@ -475,50 +475,6 @@ const
     end;
   end;
 
-  procedure AddHouse(AX, AY, CX, CY, D: UInt; AV: boolean; F: boolean);
-  var
-    W, H: UInt;
-    IsDoor: boolean;
-
-    procedure AddDoor(X, Y: UInt);
-    begin
-      if IsDoor then
-        Exit;
-      SetTileEnum(X, Y, Z, teDoor);
-      IsDoor := True;
-      AddNPC(AX, AY);
-    end;
-
-  begin
-    IsDoor := False;
-    W := IfThen(AV, 8, RandomRange(2, 5) * 2);
-    H := IfThen(AV, 8, RandomRange(2, 5) * 2);
-    AddRect(AX, AY, W, H, teWoodenFloor, teWoodenWall);
-    // Add door
-    if AV then
-    begin
-      case D of
-        4:
-          AddDoor(AX, AY - (H div 2));
-        5:
-          AddDoor(AX + (H div 2), AY);
-        6:
-          AddDoor(AX - (H div 2), AY);
-        7:
-          AddDoor(AX, AY + (H div 2));
-      end;
-      Exit;
-    end;
-    if F then
-      if (AX <= CX) then
-        AddDoor(AX + (W div 2), AY)
-      else
-        AddDoor(AX - (W div 2), AY)
-    else if (AY <= CY) then
-      AddDoor(AX, AY + (H div 2))
-    else
-      AddDoor(AX, AY - (H div 2));
-  end;
 
   procedure AddVillage(AX, AY: UInt);
   var
@@ -599,7 +555,10 @@ const
       Y := AY - House[I].Y;
       if not HP[I] then
       begin
-        AddHouse(X, Y, AX, AY, J, I = (10 - J + 1), (J = 4) or (J = 7));
+        GenerateHouse(Self, X, Y, AX, AY, Z, J, I = (10 - J + 1),
+          (J = 4) or (J = 7), HasHouseDoor);
+        if HasHouseDoor then
+          AddNPC(X, Y);
         HousePos[HouseCount].X := X;
         HousePos[HouseCount].Y := Y;
         Inc(HouseCount);
