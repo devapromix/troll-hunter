@@ -102,7 +102,8 @@ uses
   Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Scenes,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  Trollhunter.Map.House;
 
   { TMap }
 
@@ -488,6 +489,7 @@ const
   procedure AddVillage(AX, AY: UInt);
   var
     I, J, T, X, Y, PX, PY: UInt;
+    HasHouseDoor: Boolean;
     HP: array [0 .. 7] of boolean;
   const
     House: array [0 .. 7] of TPoint = ((X: -10; Y: -10; ), (X: 10; Y: -10;
