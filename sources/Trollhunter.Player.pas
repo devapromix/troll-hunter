@@ -1189,7 +1189,7 @@ end;
 
 procedure TPlayer.Dialog(AMob: TMob);
 begin
-  Game.Timer := UIntMax;
+  Game.RenderTimeout := Game.GetRenderTimeout();
   NPCName := Mobs.Name[TMobEnum(AMob.ID)];
   NPCShops := MobBase[TMobEnum(AMob.ID)].NPCShops;
   NPCActions := MobBase[TMobEnum(AMob.ID)].NPCActions;
@@ -1931,7 +1931,7 @@ begin
   FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
   if Player.IsOnStash then
   begin
-    Game.Timer := UIntMax;
+    Game.RenderTimeout := Game.GetRenderTimeout();
     Scenes.SetScene(scStash);
   end
   else if (FCount > 0) then
@@ -1947,7 +1947,7 @@ begin
     end
     else
     begin
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
       Scenes.SetScene(scItems);
     end;
   end

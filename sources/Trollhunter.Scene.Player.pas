@@ -221,7 +221,7 @@ begin
     // Inventory
     TK_SPACE:
     begin
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
       Scenes.SetScene(scInv);
     end;
     TK_UP, TK_KP_8:

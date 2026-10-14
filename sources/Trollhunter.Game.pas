@@ -90,6 +90,9 @@ const
 const
   clFog = $FF222222;
 
+const
+  RenderDelayMs = 3000;
+
 var
   clDefault: cardinal = $FFFFFF00;
   clBackground: cardinal = $00000000;
@@ -129,6 +132,7 @@ type
   private
     FDifficulty: TDifficulty;
     FTimer: UInt;
+    FRenderTimeout: QWord;
     FWon: boolean;
     FCanClose: boolean;
     FShowMap: boolean;
@@ -146,6 +150,9 @@ type
     destructor Destroy; override;
     property Difficulty: TDifficulty read FDifficulty write FDifficulty;
     property Timer: UInt read FTimer write FTimer;
+    property RenderTimeout: QWord read FRenderTimeout write FRenderTimeout;
+    function GetRenderTimeout: QWord;
+    function IsRenderTimeoutActive: Boolean;
     property Won: boolean read FWon write FWon;
     property CanClose: boolean read FCanClose write FCanClose;
     property ShowMap: boolean read FShowMap write FShowMap;
@@ -195,6 +202,16 @@ uses
 
   { TGame }
 
+function TGame.GetRenderTimeout: QWord;
+begin
+  Result := GetTickCount64() + RenderDelayMs;
+end;
+
+function TGame.IsRenderTimeoutActive: Boolean;
+begin
+  Result := (FRenderTimeout > 0) and (GetTickCount64() < FRenderTimeout);
+end;
+
 procedure TGame.ChScreen;
 begin
   if FAPOption[apFullscreen] then
@@ -210,6 +227,7 @@ var
 begin
   Randomize;
   Timer := 0;
+  FRenderTimeout := 0;
   Won := False;
   Mode.Game := False;
   Mode.Wizard := False;

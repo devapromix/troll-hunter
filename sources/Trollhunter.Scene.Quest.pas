@@ -41,7 +41,7 @@ begin
       Scenes.GoBack();
     end
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 

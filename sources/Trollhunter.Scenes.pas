@@ -381,7 +381,7 @@ end;
 
 procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
 begin
-  Game.Timer := UIntMax;
+  Game.RenderTimeout := Game.GetRenderTimeout();
   Game.ShowEffects := False;
   Self.SceneEnum := ASceneEnum;
   Render;
@@ -512,7 +512,7 @@ begin
     TK_A .. TK_Z: // Selling an item
       Player.Sell(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 
@@ -539,7 +539,7 @@ begin
     TK_A .. TK_Z: // Buy items
       Player.Buy(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 
@@ -567,7 +567,7 @@ begin
     TK_A .. TK_Z: // Repairing an item
       Player.RepairItem(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 
@@ -593,7 +593,7 @@ begin
     TK_A .. TK_Z:
       Player.PoisonItem(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 
@@ -619,7 +619,7 @@ begin
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 
@@ -645,7 +645,7 @@ begin
     TK_A .. TK_Z:
       Player.DisenchantItem(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 

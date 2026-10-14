@@ -2725,7 +2725,7 @@ begin
     Result := Result + D.Symbol + ' ';
 
   Terminal.ForegroundColor(clLightGray);
-  if (IsAdvInfo and (Game.Timer = 0)) then
+  if (IsAdvInfo and (not Game.IsRenderTimeoutActive)) then
   begin
     S := '';
     if (D.SlotType <> stNone) and (AItem.Equipment > 0) then
@@ -2769,7 +2769,7 @@ begin
         if not Player.IsOnStash and (AItem.Price > 0) and Game.GetOption(apShPrice) then
           S := GetPrice(GetDisplayPrice(AItem.Price), True);
     end;
-    if Game.Timer > 0 then
+    if Game.IsRenderTimeoutActive then
       Terminal.Print(Status.Left - L, AY + I, S)
     else
       Terminal.Print(Screen.Width - L, AY + I, S);
