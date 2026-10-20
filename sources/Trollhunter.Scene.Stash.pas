@@ -63,13 +63,13 @@ begin
       Scenes.SetScene(scGame);
     TK_SPACE:
     begin
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
       Scenes.SetScene(scInv);
     end;
     TK_A .. TK_Z:
       Items.AddItemToInv(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 

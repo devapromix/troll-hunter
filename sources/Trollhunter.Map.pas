@@ -102,7 +102,8 @@ uses
   Trollhunter.Creature,
   Trollhunter.Attribute,
   Trollhunter.Scenes,
-  Trollhunter.Helpers;
+  Trollhunter.Helpers,
+  Trollhunter.Map.House;
 
   { TMap }
 
@@ -456,73 +457,39 @@ const
 
   procedure AddNPC(AX, AY: UInt);
   var
-    I, LX, LY: Int;
+    I, NX, NY, LX, LY: Int;
   begin
     repeat
       I := Math.RandomRange(0, 7);
     until not BNPC[I];
-    Mobs.Add(Self.Current, AX, AY, fcNPC, Ord(mbEldan_2the_magic_trader3) + I);
+
+    // Place the main NPC on a random walkable tile inside the house.
+    repeat
+      NX := Int(AX) + Math.RandomRange(-4, 5);
+      NY := Int(AY) + Math.RandomRange(-4, 5);
+    until Self.GetTileEnum(NX, NY, Z) = teWoodenFloor;
+
+    Mobs.Add(Self.Current, NX, NY, fcNPC,
+      Ord(mbEldan_2the_magic_trader3) + I);
     BNPC[I] := True;
+
+    // The arcane trader also gets a random, separate tile in the same house.
     if (I = 0) then
     begin
       repeat
-        LX := Math.RandomRange(0, 5) - 2;
-        LY := Math.RandomRange(0, 5) - 2;
-      until ((LX <> 0) and (LY <> 0)) and
-        (Self.GetTileEnum(AX + LX, AY + LY, Z) in [teWoodenFloor]);
-      Mobs.Add(Self.Current, AX + LX, AY + LY, fcNPC,
+        LX := Int(AX) + Math.RandomRange(-4, 5);
+        LY := Int(AY) + Math.RandomRange(-4, 5);
+      until (Self.GetTileEnum(LX, LY, Z) = teWoodenFloor) and
+        ((LX <> NX) or (LY <> NY));
+      Mobs.Add(Self.Current, LX, LY, fcNPC,
         Ord(mbArno_2the_arcane_trader3));
     end;
-  end;
-
-  procedure AddHouse(AX, AY, CX, CY, D: UInt; AV: boolean; F: boolean);
-  var
-    W, H: UInt;
-    IsDoor: boolean;
-
-    procedure AddDoor(X, Y: UInt);
-    begin
-      if IsDoor then
-        Exit;
-      SetTileEnum(X, Y, Z, teDoor);
-      IsDoor := True;
-      AddNPC(AX, AY);
-    end;
-
-  begin
-    IsDoor := False;
-    W := IfThen(AV, 8, RandomRange(2, 5) * 2);
-    H := IfThen(AV, 8, RandomRange(2, 5) * 2);
-    AddRect(AX, AY, W, H, teWoodenFloor, teWoodenWall);
-    // Add door
-    if AV then
-    begin
-      case D of
-        4:
-          AddDoor(AX, AY - (H div 2));
-        5:
-          AddDoor(AX + (H div 2), AY);
-        6:
-          AddDoor(AX - (H div 2), AY);
-        7:
-          AddDoor(AX, AY + (H div 2));
-      end;
-      Exit;
-    end;
-    if F then
-      if (AX <= CX) then
-        AddDoor(AX + (W div 2), AY)
-      else
-        AddDoor(AX - (W div 2), AY)
-    else if (AY <= CY) then
-      AddDoor(AX, AY + (H div 2))
-    else
-      AddDoor(AX, AY - (H div 2));
   end;
 
   procedure AddVillage(AX, AY: UInt);
   var
     I, J, T, X, Y, PX, PY: UInt;
+    HasHouseDoor: Boolean;
     HP: array [0 .. 7] of boolean;
   const
     House: array [0 .. 7] of TPoint = ((X: -10; Y: -10; ), (X: 10; Y: -10;
@@ -599,7 +566,10 @@ const
       Y := AY - House[I].Y;
       if not HP[I] then
       begin
-        AddHouse(X, Y, AX, AY, J, I = (10 - J + 1), (J = 4) or (J = 7));
+        GenerateHouse(Self, X, Y, AX, AY, Z, J, I = (10 - J + 1),
+          (J = 4) or (J = 7), HasHouseDoor);
+        if HasHouseDoor then
+          AddNPC(X, Y);
         HousePos[HouseCount].X := X;
         HousePos[HouseCount].Y := Y;
         Inc(HouseCount);

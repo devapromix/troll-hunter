@@ -72,7 +72,7 @@ begin
     TK_A .. TK_Z:
       Items.AddItemToInv(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 

@@ -45,7 +45,7 @@ const
 procedure TMsgLog.Add(S: string);
 begin
   FMsg := FMsg + ' ' + Trim(S);
-  Game.Timer := UIntMax;
+  Game.RenderTimeout := Game.GetRenderTimeout();
 end;
 
 procedure TMsgLog.Clear;
@@ -91,7 +91,7 @@ end;
 
 procedure TMsgLog.Render(const Y: UInt = 0; Flag: boolean = False);
 begin
-  if (Flag and (Game.Timer = 0)) then
+  if (Flag and (not Game.IsRenderTimeoutActive)) then
     Exit;
   Player.RenderInfo;
   if (Trim(MsgLog.Msg) = '') then

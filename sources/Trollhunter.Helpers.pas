@@ -1,4 +1,4 @@
-unit Trollhunter.Helpers;
+﻿unit Trollhunter.Helpers;
 
 interface
 
@@ -84,7 +84,7 @@ end;
 
 function TItemHelper.DoIt: string;
 begin
-
+  Result := '';
 end;
 
 { TStringHelper }

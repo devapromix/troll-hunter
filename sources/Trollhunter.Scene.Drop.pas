@@ -43,7 +43,7 @@ begin
     TK_A .. TK_Z:
       Player.Drop(Key - TK_A);
     else
-      Game.Timer := UIntMax;
+      Game.RenderTimeout := Game.GetRenderTimeout();
   end;
 end;
 
