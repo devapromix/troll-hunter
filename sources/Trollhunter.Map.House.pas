@@ -54,25 +54,28 @@ var
 
   procedure AddPartition;
   var
-    LX, LY: UInt;
-    LCanSplit: boolean;
+    LX, LY, LStart, LSize, LPos: UInt;
   begin
     if Random(2) = 0 then
       Exit;
     if LDoorHorizontal then
-      LCanSplit := H >= 6
+    begin
+      LStart := PY;
+      LSize := H;
+    end
     else
-      LCanSplit := W >= 6;
-    if not LCanSplit then
+    begin
+      LStart := PX;
+      LSize := W;
+    end;
+    if LSize < 6 then
       Exit;
+    LPos := RandomRange(LStart + 3, LStart + LSize - 2);
     for LX := PX + 1 to PX + W - 1 do
       for LY := PY + 1 to PY + H - 1 do
-        if (LDoorHorizontal and (LY = AY)) or (not LDoorHorizontal and (LX = AX)) then
+        if (LDoorHorizontal and (LY = LPos)) or (not LDoorHorizontal and (LX = LPos)) then
           AMap.SetTileEnum(LX, LY, AZ, teWoodenWall);
-    if LDoorHorizontal then
-      SetDoor(True, AY)
-    else
-      SetDoor(False, AX);
+    SetDoor(LDoorHorizontal, LPos);
   end;
 
 begin
