@@ -62,7 +62,10 @@ var
       for LY := PY + 1 to PY + H - 1 do
         if (LIsHorizontal and (LY = AY)) or (not LIsHorizontal and (LX = AX)) then
           AMap.SetTileEnum(LX, LY, AZ, teWoodenWall);
-    AMap.SetTileEnum(AX, AY, AZ, teDoor);
+    if LIsHorizontal then
+      AMap.SetTileEnum(RandomRange(PX + 2, PX + W - 1), AY, AZ, teDoor)
+    else
+      AMap.SetTileEnum(AX, RandomRange(PY + 2, PY + H - 1), AZ, teDoor);
   end;
 
 begin
