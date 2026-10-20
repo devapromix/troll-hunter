@@ -18,6 +18,7 @@ procedure GenerateHouse(AMap: TMap; AX, AY, CX, CY: UInt; AZ: TMapEnum; D: UInt;
   AV, F: boolean; out AHasDoor: boolean);
 var
   W, H, X, Y, PX, PY: UInt;
+  LDoorY: UInt;
 
   procedure AddRect(AWidth, AHeight: UInt);
   var
@@ -39,7 +40,29 @@ var
     if AHasDoor then
       Exit;
     AMap.SetTileEnum(AXDoor, AYDoor, AZ, teDoor);
+    LDoorY := AYDoor;
     AHasDoor := True;
+  end;
+
+  procedure AddPartition;
+  var
+    LX, LY: UInt;
+    LIsHorizontal, LCanSplit: boolean;
+  begin
+    if Random(2) = 0 then
+      Exit;
+    LIsHorizontal := LDoorY <> AY;
+    if LIsHorizontal then
+      LCanSplit := H >= 6
+    else
+      LCanSplit := W >= 6;
+    if not LCanSplit then
+      Exit;
+    for LX := PX + 1 to PX + W - 1 do
+      for LY := PY + 1 to PY + H - 1 do
+        if (LIsHorizontal and (LY = AY)) or (not LIsHorizontal and (LX = AX)) then
+          AMap.SetTileEnum(LX, LY, AZ, teWoodenWall);
+    AMap.SetTileEnum(AX, AY, AZ, teDoor);
   end;
 
 begin
@@ -57,18 +80,19 @@ begin
       6: AddDoor(AX - (H div 2), AY);
       7: AddDoor(AX, AY + (H div 2));
     end;
-    Exit;
-  end;
-
-  if F then
+  end
+  else if F then
+  begin
     if AX <= CX then
       AddDoor(AX + (W div 2), AY)
     else
-      AddDoor(AX - (W div 2), AY)
+      AddDoor(AX - (W div 2), AY);
+  end
   else if AY <= CY then
     AddDoor(AX, AY + (H div 2))
   else
     AddDoor(AX, AY - (H div 2));
+  AddPartition;
 end;
 
 end.
