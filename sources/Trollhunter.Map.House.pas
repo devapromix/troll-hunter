@@ -18,7 +18,7 @@ procedure GenerateHouse(AMap: TMap; AX, AY, CX, CY: UInt; AZ: TMapEnum; D: UInt;
   AV, F: boolean; out AHasDoor: boolean);
 var
   W, H, X, Y, PX, PY: UInt;
-  LDoorY: UInt;
+  LDoorHorizontal: boolean;
 
   procedure AddRect(AWidth, AHeight: UInt);
   var
@@ -35,24 +35,31 @@ var
           AMap.SetTileEnum(RX, RY, AZ, teWoodenWall);
   end;
 
-  procedure AddDoor(AXDoor, AYDoor: UInt);
+  procedure SetDoor(AIsHorizontal: boolean; AFixed: UInt);
+  begin
+    if AIsHorizontal then
+      AMap.SetTileEnum(RandomRange(PX + 2, PX + W - 1), AFixed, AZ, teDoor)
+    else
+      AMap.SetTileEnum(AFixed, RandomRange(PY + 2, PY + H - 1), AZ, teDoor);
+  end;
+
+  procedure AddDoor(AIsHorizontal: boolean; AFixed: UInt);
   begin
     if AHasDoor then
       Exit;
-    AMap.SetTileEnum(AXDoor, AYDoor, AZ, teDoor);
-    LDoorY := AYDoor;
+    SetDoor(AIsHorizontal, AFixed);
+    LDoorHorizontal := AIsHorizontal;
     AHasDoor := True;
   end;
 
   procedure AddPartition;
   var
     LX, LY: UInt;
-    LIsHorizontal, LCanSplit: boolean;
+    LCanSplit: boolean;
   begin
     if Random(2) = 0 then
       Exit;
-    LIsHorizontal := LDoorY <> AY;
-    if LIsHorizontal then
+    if LDoorHorizontal then
       LCanSplit := H >= 6
     else
       LCanSplit := W >= 6;
@@ -60,12 +67,12 @@ var
       Exit;
     for LX := PX + 1 to PX + W - 1 do
       for LY := PY + 1 to PY + H - 1 do
-        if (LIsHorizontal and (LY = AY)) or (not LIsHorizontal and (LX = AX)) then
+        if (LDoorHorizontal and (LY = AY)) or (not LDoorHorizontal and (LX = AX)) then
           AMap.SetTileEnum(LX, LY, AZ, teWoodenWall);
-    if LIsHorizontal then
-      AMap.SetTileEnum(RandomRange(PX + 2, PX + W - 1), AY, AZ, teDoor)
+    if LDoorHorizontal then
+      SetDoor(True, AY)
     else
-      AMap.SetTileEnum(AX, RandomRange(PY + 2, PY + H - 1), AZ, teDoor);
+      SetDoor(False, AX);
   end;
 
 begin
@@ -78,23 +85,23 @@ begin
   if AV then
   begin
     case D of
-      4: AddDoor(AX, AY - (H div 2));
-      5: AddDoor(AX + (H div 2), AY);
-      6: AddDoor(AX - (H div 2), AY);
-      7: AddDoor(AX, AY + (H div 2));
+      4: AddDoor(True, AY - (H div 2));
+      5: AddDoor(False, AX + (H div 2));
+      6: AddDoor(False, AX - (H div 2));
+      7: AddDoor(True, AY + (H div 2));
     end;
   end
   else if F then
   begin
     if AX <= CX then
-      AddDoor(AX + (W div 2), AY)
+      AddDoor(False, AX + (W div 2))
     else
-      AddDoor(AX - (W div 2), AY);
+      AddDoor(False, AX - (W div 2));
   end
   else if AY <= CY then
-    AddDoor(AX, AY + (H div 2))
+    AddDoor(True, AY + (H div 2))
   else
-    AddDoor(AX, AY - (H div 2));
+    AddDoor(True, AY - (H div 2));
   AddPartition;
 end;
 
