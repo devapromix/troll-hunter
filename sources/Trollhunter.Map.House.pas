@@ -17,7 +17,7 @@ uses
 procedure GenerateHouse(AMap: TMap; AX, AY, CX, CY: UInt; AZ: TMapEnum; D: UInt;
   AV, F: boolean; out AHasDoor: boolean);
 var
-  W, H, X, Y, PX, PY, LDoorFixed: UInt;
+  W, H, X, Y, PX, PY, LDoorFixed, LDoorAcross: UInt;
   LDoorHorizontal: boolean;
   LGround: TTileEnum;
 
@@ -36,32 +36,6 @@ var
           AMap.SetTileEnum(RX, RY, AZ, teWoodenWall);
   end;
 
-  procedure SetDoorInRange(AIsHorizontal: boolean; AFixed, AFrom, ATo: UInt);
-  begin
-    if AIsHorizontal then
-      AMap.SetTileEnum(RandomRange(AFrom, ATo), AFixed, AZ, teDoor)
-    else
-      AMap.SetTileEnum(AFixed, RandomRange(AFrom, ATo), AZ, teDoor);
-  end;
-
-  procedure SetDoor(AIsHorizontal: boolean; AFixed: UInt);
-  begin
-    if AIsHorizontal then
-      SetDoorInRange(True, AFixed, PX + 2, PX + W - 1)
-    else
-      SetDoorInRange(False, AFixed, PY + 2, PY + H - 1);
-  end;
-
-  procedure AddDoor(AIsHorizontal: boolean; AFixed: UInt);
-  begin
-    if AHasDoor then
-      Exit;
-    SetDoor(AIsHorizontal, AFixed);
-    LDoorFixed := AFixed;
-    LDoorHorizontal := AIsHorizontal;
-    AHasDoor := True;
-  end;
-
   procedure SetTileAt(AAlong, AAcross: UInt; ATileEnum: TTileEnum);
   begin
     if LDoorHorizontal then
@@ -70,10 +44,35 @@ var
       AMap.SetTileEnum(AAlong, AAcross, AZ, ATileEnum);
   end;
 
+  procedure PlaceDoor(AAlong, AFrom, ATo: UInt);
+  begin
+    LDoorAcross := RandomRange(AFrom, ATo);
+    SetTileAt(AAlong, LDoorAcross, teDoor);
+  end;
+
+  procedure SetDoor(AAlong: UInt);
+  begin
+    if LDoorHorizontal then
+      PlaceDoor(AAlong, PX + 2, PX + W - 1)
+    else
+      PlaceDoor(AAlong, PY + 2, PY + H - 1);
+  end;
+
+  procedure AddDoor(AIsHorizontal: boolean; AFixed: UInt);
+  begin
+    if AHasDoor then
+      Exit;
+    LDoorHorizontal := AIsHorizontal;
+    LDoorFixed := AFixed;
+    SetDoor(AFixed);
+    AHasDoor := True;
+  end;
+
   procedure AddWing(AStart, ASize, AAStart, AASize, APos: UInt);
   var
-    LNarrow, LWall, LCutFrom, LCutTo, LDoorFrom, LAlongFrom, LAlongTo,
-      LAlong, LAcross: UInt;
+    LNarrow, LWall, LCutFrom, LCutTo, LDoorFrom, LDoorTo, LAlongFrom,
+      LAlongTo, LAlong, LAcross: UInt;
+    LNarrowAtStart, LNearNarrow: boolean;
   begin
     LNarrow := AASize - 2 * RandomRange(1, AASize div 2 - 1);
     if Random(2) = 0 then
@@ -90,23 +89,30 @@ var
       LCutTo := LWall - 1;
       LDoorFrom := LWall + 2;
     end;
-    if LDoorFixed = AStart then
-    begin
-      LAlongFrom := APos + 1;
-      LAlongTo := AStart + ASize;
-    end
-    else
+    LDoorTo := LDoorFrom + LNarrow - 3;
+    LNarrowAtStart := Random(2) = 0;
+    if LNarrowAtStart then
     begin
       LAlongFrom := AStart;
       LAlongTo := APos - 1;
+    end
+    else
+    begin
+      LAlongFrom := APos + 1;
+      LAlongTo := AStart + ASize;
     end;
+    LNearNarrow := LNarrowAtStart = (LDoorFixed = AStart);
+    if LNearNarrow then
+      SetTileAt(LDoorFixed, LDoorAcross, teWoodenWall);
     for LAlong := LAlongFrom to LAlongTo do
     begin
       SetTileAt(LAlong, LWall, teWoodenWall);
       for LAcross := LCutFrom to LCutTo do
         SetTileAt(LAlong, LAcross, LGround);
     end;
-    SetDoorInRange(LDoorHorizontal, APos, LDoorFrom, LDoorFrom + LNarrow - 3);
+    if LNearNarrow then
+      PlaceDoor(LDoorFixed, LDoorFrom, LDoorTo);
+    PlaceDoor(APos, LDoorFrom, LDoorTo);
   end;
 
   procedure AddPartition;
@@ -139,7 +145,7 @@ var
     if (LASize >= 6) and (Random(2) = 0) then
       AddWing(LStart, LSize, LAStart, LASize, LPos)
     else
-      SetDoor(LDoorHorizontal, LPos);
+      SetDoor(LPos);
   end;
 
 begin
