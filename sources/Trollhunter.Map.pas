@@ -103,7 +103,7 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Scenes,
   Trollhunter.Helpers,
-  Trollhunter.Map.House;
+  Trollhunter.Map.Village;
 
   { TMap }
 
@@ -378,17 +378,10 @@ begin
   Result := Value.InRange(UIntMax);
 end;
 
-var
-  BNPC: array [0 .. 6] of boolean;
-
 procedure TMap.Gen;
 var
-  GatePos: TPoint;
-  CellarPos: TPoint;
-  I, X, Y, Dir: UInt;
+  I, X, Y: UInt;
   Z: TMapEnum;
-  HouseCount: UInt;
-  HousePos: array [0 .. 7] of TPoint;
 const
   Pd = 11;
 
@@ -420,209 +413,7 @@ const
       ATileEnum);
   end;
 
-  procedure AddFrame(AX, AY, AW, AH: UInt; ABaseTileEnum: TTileEnum);
-  var
-    X, Y: UInt;
-    PX, PY: UInt;
-  begin
-    PX := AX - (AW div 2);
-    PY := AY - (AH div 2);
-    for X := PX to PX + AW do
-      for Y := PY to PY + AH do
-        if not (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
-        then
-          SetTileEnum(X, Y, Z, ABaseTileEnum);
-  end;
-
-  procedure AddRect(AX, AY, AW, AH: UInt; AFloorTileEnum, AWallTileEnum: TTileEnum;
-    IsFog: boolean = False);
-  var
-    X, Y: UInt;
-    PX, PY: UInt;
-  begin
-    PX := AX - (AW div 2);
-    PY := AY - (AH div 2);
-    for X := PX to PX + AW do
-      for Y := PY to PY + AH do
-      begin
-        if IsFog then
-          Self.SetFog(X, Y, False);
-        if (((X > PX) and (X < (PX + AW))) and ((Y > PY) and (Y < (PY + AH))))
-        then
-          SetTileEnum(X, Y, Z, AFloorTileEnum)
-        else
-          SetTileEnum(X, Y, Z, AWallTileEnum);
-      end;
-  end;
-
-  procedure AddNPC(AX, AY: UInt);
-  var
-    I, NX, NY, LX, LY: Int;
-  begin
-    repeat
-      I := Math.RandomRange(0, 7);
-    until not BNPC[I];
-
-    // Place the main NPC on a random walkable tile inside the house.
-    repeat
-      NX := Int(AX) + Math.RandomRange(-4, 5);
-      NY := Int(AY) + Math.RandomRange(-4, 5);
-    until Self.GetTileEnum(NX, NY, Z) = teWoodenFloor;
-
-    Mobs.Add(Self.Current, NX, NY, fcNPC,
-      Ord(mbEldan_2the_magic_trader3) + I);
-    BNPC[I] := True;
-
-    // The arcane trader also gets a random, separate tile in the same house.
-    if (I = 0) then
-    begin
-      repeat
-        LX := Int(AX) + Math.RandomRange(-4, 5);
-        LY := Int(AY) + Math.RandomRange(-4, 5);
-      until (Self.GetTileEnum(LX, LY, Z) = teWoodenFloor) and
-        ((LX <> NX) or (LY <> NY));
-      Mobs.Add(Self.Current, LX, LY, fcNPC,
-        Ord(mbArno_2the_arcane_trader3));
-    end;
-  end;
-
-  procedure AddVillage(AX, AY: UInt);
-  var
-    I, J, T, X, Y, PX, PY: UInt;
-    HasHouseDoor: Boolean;
-    HP: array [0 .. 7] of boolean;
-  const
-    House: array [0 .. 7] of TPoint = ((X: -10; Y: -10; ), (X: 10; Y: -10;
-      ), (X: -10; Y: 10; ), (X: 10; Y: 10; ), (X: 0; Y: 10; ), (X: -10; Y: 0;
-      ), (X: 10; Y: 0; ), (X: 0; Y: -10; ));
-
-    procedure AddStash(AX, AY: UInt);
-    begin
-      SetTileEnum(AX, AY, Z, teStash);
-    end;
-
-    procedure AddGate(AX, AY: UInt; SX, SY: shortint);
-    begin
-      SetTileEnum(AX + SX, AY + SY, Z, teGate);
-      GatePos := Point(AX + SX, AY + SY);
-      if (SX = 0) then
-      begin
-        SetTileEnum(AX + 1, AY + SY, Z, teGate);
-        SetTileEnum(AX - 1, AY + SY, Z, teGate);
-      end;
-      if (SY = 0) then
-      begin
-        SetTileEnum(AX + SX, AY + 1, Z, teGate);
-        SetTileEnum(AX + SX, AY - 1, Z, teGate);
-      end;
-    end;
-
-  begin
-    // Save to log
-    Game.Log(Format('Village: %dx%d', [AX, AY]));
-    Player.X := AX;
-    Player.Y := AY;
-
-    AddFrame(AX, AY, 34, 34, teDefaultFloor);
-    AddRect(AX, AY, 32, 32, teStoneFloor, teStoneWall, True);
-    for I := 0 to High(House) do
-      HP[I] := False;
-    // Add gate and stash
-    J := Math.RandomRange(4, 8);
-    Dir := J;
-    case J of
-      4:
-      begin
-        AddGate(AX, AY, 0, -16);
-        AddStash(AX + (RandomRange(1, 4) - 2), AY + 3);
-      end;
-      5:
-      begin
-        AddGate(AX, AY, 16, 0);
-        AddStash(AX - 3, AY + (RandomRange(1, 4) - 2));
-      end;
-      6:
-      begin
-        AddGate(AX, AY, -16, 0);
-        AddStash(AX + 3, AY + (RandomRange(1, 4) - 2));
-      end;
-      7:
-      begin
-        AddGate(AX, AY, 0, 16);
-        AddStash(AX + (RandomRange(1, 4) - 2), AY - 3);
-      end;
-    end;
-    PX := AX - House[J].X;
-    PY := AY - House[J].Y;
-    AddRect(PX, PY, 10, 10, teStoneFloor, teStoneFloor);
-    HP[J] := True;
-    // Add houses
-    T := 0;
-    HouseCount := 0;
-    while (T < High(House)) do
-    begin
-      I := Math.RandomRange(0, 8);
-      X := AX - House[I].X;
-      Y := AY - House[I].Y;
-      if not HP[I] then
-      begin
-        GenerateHouse(Self, X, Y, AX, AY, Z, J, I = (10 - J + 1),
-          (J = 4) or (J = 7), HasHouseDoor);
-        if HasHouseDoor then
-          AddNPC(X, Y);
-        HousePos[HouseCount].X := X;
-        HousePos[HouseCount].Y := Y;
-        Inc(HouseCount);
-        HP[I] := True;
-        Inc(T);
-      end;
-    end;
-    // Choose random house for cellar stairs
-    if HouseCount > 0 then
-    begin
-      I := Math.RandomRange(0, HouseCount);
-      CellarPos := HousePos[I];
-      repeat
-        X := CellarPos.X + Math.RandomRange(0, 3) - 1;
-        Y := CellarPos.Y + Math.RandomRange(0, 3) - 1;
-      until (Self.GetTileEnum(X, Y, Z) = teWoodenFloor) and
-        ((X <> CellarPos.X) or (Y <> CellarPos.Y));
-      CellarPos := Point(X, Y);
-      SetTileEnum(CellarPos.X, CellarPos.Y, Z, teDnStoneStairs);
-    end
-    else
-      CellarPos := Point(AX, AY);
-  end;
-
-  procedure AddCellarNPC(AMob: TMobEnum);
-  var
-    NX, NY: UInt;
-  begin
-    repeat
-      NX := CellarPos.X + Math.RandomRange(0, 3) - 1;
-      NY := CellarPos.Y + Math.RandomRange(0, 3) - 1;
-    until (GetTileEnum(NX, NY, Z) = teWoodenFloor) and
-      ((NX <> CellarPos.X) or (NY <> CellarPos.Y));
-    Mobs.Add(Z, NX, NY, fcNPC, Ord(AMob));
-  end;
-
-  procedure AddCellar;
-  var
-    W, H: UInt;
-  begin
-    W := RandomRange(5, 7);
-    H := RandomRange(5, 7);
-    AddRect(CellarPos.X, CellarPos.Y, W, H, teWoodenFloor, teMossyWall);
-    SetTileEnum(CellarPos.X, CellarPos.Y, Z, teUpStoneStairs);
-    // Weapon trader NPC
-    AddCellarNPC(mbGorn_2the_thief3);
-    // General buyer NPC
-    AddCellarNPC(mbFenn_2the_pawnbroker3);
-  end;
-
 begin
-  for I := 0 to 6 do
-    BNPC[I] := False;
   InitTiles();
   for Z := Low(TMapEnum) to High(TMapEnum) do
   begin
@@ -639,13 +430,13 @@ begin
         Game.Spawn.Y := RandomRange(25, UIntMax - 25);
         Game.Portal.X := Game.Spawn.X;
         Game.Portal.Y := Game.Spawn.Y;
-        AddVillage(Game.Spawn.X, Game.Spawn.Y);
+        GenerateVillage(Self, Game.Spawn.X, Game.Spawn.Y, Z);
       end;
       deGray_Cave:
       begin
         Self.Clear(Z, teDefaultWall);
         GenCave(9, 49, 4999);
-        AddCellar();
+        GenerateCellar(Self, Z);
       end;
       deDeep_Cave:
       begin
