@@ -14,3 +14,4 @@
 *.fuse_hidden*
 /sources/backup
 /backup
+/log.txt

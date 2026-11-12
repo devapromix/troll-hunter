@@ -102,12 +102,16 @@ begin
   Mobs.Add(AZ, LX, LY, fcNPC, Ord(AMob));
 end;
 
+type
+  TVillageType = (vtA, vtB, vtC);
+
 procedure GenerateVillageLayout(AMap: TMap; AX, AY: UInt; AZ: TMapEnum;
-  AHasCutCorner: boolean);
+  AType: TVillageType);
 var
   I, J, T, X, Y, LPX, LPY: UInt;
   LHasHouseDoor: boolean;
-  LEmptyPlot: UInt;
+  LEmptyPlot, LRotation: UInt;
+  LPlot: TPoint;
   LHP: array [0 .. 7] of boolean;
   LHouseCount: UInt;
   LHousePos: array [0 .. 7] of TPoint;
@@ -125,6 +129,30 @@ const
     (X: 15; Y: 0; ),
     (X: 0; Y: -15; )
     );
+
+  CTwoCutHouse: array [0 .. 7] of TPoint = (
+    (X: 0; Y: -7; ),
+    (X: 0; Y: 0; ),
+    (X: 15; Y: 0; ),
+    (X: -15; Y: 0; ),
+    (X: 0; Y: -17; ),
+    (X: -15; Y: 15; ),
+    (X: 15; Y: 15; ),
+    (X: 0; Y: 15; )
+    );
+  CTwoCutGateSide: array [0 .. 3] of UInt = (7, 6, 4, 5);
+  WingHalfWidth = 11;
+
+  function RotateOffset(DX, DY: Int): TPoint;
+  begin
+    case LRotation of
+      1: Result := Point(-DY, DX);
+      2: Result := Point(-DX, -DY);
+      3: Result := Point(DY, -DX);
+    else
+      Result := Point(DX, DY);
+    end;
+  end;
 
   procedure AddStash(AX, AY: UInt);
   begin
@@ -198,6 +226,47 @@ const
     AddStash(AX, AY);
   end;
 
+  procedure BuildTwoCutCorners;
+  var
+    DX, DY: Int;
+    Pos: TPoint;
+    Tile: TTileEnum;
+  begin
+    LRotation := Random(4);
+    J := CTwoCutGateSide[LRotation];
+    for DX := -CVillageRadius to CVillageRadius do
+      for DY := -CVillageRadius to CVillageRadius + 1 do
+      begin
+        if DY > CVillageRadius then
+        begin
+          if Abs(DX - GateLaneOffset) > 1 then
+            Continue;
+          Tile := teDefaultFloor;
+        end
+        else if DY < -CutEdge then
+        begin
+          if Abs(DX) > WingHalfWidth then
+            Continue;
+          if (Abs(DX) = WingHalfWidth) or (DY = -CVillageRadius) then
+            Tile := teStoneWall
+          else
+            Tile := teStoneFloor;
+        end
+        else if (DY = CVillageRadius) and (Abs(DX - GateLaneOffset) <= 1) then
+          Tile := teGate
+        else if (Abs(DX) = CVillageRadius) or (DY = CVillageRadius) or
+          ((DY = -CutEdge) and (Abs(DX) >= WingHalfWidth)) then
+          Tile := teStoneWall
+        else
+          Tile := teStoneFloor;
+
+        Pos := RotateOffset(DX, DY);
+        AMap.SetTileEnum(Int(AX) + Pos.X, Int(AY) + Pos.Y, AZ, Tile);
+        AMap.SetFog(Int(AX) + Pos.X, Int(AY) + Pos.Y, False);
+      end;
+    AddStash(AX, AY);
+  end;
+
 begin
   for I := 0 to 6 do
     BNPC[I] := False;
@@ -205,7 +274,12 @@ begin
   Player.X := AX;
   Player.Y := AY;
 
-  if AHasCutCorner then
+  if AType = vtC then
+  begin
+    LEmptyPlot := 1;
+    BuildTwoCutCorners;
+  end
+  else if AType = vtB then
   begin
     LEmptyPlot := RandomRange(0, 4);
     BuildCutCorner(LEmptyPlot, (LEmptyPlot mod 2) = 0);
@@ -254,8 +328,12 @@ begin
   while (T < High(CHouse)) do
   begin
     I := Math.RandomRange(0, 8);
-    X := AX - CHouse[I].X;
-    Y := AY - CHouse[I].Y;
+    if AType = vtC then
+      LPlot := RotateOffset(CTwoCutHouse[I].X, CTwoCutHouse[I].Y)
+    else
+      LPlot := Point(-CHouse[I].X, -CHouse[I].Y);
+    X := Int(AX) + LPlot.X;
+    Y := Int(AY) + LPlot.Y;
     if not LHP[I] then
     begin
       GenerateHouse(AMap, X, Y, AX, AY, AZ, J, I = (10 - J + 1),
@@ -286,22 +364,14 @@ begin
     CellarPos := Point(AX, AY);
 end;
 
-procedure GenVillageTypeA(AMap: TMap; AX, AY: UInt; AZ: TMapEnum);
-begin
-  GenerateVillageLayout(AMap, AX, AY, AZ, False);
-end;
-
-procedure GenVillageTypeB(AMap: TMap; AX, AY: UInt; AZ: TMapEnum);
-begin
-  GenerateVillageLayout(AMap, AX, AY, AZ, True);
-end;
-
 procedure GenerateVillage(AMap: TMap; AX, AY: UInt; AZ: TMapEnum);
 begin
-  if Random(4) = 0 then
-    GenVillageTypeA(AMap, AX, AY, AZ)
+  case Random(4) of
+    0: GenerateVillageLayout(AMap, AX, AY, AZ, vtA);
+    1: GenerateVillageLayout(AMap, AX, AY, AZ, vtC);
   else
-    GenVillageTypeB(AMap, AX, AY, AZ);
+    GenerateVillageLayout(AMap, AX, AY, AZ, vtB);
+  end;
 end;
 
 procedure GenerateCellar(AMap: TMap; AZ: TMapEnum);
