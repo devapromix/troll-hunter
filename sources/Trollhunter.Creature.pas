@@ -5,7 +5,6 @@ interface
 uses
   Trollhunter.Types,
   Trollhunter.Entity,
-  Trollhunter.Ability,
   Trollhunter.Effect,
   Trollhunter.StatusEffect,
   Trollhunter.Attribute;

@@ -208,7 +208,6 @@ uses
   Trollhunter.Attribute,
   Trollhunter.Spellbook,
   Trollhunter.UI,
-  Trollhunter.Player.Name,
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Helpers,

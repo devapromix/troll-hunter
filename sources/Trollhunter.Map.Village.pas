@@ -18,7 +18,6 @@ uses
   Trollhunter.Player,
   Trollhunter.Mob,
   Trollhunter.Game,
-  Trollhunter.Creature,
   Trollhunter.Map.House;
 
 var
@@ -79,7 +78,6 @@ begin
     Ord(mbEldan_2the_magic_trader3) + LIndex);
   BNPC[LIndex] := True;
 
-  // The arcane trader also gets a random, separate tile in the same house.
   if (LIndex = 0) then
   begin
     repeat
@@ -107,14 +105,34 @@ end;
 procedure GenerateVillage(AMap: TMap; AX, AY: UInt; AZ: TMapEnum);
 var
   I, J, T, X, Y, LPX, LPY: UInt;
-  LHasHouseDoor: Boolean;
+  LHasHouseDoor: boolean;
   LHP: array [0 .. 7] of boolean;
   LHouseCount: UInt;
   LHousePos: array [0 .. 7] of TPoint;
 const
-  CHouse: array [0 .. 7] of TPoint = ((X: -10; Y: -10; ), (X: 10; Y: -10;
+  {CHouse: array [0 .. 7] of TPoint = ((X: -10; Y: -10; ), (X: 10; Y: -10;
     ), (X: -10; Y: 10; ), (X: 10; Y: 10; ), (X: 0; Y: 10; ), (X: -10; Y: 0;
-    ), (X: 10; Y: 0; ), (X: 0; Y: -10; ));
+    ), (X: 10; Y: 0; ), (X: 0; Y: -10; ));}
+  {CHouse: array [0 .. 7] of TPoint = (
+    (X: -20; Y: -20; ),
+    (X: 20; Y: -20; ),
+    (X: -20; Y: 20; ),
+    (X: 20; Y: 20; ),
+    (X: 0; Y: 20; ),
+    (X: -20; Y: 0; ),
+    (X: 20; Y: 0; ),
+    (X: 0; Y: -20; )
+    ); }
+  CHouse: array [0 .. 7] of TPoint = (
+  (X: -15; Y: -15; ),
+  (X: 15; Y: -15; ),
+  (X: -15; Y: 15; ),
+  (X: 15; Y: 15; ),
+  (X: 0; Y: 15; ),
+  (X: -15; Y: 0; ),
+  (X: 15; Y: 0; ),
+  (X: 0; Y: -15; )
+  );
 
   procedure AddStash(AX, AY: UInt);
   begin
@@ -139,7 +157,6 @@ const
 begin
   for I := 0 to 6 do
     BNPC[I] := False;
-  // Save to log
   Game.Log(Format('Village: %dx%d', [AX, AY]));
   Player.X := AX;
   Player.Y := AY;
@@ -223,9 +240,8 @@ begin
   AddRect(AMap, CellarPos.X, CellarPos.Y, LW, LH, AZ, teWoodenFloor,
     teMossyWall);
   AMap.SetTileEnum(CellarPos.X, CellarPos.Y, AZ, teUpStoneStairs);
-  // Weapon trader NPC
+
   AddCellarNPC(AMap, AZ, mbGorn_2the_thief3);
-  // General buyer NPC
   AddCellarNPC(AMap, AZ, mbFenn_2the_pawnbroker3);
 end;
 

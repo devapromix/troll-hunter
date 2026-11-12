@@ -145,7 +145,6 @@ uses
   Trollhunter.UI.Logo,
   Trollhunter.Entity,
   Trollhunter.Creature,
-  Trollhunter.Statistic,
   Trollhunter.UI,
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,

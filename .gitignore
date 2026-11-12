@@ -13,3 +13,4 @@
 *.exe
 *.fuse_hidden*
 /sources/backup
+/backup

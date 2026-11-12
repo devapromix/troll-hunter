@@ -71,7 +71,6 @@ implementation
 uses
   Math,
   SysUtils,
-  Trollhunter.Game,
   Trollhunter.Map,
   Trollhunter.Attribute,
   Trollhunter.Player,

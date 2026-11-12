@@ -17,7 +17,7 @@ uses
 procedure GenerateHouse(AMap: TMap; AX, AY, CX, CY: UInt; AZ: TMapEnum; D: UInt;
   AV, F: boolean; out AHasDoor: boolean);
 var
-  W, H, X, Y, PX, PY, LDoorFixed, LDoorAcross: UInt;
+  W, H, PX, PY, LDoorFixed, LDoorAcross: UInt;
   LDoorHorizontal: boolean;
   LGround: TTileEnum;
 

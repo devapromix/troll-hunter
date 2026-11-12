@@ -9,8 +9,7 @@ uses
   Trollhunter.Entity,
   Trollhunter.Creature,
   Trollhunter.StatusEffect,
-  Trollhunter.Item.Types,
-  Trollhunter.Ability;
+  Trollhunter.Item.Types;
 
 type
   TMobRaceEnum = (mrAnimal, mrHumanoid, mrGoblinoid, mrDemon, mrUndead,
