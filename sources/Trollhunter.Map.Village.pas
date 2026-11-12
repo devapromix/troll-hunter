@@ -110,29 +110,17 @@ var
   LHouseCount: UInt;
   LHousePos: array [0 .. 7] of TPoint;
 const
-  {CHouse: array [0 .. 7] of TPoint = ((X: -10; Y: -10; ), (X: 10; Y: -10;
-    ), (X: -10; Y: 10; ), (X: 10; Y: 10; ), (X: 0; Y: 10; ), (X: -10; Y: 0;
-    ), (X: 10; Y: 0; ), (X: 0; Y: -10; ));}
-  {CHouse: array [0 .. 7] of TPoint = (
-    (X: -20; Y: -20; ),
-    (X: 20; Y: -20; ),
-    (X: -20; Y: 20; ),
-    (X: 20; Y: 20; ),
-    (X: 0; Y: 20; ),
-    (X: -20; Y: 0; ),
-    (X: 20; Y: 0; ),
-    (X: 0; Y: -20; )
-    ); }
+  CVillageRadius = 22;
   CHouse: array [0 .. 7] of TPoint = (
-  (X: -15; Y: -15; ),
-  (X: 15; Y: -15; ),
-  (X: -15; Y: 15; ),
-  (X: 15; Y: 15; ),
-  (X: 0; Y: 15; ),
-  (X: -15; Y: 0; ),
-  (X: 15; Y: 0; ),
-  (X: 0; Y: -15; )
-  );
+    (X: -15; Y: -15; ),
+    (X: 15; Y: -15; ),
+    (X: -15; Y: 15; ),
+    (X: 15; Y: 15; ),
+    (X: 0; Y: 15; ),
+    (X: -15; Y: 0; ),
+    (X: 15; Y: 0; ),
+    (X: 0; Y: -15; )
+    );
 
   procedure AddStash(AX, AY: UInt);
   begin
@@ -161,8 +149,10 @@ begin
   Player.X := AX;
   Player.Y := AY;
 
-  AddFrame(AMap, AX, AY, 34, 34, AZ, teDefaultFloor);
-  AddRect(AMap, AX, AY, 32, 32, AZ, teStoneFloor, teStoneWall, True);
+  AddFrame(AMap, AX, AY, 2 * (CVillageRadius + 1), 2 * (CVillageRadius + 1),
+    AZ, teDefaultFloor);
+  AddRect(AMap, AX, AY, 2 * CVillageRadius, 2 * CVillageRadius, AZ,
+    teStoneFloor, teStoneWall, True);
   for I := 0 to High(CHouse) do
     LHP[I] := False;
   // Add gate and stash
@@ -170,22 +160,22 @@ begin
   case J of
     4:
     begin
-      AddGate(AX, AY, 0, -16);
+      AddGate(AX, AY, 0, -CVillageRadius);
       AddStash(AX + (RandomRange(1, 4) - 2), AY + 3);
     end;
     5:
     begin
-      AddGate(AX, AY, 16, 0);
+      AddGate(AX, AY, CVillageRadius, 0);
       AddStash(AX - 3, AY + (RandomRange(1, 4) - 2));
     end;
     6:
     begin
-      AddGate(AX, AY, -16, 0);
+      AddGate(AX, AY, -CVillageRadius, 0);
       AddStash(AX + 3, AY + (RandomRange(1, 4) - 2));
     end;
     7:
     begin
-      AddGate(AX, AY, 0, 16);
+      AddGate(AX, AY, 0, CVillageRadius);
       AddStash(AX + (RandomRange(1, 4) - 2), AY - 3);
     end;
   end;
