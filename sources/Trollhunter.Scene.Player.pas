@@ -7,7 +7,6 @@ uses
   Trollhunter.Scenes,
   Trollhunter.Types,
   Trollhunter.Item.Common,
-  Trollhunter.Mob,
   Trollhunter.Game,
   Trollhunter.Attribute;
 
