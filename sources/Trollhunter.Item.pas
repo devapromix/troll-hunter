@@ -2932,8 +2932,8 @@ end;
 
 procedure TItems.AddItemToInv(Index: Int = 0; AFlag: boolean = False);
 var
-  FItem: Item;
-  MapID, FCount: Int;
+  FItem, LInventoryItem, LRemainingItem: Item;
+  MapID, FCount, I, LCapacity, LPickupAmount: Int;
 begin
   MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
@@ -2946,12 +2946,31 @@ begin
     Player.PickUpArrows(MapID, Index, FItem);
     Exit;
   end;
+  LCapacity := Max(0, ItemMax - Items_Inventory_GetCount()) * Max(1, FItem.Stack);
+  if (FItem.Stack > 1) then
+    for I := 0 to Items_Inventory_GetCount() - 1 do
+    begin
+      LInventoryItem := Items_Inventory_GetItem(I);
+      if (LInventoryItem.ItemID = FItem.ItemID) then
+        Inc(LCapacity, Max(0, FItem.Stack - LInventoryItem.Amount));
+    end;
+  LPickupAmount := Min(FItem.Amount, LCapacity);
+  if (LPickupAmount <= 0) then
+    Exit;
   if (FItem.Stack > 1) and (FItem.Amount > 1) and not AFlag then
   begin
     Player.SetAmountScene(False, Index, FItem.Amount);
     Exit;
   end;
-  if (Items_Dungeon_DeleteMapItemXY(MapID, Index, Player.X, Player.Y, FItem) > 0) then
+  if (LPickupAmount < FItem.Amount) then
+  begin
+    LRemainingItem := FItem;
+    Dec(LRemainingItem.Amount, LPickupAmount);
+    Items_Dungeon_SetMapItemXY(MapID, Index, Player.X, Player.Y, LRemainingItem);
+    FItem.Amount := LPickupAmount;
+  end
+  else if (Items_Dungeon_DeleteMapItemXY(MapID, Index, Player.X, Player.Y, FItem) <= 0) then
+    Exit;
   begin
     Items_Inventory_AppendItem(FItem);
     if Player.IsOnStash then

@@ -889,41 +889,37 @@ var
 begin
   if Self.IsDead then
     Exit;
-  if (Items_Inventory_GetCount() >= ItemMax) then
-    Exit;
-  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y).InRange(ItemMax);
+  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
   for Index := FCount - 1 downto 0 do
   begin
-    if (Items_Inventory_GetCount() >= ItemMax) then
-      Exit;
     FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
     ItemType := ItemBase[TItemEnum(FItem.ItemID)].ItemType;
     if (ItemType in AutoPickupItems) then
     begin
       if ((ItemType in CoinTypeItems) and not Game.GetOption(apCoin)) then
-        Exit;
+        Continue;
       if ((ItemType in FoodTypeItems) and not Game.GetOption(apFood)) then
-        Exit;
+        Continue;
       if ((ItemType in PlantTypeItems) and not Game.GetOption(apPlant)) then
-        Exit;
+        Continue;
       if ((ItemType in PotionTypeItems) and not Game.GetOption(apPotion)) then
-        Exit;
+        Continue;
       if ((ItemType in MagicTypeItems) and not Game.GetOption(apMagic)) then
-        Exit;
+        Continue;
       if ((ItemType in FlaskTypeItems) and not Game.GetOption(apFlask)) then
-        Exit;
+        Continue;
       if ((ItemType in ScrollTypeItems) and not Game.GetOption(apScroll)) then
-        Exit;
+        Continue;
       if ((ItemType in RuneTypeItems) and not Game.GetOption(apRune)) then
-        Exit;
+        Continue;
       if ((ItemType in BookTypeItems) and not Game.GetOption(apBook)) then
-        Exit;
+        Continue;
       if ((ItemType in GemTypeItems) and not Game.GetOption(apGem)) then
-        Exit;
+        Continue;
       if ((ItemType in KeyTypeItems) and not Game.GetOption(apKey)) then
-        Exit;
+        Continue;
       if ((ItemType in ArrowTypeItems) and not Game.GetOption(apArrow)) then
-        Exit;
+        Continue;
       Items.AddItemToInv(Index, True);
       Wait;
     end;
