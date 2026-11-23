@@ -39,7 +39,7 @@ begin
   AddOption('G', 'Auto pick up gems', Game.GetOption(apGem));
   AddOption('F', 'Auto pick up food', Game.GetOption(apFood));
   AddOption('Y', 'Auto pick up plants', Game.GetOption(apPlant));
-  AddOption('P', 'Auto pick up potions and flasks',
+  AddOption('P', 'Auto pick up potions',
     Game.GetOption(apPotion));
   AddOption('U', 'Auto pick up flasks', Game.GetOption(apFlask));
   AddOption('O', 'Auto pick up magic items', Game.GetOption(apMagic));
@@ -48,6 +48,7 @@ begin
   AddOption('B', 'Auto pick up books', Game.GetOption(apBook));
   AddOption('K', 'Auto pick up keys', Game.GetOption(apKey));
   AddOption('A', 'Auto pick up arrows', Game.GetOption(apArrow));
+  AddOption('V', 'Auto pick up venoms', Game.GetOption(apVenom));
   AddOption('D', 'Show items price in inventory', Game.GetOption(apShPrice));
 
   // Settings
@@ -81,6 +82,8 @@ begin
       Game.ChOption(apKey);
     TK_A:
       Game.ChOption(apArrow);
+    TK_V:
+      Game.ChOption(apVenom);
     TK_B:
       Game.ChOption(apBook);
     TK_D:

@@ -920,6 +920,8 @@ begin
         Continue;
       if ((ItemType in ArrowTypeItems) and not Game.GetOption(apArrow)) then
         Continue;
+      if ((ItemType in VenomTypeItems) and not Game.GetOption(apVenom)) then
+        Continue;
       Items.AddItemToInv(Index, True);
       if IsDead then
         Exit;
