@@ -223,7 +223,7 @@ const
       for DY := -1 to 1 do
         AMap.SetTileEnum(GateX, Int(GateY) + DY, AZ, teDefaultFloor);
     end;
-    AddStash(AX, AY);
+    AddStash(AX + 3, AY);
   end;
 
   procedure BuildTwoCutCorners;
@@ -264,7 +264,7 @@ const
         AMap.SetTileEnum(Int(AX) + Pos.X, Int(AY) + Pos.Y, AZ, Tile);
         AMap.SetFog(Int(AX) + Pos.X, Int(AY) + Pos.Y, False);
       end;
-    AddStash(AX, AY);
+    AddStash(AX + 3, AY);
   end;
 
 begin

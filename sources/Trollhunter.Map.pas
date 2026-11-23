@@ -384,30 +384,6 @@ var
 const
   Pd = 11;
 
-  procedure SelectTownArrival;
-  var
-    LRadius, LDX, LDY, LX, LY: Int;
-  begin
-    if GetTileEnum(Game.Spawn.X, Game.Spawn.Y, deDark_Wood) = teStoneFloor then
-      Exit;
-    for LRadius := 1 to 24 do
-      for LDX := -LRadius to LRadius do
-        for LDY := -LRadius to LRadius do
-        begin
-          if (Abs(LDX) <> LRadius) and (Abs(LDY) <> LRadius) then
-            Continue;
-          LX := Int(Game.Spawn.X) + LDX;
-          LY := Int(Game.Spawn.Y) + LDY;
-          if GetTileEnum(LX, LY, deDark_Wood) = teStoneFloor then
-          begin
-            Game.Spawn.X := LX;
-            Game.Spawn.Y := LY;
-            Exit;
-          end;
-        end;
-    raise Exception.Create('No stone floor available for town arrival.');
-  end;
-
   procedure GenCave(D: UInt; C, V: UInt);
   var
     I: UInt;
@@ -452,7 +428,6 @@ begin
         Game.Spawn.X := RandomRange(25, UIntMax - 25);
         Game.Spawn.Y := RandomRange(25, UIntMax - 25);
         GenerateVillage(Self, Game.Spawn.X, Game.Spawn.Y, Z);
-        SelectTownArrival;
         Game.Portal.X := Game.Spawn.X;
         Game.Portal.Y := Game.Spawn.Y;
         Game.PortalMap := deDark_Wood;
