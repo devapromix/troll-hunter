@@ -2975,7 +2975,11 @@ begin
   LCapacity := Items_Inventory_GetCapacity(FItem);
   LPickupAmount := Min(FItem.Amount, LCapacity);
   if (LPickupAmount <= 0) then
+  begin
+    if not AFlag then
+      MsgLog.Add('Your backpack is full!');
     Exit;
+  end;
   if (FItem.Stack > 1) and (FItem.Amount > 1) and not AFlag then
   begin
     Player.SetAmountScene(False, Index, LPickupAmount);

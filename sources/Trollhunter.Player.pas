@@ -1948,11 +1948,6 @@ begin
   end
   else if (FCount > 0) then
   begin
-    if (Items_Inventory_GetCount() >= ItemMax) then
-    begin
-      MsgLog.Add('Your backpack is full!');
-      Exit;
-    end;
     if (FCount = 1) then
     begin
       Items.AddItemToInv(0);
