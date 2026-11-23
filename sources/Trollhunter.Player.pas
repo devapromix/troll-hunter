@@ -921,7 +921,8 @@ begin
       if ((ItemType in ArrowTypeItems) and not Game.GetOption(apArrow)) then
         Continue;
       Items.AddItemToInv(Index, True);
-      Wait;
+      if IsDead then
+        Exit;
     end;
   end;
 end;
