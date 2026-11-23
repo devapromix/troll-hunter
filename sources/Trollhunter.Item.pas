@@ -2918,7 +2918,8 @@ end;
 procedure TItems.AddItemToInv(AItemEnum: TItemEnum; AAmount: UInt = 1;
   EqFlag: boolean = False; IdFlag: boolean = False; SufID: UInt = 0);
 var
-  FItem: Item;
+  FItem, LRemainingItem: Item;
+  LAmount, LX, LY: Int;
 begin
   if (AAmount = 0) then
     Exit;
@@ -2927,13 +2928,38 @@ begin
   FItem.Equipment := IfThen(EqFlag, 1, 0);
   if IdFlag and (FItem.Identify = 0) then
     Items.Identify(FItem, True, False, SufID);
+  LAmount := Min(FItem.Amount, Items_Inventory_GetCapacity(FItem));
+  LRemainingItem := FItem;
+  Dec(LRemainingItem.Amount, LAmount);
+  FItem.Amount := LAmount;
   Items_Inventory_AppendItem(FItem);
+  if LRemainingItem.Amount > 0 then
+  begin
+    LRemainingItem.MapID := Ord(Map.Current);
+    LRemainingItem.X := Player.X;
+    LRemainingItem.Y := Player.Y;
+    if LRemainingItem.Amount <= Items_Dungeon_GetCapacity(LRemainingItem) then
+      AddItemToDungeon(LRemainingItem)
+    else
+      for LX := 0 to UIntMax do
+        for LY := 0 to UIntMax do
+          if Map.GetTileEnum(LX, LY, Map.Current) in FreeTiles then
+          begin
+            LRemainingItem.X := LX;
+            LRemainingItem.Y := LY;
+            if LRemainingItem.Amount <= Items_Dungeon_GetCapacity(LRemainingItem) then
+            begin
+              AddItemToDungeon(LRemainingItem);
+              Exit;
+            end;
+          end;
+  end;
 end;
 
 procedure TItems.AddItemToInv(Index: Int = 0; AFlag: boolean = False);
 var
-  FItem, LInventoryItem, LRemainingItem: Item;
-  MapID, FCount, I, LCapacity, LPickupAmount: Int;
+  FItem, LRemainingItem: Item;
+  MapID, FCount, LCapacity, LPickupAmount: Int;
 begin
   MapID := Ord(Map.Current);
   FCount := Items_Dungeon_GetMapCountXY(MapID, Player.X, Player.Y);
@@ -2946,20 +2972,13 @@ begin
     Player.PickUpArrows(MapID, Index, FItem);
     Exit;
   end;
-  LCapacity := Max(0, ItemMax - Items_Inventory_GetCount()) * Max(1, FItem.Stack);
-  if (FItem.Stack > 1) then
-    for I := 0 to Items_Inventory_GetCount() - 1 do
-    begin
-      LInventoryItem := Items_Inventory_GetItem(I);
-      if (LInventoryItem.ItemID = FItem.ItemID) then
-        Inc(LCapacity, Max(0, FItem.Stack - LInventoryItem.Amount));
-    end;
+  LCapacity := Items_Inventory_GetCapacity(FItem);
   LPickupAmount := Min(FItem.Amount, LCapacity);
   if (LPickupAmount <= 0) then
     Exit;
   if (FItem.Stack > 1) and (FItem.Amount > 1) and not AFlag then
   begin
-    Player.SetAmountScene(False, Index, FItem.Amount);
+    Player.SetAmountScene(False, Index, LPickupAmount);
     Exit;
   end;
   if (LPickupAmount < FItem.Amount) then

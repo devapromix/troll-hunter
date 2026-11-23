@@ -24,6 +24,7 @@ function Items_Inventory_SetItem(Index: Int; AItem: Item): Int; stdcall;
 function Items_Inventory_GetItem(Index: Int): Item; stdcall;
 function Items_Inventory_IndexInRange(Index: Int): Boolean; stdcall;
 
+function Items_Inventory_GetCapacity(AItem: Item): Int; stdcall;
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall;
 function Items_Inventory_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
 
@@ -161,6 +162,24 @@ begin
   end;
 end;
 
+function Items_Inventory_GetCapacity(AItem: Item): Int; stdcall;
+var
+  I, LFreeSlots: Int;
+begin
+
+  if AItem.Stack <= 0 then
+    Exit(0);
+  LFreeSlots := SlotMax - Length(InvItems);
+  if LFreeSlots < 0 then
+    LFreeSlots := 0;
+  Result := LFreeSlots * AItem.Stack;
+  if AItem.Stack > 1 then
+    for I := 0 to Length(InvItems) - 1 do
+      if (InvItems[I].ItemID = AItem.ItemID) then
+        if InvItems[I].Amount < AItem.Stack then
+          Inc(Result, AItem.Stack - InvItems[I].Amount);
+end;
+
 procedure Items_Inventory_AppendItem(AItem: Item); stdcall;
 var
   I, J, A: Int;
@@ -182,6 +201,10 @@ var
   end;
 
 begin
+  if (AItem.Amount <= 0) or (AItem.Stack <= 0) then
+    Exit;
+  if AItem.Amount > Items_Inventory_GetCapacity(AItem) then
+    Exit;
   if (AItem.Stack > 1) then
   begin
     if (Items_Inventory_GetItemCount(AItem.ItemID) > 0) then
@@ -258,6 +281,7 @@ procedure Items_Inventory_SetSlotCount(ACount: Int); stdcall;
 begin
   SlotMax := ACount;
   if (SlotMax < 1) then SlotMax := 1;
+  if (SlotMax > 26) then SlotMax := 26;
 end;
 
 function Items_Inventory_GetSlotCount: Int; stdcall;

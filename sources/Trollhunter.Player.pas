@@ -1774,7 +1774,8 @@ end;
 procedure TPlayer.Drop(Index: Int);
 var
   AItem: Item;
-  FCount: Int;
+  LCapacity: Int;
+  LDestinationItem: Item;
 
   procedure DeleteItem;
   begin
@@ -1801,8 +1802,15 @@ begin
   if (AItem.Equipment > 0) then
     Exit;
 
-  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
-  if (FCount >= ItemMax) then
+  LDestinationItem := AItem;
+  LDestinationItem.MapID := Ord(Map.Current);
+  LDestinationItem.X := X;
+  LDestinationItem.Y := Y;
+  LCapacity := Items_Dungeon_GetCapacity(LDestinationItem);
+  if not IsOnStash and
+    (Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y) >= ItemMax) then
+    LCapacity := 0;
+  if (LCapacity <= 0) then
   begin
     if IsOnStash then
       MsgLog.Add('The stash is full!')
@@ -1821,7 +1829,8 @@ end;
 procedure TPlayer.DropAmount(Index: Int);
 var
   FItem: Item;
-  FCount: Int;
+  LCapacity: Int;
+  LDestinationItem: Item;
 begin
   if not Items_Inventory_IndexInRange(Index) then Exit;
   FItem := Items_Inventory_GetItem(Index);
@@ -1834,8 +1843,15 @@ begin
 
   ItemAmount := Math.EnsureRange(ItemAmount, 1, FItem.Amount);
 
-  FCount := Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y);
-  if (FCount >= ItemMax) then
+  LDestinationItem := FItem;
+  LDestinationItem.MapID := Ord(Map.Current);
+  LDestinationItem.X := X;
+  LDestinationItem.Y := Y;
+  LCapacity := Items_Dungeon_GetCapacity(LDestinationItem);
+  if not IsOnStash and
+    (Items_Dungeon_GetMapCountXY(Ord(Map.Current), X, Y) >= ItemMax) then
+    LCapacity := 0;
+  if (LCapacity <= 0) then
   begin
     if IsOnStash then
       MsgLog.Add('The stash is full!')
@@ -1844,6 +1860,7 @@ begin
     Exit;
   end;
 
+  ItemAmount := Min(ItemAmount, LCapacity);
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Inventory_SetItem(Index, FItem);
   FItem.X := X;
@@ -1953,12 +1970,8 @@ end;
 procedure TPlayer.PickUpAmount(Index: Int);
 var
   FItem: Item;
+  LCapacity: Int;
 begin
-  if (Items_Inventory_GetCount() >= ItemMax) then
-  begin
-    MsgLog.Add('Your backpack is full!');
-    Exit;
-  end;
   FItem := Items_Dungeon_GetMapItemXY(Ord(Map.Current), Index, X, Y);
 
   if (FItem.Stack <= 1) then
@@ -1967,7 +1980,13 @@ begin
     Exit;
   end;
 
-  ItemAmount := Math.EnsureRange(ItemAmount, 1, FItem.Amount);
+  LCapacity := Items_Inventory_GetCapacity(FItem);
+  if LCapacity <= 0 then
+  begin
+    MsgLog.Add('Your backpack is full!');
+    Exit;
+  end;
+  ItemAmount := Math.EnsureRange(ItemAmount, 1, Min(FItem.Amount, LCapacity));
 
   FItem.Amount := FItem.Amount - ItemAmount;
   Items_Dungeon_SetMapItemXY(Ord(Map.Current), Index, X, Y, FItem);
@@ -1978,7 +1997,11 @@ begin
       [Items.GetNameThe(FItem), FItem.Amount]))
   else
     MsgLog.Add(Format('You picked up %s.', [Items.GetNameThe(FItem)]));
-  Scenes.SetScene(scItems);
+  if IsOnStash then
+    Scenes.SetScene(scStash)
+  else
+    Scenes.SetScene(scItems);
+  Calc;
   Wait();
 end;
 

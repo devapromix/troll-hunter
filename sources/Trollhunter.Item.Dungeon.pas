@@ -27,6 +27,7 @@ function Items_Dungeon_GetMapItem(MapID, Index: Int): Item; stdcall;
 function Items_Dungeon_SetMapItemXY(MapID, Index: Int; AX, AY: Int; AItem: Item): Int; stdcall;
 function Items_Dungeon_GetMapItemXY(MapID, Index: Int; AX, AY: Int): Item; stdcall;
 
+function Items_Dungeon_GetCapacity(AItem: Item): Int; stdcall;
 procedure Items_Dungeon_AppendItem(AItem: Item); stdcall;
 
 function Items_Dungeon_DeleteItem(Index: Int; var AItem: Item): Int; stdcall;
@@ -36,6 +37,9 @@ function Items_Dungeon_DeleteMapItemXY(MapID: Int; Index, AX, AY: Int; var AItem
 function Items_Dungeon_GetMapItemAmountXY(MapID, ItemID, AX, AY: Int): Int; stdcall;
 
 implementation
+
+uses
+  Trollhunter.Map;
 
 var
   MapItems: TItems;
@@ -207,6 +211,25 @@ begin
     Exit;
 end;
 
+function Items_Dungeon_GetCapacity(AItem: Item): Int; stdcall;
+var
+  I, LFreeSlots: Int;
+begin
+  if Map.GetTileEnum(AItem.X, AItem.Y, TMapEnum(AItem.MapID)) <> teStash then
+    Exit(High(Int));
+  if AItem.Stack <= 0 then
+    Exit(0);
+  LFreeSlots := 26 - Items_Dungeon_GetMapCountXY(AItem.MapID, AItem.X, AItem.Y);
+  if LFreeSlots < 0 then
+    LFreeSlots := 0;
+  Result := LFreeSlots * AItem.Stack;
+  if AItem.Stack > 1 then
+    for I := 0 to Length(MapItems) - 1 do
+      if (MapItems[I].ItemID = AItem.ItemID) and HasItem(MapItems, I, AItem.MapID, AItem.X, AItem.Y) then
+        if MapItems[I].Amount < AItem.Stack then
+          Inc(Result, AItem.Stack - MapItems[I].Amount);
+end;
+
 procedure Items_Dungeon_AppendItem(AItem: Item); stdcall;
 var
   I, J, A: Int;
@@ -228,6 +251,10 @@ var
   end;
 
 begin
+  if (AItem.Amount <= 0) or (AItem.Stack <= 0) then
+    Exit;
+  if AItem.Amount > Items_Dungeon_GetCapacity(AItem) then
+    Exit;
   if (AItem.Stack > 1) then
   begin
     if (Items_Dungeon_GetMapItemCountXY(AItem.MapID, AItem.ItemID, AItem.X, AItem.Y) > 0) then
