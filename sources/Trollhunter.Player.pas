@@ -2444,10 +2444,17 @@ begin
   // Town Portal
   if (efTownPortal in Effects) then
   begin
-    Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap,
-      Game.PortalTile);
-    if ((X = Game.Spawn.X) and (Y = Game.Spawn.Y)) then
+    if (Map.Current = deDark_Wood) and
+      (X = Game.Spawn.X) and (Y = Game.Spawn.Y) then
       Exit;
+    if Map.GetTileEnum(X, Y, Map.Current) = teStash then
+    begin
+      MsgLog.Add('You cannot open a portal on a stash.');
+      Exit;
+    end;
+    if Map.GetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap) = tePortal then
+      Map.SetTileEnum(Game.Portal.X, Game.Portal.Y, Game.PortalMap,
+        Game.PortalTile);
     Game.PortalTile := Map.GetTileEnum(X, Y, Map.Current);
     Game.PortalMap := Map.Current;
     Game.Portal.X := X;
