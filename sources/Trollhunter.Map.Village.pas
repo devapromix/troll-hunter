@@ -111,7 +111,7 @@ var
   I, J, T, X, Y, LPX, LPY: UInt;
   LHasHouseDoor: boolean;
   LEmptyPlot, LRotation: UInt;
-  LPlot: TPoint;
+  LPlot, LStashPos: TPoint;
   LHP: array [0 .. 7] of boolean;
   LHouseCount: UInt;
   LHousePos: array [0 .. 7] of TPoint;
@@ -156,7 +156,7 @@ const
 
   procedure AddStash(AX, AY: UInt);
   begin
-    AMap.SetTileEnum(AX, AY, AZ, teStash);
+    LStashPos := Point(AX, AY);
   end;
 
   procedure AddGate(AX, AY: UInt; SX, SY: shortint);
@@ -264,7 +264,8 @@ const
         AMap.SetTileEnum(Int(AX) + Pos.X, Int(AY) + Pos.Y, AZ, Tile);
         AMap.SetFog(Int(AX) + Pos.X, Int(AY) + Pos.Y, False);
       end;
-    AddStash(AX + 3, AY);
+    Pos := RotateOffset(3, 0);
+    AddStash(Int(AX) + Pos.X, Int(AY) + Pos.Y);
   end;
 
 begin
@@ -347,6 +348,14 @@ begin
       Inc(T);
     end;
   end;
+  // Reserve the spawn and place the stash after all houses are built.
+  if AMap.GetTileEnum(AX, AY, AZ) <> teStoneFloor then
+    raise Exception.Create('Village generation overwrote the player spawn.');
+  if (LStashPos.X = Int(AX)) and (LStashPos.Y = Int(AY)) then
+    raise Exception.Create('Village stash overlaps the player spawn.');
+  if AMap.GetTileEnum(LStashPos.X, LStashPos.Y, AZ) <> teStoneFloor then
+    raise Exception.Create('Village stash position is blocked.');
+  AMap.SetTileEnum(LStashPos.X, LStashPos.Y, AZ, teStash);
   // Choose random house for cellar stairs
   if LHouseCount > 0 then
   begin
