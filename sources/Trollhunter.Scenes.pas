@@ -16,6 +16,9 @@ type
     scEnchant, scRecharge, scClass, scRace, scStash, scStore, scDisenchant,
     scPoison, scDeath);
 
+const
+  SpellItemSelectionScenes: set of TSceneEnum = [scIdentification, scEnchant];
+
 type
   TScene = class(TObject)
   private
@@ -380,7 +383,7 @@ end;
 
 procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
 begin
-  if (Spellbook <> nil) and not (ASceneEnum in [scIdentification, scEnchant]) then
+  if (Spellbook <> nil) and not (ASceneEnum in SpellItemSelectionScenes) then
     Spellbook.CancelPendingSpell;
   Game.RenderTimeout := Game.GetRenderTimeout();
   Game.ShowEffects := False;
