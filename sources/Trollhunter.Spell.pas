@@ -44,6 +44,9 @@ type
                      {Elemental V}
     );
 
+const
+  TargetedStatusSpells: set of TSpellEnum = [spCurse, spBlind];
+
 type
   TSpellData = record
     Name: string;
@@ -256,7 +259,7 @@ const
     School: scShadow;
     Level: 6;
     ManaCost: 55;
-    Effects: [];
+    Effects: [efBlind];
     Description: 'Blinds the target';
     Icon: icVision;
     Value: 10;

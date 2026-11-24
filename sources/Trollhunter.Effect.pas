@@ -15,7 +15,7 @@ type
     efPrmBodybuilding, efPrmMeditation,
     efPrmEnchant_Item, efLight, efBerserk, efPrmStealth, efPrmAwareness,
     efPrmTreasureHunter, efPrmGoldFinder, efPrmSurvival, efCharges, efDisenchant,
-    efPoisonWeapon, efPrmPoisoning, efManaShield, efWeaken, efBurn, efDrain);
+    efPoisonWeapon, efPrmPoisoning, efManaShield, efWeaken, efBurn, efDrain, efBlind);
 
 const
   CraftEffLow = efCraftStr;

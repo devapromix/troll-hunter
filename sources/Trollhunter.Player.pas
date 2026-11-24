@@ -604,6 +604,8 @@ var
   LSpell: TSpellData;
   LWasStealthed: boolean;
   LTargetLife, LActualDamage, LDrainPercent, LHealing: Int;
+  LStatus: TStatusEffectEnum;
+  LDuration: Int;
 
   procedure Miss();
   begin
@@ -612,13 +614,18 @@ var
   end;
 
 begin
-  if (Index < 0) then
+  if IsDead or (Index < 0) or (Index >= Mobs.Count) then
     Exit;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
   if (Mob.Force <> fcEnemy) then
     Exit;
+  if ASpellEnum in TargetedStatusSpells then
+    if (Mob.MapZone <> Map.Current) or (Self.GetDist(Mob.X, Mob.Y) > Self.Vision) or
+      not Map.InView(Mob.X, Mob.Y) or
+      (not Mode.Wizard and not Map.GetFOV(Mob.X, Mob.Y)) then
+      Exit;
   LWasStealthed := StatusEffects.IsStatusEffect(seStealth);
   BreakStealth;
   LSpell := GetSpellData(ASpellEnum);
@@ -642,6 +649,23 @@ begin
   if (TargetDV < Math.RandomRange(0, 100)) and not
     StatusEffects.IsStatusEffect(seCursed) then
   begin
+    if ASpellEnum in TargetedStatusSpells then
+    begin
+      if efWeaken in LSpell.Effects then
+        LStatus := seWeak
+      else
+        LStatus := seBlinded;
+      LDuration := Max(1, Skills.Skill[skConcentration].Value + LSpell.Value);
+      // Preserve the stated duration through the casting turn.
+      Mob.StatusEffects.StatusEffect[LStatus] := Max(
+        Mob.StatusEffects.StatusEffect[LStatus], LDuration + 1);
+      Mob.StatusEffects.StatusEffect[seSleeping] := 0;
+      MsgLog.Add(Format('You cast %s on %s (%d turns).',
+        [LSpell.Name, The, LDuration]));
+      Skills.DoSkill(skConcentration);
+      AddTurn;
+      Exit;
+    end;
     MMin := SpellMinDamage(ASpellEnum);
     MMax := SpellMaxDamage(ASpellEnum);
     Dam := Game.EnsureRange(RandomRange(MMin, MMax + 1), UIntMax);
@@ -746,7 +770,8 @@ begin
     if Mobs.Mob[I].Alive and (Mobs.Mob[I].Force = fcEnemy) and
       (Mobs.Mob[I].MapZone = Map.Current) and
       Map.InView(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
-      (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) and
+      ((Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) > 1) or
+      (FMagicMode and (Spellbook.GetLastSelectedSpell in TargetedStatusSpells))) and
       (Mode.Wizard or (Map.GetFOV(Mobs.Mob[I].X, Mobs.Mob[I].Y) and
       (Self.GetDist(Mobs.Mob[I].X, Mobs.Mob[I].Y) <= ARange))) then
     begin
@@ -756,7 +781,10 @@ begin
   if (Length(FFireTargets) = 0) then
   begin
     FFireMode := False;
-    MsgLog.Add('There is no one in sight to shoot at.');
+    if FMagicMode then
+      MsgLog.Add('There is no one in sight to cast at.')
+    else
+      MsgLog.Add('There is no one in sight to shoot at.');
     Exit;
   end;
   for I := 1 to High(FFireTargets) do
@@ -822,10 +850,15 @@ end;
 
 procedure TPlayer.MagicFireModeEnter;
 begin
+  if IsDead then
+  begin
+    FireModeExit;
+    Exit;
+  end;
   FMagicMode := True;
   if not (Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Enable and
-    (Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Spell.Projectile <>
-    prNone)) then
+    ((Spellbook.GetSpell(Spellbook.GetLastSelectedSpell).Spell.Projectile <>
+    prNone) or (Spellbook.GetLastSelectedSpell in TargetedStatusSpells))) then
   begin
     FFireMode := False;
     MsgLog.Add('No quick spell selected.');

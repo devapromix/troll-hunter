@@ -133,7 +133,7 @@ begin
   CancelPendingSpell;
   FLastSelectedSpell := ASpellEnum;
   LSpell := FSpell[ASpellEnum].Spell;
-  if LSpell.Projectile <> prNone then
+  if (LSpell.Projectile <> prNone) or (ASpellEnum in TargetedStatusSpells) then
   begin
     Player.MagicFireModeEnter;
     Exit;

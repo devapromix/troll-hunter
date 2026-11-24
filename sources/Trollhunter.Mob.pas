@@ -638,6 +638,11 @@ begin
   if IsDead or Player.IsDead or (Force <> fcEnemy) then
     Exit;
   The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+  if StatusEffects.IsStatusEffect(seBlinded) and (Random(2) = 0) then
+  begin
+    Miss();
+    Exit;
+  end;
   if (Player.Attributes.Attrib[atDV].Value < Math.RandomRange(0, 100)) then
   begin
     Game.ShowEffects := False;
@@ -893,6 +898,8 @@ end;
 
 function TMob.GetVision: UInt;
 begin
+  if StatusEffects.IsStatusEffect(seBlinded) then
+    Exit(1);
   Result := EnsureRange(VisionMax - (Player.Skills.Skill[skStealth].Value div 6),
     3, VisionMax);
 end;
@@ -910,9 +917,18 @@ begin
   NY := 0;
   if (Force = fcNPC) then
     Exit;
+  Dist := GetDist(Player.X, Player.Y);
+  // Continue ticking blindness even when its reduced vision prevents acting.
+  if StatusEffects.IsStatusEffect(seBlinded) and
+    (Player.StatusEffects.IsStatusEffect(seStealth) or (Dist > GetVision)) then
+  begin
+    OnTurn();
+    if IsDead then
+      Defeat;
+    Exit;
+  end;
   if Player.StatusEffects.IsStatusEffect(seStealth) then
     Exit;
-  Dist := GetDist(Player.X, Player.Y);
   if (Dist > GetVision) then
     Exit;
   if StatusEffects.IsStatusEffect(seSleeping) then

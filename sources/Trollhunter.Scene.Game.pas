@@ -377,11 +377,14 @@ begin
   LSpellEnum := Spellbook.GetLastSelectedSpell;
   TX := Mobs.Mob[Index].X;
   TY := Mobs.Mob[Index].Y;
-  LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
-  if (GetSpellData(LSpellEnum).Projectile = prLightning) then
-    RenderLightning(TX, TY, LSymbol, Index, LSpellEnum)
-  else
-    RenderProjectileFly(TX, TY, LSymbol);
+  if GetSpellData(LSpellEnum).Projectile <> prNone then
+  begin
+    LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
+    if (GetSpellData(LSpellEnum).Projectile = prLightning) then
+      RenderLightning(TX, TY, LSymbol, Index, LSpellEnum)
+    else
+      RenderProjectileFly(TX, TY, LSymbol);
+  end;
   Player.MagicAttack(Index, LSpellEnum);
   if Player.FireMode then
     Player.MagicFireModeEnter;
