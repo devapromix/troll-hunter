@@ -247,9 +247,9 @@ const
     Level: 6;
     ManaCost: 35;
     Effects: [efVision];
-    Description: 'Reveals nearby creatures and terrain';
+    Description: 'Temporarily extends normal sight; walls block vision';
     Icon: icVision;
-    Value: 5;
+    Value: 3;
     MinDamage: 0;
     MaxDamage: 0;
     Projectile: prNone;

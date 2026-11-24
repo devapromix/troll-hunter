@@ -175,7 +175,8 @@ begin
   Player.DoEffects(LSpell.Effects, LSpell.Value, 1, LTeleportX, LTeleportY);
   // The casting turn must not shorten a newly applied timed effect.
   for LStatus := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
-    if Player.StatusEffects.StatusEffect[LStatus] > LPreviousDuration[LStatus] then
+    if (Player.StatusEffects.StatusEffect[LStatus] > LPreviousDuration[LStatus]) or
+      ((LStatus = seNatureEye) and (efVision in LSpell.Effects)) then
       Player.StatusEffects.Modify(LStatus, 1);
   Player.Calc;
   Scenes.SetScene(scGame);

@@ -333,14 +333,8 @@ begin
 end;
 
 procedure TMap.ClearFOV;
-var
-  X, Y: Int;
-  Vision: UInt;
 begin
-  Vision := Player.Attributes.Attrib[atVision].Value.InRange(VisionMax);
-  for Y := Player.Y - Vision to Player.Y + Vision do
-    for X := Player.X - Vision to Player.X + Vision do
-      FFOV[Self.EnsureRange(X)][Self.EnsureRange(Y)] := False;
+  FillChar(FFOV, SizeOf(FFOV), 0);
 end;
 
 procedure TMap.Clear(Z: TMapEnum; ATileEnum: TTileEnum);

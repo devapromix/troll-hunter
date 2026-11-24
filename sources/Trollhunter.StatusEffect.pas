@@ -9,7 +9,7 @@ type
   TStatusEffectEnum = (sePoisoned, seBlinded, seStunned, seBurning, seRegen,
     seSleeping, seBloodlust, seCursed, seDrunk, seDiseased, seWeak, seAfraid,
     seArmor_Reduction, seLight, seBerserk, seWeightless, seMana_Shield,
-    seAiming, seSlowed, seStealth);
+    seAiming, seSlowed, seStealth, seNatureEye);
 
 type
   TSetOfStatusEffect = set of TStatusEffectEnum;
@@ -47,7 +47,7 @@ const
     'Dark Yellow', 'Light Red', 'Lighter Red', 'Yellow', 'Dark Red',
     'Dark Green', 'Light Blue', 'Dark Red', 'Dark White', 'Light Green',
     'Light Yellow', 'Lighter Yellow', 'Light Red', 'Light Blue', 'Lighter Blue',
-    'Light Green', 'Lighter Blue', 'White');
+    'Light Green', 'Lighter Blue', 'White', 'Light Green');
 
 procedure TStatusEffects.Modify(const AStatusEffect: TStatusEffectEnum;
   const Value: Int);

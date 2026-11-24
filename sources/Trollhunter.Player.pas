@@ -19,6 +19,8 @@ uses
 const
   // Player
   VisionMax = 15;
+  CNatureEyeBaseDuration = 20;
+  CNatureEyeMaxDuration = 45;
   DVMax = 80;
   LevelExpMax = 9;
   ReLifeMax = 10;
@@ -1246,8 +1248,13 @@ begin
 end;
 
 function TPlayer.GetVision: UInt;
+var
+  LBonus: Int;
 begin
-  Result := Game.EnsureRange((Attributes.Attrib[atVision].Value -
+  LBonus := 0;
+  if StatusEffects.IsStatusEffect(seNatureEye) then
+    LBonus := GetSpellData(spNatureEye).Value;
+  Result := Game.EnsureRange((Int(Attributes.Attrib[atVision].Value) + LBonus -
     StatusEffects.StatusEffect[seBlinded]) + 3, VisionMax);
   Result := Math.IfThen(Calendar.IsDay, Result, Result div 2);
 end;
@@ -2406,6 +2413,7 @@ procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0;
 var
   V: UInt;
   LTeleportX, LTeleportY: Int;
+  LDuration: Int;
   Ef: TEffect;
   WIndex: Int;
   WItem: Item;
@@ -2603,6 +2611,17 @@ begin
   begin
     StatusEffects.Modify(seBerserk, Value);
     MsgLog.Add(Format('You feel a sudden urge to kill things. (%d).', [Value]));
+  end;
+  // Nature's Eye extends ordinary sight and uses the existing wall-blocked FOV.
+  if (efVision in Effects) then
+  begin
+    LDuration := EnsureRange(CNatureEyeBaseDuration +
+      Skills.Skill[skConcentration].Value div 3,
+      CNatureEyeBaseDuration, CNatureEyeMaxDuration);
+    StatusEffects.StatusEffect[seNatureEye] := Max(
+      StatusEffects.StatusEffect[seNatureEye], LDuration);
+    MsgLog.Add(Format('Your sight sharpens (+%d vision, %d turns).',
+      [GetSpellData(spNatureEye).Value, LDuration]));
   end;
   // Mana Shield
   if (efManaShield in Effects) then
