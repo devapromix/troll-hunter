@@ -23,7 +23,8 @@ uses
   Trollhunter.UI.Log,
   Trollhunter.Terminal,
   Trollhunter.Player,
-  Trollhunter.Game;
+  Trollhunter.Game,
+  Trollhunter.Spellbook;
 
   { TSceneEnchant }
 
@@ -43,7 +44,10 @@ procedure TSceneEnchant.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
+    begin
+      Spellbook.CancelPendingSpell;
       Scenes.SetScene(scInv);
+    end;
     TK_A .. TK_Z:
       Player.CraftItem(Key - TK_A);
     else

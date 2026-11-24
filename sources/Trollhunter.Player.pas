@@ -1136,13 +1136,17 @@ end;
 procedure TPlayer.CraftItem(Index: Int);
 var
   FItem: Item;
+  LPendingSpell: Boolean;
 begin
   if not Items_Inventory_IndexInRange(Index) then Exit;
+  LPendingSpell := Spellbook.HasPendingSpell;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > -1)) then
     Exit;
   if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
   begin
+    if not Spellbook.CanCompletePendingSpell(spInfusion) then
+      Exit;
     FItem.Identify := Items.Index;
     Affixes.DoSuffix(FItem);
     if (Items_Inventory_SetItem(Index, FItem) > 0) then
@@ -1150,6 +1154,12 @@ begin
       MsgLog.Add(Format('You crafted %s.', [Items.GetNameThe(FItem)]));
       Statictics.Inc(stItCrafted);
       Skills.DoSkill(skEnchant_Item, FItem.Level);
+      if LPendingSpell then
+      begin
+        Spellbook.CompletePendingSpell;
+        if IsDead then
+          Exit;
+      end;
       Scenes.SetScene(scInv);
     end;
     Self.Calc;
@@ -1582,18 +1592,35 @@ end;
 procedure TPlayer.IdentItem(Index: Int);
 var
   FItem: Item;
+  LPendingSpell: Boolean;
 begin
   if not Items_Inventory_IndexInRange(Index) then Exit;
+  LPendingSpell := Spellbook.HasPendingSpell;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
+  if LPendingSpell then
+  begin
+    if (FItem.Identify <> 0) and (FItem.Prefix <> 0) then
+      Exit;
+    if not Spellbook.CanCompletePendingSpell(spIdentify) then
+      Exit;
+  end;
   if (Items.Identify(FItem) and (FItem.Identify > 0) and
     (Items_Inventory_SetItem(Index, FItem) > 0)) then
   begin
     MsgLog.Add(Format('You identified %s.', [Items.GetNameThe(FItem)]));
     Statictics.Inc(stItIdent);
+    if LPendingSpell then
+    begin
+      Spellbook.CompletePendingSpell;
+      if IsDead then
+        Exit;
+    end;
     Scenes.SetScene(scInv);
   end;
+  if LPendingSpell then
+    Exit;
   Self.Calc;
   Wait;
 end;

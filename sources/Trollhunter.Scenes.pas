@@ -380,6 +380,8 @@ end;
 
 procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
 begin
+  if (Spellbook <> nil) and not (ASceneEnum in [scIdentification, scEnchant]) then
+    Spellbook.CancelPendingSpell;
   Game.RenderTimeout := Game.GetRenderTimeout();
   Game.ShowEffects := False;
   Self.SceneEnum := ASceneEnum;
@@ -614,7 +616,10 @@ procedure TSceneIdentification.Update(var Key: UInt);
 begin
   case Key of
     TK_ESCAPE:
+    begin
+      Spellbook.CancelPendingSpell;
       Scenes.SetScene(scInv);
+    end;
     TK_A .. TK_Z:
       Player.IdentItem(Key - TK_A);
     else
