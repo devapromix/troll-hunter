@@ -1706,91 +1706,91 @@ const
     // Magic Books
     // Arcane Book of Mana Shield
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 300; Color: clLightestBlue; Deep: [deDark_Wood];
     Effects: []; Value: 1; ManaCost: 0; ),
     // Divine Book of Heal
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 250; Color: clWhite; Deep: [deDark_Wood];
     Effects: []; Value: 2; ManaCost: 0; ),
     // Nature Book of Regeneration
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 200; Color: clBlue; Deep: [deDark_Wood];
     Effects: []; Value: 3; ManaCost: 0; ),
     // Shadow Book of Curse
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 2; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 150; Color: clGray; Deep: [deDark_Wood];
     Effects: []; Value: 4; ManaCost: 0; ),
     // Elemental Book of Fire Arrow
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 220; Color: clLighterRed; Deep: [deDark_Wood];
     Effects: []; Value: 5; ManaCost: 0; ),
     // Arcane Book of Teleport
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 400; Color: clLightBlue; Deep: [deGray_Cave];
     Effects: []; Value: 6; ManaCost: 0; ),
     // Divine Book of Cure Poison
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 280; Color: clBlue; Deep: [deGray_Cave];
     Effects: []; Value: 7; ManaCost: 0; ),
     // Nature Book of Verdant Spear
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 4; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 360; Color: clLightGreen; Deep: [deGray_Cave];
     Effects: []; Value: 8; ManaCost: 0; ),
     // Shadow Book of Drain Life
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 380; Color: clLightestBlue; Deep: [deGray_Cave];
     Effects: []; Value: 9; ManaCost: 0; ),
     // Elemental Book of Ignite
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 3; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 350; Color: clLightBlue; Deep: [deGray_Cave];
     Effects: []; Value: 10; ManaCost: 0; ),
     // Arcane Book of Town Portal
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 420; Color: clLightestBlue; Deep: [deDeep_Cave];
     Effects: []; Value: 11; ManaCost: 0; ),
     // Divine Book of Cure Weakness
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 5; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 480; Color: clLightBlue; Deep: [deDeep_Cave];
     Effects: []; Value: 12; ManaCost: 0; ),
     // Nature Book of Nature's Eye
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 390; Color: clLightGreen; Deep: [deDeep_Cave];
     Effects: []; Value: 13; ManaCost: 0; ),
     // Shadow Book of Blind
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 470; Color: clLightGray; Deep: [deDeep_Cave];
     Effects: []; Value: 14; ManaCost: 0; ),
     // Elemental Book of Lightning
     (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
-    MaxDurability: 0; Level: 6; Defense: (Min: 0; Max: 0);
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 450; Color: clWhite; Deep: [deDeep_Cave];
     Effects: []; Value: 15; ManaCost: 0; ),
@@ -1942,6 +1942,8 @@ type
     function GetName(I: TItemEnum): string; overload;
   public
     Index: UInt;
+    class function GetRequiredLevel(AItemEnum: TItemEnum): UInt; overload;
+    class function GetRequiredLevel(const AItem: Item): UInt; overload;
     class procedure Make(ID: UInt; var AItem: Item);
     class procedure CalcItem(var AItem: Item);
     constructor Create;
@@ -2011,6 +2013,29 @@ uses
   Trollhunter.Spell;
 
   { TItems }
+
+class function TItems.GetRequiredLevel(AItemEnum: TItemEnum): UInt;
+var
+  LSpellID: Int;
+begin
+  if ItemBase[AItemEnum].ItemType = itBook then
+  begin
+    LSpellID := ItemBase[AItemEnum].Value;
+    if (LSpellID <= Ord(spNone)) or (LSpellID > Ord(High(TSpellEnum))) then
+      raise Exception.Create('Magic book has an invalid spell identifier.');
+    Result := GetSpellData(TSpellEnum(LSpellID)).Level;
+  end
+  else
+    Result := ItemBase[AItemEnum].Level;
+end;
+
+class function TItems.GetRequiredLevel(const AItem: Item): UInt;
+begin
+  if ItemBase[TItemEnum(AItem.ItemID)].ItemType = itBook then
+    Result := GetRequiredLevel(TItemEnum(AItem.ItemID))
+  else
+    Result := AItem.Level;
+end;
 
 class procedure TItems.CalcItem(var AItem: Item);
 var
@@ -2142,6 +2167,7 @@ var
   end;
 
 begin
+  AItem.Level := GetRequiredLevel(AItem);
   S := '';
   T := '';
   Level := '';
@@ -2352,7 +2378,7 @@ begin
   AItem.ItemID := ID;
   AItem.SlotID := Ord(ItemBase[TItemEnum(ID)].SlotType);
   AItem.Stack := ItemBase[TItemEnum(ID)].MaxStack;
-  AItem.Level := ItemBase[TItemEnum(ID)].Level;
+  AItem.Level := GetRequiredLevel(TItemEnum(ID));
   // Color
   AItem.Color := ItemBase[TItemEnum(ID)].Color;
   // AItem.Color := Math.RandomRange($FF888888, $FFFFFFFF);

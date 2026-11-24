@@ -1277,6 +1277,7 @@ var
   I: TItemEnum;
   T: TItemType;
   LTeleportX, LTeleportY: Int;
+  LRequiredLevel: UInt;
 begin
   if IsDead or not Items_Inventory_IndexInRange(Index) then
     Exit;
@@ -1288,10 +1289,11 @@ begin
     Self.Calc;
     Exit;
   end;
+  LRequiredLevel := TItems.GetRequiredLevel(FItem);
   // Need level
-  if (Attributes.Attrib[atLev].Value < FItem.Level) and not Mode.Wizard then
+  if (Attributes.Attrib[atLev].Value < LRequiredLevel) and not Mode.Wizard then
   begin
-    MsgLog.Add(Format('You can not use this yet (need level %d)!', [FItem.Level]));
+    MsgLog.Add(Format('You can not use this yet (need level %d)!', [LRequiredLevel]));
     Self.Calc;
     Exit;
   end;

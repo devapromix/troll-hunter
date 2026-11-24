@@ -179,7 +179,7 @@ var
 
   function MatchesLevel(const AID: TItemEnum): Boolean;
   begin
-    Result := ItemBase[AID].Level <= LPlayerLevel;
+    Result := TItems.GetRequiredLevel(AID) <= LPlayerLevel;
   end;
 
   procedure RestrictShopAffixes(var AItem: Item);
