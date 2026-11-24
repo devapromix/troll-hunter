@@ -603,6 +603,7 @@ var
   The: string;
   LSpell: TSpellData;
   LWasStealthed: boolean;
+  LTargetLife, LActualDamage, LDrainPercent, LHealing: Int;
 
   procedure Miss();
   begin
@@ -659,9 +660,22 @@ begin
       AddTurn;
       Exit;
     end;
+    LTargetLife := Mob.Attributes.Attrib[atLife].Value;
     Mob.Attributes.Modify(atLife, -Dam);
+    LActualDamage := Max(0, LTargetLife - Int(Mob.Attributes.Attrib[atLife].Value));
     MsgLog.Add(Format('Your %s hits %s (%d).', [LowerCase(LSpell.Name), The, Dam]));
     Skills.TryAwarenessSkill;
+    if (efDrain in LSpell.Effects) and (LActualDamage > 0) then
+    begin
+      LDrainPercent := EnsureRange(Skills.Skill[skConcentration].Value +
+        LSpell.Value, 0, 100);
+      LHealing := Max(1, (LActualDamage * LDrainPercent) div 100);
+      LHealing := Min(LHealing, Max(0, Int(Attributes.Attrib[atMaxLife].Value) -
+        Int(Attributes.Attrib[atLife].Value)));
+      Attributes.Modify(atLife, LHealing);
+      Skills.DoSkill(skConcentration);
+      MsgLog.Add(Format('You drain %d life from %s.', [LHealing, The]));
+    end;
     if Mob.IsDead then
       Mob.Defeat
     else if (efWeaken in LSpell.Effects) then
@@ -675,13 +689,6 @@ begin
       V := Skills.Skill[skConcentration].Value + LSpell.Value;
       Mob.StatusEffects.Modify(seBurning, V);
       MsgLog.Add(Format('%s is engulfed in flames (%d).', [The, V]));
-    end
-    else if (efDrain in LSpell.Effects) then
-    begin
-      V := (Dam * (Skills.Skill[skConcentration].Value + LSpell.Value)) div 100;
-      Attributes.Modify(atLife, V);
-      Skills.DoSkill(skConcentration);
-      MsgLog.Add(Format('You drain %d life from %s.', [V, The]));
     end;
   end
   else
