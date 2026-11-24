@@ -58,6 +58,7 @@ uses
   Trollhunter.UI,
   Trollhunter.Attribute,
   Trollhunter.StatusEffect,
+  Trollhunter.Effect,
   Trollhunter.Map,
   Trollhunter.Game,
   Trollhunter.Scenes;
@@ -124,6 +125,7 @@ procedure TSpellbook.CastSpell(ASpellEnum: TSpellEnum);
 var
   LSpell: TSpellData;
   LStatus: TStatusEffectEnum;
+  LTeleportX, LTeleportY: Int;
   LPreviousDuration: array [TStatusEffectEnum] of Int;
 begin
   if Player.IsDead or not FSpell[ASpellEnum].Enable then
@@ -161,11 +163,16 @@ begin
     Player.DoEffects(LSpell.Effects, LSpell.Value);
     Exit;
   end;
+  LTeleportX := -1;
+  LTeleportY := -1;
+  if (efTeleportation in LSpell.Effects) then
+    if not Player.TryGetTeleportTarget(LSpell.Value, LTeleportX, LTeleportY) then
+      Exit;
   for LStatus := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
     LPreviousDuration[LStatus] := Player.StatusEffects.StatusEffect[LStatus];
   Player.Attributes.Modify(atMana, -Int(LSpell.ManaCost));
   Player.Statictics.Inc(stSpCast);
-  Player.DoEffects(LSpell.Effects, LSpell.Value);
+  Player.DoEffects(LSpell.Effects, LSpell.Value, 1, LTeleportX, LTeleportY);
   // The casting turn must not shorten a newly applied timed effect.
   for LStatus := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
     if Player.StatusEffects.StatusEffect[LStatus] > LPreviousDuration[LStatus] then

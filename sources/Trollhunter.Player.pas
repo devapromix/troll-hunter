@@ -149,8 +149,10 @@ type
     procedure Drop(Index: Int);
     procedure DropAmount(Index: Int);
     procedure UseItem(Index: Int);
+    function TryGetTeleportTarget(const Value: UInt; out TargetX, TargetY: Int): Boolean;
     procedure DoEffects(const Effects: TEffects; const Value: UInt = 0;
-      const Multiplier: UInt = 1);
+      const Multiplier: UInt = 1; const TeleportX: Int = -1;
+      const TeleportY: Int = -1);
     function AbsorbManaShieldDamage(const ADamage: UInt): UInt;
     procedure Equip(Index: Int);
     procedure UnEquip(Index: Int);
@@ -1269,6 +1271,7 @@ var
   FItem: Item;
   I: TItemEnum;
   T: TItemType;
+  LTeleportX, LTeleportY: Int;
 begin
   if IsDead or not Items_Inventory_IndexInRange(Index) then
     Exit;
@@ -1300,6 +1303,11 @@ begin
   begin
     if (T in UseTypeItems) then
     begin
+      LTeleportX := -1;
+      LTeleportY := -1;
+      if (efTeleportation in FItem.Effects) then
+        if not TryGetTeleportTarget(FItem.Value, LTeleportX, LTeleportY) then
+          Exit;
       if not (T in RuneTypeItems) then
         FItem.Amount := FItem.Amount - 1;
       if (T in PotionTypeItems) then
@@ -1358,7 +1366,7 @@ begin
           Exit;
         end;
       end;
-      DoEffects(FItem.Effects, FItem.Value);
+      DoEffects(FItem.Effects, FItem.Value, 1, LTeleportX, LTeleportY);
       Self.Calc;
       Wait;
     end;
@@ -2305,10 +2313,59 @@ begin
   Result := (Map.GetTileEnum(X, Y, Map.Current) = teStash);
 end;
 
-procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0;
-  const Multiplier: UInt = 1);
+function TPlayer.TryGetTeleportTarget(const Value: UInt;
+  out TargetX, TargetY: Int): Boolean;
 var
-  V, VX, VY: UInt;
+  LRangeX, LRangeY, LMinX, LMaxX, LMinY, LMaxY: Int;
+  LX, LY, LCount, LIndex: Int;
+  LCandidates: array of record
+    X, Y: Int;
+  end;
+begin
+  Result := False;
+  TargetX := -1;
+  TargetY := -1;
+  LRangeX := Max(1, Math.RandomRange(Value,
+    Int(Value) + Skills.Skill[skConcentration].Value));
+  LRangeY := Max(1, Math.RandomRange(Value,
+    Int(Value) + Skills.Skill[skConcentration].Value));
+  LMinX := Max(0, Int(X) - LRangeX);
+  LMaxX := Min(UIntMax, Int(X) + LRangeX);
+  LMinY := Max(0, Int(Y) - LRangeY);
+  LMaxY := Min(UIntMax, Int(Y) + LRangeY);
+  SetLength(LCandidates, (LMaxX - LMinX + 1) * (LMaxY - LMinY + 1));
+  LCount := 0;
+  for LX := LMinX to LMaxX do
+    for LY := LMinY to LMaxY do
+    begin
+      if (LX = Int(X)) and (LY = Int(Y)) then
+        Continue;
+      if not (Map.GetTileEnum(LX, LY, Map.Current) in
+        (SpawnTiles + [teStoneFloor, teWoodenFloor])) then
+        Continue;
+      if not Mobs.GetFreeTile(LX, LY) then
+        Continue;
+      LCandidates[LCount].X := LX;
+      LCandidates[LCount].Y := LY;
+      Inc(LCount);
+    end;
+  if LCount = 0 then
+  begin
+    MsgLog.Add('There is no free place to teleport.');
+    Exit;
+  end;
+  LIndex := Random(LCount);
+  TargetX := LCandidates[LIndex].X;
+  TargetY := LCandidates[LIndex].Y;
+  Result := True;
+end;
+
+procedure TPlayer.DoEffects(const Effects: TEffects; const Value: UInt = 0;
+  const Multiplier: UInt = 1; const TeleportX: Int = -1;
+  const TeleportY: Int = -1);
+var
+  V: UInt;
+  LTeleportX, LTeleportY: Int;
   Ef: TEffect;
   WIndex: Int;
   WItem: Item;
@@ -2356,6 +2413,12 @@ const
   end;
 
 begin
+  LTeleportX := TeleportX;
+  LTeleportY := TeleportY;
+  if (efTeleportation in Effects) and
+    ((LTeleportX < 0) or (LTeleportY < 0)) then
+    if not TryGetTeleportTarget(Value, LTeleportX, LTeleportY) then
+      Exit;
   // Life
   if (efLife in Effects) then
   begin
@@ -2462,12 +2525,8 @@ begin
   // Teleportation
   if (efTeleportation in Effects) then
   begin
-    VX := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
-      .Value + Value);
-    VY := Math.RandomRange(Value, Self.Skills.Skill[skConcentration]
-      .Value + Value);
-    X := Map.EnsureRange(X + (Math.RandomRange(0, VX * 2 + 1) - VX));
-    Y := Map.EnsureRange(Y + (Math.RandomRange(0, VY * 2 + 1) - VY));
+    X := LTeleportX;
+    Y := LTeleportY;
     MsgLog.Add('You have teleported into new place!');
     Scenes.SetScene(scGame);
   end;
