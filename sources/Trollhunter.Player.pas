@@ -642,10 +642,8 @@ begin
   if (TargetDV < Math.RandomRange(0, 100)) and not
     StatusEffects.IsStatusEffect(seCursed) then
   begin
-    MMin := EnsureRange(LSpell.MinDamage + Attributes.Attrib[atWil].Value div
-      7, 1, UIntMax - 1);
-    MMax := EnsureRange(LSpell.MaxDamage + Attributes.Attrib[atWil].Value div
-      5, 2, UIntMax);
+    MMin := SpellMinDamage(ASpellEnum);
+    MMax := SpellMaxDamage(ASpellEnum);
     Dam := Game.EnsureRange(RandomRange(MMin, MMax + 1), UIntMax);
     if StatusEffects.IsStatusEffect(seBloodlust) then
       Inc(Dam, Dam div 4);
@@ -2769,14 +2767,14 @@ end;
 
 function TPlayer.SpellMinDamage(ASpellEnum: TSpellEnum): UInt;
 begin
-  Result := EnsureRange(Spellbook.GetSpell(ASpellEnum).Spell.MinDamage +
-    Attributes.Attrib[atWil].Value div 5, 1, SpellMinDamageMax);
+  Result := EnsureRange(GetSpellData(ASpellEnum).MinDamage +
+    Attributes.Attrib[atWil].Value div 7, 1, SpellMinDamageMax);
 end;
 
 function TPlayer.SpellMaxDamage(ASpellEnum: TSpellEnum): UInt;
 begin
-  Result := EnsureRange(Spellbook.GetSpell(ASpellEnum).Spell.MaxDamage +
-    Attributes.Attrib[atWil].Value div 3, 2, SpellMaxDamageMax);
+  Result := EnsureRange(GetSpellData(ASpellEnum).MaxDamage +
+    Attributes.Attrib[atWil].Value div 5, 2, SpellMaxDamageMax);
 end;
 
 function TPlayer.QuickSpellMinDamage: UInt;
