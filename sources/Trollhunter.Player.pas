@@ -1669,35 +1669,33 @@ var
   FItem: Item;
   LPendingSpell: Boolean;
 begin
-  if not Items_Inventory_IndexInRange(Index) then Exit;
-  LPendingSpell := Spellbook.HasPendingSpell;
+  if IsDead or not Items_Inventory_IndexInRange(Index) then
+    Exit;
   FItem := Items_Inventory_GetItem(Index);
   if ((FItem.Stack > 1) or (FItem.Amount > 1)) then
     Exit;
-  if LPendingSpell then
-  begin
-    if (FItem.Identify <> 0) and (FItem.Prefix <> 0) then
-      Exit;
-    if not Spellbook.CanCompletePendingSpell(spIdentify) then
-      Exit;
-  end;
-  if (Items.Identify(FItem) and (FItem.Identify > 0) and
-    (Items_Inventory_SetItem(Index, FItem) > 0)) then
-  begin
-    MsgLog.Add(Format('You identified %s.', [Items.GetNameThe(FItem)]));
-    Statictics.Inc(stItIdent);
-    if LPendingSpell then
-    begin
-      Spellbook.CompletePendingSpell;
-      if IsDead then
-        Exit;
-    end;
-    Scenes.SetScene(scInv);
-  end;
-  if LPendingSpell then
+  if (FItem.Identify <> 0) and (FItem.Prefix <> 0) then
     Exit;
-  Self.Calc;
-  Wait;
+  LPendingSpell := Spellbook.HasPendingSpell;
+  if not Spellbook.CanCompletePendingSpell(spIdentify) then
+    Exit;
+  if not Items.Identify(FItem) then
+    Exit;
+  if (FItem.Identify = 0) or (FItem.Prefix = 0) then
+    Exit;
+  if Items_Inventory_SetItem(Index, FItem) <= 0 then
+    Exit;
+  MsgLog.Add(Format('You identified %s.', [Items.GetNameThe(FItem)]));
+  Statictics.Inc(stItIdent);
+  if LPendingSpell then
+    Spellbook.CompletePendingSpell
+  else
+  begin
+    Self.Calc;
+    Wait;
+  end;
+  if not IsDead then
+    Scenes.SetScene(scInv);
 end;
 
 procedure TPlayer.RechargeWand(Index: Int);
