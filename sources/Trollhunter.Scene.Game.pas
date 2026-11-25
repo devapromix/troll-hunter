@@ -17,6 +17,11 @@ uses
   Trollhunter.Attribute;
 
 type
+  TLightningGeometry = record
+    Path: array of TPoint;
+    BranchAttach: array of Int;
+    BranchPoints: array of TPoint;
+  end;
 
   { TSceneGame }
 
@@ -26,8 +31,9 @@ type
     procedure CastTargetedSpell;
     procedure CastSpell();
     procedure RenderProjectileFly(const ATX, ATY: Int; const ASymbol: TSymbol);
-    procedure RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol;
-      const AIndex: Int; const ASpellEnum: TSpellEnum);
+    function BuildLightning(const ATX, ATY: Int): TLightningGeometry;
+    procedure RenderLightning(const AGeometry: TLightningGeometry;
+      const ASymbol: TSymbol);
   public
     procedure Render; override;
     procedure Update(var Key: UInt); override;
@@ -250,95 +256,78 @@ begin
   end;
 end;
 
-procedure TSceneGame.RenderLightning(const ATX, ATY: Int; const ASymbol: TSymbol;
-  const AIndex: Int; const ASpellEnum: TSpellEnum);
+function TSceneGame.BuildLightning(const ATX, ATY: Int): TLightningGeometry;
 const
   CBranchLen = 2;
 var
-  L, I, J, PX, PY, LBranchCount, LDX, LDY, LPX, LPY, LSign: Int;
+  L, I, J, LBranchCount, LDX, LDY, LPX, LPY, LSign: Int;
   LR: real;
-  LPath: array of TPoint;
-  LBranchAttach: array of Int;
-  LBranchPoint: array of TPoint;
-  LHitList: array of Int;
-
-  procedure HitIfMob(const AX, AY: Int);
-  var
-    LHitIndex, K: Int;
-  begin
-    LHitIndex := Mobs.GetIndex(AX, AY);
-    if (LHitIndex < 0) or (LHitIndex = AIndex) or not Mobs.Mob[LHitIndex].Alive then
-      Exit;
-    for K := 0 to High(LHitList) do
-      if (LHitList[K] = LHitIndex) then
-        Exit;
-    SetLength(LHitList, Length(LHitList) + 1);
-    LHitList[High(LHitList)] := LHitIndex;
-    Player.MagicSplashAttack(LHitIndex, ASpellEnum);
-  end;
-
 begin
-  PX := View.Width div 2;
-  PY := View.Height div 2;
   L := Math.Max(Abs(Int(Player.X) - ATX), Abs(Int(Player.Y) - ATY));
   if (L = 0) then
     L := 1;
-  SetLength(LPath, L + 1);
-  LPath[0] := Point(Int(Player.X), Int(Player.Y));
+  SetLength(Result.Path, L + 1);
+  Result.Path[0] := Point(Int(Player.X), Int(Player.Y));
   for I := 1 to L do
   begin
     LR := I / L;
-    LPath[I].X := Int(Player.X) + Round((ATX - Int(Player.X)) * LR);
-    LPath[I].Y := Int(Player.Y) + Round((ATY - Int(Player.Y)) * LR);
+    Result.Path[I].X := Int(Player.X) + Round((ATX - Int(Player.X)) * LR);
+    Result.Path[I].Y := Int(Player.Y) + Round((ATY - Int(Player.Y)) * LR);
     if (I < L) then
       if (RandomRange(0, 2) = 0) then
-        Inc(LPath[I].X, RandomRange(-1, 2))
+        Inc(Result.Path[I].X, RandomRange(-1, 2))
       else
-        Inc(LPath[I].Y, RandomRange(-1, 2));
+        Inc(Result.Path[I].Y, RandomRange(-1, 2));
   end;
 
   LBranchCount := RandomRange(2, 4);
-  SetLength(LBranchAttach, LBranchCount);
-  SetLength(LBranchPoint, LBranchCount);
+  SetLength(Result.BranchAttach, LBranchCount);
+  SetLength(Result.BranchPoints, LBranchCount);
   for J := 0 to LBranchCount - 1 do
   begin
     I := RandomRange(1, L);
-    LDX := LPath[I].X - LPath[I - 1].X;
-    LDY := LPath[I].Y - LPath[I - 1].Y;
+    LDX := Result.Path[I].X - Result.Path[I - 1].X;
+    LDY := Result.Path[I].Y - Result.Path[I - 1].Y;
     if (RandomRange(0, 2) = 0) then
       LSign := 1
     else
       LSign := -1;
-    LPX := LPath[I].X + LSign * (-LDY) * RandomRange(1, CBranchLen + 1);
-    LPY := LPath[I].Y + LSign * LDX * RandomRange(1, CBranchLen + 1);
-    LBranchAttach[J] := I;
-    LBranchPoint[J] := Point(LPX, LPY);
+    LPX := Result.Path[I].X + LSign * (-LDY) * RandomRange(1, CBranchLen + 1);
+    LPY := Result.Path[I].Y + LSign * LDX * RandomRange(1, CBranchLen + 1);
+    Result.BranchAttach[J] := I;
+    Result.BranchPoints[J] := Point(LPX, LPY);
   end;
 
+end;
+
+procedure TSceneGame.RenderLightning(const AGeometry: TLightningGeometry;
+  const ASymbol: TSymbol);
+var
+  L, I, J, PX, PY: Int;
+begin
+  PX := View.Width div 2;
+  PY := View.Height div 2;
+  L := High(AGeometry.Path);
   for I := 1 to L do
   begin
     Self.Render;
     Terminal.ForegroundColor(ASymbol.Color);
     for J := 1 to I do
-      Terminal.Print(LPath[J].X - Int(Player.X) + PX + View.Left,
-        LPath[J].Y - Int(Player.Y) + PY + View.Top,
-        Projectile.GetDirSymbol(Math.Sign(LPath[J].X - LPath[J - 1].X),
-        Math.Sign(LPath[J].Y - LPath[J - 1].Y)));
-    for J := 0 to LBranchCount - 1 do
-      if (LBranchAttach[J] <= I) then
-        Terminal.Print(LBranchPoint[J].X - Int(Player.X) + PX + View.Left,
-          LBranchPoint[J].Y - Int(Player.Y) + PY + View.Top,
+      Terminal.Print(AGeometry.Path[J].X - Int(Player.X) + PX + View.Left,
+        AGeometry.Path[J].Y - Int(Player.Y) + PY + View.Top,
+        Projectile.GetDirSymbol(Math.Sign(AGeometry.Path[J].X - AGeometry.Path[J - 1].X),
+        Math.Sign(AGeometry.Path[J].Y - AGeometry.Path[J - 1].Y)));
+    for J := 0 to High(AGeometry.BranchPoints) do
+      if (AGeometry.BranchAttach[J] <= I) then
+        Terminal.Print(AGeometry.BranchPoints[J].X - Int(Player.X) + PX + View.Left,
+          AGeometry.BranchPoints[J].Y - Int(Player.Y) + PY + View.Top,
           Projectile.GetDirSymbol(
-          Math.Sign(LBranchPoint[J].X - LPath[LBranchAttach[J]].X),
-          Math.Sign(LBranchPoint[J].Y - LPath[LBranchAttach[J]].Y)));
+          Math.Sign(AGeometry.BranchPoints[J].X - AGeometry.Path[AGeometry.BranchAttach[J]].X),
+          Math.Sign(AGeometry.BranchPoints[J].Y - AGeometry.Path[AGeometry.BranchAttach[J]].Y)));
     terminal_refresh();
     terminal_delay(15);
   end;
 
-  for I := 1 to L do
-    HitIfMob(LPath[I].X, LPath[I].Y);
-  for J := 0 to LBranchCount - 1 do
-    HitIfMob(LBranchPoint[J].X, LBranchPoint[J].Y);
 end;
 
 procedure TSceneGame.FireArrow;
@@ -364,12 +353,15 @@ end;
 
 procedure TSceneGame.CastTargetedSpell;
 var
-  Index, TX, TY: Int;
+  Index, TX, TY, I: Int;
   LSymbol: TSymbol;
   LSpellEnum: TSpellEnum;
+  LGeometry: TLightningGeometry;
+  LSplashTiles: array of TPoint;
+  LResult: TSpellAttackResult;
 begin
   Index := Player.FireModeTarget;
-  if (Index < 0) or not Mobs.Mob[Index].Alive then
+  if (Index < 0) or (Index >= Mobs.Count) or not Mobs.Mob[Index].Alive then
   begin
     Player.FireModeExit;
     Exit;
@@ -377,15 +369,27 @@ begin
   LSpellEnum := Spellbook.GetLastSelectedSpell;
   TX := Mobs.Mob[Index].X;
   TY := Mobs.Mob[Index].Y;
+  if GetSpellData(LSpellEnum).Projectile = prLightning then
+  begin
+    LGeometry := BuildLightning(TX, TY);
+    SetLength(LSplashTiles, High(LGeometry.Path) + Length(LGeometry.BranchPoints));
+    for I := 1 to High(LGeometry.Path) do
+      LSplashTiles[I - 1] := LGeometry.Path[I];
+    for I := 0 to High(LGeometry.BranchPoints) do
+      LSplashTiles[High(LGeometry.Path) + I] := LGeometry.BranchPoints[I];
+  end;
+  LResult := Player.MagicAttack(Index, LSpellEnum, LSplashTiles);
+  if LResult = sarRejected then
+    Exit;
   if GetSpellData(LSpellEnum).Projectile <> prNone then
   begin
     LSymbol := Projectile.GetSpellSymbol(LSpellEnum);
-    if (GetSpellData(LSpellEnum).Projectile = prLightning) then
-      RenderLightning(TX, TY, LSymbol, Index, LSpellEnum)
+    if (GetSpellData(LSpellEnum).Projectile = prLightning) and (LResult = sarHit) then
+      RenderLightning(LGeometry, LSymbol)
     else
       RenderProjectileFly(TX, TY, LSymbol);
   end;
-  Player.MagicAttack(Index, LSpellEnum);
+  Player.AddTurn;
   if Player.FireMode then
     Player.MagicFireModeEnter;
 end;

@@ -3,6 +3,7 @@ unit Trollhunter.Player;
 interface
 
 uses
+  Types,
   Trollhunter.Types,
   Trollhunter.Player.Types,
   Trollhunter.Creature,
@@ -129,7 +130,8 @@ type
     procedure UseCharge;
     procedure BuildFireTargets(ARange: UInt);
     procedure RangedAttack(Index: Int);
-    procedure MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
+    function MagicAttack(Index: Int; ASpellEnum: TSpellEnum;
+      const ASplashTiles: array of TPoint): TSpellAttackResult;
     procedure MagicSplashAttack(Index: Int; ASpellEnum: TSpellEnum);
     function CanFire: boolean;
     procedure FireModeEnter;
@@ -594,7 +596,8 @@ begin
   AddTurn;
 end;
 
-procedure TPlayer.MagicAttack(Index: Int; ASpellEnum: TSpellEnum);
+function TPlayer.MagicAttack(Index: Int; ASpellEnum: TSpellEnum;
+  const ASplashTiles: array of TPoint): TSpellAttackResult;
 const
   RangeAccuracyPenalty = 3;
   AccuracyWilDivisor = 2;
@@ -607,7 +610,8 @@ var
   LWasStealthed: boolean;
   LTargetLife, LActualDamage, LDrainPercent, LHealing: Int;
   LStatus: TStatusEffectEnum;
-  LDuration: Int;
+  LDuration, I, LHitIndex: Int;
+  LHitList: array of Boolean;
 
   procedure Miss();
   begin
@@ -616,12 +620,13 @@ var
   end;
 
 begin
+  Result := sarRejected;
   if IsDead or (Index < 0) or (Index >= Mobs.Count) then
     Exit;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
-  if (Mob.Force <> fcEnemy) then
+  if (Mob.Force <> fcEnemy) or (Mob.MapZone <> Map.Current) then
     Exit;
   if ASpellEnum in TargetedStatusSpells then
     if (Mob.MapZone <> Map.Current) or (Self.GetDist(Mob.X, Mob.Y) > Self.Vision) or
@@ -629,7 +634,6 @@ begin
       (not Mode.Wizard and not Map.GetFOV(Mob.X, Mob.Y)) then
       Exit;
   LWasStealthed := StatusEffects.IsStatusEffect(seStealth);
-  BreakStealth;
   LSpell := GetSpellData(ASpellEnum);
   if (Self.Attributes.Attrib[atMana].Value < LSpell.ManaCost) then
   begin
@@ -637,6 +641,8 @@ begin
     Self.FireModeExit;
     Exit;
   end;
+  BreakStealth;
+  Result := sarMissed;
   Self.Attributes.Modify(atMana, -Int(LSpell.ManaCost));
   Self.Statictics.Inc(stSpCast);
   Dist := Self.GetDist(Mob.X, Mob.Y);
@@ -665,7 +671,7 @@ begin
       MsgLog.Add(Format('You cast %s on %s (%d turns).',
         [LSpell.Name, The, LDuration]));
       Skills.DoSkill(skConcentration);
-      AddTurn;
+      Result := sarHit;
       Exit;
     end;
     MMin := SpellMinDamage(ASpellEnum);
@@ -681,9 +687,9 @@ begin
     if (Dam = 0) then
     begin
       Miss();
-      AddTurn;
       Exit;
     end;
+    Result := sarHit;
     LTargetLife := Mob.Attributes.Attrib[atLife].Value;
     Mob.Attributes.Modify(atLife, -Dam);
     LActualDamage := Max(0, LTargetLife - Int(Mob.Attributes.Attrib[atLife].Value));
@@ -717,7 +723,21 @@ begin
   end
   else
     Miss();
-  AddTurn;
+  if (Result = sarHit) and (LSpell.Projectile = prLightning) then
+  begin
+    SetLength(LHitList, Mobs.Count);
+    LHitList[Index] := True;
+    for I := 0 to High(ASplashTiles) do
+    begin
+      if not Map.InMap(ASplashTiles[I].X, ASplashTiles[I].Y) then
+        Continue;
+      LHitIndex := Mobs.GetIndex(ASplashTiles[I].X, ASplashTiles[I].Y);
+      if (LHitIndex < 0) or LHitList[LHitIndex] then
+        Continue;
+      LHitList[LHitIndex] := True;
+      MagicSplashAttack(LHitIndex, ASpellEnum);
+    end;
+  end;
 end;
 
 procedure TPlayer.MagicSplashAttack(Index: Int; ASpellEnum: TSpellEnum);
@@ -727,10 +747,10 @@ var
   LSpell: TSpellData;
   LThe: string;
 begin
-  if (Index < 0) then
+  if (Index < 0) or (Index >= Mobs.Count) then
     Exit;
   LMob := Mobs.Mob[Index];
-  if not LMob.Alive or (LMob.Force <> fcEnemy) then
+  if not LMob.Alive or (LMob.Force <> fcEnemy) or (LMob.MapZone <> Map.Current) then
     Exit;
   LSpell := GetSpellData(ASpellEnum);
   LThe := GetDescThe(Mobs.Name[TMobEnum(LMob.ID)]);

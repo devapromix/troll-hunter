@@ -48,6 +48,8 @@ const
   TargetedStatusSpells: set of TSpellEnum = [spCurse, spBlind];
 
 type
+  TSpellAttackResult = (sarRejected, sarMissed, sarHit);
+
   TSpellData = record
     Name: string;
     School: TSpellSchoolEnum;
