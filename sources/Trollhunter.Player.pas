@@ -1211,33 +1211,55 @@ procedure TPlayer.CraftItem(Index: Int);
 var
   FItem: Item;
   LPendingSpell: Boolean;
+  LSuffix: Int;
 begin
-  if not Items_Inventory_IndexInRange(Index) then Exit;
+  if IsDead or not Items_Inventory_IndexInRange(Index) then
+    Exit;
   LPendingSpell := Spellbook.HasPendingSpell;
   FItem := Items_Inventory_GetItem(Index);
-  if ((FItem.Stack > 1) or (FItem.Amount > 1) or (FItem.Identify > -1)) then
-    Exit;
-  if (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
+  if (FItem.Stack > 1) or (FItem.Amount > 1) or
+    not (ItemBase[TItemEnum(FItem.ItemID)].ItemType in SmithTypeItems) then
   begin
-    if not Spellbook.CanCompletePendingSpell(spInfusion) then
-      Exit;
-    FItem.Identify := Items.Index;
-    Affixes.DoSuffix(FItem);
-    if (Items_Inventory_SetItem(Index, FItem) > 0) then
-    begin
-      MsgLog.Add(Format('You crafted %s.', [Items.GetNameThe(FItem)]));
-      Statictics.Inc(stItCrafted);
-      Skills.DoSkill(skEnchant_Item, FItem.Level);
-      if LPendingSpell then
-      begin
-        Spellbook.CompletePendingSpell;
-        if IsDead then
-          Exit;
-      end;
-      Scenes.SetScene(scInv);
-    end;
-    Self.Calc;
+    MsgLog.Add('Choose a weapon, armor or jewelry item.');
+    Exit;
   end;
+  if (FItem.Identify = 0) or (FItem.Prefix = 0) then
+  begin
+    MsgLog.Add('Identify this item before enchanting it.');
+    Exit;
+  end;
+  if FItem.Identify <> -1 then
+  begin
+    MsgLog.Add('This item already has a suffix.');
+    Exit;
+  end;
+  if not Spellbook.CanCompletePendingSpell(spInfusion) then
+    Exit;
+  if LPendingSpell then
+    LSuffix := Ord(of_the_Sky) + GetSpellData(spInfusion).Value
+  else
+    LSuffix := Items.Index;
+  if (LSuffix <= 0) or (LSuffix >= Int(Affixes.SuffixAmount)) then
+  begin
+    MsgLog.Add('There is no valid enchantment selected.');
+    Exit;
+  end;
+  FItem.Identify := LSuffix;
+  Affixes.DoSuffix(FItem);
+  if Items_Inventory_SetItem(Index, FItem) <= 0 then
+    Exit;
+  MsgLog.Add(Format('You crafted %s.', [Items.GetNameThe(FItem)]));
+  Statictics.Inc(stItCrafted);
+  Skills.DoSkill(skEnchant_Item, FItem.Level);
+  if LPendingSpell then
+  begin
+    Spellbook.CompletePendingSpell;
+    if IsDead then
+      Exit;
+  end
+  else
+    Self.Calc;
+  Scenes.SetScene(scInv);
 end;
 
 constructor TPlayer.Create;

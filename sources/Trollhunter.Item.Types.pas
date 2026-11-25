@@ -247,7 +247,9 @@ type
     itmDeadly_Poison,  itmManticore_Venom,
     itmHydra_Venom, itmVoid_Poison, itmBlack_Ichor,
     // Trophies
-    itmBig_Tooth, itmVenom_Sac
+    itmBig_Tooth, itmVenom_Sac,
+    // Magic Books V
+    itmArcane_Book_of_Infusion
     );
 
 const

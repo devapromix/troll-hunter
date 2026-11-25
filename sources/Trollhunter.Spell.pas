@@ -303,7 +303,7 @@ const
     Level: 10;
     ManaCost: 100;
     Effects: [efCraftAtr];
-    Description: 'Imbues an item with a random enchantment';
+    Description: 'Adds 1-3 Str/Dex/Wil/Per to suffix-free gear';
     Icon: icCharg;
     Value: 0;
     MinDamage: 0;

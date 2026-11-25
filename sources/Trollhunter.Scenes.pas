@@ -383,7 +383,9 @@ end;
 
 procedure TScenes.SetScene(ASceneEnum: TSceneEnum);
 begin
-  if (Spellbook <> nil) and not (ASceneEnum in SpellItemSelectionScenes) then
+  // The quit confirmation temporarily suspends the item-selection scene.
+  if (Spellbook <> nil) and not (ASceneEnum in SpellItemSelectionScenes) and
+    (ASceneEnum <> scQuit) then
     Spellbook.CancelPendingSpell;
   Game.RenderTimeout := Game.GetRenderTimeout();
   Game.ShowEffects := False;

@@ -12,7 +12,8 @@ uses
   Trollhunter.Player,
   Trollhunter.Effect,
   Trollhunter.Entity,
-  Trollhunter.Creature;
+  Trollhunter.Creature,
+  Trollhunter.Spell;
 
 type
   TItemBase = record
@@ -1929,7 +1930,13 @@ const
     (Symbol: '~'; ItemType: itTrophy; SlotType: stNone; MaxStack: 20;
     MaxDurability: 0; Level: 1; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
-    Price: 8; Color: clLightGreen; Deep: [deDark_Wood .. deDrom])
+    Price: 8; Color: clLightGreen; Deep: [deDark_Wood .. deDrom]),
+    // Arcane Book of Infusion
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 1200; Color: clLightBlue; Deep: [deDrom];
+    Effects: []; Value: Ord(spInfusion); ManaCost: 0; )
     );
 
 type
@@ -2009,8 +2016,7 @@ uses
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Helpers,
-  Trollhunter.Statistic,
-  Trollhunter.Spell;
+  Trollhunter.Statistic;
 
   { TItems }
 
