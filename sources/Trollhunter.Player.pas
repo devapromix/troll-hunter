@@ -2273,6 +2273,8 @@ end;
 
 procedure TPlayer.Wait;
 begin
+  if IsDead then
+    Exit;
   if not Map.GetVis(Map.Current) then
   begin
     Map.SetVis(Map.Current, True);
@@ -2281,7 +2283,7 @@ begin
     MaxMap := MaxMap + 1;
   end;
   SatPerTurn := 1;
-  Move(drOrigin);
+  AddTurn;
 end;
 
 function TPlayer.HasVisibleEnemy: boolean;
