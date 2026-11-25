@@ -1370,6 +1370,13 @@ begin
   begin
     if (T in UseTypeItems) then
     begin
+      if (T in BookTypeItems) and
+        Spellbook.GetSpell(TSpellEnum(FItem.Value)).Enable then
+      begin
+        MsgLog.Add(Format('You already know %s.',
+          [GetSpellData(TSpellEnum(FItem.Value)).Name]));
+        Exit;
+      end;
       LTeleportX := -1;
       LTeleportY := -1;
       if (efTeleportation in FItem.Effects) then
@@ -1388,15 +1395,9 @@ begin
       end;
       if (T in BookTypeItems) then
       begin
-        if Spellbook.GetSpell(TSpellEnum(FItem.Value)).Enable then
-          MsgLog.Add(Format('You already know %s.',
-            [GetSpellData(TSpellEnum(FItem.Value)).Name]))
-        else
-        begin
-          Spellbook.AddSpell(TSpellEnum(FItem.Value));
-          MsgLog.Add(Format('You learn %s.',
-            [GetSpellData(TSpellEnum(FItem.Value)).Name]));
-        end;
+        Spellbook.AddSpell(TSpellEnum(FItem.Value));
+        MsgLog.Add(Format('You learn %s.',
+          [GetSpellData(TSpellEnum(FItem.Value)).Name]));
       end;
       if (T in FoodTypeItems + PlantTypeItems) then
       begin
