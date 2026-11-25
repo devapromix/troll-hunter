@@ -52,6 +52,7 @@ implementation
 uses
   SysUtils,
   Trollhunter.Player,
+  Trollhunter.Player.Helpers,
   Trollhunter.UI.Log,
   Trollhunter.Statistic,
   Trollhunter.Projectile.Types,
@@ -101,6 +102,12 @@ begin
   Result := not Player.IsDead and (FPendingSpell = ASpell);
   if not Result then
     Exit;
+  if not Player.HasSpellbook then
+  begin
+    Result := False;
+    MsgLog.Add('You don''t have a spellbook equipped!');
+    Exit;
+  end;
   Result := Player.Attributes.Attrib[atMana].Value >=
     GetSpellData(FPendingSpell).ManaCost;
   if not Result then
@@ -130,6 +137,11 @@ var
 begin
   if Player.IsDead or not FSpell[ASpellEnum].Enable then
     Exit;
+  if not Player.HasSpellbook then
+  begin
+    MsgLog.Add('You don''t have a spellbook equipped!');
+    Exit;
+  end;
   CancelPendingSpell;
   FLastSelectedSpell := ASpellEnum;
   LSpell := FSpell[ASpellEnum].Spell;

@@ -623,6 +623,12 @@ begin
   Result := sarRejected;
   if IsDead or (Index < 0) or (Index >= Mobs.Count) then
     Exit;
+  if not HasSpellbook then
+  begin
+    MsgLog.Add('You don''t have a spellbook equipped!');
+    FireModeExit;
+    Exit;
+  end;
   Mob := Mobs.Mob[Index];
   if not Mob.Alive then
     Exit;
@@ -874,6 +880,12 @@ procedure TPlayer.MagicFireModeEnter;
 begin
   if IsDead then
   begin
+    FireModeExit;
+    Exit;
+  end;
+  if not HasSpellbook then
+  begin
+    MsgLog.Add('You don''t have a spellbook equipped!');
     FireModeExit;
     Exit;
   end;
