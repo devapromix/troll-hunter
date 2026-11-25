@@ -906,61 +906,49 @@ end;
 
 procedure TMob.Process;
 var
-  NX, NY: Int;
   The: string;
-  Dist: UInt;
-  LSkipMove, LWasSlowed: boolean;
-begin
-  // Exit;
+  LWasSlowed: Boolean;
 
-  NX := 0;
-  NY := 0;
-  if (Force = fcNPC) then
-    Exit;
-  Dist := GetDist(Player.X, Player.Y);
-  // Continue ticking blindness even when its reduced vision prevents acting.
-  if StatusEffects.IsStatusEffect(seBlinded) and
-    (Player.StatusEffects.IsStatusEffect(seStealth) or (Dist > GetVision)) then
+  procedure PerformAction;
+  var
+    NX, NY: Int;
+    Dist: UInt;
+    LSkipMove: Boolean;
   begin
-    OnTurn();
-    if IsDead then
-      Defeat;
-    Exit;
-  end;
-  if Player.StatusEffects.IsStatusEffect(seStealth) then
-    Exit;
-  if (Dist > GetVision) then
-    Exit;
-  if StatusEffects.IsStatusEffect(seSleeping) then
-  begin
-    if (Math.RandomRange(0, 100) <= 15) then
+    if (Force = fcNPC) then
+      Exit;
+    if Player.StatusEffects.IsStatusEffect(seStealth) then
+      Exit;
+    Dist := GetDist(Player.X, Player.Y);
+    if (Dist > GetVision) then
+      Exit;
+    if StatusEffects.IsStatusEffect(seSleeping) then
     begin
-      StatusEffects.StatusEffect[seSleeping] := 0;
-      if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
+      if (Math.RandomRange(0, 100) <= 15) then
       begin
-        The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
-        MsgLog.Add(Format('%s notices you!', [The]));
+        StatusEffects.StatusEffect[seSleeping] := 0;
+        if (Player.Attributes.Attrib[atPer].Value > Math.RandomRange(0, 100)) then
+        begin
+          The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
+          MsgLog.Add(Format('%s notices you!', [The]));
+        end;
       end;
       Exit;
     end;
-    Exit;
-  end;
-  if (Dist <= 2) and Player.IsRest then
-    Player.IsRest := False;
-  // Cripling Blow
-  LSkipMove := StatusEffects.IsStatusEffect(seSlowed) and
-    Odd(StatusEffects.StatusEffect[seSlowed]);
-  if not LSkipMove then
-  begin
-    // A*
+    if (Dist <= 2) and Player.IsRest then
+      Player.IsRest := False;
+    LSkipMove := StatusEffects.IsStatusEffect(seSlowed) and
+      Odd(StatusEffects.StatusEffect[seSlowed]);
+    if LSkipMove then
+      Exit;
+    NX := 0;
+    NY := 0;
     if not PathFind(UIntMax + 1, UIntMax + 1, X, Y, Player.X, Player.Y,
       @MyCallback, NX, NY) then
       Exit;
     if (NX = Int(Player.X)) and (NY = Int(Player.Y)) then
-    begin
-      Self.Attack();
-    end
-    else if (Mobs.GetFreeTile(NX, NY)) then
+      Self.Attack()
+    else if Mobs.GetFreeTile(NX, NY) then
     begin
       X := NX;
       Y := NY;
@@ -968,15 +956,27 @@ begin
     else
       Self.Walk(X, Y, Player.X, Player.Y);
   end;
+
+begin
+  if not Alive then
+    Exit;
+  if IsDead then
+  begin
+    Defeat;
+    Exit;
+  end;
   LWasSlowed := StatusEffects.IsStatusEffect(seSlowed);
+  PerformAction;
   OnTurn();
-  if LWasSlowed and not StatusEffects.IsStatusEffect(seSlowed) then
+  if LWasSlowed and not StatusEffects.IsStatusEffect(seSlowed) and
+    Map.InView(X, Y) and Map.GetFOV(X, Y) and
+    (Player.GetDist(X, Y) <= Player.Vision) then
   begin
     The := GetCapit(GetDescThe(Mobs.GetName(TMobEnum(ID))));
     MsgLog.Add(Format('The slowing magic fades from %s.', [The]));
   end;
-  if Self.IsDead then
-    Self.Defeat;
+  if IsDead then
+    Defeat;
 end;
 
 procedure TMob.Render(AX, AY: UInt);
