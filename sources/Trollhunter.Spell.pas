@@ -117,7 +117,7 @@ const
     Level: 2;
     ManaCost: 22;
     Effects: [efRegeneration];
-    Description: 'Gradually restores health over time';
+    Description: 'Restores 1 health per turn';
     Icon: icLife;
     Value: 20;
     MinDamage: 0;
@@ -170,7 +170,7 @@ const
     Level: 3;
     ManaCost: 35;
     Effects: [efCurePoison];
-    Description: 'Neutralizes poison in your body';
+    Description: 'Shortens poisoning by 15 turns';
     Icon: icDrop;
     Value: 15;
     MinDamage: 0;

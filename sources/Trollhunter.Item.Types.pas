@@ -249,7 +249,9 @@ type
     // Trophies
     itmBig_Tooth, itmVenom_Sac,
     // Magic Books V
-    itmArcane_Book_of_Infusion
+    itmArcane_Book_of_Infusion,
+    // Magic Books IV
+    itmArcane_Book_of_Identify
     );
 
 const

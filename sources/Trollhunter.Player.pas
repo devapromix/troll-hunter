@@ -2882,10 +2882,7 @@ var
 begin
   // Regen
   if StatusEffects.IsStatusEffect(seRegen) then
-  begin
     Attributes.Modify(atLife);
-    Attributes.Modify(atMana, Math.RandomRange(0, 3) + 1);
-  end;
   if not StatusEffects.IsStatusEffect(seDiseased) then
   begin
     // Replenish Life

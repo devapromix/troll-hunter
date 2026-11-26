@@ -1936,7 +1936,13 @@ const
     MaxDurability: 0; Defense: (Min: 0; Max: 0);
     Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
     Price: 1200; Color: clLightBlue; Deep: [deDrom];
-    Effects: []; Value: Ord(spInfusion); ManaCost: 0; )
+    Effects: []; Value: Ord(spInfusion); ManaCost: 0; ),
+    // Arcane Book of Identify
+    (Symbol: '?'; ItemType: itBook; SlotType: stNone; MaxStack: 1;
+    MaxDurability: 0; Defense: (Min: 0; Max: 0);
+    Damage: (MinDamage: (Min: 0; Max: 0; ); MaxDamage: (Min: 0; Max: 0; ));
+    Price: 800; Color: clLightBlue; Deep: [deBlood_Cave];
+    Effects: []; Value: Ord(spIdentify); ManaCost: 0; )
     );
 
 type
