@@ -631,7 +631,6 @@ var
   procedure Miss();
   begin
     MsgLog.Add(Format('You miss %s.', [The]));
-    SatPerTurn := Ord(Game.Difficulty) + 3;
   end;
 
 begin
@@ -669,6 +668,7 @@ begin
     Exit;
   end;
   BreakStealth;
+  SatPerTurn := 1;
   Result := sarMissed;
   Self.Attributes.Modify(atMana, -Int(LSpell.ManaCost));
   Self.Statictics.Inc(stSpCast);
@@ -1434,6 +1434,11 @@ begin
       begin
         MsgLog.Add(Format('You already know %s.',
           [GetSpellData(TSpellEnum(FItem.Value)).Name]));
+        Exit;
+      end;
+      if (T in ScrollTypeItems) and (efIdentification in FItem.Effects) then
+      begin
+        Spellbook.BeginIdentifyScroll(Index);
         Exit;
       end;
       LTeleportX := -1;

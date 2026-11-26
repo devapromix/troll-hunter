@@ -24,10 +24,13 @@ type
     FHasQuickSpell: boolean;
     FLastSelectedSpell: TSpellEnum;
     FPendingSpell: TSpellEnum;
+    FPendingScrollIndex: Int;
+    FPendingScrollItemID: Int;
     procedure CastSpell(ASpellEnum: TSpellEnum);
   public
     procedure Clear;
     procedure CancelPendingSpell;
+    procedure BeginIdentifyScroll(Index: Int);
     function CanCompletePendingSpell(ASpell: TSpellEnum): Boolean;
     procedure CompletePendingSpell;
     function HasPendingSpell: Boolean;
@@ -62,7 +65,12 @@ uses
   Trollhunter.Effect,
   Trollhunter.Map,
   Trollhunter.Game,
-  Trollhunter.Scenes;
+  Trollhunter.Scenes,
+  Trollhunter.Item,
+  Trollhunter.Item.Common,
+  Trollhunter.Item.Inventory,
+  Trollhunter.Item.Types,
+  Trollhunter.Skill;
 
   { TSpellbook }
 
@@ -87,6 +95,8 @@ end;
 procedure TSpellbook.CancelPendingSpell;
 begin
   FPendingSpell := spNone;
+  FPendingScrollIndex := -1;
+  FPendingScrollItemID := -1;
 end;
 
 function TSpellbook.HasPendingSpell: Boolean;
@@ -94,7 +104,27 @@ begin
   Result := FPendingSpell <> spNone;
 end;
 
+procedure TSpellbook.BeginIdentifyScroll(Index: Int);
+var
+  LScroll: Item;
+begin
+  if not Items_Inventory_IndexInRange(Index) then
+    Exit;
+  LScroll := Items_Inventory_GetItem(Index);
+  if not (ItemBase[TItemEnum(LScroll.ItemID)].ItemType in ScrollTypeItems) or
+    not (efIdentification in LScroll.Effects) then
+    Exit;
+  CancelPendingSpell;
+  FPendingSpell := spIdentify;
+  FPendingScrollIndex := Index;
+  FPendingScrollItemID := LScroll.ItemID;
+  Scenes.SetScene(scIdentification);
+end;
+
 function TSpellbook.CanCompletePendingSpell(ASpell: TSpellEnum): Boolean;
+var
+  LScroll: Item;
+  LManaCost: Int;
 begin
   Result := True;
   if not HasPendingSpell then
@@ -108,27 +138,62 @@ begin
     MsgLog.Add('You cannot cast spells while stunned.');
     Exit;
   end;
-  if not Player.HasSpellbook then
+  if FPendingScrollIndex >= 0 then
   begin
     Result := False;
-    MsgLog.Add('You don''t have a spellbook equipped!');
-    Exit;
+    if not Items_Inventory_IndexInRange(FPendingScrollIndex) then
+    begin
+      MsgLog.Add('The selected scroll is no longer available.');
+      Exit;
+    end;
+    LScroll := Items_Inventory_GetItem(FPendingScrollIndex);
+    if (LScroll.ItemID <> FPendingScrollItemID) or (LScroll.Amount <= 0) or
+      (LScroll.Identify = 0) or not (efIdentification in LScroll.Effects) then
+    begin
+      MsgLog.Add('The selected scroll is no longer available.');
+      Exit;
+    end;
+    LManaCost := ItemBase[TItemEnum(LScroll.ItemID)].ManaCost;
+  end
+  else
+  begin
+    if not Player.HasSpellbook then
+    begin
+      Result := False;
+      MsgLog.Add('You don''t have a spellbook equipped!');
+      Exit;
+    end;
+    LManaCost := GetSpellData(FPendingSpell).ManaCost;
   end;
-  Result := Player.Attributes.Attrib[atMana].Value >=
-    GetSpellData(FPendingSpell).ManaCost;
+  Result := Player.Attributes.Attrib[atMana].Value >= LManaCost;
   if not Result then
     MsgLog.Add('You need more mana!');
 end;
 
 procedure TSpellbook.CompletePendingSpell;
 var
-  LSpell: TSpellData;
+  LScroll: Item;
+  LManaCost: Int;
+  LScrollName: string;
 begin
   if not HasPendingSpell then
     Exit;
-  LSpell := GetSpellData(FPendingSpell);
+  if FPendingScrollIndex >= 0 then
+  begin
+    LScroll := Items_Inventory_GetItem(FPendingScrollIndex);
+    LManaCost := ItemBase[TItemEnum(LScroll.ItemID)].ManaCost;
+    LScrollName := Items.GetNameThe(LScroll);
+    Dec(LScroll.Amount);
+    if Items_Inventory_SetItem(FPendingScrollIndex, LScroll) <= 0 then
+      Exit;
+    MsgLog.Add(Format('You read %s.', [LScrollName]));
+    Player.Statictics.Inc(stScrRead);
+    Player.Skills.DoSkill(skConcentration);
+  end
+  else
+    LManaCost := GetSpellData(FPendingSpell).ManaCost;
   CancelPendingSpell;
-  Player.Attributes.Modify(atMana, -Int(LSpell.ManaCost));
+  Player.Attributes.Modify(atMana, -LManaCost);
   Player.Statictics.Inc(stSpCast);
   Player.Calc;
   Player.Wait;
