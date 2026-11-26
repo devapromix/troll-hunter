@@ -684,6 +684,7 @@ begin
   if (TargetDV < Math.RandomRange(0, 100)) and not
     StatusEffects.IsStatusEffect(seCursed) then
   begin
+    Mob.StatusEffects.StatusEffect[seSleeping] := 0;
     if ASpellEnum in TargetedStatusSpells then
     begin
       if efWeaken in LSpell.Effects then
@@ -694,7 +695,6 @@ begin
       // Preserve the stated duration through the casting turn.
       Mob.StatusEffects.StatusEffect[LStatus] := Max(
         Mob.StatusEffects.StatusEffect[LStatus], LDuration + 1);
-      Mob.StatusEffects.StatusEffect[seSleeping] := 0;
       MsgLog.Add(Format('You cast %s on %s (%d turns).',
         [LSpell.Name, The, LDuration]));
       Skills.DoSkill(skConcentration);
@@ -779,6 +779,7 @@ begin
   LMob := Mobs.Mob[Index];
   if not LMob.Alive or (LMob.Force <> fcEnemy) or (LMob.MapZone <> Map.Current) then
     Exit;
+  LMob.StatusEffects.StatusEffect[seSleeping] := 0;
   LSpell := GetSpellData(ASpellEnum);
   LThe := GetDescThe(Mobs.Name[TMobEnum(LMob.ID)]);
   LPercent := EnsureRange(Skills.Skill[skConcentration].Value, SkillMin, SkillMax);

@@ -117,6 +117,7 @@ function TCreature.OnTurn: Boolean;
 var
   I: TStatusEffectEnum;
   Value: UInt;
+  LLifeBefore: Int;
 begin
   Result := False;
   for I := Low(TStatusEffectEnum) to High(TStatusEffectEnum) do
@@ -138,7 +139,16 @@ begin
           Value := 0;
         end;
         if (Value > 0) then
+        begin
+          LLifeBefore := Attributes.Attrib[atLife].Value;
           Attributes.Modify(atLife, -Value);
+          if (Int(Attributes.Attrib[atLife].Value) < LLifeBefore) and
+            StatusEffects.IsStatusEffect(seSleeping) then
+          begin
+            StatusEffects.StatusEffect[seSleeping] := 0;
+            Result := True;
+          end;
+        end;
       end;
     end;
   if (Light > 0) then
