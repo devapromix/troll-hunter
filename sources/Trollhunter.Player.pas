@@ -237,12 +237,27 @@ end;
 
 procedure TPlayer.AddTurn;
 var
-  LWasAiming: boolean;
+  LWasAiming, LLightChanged: Boolean;
+  LTorchIndex: Int;
+  LTorch: Item;
 begin
   if IsDead then
     Exit;
   Statictics.Inc(stTurn);
   Calendar.Turn;
+  LLightChanged := False;
+  LTorchIndex := GetEquippedIndex(stTorch);
+  if LTorchIndex >= 0 then
+  begin
+    LTorch := Items_Inventory_GetItem(LTorchIndex);
+    if LTorch.Value > 0 then
+      Dec(LTorch.Value);
+    if LTorch.Value <= 0 then
+      Items_Inventory_DeleteItem(LTorchIndex, LTorch)
+    else
+      Items_Inventory_SetItem(LTorchIndex, LTorch);
+    LLightChanged := True;
+  end;
   if (Attributes.Attrib[atSat].Value > 0) and
     (Math.RandomRange(0, MetabolismMax) <= Player.Statictics.Get(stMetabolism)) then
     if not Utils.Chance(Player.Talents.GetLevel(tlSurvival) * 10) then
@@ -253,7 +268,7 @@ begin
     Attributes.Modify(atLife, -1);
   Turn;
   LWasAiming := StatusEffects.IsStatusEffect(seAiming);
-  if OnTurn() then
+  if OnTurn() or LLightChanged then
     Calc;
   if LWasAiming and not StatusEffects.IsStatusEffect(seAiming) then
     MsgLog.Add(Terminal.Colorize(
@@ -1104,16 +1119,7 @@ begin
         FBowMaxDamage := FItem.MaxDamage;
       end;
       if (ItemBase[ID].SlotType = stTorch) then
-      begin
-        Light := Light + FItem.Value;
-        FItem.Value := FItem.Value - 1;
-        Items_Inventory_SetItem(I, FItem);
-        if (FItem.Value <= 0) then
-        begin
-          Items_Inventory_DeleteItem(I, FItem);
-          Light := 0;
-        end;
-      end;
+        Light := Light + Max(0, FItem.Value);
     end;
   end;
 
