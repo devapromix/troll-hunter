@@ -523,9 +523,12 @@ uses
   Trollhunter.Quest,
   Trollhunter.Helpers;
 
+const
+  MobWalkableTiles = FreeTiles + [tePortal, teTownPortal];
+
 function MyCallback(X, Y: Int): boolean; stdcall;
 begin
-  Result := (Map.GetTileEnum(X, Y, Map.Current) in FreeTiles);
+  Result := (Map.GetTileEnum(X, Y, Map.Current) in MobWalkableTiles);
 end;
 
 { TMob }
@@ -1106,7 +1109,7 @@ begin
   FX := Map.EnsureRange(X + NX);
   FY := Map.EnsureRange(Y + NY);
   if Mobs.GetFreeTile(FX, FY) and (Map.GetTileEnum(FX, FY, Map.Current) in
-    FreeTiles) then
+    MobWalkableTiles) then
   begin
     X := FX;
     Y := FY;
