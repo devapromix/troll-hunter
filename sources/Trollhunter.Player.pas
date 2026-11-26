@@ -638,6 +638,12 @@ begin
   Result := sarRejected;
   if IsDead or (Index < 0) or (Index >= Mobs.Count) then
     Exit;
+  if StatusEffects.IsStatusEffect(seStunned) then
+  begin
+    MsgLog.Add('You cannot cast spells while stunned.');
+    FireModeExit;
+    Exit;
+  end;
   if not HasSpellbook then
   begin
     MsgLog.Add('You don''t have a spellbook equipped!');
@@ -895,6 +901,12 @@ procedure TPlayer.MagicFireModeEnter;
 begin
   if IsDead then
   begin
+    FireModeExit;
+    Exit;
+  end;
+  if StatusEffects.IsStatusEffect(seStunned) then
+  begin
+    MsgLog.Add('You cannot cast spells while stunned.');
     FireModeExit;
     Exit;
   end;
@@ -1399,6 +1411,12 @@ begin
   end;
   I := TItemEnum(FItem.ItemID);
   T := ItemBase[I].ItemType;
+  if (T in ScrollTypeItems + RuneTypeItems) and
+    StatusEffects.IsStatusEffect(seStunned) then
+  begin
+    MsgLog.Add('You cannot cast spells while stunned.');
+    Exit;
+  end;
   // No mana
   if (Player.Attributes.Attrib[atMana].Value < ItemBase[I].ManaCost) then
   begin

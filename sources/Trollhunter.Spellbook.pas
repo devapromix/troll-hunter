@@ -102,6 +102,12 @@ begin
   Result := not Player.IsDead and (FPendingSpell = ASpell);
   if not Result then
     Exit;
+  if Player.StatusEffects.IsStatusEffect(seStunned) then
+  begin
+    Result := False;
+    MsgLog.Add('You cannot cast spells while stunned.');
+    Exit;
+  end;
   if not Player.HasSpellbook then
   begin
     Result := False;
@@ -137,6 +143,11 @@ var
 begin
   if Player.IsDead or not FSpell[ASpellEnum].Enable then
     Exit;
+  if Player.StatusEffects.IsStatusEffect(seStunned) then
+  begin
+    MsgLog.Add('You cannot cast spells while stunned.');
+    Exit;
+  end;
   if not Player.HasSpellbook then
   begin
     MsgLog.Add('You don''t have a spellbook equipped!');
