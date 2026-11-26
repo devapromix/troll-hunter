@@ -2022,7 +2022,8 @@ uses
   Trollhunter.Item.Dungeon,
   Trollhunter.Item.Inventory,
   Trollhunter.Helpers,
-  Trollhunter.Statistic;
+  Trollhunter.Statistic,
+  Trollhunter.Spell.School;
 
   { TItems }
 
@@ -2435,6 +2436,8 @@ begin
   AItem.Identify := Math.IfThen(IsIdentify(IdentTypeItems,
     AllwaysIdentTypeItems), 0, -1);
   AItem.Prefix := Math.IfThen(IsIdentify(PrefixTypeItems, []), 0, -1);
+  if ItemBase[TItemEnum(ID)].ItemType = itBook then
+    AItem.Identify := 0;
 end;
 
 procedure TItems.Add(AZ: TMapEnum; AX: Int = -1; AY: Int = -1;
@@ -3142,6 +3145,16 @@ var
 
 begin
   Result := False;
+  if ItemBase[TItemEnum(AItem.ItemID)].ItemType = itBook then
+  begin
+    if AItem.Identify = 0 then
+    begin
+      AItem.Identify := -1;
+      AItem.Prefix := -1;
+      Result := True;
+    end;
+    Exit;
+  end;
   LNewPrefix := False;
   if (AItem.Prefix = 0) then
   begin
@@ -3225,8 +3238,15 @@ function TItems.GetName(AItem: Item; IsShort: boolean = False): string;
 var
   LName, S: string;
   LIsNegativePrefix: boolean;
+  LSpell: TSpellData;
 begin
   LName := GetName(TItemEnum(AItem.ItemID));
+  if (AItem.Identify = 0) and
+    (ItemBase[TItemEnum(AItem.ItemID)].ItemType = itBook) then
+  begin
+    LSpell := GetSpellData(TSpellEnum(ItemBase[TItemEnum(AItem.ItemID)].Value));
+    LName := GetSpellSchoolData(LSpell.School).Name + ' Book';
+  end;
 
   LIsNegativePrefix := False;
   if (AItem.Prefix > 0) then
